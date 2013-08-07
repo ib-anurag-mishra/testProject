@@ -282,14 +282,14 @@ if ($type != 'all') {
 
                         //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                     }
-                    $album_title = truncate_text($palbum->Title, 30, $this);
+                    $album_title = truncate_text($this->getTextEncode($palbum->Title), 30, $this);
                     $album_genre = str_replace('"', '', $palbum->Genre);
                     $album_label = $palbum->Label;
                     $tilte = urlencode($palbum->Title);
                     $linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
                     $linkProviderType = base64_encode($palbum->provider_type);
                     if (!empty($album_label)) {
-                        $album_label_str = "Label: " . truncate_text($album_label, 32, $this);
+                        $album_label_str = "Label: " . truncate_text($this->getTextEncode($album_label), 32, $this);
                     } else {
                         $album_label_str = "";
                     }
@@ -300,8 +300,8 @@ if ($type != 'all') {
                         $explicit = '';
                     }
                     ?>
-                                                <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $palbum->Title; ?>"><img src="<?php echo $image; ?>" alt="<?php echo $palbum->Title; ?>" width="162" height="162" /></a>
-                                                <div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $palbum->Title; ?>" ><?php echo $album_title; ?> <?php echo $explicit; ?></a></div>
+                                                <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>"><img src="<?php echo $image; ?>" alt="<?php echo $this->getTextEncode($palbum->Title); ?>" width="162" height="162" /></a>
+                                                <div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>" ><?php echo $album_title; ?> <?php echo $explicit; ?></a></div>
                                                 <div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
                                                 <div class="album-label">Label: <span><a href="#"><?php echo $album_label; ?></a></span></div>
                                                 <?php
@@ -422,7 +422,7 @@ if ($type != 'all') {
                     $count = $composer->numFound;
                     $name = $this->getTextEncode($name);
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $composer_name; ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
@@ -482,7 +482,7 @@ if ($type != 'all') {
                     $name = $genre->Genre;
                     $count = $genre->numFound;
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=genre"; ?>" title="<?php echo $genre_name; ?>"><?php echo $genre_name_text; ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
@@ -542,7 +542,7 @@ if ($type != 'all') {
                     $name = $label->Label;
                     $count = $label->numFound;
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=label"; ?>" title="<?php echo $name; ?>"><?php echo $label_name_text; ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=label"; ?>" title="<?php echo $this->getTextEncode($name); ?>"><?php echo $this->getTextEncode($label_name_text); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
@@ -609,7 +609,7 @@ if ($type != 'all') {
         } else {
             //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
         }
-        $album_title = truncate_text($palbum->Title, 30, $this);
+        $album_title = truncate_text($this->getTextEncode($palbum->Title), 30, $this);
         $title = urlencode($palbum->Title);
         $album_genre = str_replace('"', '', $palbum->Genre);
         $tilte = urlencode($palbum->Title);
@@ -628,8 +628,8 @@ if ($type != 'all') {
             $album_label_str = "";
         }
         ?>
-                                    <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $palbum->Title; ?>"><img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" /></a>
-                                    <div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $palbum->Title; ?>"><?php echo $album_title; ?></a></div>
+                                    <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>"><img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" /></a>
+                                    <div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>"><?php echo $album_title; ?></a></div>
                                     <div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
                                     <div class="album-label"><?php echo $album_label_str; ?></span></div>
                                 </li>
@@ -655,7 +655,7 @@ if ($type != 'all') {
             if (!empty($artists)) {
                 foreach ($artists as $artist) {
                     $tilte = urlencode($artist->ArtistText);
-                    $artist_name_text = truncate_text($artist->ArtistText, 30, $this);
+                    $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
                     $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))));
                     ?>
                                 <div><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></div>
@@ -690,9 +690,9 @@ if ($type != 'all') {
     if (!empty($composers)) {
         foreach ($composers as $composer) {
             $tilte = urlencode($composer->Composer);
-            $composer_name = truncate_text($composer->Composer, 30, $this);
+            $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
             ?>
-                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title='<?php echo $composer->Composer ?>'><?php echo str_replace('"', '', $composer_name); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
+                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title='<?php echo $this->getTextEncode($composer->Composer) ?>'><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
         <?php }
     } else {
         ?>
@@ -714,8 +714,8 @@ if ($type != 'all') {
             if (!empty($videos)) {
                 foreach ($videos as $video) {
                     $tilte = urlencode($video->VideoTitle);
-                    $video_name_text = truncate_text($video->VideoTitle, 30, $this);
-                    $name = $video->VideoTitle;
+                    $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
+                    $name = $this->getTextEncode($video->VideoTitle);
                     // $count = $video->numFound;
                     ?>
                                     <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
@@ -741,11 +741,11 @@ if ($type != 'all') {
                 foreach ($genres as $genre) {
                     $genre_name = str_replace('"', '', $genre->Genre);
                     $tilte = urlencode($genre_name);
-                    $genre_name_text = truncate_text($genre_name, 30, $this);
+                    $genre_name_text = truncate_text($this->getTextEncode($genre_name), 30, $this);
                     $name = $genre->Genre;
                     $count = $genre->numFound;
                     ?>
-                                <div><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $genre_name; ?>"><?php echo $genre_name_text; ?><span>(<?php echo $count; ?>)</span></a></div>
+                                <div><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $genre_name_text; ?><span>(<?php echo $count; ?>)</span></a></div>
                                 <?php
                             }
                         } else {
@@ -769,7 +769,7 @@ if ($type != 'all') {
             if (!empty($labels)) {
                 foreach ($labels as $label) {
                     $tilte = urlencode($label->Label);
-                    $label_name_text = truncate_text($label->Label, 30, $this);
+                    $label_name_text = truncate_text($this->getTextEncode($label->Label), 30, $this);
                     $name = $label->Label;
                     $count = $label->numFound;
                     ?>
@@ -796,8 +796,8 @@ if ($type != 'all') {
             if (!empty($videos)) {
                 foreach ($videos as $video) {
                     $tilte = urlencode($video->VideoTitle);
-                    $video_name_text = truncate_text($video->VideoTitle, 30, $this);
-                    $name = $video->VideoTitle;
+                    $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
+                    $name = $this->getTextEncode($video->VideoTitle);
                     // $count = $video->numFound;
                     ?>
                                     <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
@@ -852,7 +852,7 @@ if ($type != 'all') {
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
-                            <div class="composer"><?php echo truncate_text(str_replace('"', '', $psong->Composer), 25, $this); ?></div>
+                            <div class="composer"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></div>
 
 
                             <div class="wishlist-popover">	
@@ -898,10 +898,10 @@ if ($type != 'all') {
                                 ?>
                                 <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><img src="<?php echo $image; ?>" width="27" height="27" /></a> <?php /*alt="<?php echo $psong->SongTitle; ?>"*/ ?>
                             </div>
-                            <div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><?php echo str_replace('"', '', truncate_text($psong->Title, 15, $this)); ?></a></a></div>
+                            <div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 15, $this)); ?></a></a></div>
                             <div class="song">
-        <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                <span title="<?php echo str_replace('"', '', $showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle, 21, $this); ?>
+                                <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
+                                <span title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
         <?php
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
@@ -1026,7 +1026,7 @@ if (isset($type)) {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $psong->ArtistText; ?></a></div>
+                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $this->getTextEncode($psong->ArtistText); ?></a></div>
 						<a class="add-to-playlist-button" href="#"></a>
 						
 						<div class="wishlist-popover">	
@@ -1050,12 +1050,12 @@ if (isset($type)) {
 							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
 						</div>
 						-->
-                        <div class="album"><a href="#"><?php echo truncate_text($psong->Title,25,$this); ?></a></div>
+                        <div class="album"><a href="#"><?php echo truncate_text($this->getTextEncode($psong->Title),25,$this); ?></a></div>
 						<?php
                             $imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                             $image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
-                        <div class="song"><a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
+                        <div class="song"><a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php echo $image; ?>" alt="<?php echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" /></a><?php echo $this->getTextEncode($psong->VideoTitle); ?></div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
                                     if ($sales_date <= date('Y-m-d')) {
