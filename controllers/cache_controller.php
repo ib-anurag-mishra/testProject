@@ -489,7 +489,7 @@ STR;
             $this->log("cache written for coming soon for $territory", 'debug');
             // End Caching functionality for coming soon songs
 
-           */ 
+          
             
          
             
@@ -551,7 +551,9 @@ STR;
 
             $this->log("cache written for coming soon videos for $territory", 'debug');
             //End Caching functionality for coming soon songs
-  /*
+           
+              */
+
             //Added caching functionality for us top 10 Songs           
             $country = $territory;
             if ( !empty($country )) {
@@ -661,7 +663,7 @@ STR;
             $this->log("cache written for US top ten for $territory", 'debug');
              //End Caching functionality for US TOP 10 Songs
             
-        
+          /*
             
              //Added caching functionality for us top 10 Album            
             $country = $territory;
