@@ -661,7 +661,7 @@ STR;
             }
             $this->log("cache written for US top ten for $territory", 'debug');
              //End Caching functionality for US TOP 10 Songs
-           */  
+          
         
             
              //Added caching functionality for us top 10 Album            
@@ -774,7 +774,8 @@ STR;
             $this->log("cache written for US top ten Album for $territory", 'debug');
             //End Caching functionality for US TOP 10 Albums
             
-              /*
+           */  
+            
           
            //Added caching functionality for us top 10 Video            
             $country = $territory;
@@ -878,6 +879,9 @@ STR;
             $this->log("cache written for US top ten video for $territory", 'debug');
             //End Caching functionality for US TOP 10 Videos
 
+            
+            
+          /*
             //Added caching functionality for new release Albums           
             $country = $territory;
             if ( !empty($country ) && ( $territory == "US" ) ) {
