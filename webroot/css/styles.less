@@ -14348,37 +14348,73 @@ img {
 		div {
 			
 			float: left;
+
+			/* added 080613 */
+			position: relative;
+			
+			background: #ddd;
+			
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FhYWFhYSIgc3RvcC1vcGFjaXR5PSIwLjA1Ii8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wNSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-linear-gradient(top,  rgba(170,170,170,0.05) 0%, rgba(0,0,0,0.05) 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(170,170,170,0.05)), color-stop(100%,rgba(0,0,0,0.05)));
+			background: -webkit-linear-gradient(top,  rgba(170,170,170,0.05) 0%,rgba(0,0,0,0.05) 100%);
+			background: -o-linear-gradient(top,  rgba(170,170,170,0.05) 0%,rgba(0,0,0,0.05) 100%);
+			background: -ms-linear-gradient(top,  rgba(170,170,170,0.05) 0%,rgba(0,0,0,0.05) 100%);
+			background: linear-gradient(to bottom,  rgba(170,170,170,0.05) 0%,rgba(0,0,0,0.05) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0daaaaaa', endColorstr='#0d000000',GradientType=0 );
+
+
+
+
+			
+			
+			font-size: 13px;
+			font-weight: bold;
+			color: rgba(0,0,0,.9);
+			padding-left: 10px;
+			line-height: 38px;
+            -moz-box-sizing: border-box;
+			box-sizing: border-box;
+			border-bottom: 1px solid rgba(0,0,0,.1);
+			
+			&:after {
+				
+				content: "";
+				position: absolute;
+				right: 0;
+				top:0;
+				background: url(../images/tab-border.png) repeat-y;
+				width: 3px;
+				height: 38px;
+			}
+			
+			&.active {
+			
+				background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzExMTExMSIgc3RvcC1vcGFjaXR5PSIwLjA1Ii8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjA2Ii8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC4wNSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+				background: -moz-linear-gradient(top,  rgba(17,17,17,0.13) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.03) 100%);
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(17,17,17,0.13)), color-stop(50%,rgba(0,0,0,0.05)), color-stop(100%,rgba(0,0,0,0.03)));
+				background: -webkit-linear-gradient(top,  rgba(17,17,17,0.13) 0%,rgba(0,0,0,0.05) 50%,rgba(0,0,0,0.03) 100%);
+				background: -o-linear-gradient(top,  rgba(17,17,17,0.13) 0%,rgba(0,0,0,0.05) 50%,rgba(0,0,0,0.03) 100%);
+				background: -ms-linear-gradient(top,  rgba(17,17,17,0.13) 0%,rgba(0,0,0,0.05) 50%,rgba(0,0,0,0.03) 100%);
+				background: linear-gradient(to bottom,  rgba(17,17,17,0.13) 0%,rgba(0,0,0,0.05) 50%,rgba(0,0,0,0.03) 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0d111111', endColorstr='#0d000000',GradientType=0 );
+			}	
+			
 			
 			&.date-filter-button {
+				
 				width: 98px;
 				height: 39px;
-				background: url(../img/recent-downloads/date-off.jpg);
 				
-				&.active {
-					
-					background: url(../img/recent-downloads/date-up.jpg);
-					
-					&.toggled {
-						background: url(../img/recent-downloads/date-down.jpg);
-						
-					}
-				}
-				
+
 			}
 			
 			&.song-filter-button {
 				width: 98px;
 				height: 39px;
-				background: url(../img/recent-downloads/song-off.jpg);
 				
-				&.active {
-					background: url(../img/recent-downloads/song-up.jpg);
-					
-					&.toggled {
-						
-						background: url(../img/recent-downloads/song-down.jpg);
-					}
-				}
+				
+
 				
 			}
 			
@@ -14386,65 +14422,43 @@ img {
 				
 				width: 98px;
 				height: 39px;
-				background: url(../img/recent-downloads/music-off.jpg);
-				
-				&.active {
-					background: url(../img/recent-downloads/music-active.jpg);
-					
-				}
+
 			}
+			
 			
 			&.video-filter-button {
 				
 				width: 98px;
 				height: 39px;
-				background: url(../img/recent-downloads/videos-off.jpg);
-				
-				&.active {
-					
-					background: url(../img/recent-downloads/videos-active.jpg);
-				}
+
 			}
 			
 			&.artist-filter-button {
 				
 				width: 177px;
 				height: 39px;
-				background: url(../img/recent-downloads/artists-off.jpg);
-				
-				&.active {
-					background: url(../img/recent-downloads/artists-up.jpg);
-					
-					&.toggled {
-						
-						background: url(../img/recent-downloads/artists-down.jpg);
-					}
-					
-				}
+
 			}
 			
 			&.album-filter-button {
 				
 				width: 195px;
 				height: 39px;
-				background: url(../img/recent-downloads/album-off.jpg);
-				
-				&.active {
-					background: url(../img/recent-downloads/album-up.jpg);
-					
-					&.toggled {
-						
-						background: url(../img/recent-downloads/album-down.jpg);
-					}
-					
-				}
+
+	
 			}
 			
 			&.download-button {
 				width: 85px;
 				height: 39px;
-				background: url(../img/recent-downloads/download.jpg)
+				
+				&:after {
+					
+					background: none;
+				}
+
 			}
+
 		}
 		
 		
@@ -14788,7 +14802,7 @@ img {
 						
 						width: 147px;
 						position: absolute;
-						left: 585px;
+						left: 580px; /* changed 080613 */
 						
 						&.playing {
 							
