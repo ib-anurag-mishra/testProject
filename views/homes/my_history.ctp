@@ -124,7 +124,7 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                     </div>
-					<a class="add-to-wishlist-button" href="#"></a>
+					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="#"><?php echo $downloadResult['Song']['Title'];  ?></a></div>
 					<div class="artist-name"><a href="#"><?php
 						if (strlen($downloadResult['Download']['artist']) >= 19) {
@@ -136,11 +136,11 @@ $ieVersion =  ieversion();
 						
 					?></a></div>
 					
-					<div class="wishlist-popover">
+					<!-- <div class="wishlist-popover">
 						<!--	
 						<a class="remove-song" href="#">Remove Song</a>
 						<a class="make-cover-art" href="#">Make Cover Art</a>
-						-->
+						*/
                                         <?php
                                         if($this->Session->read('library_type') == '2'){
                                             echo $this->Queue->getQueuesList($this->Session->read('patron'),$downloadResult["Song"]["ProdID"],$downloadResult["Song"]["provider_type"],$downloadResult["Album"]["ProdID"],$downloadResult["Album"]["provider_type"]); ?>
@@ -150,7 +150,7 @@ $ieVersion =  ieversion();
                                                     echo $this->Queue->getSocialNetworkinglinksMarkup(); 
                                               }
                                         ?>
-					</div>
+					</div> -->
 					<div class="download">
                     <a href="#">
                         <p>

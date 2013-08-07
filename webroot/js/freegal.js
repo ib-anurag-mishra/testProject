@@ -1235,7 +1235,7 @@ function videoDownloadAll(prodId)
                           
                  if (hidVideoValue==1) {
                                       
-                        var r=confirm('A video download requires 2 credits per download. Are you sure you want to continue?')
+                        //var r=confirm('A video download requires 2 credits per download. Are you sure you want to continue?')
                         if (r==true)
                          {
                                $('.beforeClick').hide();

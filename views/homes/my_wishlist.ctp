@@ -446,7 +446,7 @@ $ieVersion =  ieversion();
 							echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
 					 	}
 					?></div>
-					<a class="add-to-wishlist-button" href="#"></a>
+					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResults[$i]['Song']['ArtistText']);?>/<?= $wishlistResults[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResults[$i]['Song']['provider_type']);?>">
                                          <?php
 						if (strlen($wishlistResults[$i]['wishlists']['album']) >= 15) {
@@ -469,13 +469,13 @@ $ieVersion =  ieversion();
                                          ?>
                                             </a></div>
 					
-                                        <div class="wishlist-popover">
+                                        <!-- <div class="wishlist-popover">
                                             <?php if( $this->Session->read('library_type') == 2 ){
                                                         echo $this->Queue->getQueuesList($this->Session->read('patron'),$wishlistResults[$i]["Song"]["ProdID"],$wishlistResults[$i]["Song"]["provider_type"],$wishlistResults[$i]["Albums"]["ProdID"],$wishlistResults[$i]["Albums"]["provider_type"]); ?>
                                                         <a class="add-to-playlist" href="#">Add To Queue</a>
                                             <?php } ?>
                                             <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>            
-					</div>
+					</div> -->
 						<div class="download">
                                             
                                     <?php										
