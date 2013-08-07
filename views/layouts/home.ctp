@@ -454,7 +454,7 @@ if ($this->Session->read('Config.language') == 'en') {
                                         <div style="display:none;">
                                             <div id="notificationApproval_div">
                                                 <span id="noti_content">
-                                                    <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                                    <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:125px;bottom:0;left:305px;right:0;z-index:10000;">
                                                         <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
                                                     </div>
                                                     <b>Email Notification</b><br />
