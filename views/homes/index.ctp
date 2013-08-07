@@ -604,7 +604,7 @@
 							
 							<div class="whats-happening">
 								<header>
-									<h3>What's Happening</h3>
+									<h3>News</h3>
 									<!--
 									<div class="whats-happening-see-all">
 										<a href="#">View All</a>
