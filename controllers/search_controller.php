@@ -706,7 +706,9 @@ class SearchController extends AppController {
             $typeVar = 'all';
         }
         if ($type != 'all') {
+            echo "Started".microtime();
             $data = $this->Solr->getAutoCompleteData($queryVar, $type, 10);
+            echo "Ended".microtime();
         }
         $records = array();
         switch ($typeVar) {
@@ -718,12 +720,25 @@ class SearchController extends AppController {
                 $arr_data = $arr_records = array();
 
                 // each indiviual filter call
+                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'album', 18, '1');
+                echo "Ended".microtime();
+                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'artist', 18, '1');
+                echo "Ended".microtime();
+                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'composer', 18, '1');
+                echo "Ended".microtime();
+                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'genre', 18, '1');
+                echo "Ended".microtime();
+                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1');
+                echo "Ended".microtime();
+                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'song', 18, '1');
+                echo "Ended".microtime();
+                echo "Started".microtime();
 
                 // formates array
                 foreach ($arr_data as $key1 => $val1) {
