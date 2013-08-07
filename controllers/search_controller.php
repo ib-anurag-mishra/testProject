@@ -864,6 +864,15 @@ class SearchController extends AppController {
                     }
                 }
                 break;
+            case 'video':
+                foreach ($data as $record => $count) {
+                    if (stripos($record, $queryVar) !== false) {
+                        $record = trim($record, '"');
+                        $record = preg_replace("/\n/", '', $record);
+                        $records[] = $record;
+                    }
+                }
+                break;
             case 'genre':
                 //echo '<pre>'; print_r($data); 
                 foreach ($data as $record => $count) {
