@@ -1,4 +1,4 @@
-					
+                                                <?php echo $session->flash(); ?>					
 						<section class="news">
 							<div class="top-100">
 								<header>
