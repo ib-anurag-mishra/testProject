@@ -46,7 +46,7 @@ $ieVersion =  ieversion();
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter "></div>
+                <div class="date-filter-button filter ">Date</div>
             <?php
             }
             if($sort == 'song'){
