@@ -24,74 +24,80 @@ $ieVersion =  ieversion();
 </form>
 <section class="recent-downloads-page">
 		
-		<div class="breadcrumbs"><span>Home</span> > <span><?php echo __('Recent Downloads', true); ?></span></div>
+		
+                
+<div class="breadcrumbs">
+<?php
+	$html->addCrumb( __('Recent Downloads', true), '/homes/my_history');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
+</div>          
+                
+                
 		<header class="clearfix">
 			<h2><?php echo __('Downloads', true); ?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
 		</header>
 		<div class="instructions">
-			<p>
-				Once in awhile Internet Service Providers or your computer may time out, and you could experience an incomplete or problem download. Freegal Music™ provides you with the opportunity to download previously downloaded songs again, without using up a personal download, and at no cost to your Library. To download a song again, from this week or last week of your initial downloads, press the download now link below. You may do this up to 2 additional times. Once you have downloaded a song twice from the Recent Downloads page, the song titles disappear from your list because they are no longer available to you.
-			</p>
-			
+			<?php echo $page->getPageContent('history'); ?>			
 		</div>
 		<nav class="recent-downloads-filter-container clearfix">
 			<?php 
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active">Date</div>
+                    <div class="date-filter-button filter active" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled">Date</div>
+                    <div class="date-filter-button filter active toggled"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter ">Date</div>
+                <div class="date-filter-button filter "><?php echo __('Date'); ?></div>
             <?php
             }
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active">Song</div>
+                    <div class="song-filter-button filter active"style="cursor:pointer;"><?php echo __('Song'); ?></div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled">Song</div>
+                    <div class="song-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Song'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter">Song</div>
+			<div class="song-filter-button filter"style="cursor:pointer;"><?php echo __('Song'); ?></div>
             <?php
             }
             ?>    
                     
-			<div class="music-filter-button tab active">Music</div>
-			<div class="video-filter-button tab">Videos</div>
+			<div class="music-filter-button tab active"style="cursor:pointer;"><?php echo __('Music'); ?></div>
+			<div class="video-filter-button tab"style="cursor:pointer;"><?php echo __('Videos'); ?></div>
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active">Artists</div>
+                    <div class="artist-filter-button filter active"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled">Artists</div>
+                    <div class="artist-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter">Artists</div>
+			<div class="artist-filter-button filter"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active">Album</div>
+                    <div class="album-filter-button filter active"style="cursor:pointer;"><?php echo __('Album'); ?></div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled">Album</div>
+                    <div class="album-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Album'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter">Album</div>
+			<div class="album-filter-button filter"style="cursor:pointer;"><?php echo __('Album'); ?></div>
             <?php
             }
             ?>  
-			<div class="download-button filter">Download</div>
+			<div class="download-button filter"style="cursor:pointer;"><?php echo __('Download'); ?></div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">

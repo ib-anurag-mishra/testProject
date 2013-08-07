@@ -229,28 +229,50 @@ STR;
                 }
             }
             $this->log("cache written for national top 100 for $territory", 'debug');
-  */
 
+ 
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
-            $featuredVideos = $this->Album->query($featured_videos_sql);
+            
+            $this->log("Queries caching functionality for featured videos $territory", "cachequery");
+            $this->log($featured_videos_sql, "cachequery");
+             
+             $featuredVideos = $this->Album->query($featured_videos_sql);
             if (!empty($featuredVideos)) {
+                
                 foreach($featuredVideos as $key => $featureVideo){
                     $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
-                }                
+                }         
+               
+                    
                 Cache::write("featured_videos" . $territory, $featuredVideos);
+                $this->log("cache written for featured videos for $territory", "cache");
+                echo "cache written for featured videos for $territory";
+                    
+                            
+                
+            }else{
+                
+                Cache::write("featured_videos" . $territory, Cache::read("featured_videos" . $territory));
+                echo "Unable to update key for featured videos";
+                $this->log("Unable to update featured videos cache for " . $territory, "cache");
+                echo "Unable to update update featured videos for " . $territory;
             }
-            // End Caching functionality for featured videos
             
-            print_r(Cache::read("featured_videos" . $territory));
+            // End Caching functionality for featured videos            
+           
  
-       /*     
+          
             // Added caching functionality for top video downloads
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+           
+            $this->log('Queries for top video downloads', "cachequery");
+            $this->log($topDownloadSQL, "cachequery");
+            
             $topDownloads = $this->Album->query($topDownloadSQL);
             if(!empty($topDownloads)){
                 foreach($topDownloads as $key => $topDownload)
@@ -261,11 +283,23 @@ STR;
                      $topDownloads[$key]['videoImage'] = $videoImage;
                 }                
                 Cache::write("top_download_videos".$territory, $topDownloads);
+                $this->log("cache written for top download   videos for $territory", "cache");
+                echo "cache written for top download  videos for $territory";
+                
+            }else{
+                Cache::write("top_download_videos" . $territory, Cache::read("top_download_videos" . $territory));
+                echo "Unable to update key for top download  videos";
+                $this->log("Unable to update top download  videos cache for " . $territory, "cache");
+                echo "Unable to update update top download  videos for " . $territory;
+                
             }
-            // End Caching functionality for top video downloads
-           
-            // Added caching functionality for national top 10 videos   
+            // End Caching functionality for top video downloads         
             
+              
+            // Added caching functionality for national top 100 videos   
+        
+      
+    
             $country = $territory;
 
             if (!empty($country)) {
@@ -281,7 +315,7 @@ STR;
               LIMIT 110";
                 } else {
 
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `videodownloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -291,6 +325,9 @@ STR;
               LIMIT 110";
                 }
 
+                $this->log("national top 100 videos first query videos $territory", "cachequery");
+                $this->log($sql, "cachequery");
+                
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql);
@@ -359,6 +396,9 @@ STR;
                 // echo $sql_national_100_v; die;
                 $data = $this->Album->query($sql_national_100_v);
                 $this->log($sql_national_100_v, "cachequery");
+                
+                
+                
                 if ($ids_provider_type == "") {
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
                     echo "ids_provider_type is set blank for " . $territory;
@@ -386,6 +426,9 @@ STR;
             // End Caching functionality for national top 10 videos
             
             
+                 */ 
+            
+   
 
             // Added caching functionality for coming soon songs
             $sql_coming_soon_s = <<<STR
@@ -420,9 +463,11 @@ STR;
             LIMIT 20      
 STR;
 
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
-            // echo $sql_coming_soon_s; die;
+
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
+            
+            $this->log("coming soon songs $territory", "cachequery");
+            $this->log($sql_coming_soon_s, "cachequery");
 
             if (!empty($coming_soon_rs)) {
                 foreach($coming_soon_rs as $key => $value)
@@ -432,12 +477,19 @@ STR;
                     $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
                 }                
                 Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
+                $this->log("cache written for coming soon songs for $territory", "cache");
+                echo "cache written for coming soon songs forfor $territory";         
+                
+            }else{
+                 Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
+                 $this->log("coming soon songs for " . $territory, "cache");
+                 echo "coming soon songs for " . $territory;
             }
             
             $this->log("cache written for coming soon for $territory", 'debug');
             // End Caching functionality for coming soon songs
 
-            
+                     /*
             
             // Added caching functionality for coming soon videos
             $sql_coming_soon_v = <<<STR
