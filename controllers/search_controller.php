@@ -791,7 +791,7 @@ class SearchController extends AppController {
                                 $widthRight = "180px";
                             }
                             if($name=="artist" && preg_match("/^$queryVar/", $record)){
-                                $str = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                                $str = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> 1" . $record . "1</div>|" . $record . "|" . $rank;
                                 array_unshift($records, $str);
                             } else {
                                 $records[] = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
