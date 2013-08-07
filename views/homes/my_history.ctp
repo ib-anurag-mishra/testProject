@@ -40,9 +40,9 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active"></div>
+                    <div class="date-filter-button filter active">Date</div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled"></div>
+                    <div class="date-filter-button filter active toggled">Date</div>
                 <?php } 
             } else {
                 ?>
@@ -52,46 +52,46 @@ $ieVersion =  ieversion();
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active"></div>
+                    <div class="song-filter-button filter active">Song</div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled"></div>
+                    <div class="song-filter-button filter active toggled">Song</div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter"></div>
+			<div class="song-filter-button filter">Song</div>
             <?php
             }
             ?>    
                     
-			<div class="music-filter-button tab active"></div>
-			<div class="video-filter-button tab"></div>
+			<div class="music-filter-button tab active">Music</div>
+			<div class="video-filter-button tab">Videos</div>
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active"></div>
+                    <div class="artist-filter-button filter active">Artists</div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled"></div>
+                    <div class="artist-filter-button filter active toggled">Artists</div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter"></div>
+			<div class="artist-filter-button filter">Artists</div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active"></div>
+                    <div class="album-filter-button filter active">Album</div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled"></div>
+                    <div class="album-filter-button filter active toggled">Album</div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter"></div>
+			<div class="album-filter-button filter">Album</div>
             <?php
             }
             ?>  
-			<div class="download-button filter"></div>
+			<div class="download-button filter">Download</div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
