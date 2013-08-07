@@ -46,7 +46,7 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
                     <div class="date-filter-button filter active toggled"><?php echo __('Date'); ?></div>
                 <?php } 
@@ -58,46 +58,46 @@ $ieVersion =  ieversion();
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active"><?php echo __('Song'); ?></div>
+                    <div class="song-filter-button filter active"style="cursor:pointer;"><?php echo __('Song'); ?></div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled"><?php echo __('Song'); ?></div>
+                    <div class="song-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Song'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter"><?php echo __('Song'); ?></div>
+			<div class="song-filter-button filter"style="cursor:pointer;"><?php echo __('Song'); ?></div>
             <?php
             }
             ?>    
                     
-			<div class="music-filter-button tab active"><?php echo __('Music'); ?></div>
-			<div class="video-filter-button tab"><?php echo __('Videos'); ?></div>
+			<div class="music-filter-button tab active"style="cursor:pointer;"><?php echo __('Music'); ?></div>
+			<div class="video-filter-button tab"style="cursor:pointer;"><?php echo __('Videos'); ?></div>
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter active"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter"><?php echo __('Artists'); ?></div>
+			<div class="artist-filter-button filter"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active"><?php echo __('Album'); ?></div>
+                    <div class="album-filter-button filter active"style="cursor:pointer;"><?php echo __('Album'); ?></div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled"><?php echo __('Album'); ?></div>
+                    <div class="album-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Album'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter"><?php echo __('Album'); ?></div>
+			<div class="album-filter-button filter"style="cursor:pointer;"><?php echo __('Album'); ?></div>
             <?php
             }
             ?>  
-			<div class="download-button filter"><?php echo __('Download'); ?></div>
+			<div class="download-button filter"style="cursor:pointer;"><?php echo __('Download'); ?></div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
