@@ -229,26 +229,40 @@ STR;
                 }
             }
             $this->log("cache written for national top 100 for $territory", 'debug');
-  */
 
+ 
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             $featuredVideos = $this->Album->query($featured_videos_sql);
             if (!empty($featuredVideos)) {
+                
                 foreach($featuredVideos as $key => $featureVideo){
                     $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
-                }                
+                }         
+               
+                    
                 Cache::write("featured_videos" . $territory, $featuredVideos);
+                $this->log("cache written for featured videos for $territory", "cache");
+                echo "cache written for featured videos for $territory";
+                    
+                            
+                
+            }else{
+                
+                Cache::write("featured_videos" . $territory, Cache::read("featured_videos" . $territory));
+                echo "Unable to update key for featured videos";
+                $this->log("Unable to update featured videos cache for " . $territory, "cache");
+                echo "Unable to update update featured videos for " . $territory;
             }
-            // End Caching functionality for featured videos
             
-            print_r(Cache::read("featured_videos" . $territory));
- 
-       /*     
+            // End Caching functionality for featured videos            
+           
+  */ 
+          
             // Added caching functionality for top video downloads
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
             $topDownloads = $this->Album->query($topDownloadSQL);
@@ -261,11 +275,22 @@ STR;
                      $topDownloads[$key]['videoImage'] = $videoImage;
                 }                
                 Cache::write("top_download_videos".$territory, $topDownloads);
+                $this->log("cache written for top download   videos for $territory", "cache");
+                echo "cache written for top download  videos for $territory";
+                
+            }else{
+                Cache::write("top_download_videos" . $territory, Cache::read("top_download_videos" . $territory));
+                echo "Unable to update key for top download  videos";
+                $this->log("Unable to update top download  videos cache for " . $territory, "cache");
+                echo "Unable to update update top download  videos for " . $territory;
+                
             }
             // End Caching functionality for top video downloads
            
             // Added caching functionality for national top 10 videos   
+        
             
+            /*
             $country = $territory;
 
             if (!empty($country)) {
