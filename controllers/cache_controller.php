@@ -426,7 +426,7 @@ STR;
             // End Caching functionality for national top 10 videos
             
             
-                 */ 
+                
             
    
 
@@ -482,14 +482,16 @@ STR;
                 
             }else{
                  Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
-                 $this->log("coming soon songs for " . $territory, "cache");
-                 echo "coming soon songs for " . $territory;
+                 $this->log("Unable to update coming soon songs for " . $territory, "cache");
+                 echo "Unable to update coming soon songs for " . $territory;
             }
             
             $this->log("cache written for coming soon for $territory", 'debug');
             // End Caching functionality for coming soon songs
 
-                     /*
+           */ 
+            
+         
             
             // Added caching functionality for coming soon videos
             $sql_coming_soon_v = <<<STR
@@ -526,6 +528,9 @@ STR;
 STR;
 
             $coming_soon_rv = $this->Album->query($sql_coming_soon_v);
+            
+            $this->log("coming soon videos $territory", "cachequery");
+            $this->log($sql_coming_soon_v, "cachequery");
 
             if (!empty($coming_soon_rv)) {
                 foreach($coming_soon_videos as $key => $value)
@@ -535,12 +540,18 @@ STR;
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
-                Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
+                 Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
+                 $this->log("cache written for coming soon videos for $territory", "cache");
+                echo "cache written for coming soon videos for $territory";  
+            }else{
+                Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));                   
+                $this->log("Unable to update coming soon videos for " . $territory, "cache");
+                echo "Unable to update coming soon videos for " . $territory;
             }
 
             $this->log("cache written for coming soon videos for $territory", 'debug');
             //End Caching functionality for coming soon songs
- 
+  /*
             //Added caching functionality for us top 10 Songs           
             $country = $territory;
             if ( !empty($country )) {
@@ -650,7 +661,7 @@ STR;
             $this->log("cache written for US top ten for $territory", 'debug');
              //End Caching functionality for US TOP 10 Songs
             
-         
+        
             
              //Added caching functionality for us top 10 Album            
             $country = $territory;
