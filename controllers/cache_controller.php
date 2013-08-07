@@ -427,8 +427,7 @@ STR;
             
             
                 
-            
-   
+              
 
             // Added caching functionality for coming soon songs
             $sql_coming_soon_s = <<<STR
@@ -620,7 +619,7 @@ STR;
                         File.CdnPath,
                         File.SourceURL,
                         File.SaveAsName,
-                        Sample_Files.FileID,
+                        Sample_Files.FileID
                 FROM Songs AS Song
                 LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
@@ -628,7 +627,7 @@ STR;
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                 INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                 INNER JOIN File ON (Albums.FileID = File.FileID) 
-                WHERE ((Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+                WHERE (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
                 GROUP BY Song.ProdID
                 ORDER BY FIELD(Song.ProdID,$ids) ASC
                 LIMIT 10
