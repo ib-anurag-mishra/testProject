@@ -67,9 +67,8 @@ class CacheController extends AppController {
                 $countryPrefix = strtolower($territory) . "_";
                 $this->Country->setTablePrefix($countryPrefix);
             }
-            
-            
-            /*
+                        
+           
             $this->log("Starting caching for $territory", 'debug');
         
             $this->Genre->Behaviors->attach('Containable');
@@ -774,7 +773,7 @@ STR;
             $this->log("cache written for US top ten Album for $territory", 'debug');
             //End Caching functionality for US TOP 10 Albums
             
-           */  
+         
             
           
            //Added caching functionality for us top 10 Video            
@@ -881,7 +880,7 @@ STR;
 
             
             
-          /*
+      
             //Added caching functionality for new release Albums           
             $country = $territory;
             if ( !empty($country ) && ( $territory == "US" ) ) {
@@ -1396,7 +1395,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-          negesh */  
+           
                  
         }
       
@@ -1454,7 +1453,7 @@ STR;
         
         
         
-       /* nagesh
+      
         
  
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
@@ -2003,7 +2002,7 @@ STR;
            
         }
         
-        */
+      
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
