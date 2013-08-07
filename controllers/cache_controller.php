@@ -305,7 +305,7 @@ STR;
             if (!empty($country)) {
                 if ($maintainLatestVideoDownload) {
 
-                 echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_videodownloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -315,7 +315,7 @@ STR;
               LIMIT 110";
                 } else {
 
-                 echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `videodownloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -463,12 +463,11 @@ STR;
             LIMIT 20      
 STR;
 
-//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
-            // echo $sql_coming_soon_s; die;
+
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
             
-             $this->log("coming soon songs $territory", "cachequery");
-             $this->log($sql_coming_soon_s, "cachequery");
+            $this->log("coming soon songs $territory", "cachequery");
+            $this->log($sql_coming_soon_s, "cachequery");
 
             if (!empty($coming_soon_rs)) {
                 foreach($coming_soon_rs as $key => $value)
@@ -478,6 +477,13 @@ STR;
                     $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
                 }                
                 Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
+                $this->log("cache written for coming soon songs for $territory", "cache");
+                echo "cache written for coming soon songs forfor $territory";         
+                
+            }else{
+                 Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
+                 $this->log("coming soon songs for " . $territory, "cache");
+                 echo "coming soon songs for " . $territory;
             }
             
             $this->log("cache written for coming soon for $territory", 'debug');
