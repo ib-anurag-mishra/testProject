@@ -38,8 +38,8 @@
                                                         <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Albums']['AlbumTitle'])>32)
-                                                                echo substr($value['Albums']['AlbumTitle'],0,32)."..."; 
-                                                                else echo $value['Albums']['AlbumTitle'];
+                                                                echo substr($this->getTextEncode($value['Albums']['AlbumTitle']),0,32)."..."; 
+                                                                else echo $this->getTextEncode($value['Albums']['AlbumTitle']);
                                                          ?>
                                                     </a>
 						</div>
@@ -47,8 +47,8 @@
                                                         <a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>32)
-                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
-                                                                                                                    else echo $value['Song']['Artist'];
+                                                                                                                    echo substr($this->getTextEncode($value['Song']['Artist']),0,32)."..."; 
+                                                                                                                    else echo $this->getTextEncode($this->getTextEncode($value['Song']['Artist']));
                                                                                                              ?>
                                                        </a>
 						</div>
@@ -172,8 +172,8 @@
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>32)
-                                                                echo substr($value['Song']['SongTitle'],0,32)."..."; 
-                                                                else echo $value['Song']['SongTitle'];
+                                                                echo substr($this->getTextEncode($value['Song']['SongTitle']),0,32)."..."; 
+                                                                else echo $this->getTextEncode($value['Song']['SongTitle']);
                                                          ?>
                                                     </a>
 						</div>
@@ -181,8 +181,8 @@
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>32)
-                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
-                                                                                                                    else echo $value['Song']['Artist'];
+                                                                                                                    echo substr($this->getTextEncode($value['Song']['Artist']),0,32)."..."; 
+                                                                                                                    else echo $this->getTextEncode($value['Song']['Artist']);
                                                                                                              ?>
                                                        </a>
 						</div>
@@ -301,8 +301,8 @@
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Video']['VideoTitle'])>32)
-                                                                echo substr($value['Video']['VideoTitle'],0,32)."..."; 
-                                                                else echo $value['Video']['VideoTitle'];
+                                                                echo substr($this->getTextEncode($value['Video']['VideoTitle']),0,32)."..."; 
+                                                                else echo $this->getTextEncode($value['Video']['VideoTitle']);
                                                          ?>
                                                     </a>
 						</div>
@@ -310,8 +310,8 @@
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Video']['Artist'])>32)
-                                                                                                                    echo substr($value['Video']['Artist'],0,32)."..."; 
-                                                                                                                    else echo $value['Video']['Artist'];
+                                                                                                                    echo substr($this->getTextEncode($value['Video']['Artist']),0,32)."..."; 
+                                                                                                                    else echo $this->getTextEncode($value['Video']['Artist']);
                                                                                                              ?>
                                                        </a>
 						</div>
