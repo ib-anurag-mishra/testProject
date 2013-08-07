@@ -782,10 +782,19 @@ class SearchController extends AppController {
                             }
                             //if(preg_match("/^".$queryVar."/i",$record)){
                             //$records[] = $record."|".$record;
+                            
                             if(isset($_GET['ufl']) && $_GET['ufl'] == 1){
-                                $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:300px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                                $widthLeft = "75px";
+                                $widthRight = "300px";
                             } else {
-                                $records[] = "<div style='float:left;width:65px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:180px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                                $widthLeft = "65px";
+                                $widthRight = "180px";
+                            }
+                            if(preg_match("/^$queryVar/", $record)){
+                                $str = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                                array_unshift($records, $str);
+                            } else {
+                                $records[] = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
                             }
                             $rank++;
                             //}
