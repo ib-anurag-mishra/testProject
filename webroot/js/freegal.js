@@ -1232,30 +1232,29 @@ function videoDownloadAll(prodId)
 {
     
                  hidVideoValue    =   $("#hid_VideoDownloadStatus").val();
-                 $('#form'+prodId).submit();
-                          
-//                 if (hidVideoValue==1) {
-//                                      
-//                        //var r=confirm('A video download requires 2 credits per download. Are you sure you want to continue?')
-//                        if (r==true)
-//                         {
-//                               $('.beforeClick').hide();
-//                               $('.afterClick').show();
-//                               document.getElementById('downloading_'+prodId).style.display = 'block';
-//                               document.getElementById('song_'+prodId).style.display = 'none';
-//                               document.getElementById('download_loader_'+prodId).style.display = 'block';
-//                               $('#form'+prodId).submit();
-//                               setTimeout("location.reload(true)", 7000);
-//                         }
-//                       else
-//                         {
-//                             return;
-//                         }
-//                 }
-//                 else
-//                     {
-//                        alert('Sorry, you do not have enough credits to download a video.'); 
-//                     }
+                         
+                 if (hidVideoValue==1) {
+                                      
+                        var r=confirm('A video download will use up 2 of your available downloads. Are you sure you want to continue?');
+                        if (r==true)
+                         {
+                               $('.beforeClick').hide();
+                               $('.afterClick').show();
+                               document.getElementById('downloading_'+prodId).style.display = 'block';
+                               document.getElementById('song_'+prodId).style.display = 'none';
+                               document.getElementById('download_loader_'+prodId).style.display = 'block';
+                               $('#form'+prodId).submit();
+                               setTimeout("location.reload(true)", 7000);
+                         }
+                       else
+                         {
+                             return;
+                         }
+                 }
+                 else
+                     {
+                        alert('Sorry, you do not have enough credits to download a video.'); 
+                     }
     
     
 } 

@@ -341,10 +341,12 @@ $ieVersion =  ieversion();
 </form>
 <section class="my-wishlist-page">
 		
-		<div class="breadcrumbs"><?php
+<div class="breadcrumbs">
+<?php
 	$html->addCrumb( __('My Wishlist', true), '/homes/my_wishlist');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
-?></div>
+?>
+</div>
 		<header class="clearfix">
 			<h2><?php echo __('My Wishlist', true); ?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?></div>
@@ -357,57 +359,57 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active" style="cursor:pointer;">Date</div>
+                    <div class="date-filter-button filter active" style="cursor:pointer;"><?php echo __('Date');?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled" style="cursor:pointer;">Date</div>
+                    <div class="date-filter-button filter active toggled" style="cursor:pointer;"><?php echo __('Date');?></div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter " style="cursor:pointer;">Date</div>
+                <div class="date-filter-button filter " style="cursor:pointer;"><?php echo __('Date');?></div>
             <?php
             }
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active" style="cursor:pointer;">Song</div>
+                    <div class="song-filter-button filter active" style="cursor:pointer;"><?php echo __('Song');?></div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled" style="cursor:pointer;">Song</div>
+                    <div class="song-filter-button filter active toggled" style="cursor:pointer;"><?php echo __('Song');?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter" style="cursor:pointer;">Song</div>
+			<div class="song-filter-button filter" style="cursor:pointer;"><?php echo __('Song');?></div>
             <?php
             }
             ?>
-			<div class="music-filter-button tab" style="cursor:pointer;">Music</div>
-			<div class="video-filter-button tab" style="cursor:pointer;">Video</div>
+			<div class="music-filter-button tab" style="cursor:pointer;"><?php echo __('Music');?></div>
+			<div class="video-filter-button tab" style="cursor:pointer;"><?php echo __('Video');?></div>
 		<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active" style="cursor:pointer;">Artist</div>
+                    <div class="artist-filter-button filter active" style="cursor:pointer;"><?php echo __('Artist');?></div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled" style="cursor:pointer;">Artist</div>
+                    <div class="artist-filter-button filter active toggled" style="cursor:pointer;"><?php echo __('Artist');?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter" style="cursor:pointer;">Artist</div>
+			<div class="artist-filter-button filter" style="cursor:pointer;"><?php echo __('Artist');?></div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active" style="cursor:pointer;">Album</div>
+                    <div class="album-filter-button filter active" style="cursor:pointer;"><?php echo __('Album');?></div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled" style="cursor:pointer;">Album</div>
+                    <div class="album-filter-button filter active toggled" style="cursor:pointer;"><?php echo __('Album');?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter" style="cursor:pointer;">Album</div>
+			<div class="album-filter-button filter" style="cursor:pointer;"><?php echo __('Album');?></div>
             <?php
             }
             ?>  
-			<div class="download-button filter" >Download</div>
+			<div class="download-button filter" ><?php echo __('Download');?></div>
 			
 		</nav>
 		<div class="my-wishlist-shadow-container">

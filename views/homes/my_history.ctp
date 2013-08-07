@@ -24,7 +24,16 @@ $ieVersion =  ieversion();
 </form>
 <section class="recent-downloads-page">
 		
-		<div class="breadcrumbs"><span>Home</span> > <span><?php echo __('Recent Downloads', true); ?></span></div>
+		
+                
+<div class="breadcrumbs">
+<?php
+	$html->addCrumb( __('Recent Downloads', true), '/homes/my_history');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
+</div>          
+                
+                
 		<header class="clearfix">
 			<h2><?php echo __('Downloads', true); ?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
@@ -37,58 +46,58 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active">Date</div>
+                    <div class="date-filter-button filter active"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled">Date</div>
+                    <div class="date-filter-button filter active toggled"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter ">Date</div>
+                <div class="date-filter-button filter "><?php echo __('Date'); ?></div>
             <?php
             }
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active">Song</div>
+                    <div class="song-filter-button filter active"><?php echo __('Song'); ?></div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled">Song</div>
+                    <div class="song-filter-button filter active toggled"><?php echo __('Song'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter">Song</div>
+			<div class="song-filter-button filter"><?php echo __('Song'); ?></div>
             <?php
             }
             ?>    
                     
-			<div class="music-filter-button tab active">Music</div>
-			<div class="video-filter-button tab">Videos</div>
+			<div class="music-filter-button tab active"><?php echo __('Music'); ?></div>
+			<div class="video-filter-button tab"><?php echo __('Videos'); ?></div>
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active">Artists</div>
+                    <div class="artist-filter-button filter active"><?php echo __('Artists'); ?></div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled">Artists</div>
+                    <div class="artist-filter-button filter active toggled"><?php echo __('Artists'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter">Artists</div>
+			<div class="artist-filter-button filter"><?php echo __('Artists'); ?></div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active">Album</div>
+                    <div class="album-filter-button filter active"><?php echo __('Album'); ?></div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled">Album</div>
+                    <div class="album-filter-button filter active toggled"><?php echo __('Album'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter">Album</div>
+			<div class="album-filter-button filter"><?php echo __('Album'); ?></div>
             <?php
             }
             ?>  
-			<div class="download-button filter">Download</div>
+			<div class="download-button filter"><?php echo __('Download'); ?></div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">

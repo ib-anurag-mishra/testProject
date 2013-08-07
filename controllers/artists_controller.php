@@ -1363,12 +1363,15 @@ STR;
                     $copyrightString .= $album['Album']['Copyright'];
                 }
                 
-   
+                
                 
                 
                //created the album url 
                $albumURL = "artists/album_ajax_view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
-               			  
+               
+               $album['Album']['AlbumTitle'] = @iconv(mb_detect_encoding($album['Album']['AlbumTitle']), "WINDOWS-1252//IGNORE", $album['Album']['AlbumTitle']);
+               $album['Album']['AlbumTitle'] = @iconv(mb_detect_encoding($album['Album']['AlbumTitle']), "UTF-8//IGNORE", $album['Album']['AlbumTitle']);
+    
                $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
                                         <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
