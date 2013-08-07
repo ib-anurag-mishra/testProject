@@ -793,7 +793,7 @@ class SearchController extends AppController {
                             
                             $regex = "/^$queryVar/i";
                             
-                            if($name == "artist" && preg_match($regex,$record)){
+                            if(preg_match($regex,$record)){
                                 $str = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'>" . $record . "</div>|" . $record . "|" . $rank;
                                 array_unshift($records, $str);
                             } else {
