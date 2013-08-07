@@ -234,7 +234,11 @@ STR;
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
-            $featuredVideos = $this->Album->query($featured_videos_sql);
+            
+            $this->log("Queries caching functionality for featured videos $territory", "cachequery");
+            $this->log($featured_videos_sql, "cachequery");
+             
+             $featuredVideos = $this->Album->query($featured_videos_sql);
             if (!empty($featuredVideos)) {
                 
                 foreach($featuredVideos as $key => $featureVideo){
@@ -261,7 +265,7 @@ STR;
             
             // End Caching functionality for featured videos            
            
-  */ 
+ 
           
             // Added caching functionality for top video downloads
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
@@ -289,12 +293,13 @@ STR;
                 echo "Unable to update update top download  videos for " . $territory;
                 
             }
-            // End Caching functionality for top video downloads
-           print_r(Cache::read("top_download_videosCA"));
-            // Added caching functionality for national top 10 videos   
-        
+            // End Caching functionality for top video downloads         
             
-            /*
+              
+            // Added caching functionality for national top 100 videos   
+        
+           */ 
+    
             $country = $territory;
 
             if (!empty($country)) {
@@ -414,7 +419,7 @@ STR;
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
             
-            
+            /*
 
             // Added caching functionality for coming soon songs
             $sql_coming_soon_s = <<<STR
