@@ -1346,8 +1346,9 @@ STR;
                 $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
                                 
                 //get the album title
-                if(strlen($album['Album']['AlbumTitle']) >= 50){
-                      $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
+                $title_album_on_hover = $album['Album']['AlbumTitle'];
+                if(strlen($album['Album']['AlbumTitle']) >= 40){
+                      $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 40). '...';
                 }
      
                
@@ -1371,13 +1372,15 @@ STR;
                
                $album['Album']['AlbumTitle'] = @iconv(mb_detect_encoding($album['Album']['AlbumTitle']), "WINDOWS-1252//IGNORE", $album['Album']['AlbumTitle']);
                $album['Album']['AlbumTitle'] = @iconv(mb_detect_encoding($album['Album']['AlbumTitle']), "UTF-8//IGNORE", $album['Album']['AlbumTitle']);
+               $title_album_on_hover = @iconv(mb_detect_encoding($title_album_on_hover), "WINDOWS-1252//IGNORE", $title_album_on_hover);
+               $title_album_on_hover = @iconv(mb_detect_encoding($title_album_on_hover), "UTF-8//IGNORE", $title_album_on_hover);
     
                $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
                                         <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>
                                 <div class="album-title">
-                                        <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$album['Album']['AlbumTitle'].'</a>
+                                        <a href="javascript:void(0);" title="'.$title_album_on_hover.'" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$album['Album']['AlbumTitle'].'</a>
                                 </div>
                                 <div class="album-year">
                                         <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$copyrightString.'</a>
