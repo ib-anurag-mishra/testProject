@@ -68,33 +68,33 @@ class SolrComponent extends Object {
             switch($type){
               case 'song':
                 //$query = '(CSongTitle:('.strtolower($searchkeyword).') OR SongTitle:'.$searchkeyword.')';
-                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.')^400 OR Title:('.$searchkeyword.')^200 OR ArtistText:('.$searchkeyword.')^200 OR Composer:('.$searchkeyword.')^200))';
+                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
                 break;
               case 'genre':
-                $query = '(TGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Genre:('.$searchkeyword.')^200)';
+                $query = '(TGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Genre:('.$searchkeyword.'))';
                 break;
               case 'album':
-                $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:'.$searchkeyword.'^400 OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:'.$searchkeyword.'^200 OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:'.$searchkeyword.'^200)';
+                $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:'.$searchkeyword.' OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:'.$searchkeyword.' OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:'.$searchkeyword.')';
                 break;
               case 'artist':
-                //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.'^200 OR ArtistText:*'.$searchkeyword.'*)';
-                $query = '(TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200)';
+                //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.' OR ArtistText:*'.$searchkeyword.'*)';
+                $query = '(TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.'))';
                 break;
               case 'label':
-                $query = '(TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.')^200)';
+                $query = '(TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.'))';
                 break;
               case 'video':
-                $query = '(TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.')^200)';
+                $query = '(TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.'))';
                 break;
               case 'composer':
-                //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.'^200 OR Composer:*'.$searchkeyword.'*)';
-		$query = '(CComposer:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Composer:('.$searchkeyword.')^200)';
+                //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.' OR Composer:*'.$searchkeyword.'*)';
+		$query = '(CComposer:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Composer:('.$searchkeyword.'))';
 		break;
               case 'all':
-                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.'^400) OR Title:('.$searchkeyword.'^200) OR ArtistText:('.$searchkeyword.'^200) OR Composer:('.$searchkeyword.'^200)))';
+                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
                 break;
               default:
-                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.'^400) OR Title:('.$searchkeyword.'^200) OR ArtistText:('.$searchkeyword.'^200) OR Composer:('.$searchkeyword.'^200)))';
+                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
                 break;
             }
           } else {
@@ -482,37 +482,37 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = '(TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR SongTitle:'.$searchkeyword.'^200)';
+            $query = '(TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR SongTitle:'.$searchkeyword.')';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = '(TGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Genre:'.$searchkeyword.'^200)';
+            $query = '(TGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Genre:'.$searchkeyword.')';
             $field = 'Genre';
             break;
           case 'album':
-            $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.')^400 OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200 OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:('.$searchkeyword.')^200)';
+            $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.') OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.') OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:('.$searchkeyword.'))';
             //$field = 'Title';
             $field = 'rpjoin';
             break;
           case 'artist':
-            $query = '(TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200)';
+            $query = '(TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.'))';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = '(TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.')^200)';
+            $query = '(TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.'))';
             $field = 'Label';
             break;
           case 'video':
-            $query = '(TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.')^200)';
+            $query = '(TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.'))';
             $field = 'VideoTitle';
             break;
           case 'composer':
             //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
-            $query = '(TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:'.$searchkeyword.'^200)';
+            $query = '(TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:'.$searchkeyword.')';
             $field = 'Composer';
             break;
           default:
-            $query = '(CSongTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR SongTitle:'.$searchkeyword.'^200)';
+            $query = '(CSongTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR SongTitle:'.$searchkeyword.')';
             $field = 'SongTitle';
             break;
         }
@@ -538,9 +538,9 @@ class SolrComponent extends Object {
 			CArtistText: (*britney spears) OR
 			CArtistText: (*britney*)       OR
 			CArtistText: (*spears*)        OR
-			ArtistText:Britney\ spears^200
+			ArtistText:Britney\ spears
 		) AND Territory:US';  */
-	//$query = '(CArtistText:(*britney* *spears*) OR ArtistText:Britney\ spears^200) AND Territory:US';
+	//$query = '(CArtistText:(*britney* *spears*) OR ArtistText:Britney\ spears) AND Territory:US';
        // echo '<br /> Boxs : '.$query.'<br />';
 
         if($type != 'video'){
@@ -706,36 +706,36 @@ class SolrComponent extends Object {
         if($type != 'all'){
           switch($type){
             case 'song':
-              $query = '(CSongTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR SongTitle:('.$searchkeyword.'^200) )';
+              $query = '(CSongTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR SongTitle:('.$searchkeyword.') )';
               $field = 'SongTitle';
               break;
             case 'genre':
-              $query = '(CGenre:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Genre:('.$searchkeyword.'^200))';
+              $query = '(CGenre:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Genre:('.$searchkeyword.'))';
               $field = 'Genre';
               break;
             case 'album':
-              $query = '(CTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.'^200))';
+              $query = '(CTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.'))';
               $field = 'Title';
               break;
             case 'artist':
-              $query = '(CArtistText:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.'^200))';
+              $query = '(CArtistText:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.'))';
               $field = 'ArtistText';
               break;
             case 'label':
-              $query = '(CLabel:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.'^200))';
+              $query = '(CLabel:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.'))';
               $field = 'Label';
               break;
             case 'video':
-              $query = '(CVideoTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.'^200))';
+              $query = '(CVideoTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.'))';
               $field = 'VideoTitle';
               break;
             case 'composer':
               //$query = '(CComposer:('.strtolower($searchkeyword).'*) OR TComposer:('.$searchkeyword.'*) OR Composer:('.$searchkeyword.'*))';
-              $query = '(TComposer:('.strtolower($keyword).'*) OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:('.$searchkeyword.'^200))';
+              $query = '(TComposer:('.strtolower($keyword).'*) OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:('.$searchkeyword.'))';
               $field = 'Composer';
               break;
             default:
-              $query = '(TSongTitle:('.strtolower($keyword).'*) OR TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR SongTitle:('.$searchkeyword.'^200))';
+              $query = '(TSongTitle:('.strtolower($keyword).'*) OR TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR SongTitle:('.$searchkeyword.'))';
               $field = 'SongTitle';
               break;
           }
