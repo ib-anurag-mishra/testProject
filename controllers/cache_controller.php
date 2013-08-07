@@ -551,7 +551,7 @@ STR;
             $this->log("cache written for coming soon videos for $territory", 'debug');
             //End Caching functionality for coming soon songs
            
-              */
+             
 
             //Added caching functionality for us top 10 Songs           
             $country = $territory;
@@ -661,14 +661,14 @@ STR;
             }
             $this->log("cache written for US top ten for $territory", 'debug');
              //End Caching functionality for US TOP 10 Songs
-            
-          /*
+           */  
+        
             
              //Added caching functionality for us top 10 Album            
             $country = $territory;
             if ( !empty($country )) {
                 if($maintainLatestDownload){
-                            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                         echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_downloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -677,7 +677,7 @@ STR;
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
                     } else {
-                            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                         echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `downloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -705,7 +705,7 @@ STR;
                 }
                 $data = array();
 
-                $album_sql_US_TOP_10 =<<<STR
+              echo  $album_sql_US_TOP_10 =<<<STR
                 SELECT 
                         Song.ProdID,
                         Song.ReferenceID,
@@ -754,7 +754,7 @@ STR;
 
                 if (!empty($data)) {
                     foreach($data as $key => $value){
-
+                        
                          $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                          $album_img =  Configure::read('App.Music_Path').$album_img;
                          $data[$key]['album_img'] = $album_img;
@@ -774,7 +774,7 @@ STR;
             $this->log("cache written for US top ten Album for $territory", 'debug');
             //End Caching functionality for US TOP 10 Albums
             
-            
+              /*
           
            //Added caching functionality for us top 10 Video            
             $country = $territory;
