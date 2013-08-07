@@ -668,7 +668,7 @@ STR;
             $country = $territory;
             if ( !empty($country )) {
                 if($maintainLatestDownload){
-                         echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_downloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -677,7 +677,7 @@ STR;
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
                     } else {
-                         echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `downloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -705,7 +705,7 @@ STR;
                 }
                 $data = array();
 
-              echo  $album_sql_US_TOP_10 =<<<STR
+                $album_sql_US_TOP_10 =<<<STR
                 SELECT 
                         Song.ProdID,
                         Song.ReferenceID,
@@ -782,7 +782,7 @@ STR;
             if ( !empty($country )) {
                    if($maintainLatestVideoDownload){                    
 
-                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                      echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -792,7 +792,7 @@ STR;
                         LIMIT 110";
                    } else {
 
-                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                     echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
