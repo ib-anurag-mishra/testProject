@@ -265,7 +265,7 @@ class SearchController extends AppController {
                 $this->set('genres', $genres);
                 //print_r($genres);die;
                 $this->set('composers', $composers);
-                $this->set('labels', $labels);
+                //$this->set('labels', $labels);
                 $this->set('videos', $videos);
             }
             $this->set('libraryDownload', $libraryDownload);
