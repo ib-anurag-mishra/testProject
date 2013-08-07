@@ -1374,7 +1374,7 @@ STR;
                                         <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>
                                 <div class="album-title">
-                                        <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$this->getTextEncode($album['Album']['AlbumTitle']).'</a>
+                                        <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$album['Album']['AlbumTitle'].'</a>
                                 </div>
                                 <div class="album-year">
                                         <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$copyrightString.'</a>
