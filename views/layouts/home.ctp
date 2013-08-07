@@ -49,7 +49,7 @@
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
 					?>// alert("HI");
-						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, opacity:.5, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                                 
                                                 
 					<?php }	?>
