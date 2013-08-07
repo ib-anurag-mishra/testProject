@@ -437,7 +437,7 @@ if ($this->Session->read('Config.language') == 'en') {
                         <a class='termsApproval' href="#"></a>
                         <div style="display:none;">
                             <div id="termsApproval_div">
-                                <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:125px;bottom:0;left:305px;right:0;z-index:10000;">
                                     <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
                                 </div>
                                 <b>You need to accept the terms and conditions to browse the site.</b><br />
