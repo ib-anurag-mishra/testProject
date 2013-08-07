@@ -24,7 +24,7 @@ $ieVersion =  ieversion();
 </form>
 <section class="recent-downloads-page">
 		
-		<div class="breadcrumbs"><span>Home</span> > <span><?php echo __('Recent Downloads', true); ?></span></div>
+		
                 
 <div class="breadcrumbs">
 <?php
