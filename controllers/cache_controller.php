@@ -56,8 +56,15 @@ class CacheController extends AppController {
               
         
         for ($i = 0; $i < count($territoryNames); $i++) {
-            
+           
+           
             $territory = $territoryNames[$i];
+            
+             print_r(Cache::read("genre" . $territory));
+           
+           
+            /* 
+           
             if (0 == $multiple_countries) {
                 $countryPrefix = '';
                 $this->Country->setTablePrefix('');
@@ -103,9 +110,9 @@ class CacheController extends AppController {
                 echo "no data available for genre" . $territory;
             }
           
-  
+  */
       
-            
+            /*
             $country = $territory;
             
            
@@ -1320,7 +1327,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-             
+          negesh */  
                  
         }
       
@@ -1378,7 +1385,9 @@ STR;
         
         
         
+       /* nagesh
         
+ 
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
        
        foreach($musicVideoRecs as $musicVideoRec){
@@ -1925,7 +1934,7 @@ STR;
            
         }
         
-        
+        */
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
