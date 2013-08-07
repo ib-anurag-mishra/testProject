@@ -341,10 +341,12 @@ $ieVersion =  ieversion();
 </form>
 <section class="my-wishlist-page">
 		
-		<div class="breadcrumbs"><?php
+<div class="breadcrumbs">
+<?php
 	$html->addCrumb( __('My Wishlist', true), '/homes/my_wishlist');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
-?></div>
+?>
+</div>
 		<header class="clearfix">
 			<h2><?php echo __('My Wishlist', true); ?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?></div>

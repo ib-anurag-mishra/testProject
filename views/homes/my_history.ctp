@@ -25,6 +25,15 @@ $ieVersion =  ieversion();
 <section class="recent-downloads-page">
 		
 		<div class="breadcrumbs"><span>Home</span> > <span><?php echo __('Recent Downloads', true); ?></span></div>
+                
+<div class="breadcrumbs">
+<?php
+	$html->addCrumb( __('Recent Downloads', true), '/homes/my_history');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
+</div>          
+                
+                
 		<header class="clearfix">
 			<h2><?php echo __('Downloads', true); ?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
