@@ -446,7 +446,7 @@ $ieVersion =  ieversion();
 							echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
 					 	}
 					?></div>
-					<a class="add-to-wishlist-button" href="#"></a>
+					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResults[$i]['Song']['ArtistText']);?>/<?= $wishlistResults[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResults[$i]['Song']['provider_type']);?>">
                                          <?php
 						if (strlen($wishlistResults[$i]['wishlists']['album']) >= 15) {
