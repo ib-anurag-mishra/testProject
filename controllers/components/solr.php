@@ -84,7 +84,7 @@ class SolrComponent extends Object {
                 $query = '(TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.'))';
                 break;
               case 'video':
-                $query = '(TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.'))';
+                $query = '(TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.') OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.'))';
                 break;
               case 'composer':
                 //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.' OR Composer:*'.$searchkeyword.'*)';
@@ -303,7 +303,7 @@ class SolrComponent extends Object {
             $field = 'Label';
             break;
           case 'video':
-            $query = '(CVideoTitle:('.strtolower($searchkeyword).') OR VideoTitle:'.$searchkeyword.')';
+            $query = '(CVideoTitle:('.strtolower($searchkeyword).') OR VideoTitle:('.$searchkeyword.')  OR TArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:('.$searchkeyword.'))';
             $field = 'VideoTitle';
             break;
           case 'composer':
@@ -726,7 +726,7 @@ class SolrComponent extends Object {
               $field = 'Label';
               break;
             case 'video':
-              $query = '(CVideoTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.'))';
+              $query = '(CVideoTitle:('.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.') OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.'))';
               $field = 'VideoTitle';
               break;
             case 'composer':
