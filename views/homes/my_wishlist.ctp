@@ -350,12 +350,7 @@ $ieVersion =  ieversion();
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?></div>
 		</header>
 		<div class="instructions">
-			<p>
-				In the event that your library exceeds its download budget for the week, you will see "add to wishlist" in place of the "download now" command. Adding your music to the wishlist will place you in a "first come, first serve" line to get more music when it becomes available, which is at midnight Sunday Eastern Time (U.S.). At that point your music is on hold for you for 24 hours (so no need to set your alarm clock) for you to proactively download. You should visit the Wishlist area on the top part of the home page to see the music that you requested, and if it is available.
-			</p>
-			<p>
-				If you do not see the "download now" command in the Wish List area, it means so many people were waiting in line that you need to check back on a subsequent Monday.
-			</p>
+			<?php echo $page->getPageContent('wishlist'); ?>	
 		</div>
 		<nav class="my-wishlist-filter-container clearfix">
 					<?php 

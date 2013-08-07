@@ -30,10 +30,7 @@ $ieVersion =  ieversion();
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
 		</header>
 		<div class="instructions">
-			<p>
-				Once in awhile Internet Service Providers or your computer may time out, and you could experience an incomplete or problem download. Freegal Music™ provides you with the opportunity to download previously downloaded songs again, without using up a personal download, and at no cost to your Library. To download a song again, from this week or last week of your initial downloads, press the download now link below. You may do this up to 2 additional times. Once you have downloaded a song twice from the Recent Downloads page, the song titles disappear from your list because they are no longer available to you.
-			</p>
-			
+			<?php echo $page->getPageContent('history'); ?>			
 		</div>
 		<nav class="recent-downloads-filter-container clearfix">
 			<?php 
