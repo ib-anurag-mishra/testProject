@@ -305,7 +305,7 @@ STR;
             if (!empty($country)) {
                 if ($maintainLatestVideoDownload) {
 
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                 echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_videodownloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -315,7 +315,7 @@ STR;
               LIMIT 110";
                 } else {
 
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                 echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `videodownloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -325,6 +325,9 @@ STR;
               LIMIT 110";
                 }
 
+                $this->log("national top 100 videos first query videos $territory", "cachequery");
+                $this->log($sql, "cachequery");
+                
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql);
@@ -393,6 +396,9 @@ STR;
                 // echo $sql_national_100_v; die;
                 $data = $this->Album->query($sql_national_100_v);
                 $this->log($sql_national_100_v, "cachequery");
+                
+                
+                
                 if ($ids_provider_type == "") {
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
                     echo "ids_provider_type is set blank for " . $territory;
@@ -418,6 +424,9 @@ STR;
             }
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
+            
+            
+            
             
             /*
 
