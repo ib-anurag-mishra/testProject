@@ -37,7 +37,7 @@ class SearchController extends AppController {
     }
 
     function index($page = 1, $facetPage = 1) {
-
+        echo "Started at ".time();
         // reset page parameters when serach keyword changes
         if (('' == trim($_GET['q'])) || ('' == trim($_GET['type']))) {
             unset($_SESSION['SearchReq']);
@@ -146,7 +146,9 @@ class SearchController extends AppController {
             }
 
             $country = $this->Session->read('territory');
+            echo "Search for Songs Started at ".time();
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
+            echo "Search for Songs Ended at ".time();
             //print_r($songs); die;
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
@@ -176,7 +178,9 @@ class SearchController extends AppController {
                     case 'album':
                         $limit = 24;
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
+                        echo "Group Search for Albums Ended at ".time();
                         /* $queryArr = null;
                           $albumData = array();
                           $albumsCheck = array_keys($albums);
@@ -229,7 +233,9 @@ class SearchController extends AppController {
                 }
             } else {
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
+                echo "Group Search for Albums Started at ".time();
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
+                echo "Group Search for Albums Ended at ".time();
                 // print_r($albums); die;
                 $queryArr = null;
                 $albumData = array();
@@ -238,12 +244,19 @@ class SearchController extends AppController {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
-
+                echo "Group Search for Artists Started at ".time();
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
+                echo "Group Search for Artists Ended at ".time();
+                echo "Group Search for Genres Started at ".time();
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
+                echo "Group Search for Genres Ended at ".time();
+                echo "Group Search for Composers Started at ".time();
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
-                $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
+                echo "Group Search for Composers Ended at ".time();
+                // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
+                echo "Group Search for Video Started at ".time();
                 $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
+                echo "Group Search for Video ended at ".time();
                 // print_r($videos); die;
                 $this->set('albums', $albums);
                 //$this->set('albumData',$albumData);
@@ -706,9 +719,7 @@ class SearchController extends AppController {
             $typeVar = 'all';
         }
         if ($type != 'all') {
-            echo "Started".microtime();
             $data = $this->Solr->getAutoCompleteData($queryVar, $type, 10);
-            echo "Ended".microtime();
         }
         $records = array();
         switch ($typeVar) {
@@ -720,25 +731,12 @@ class SearchController extends AppController {
                 $arr_data = $arr_records = array();
 
                 // each indiviual filter call
-                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'album', 18, '1');
-                echo "Ended".microtime();
-                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'artist', 18, '1');
-                echo "Ended".microtime();
-                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'composer', 18, '1');
-                echo "Ended".microtime();
-                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'genre', 18, '1');
-                echo "Ended".microtime();
-                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1');
-                echo "Ended".microtime();
-                echo "Started".microtime();
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'song', 18, '1');
-                echo "Ended".microtime();
-                echo "Started".microtime();
 
                 // formates array
                 foreach ($arr_data as $key1 => $val1) {
