@@ -298,7 +298,7 @@ STR;
               
             // Added caching functionality for national top 100 videos   
         
-           */ 
+      
     
             $country = $territory;
 
@@ -426,9 +426,9 @@ STR;
             // End Caching functionality for national top 10 videos
             
             
+                 */ 
             
-            
-            /*
+   
 
             // Added caching functionality for coming soon songs
             $sql_coming_soon_s = <<<STR
@@ -466,6 +466,9 @@ STR;
 //AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
             // echo $sql_coming_soon_s; die;
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
+            
+             $this->log("coming soon songs $territory", "cachequery");
+             $this->log($sql_coming_soon_s, "cachequery");
 
             if (!empty($coming_soon_rs)) {
                 foreach($coming_soon_rs as $key => $value)
@@ -480,7 +483,7 @@ STR;
             $this->log("cache written for coming soon for $territory", 'debug');
             // End Caching functionality for coming soon songs
 
-            
+                     /*
             
             // Added caching functionality for coming soon videos
             $sql_coming_soon_v = <<<STR
