@@ -286,7 +286,7 @@ STR;
                 
             }
             // End Caching functionality for top video downloads
-           
+           print_r(Cache::read("top_download_videosCA"));
             // Added caching functionality for national top 10 videos   
         
             
