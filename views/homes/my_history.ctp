@@ -123,8 +123,8 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title">
                     <?php 
-						if (strlen($downloadResult['Download']['track_title']) >= 48) {
-							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 48) . '...</span>';							
+						if (strlen($downloadResult['Download']['track_title']) >= 22) {
+							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 22) . '...</span>';							
 						} else {
 							echo $downloadResult['Download']['track_title']; 
 					 	}
@@ -217,8 +217,8 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title">
                     <?php 
-						if (strlen($videoDownloadResult['Videodownload']['track_title']) >= 48) {
-							echo '<span title="'.htmlentities($$videoDownloadResult['Videodownload']['track_title']).'">' .substr($$videoDownloadResult['Download']['track_title'], 0, 48) . '...</span>';							
+						if (strlen($videoDownloadResult['Videodownload']['track_title']) >= 22) {
+							echo '<span title="'.htmlentities($$videoDownloadResult['Videodownload']['track_title']).'">' .substr($$videoDownloadResult['Download']['track_title'], 0, 22) . '...</span>';							
 						} else {
 							echo $videoDownloadResult['Videodownload']['track_title']; 
 					 	}
