@@ -1232,6 +1232,7 @@ function videoDownloadAll(prodId)
 {
     
                  hidVideoValue    =   $("#hid_VideoDownloadStatus").val();
+                 $('#form'+prodId).submit();
                           
 //                 if (hidVideoValue==1) {
 //                                      
