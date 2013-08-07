@@ -6,7 +6,7 @@
  */
 ?>
 <?php
-	$this->pageTitle = 'Login';
+	$this->pageTitle = 'ildlogin';
 	echo $session->flash();
 	echo $session->flash('auth');
 		echo '<div class="login-form-wrapper clearfix">';

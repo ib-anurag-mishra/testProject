@@ -5,7 +5,7 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList');
-    var $components = array('Queue');
+    //var $components = array('Queue');
     
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -39,6 +39,7 @@ class CacheController extends AppController {
     function cacheGenre() {
         set_time_limit(0);
         error_reporting(1); ini_set('display_errors', 1);
+       
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
@@ -50,8 +51,10 @@ class CacheController extends AppController {
         $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-        
+       
              
+              
+        
         for ($i = 0; $i < count($territoryNames); $i++) {
             
             $territory = $territoryNames[$i];
@@ -105,7 +108,7 @@ class CacheController extends AppController {
             
             $country = $territory;
             
-            
+           
                                 
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -822,6 +825,7 @@ SELECT
     Song.Sample_Duration,
     Song.FullLength_Duration,
     Song.provider_type,
+    Albums.AlbumTitle,
     Genre.Genre,
     Country.Territory,
     Country.SalesDate,
@@ -1316,7 +1320,7 @@ STR;
 
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
-                
+          
              
                  
         }
@@ -1370,6 +1374,10 @@ STR;
        
  */       
         //--------------------------------set each music video in the cache start-------------------------------------------------        
+        
+       
+        
+        
         
         
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
@@ -1917,6 +1925,8 @@ STR;
            //library top 10 cache set for videos end
            
         }
+        
+        
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 

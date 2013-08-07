@@ -293,7 +293,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 														<a class="add-to-playlist-button" href="#"></a>
 														
 														<div class="wishlist-popover">
-															
+															<!--
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
 															-->
