@@ -37,7 +37,7 @@ class SearchController extends AppController {
     }
 
     function index($page = 1, $facetPage = 1) {
-        echo "Started at ".time();
+        //echo "Started at ".time();
         // reset page parameters when serach keyword changes
         if (('' == trim($_GET['q'])) || ('' == trim($_GET['type']))) {
             unset($_SESSION['SearchReq']);
