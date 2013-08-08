@@ -65,7 +65,7 @@
                                                 $language = $language->getLanguage();
                                                 $i =1;
                                                 foreach($language as $k => $v){
-                                                        echo '<a href="javascript:void(0)" id='.$k.' onClick="changeLang('.$k.');">';?><?php echo $this->getTextEncode($v); ?><?php echo '</a> ';
+                                                        echo '<a style="color: #A1A7AE;padding-left:10px;padding-right:10px;" href="javascript:void(0)" id='.$k.' onClick="changeLang('.$k.');">';?><?php echo $this->getTextEncode($v); ?><?php echo '</a> ';
                                                         if($i > 0 && $i < count($language)){
                                                                 echo "| ";
                                                         }

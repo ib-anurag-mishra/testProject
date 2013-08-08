@@ -53,7 +53,7 @@ class CacheController extends AppController {
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
        
              
-              
+          /*    
         
         for ($i = 0; $i < count($territoryNames); $i++) {
            
@@ -1398,6 +1398,7 @@ STR;
            
                  
         }
+          */
       
 
 /*       
@@ -1452,7 +1453,7 @@ STR;
        
         
         
-        
+       /* 
       
         
  
@@ -1556,12 +1557,11 @@ STR;
         
        
         
-        
+        */
         
        
 
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
-
         $libraryDetails = $this->Library->find('all', array(
             'fields' => array('id', 'library_territory'),
             'conditions' => array('library_status' => 'active'),
@@ -2007,7 +2007,7 @@ STR;
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-        $this->requestAction('/Resetcache/genrateXML');
+       // $this->requestAction('/Resetcache/genrateXML');
         exit;
     }
 }
