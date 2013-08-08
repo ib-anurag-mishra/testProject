@@ -525,12 +525,12 @@ class SolrComponent extends Object {
           $start = (($page - 1) * $limit);
         }
         
-        $additionalParams = array(
+        /*$additionalParams = array(
           'group' => 'true',
           'group.field' => $field,
           'group.query' => $query,
           'group.sort' => 'provider_type desc',
-	    );
+	    );*/
 	
 	/*$query = '(
 			CArtistText: (britney spears)  OR 
