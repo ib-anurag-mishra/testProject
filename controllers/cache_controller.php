@@ -893,7 +893,7 @@ STR;
             if ( !empty($country ) && ( $territory == "US" ) ) {
                 
                 $data = array();
-               echo $sql_album_new_release = <<<STR
+                $sql_album_new_release = <<<STR
 SELECT 
     Song.ProdID,
     Song.ReferenceID,
