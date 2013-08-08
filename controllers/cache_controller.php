@@ -466,7 +466,7 @@ STR;
 
 
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
-            print_r($coming_soon_rs);
+            //print_r($coming_soon_rs);
             
             $this->log("coming soon songs $territory", "cachequery");
             $this->log($sql_coming_soon_s, "cachequery");
