@@ -428,7 +428,7 @@ STR;
             // End Caching functionality for national top 10 videos
             
             
-            */    
+           
               
 
             // Added caching functionality for coming soon songs
@@ -466,7 +466,7 @@ STR;
 
 
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
-            print_r($coming_soon_rs);
+            //print_r($coming_soon_rs);
             
             $this->log("coming soon songs $territory", "cachequery");
             $this->log($sql_coming_soon_s, "cachequery");
@@ -495,7 +495,7 @@ STR;
             // End Caching functionality for coming soon songs
 
           
-            /*
+           
          
             
             // Added caching functionality for coming soon videos
@@ -885,7 +885,7 @@ STR;
             $this->log("cache written for US top ten video for $territory", 'debug');
             //End Caching functionality for US TOP 10 Videos
 
-            
+          */  
             
       
             //Added caching functionality for new release Albums           
@@ -893,7 +893,7 @@ STR;
             if ( !empty($country ) && ( $territory == "US" ) ) {
                 
                 $data = array();
-                $sql_album_new_release = <<<STR
+               echo $sql_album_new_release = <<<STR
 SELECT 
     Song.ProdID,
     Song.ReferenceID,
@@ -927,6 +927,7 @@ group by Song.ReferenceID
 ORDER BY Country.SalesDate DESC
 LIMIT 100
 STR;
+die;
                  
                 $data = $this->Album->query($sql_album_new_release);
                 $this->log($sql_album_new_release, "cachequery");
@@ -953,7 +954,7 @@ STR;
             //End Caching functionality for new releases albums
             
             
-            
+          /*  
             
             //Added caching functionality for new release videos           
             $country = $territory;
