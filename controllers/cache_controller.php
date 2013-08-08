@@ -466,6 +466,7 @@ STR;
 
 
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
+            print_r($coming_soon_rs);
             
             $this->log("coming soon songs $territory", "cachequery");
             $this->log($sql_coming_soon_s, "cachequery");
@@ -490,7 +491,7 @@ STR;
             $this->log("cache written for coming soon for $territory", 'debug');
             // End Caching functionality for coming soon songs
 
-          print_r(Cache::read("coming_soon_songs" . $territory));
+          //print_r(Cache::read("coming_soon_songs" . $territory));
             /*
          
             
