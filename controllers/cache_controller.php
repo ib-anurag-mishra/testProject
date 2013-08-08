@@ -466,7 +466,7 @@ STR;
 
 
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
-            print_r($coming_soon_rs);
+           // print_r($coming_soon_rs);
             
             $this->log("coming soon songs $territory", "cachequery");
             $this->log($sql_coming_soon_s, "cachequery");
@@ -479,6 +479,7 @@ STR;
                     $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
                 }                
                 Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
+                echo 147;
                 $this->log("cache written for coming soon songs for $territory", "cache");
                 echo "cache written for coming soon songs forfor $territory";         
                 
