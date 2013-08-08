@@ -36,6 +36,7 @@ class AppController extends Controller
                     $this->Session->write("subdomain",$subdomains);
                     $this->Session->write("lId",$libraryIDArray['Library']['id']);                    
                     $this->Session->write("territory", $libraryIDArray['Library']['library_territory']);  
+                     $this->Session->write("library_auth_method_name",$libraryIDArray['Library']['library_authentication_method']);
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
@@ -65,13 +66,13 @@ class AppController extends Controller
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header('Cache-Control: post-check=0, pre-check=0', false);
 		header('Pragma: no-cache');
-	//	$this->checkOnlinePatron();
+                //$this->checkOnlinePatron();
                 
                 
                 $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
                 $announcment_rs = $this->Album->query($announcment_query);
-//                echo "<pre>";
-//                print_r($announcment_rs);
+                //echo "<pre>";
+                //print_r($announcment_rs);
                 $this -> set ( 'announcment_value' ,  $announcment_rs[0]['pages']['page_content']);
                 //$announcment_rs[0]['pages']['page_content'];
                 
