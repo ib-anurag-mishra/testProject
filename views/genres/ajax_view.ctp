@@ -35,7 +35,27 @@ var preValue= 1;
             } 
        }
         
-   });  
+   }); 
+
+//load the albums list via ajax 
+function showAllAlbumsList(albumListURL){
+
+       $('#album_details_container').html('');
+       $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader1"/></span>');
+
+        var data = "";
+        jQuery.ajax({
+            type: "post",  // Request method: post, get
+            url: webroot+albumListURL, // URL to request
+            data: data,  // post data
+            success: function(response) {              
+                $('.album-list-span').html(response);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) { 
+               // alert('No album available for this artist.');
+            }
+        });
+} 
 
 </script> 
 		<div class="alphabetical-shadow-container">
