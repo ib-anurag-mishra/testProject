@@ -50,7 +50,7 @@
 					</div>
 					<nav class="footer-nav">
 					<ul class="clearfix">
-		<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'));?></li>
+		<li><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'));?></li>
 		<li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index')); ?></li>
 		<li><?php echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' => 'us_top_10')); ?></li>
 		<li><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases')); ?></li>
