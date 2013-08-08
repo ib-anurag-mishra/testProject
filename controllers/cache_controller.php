@@ -477,11 +477,12 @@ STR;
                     $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                     $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                }                
+                }
+                Cache::delete("coming_soon_songs" . $territory);
                 Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
-                echo 147;
+                
                 $this->log("cache written for coming soon songs for $territory", "cache");
-                echo "cache written for coming soon songs forfor $territory";         
+                echo "cache written for coming soon songs for $territory";         
                 
             }else{
                  Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
@@ -492,7 +493,7 @@ STR;
             $this->log("cache written for coming soon for $territory", 'debug');
             // End Caching functionality for coming soon songs
 
-          //print_r(Cache::read("coming_soon_songs" . $territory));
+          print_r(Cache::read("coming_soon_songs" . $territory));
             /*
          
             
