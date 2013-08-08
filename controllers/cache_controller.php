@@ -927,6 +927,7 @@ group by Song.ReferenceID
 ORDER BY Country.SalesDate DESC
 LIMIT 100
 STR;
+die;
                  
                 $data = $this->Album->query($sql_album_new_release);
                 $this->log($sql_album_new_release, "cachequery");
