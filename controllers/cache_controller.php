@@ -59,6 +59,8 @@ class CacheController extends AppController {
            
            
             $territory = $territoryNames[$i];
+            
+            
            
             if (0 == $multiple_countries) {
                 $countryPrefix = '';
@@ -67,7 +69,8 @@ class CacheController extends AppController {
                 $countryPrefix = strtolower($territory) . "_";
                 $this->Country->setTablePrefix($countryPrefix);
             }
-                        
+           
+            /*
            
             $this->log("Starting caching for $territory", 'debug');
         
@@ -425,7 +428,7 @@ STR;
             // End Caching functionality for national top 10 videos
             
             
-                
+            */    
               
 
             // Added caching functionality for coming soon songs
@@ -487,8 +490,8 @@ STR;
             $this->log("cache written for coming soon for $territory", 'debug');
             // End Caching functionality for coming soon songs
 
-          
-            
+          print_r(Cache::read("coming_soon_songs" . $territory));
+            /*
          
             
             // Added caching functionality for coming soon videos
@@ -1395,7 +1398,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-           
+          nagesh */
                  
         }
       
@@ -1453,7 +1456,7 @@ STR;
         
         
         
-      
+      /* nagesh
         
  
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
@@ -2003,11 +2006,11 @@ STR;
         }
         
       
-
+*/
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-        $this->requestAction('/Resetcache/genrateXML');
+       // $this->requestAction('/Resetcache/genrateXML');
         exit;
     }
 }
