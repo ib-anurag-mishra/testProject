@@ -490,7 +490,7 @@ class SolrComponent extends Object {
             $field = 'Genre';
             break;
           case 'album':
-            $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.') OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.') OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:('.$searchkeyword.'))';
+            $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.'))';
             //$field = 'Title';
             $field = 'rpjoin';
             break;
