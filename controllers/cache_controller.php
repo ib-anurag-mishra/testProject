@@ -53,7 +53,7 @@ class CacheController extends AppController {
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
        
              
-          /*    
+              
         
         for ($i = 0; $i < count($territoryNames); $i++) {
            
@@ -1398,7 +1398,6 @@ STR;
            
                  
         }
-          */
       
 
 /*       
@@ -1453,7 +1452,7 @@ STR;
        
         
         
-       /* 
+        
       
         
  
@@ -1557,11 +1556,12 @@ STR;
         
        
         
-        */
+        
         
        
 
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
+
         $libraryDetails = $this->Library->find('all', array(
             'fields' => array('id', 'library_territory'),
             'conditions' => array('library_status' => 'active'),
@@ -1651,11 +1651,11 @@ STR;
                     $ioda_ids_str = implode(',', $ioda_ids);
                 }
                 if (!empty($sony_ids_str) && !empty($ioda_ids_str)) {
-                    $top_ten_condition = "((Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony') OR (Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda'))";
+                    $top_ten_condition_songs = "((Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony') OR (Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda'))";
                 } else if (!empty($sony_ids_str)) {
-                    $top_ten_condition = "(Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony')";
+                    $top_ten_condition_songs = "(Song.ProdID IN (" . $sony_ids_str . ") AND Song.provider_type='sony')";
                 } else if (!empty($ioda_ids_str)) {
-                    $top_ten_condition = "(Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda')";
+                    $top_ten_condition_songs = "(Song.ProdID IN (" . $ioda_ids_str . ") AND Song.provider_type='ioda')";
                 }
 
                 $this->Song->recursive = 2;
@@ -2007,7 +2007,7 @@ STR;
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-       // $this->requestAction('/Resetcache/genrateXML');
+        $this->requestAction('/Resetcache/genrateXML');
         exit;
     }
 }
