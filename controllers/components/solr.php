@@ -491,8 +491,8 @@ class SolrComponent extends Object {
             break;
           case 'album':
             $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.'))';
-            $field = 'Title';
-            //$field = 'rpjoin';
+            //$field = 'Title';
+            $field = 'rpjoin';
             break;
           case 'artist':
             $query = '(TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.'))';
