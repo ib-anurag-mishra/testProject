@@ -490,7 +490,7 @@ class SolrComponent extends Object {
             $field = 'Genre';
             break;
           case 'album':
-            $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.'))';
+            $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:('.$searchkeyword.') OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:('.$searchkeyword.') OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:('.$searchkeyword.'))';
             //$field = 'Title';
             $field = 'rpjoin';
             break;
@@ -525,12 +525,12 @@ class SolrComponent extends Object {
           $start = (($page - 1) * $limit);
         }
         
-        /*$additionalParams = array(
+        $additionalParams = array(
           'group' => 'true',
           'group.field' => $field,
           'group.query' => $query,
           'group.sort' => 'provider_type desc',
-	    );*/
+	    );
 	
 	/*$query = '(
 			CArtistText: (britney spears)  OR 

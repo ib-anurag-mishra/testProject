@@ -146,9 +146,9 @@ class SearchController extends AppController {
             }
 
             $country = $this->Session->read('territory');
-            echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
+            //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
-            echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
+            //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
             //print_r($songs); die;
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
@@ -234,9 +234,9 @@ class SearchController extends AppController {
             } else {
                 
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
-                echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
-                echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 // print_r($albums); die;
                 $queryArr = null;
                 $albumData = array();
@@ -246,19 +246,19 @@ class SearchController extends AppController {
                     $albumData[] = $queryArr[0];
                 }
                 
-                echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
-                echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
-                echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
-                echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
-                echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
+                //echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
-                echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
                 // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
-                echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
                 $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
-                echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
                 // print_r($videos); die;
                 $this->set('albums', $albums);
                 //$this->set('albumData',$albumData);
@@ -278,7 +278,7 @@ class SearchController extends AppController {
             $this->set('facetPage', $facetPage);
         }
         $this->set('keyword', htmlspecialchars($queryVar));
-        echo "<br>search end- ".date("Y-m-d H:i:s");
+        //echo "<br>search end- ".date("Y-m-d H:i:s");
     }
 
     function advanced_search($page = 1, $facetPage = 1) {
