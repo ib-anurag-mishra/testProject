@@ -117,16 +117,16 @@
                     ?>
                 </noscript>
                 <script type="text/javascript">
-                    $().ready(function() {
-                        var tmpcookie = new Date();
-                        chkcookie = (tmpcookie.getTime() + '');
-                        document.cookie = "chkcookie=" + chkcookie;
-                        if (document.cookie.indexOf(chkcookie,0) < 0) {
-<?php if (!isset($this->params['pass']['0'])) { ?>				
-                location.href = "<?php echo $this->webroot; ?>homes/aboutus/cookie_err";
-<?php } ?>
-        }
-    });
+//                    $().ready(function() {
+//                        var tmpcookie = new Date();
+//                        chkcookie = (tmpcookie.getTime() + '');
+//                        document.cookie = "chkcookie=" + chkcookie;
+//                        if (document.cookie.indexOf(chkcookie,0) < 0) {
+//<?php if (!isset($this->params['pass']['0'])) { ?>				
+//                location.href = "<?php echo $this->webroot; ?>homes/aboutus/cookie_err";
+//<?php } ?>
+//        }
+//    });
                 
                               
     function validateEmail(email) { 
