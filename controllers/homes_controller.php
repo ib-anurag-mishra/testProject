@@ -3900,7 +3900,7 @@ STR;
 						$other_condition = '';
 						if(!empty($city)){
 							if($other_condition != ''){
-								$other_condition = ' library_city like "%' . $city . '%"';
+								$other_condition = 'OR library_city like "%' . $city . '%"';
 							}
 							else{
 								$other_condition .= ' library_city like "%' . $city . '%"';
@@ -3932,7 +3932,7 @@ STR;
 								$other_condition .= 'library_territory = "' . $country . '"';
 							}
 						}
-
+                                                $other_condition .= "AND library_status = 'active' ";
 						if($zip == ''){
 							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
                                                     
