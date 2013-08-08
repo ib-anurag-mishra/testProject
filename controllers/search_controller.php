@@ -235,7 +235,7 @@ class SearchController extends AppController {
                 
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
                 //echo "Group Search for Albums Started at ".time();
-                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
+                /*$albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
                 //echo "Group Search for Albums Ended at ".time();
                 // print_r($albums); die;
                 $queryArr = null;
@@ -244,7 +244,7 @@ class SearchController extends AppController {
                 for ($i = 0; $i <= count($albumsCheck) - 1; $i++) {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
-                }
+                }*/
                 //echo "Group Search for Artists Started at ".time();
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
                 //echo "Group Search for Artists Ended at ".time();
