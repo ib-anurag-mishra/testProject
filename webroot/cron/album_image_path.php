@@ -15,7 +15,8 @@ set_time_limit(0);
 include 'functions.php';
 
 $memcache = new Memcache;
-$memcache->addServer('10.178.4.51', 11211);
+//$memcache->addServer('10.178.4.51', 11211);
+$memcache->connect('10.178.4.51', 11211) or die ("Could not connect to memcache server");
 
 
 $query = "SELECT  Album.ProdID, Album.FileID,  FileInfo.SourceURL, FileInfo.CdnPath 
@@ -31,13 +32,13 @@ while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC))
         $album_img =  shell_exec('perl files/tokengen ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
         $album_img =  "http://music.libraryideas.com/".$album_img;         
 
-        
+        echo "<br>album_img".$album_img; 
         echo "<BR>ProdID: album_image_path".$AlbumData['ProdID'].memcache_delete($memcache,"album_image_path" .$AlbumData['ProdID']);
         memcache_set("album_image_path" .$AlbumData['ProdID'],$album_img,false,86400);		
 
 }
 
-echo "Done with Updation";
+echo "<br><br>Done with Updation";
 
 
 
