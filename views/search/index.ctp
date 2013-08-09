@@ -593,8 +593,8 @@ if ($type != 'all') {
                         <ul>
     <?php
     foreach ($albumData as $palbum) {
-        print_r($albumData);
-        print_r($palbum); die;
+        //print_r($albumData);
+        //print_r($palbum); die;
         ?>
                                 <li>
         <?php
