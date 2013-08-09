@@ -1390,7 +1390,7 @@ STR;
 
                     }  
               }else{
-                   $htmlContain .= '<div style="color:#000000;font-weight:bold;padding-left:10px;">No Results Found</div>';
+                    $htmlContain .= '<div style="color:#000000;font-weight:bold;padding-left:10px;">No Results Found</div>';
               }
              $htmlContain .= '</div></div>';
              
