@@ -24,7 +24,7 @@ from Albums as Album LEFT JOIN File AS FileInfo on Album.FileID=FileInfo.FileID 
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
 
 
-while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) 
+while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC)) 
 { 
         //echo "<pre>"; print_r($line);    
 
