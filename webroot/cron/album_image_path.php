@@ -32,7 +32,7 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC))
         $album_img =  "http://music.libraryideas.com/".$album_img;         
 
         
-        echo "<BR>ProdID: ".$AlbumData['ProdID'].memcache_delete($memcache,"album_image_path" .$AlbumData['ProdID']);
+        echo "<BR>ProdID: album_image_path".$AlbumData['ProdID'].memcache_delete($memcache,"album_image_path" .$AlbumData['ProdID']);
         memcache_set("album_image_path" .$AlbumData['ProdID'],$album_img,false,86400);		
 
 }
