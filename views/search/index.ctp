@@ -653,13 +653,12 @@ if ($type != 'all') {
                     <div class="advanced-artists-scrollable">
             <?php
             if (!empty($artists)) {
-                print_r($artists); die;
-                foreach ($artists as $artist) {
-                    $tilte = urlencode($artist->ArtistText);
-                    $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
-                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))));
+                foreach ($artists as $artist=>$count) {
+                    $tilte = urlencode($artist);
+                    $artist_name_text = truncate_text($this->getTextEncode($artist), 30, $this);
+                    $link = $html->link(str_replace('"', '', truncate_text($artist, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist))));
                     ?>
-                                <div><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></div>
+                                <div><?php echo $link; ?><span>(<?php echo $count; ?>)</span></div>
         <?php }
     } else {
         ?>
