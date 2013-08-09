@@ -21,7 +21,7 @@ if ($keyword )
 	} else {
 		$core = '/solr/freegalmusicprod';
 	}
-	$solr = new Apache_Solr_Service('108.166.39.24', 8080, $core);
+	$solr = new Apache_Solr_Service('192.168.100.24', 8080, $core);
 
 	// if magic quotes is enabled then stripslashes will be needed
   
