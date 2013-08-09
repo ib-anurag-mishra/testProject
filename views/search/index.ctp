@@ -690,11 +690,11 @@ if ($type != 'all') {
                     <div class="advanced-composers-scrollable">
     <?php
     if (!empty($composers)) {
-        foreach ($composers as $composer) {
-            $tilte = urlencode($composer->Composer);
-            $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
+        foreach ($composers as $composer=>$count) {
+            $tilte = urlencode($composer);
+            $composer_name = truncate_text($this->getTextEncode($composer), 30, $this);
             ?>
-                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title='<?php echo $this->getTextEncode($composer->Composer) ?>'><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
+                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title='<?php echo $this->getTextEncode($composer) ?>'><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $count; ?>)</span></div>
         <?php }
     } else {
         ?>
@@ -740,12 +740,11 @@ if ($type != 'all') {
                     <div class="advanced-genres-scrollable">
             <?php
             if (!empty($genres)) {
-                foreach ($genres as $genre) {
-                    $genre_name = str_replace('"', '', $genre->Genre);
+                foreach ($genres as $genre=>$count) {
+                    $genre_name = str_replace('"', '', $genre);
                     $tilte = urlencode($genre_name);
                     $genre_name_text = truncate_text($this->getTextEncode($genre_name), 30, $this);
-                    $name = $genre->Genre;
-                    $count = $genre->numFound;
+                    $name = $genre;
                     ?>
                                 <div><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $genre_name_text; ?><span>(<?php echo $count; ?>)</span></a></div>
                                 <?php
@@ -768,19 +767,18 @@ if ($type != 'all') {
                     <div class="advanced-labels-shadow-container">
                         <div class="advanced-labels-scrollable">
             <?php
-            if (!empty($labels)) {
-                foreach ($labels as $label) {
-                    $tilte = urlencode($label->Label);
-                    $label_name_text = truncate_text($this->getTextEncode($label->Label), 30, $this);
-                    $name = $label->Label;
-                    $count = $label->numFound;
+            /*if (!empty($labels)) {
+                foreach ($labels as $label=>$count) {
+                    $tilte = urlencode($label);
+                    $label_name_text = truncate_text($this->getTextEncode($label), 30, $this);
+                    $name = $label;
                     ?>
                                     <div><a href="/search/index?q=<?php echo $tilte; ?>&type=label" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $label_name_text : ""); ?> <span>(<?php echo $count; ?>)</span></a></div>
                 <?php }
             } else {
                 ?>
                                      <div style='color:red'><?php __("No Labels Found"); ?></div>     
-            <?php } ?>
+            <?php }*/ ?>
                         </div>
                     </div>
                 </section> -->
@@ -789,17 +787,17 @@ if ($type != 'all') {
             <?php /*             * *******************Video Block Started****************************** */ ?>            
 <!--            <section class="advanced-labels">
                     <header class="clearfix">
-                        <h5><?php __("Videos"); ?></h5>
+                        <h5><?php //__("Videos"); ?></h5>
                         <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=video">See more videos</a></h6>
                     </header>
                     <div class="advanced-labels-shadow-container">
                         <div class="advanced-labels-scrollable">
             <?php
-            if (!empty($videos)) {
-                foreach ($videos as $video) {
-                    $tilte = urlencode($video->VideoTitle);
-                    $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
-                    $name = $this->getTextEncode($video->VideoTitle);
+            /*if (!empty($videos)) {
+                foreach ($videos as $video=>$count) {
+                    $tilte = urlencode($video);
+                    $video_name_text = truncate_text($this->getTextEncode($video), 30, $this);
+                    $name = $this->getTextEncode($video);
                     // $count = $video->numFound;
                     ?>
                                     <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
@@ -807,7 +805,7 @@ if ($type != 'all') {
             } else {
                 ?>
                                      <div style='color:red'><?php __("No Videos Found"); ?></div>     
-            <?php } ?>
+            <?php }*/ ?>
                         </div>
                     </div>
                 </section> 
