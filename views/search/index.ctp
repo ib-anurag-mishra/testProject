@@ -653,6 +653,7 @@ if ($type != 'all') {
                     <div class="advanced-artists-scrollable">
             <?php
             if (!empty($artists)) {
+                print_r($artists); die;
                 foreach ($artists as $artist) {
                     $tilte = urlencode($artist->ArtistText);
                     $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
