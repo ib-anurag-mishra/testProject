@@ -36,30 +36,31 @@ if($AlbumDataCount = mysql_fetch_array($result_count, MYSQL_ASSOC))
                 $query = "SELECT  Album.ProdID, Album.FileID,  FileInfo.SourceURL, FileInfo.CdnPath 
                 from Albums as Album LEFT JOIN File AS FileInfo on Album.FileID=FileInfo.FileID where FileInfo.SourceURL!='' LIMIT ".$temp.", 10000";
                 
-                echo "<br>Queyr: ".$query;
+                //echo "<br>Queyr: ".$query;
 
-//                $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-//
-//                while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC)) 
-//                { 
-//                        //echo "<pre>"; print_r($line);    
-//
-//                        $album_img =  shell_exec('perl ../files/tokengen_artwork ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
-//                        $album_img =  "http://music.libraryideas.com/".$album_img;         
-//
-//                        echo "<br>album_img".$album_img; 
-//                        echo "<BR>ProdID: album_image_path".$AlbumData['ProdID'].$memcache->delete("album_image_path" .$AlbumData['ProdID']);
-//                        echo "<br>SET: ".$memcache->set("album_image_path" .$AlbumData['ProdID'],$album_img,false,86400);		
-//
-//                }
-                
-                     echo "<br><br>Done with Updation";
+                $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+
+                while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC)) 
+                { 
+                        //echo "<pre>"; print_r($line);    
+
+                        $album_img =  shell_exec('perl ../files/tokengen_artwork ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
+                        $album_img =  "http://music.libraryideas.com/".$album_img;         
+
+                        echo "<br>album_img: ".$album_img; 
+                        echo "<BR>ProdID: album_image_path".$AlbumData['ProdID'].$memcache->delete("album_image_path" .$AlbumData['ProdID']);
+                        echo "<br>SET: ".$memcache->set("album_image_path" .$AlbumData['ProdID'],$album_img,false,86400);		
+
+                }     
         }
-    }
-    else
-    {
-                     echo "<br><br>No Records";
-    }
+        
+        echo "<br><br>Done with Updation";
+        
+  }
+else
+{
+                 echo "<br><br>No Records";
+}
 
    
 
