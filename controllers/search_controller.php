@@ -246,8 +246,6 @@ class SearchController extends AppController {
                     $albumData[] = $queryArr[0];
                 }
                 
-                print_r($albumData); die;
-                
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
                 //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
