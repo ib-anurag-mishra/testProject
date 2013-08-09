@@ -262,7 +262,7 @@ class SearchController extends AppController {
                 // print_r($videos); die;
                 $this->set('albums', $albums);
                 //$this->set('albumData',$albumData);
-                $this->set('albumData', $albums);
+                $this->set('albumData', $albumData);
                 $this->set('artists', $artists);
                 $this->set('genres', $genres);
                 //print_r($genres);die;
