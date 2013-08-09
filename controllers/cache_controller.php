@@ -788,7 +788,7 @@ STR;
             if ( !empty($country )) {
                    if($maintainLatestVideoDownload){                    
 
-                      echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -798,7 +798,7 @@ STR;
                         LIMIT 110";
                    } else {
 
-                     echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -2014,7 +2014,7 @@ STR;
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-       // $this->requestAction('/Resetcache/genrateXML');
+        $this->requestAction('/Resetcache/genrateXML');
         exit;
     }
 }
