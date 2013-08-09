@@ -241,11 +241,12 @@ class SearchController extends AppController {
                 $queryArr = null;
                 $albumData = array();
                 $albumsCheck = array_keys($albums);
-                print_r($albumsCheck); die;
                 for ($i = 0; $i <= count($albumsCheck) - 1; $i++) {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
+                
+                print_r($albumData); die;
                 
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
