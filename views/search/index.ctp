@@ -891,13 +891,13 @@ if ($type != 'all') {
                                     <a class="twitter" href="#"></a>
                                 </div> -->
                             </div>
-                            <div class="cover-art">
+                            <!--div class="cover-art">
                                 <?php
-                                $imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
-                                $image = Configure::read('App.Music_Path') . $imageUrl;
+                                //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
+                                //$image = Configure::read('App.Music_Path') . $imageUrl;
                                 ?>
-                                <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><img src="<?php echo $image; ?>" width="27" height="27" /></a> <?php /*alt="<?php echo $psong->SongTitle; ?>"*/ ?>
-                            </div>
+                                <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php //echo $psong->ReferenceID; ?>/<?php //echo base64_encode($psong->provider_type); ?>"><img src="<?php //echo $image; ?>" width="27" height="27" /></a> <?php /*alt="<?php echo $psong->SongTitle; ?>"*/ ?>
+                            </div-->
                             <div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 15, $this)); ?></a></a></div>
                             <div class="song">
                                 <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
@@ -1052,10 +1052,10 @@ if (isset($type)) {
 						-->
                         <div class="album"><a href="#"><?php echo truncate_text($this->getTextEncode($psong->Title),25,$this); ?></a></div>
 						<?php
-                            $imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
-                            $image = Configure::read('App.Music_Path') . $imageUrl;
+                            //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
+                            //$image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
-                        <div class="song"><a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php echo $image; ?>" alt="<?php echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" /></a><?php echo $this->getTextEncode($psong->VideoTitle); ?></div>
+                        <!--div class="song"><a href="/videos/details/<?php //echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" /></a><?php ///echo $this->getTextEncode($psong->VideoTitle); ?></div-->
 						<div class="download"><?php
                          if($this->Session->read("patron")){
                                     if ($sales_date <= date('Y-m-d')) {

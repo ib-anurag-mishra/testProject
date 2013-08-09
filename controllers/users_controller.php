@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe');
+		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','redirection','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -110,6 +110,61 @@ Class UsersController extends AppController
         }
 	}
         
+        function redirection($library = null)
+	{
+            if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('Library.id' => $library)));                      
+                        
+                                            
+                        if($library_data['Library']['library_status'] == 'inactive'){
+                           $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                           exit;                           
+                        }                        
+                        
+			$this->get_login_layout_name($library_data);                       
+                        
+                        
+			if(!empty($library_data))
+			{
+                            	if($this->Session->read('loginchk') == '' && $this->Session->read('patron')== '')
+				{
+                                    if($_SERVER['REQUEST_URI'] == '/users/redirection/'.$library){
+                                        if($library_data['Library']['library_authentication_method'] == 'referral_url')
+					{
+						$referral = explode(",",$library_data['Library']['library_domain_name']);
+						$this->redirect($referral[0]);
+					}
+                                        else if($library_data['Library']['library_authentication_method'] == 'ezproxy')
+                                        {
+                                            $this->redirect($library_data['Library']['library_ezproxy_referral']);
+                                        }
+					else
+					{
+						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
+						//$this->redirect(array('controller' => 'users', 'action' => $action));
+                                                $this->Session->write("layout_option", 'login');
+                                                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
+					}
+                                    } else {
+                                        $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
+                                    }
+				}
+				else
+				{
+                                    $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
+				}
+			}
+			else
+			{
+				$this->Session->write('lib_status', 'invalid');
+				$this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/aboutus');
+			}
+		} else {
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/chooser');
+                }
+	}
+	
      /*
     Function Name : libinactive
     Desc : actions for set message whenever a inative app call

@@ -1000,7 +1000,7 @@ $(function() {
 
 	$('.site-nav .most-popular a').on('mouseenter',function(e){
 		e.preventDefault(); 
-                console.log('entered');
+              /*  console.log('entered'); */
 		$('.most-popular-sub-nav').addClass('active');
 		
 	});
@@ -2399,7 +2399,11 @@ $(function() {
 	
 	});*/
 	
-
+        var most_popular_position = $('li.most-popular').position();
+	var most_popular_width = $('li.most-popular').outerWidth();
+	
+	$('.most-popular-sub-nav').css('left',most_popular_position.left);
+	$('.most-popular-sub-nav').css('width',most_popular_width);
 	
 	 
 });

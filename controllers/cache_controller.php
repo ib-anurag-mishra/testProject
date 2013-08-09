@@ -59,6 +59,8 @@ class CacheController extends AppController {
            
            
             $territory = $territoryNames[$i];
+            
+            
            
             if (0 == $multiple_countries) {
                 $countryPrefix = '';
@@ -67,7 +69,8 @@ class CacheController extends AppController {
                 $countryPrefix = strtolower($territory) . "_";
                 $this->Country->setTablePrefix($countryPrefix);
             }
-                        
+           
+          
            
             $this->log("Starting caching for $territory", 'debug');
         
@@ -425,7 +428,7 @@ STR;
             // End Caching functionality for national top 10 videos
             
             
-                
+           
               
 
             // Added caching functionality for coming soon songs
@@ -463,20 +466,24 @@ STR;
 
 
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
+            //print_r($coming_soon_rs);
             
             $this->log("coming soon songs $territory", "cachequery");
             $this->log($sql_coming_soon_s, "cachequery");
-
+            
+          
             if (!empty($coming_soon_rs)) {
                 foreach($coming_soon_rs as $key => $value)
                 {     
                     $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                     $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                }                
+                }
+                Cache::delete("coming_soon_songs" . $territory);
                 Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
+                
                 $this->log("cache written for coming soon songs for $territory", "cache");
-                echo "cache written for coming soon songs forfor $territory";         
+                echo "cache written for coming soon songs for $territory";         
                 
             }else{
                  Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
@@ -488,7 +495,7 @@ STR;
             // End Caching functionality for coming soon songs
 
           
-            
+           
          
             
             // Added caching functionality for coming soon videos
@@ -878,7 +885,7 @@ STR;
             $this->log("cache written for US top ten video for $territory", 'debug');
             //End Caching functionality for US TOP 10 Videos
 
-            
+     
             
       
             //Added caching functionality for new release Albums           
@@ -920,6 +927,7 @@ group by Song.ReferenceID
 ORDER BY Country.SalesDate DESC
 LIMIT 100
 STR;
+
                  
                 $data = $this->Album->query($sql_album_new_release);
                 $this->log($sql_album_new_release, "cachequery");
@@ -946,7 +954,7 @@ STR;
             //End Caching functionality for new releases albums
             
             
-            
+        
             
             //Added caching functionality for new release videos           
             $country = $territory;
@@ -1395,7 +1403,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-           
+         
                  
         }
       
@@ -1453,7 +1461,7 @@ STR;
         
         
         
-      
+  
         
  
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
@@ -2002,12 +2010,11 @@ STR;
            
         }
         
-      
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-        $this->requestAction('/Resetcache/genrateXML');
+       // $this->requestAction('/Resetcache/genrateXML');
         exit;
     }
 }

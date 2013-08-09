@@ -349,7 +349,7 @@
 							<?php } ?>
 						</div>
 						<div class="album-title">
-							<a href="<?php echo $value['Video']['ProdID']; ?>">
+							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Video']['VideoTitle'])>32)
                                                                 echo substr($value['Video']['VideoTitle'],0,32)."..."; 

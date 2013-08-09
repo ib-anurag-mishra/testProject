@@ -37,7 +37,7 @@ class SearchController extends AppController {
     }
 
     function index($page = 1, $facetPage = 1) {
-        //echo "Started at ".time();
+        //echo "<br>Started at ".date("Y-m-d H:i:s");
         // reset page parameters when serach keyword changes
         if (('' == trim($_GET['q'])) || ('' == trim($_GET['type']))) {
             unset($_SESSION['SearchReq']);
@@ -146,9 +146,9 @@ class SearchController extends AppController {
             }
 
             $country = $this->Session->read('territory');
-            // echo "Search for Songs Started at ".time();
+            //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
-            // echo "Search for Songs Ended at ".time();
+            //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
             //print_r($songs); die;
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
@@ -232,11 +232,11 @@ class SearchController extends AppController {
                     $this->set('totalFacetPages', 0);
                 }
             } else {
-                /*
+                
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
-                //echo "Group Search for Albums Started at ".time();
+                //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
-                //echo "Group Search for Albums Ended at ".time();
+                //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 // print_r($albums); die;
                 $queryArr = null;
                 $albumData = array();
@@ -245,19 +245,20 @@ class SearchController extends AppController {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
-                //echo "Group Search for Artists Started at ".time();
+                
+                //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
-                //echo "Group Search for Artists Ended at ".time();
-                //echo "Group Search for Genres Started at ".time();
+                //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
-                //echo "Group Search for Genres Ended at ".time();
-                //echo "Group Search for Composers Started at ".time();
+                //echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
+                //echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
-                //echo "Group Search for Composers Ended at ".time();
+                //echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
                 // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
-                //echo "Group Search for Video Started at ".time();
+                //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
                 $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
-                //echo "Group Search for Video ended at ".time();
+                //echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
                 // print_r($videos); die;
                 $this->set('albums', $albums);
                 //$this->set('albumData',$albumData);
@@ -267,7 +268,7 @@ class SearchController extends AppController {
                 //print_r($genres);die;
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
-                $this->set('videos', $videos);*/
+                $this->set('videos', $videos);
             }
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
@@ -277,6 +278,7 @@ class SearchController extends AppController {
             $this->set('facetPage', $facetPage);
         }
         $this->set('keyword', htmlspecialchars($queryVar));
+        //echo "<br>search end- ".date("Y-m-d H:i:s");
     }
 
     function advanced_search($page = 1, $facetPage = 1) {
@@ -788,9 +790,9 @@ class SearchController extends AppController {
                             if($name == 'album'){
                                 $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $record);
                                 $albumdocs = $this->Solr->query('Title:'.$keyword,1);
-                                $imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
-                                $image = Configure::read('App.Music_Path') . preg_replace(array("/\r\n/","/\r/","/\n/"), array('','',''), $imageUrl);
-                                $imageData = "<img src='".$image."' height='40px' width='40px' />";
+                                //$imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
+                                //$image = Configure::read('App.Music_Path') . preg_replace(array("/\r\n/","/\r/","/\n/"), array('','',''), $imageUrl);
+                                //$imageData = "<img src='".$image."' height='40px' width='40px' />";
                             } else {
                                 $imageData = "";
                             }
@@ -839,9 +841,10 @@ class SearchController extends AppController {
                         $record = preg_replace("/\n/", '', $record);
                         $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $record);
                         $albumdocs = $this->Solr->query('Title:'.$keyword,1);
-                        $imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
-                        $image = Configure::read('App.Music_Path') . preg_replace(array("/\r\n/","/\r/","/\n/"), array('','',''), $imageUrl);
-                        $imageData = "<img src='".$image."' height='40px' width='40px' />";
+                        //$imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
+                        //$image = Configure::read('App.Music_Path') . preg_replace(array("/\r\n/","/\r/","/\n/"), array('','',''), $imageUrl);
+                        //$imageData = "<img src='".$image."' height='40px' width='40px' />";
+                        $imageData = "";
                         if(isset($_GET['ufl']) && $_GET['ufl'] == 1){
                             $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:300px;text-align:left;'> " . $record . "</div>|" . $record;
                         } else {
