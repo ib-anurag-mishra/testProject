@@ -29,7 +29,7 @@ while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC))
 { 
         //echo "<pre>"; print_r($line);    
 
-        $album_img =  shell_exec('perl files/tokengen ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
+        $album_img =  shell_exec('perl ../files/tokengen ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
         $album_img =  "http://music.libraryideas.com/".$album_img;         
 
         echo "<br>album_img".$album_img; 
