@@ -19,8 +19,20 @@ $memcache = new Memcache;
 $memcache->connect('10.178.4.51', 11211) or die ("Could not connect to memcache server");
 
 
+$query_count = "SELECT  count(*) 
+from Albums as Album LEFT JOIN File AS FileInfo on Album.FileID=FileInfo.FileID where FileInfo.SourceURL!=''";
+
+$result_count = mysql_query($query_count) or die('Query failed: ' . mysql_error());
+
+
+if($AlbumDataCount = mysql_fetch_array($result_count, MYSQL_ASSOC))
+{
+    echo "<pre>"; print_r($AlbumDataCount);   die;
+}
+
+
 $query = "SELECT  Album.ProdID, Album.FileID,  FileInfo.SourceURL, FileInfo.CdnPath 
-from Albums as Album LEFT JOIN File AS FileInfo on Album.FileID=FileInfo.FileID where FileInfo.SourceURL!='' LIMIT 0,2";
+from Albums as Album LEFT JOIN File AS FileInfo on Album.FileID=FileInfo.FileID where FileInfo.SourceURL!=''";
 
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
 
@@ -29,7 +41,7 @@ while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC))
 { 
         //echo "<pre>"; print_r($line);    
 
-        $album_img =  shell_exec('perl ../files/tokengen ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
+        $album_img =  shell_exec('perl ../files/tokengen_artwork ' . $AlbumData['CdnPath']."/".$AlbumData['SourceURL']);
         $album_img =  "http://music.libraryideas.com/".$album_img;         
 
         echo "<br>album_img".$album_img; 
