@@ -2,7 +2,7 @@
     error_reporting(E_ALL);
 	set_time_limit(0);
 	include 'functions.php';
-        $memcache = new Memcache;
+        //$memcache = new Memcache;
 	//$memcache->addServer('10.176.4.199', 11211);
 	$url = "http://www.freegaldev.com/cache/cacheGenre";
 	print $url;
