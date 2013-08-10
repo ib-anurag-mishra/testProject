@@ -42,16 +42,16 @@ class SolrComponent extends Object {
         self::$solr = new Apache_Solr_Service($settings['server'], $settings['port'], $settings['solrpath']);
         var_dump($solr);
         if (!self::$solr->ping()) {
-            echo "Not Connected";
-            die;
+            //echo "Not Connected";
+            //die;
             throw new SolrException();
         }
 
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
 
         if (!self::$solr2->ping()) {
-            echo "Not Connected";
-            die;
+            //echo "Not Connected";
+            //die;
             throw new SolrException();
         }
     }
