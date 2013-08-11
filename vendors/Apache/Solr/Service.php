@@ -772,11 +772,24 @@ class Apache_Solr_Service
 
   private function curl_file_get_contents($request)
   {
+      static $i;
+      $i++;
+    echo "Start request $i :".date('Y-m-d h:i:s');
+    echo "<br/>";
+    echo $request;
+    echo "<br/>";
     $curl_req = curl_init($request);
     curl_setopt($curl_req, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($curl_req, CURLOPT_HEADER, FALSE);
     $contents = curl_exec($curl_req);
     curl_close($curl_req);
+    echo "End request $i :".date('Y-m-d h:i:s');
+    echo "<br/>";
+    echo $contents;
+    echo "<br/>";
+    echo "End $i";
+    echo "<br/>";
+    
     return $contents;
   }///end of functn curl File get contents
 }
