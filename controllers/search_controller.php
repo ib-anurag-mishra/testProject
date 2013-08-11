@@ -235,7 +235,7 @@ class SearchController extends AppController {
                 
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
-                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
+                /*$albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 // print_r($albums); die;
                 $queryArr = null;
@@ -268,7 +268,7 @@ class SearchController extends AppController {
                 //print_r($genres);die;
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
-                $this->set('videos', $videos);
+                $this->set('videos', $videos);*/
             }
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
