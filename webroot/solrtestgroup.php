@@ -61,7 +61,7 @@ if ($keyword )
             $query = '(LComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.')';
             $field = 'Composer';
             break;
-		case 'all':
+        case 'all':
 			$query = '((LSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
 			break;
         default:
@@ -73,13 +73,13 @@ if ($keyword )
             break;*/
 	}
   
-	$additionalParams = array(
+	/*$additionalParams = array(
 		'group' => 'true',
 		'group.field' => array(
 			$field
 		),
 		'group.query' => $query
-	);
+	);*/
 
 	// in production code you'll always want to use a try /catch for any
 	// possible exceptions emitted  by searching (i.e. connection
@@ -87,13 +87,13 @@ if ($keyword )
 	if($type!='all'){
 		try
 		{
-			echo "Query Started at : ".time();
+			echo "Query Started at : ".date("ymd-h:i:s");
 			if(!empty($additionalParams)){
 				$results = $solr->search($query, 0, $limit, $additionalParams);
 			} else {
 				$results = $solr->search($query, 0, $limit);
 			}
-			echo "Query Ended at : ".time();
+			echo "Query Ended at : ".date("ymd-h:i:s");
 		}
 		catch (Exception $e)
 		{
@@ -110,23 +110,23 @@ if ($keyword )
 		
 		foreach($queries as $query){
 		
-			$additionalParams = array(
+			/*$additionalParams = array(
 				'group' => 'true',
 				'group.field' => array(
 					$query['field']
 				),
 				'group.query' => $query['query']
-			);
+			);*/
 		
 			try
 			{
-				echo "Query Started at : ".time();
+				echo "Query Started at : ".date("ymd-h:i:s");
 				if(!empty($additionalParams)){
 					$results[] = $solr->search($query['query'], 0, $limit, $additionalParams);
 				} else {
 					$results[] = $solr->search($query['query'], 0, $limit);
 				}
-				echo "Query Ended at : ".time();
+				echo "Query Ended at : ".date("ymd-h:i:s");
 			}
 			catch (Exception $e)
 			{
