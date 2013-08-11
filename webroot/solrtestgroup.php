@@ -19,7 +19,7 @@ if ($keyword )
 	if($type == 'video'){
 		$core = '/solr/freegalmusicvideo';
 	} else {
-		$core = '/solr/freegalmusic';
+		$core = '/solr/freegalmusicprod';
 	}
 	$solr = new Apache_Solr_Service('192.168.100.24', 8080, $core);
 
