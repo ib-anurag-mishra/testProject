@@ -59,7 +59,7 @@ class SearchController extends AppController {
         $sortOrder = 'asc';
 
         if (isset($_GET['q'])) {
-            $queryVar = html_entity_decode($_GET['q']);
+            $queryVar = $_GET['q'];// html_entity_decode();
         }
         if (isset($_GET['type'])) {
             $type = $_GET['type'];
