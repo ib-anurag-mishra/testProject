@@ -73,33 +73,33 @@ class SolrComponent extends Object {
                 switch ($type) {
                     case 'song':
                         //$query = '(CSongTitle:('.strtolower($searchkeyword).') OR SongTitle:'.$searchkeyword.')';
-                        $query = '((LSongTitle:(' . $searchkeyword . ') OR LTitle:(' . $searchkeyword . ') OR LArtistText:(' . $searchkeyword . ') OR LComposer:(' . $searchkeyword . ')))';
+                        $query = '((CSongTitle:(' . $searchkeyword . ') OR CTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . ') OR CComposer:(' . $searchkeyword . ')))';
                         break;
                     case 'genre':
-                        $query = '(LGenre:(' . $searchkeyword . '))';
+                        $query = '(CGenre:(' . $searchkeyword . '))';
                         break;
                     case 'album':
-                        $query = '(LTitle:('.$searchkeyword.') OR LArtistText:('.$searchkeyword.') OR LComposer:('.$searchkeyword.'))';
+                        $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
                         break;
                     case 'artist':
                         //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.' OR ArtistText:'.$searchkeyword.')';
-                        $query = '(LArtistText:(' . $searchkeyword . '))';
+                        $query = '(CArtistText:(' . $searchkeyword . '))';
                         break;
                     case 'label':
-                        $query = '(LLabel:(' . $searchkeyword . '))';
+                        $query = '(CLabel:(' . $searchkeyword . '))';
                         break;
                     case 'video':
-                        $query = '(LVideoTitle:(' . $searchkeyword . ') OR LArtistText:(' . $searchkeyword . '))';
+                        $query = '(CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
                         break;
                     case 'composer':
                         //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.' OR Composer:'.$searchkeyword.')';
-                        $query = '(LComposer:(' . $searchkeyword . '))';
+                        $query = '(CComposer:(' . $searchkeyword . '))';
                         break;
                     case 'all':
-                        $query = '((LSongTitle:('.$searchkeyword.') OR LGenre:('.$searchkeyword.') OR LTitle:('.$searchkeyword.') OR LArtistText:('.$searchkeyword.') OR LLabel:('.$searchkeyword.') OR LComposer:('.$searchkeyword.')))';
+                        $query = '((CSongTitle:('.$searchkeyword.') OR CGenre:('.$searchkeyword.') OR CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CLabel:('.$searchkeyword.') OR CComposer:('.$searchkeyword.')))';
                         break;
                     default:
-                        $query = '((LSongTitle:('.$searchkeyword.') OR LGenre:('.$searchkeyword.') OR LTitle:('.$searchkeyword.') OR LArtistText:('.$searchkeyword.') OR LLabel:('.$searchkeyword.') OR LComposer:('.$searchkeyword.')))';
+                        $query = '((CSongTitle:('.$searchkeyword.') OR CGenre:('.$searchkeyword.') OR CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CLabel:('.$searchkeyword.') OR CComposer:('.$searchkeyword.')))';
                         break;
                 }
             } /*else {
@@ -292,35 +292,35 @@ class SolrComponent extends Object {
 
             switch ($type) {
                 case 'song':
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
                 case 'genre':
-                    $query = '(LGenre:(' . $searchkeyword . '))';
+                    $query = '(CGenre:(' . $searchkeyword . '))';
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = '(LTitle:('.$searchkeyword.') OR LArtistText:('.$searchkeyword.') OR LComposer:(' . $searchkeyword . '))';
+                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:(' . $searchkeyword . '))';
                     $field = 'Title';
                     break;
                 case 'artist':
-                    $query = '(LArtistText:(' . $searchkeyword . '))';
+                    $query = '(CArtistText:(' . $searchkeyword . '))';
                     $field = 'ArtistText';
                     break;
                 case 'label':
-                    $query = '(LLabel:(' . $searchkeyword . '))';
+                    $query = '(CLabel:(' . $searchkeyword . '))';
                     $field = 'Label';
                     break;
                 case 'video':
-                    $query = '(LVideoTitle:(' . $searchkeyword . ') OR LArtistText:(' . $searchkeyword . '))';
+                    $query = '(CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
                     $field = 'VideoTitle';
                     break;
                 case 'composer':
-                    $query = '(LComposer:(' . $searchkeyword . '))';
+                    $query = '(CComposer:(' . $searchkeyword . '))';
                     $field = 'Composer';
                     break;
                 default:
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
             }
@@ -389,35 +389,35 @@ class SolrComponent extends Object {
 
             switch ($type) {
                 case 'song':
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
                 case 'genre':
-                    $query = '(LGenre:(' . $searchkeyword . '))';
+                    $query = '(CGenre:(' . $searchkeyword . '))';
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = '(LTitle:('.$searchkeyword.') OR LArtistText:('.$searchkeyword.') LComposer:(' . $searchkeyword . '))';
+                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') CComposer:(' . $searchkeyword . '))';
                     $field = 'Title';
                     break;
                 case 'artist':
-                    $query = '(LArtistText:(' . $searchkeyword . '))';
+                    $query = '(CArtistText:(' . $searchkeyword . '))';
                     $field = 'ArtistText';
                     break;
                 case 'label':
-                    $query = '(LLabel:(' . $searchkeyword . '))';
+                    $query = '(CLabel:(' . $searchkeyword . '))';
                     $field = 'Label';
                     break;
                 case 'video':
-                    $query = '(LVideoTitle:(' . $searchkeyword . '))';
+                    $query = '(CVideoTitle:(' . $searchkeyword . '))';
                     $field = 'VideoTitle';
                     break;
                 case 'composer':
-                    $query = '(LComposer:(' . $searchkeyword . '))';
+                    $query = '(CComposer:(' . $searchkeyword . '))';
                     $field = 'Composer';
                     break;
                 default:
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
             }
@@ -487,37 +487,37 @@ class SolrComponent extends Object {
 
             switch ($type) {
                 case 'song':
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
                 case 'genre':
-                    $query = '(LGenre:(' . $searchkeyword . '))';
+                    $query = '(CGenre:(' . $searchkeyword . '))';
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = '(LTitle:('.$searchkeyword.') OR LArtistText:('.$searchkeyword.') OR LComposer:('.$searchkeyword.'))';
+                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
                     //$field = 'Title';
                     $field = 'rpjoin';
                     break;
                 case 'artist':
-                    $query = '(LArtistText:(' . $searchkeyword . '))';
+                    $query = '(CArtistText:(' . $searchkeyword . '))';
                     $field = 'ArtistText';
                     break;
                 case 'label':
-                    $query = '(LLabel:(' . $searchkeyword . '))';
+                    $query = '(CLabel:(' . $searchkeyword . '))';
                     $field = 'Label';
                     break;
                 case 'video':
-                    $query = '(LVideoTitle:(' . $searchkeyword . '))';
+                    $query = '(CVideoTitle:(' . $searchkeyword . '))';
                     $field = 'VideoTitle';
                     break;
                 case 'composer':
                     //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
-                    $query = '(LComposer:(' . $searchkeyword . '))';
+                    $query = '(CComposer:(' . $searchkeyword . '))';
                     $field = 'Composer';
                     break;
                 default:
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
             }
@@ -609,35 +609,35 @@ class SolrComponent extends Object {
 
             switch ($type) {
                 case 'song':
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
                 case 'genre':
-                    $query = '(LGenre:(' . $searchkeyword . '))';
+                    $query = '(CGenre:(' . $searchkeyword . '))';
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = '(LTitle:('.$searchkeyword.') OR LArtistText:('.strtolower($searchkeyword).') OR LComposer:(' . $searchkeyword . '))';
+                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.strtolower($searchkeyword).') OR CComposer:(' . $searchkeyword . '))';
                     $field = 'Title';
                     break;
                 case 'artist':
-                    $query = '(LArtistText:(' . $searchkeyword . '))';
+                    $query = '(CArtistText:(' . $searchkeyword . '))';
                     $field = 'ArtistText';
                     break;
                 case 'label':
-                    $query = '(LLabel:(' . $searchkeyword . '))';
+                    $query = '(CLabel:(' . $searchkeyword . '))';
                     $field = 'Label';
                     break;
                 case 'video':
-                    $query = '(LVideoTitle:(' . $searchkeyword . '))';
+                    $query = '(CVideoTitle:(' . $searchkeyword . '))';
                     $field = 'VideoTitle';
                     break;
                 case 'composer':
-                    $query = '(LComposer:(' . $searchkeyword . '))';
+                    $query = '(CComposer:(' . $searchkeyword . '))';
                     $field = 'Composer';
                     break;
                 default:
-                    $query = '(LSongTitle:(' . $searchkeyword . '))';
+                    $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
                     break;
             }
@@ -707,36 +707,36 @@ class SolrComponent extends Object {
             if ($type != 'all') {
                 switch ($type) {
                     case 'song':
-                        $query = '(LSongTitle:(' . $searchkeyword . ') OR LSongTitle:(' . $searchkeyword . '))';
+                        $query = '(CSongTitle:(' . $searchkeyword . ') OR CSongTitle:(' . $searchkeyword . '))';
                         $field = 'SongTitle';
                         break;
                     case 'genre':
-                        $query = '(LGenre:(' . $searchkeyword . ') OR LGenre:(' . $searchkeyword . '))';
+                        $query = '(CGenre:(' . $searchkeyword . ') OR CGenre:(' . $searchkeyword . '))';
                         $field = 'Genre';
                         break;
                     case 'album':
-                        $query = '(LTitle:(' . $searchkeyword . ') OR LTitle:(' . $searchkeyword . '))';
+                        $query = '(CTitle:(' . $searchkeyword . ') OR CTitle:(' . $searchkeyword . '))';
                         $field = 'Title';
                         break;
                     case 'artist':
-                        $query = '(LArtistText:(' . $searchkeyword . ') OR LArtistText:(' . $searchkeyword . '))';
+                        $query = '(CArtistText:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
                         $field = 'ArtistText';
                         break;
                     case 'label':
-                        $query = '(LLabel:(' . $searchkeyword . ') OR LLabel:(' . $searchkeyword . '))';
+                        $query = '(CLabel:(' . $searchkeyword . ') OR CLabel:(' . $searchkeyword . '))';
                         $field = 'Label';
                         break;
                     case 'video':
-                        $query = '(LVideoTitle:('.$searchkeyword.') OR LVideoTitle:('.$searchkeyword.') OR LArtistText:('.$searchkeyword.'))';
+                        $query = '(CVideoTitle:('.$searchkeyword.') OR CVideoTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.'))';
                         $field = 'VideoTitle';
                         break;
                     case 'composer':
                         //$query = '(CComposer:('.strtolower($searchkeyword).') OR TComposer:('.$searchkeyword.') OR Composer:('.$searchkeyword.'))';
-                        $query = '(LComposer:(' . $searchkeyword . ') OR LComposer:(' . $searchkeyword . '))';
+                        $query = '(CComposer:(' . $searchkeyword . ') OR CComposer:(' . $searchkeyword . '))';
                         $field = 'Composer';
                         break;
                     default:
-                        $query = '(LSongTitle:(' . $searchkeyword . ') OR LSongTitle:(' . $searchkeyword . '))';
+                        $query = '(CSongTitle:(' . $searchkeyword . ') OR CSongTitle:(' . $searchkeyword . '))';
                         $field = 'SongTitle';
                         break;
                 }
