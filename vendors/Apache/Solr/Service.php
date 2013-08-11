@@ -789,6 +789,7 @@ class Apache_Solr_Service
     echo "<br/>";
     echo "End $i";
     echo "<br/>";
+    echo "<hr/>";
     
     return $contents;
   }///end of functn curl File get contents
