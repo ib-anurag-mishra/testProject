@@ -245,7 +245,7 @@ class SearchController extends AppController {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
-                /*
+                
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
                 //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
@@ -268,7 +268,7 @@ class SearchController extends AppController {
                 //print_r($genres);die;
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
-                $this->set('videos', $videos);*/
+                $this->set('videos', $videos);
             }
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
