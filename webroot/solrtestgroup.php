@@ -34,38 +34,38 @@ if ($keyword )
 	
 	switch($type){
         case 'song':
-            $query = '(TSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:'.$searchkeyword.')';
+            $query = '(SongTitle:(*'.strtolower($searchkeyword).'*))';
             $field = 'SongTitle';
             break;
         case 'genre':
-            $query = '(TGenre:(*'.strtolower($searchkeyword).'*) OR Genre:'.$searchkeyword.')';
+            $query = '(LGenre:(*'.strtolower($searchkeyword).'*) OR Genre:'.$searchkeyword.')';
             $field = 'Genre';
             break;
         case 'album':
-            $query = '(TTitle:(*'.strtolower($searchkeyword).'*) OR Title:'.$searchkeyword.' OR TArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:'.$searchkeyword.' OR TComposer:(*'.strtolower($searchkeyword).'*) OR Composer:'.$searchkeyword.')';
+            $query = '(LTitle:(*'.strtolower($searchkeyword).'*) OR Title:'.$searchkeyword.' OR LArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:'.$searchkeyword.' OR LComposer:(*'.strtolower($searchkeyword).'*) OR Composer:'.$searchkeyword.')';
             $field = 'Title';
             break;
         case 'artist':
-            $query = '(TArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:'.$searchkeyword.')';
+            $query = '(LArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:'.$searchkeyword.')';
             $field = 'ArtistText';
             break;
         case 'label':
-            $query = '(TLabel:(*'.strtolower($searchkeyword).') OR Label:'.$searchkeyword.')';
+            $query = '(LLabel:(*'.strtolower($searchkeyword).') OR Label:'.$searchkeyword.')';
             $field = 'Label';
             break;
         case 'video':
-            $query = '(TVideoTitle:(*'.strtolower($searchkeyword).'*) OR VideoTitle:('.$searchkeyword.')  OR TArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:('.$searchkeyword.'))';
+            $query = '(LVideoTitle:(*'.strtolower($searchkeyword).'*) OR VideoTitle:('.$searchkeyword.')  OR LArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:('.$searchkeyword.'))';
             $field = 'VideoTitle';
             break;
         case 'composer':
-            $query = '(TComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.')';
+            $query = '(LComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.')';
             $field = 'Composer';
             break;
-		case 'all':
-			$query = '((TSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
+        case 'all':
+			$query = '((LSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
 			break;
         default:
-            $query = '((TSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
+            $query = '((LSongTitle:(*'.strtolower($searchkeyword).'*) OR LGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR LComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.') OR Title:('.$searchkeyword.') OR ArtistText:('.$searchkeyword.') OR Composer:('.$searchkeyword.')))';
             break;
         /*default:
 			$query = '(TSongTitle:('.strtolower($searchkeyword).') OR SongTitle:'.$searchkeyword.')';
@@ -73,13 +73,13 @@ if ($keyword )
             break;*/
 	}
   
-	$additionalParams = array(
+	/*$additionalParams = array(
 		'group' => 'true',
 		'group.field' => array(
 			$field
 		),
 		'group.query' => $query
-	);
+	);*/
 
 	// in production code you'll always want to use a try /catch for any
 	// possible exceptions emitted  by searching (i.e. connection
@@ -87,13 +87,13 @@ if ($keyword )
 	if($type!='all'){
 		try
 		{
-			echo "Query Started at : ".time();
+			echo "Query Started at : ".date("ymd-h:i:s");
 			if(!empty($additionalParams)){
 				$results = $solr->search($query, 0, $limit, $additionalParams);
 			} else {
 				$results = $solr->search($query, 0, $limit);
 			}
-			echo "Query Ended at : ".time();
+			echo "Query Ended at : ".date("ymd-h:i:s");
 		}
 		catch (Exception $e)
 		{
@@ -110,23 +110,23 @@ if ($keyword )
 		
 		foreach($queries as $query){
 		
-			$additionalParams = array(
+			/*$additionalParams = array(
 				'group' => 'true',
 				'group.field' => array(
 					$query['field']
 				),
 				'group.query' => $query['query']
-			);
+			);*/
 		
 			try
 			{
-				echo "Query Started at : ".time();
+				echo "Query Started at : ".date("ymd-h:i:s");
 				if(!empty($additionalParams)){
 					$results[] = $solr->search($query['query'], 0, $limit, $additionalParams);
 				} else {
 					$results[] = $solr->search($query['query'], 0, $limit);
 				}
-				echo "Query Ended at : ".time();
+				echo "Query Ended at : ".date("ymd-h:i:s");
 			}
 			catch (Exception $e)
 			{
