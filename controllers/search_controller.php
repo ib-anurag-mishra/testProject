@@ -232,7 +232,7 @@ class SearchController extends AppController {
                     $this->set('totalFacetPages', 0);
                 }
             } else {
-                
+                /*
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
@@ -269,6 +269,8 @@ class SearchController extends AppController {
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
                 $this->set('videos', $videos);
+                 * 
+                 */
             }
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
