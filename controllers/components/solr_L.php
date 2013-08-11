@@ -1,6 +1,6 @@
 <?php
 
-class SolrComponent extends Object {
+class SolrLComponent extends Object {
 
     var $components = array('Session');
 
