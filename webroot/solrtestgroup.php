@@ -34,7 +34,7 @@ if ($keyword )
 	
 	switch($type){
         case 'song':
-            $query = '(LSongTitle:(*'.strtolower($searchkeyword).'*))';
+            $query = '(SongTitle:(*'.strtolower($searchkeyword).'*))';
             $field = 'SongTitle';
             break;
         case 'genre':
