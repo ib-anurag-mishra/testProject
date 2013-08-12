@@ -2409,7 +2409,7 @@ $(function() {
 });
 
 $('document').ready(function(){
-    /*$('#search-text').autocomplete("/search/autocomplete",
+    $('#search-text').autocomplete("/search/autocomplete",
     {
         minChars: 1,
         cacheLength: 10,
@@ -2432,5 +2432,5 @@ $('document').ready(function(){
         } else if(item[2]==3){
             $('#header-search-type').val('song');
         }*/
-    //});
+    });
 });
