@@ -1,5 +1,11 @@
 <section class="individual-videos-page">
-		<div class="breadcrumbs"><span>Home</span> > <span>Video</span></div>
+		<div class="breadcrumbs">                
+                 <?php
+                         
+                            $html->addCrumb(__('Video', true), 'javascript:void(0);');
+                            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+                  ?>
+                </div>
 		<div class="hero-container clearfix">
 			<div class="hero-image-container">
                                 <?php
