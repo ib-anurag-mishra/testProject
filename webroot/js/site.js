@@ -975,6 +975,7 @@ $(function() {
 	
 	faq_container.on('click',function(e){
 		e.preventDefault();
+		/* modified 080913
 		if($(this).siblings('p').hasClass('active')) {
 		
 			$(this).siblings('p').slideUp(500).removeClass('active');
@@ -991,6 +992,11 @@ $(function() {
 			}
 			
 		}
+		*/
+		
+		/* added 080913 */
+		$('p').slideUp(500).removeClass('active');
+		$(this).siblings('p').slideDown(500).addClass('active');
 		
 	});
 	
