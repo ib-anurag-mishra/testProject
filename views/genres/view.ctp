@@ -54,7 +54,7 @@
 
     
 </style>
-<script language="javascript">
+<script language="javascript" type="text/javascript">
     
  $(document).on('click','.artist-list a',function(){    
     var artist = $(this).data('artist');
@@ -149,7 +149,7 @@ function showAlbumDetails(albumDetailURL){
             type: "post",  // Request method: post, get
             url: webroot+albumDetailURL, // URL to request
             data: data,  // post data
-            success: function(response) {              
+            success: function(response) {
                 $('#album_details_container').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { 
@@ -363,7 +363,7 @@ $totalRows = count($genresAll);
                 
 		<section class="album-detail-container clearfix" id='album_details_container'>
 	
-			
+		
 		</section>
 		
 	</section>
