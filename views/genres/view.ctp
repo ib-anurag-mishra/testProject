@@ -143,14 +143,14 @@ function showAllAlbumsList(albumListURL){
 function showAlbumDetails(albumDetailURL){
    
         $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
-alert(webroot+albumDetailURL);
+
         var data = "";
-        $.ajax({
+        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: webroot+albumDetailURL, // URL to request
             data: data,  // post data
             success: function(response) {              
-                $('#album_details_container').html(response);
+                $('#album_details_container').html('hello world');
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { 
                // alert('Album detail not available.');
