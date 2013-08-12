@@ -115,7 +115,7 @@ class CacheController extends AppController {
           
             $country = $territory;
             
-           
+           /*
                                 
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -545,8 +545,8 @@ STR;
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
-                 Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
-                 $this->log("cache written for coming soon videos for $territory", "cache");
+                Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
+                $this->log("cache written for coming soon videos for $territory", "cache");
                 echo "cache written for coming soon videos for $territory";  
             }else{
                 Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));                   
@@ -1219,7 +1219,7 @@ STR;
             }
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
-        
+        */     
      
         
             
@@ -1404,7 +1404,7 @@ STR;
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
          
-                 
+            
         }
       
 
@@ -1461,7 +1461,7 @@ STR;
         
         
         
-  
+  /*nagesh
         
  
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
@@ -2010,7 +2010,7 @@ STR;
            
         }
         
-
+*/
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
