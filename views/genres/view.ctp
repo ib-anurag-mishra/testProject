@@ -150,7 +150,6 @@ function showAlbumDetails(albumDetailURL){
             url: webroot+albumDetailURL, // URL to request
             data: data,  // post data
             success: function(response) {
-                alert(response);
                 $('#album_details_container').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { 
@@ -362,9 +361,9 @@ $totalRows = count($genresAll);
                 
                
                 
-		<div class="album-detail-container clearfix" id='album_details_container'>
+		<section class="album-detail-container clearfix" id='album_details_container'>
 	
-			ab
-		</div>
+		
+		</section>
 		
 	</section>
