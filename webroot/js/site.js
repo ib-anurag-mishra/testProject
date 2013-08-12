@@ -999,6 +999,7 @@ $(function() {
 	
 
 	$('.site-nav .most-popular a').on('mouseenter',function(e){
+            alert(1);
 		e.preventDefault(); 
               /*  console.log('entered'); */
 		$('.most-popular-sub-nav').addClass('active');
@@ -1011,6 +1012,7 @@ $(function() {
 	
 	
 	$('.site-nav .regular').on('mouseenter',function(e){
+            alert(2);
              $('.most-popular-sub-nav').removeClass('active');
 	});
 	
