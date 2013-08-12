@@ -1134,6 +1134,18 @@ if (isset($type)) {
 				?>
 				</div>
 			</div>
+            
+            <div class="paging">
+<?php
+if (isset($type)) {
+    $keyword = "?q=" . $keyword . "&type=" . $type;
+}
+?>
+                <?php
+                $keyword = $keyword . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 7, $keyword);
+                ?>
+        </div>
 		</section>
 
 		
