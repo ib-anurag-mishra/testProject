@@ -43,7 +43,7 @@ if($AlbumDataCount = mysql_fetch_array($result_count, MYSQL_ASSOC))
                 while ($AlbumData = mysql_fetch_array($result, MYSQL_ASSOC)) 
                 { 
                         //echo "<pre>"; print_r($line);                      
-                        echo "<br>SR.NO.: ".$i.", ProdID: ".$AlbumData['ProdID'].", Path: ".$memcache->get("album_image_path" .$AlbumData['ProdID']);		
+                        echo "<br>SR.NO.: ".$i.", ProdID: ".$AlbumData['ProdID'].", Path: ".memcache_get("album_image_path".$AlbumData['ProdID']);		
                 }     
         }
         
