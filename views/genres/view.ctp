@@ -143,9 +143,9 @@ function showAllAlbumsList(albumListURL){
 function showAlbumDetails(albumDetailURL){
    
         $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
-alert("hello");
+alert(webroot+albumDetailURL);
         var data = "";
-        jQuery.ajax({
+        $.ajax({
             type: "post",  // Request method: post, get
             url: webroot+albumDetailURL, // URL to request
             data: data,  // post data
