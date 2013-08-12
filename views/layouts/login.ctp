@@ -49,14 +49,17 @@
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
            
             <!-- <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" /> -->
-           
-                       
 
 
             <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
-            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
+            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>   
+            
+            <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
 
                <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';

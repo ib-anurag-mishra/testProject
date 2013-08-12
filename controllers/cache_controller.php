@@ -115,7 +115,7 @@ class CacheController extends AppController {
           
             $country = $territory;
             
-           
+          
                                 
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -206,6 +206,7 @@ class CacheController extends AppController {
    
 STR;
                 $data = $this->Album->query($sql_national_100);
+                $this->log("National top 100 songs for " . $territory, "cachequery");
                 $this->log($sql_national_100, "cachequery");
                 if ($ids_provider_type == "") {
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
@@ -235,9 +236,9 @@ STR;
  
           
             // Added caching functionality for featured videos
-            $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
+            $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID  and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             
-            $this->log("Queries caching functionality for featured videos $territory", "cachequery");
+            $this->log("featured videos $territory", "cachequery");
             $this->log($featured_videos_sql, "cachequery");
              
              $featuredVideos = $this->Album->query($featured_videos_sql);
@@ -270,9 +271,9 @@ STR;
  
           
             // Added caching functionality for top video downloads
-            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
            
-            $this->log('Queries for top video downloads', "cachequery");
+            $this->log("Top video downloads $territory", "cachequery");
             $this->log($topDownloadSQL, "cachequery");
             
             $topDownloads = $this->Album->query($topDownloadSQL);
@@ -327,7 +328,7 @@ STR;
               LIMIT 110";
                 }
 
-                $this->log("national top 100 videos first query videos $territory", "cachequery");
+                $this->log("national top 100 videos first query for $territory", "cachequery");
                 $this->log($sql, "cachequery");
                 
                 $ids = '';
@@ -397,6 +398,7 @@ STR;
 
                 // echo $sql_national_100_v; die;
                 $data = $this->Album->query($sql_national_100_v);
+                $this->log("national top 100 videos second query for $territory", "cachequery");
                 $this->log($sql_national_100_v, "cachequery");
                 
                 
@@ -545,8 +547,8 @@ STR;
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
-                 Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
-                 $this->log("cache written for coming soon videos for $territory", "cache");
+                Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
+                $this->log("cache written for coming soon videos for $territory", "cache");
                 echo "cache written for coming soon videos for $territory";  
             }else{
                 Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));                   
@@ -639,7 +641,7 @@ STR;
                 LIMIT 10
 STR;
                 $data = $this->Album->query($sql_US_TOP_10);
-                
+                $this->log("US top 10 songs for $territory", "cachequery");
                
                 $this->log($sql_US_TOP_10, "cachequery");
                 if ($ids_provider_type == "") {
@@ -751,6 +753,7 @@ STR;
                 LIMIT 10  
 STR;
                 $data = $this->Album->query($album_sql_US_TOP_10);
+                $this->log("US top 10 album for $territory", "cachequery");
              
                 $this->log($album_sql_US_TOP_10, "cachequery");
                 if ($ids_provider_type == "") {
@@ -859,6 +862,7 @@ STR;
                 LIMIT 10                   
 STR;
                 $data = $this->Album->query($video_sql_US_TOP_10);
+                $this->log("US top 10 videos for $territory", "cachequery");
                 $this->log($video_sql_US_TOP_10, "cachequery");
                 if ($ids_provider_type == "") {
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
@@ -930,6 +934,7 @@ STR;
 
                  
                 $data = $this->Album->query($sql_album_new_release);
+                $this->log("new release album for $territory", "cachequery");
                 $this->log($sql_album_new_release, "cachequery");
 
 
@@ -995,6 +1000,7 @@ LIMIT 100
 STR;
                  
                 $data = $this->Album->query($sql_video_new_release);
+                $this->log("new release album for $territory", "cachequery");
                 $this->log($sql_video_new_release, "cachequery");
 
                 if (!empty($data)) {
@@ -1203,6 +1209,7 @@ STR;
         ";
             }
                 $data = $this->Album->query($restoregenre_query);
+                $this->log("restoregenre_query for $territory", "cachequery");
                 $this->log($restoregenre_query, "cachequery");
                 if (!empty($data)) {
                     Cache::delete($genre . $territory);
@@ -1219,7 +1226,7 @@ STR;
             }
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
-        
+            
      
         
             
@@ -1404,7 +1411,7 @@ STR;
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
          
-                 
+            
         }
       
 
@@ -1454,15 +1461,10 @@ STR;
         }     
         //--------------------------------Default Freegal Queues End--------------------------------------------------------------
        
- */       
+    */  
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         
        
-        
-        
-        
-  
-        
  
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
        

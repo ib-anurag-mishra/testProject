@@ -21,7 +21,8 @@
 						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
 					}
 					?>
-					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?></div>                      
+					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?>
+                        </div>                      
                         
                         
                         
@@ -70,7 +71,7 @@
                                                             if (strlen($albumSong['Song']['SongTitle']) >= 30) {
                                                                     echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</span>';
                                                             } else {
-                                                                    echo '<p>' . $this->getTextEncode($albumSong['Song']['SongTitle']);
+                                                                    echo '<p>' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</p>';
                                                             }
                                                             if ($albumSong['Song']['Advisory'] == 'T') {
                                                                     echo '<span class="explicit"> (Explicit)</span>';
@@ -146,8 +147,6 @@
                                                                         <?php
                                                                         }
                                                                         ?>
-
-					</div>
 				</div>
 					
 			<?php
