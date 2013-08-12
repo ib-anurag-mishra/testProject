@@ -4096,8 +4096,7 @@ STR;
     }
 
 
-    $this->Download->recursive = -1;
-    $currentDownloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+    $currentDownloadCount =  $this->getTotalDownloadCound($libId, $patId);
 
     $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
 
