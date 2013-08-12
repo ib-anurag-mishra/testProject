@@ -1012,7 +1012,7 @@ $(function() {
 	
 	
 	$('.site-nav .regular').on('mouseenter',function(e){
-            alert(2);
+            alert(23);
              $('.most-popular-sub-nav').removeClass('active');
 	});
 	
