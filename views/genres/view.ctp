@@ -149,8 +149,9 @@ function showAlbumDetails(albumDetailURL){
             type: "post",  // Request method: post, get
             url: webroot+albumDetailURL, // URL to request
             data: data,  // post data
-            success: function(response) {              
-                $('#album_details_container').html('hello world');
+            success: function(response) {
+                alert(response);
+                $('#album_details_container').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { 
                // alert('Album detail not available.');
