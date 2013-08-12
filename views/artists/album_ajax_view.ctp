@@ -140,13 +140,15 @@
                                                                             echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
                                                                          ?>
                                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
-                                                                                
-									<?php }else{
+                                                                       </div> 
+                                                                       <?php }else{
                                                                          ?>
                                                                         <a class="genre-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                                                        
                                                                         <?php
                                                                         }
                                                                         ?>
+                                                                        
 				</div>
 					
 			<?php
