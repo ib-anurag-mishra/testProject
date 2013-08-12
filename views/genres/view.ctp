@@ -54,7 +54,7 @@
 
     
 </style>
-<script language="javascript">
+<script language="javascript" type="text/javascript">
     
  $(document).on('click','.artist-list a',function(){    
     var artist = $(this).data('artist');
