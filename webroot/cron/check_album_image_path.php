@@ -24,7 +24,10 @@ from Albums as Album LEFT JOIN File AS FileInfo on Album.FileID=FileInfo.FileID 
 
 $result_count = mysql_query($query_count) or die('Query failed: ' . mysql_error());
 
-
+ echo "<br>SR.NO.: ".$i.", ProdID: 886788366350, Path: ".memcache_get("album_image_path886788366350");	
+ echo "<br>SR.NO.: ".$i.", ProdID: 886788366350, Path: ".$memcache->get("album_image_path886788366350");	
+ 
+ die;
 if($AlbumDataCount = mysql_fetch_array($result_count, MYSQL_ASSOC))
 {
     $Total_records      = $AlbumDataCount['count(*)'];
