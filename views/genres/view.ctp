@@ -143,7 +143,7 @@ function showAllAlbumsList(albumListURL){
 function showAlbumDetails(albumDetailURL){
    
         $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
-
+alert("hello");
         var data = "";
         jQuery.ajax({
             type: "post",  // Request method: post, get
