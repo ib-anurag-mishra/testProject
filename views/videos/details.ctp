@@ -1,6 +1,5 @@
 <section class="individual-videos-page">
-		<div class="breadcrumbs">
-                <span>Home</span> > <span>Video</span>
+		<div class="breadcrumbs">                
                  <?php
                          
                             $html->addCrumb(__('Video', true), 'javascript:void(0);');
