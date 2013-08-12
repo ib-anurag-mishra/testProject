@@ -361,9 +361,9 @@ $totalRows = count($genresAll);
                 
                
                 
-		<section class="album-detail-container clearfix" id='album_details_container'>
+		<div class="album-detail-container clearfix" id='album_details_container'>
 	
-			
-		</section>
+			ab
+		</div>
 		
 	</section>
