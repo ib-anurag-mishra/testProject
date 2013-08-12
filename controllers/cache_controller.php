@@ -1372,7 +1372,7 @@ STR;
                         ),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => '60', 'cache' => 'no','check' => 2
+                        'limit' => '60', 'cache' => 'yes','check' => 2
                     );
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $allArtists = $this->paginate('Song');
