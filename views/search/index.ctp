@@ -850,7 +850,7 @@ if ($type != 'all') {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                            <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode(truncate_text($psong->ArtistText, 20, $this))))); ?></div>
+                            <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="composer"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></div>
 
@@ -1026,7 +1026,7 @@ if (isset($type)) {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo base64_encode(truncate_text($psong->ArtistText, 20, $this)); ?></a></div>
+                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this)); ?></a></div>
 						<a class="add-to-playlist-button" href="#"></a>
 						
 						<div class="wishlist-popover">	
