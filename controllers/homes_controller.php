@@ -3900,39 +3900,39 @@ STR;
 						$other_condition = '';
 						if(!empty($city)){
 							if($other_condition != ''){
-								$other_condition = 'OR library_city like "%' . $city . '%"';
+								$other_condition = 'OR library_city like "%' . $city . '%" AND';
 							}
 							else{
-								$other_condition .= ' library_city like "%' . $city . '%"';
+								$other_condition .= ' library_city like "%' . $city . '%" AND';
 							}
 						}
 						//Added code for state
 						if(!empty($state)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_state like "%' . $state . '%"';
+								$other_condition .= ' OR library_state like "%' . $state . '%" AND';
 							}
 							else{
-								$other_condition .= 'library_state like "%' . $state . '%"';
+								$other_condition .= 'library_state like "%' . $state . '%" AND';
 							}
 						}
 						//Added code for library name
 						if(!empty($library_name)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_name like "%' . $library_name . '%"';
+								$other_condition .= ' OR library_name like "%' . $library_name . '%" AND';
 							}
 							else{
-								$other_condition .= 'library_name like "%' . $library_name . '%"';
+								$other_condition .= 'library_name like "%' . $library_name . '%" AND';
 							}
 						}
 						if(!empty($country)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_territory = "' . $country . '"';
+								$other_condition .= ' OR library_territory = "' . $country . '" AND';
 							}
 							else{
-								$other_condition .= 'library_territory = "' . $country . '"';
+								$other_condition .= 'library_territory = "' . $country . '" AND';
 							}
 						}
-                                                $other_condition .= "AND library_status = 'active' ";
+                                                $other_condition .= "library_status = 'active' ";
 						if($zip == ''){
 							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
                                                     
@@ -3941,7 +3941,7 @@ STR;
 								$this->set('libraries',$result);
 							}
 							else{
-								$this->set('msg','Sorry, currently there are no libraries in your area that subscribe to 	Freading.');
+								$this->set('msg','Sorry, currently there are no libraries in your area that subscribe to Freading.');
 							}
                                                          
 						}
