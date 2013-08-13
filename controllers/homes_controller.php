@@ -3900,39 +3900,46 @@ STR;
 						$other_condition = '';
 						if(!empty($city)){
 							if($other_condition != ''){
-								$other_condition = 'OR library_city like "%' . $city . '%" AND';
+								$other_condition = 'OR library_city like "%' . $city . '%" ';
 							}
 							else{
-								$other_condition .= ' library_city like "%' . $city . '%" AND';
+								$other_condition .= ' library_city like "%' . $city . '%" ';
 							}
 						}
 						//Added code for state
 						if(!empty($state)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_state like "%' . $state . '%" AND';
+								$other_condition .= ' OR library_state like "%' . $state . '%" ';
 							}
 							else{
-								$other_condition .= 'library_state like "%' . $state . '%" AND';
+								$other_condition .= 'library_state like "%' . $state . '%" ';
 							}
 						}
 						//Added code for library name
 						if(!empty($library_name)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_name like "%' . $library_name . '%" AND';
+								$other_condition .= ' OR library_name like "%' . $library_name . '%" ';
 							}
 							else{
-								$other_condition .= 'library_name like "%' . $library_name . '%" AND';
+								$other_condition .= 'library_name like "%' . $library_name . '%" ';
 							}
 						}
 						if(!empty($country)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_territory = "' . $country . '" AND';
+								$other_condition .= ' OR library_territory = "' . $country . '" ';
 							}
 							else{
-								$other_condition .= 'library_territory = "' . $country . '" AND';
+								$other_condition .= 'library_territory = "' . $country . '" ';
 							}
 						}
-                                                $other_condition .= " library_status = 'active' ";
+                                                    if($other_condition != ''){
+							$other_condition .= " AND library_status = 'active' ";
+                                                    }
+                                                    else{
+                                                        $other_condition .= " library_status = 'active' ";
+                                                    }
+                                                
+                                                
 						if($zip == ''){
 							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
                                                     
