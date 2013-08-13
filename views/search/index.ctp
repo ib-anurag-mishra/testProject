@@ -1026,7 +1026,7 @@ if (isset($type)) {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $this->getTextEncode($psong->ArtistText); ?></a></div>
+                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this)); ?></a></div>
 						<a class="add-to-playlist-button" href="#"></a>
 						
 						<div class="wishlist-popover">	

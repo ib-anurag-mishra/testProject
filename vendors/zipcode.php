@@ -49,9 +49,9 @@ define('_ZIPS_SORT_BY_ZIP_DESC', 4);
 // constant for miles to kilometers conversion
 define('_M2KM_FACTOR', 1.609344);
 
-define('DB_HOST', '10.181.56.177');
-define('DB_USER', 'freegal_test');
-define('DB_PASSWORD', 'c45X^E1X7:TQ');
+define('DB_HOST', '192.168.100.115');
+define('DB_USER', 'freegal_prod');
+define('DB_PASSWORD', '}e47^B1EO9hD');
 define('DB', 'freegal');
 
   
