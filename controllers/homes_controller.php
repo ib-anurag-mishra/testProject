@@ -3932,7 +3932,7 @@ STR;
 								$other_condition .= 'library_territory = "' . $country . '" AND';
 							}
 						}
-                                                $other_condition .= " library_status = 'active' ";
+                                                $other_condition .= " library_statu = 'active' ";
 						if($zip == ''){
 							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
                                                     
@@ -3946,8 +3946,8 @@ STR;
                                                          
 						}
 						else{
-							$zipRows = $this->Zipcode->find('first',array('fields'=>'DISTINCT(ZipCode)','conditions'=>array('ZipCode' => $zip)));
-
+                                                    	$zipRows = $this->Zipcode->find('first',array('fields'=>'DISTINCT(ZipCode)','conditions'=>array('ZipCode' => $zip)));
+echo $this->Zipcode->lastQuery();
 							if(!empty($zipRows))
 							{
 								App::import('vendor', 'zipcode_class', array('file' => 'zipcode.php'));
@@ -3962,6 +3962,7 @@ STR;
 
 
 								$result = $this->Library->find('all',array('conditions' => array('OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)", $other_condition))));
+                                                                print_r($result);die;
 								if(!empty($result)){
 									$this->set('libraries',$result);
 								}
