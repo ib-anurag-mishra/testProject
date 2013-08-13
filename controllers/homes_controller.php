@@ -3932,7 +3932,7 @@ STR;
 								$other_condition .= 'library_territory = "' . $country . '" AND';
 							}
 						}
-                                                $other_condition .= "library_status = 'active' ";
+                                                $other_condition .= " library_status = 'active' ";
 						if($zip == ''){
 							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
                                                     
