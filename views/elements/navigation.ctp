@@ -379,10 +379,20 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
-                                            </ul>                                            
+                                            </ul>
+                                            <?php
+                                                    if(!empty(strip_tags($announcment_value)))
+                                                    {
+                                                        $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                    }
+                                                    else
+                                                    {
+                                                        $announcment_class  =   "";
+                                                    }
+                                            ?>
                                             <div class="announcements">
                                                     <h4><a href="#"><?php __('Announcements'); ?></a></h4>
-                                                    <div class="poll" >
+                                                    <div class="poll1" style="<?php echo $announcment_class; ?>">
                                                         <?php echo $announcment_value; ?>
                                                     </div>
                                             </div>
