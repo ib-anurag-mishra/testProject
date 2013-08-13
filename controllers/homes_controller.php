@@ -3900,48 +3900,49 @@ STR;
 						$other_condition = '';
 						if(!empty($city)){
 							if($other_condition != ''){
-								$other_condition = 'OR library_city like "%' . $city . '%"';
+								$other_condition = 'OR library_city like "%' . $city . '%" ';
 							}
 							else{
-								$other_condition .= ' library_city like "%' . $city . '%"';
+								$other_condition .= ' library_city like "%' . $city . '%" ';
 							}
 						}
 						//Added code for state
 						if(!empty($state)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_state like "%' . $state . '%"';
+								$other_condition .= ' OR library_state like "%' . $state . '%" ';
 							}
 							else{
-								$other_condition .= 'library_state like "%' . $state . '%"';
+								$other_condition .= 'library_state like "%' . $state . '%" ';
 							}
 						}
 						//Added code for library name
 						if(!empty($library_name)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_name like "%' . $library_name . '%"';
+								$other_condition .= ' OR library_name like "%' . $library_name . '%" ';
 							}
 							else{
-								$other_condition .= 'library_name like "%' . $library_name . '%"';
+								$other_condition .= 'library_name like "%' . $library_name . '%" ';
 							}
 						}
 						if(!empty($country)){
 							if($other_condition != ''){
-								$other_condition .= ' OR library_territory = "' . $country . '"';
+								$other_condition .= ' OR library_territory = "' . $country . '" ';
 							}
 							else{
-								$other_condition .= 'library_territory = "' . $country . '"';
+								$other_condition .= 'library_territory = "' . $country . '" ';
 							}
 						}
-                                                $other_condition .= "AND library_status = 'active' ";
+                                                
+                                                
 						if($zip == ''){
-							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
+							$result = $this->Library->find('all',array('conditions' => array('library_status'=>'active','OR'=>array($other_condition))));
                                                     
                                                         
                                                         if(!empty($result)){
 								$this->set('libraries',$result);
 							}
 							else{
-								$this->set('msg','Sorry, currently there are no libraries in your area that subscribe to 	Freading.');
+								$this->set('msg','Sorry, currently there are no libraries in your area that subscribe to Freading.');
 							}
                                                          
 						}
@@ -3959,9 +3960,13 @@ STR;
 								$condition = implode("',library_zipcode) OR find_in_set('",explode(',',$result));
 
 
-
-
-								$result = $this->Library->find('all',array('conditions' => array('OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)", $other_condition))));
+								$result = $this->Library->find('all',array(
+                  'conditions' => array(
+                    'library_status'=>'active',
+                    'OR'=>array(
+                      "substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)", $other_condition))));
+               
+                
 								if(!empty($result)){
 									$this->set('libraries',$result);
 								}
