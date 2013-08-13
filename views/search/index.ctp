@@ -849,8 +849,6 @@ if ($type != 'all') {
                         } else {
                             $style = 'style="left:10px"';
                         }
-                        
-                        echo "TEXT: ".base64_encode(truncate_text($psong->ArtistText, 20, $this))."<br>";
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode(truncate_text($psong->ArtistText, 20, $this))))); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
@@ -1028,7 +1026,7 @@ if (isset($type)) {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $this->getTextEncode($psong->ArtistText); ?></a></div>
+                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo base64_encode(truncate_text($psong->ArtistText, 20, $this)); ?></a></div>
 						<a class="add-to-playlist-button" href="#"></a>
 						
 						<div class="wishlist-popover">	
