@@ -3932,16 +3932,10 @@ STR;
 								$other_condition .= 'library_territory = "' . $country . '" ';
 							}
 						}
-                                                    if($other_condition != ''){
-							$other_condition .= " AND library_status = 'active' ";
-                                                    }
-                                                    else{
-                                                        $other_condition .= " library_status = 'active' ";
-                                                    }
                                                 
                                                 
 						if($zip == ''){
-							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
+							$result = $this->Library->find('all',array('conditions' => array('library_status'=>'active','OR'=>array($other_condition))));
                                                     
                                                         
                                                         if(!empty($result)){
@@ -3966,9 +3960,13 @@ STR;
 								$condition = implode("',library_zipcode) OR find_in_set('",explode(',',$result));
 
 
-
-
-								$result = $this->Library->find('all',array('conditions' => array('OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)", $other_condition))));
+								$result = $this->Library->find('all',array(
+                  'conditions' => array(
+                    'library_status'=>'active',
+                    'OR'=>array(
+                      "substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)", $other_condition))));
+               
+                
 								if(!empty($result)){
 									$this->set('libraries',$result);
 								}
