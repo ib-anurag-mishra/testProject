@@ -1026,7 +1026,7 @@ if (isset($type)) {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $this->getTextEncode($psong->ArtistText); ?></a></div>
+                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
 						<a class="add-to-playlist-button" href="#"></a>
 						
 						<div class="wishlist-popover">	
@@ -1056,9 +1056,8 @@ if (isset($type)) {
                             //$image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
                         <div class="song">
-                            <a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;">
-                                <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
-                            </a><?php echo $this->getTextEncode($psong->VideoTitle); ?>
+                            <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
+                            <a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
