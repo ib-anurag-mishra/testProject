@@ -39,7 +39,7 @@ var preValue= 1;
 
 </script> 
 		<div class="alphabetical-shadow-container">
-				<h3><?php __('Artist'); echo $selectedCallFlag; ?></h3>
+				<h3><?php __('Artist'); ?></h3>
 				<div class="alphabetical-filter">
                                     <ul>
                                     <li><a style="padding:0px 0px 0px 12px" href="javascript:void(0);" data-letter="All" <?php if($selectedAlpha =="All") {?>class="selected" <?php } ?>   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/All' ,'' , '')">ALL</a></li>                                            
