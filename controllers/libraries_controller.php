@@ -951,17 +951,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             else{
                 $this ->Session->write("block", 'no');
             }
-            
-            //this login redirect user to the same page after login
-            if ($this->Session->read('UrlReferer') != '') {
-                    $UrlReferer = $this->Session->read('UrlReferer');
-                    $this->Session->delete('UrlReferer');
-                    $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
-            } else {
-                    $this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            }
-            
-            
+            $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
     }
     
