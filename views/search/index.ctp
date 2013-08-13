@@ -1026,7 +1026,7 @@ if (isset($type)) {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', echo $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
+                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', echo $this->getTextEncode(truncate_text($psong->ArtistText)), 20, $this), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
 
 						<a class="add-to-playlist-button" href="#"></a>
 						
