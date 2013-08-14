@@ -292,6 +292,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  $wishlist_css = "sidebar-anchor";
                                  $new_releases_css = "sidebar-anchor";
                                  $ul_class = "sidebar-sub-nav";
+                                 $section_class = "";
                                  
                                  //echo $_SERVER['REQUEST_URI'];
 
@@ -316,6 +317,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                 else if($_SERVER['REQUEST_URI'] == '/homes/my_wishlist')
                                 {
                                     $wishlist_css = "sidebar-anchor active";
+                                }
+                                else if($_SERVER['REQUEST_URI'] == '/homes/aboutus')
+                                {
+                                    $section_class = "height:900px;";
                                 }
                                 else if($_SERVER['REQUEST_URI'] == '/homes/new_releases')
                                 {
@@ -399,6 +404,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </div>
                                             <?php } ?>
 					</section>					
-					<div class="content">
+					<div class="content" style="<?php echo $section_class; ?>">
                                             <span class="ajaxmessage44" id="ajaxflashMessage44"></span>
  
