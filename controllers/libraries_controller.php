@@ -970,10 +970,12 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
               $this->Cookie->delete('UrlReferer');
               $this->redirect($urlReferer);
             } else {
+                echo 147;
+                die;
               $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
             }
            
-            $this->redirect(array('controller' => 'homes', 'action' => 'index')); 
+            //$this->redirect(array('controller' => 'homes', 'action' => 'index')); 
             
                      
             
