@@ -840,7 +840,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if(isset($_REQUEST['url']))
         {
             $requestUrlArr = explode("/", $_REQUEST['url']);
-           echo  $patronId = $requestUrlArr['2'];          
+            $patronId = $requestUrlArr['2'];          
         }
         
         if($patronId == '___BARCODE___')
@@ -856,18 +856,13 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if($referrerUrl == ''){
             $this -> Session -> setFlash("You are not coming from a correct referral url.");
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
-        } 
-        echo $referrerUrl;
+        }        
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
-		
-        print_r( $existingLibraries);
-        
-        
-        /*echo $library1;
+		/*echo $library1;
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
@@ -879,9 +874,8 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         // After redirecting from third party authentication system if it is not redirected to it's subdoamin then forcefully redirect it sub-domain.                                    
         $subDomain = $existingLibraries['0']['Library']['library_subdomain'];    
         if(isset($subDomain) && strpos($_SERVER['HTTP_HOST'],$subDomain) === false){
-            echo 147;
-            $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
-            $this->redirect('https://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
+        $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
+        $this->redirect('https://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
         }
         
         
