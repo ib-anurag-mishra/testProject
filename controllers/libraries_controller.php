@@ -862,6 +862,8 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
+        
+        print_r($existingLibraries);
 		/*echo $library1;
 		if($library != null)
 		{
@@ -874,6 +876,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         // After redirecting from third party authentication system if it is not redirected to it's subdoamin then forcefully redirect it sub-domain.                                    
         $subDomain = $existingLibraries['0']['Library']['library_subdomain'];    
         if(isset($subDomain) && strpos($_SERVER['HTTP_HOST'],$subDomain) === false){
+            echo 147;die;
         $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
         $this->redirect('https://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
         }
