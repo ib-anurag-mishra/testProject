@@ -965,13 +965,10 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             }
             
             if ($this->Cookie->read('UrlReferer') != '') {
-              echo $urlReferer = $this->Cookie->read('UrlReferer');
-              die;
-              $this->Cookie->delete('UrlReferer');
-              $this->redirect($urlReferer);
-            } else {
-                echo 147;
-                die;
+               $urlReferer = $this->Cookie->read('UrlReferer');             
+               $this->Cookie->delete('UrlReferer');
+               $this->redirect($urlReferer);
+            } else {               
               $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
             }
            
