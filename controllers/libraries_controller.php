@@ -952,9 +952,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
                 $this ->Session->write("block", 'no');
             }
             
-            print_r($existingLibraries);
-            die;
-         
+                     
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
     }
