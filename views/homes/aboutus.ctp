@@ -1,37 +1,23 @@
 <?php
 /*
-	 File Name : aboutus.ctp
-	 File Description : View page for about us
-	 Author : m68interactive
+ File Name : index.ctp
+ File Description : View page for index
+ Author : m68interactive
  */
 ?>
-<?php
-if($this->Session->read('Config.language') != '') {
-?>
-<div class="breadCrumb">
-<?php
-	$html->addCrumb('About Freegal Music', '/homes/aboutus');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
-?>
-</div>
-<?php
-}
-?>
-<br class="clr">
-<style>
-.txt-my-about {
-	background: url("../img/<?php if($this->Session->read('Config.language') != '') { echo $this->Session->read('Config.language'); }else{ echo "en"; }?>/about.png") no-repeat scroll 0 0 transparent;
-    height: 62px;
-    left: 35px;
-    overflow: hidden;
-    position: relative;
-    text-indent: -9999px;
-    width: 285px;
-}
-</style>
-<?php echo $session->flash(); ?>
-<div class="txt-my-about">
-	About Freegal Music&trade;
-</div>
-<br class="clr">
-<div id="aboutUs"><?php echo $page->getPageContent('aboutus'); ?></div>
+	<section class="faq">
+		<div class="breadcrumbs">
+                    <?php
+                            $html->addCrumb('About Freegal Music', '/aboutus');
+                            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+                    ?>
+                </div>
+		<header><?php echo $session->flash(); ?>
+			<h2><?php __('About Freegal Music');?></h2>
+		</header>
+		<div class="faq-container">
+                    <ul>
+                        <?php echo $page->getPageContent('aboutus'); ?>
+                    </ul>
+                </div>
+	</section>
