@@ -4094,10 +4094,8 @@ STR;
       }
       
     }
-
-
-    $this->Download->recursive = -1;
-    $currentDownloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+	
+	$currentDownloadCount = $this->getTotalDownloadCound($libId, $patId);
 
     $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
 
@@ -5009,10 +5007,10 @@ STR;
       
       if($sobj->DownloadStatus) {
         $sobj->fileURL            = 'nostring';
-        $sobj->FullLengthFileURL  = 'nostring';
+        
       }else{
         $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
-        $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
+       
       }
         
       $albumData = $this->Album->find('first',
