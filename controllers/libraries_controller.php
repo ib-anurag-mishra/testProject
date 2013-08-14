@@ -840,7 +840,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if(isset($_REQUEST['url']))
         {
             $requestUrlArr = explode("/", $_REQUEST['url']);
-            $patronId = $requestUrlArr['2'];          
+           echo $patronId = $requestUrlArr['2'];          
         }
         
         if($patronId == '___BARCODE___')
