@@ -856,7 +856,8 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if($referrerUrl == ''){
             $this -> Session -> setFlash("You are not coming from a correct referral url.");
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
-        }        
+        } 
+        echo $referrerUrl;
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
