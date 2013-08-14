@@ -951,8 +951,10 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             else{
                 $this ->Session->write("block", 'no');
             }
-            echo $this->Session->read("UrlReferer");
+            
+            print_r($existingLibraries);
             die;
+         
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
     }
