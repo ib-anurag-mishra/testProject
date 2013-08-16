@@ -49,6 +49,7 @@ class CacheController extends AppController {
     {
         $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
     }
+    print_r($territoryNames);
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
