@@ -994,9 +994,20 @@ $(function() {
 		}
 		*/
 		
-		/* added 080913 */
+		/* commented out 081413 */
+		/*
 		$('p').slideUp(500).removeClass('active');
 		$(this).siblings('p').slideDown(500).addClass('active');
+		*/
+		
+		/* added 081413 */
+		
+		if ($(this).siblings('p').hasClass('active')) {
+			$(this).siblings('p').slideUp(500).removeClass('active');
+		} else {
+			$('.faq-container p').slideUp(500).removeClass('active');
+			$(this).siblings('p').slideDown(500).addClass('active');
+		}
 		
 	});
 	
