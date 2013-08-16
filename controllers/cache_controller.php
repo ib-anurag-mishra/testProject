@@ -1575,7 +1575,7 @@ STR;
 
             
             $libId = $val['Library']['id'];
-            if( $libId ==1 ){
+           
             $country = $val['Library']['library_territory'];
 
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
@@ -2010,7 +2010,7 @@ STR;
             }
             
            //library top 10 cache set for videos end
-        }
+       
            
         }
     
