@@ -1573,8 +1573,9 @@ STR;
 
         foreach ($libraryDetails AS $key => $val) {
 
-            if( $libId ==1 ){
+            
             $libId = $val['Library']['id'];
+            if( $libId ==1 ){
             $country = $val['Library']['library_territory'];
 
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
