@@ -49,7 +49,7 @@ class CacheController extends AppController {
     {
         $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
     }
-    print_r($territoryNames);
+   
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
@@ -1713,7 +1713,9 @@ STR;
 				LIMIT 10
 STR;
                 $topDownload = $this->Album->query($topDownloaded_query);
+                print_r($topDownload);die;
             } else {
+                echo 147;
                 $topDownload = array();
             }
 
@@ -1726,7 +1728,7 @@ STR;
             } else {
                 foreach($topDownload as $key => $value){
                     
-                     print_r($topDownload);die;
+                     
                      $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                      $songs_img =  Configure::read('App.Music_Path').$songs_img;
                      $topDownload[$key]['songs_img'] = $songs_img;
