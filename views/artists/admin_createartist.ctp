@@ -29,7 +29,7 @@
 							echo $this->Form->input('territory', array('options' => array(
 								'' => 'Choose Territory',
 								'US' => 'US',
-								'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory'])
+								'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ','GB' => 'GB','IE' => 'IE'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory'])
 							);
 						?>
 					</td>

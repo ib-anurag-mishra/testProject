@@ -23,13 +23,13 @@ if(empty($getArtistData)){
 <div class="form_steps">
 <table cellspacing="10" cellpadding="0" border="0" width="100%">
 	<tr>
-		<td align="right" width="390"><?php echo $form->label('Choose Territory');?>2</td>
+		<td align="right" width="390"><?php echo $form->label('Choose Territory');?></td>
 		<td align="left">
 			<?php
 				echo $this->Form->input('territory', array('options' => array(
 					'' => 'Choose Territory',
 					'US' => 'US',
-					'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ','GB' => 'GB','IE' => 'IE'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Newartist']['territory'])
+					'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Newartist']['territory'])
 				);
 			?>
 		</td>
