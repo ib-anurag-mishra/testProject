@@ -49,15 +49,12 @@ class CacheController extends AppController {
     {
         $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
     }
-   
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-    
-    /*
 		for($i=0;$i<count($territoryNames);$i++){
 			$territory = $territoryNames[$i];
                         if(0 == $multiple_countries){
@@ -1455,7 +1452,7 @@ STR;
     */  
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         
-   /*    
+       
  
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
        
@@ -1558,9 +1555,8 @@ STR;
        
         
         
-       */ 
+        
        
-    
 
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
 
@@ -1573,9 +1569,7 @@ STR;
 
         foreach ($libraryDetails AS $key => $val) {
 
-            
             $libId = $val['Library']['id'];
-           
             $country = $val['Library']['library_territory'];
 
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
@@ -1714,26 +1708,21 @@ STR;
 				LIMIT 10
 STR;
                 $topDownload = $this->Album->query($topDownloaded_query);
-                
             } else {
-               
                 $topDownload = array();
             }
 
             //library top 10 cache set
             if ((count($topDownload) < 1) || ($topDownload === false)) {
-               
                 Cache::write("lib" . $libId, Cache::read("lib" . $libId));
                 $this->log("topDownloaded_query songs  returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 songs returns null for lib: $libId $country <br />";
             } else {
                 foreach($topDownload as $key => $value){
-                    
                      $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                      $songs_img =  Configure::read('App.Music_Path').$songs_img;
                      $topDownload[$key]['songs_img'] = $songs_img;
-                }  
-               
+                }                
                 Cache::delete("lib" . $libId);
                 Cache::write("lib" . $libId, $topDownload);
                 //library top 10 cache set
@@ -1985,8 +1974,6 @@ STR;
                 LIMIT 10
 STR;
                 $topDownload = $this->Album->query($topDownloaded_query_videos);
-                
-               
             } else {
                 $topDownload = array();
             }
@@ -2010,15 +1997,14 @@ STR;
             }
             
            //library top 10 cache set for videos end
-       
            
         }
-    
+        
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-       // $this->requestAction('/Resetcache/genrateXML');
+        $this->requestAction('/Resetcache/genrateXML');
         exit;
     }
 }
