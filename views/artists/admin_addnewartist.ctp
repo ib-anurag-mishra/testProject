@@ -23,7 +23,7 @@ if(empty($getArtistData)){
 <div class="form_steps">
 <table cellspacing="10" cellpadding="0" border="0" width="100%">
 	<tr>
-		<td align="right" width="390"><?php echo $form->label('Choose Territory');?></td>
+		<td align="right" width="390"><?php echo $form->label('Choose Territory');?>2</td>
 		<td align="left">
 			<?php
 				echo $this->Form->input('territory', array('options' => array(
