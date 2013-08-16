@@ -967,6 +967,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
 //            if ($this->Cookie->read('UrlReferer') != '') {
 //                echo  $urlReferer = $this->Cookie->read('UrlReferer');die;
 //            }
+         
             
             
 //            if ($this->Cookie->read('UrlReferer') != '') {
