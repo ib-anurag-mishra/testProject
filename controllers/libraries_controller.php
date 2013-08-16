@@ -960,6 +960,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             else{
                 $this ->Session->write("block", 'no');
             }
+            $this->redirect(array('controller' => 'homes', 'action' => 'index')); 
             
 //            if ($this->Cookie->read('UrlReferer') != '') {
 //                echo  $urlReferer = $this->Cookie->read('UrlReferer');die;
@@ -975,7 +976,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
 //              $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 //            }
            
-            $this->redirect(array('controller' => 'homes', 'action' => 'index')); 
+            
             
                      
             
