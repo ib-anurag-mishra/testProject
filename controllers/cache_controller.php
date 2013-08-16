@@ -1729,13 +1729,11 @@ STR;
             } else {
                 foreach($topDownload as $key => $value){
                     
-                     echo 'perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL'];
-                     echo '<br>';
                      $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                      $songs_img =  Configure::read('App.Music_Path').$songs_img;
                      $topDownload[$key]['songs_img'] = $songs_img;
                 }  
-                die;
+               
                 Cache::delete("lib" . $libId);
                 Cache::write("lib" . $libId, $topDownload);
                 //library top 10 cache set
