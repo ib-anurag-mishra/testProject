@@ -8,7 +8,7 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download','Video' );
+	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download','Video', 'Territory' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language','Album');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
@@ -239,6 +239,12 @@ Class ArtistsController extends AppController
     ini_set('memory_limit','1024M');
 		set_time_limit(0);
 		$errorMsg = '';
+                $territories = $this->Territory->find("all");
+                for($m=0;$m<count($territories);$m++)
+                {
+                    $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
+                }
+                $this->set("territories", $territoriesArray);
 		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
