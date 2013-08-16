@@ -4094,9 +4094,8 @@ STR;
       }
       
     }
-
-
-    $currentDownloadCount =  $this->getTotalDownloadCound($libId, $patId);
+	
+	$currentDownloadCount = $this->getTotalDownloadCound($libId, $patId);
 
     $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
 
@@ -5008,8 +5007,10 @@ STR;
       
       if($sobj->DownloadStatus) {
         $sobj->fileURL            = 'nostring';
+        
       }else{
         $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+       
       }
         
       $albumData = $this->Album->find('first',

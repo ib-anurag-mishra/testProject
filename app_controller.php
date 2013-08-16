@@ -1,7 +1,7 @@
 <?php
 class AppController extends Controller
 {
-	var $components = array( 'Session', 'RequestHandler');
+	var $components = array( 'Session', 'RequestHandler','Cookie');
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download','Queue' );
 	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country');
         var $view = 'Dataencode';
@@ -15,6 +15,7 @@ class AppController extends Controller
                 if($first_param[1] != 'admin' &&  $first_param[1] != 'users' && !$this->RequestHandler->isAjax()){
                    if($_SERVER['REQUEST_URI'] != '/homes/chooser' && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI']!= '/homes/forgot_password' && $_SERVER['REQUEST_URI']!= '/admin/*'){
                        $this->Session->write("UrlReferer",$_SERVER['REQUEST_URI']);
+                      // $this->Cookie->write('UrlReferer',$_SERVER['REQUEST_URI']);	
                    }
                 }
                 $this->switchCpuntriesTable();
@@ -36,7 +37,7 @@ class AppController extends Controller
                     $this->Session->write("subdomain",$subdomains);
                     $this->Session->write("lId",$libraryIDArray['Library']['id']);                    
                     $this->Session->write("territory", $libraryIDArray['Library']['library_territory']);  
-                     $this->Session->write("library_auth_method_name",$libraryIDArray['Library']['library_authentication_method']);
+                    $this->Session->write("library_auth_method_name",$libraryIDArray['Library']['library_authentication_method']);
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);

@@ -13,7 +13,7 @@ $count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 
-$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
+$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
 //$countrys = array('CA' => 'CAD');
 
 $lib_types = array('Unlimited' , 'ALC');
@@ -35,8 +35,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-$currentDate = '2013-08-01';
-//$currentDate = date( "Y-m-d", time());
+//$currentDate = '2013-08-01';
+$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -55,8 +55,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_12Q1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_Oct_2012';
-            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
-//            $reports_dir = SONY_REPORTFILES;
+//            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
+            $reports_dir = SONY_REPORTFILES;
 
             if(!file_exists($reports_dir))
             {
@@ -109,7 +109,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $all_Ids = '';
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
                 //$sql = "SELECT library_purchases.library_id as id from freegal.library_purchases join freegal.contract_library_purchases on contract_library_purchases.id_library_purchases = library_purchases.id and contract_library_purchases.library_contract_start_date  <= '" . $condEndDate . "'  AND contract_library_purchases.library_contract_end_date >= '" . $condEndDate . "' join libraries on libraries.id = library_purchases.library_id and contract_library_purchases.library_unlimited='".$lib_type_int."' AND libraries.library_territory='".$country."' group by library_purchases.library_id,contract_library_purchases.library_contract_start_date,contract_library_purchases.library_unlimited order by libraries.id,library_purchases.created;";
-                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' AND lp.library_id=1 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
                 if($result)
                 {
@@ -381,7 +381,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         die(" Query failed: ". $sql. " Error: " .mysql_error());
                     }
 
-                    /*//  FOR SENDING REPORT TO SONY SERVER USING SFTP
+                    //  FOR SENDING REPORT TO SONY SERVER USING SFTP
                     if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
@@ -399,7 +399,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             die(" Query failed: ". $sql. " Error: " .mysql_error());
                         }
                         // }
-                    }*/
+                    }
                 }
             }
 
@@ -443,7 +443,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $all_Ids = '';
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
-                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' and lp.library_id=1 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
                 
                 if($result)
@@ -555,7 +555,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $videodata = array();
                 }
                 
-                if(!empty($data) || !empty($data))
+                if(!empty($data) || !empty($videodata))
                 {
                     /*$query = 'SELECT COUNT(downloads.ISRC) AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM freegal.downloads join `freegal`.`currentpatrons` on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id WHERE provider_type="'.'sony'.'" and downloads.created between "'.$condStartDate.'" and "'.$condEndDate.'" and downloads.library_id IN ('.rtrim($all_Ids,",").') group by TrkID, downloads.created ORDER BY downloads.created';
                     $result = mysql_query($query) or die('Query failed: ' . mysql_error());
@@ -747,7 +747,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    /*if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
+                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
@@ -763,7 +763,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             sendalert("Query failed: ".$sql);
                             die("Query failed: ". $sql. " Error: " .mysql_error());
                         }
-                    }*/
+                    }
                 }   
             }
         }

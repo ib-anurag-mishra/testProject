@@ -492,7 +492,7 @@ img {
 		*/
 		
 		/* new css changed 0080513 */
-		.poll {
+		.poll1 {
 			
 			background:         #eee;
 			height:             auto;
@@ -505,10 +505,10 @@ img {
                         overflow-y: hidden;
                         height: 250px;
 
-			&.active {								
+			/*&.active {								
                                     display: block;	
                                     overflow-y: scroll;
-                                 }
+                                 }*/
 			
 		}
 		
@@ -1912,7 +1912,7 @@ img {
 		overflow-x: hidden;
 	
 		ul {
-			width: 10000px;
+			width: 18000px;
 			//overflow-x: scroll;
 			overflow-y: hidden;
 			height: auto;
@@ -4910,7 +4910,7 @@ img {
 				font-size: 18px;
 				
 				height: 28px;
-				padding-left: 12px;
+				padding-left: 7px;
 				padding-top: 10px;
 			}
 			
@@ -5102,6 +5102,7 @@ img {
 				
 				
 				height: 219px;
+                                overflow: hidden; /* 081313 */
 				
 				
 				
@@ -5703,7 +5704,8 @@ img {
 	}
 	
 	.album-detail-container {
-		width:72%\0;
+		
+                width:72%\0;
 		
 		.album-detail {
 			float: left;
@@ -18465,7 +18467,18 @@ img {
 .site-login {
 	margin-left: 20px;
 	margin-top: 20px;
+        font-size:14px;
+        line-height:1.75;
 	
+        ul{
+            list-style:disc outside none;
+            margin-left:25px;
+
+            li{
+                margin-top:5px;
+                margin-bottom:5px;
+            }
+        }
 	header {
 		margin-bottom: 24px;
 		

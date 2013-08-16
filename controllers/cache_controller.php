@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
     //var $components = array('Queue');
     
     function cacheLogin() {
@@ -38,87 +38,75 @@ class CacheController extends AppController {
     //for caching data
     function cacheGenre() {
         set_time_limit(0);
-        error_reporting(1); ini_set('display_errors', 1);
+        //error_reporting(1); ini_set('display_errors', 1);
        
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
-        $territoryNames = array('US', 'CA', 'AU', 'NZ', 'IT', 'IE', 'GB');
-        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-        $siteConfigData = $this->Album->query($siteConfigSQL);
-        $maintainLatestVideoDownload = false;
-        $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
-        $siteConfigData = $this->Album->query($siteConfigSQL);
-        $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-       
-             
-              
-        
-        for ($i = 0; $i < count($territoryNames); $i++) {
-           
-           
-            $territory = $territoryNames[$i];
+    //$territoryNames = array('US','CA','AU','NZ','IT','GB','IE');
+    $territories = $this->Territory->find("all");
+    for($mm=0;$mm<count($territories);$mm++)
+    {
+        $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
+    }
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+		for($i=0;$i<count($territoryNames);$i++){
+			$territory = $territoryNames[$i];
+                        if(0 == $multiple_countries){
+                            $countryPrefix = '';
+                            $this->Country->setTablePrefix('');
+
+                        } else {
+                            $countryPrefix = strtolower($territory)."_";
+                            $this->Country->setTablePrefix($countryPrefix);
+                        }
+			$this->log("Starting caching for $territory",'debug');
+			$this->Genre->Behaviors->attach('Containable');
+			$this->Genre->recursive = 2;
+			$genreAll = $this->Genre->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Country.Territory' => $territory, "Genre.Genre NOT IN('Porn Groove')")
+								)
+							),
+						'fields' => array(
+								'Genre.Genre'
+								),
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory'
+										)
+									),
+						),'group' => 'Genre.Genre'
+					));
             
-            
-           
-            if (0 == $multiple_countries) {
-                $countryPrefix = '';
-                $this->Country->setTablePrefix('');
-            } else {
-                $countryPrefix = strtolower($territory) . "_";
-                $this->Country->setTablePrefix($countryPrefix);
-            }
-           
-          
-           
-            $this->log("Starting caching for $territory", 'debug');
-        
-            $this->Genre->Behaviors->attach('Containable');
-            $this->Genre->recursive = 2;
-           
-            $genreAll = $this->Genre->find('all', array(
-                'conditions' =>
-                array('and' =>
-                    array(
-                        array('Country.Territory' => $territory, "Genre.Genre NOT IN('Porn Groove')")
-                    )
-                ),
-                'fields' => array(
-                    'Genre.Genre'
-                ),
-                'contain' => array(
-                    'Country' => array(
-                        'fields' => array(
-                            'Country.Territory'
-                        )
-                    ),
-                ), 'group' => 'Genre.Genre'
-                    ));
-
-            $this->log("cache written for genre for $territory", 'debug');
-
-            if ((count($genreAll) > 0) && ($genreAll !== false)) {
-                Cache::delete("genre" . $territory);
-                Cache::write("genre" . $territory, $genreAll);
-                $this->log("cache written for genre for $territory", "cache");
-                echo "cache written for genre for $territory";
-            } else {
-
-                Cache::write("genre" . $territory, Cache::read("genre" . $territory));
-                $this->log("no data available for genre" . $territory, "cache");
-                echo "no data available for genre" . $territory;
-            }
-          
-
+      $this->log("cache written for genre for $territory",'debug');      
       
-          
-            $country = $territory;
-            
-          
-                                
-            if (!empty($country)) {
-                if ($maintainLatestDownload) {
+      if( (count($genreAll) > 0) && ($genreAll !== false) )
+      {
+        Cache::delete("genre".$territory);
+        Cache::write("genre".$territory, $genreAll);
+        $this->log( "cache written for genre for $territory", "cache");
+        echo "cache written for genre for $territory";
+      }
+      else
+      {                                  
+        
+        Cache::write("genre".$territory, Cache::read("genre".$territory) );
+        $this->log( "no data available for genre".$territory, "cache");
+        echo "no data available for genre".$territory;
+      }
+	  
+		$country = $territory;
+		if(!empty($country)){
+		  if($maintainLatestDownload){
 
                     $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_downloads` AS `Download` 

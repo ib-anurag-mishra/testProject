@@ -862,6 +862,8 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
+        
+       
 		/*echo $library1;
 		if($library != null)
 		{
@@ -869,6 +871,16 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
 		}
 		if(count($existingLibraries) == 0)
 		$existingLibraries = $library_data;*/
+        
+        
+        // After redirecting from third party authentication system if it is not redirected to it's subdoamin then forcefully redirect it sub-domain.                                    
+        $subDomain = $existingLibraries['0']['Library']['library_subdomain'];    
+        if(isset($subDomain) && strpos($_SERVER['HTTP_HOST'],$subDomain) === false){            
+        $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
+        $this->redirect('https://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
+        }
+        
+        
 	if(count($existingLibraries) == 0)
         {
             $this -> Session -> setFlash("You are not authorized to view this location.");
@@ -951,7 +963,25 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             else{
                 $this ->Session->write("block", 'no');
             }
-            $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            
+//            if ($this->Cookie->read('UrlReferer') != '') {
+//                echo  $urlReferer = $this->Cookie->read('UrlReferer');die;
+//            }
+         
+            
+            
+//            if ($this->Cookie->read('UrlReferer') != '') {
+//               $urlReferer = $this->Cookie->read('UrlReferer');             
+//               $this->Cookie->delete('UrlReferer');
+//               $this->redirect($urlReferer);
+//            } else {               
+//              $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+//            }
+           
+            $this->redirect(array('controller' => 'homes', 'action' => 'index')); 
+            
+                     
+            
         }
     }
     

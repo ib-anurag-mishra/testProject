@@ -4007,7 +4007,15 @@ STR;
 			{
 				$this->Session->setFlash('Please enter something valid');
 			}
-		} 
+		}else {
+                    if($this->Cookie->read('UrlReferer') == ''){
+                        $this->Cookie->write('UrlReferer', $this->referer(), false);
+                    }else if(strpos($this->Cookie->read('UrlReferer'),'?fb_xd_fragment')){
+                        $this->Cookie->write('UrlReferer', $this->referer(), false);
+                    }else if(strpos($this->Cookie->read('UrlReferer'),'internet_explorer')){
+                        $this->Cookie->write('UrlReferer', $this->referer(), false);
+                    }
+                } 
 	}
         
         function new_releases() 

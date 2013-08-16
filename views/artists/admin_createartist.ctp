@@ -26,10 +26,7 @@
 					<td align="right" width="390"><?php echo $form->label('Choose Territory');?></td>
 					<td align="left">
 						<?php
-							echo $this->Form->input('territory', array('options' => array(
-								'' => 'Choose Territory',
-								'US' => 'US',
-								'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory'])
+							echo $this->Form->input('territory', array('options' => $territories,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Artist']['territory'])
 							);
 						?>
 					</td>

@@ -292,6 +292,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                  $wishlist_css = "sidebar-anchor";
                                  $new_releases_css = "sidebar-anchor";
                                  $ul_class = "sidebar-sub-nav";
+                                 $section_class = "";
                                  
                                  //echo $_SERVER['REQUEST_URI'];
 
@@ -316,6 +317,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                 else if($_SERVER['REQUEST_URI'] == '/homes/my_wishlist')
                                 {
                                     $wishlist_css = "sidebar-anchor active";
+                                }
+                                else if($_SERVER['REQUEST_URI'] == '/homes/aboutus')
+                                {
+                                    $section_class = "height:900px;";
                                 }
                                 else if($_SERVER['REQUEST_URI'] == '/homes/new_releases')
                                 {
@@ -379,15 +384,26 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
-                                            </ul>                                            
+                                            </ul>
+                                            <?php
+                                                    $temp_text  =   strip_tags($announcment_value);
+                                                    if($temp_text!="")
+                                                    {
+                                                        $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                    }
+                                                    else
+                                                    {
+                                                        $announcment_class  =   "";
+                                                    }
+                                            ?>
                                             <div class="announcements">
                                                     <h4><a href="#"><?php __('Announcements'); ?></a></h4>
-                                                    <div class="poll" >
+                                                    <div class="poll1" style="<?php echo $announcment_class; ?>">
                                                         <?php echo $announcment_value; ?>
                                                     </div>
                                             </div>
                                             <?php } ?>
 					</section>					
-					<div class="content">
+					<div class="content" style="<?php echo $section_class; ?>">
                                             <span class="ajaxmessage44" id="ajaxflashMessage44"></span>
  

@@ -77,7 +77,7 @@
 			<div class="hero-detail">
 				
 				<h2 class="song-title">
-					<?php echo $VideosData[0]['Video']['VideoTitle']; ?>
+					<?php echo wordwrap($VideosData[0]['Video']['VideoTitle'], 15, "<br />");; ?>
 				</h2>
 				<h3 class="artist-name">
 					<a href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
