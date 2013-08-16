@@ -13,7 +13,7 @@ $count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 
-$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
+$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
 //$countrys = array('CA' => 'CAD');
 
 $lib_types = array('Unlimited' , 'ALC');
@@ -555,7 +555,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $videodata = array();
                 }
                 
-                if(!empty($data) || !empty($data))
+                if(!empty($data) || !empty($videodata))
                 {
                     /*$query = 'SELECT COUNT(downloads.ISRC) AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM freegal.downloads join `freegal`.`currentpatrons` on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id WHERE provider_type="'.'sony'.'" and downloads.created between "'.$condStartDate.'" and "'.$condEndDate.'" and downloads.library_id IN ('.rtrim($all_Ids,",").') group by TrkID, downloads.created ORDER BY downloads.created';
                     $result = mysql_query($query) or die('Query failed: ' . mysql_error());
