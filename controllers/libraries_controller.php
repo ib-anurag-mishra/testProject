@@ -850,6 +850,16 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if($referrerUrl == 'http://www.ocls.info/freegalmusic-sp.asp'){
             $this->Session->write('Config.language', 'es');
         }
+        
+        if(isset($_SERVER['HTTP_REFERER']))
+        {
+        $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
+        $this->Cookie->write('referer', $referrerUrl, false);
+        }    
+        if($referrerUrl == '')
+        {
+        $referrerUrl = $this->Cookie->read('referer');      
+        }
         if($referrerUrl == ''){
             $this -> Session -> setFlash("You are not coming from a correct referral url.");
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
