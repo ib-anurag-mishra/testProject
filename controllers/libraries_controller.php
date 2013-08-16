@@ -66,10 +66,7 @@ Class LibrariesController extends AppController
         $this->set('searchKeyword', $searchKeyword);
         $this->set('libraries', $this->paginate('Library'));
         
-        
-        
-     
-        
+      
        
     }
 
@@ -970,15 +967,15 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
          
             
             
-//            if ($this->Cookie->read('UrlReferer') != '') {
-//               $urlReferer = $this->Cookie->read('UrlReferer');             
-//               $this->Cookie->delete('UrlReferer');
-//               $this->redirect($urlReferer);
-//            } else {               
-//              $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-//            }
+            if ($this->Cookie->read('UrlReferer') != '') {
+               $urlReferer = $this->Cookie->read('UrlReferer');             
+               $this->Cookie->delete('UrlReferer');
+               $this->redirect($urlReferer);
+            } else {               
+              $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+            }
            
-            $this->redirect(array('controller' => 'homes', 'action' => 'index')); 
+           // $this->redirect(array('controller' => 'homes', 'action' => 'index')); 
             
                      
             
