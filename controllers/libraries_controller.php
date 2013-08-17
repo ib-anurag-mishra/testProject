@@ -863,8 +863,8 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         }    
         if($referrerUrl == '')
         {
-            $str = "<!-- two -->"; 
-        $referrerUrl = $this->Cookie->read('referer');      
+            $referrerUrl = $this->Cookie->read('referer');      
+            $str = "<!-- two ".$referrerUrl." -->"; 
         }
         if($referrerUrl == ''){
             $this -> Session -> setFlash("You are not coming from a correct referral url.".$str);
