@@ -857,15 +857,17 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         
         if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
         {
+            $str = "<!-- one -->";
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
         $this->Cookie->write('referer', $referrerUrl, false);
         }    
         if($referrerUrl == '')
         {
+            $str = "<!-- two -->"; 
         $referrerUrl = $this->Cookie->read('referer');      
         }
         if($referrerUrl == ''){
-            $this -> Session -> setFlash("You are not coming from a correct referral url.");
+            $this -> Session -> setFlash("You are not coming from a correct referral url.".$str);
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
         }        
         $this->Library->recursive = -1;
