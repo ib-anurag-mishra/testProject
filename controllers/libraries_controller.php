@@ -855,7 +855,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             $this->Session->write('Config.language', 'es');
         }
         
-        if(isset($_SERVER['HTTP_REFERER']))
+        if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
         {
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
         $this->Cookie->write('referer', $referrerUrl, false);
