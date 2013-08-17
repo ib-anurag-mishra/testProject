@@ -865,9 +865,6 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if($referrerUrl == '')
         {
             $str = "<!-- two -->"; 
-            $this->Cookie->name = 'baker_id';
-            $this->Cookie->path = '/';
-            $this->Cookie->domain = 'freegalmusic.com';
             $referrerUrl = $this->Cookie->read('referer');      
         }
         
