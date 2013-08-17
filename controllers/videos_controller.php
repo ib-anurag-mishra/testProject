@@ -17,8 +17,8 @@ class VideosController extends AppController {
             parent::beforeFilter();
             $this->Cookie->name = 'baker_id';
             $this->Cookie->time = 3600; // or '1 hour'
-            $this->Cookie->path = '/';
-            $this->Cookie->domain = '.freegalmusic.com';
+            // $this->Cookie->path = '/';
+            $this->Cookie->domain = 'freegalmusic.com';
             //$this->Cookie->key = 'qSI232qs*&sXOw!';
     }
     
