@@ -23,7 +23,7 @@ Class LibrariesController extends AppController
         $this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
-		$this->Cookie->domain = 'freegalmusic.com';
+		$this->Cookie->domain = '.freegalmusic.com';
     }
     
     /*
@@ -858,14 +858,16 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
         {
             $str = "<!-- one -->";
-        $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
-        $this->Cookie->write('referer', $referrerUrl, false);
-        }    
+            $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
+            $this->Cookie->write('referer', $referrerUrl, false);
+        }   
+        
         if($referrerUrl == '')
         {
+            $str = "<!-- two -->"; 
             $referrerUrl = $this->Cookie->read('referer');      
-            $str = "<!-- two ".$referrerUrl." -->"; 
         }
+        
         if($referrerUrl == ''){
             $this -> Session -> setFlash("You are not coming from a correct referral url.".$str);
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
