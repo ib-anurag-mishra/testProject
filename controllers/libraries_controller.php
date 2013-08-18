@@ -858,8 +858,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
         {
             $str = "<!-- one -->";
-            echo $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
-            die;
+            $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);           
             $this->Cookie->write('referer', $referrerUrl, false);
         }   
         
