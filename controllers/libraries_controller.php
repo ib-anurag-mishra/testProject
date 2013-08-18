@@ -892,7 +892,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         $subDomain = $existingLibraries['0']['Library']['library_subdomain'];    
         if(isset($subDomain) && strpos($_SERVER['HTTP_HOST'],$subDomain) === false){            
         $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
-        $this->redirect('https://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
+        $this->redirect('http://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
         }
         
         
