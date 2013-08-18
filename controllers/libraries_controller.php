@@ -878,6 +878,14 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
+        
+        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") { 
+            echo "something HTTPS";
+        } else { 
+            echo "something other";
+        }
+        
+        
         /*echo $library1;
         if($library != null)
         {
