@@ -879,13 +879,9 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
                                                 )
                                             );
         
-        if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") { 
-            echo "something HTTPS";
-        } else { 
-            echo "something other";
-        }
+       
         
-        die;
+       
         /*echo $library1;
         if($library != null)
         {
@@ -894,13 +890,19 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if(count($existingLibraries) == 0)
         $existingLibraries = $library_data;*/
         
+         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") { 
+            $httpURLHeader = 'https://';
+        } else { 
+            $httpURLHeader = 'http://';
+        }
         
+                
         // After redirecting from third party authentication system if it is not redirected to it's subdoamin then forcefully redirect it sub-domain.                                    
-//        $subDomain = $existingLibraries['0']['Library']['library_subdomain'];    
-//        if(isset($subDomain) && strpos($_SERVER['HTTP_HOST'],$subDomain) === false){            
-//            $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
-//            $this->redirect('https://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
-//        }
+        $subDomain = $existingLibraries['0']['Library']['library_subdomain'];    
+        if(isset($subDomain) && strpos($_SERVER['HTTP_HOST'],$subDomain) === false){            
+            $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
+            $this->redirect($httpURLHeader.$subDomain.$domain .'/libraries/patron/'.$patronId);
+        }
         
         
 	if(count($existingLibraries) == 0)
