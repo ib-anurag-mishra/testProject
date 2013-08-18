@@ -858,7 +858,8 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER']))
         {
             $str = "<!-- one -->";
-            $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
+            echo $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
+            die;
             $this->Cookie->write('referer', $referrerUrl, false);
         }   
         
@@ -877,22 +878,20 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
-        
-       
-		/*echo $library1;
-		if($library != null)
-		{
-			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-		}
-		if(count($existingLibraries) == 0)
-		$existingLibraries = $library_data;*/
+        /*echo $library1;
+        if($library != null)
+        {
+                $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        }
+        if(count($existingLibraries) == 0)
+        $existingLibraries = $library_data;*/
         
         
         // After redirecting from third party authentication system if it is not redirected to it's subdoamin then forcefully redirect it sub-domain.                                    
         $subDomain = $existingLibraries['0']['Library']['library_subdomain'];    
         if(isset($subDomain) && strpos($_SERVER['HTTP_HOST'],$subDomain) === false){            
         $domain = str_replace("www","",$_SERVER['HTTP_HOST']);
-        $this->redirect('http://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
+        $this->redirect('https://'.$subDomain.$domain .'/libraries/patron/'.$patronId);
         }
         
         
