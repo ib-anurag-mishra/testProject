@@ -866,6 +866,9 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         {
             $str = "<!-- two -->"; 
             $referrerUrl = $this->Cookie->read('referer');      
+            if($referrerUrl == ''){
+                $referrerUrl = $_COOKIE['referer'];
+            }
         }
         
         if($referrerUrl == ''){

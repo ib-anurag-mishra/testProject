@@ -78,8 +78,8 @@ Class UsersController extends AppController
                                         if($library_data['Library']['library_authentication_method'] == 'referral_url')
 					{
 						$referral = explode(",",$library_data['Library']['library_domain_name']);
-                                                $this->Cookie->write('referer', $referral[0], false);                                       
-                                                
+                                                $this->Cookie->write('referer', $referral[0], false);
+                                                setcookie('referer',$referral[0],3600,'/','freegalmusic.com');
 						$this->redirect($referral[0]);
 					}
                                         else if($library_data['Library']['library_authentication_method'] == 'ezproxy')
