@@ -885,7 +885,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             echo "something other";
         }
         
-        
+        die;
         /*echo $library1;
         if($library != null)
         {
