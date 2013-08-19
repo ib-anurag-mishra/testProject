@@ -953,6 +953,100 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 	return false; 
 }
 
+function historyDownloadVideo(id,libID,patronID)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('download_loader_'+id).style.display = 'block';
+	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/historyDownloadVideo", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your have already downloaded this song twice.");
+				location.reload();
+				return false;
+			}			
+			else if(msg == 'suces')
+			{
+				var count = response.substring(0,1);
+					if(count == 2){
+						if(languageSet == 'en'){
+							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
+						}else{
+							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
+						}
+					}
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false;
+}
+
+function historyDownloadVideoOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('download_loader_'+id).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/historyDownloadVideo", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				location.reload();
+				return false;
+			}
+			else if(msg == 'suces')
+			{
+				var count = response.substring(0,1);
+					if(count == 2){
+						if(languageSet == 'en'){
+							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
+						}else{
+							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
+						}
+					}
+				$('.afterClick').hide();
+				$('.beforeClick').show();					
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				location.href = unescape(finalURL);
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}	
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
+}
+
+
 function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3,provider)
 {
 	$('.beforeClick').hide();

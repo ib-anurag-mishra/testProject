@@ -3547,6 +3547,35 @@ STR;
 	}
 	exit;
     }
+    
+     /*
+     Function Name : historyDownload
+     Desc : For getting download count on My History
+    */
+    function historyDownloadVideo() {
+        Configure::write('debug', 0);
+        $this->layout = false;
+
+        $id = $_REQUEST['id'];
+        $libId = $_REQUEST['libid'];
+        $patId = $_REQUEST['patronid'];
+        $this->Videodownload->recursive = -1;
+        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
+        $downloadCount =  $downloadsUsed[0]['Download']['history'];
+        //check for download availability
+        if($downloadCount < 2){
+                $this->Videodownload->setDataSource('master');
+                $sql = "UPDATE `videodownloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."' ORDER BY created DESC";
+                $this->Videodownload->query($sql);
+                $this->Videodownload->setDataSource('default');
+                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
+                $downloadCount =  $downloadsUsed[0]['Download']['history'];
+        echo "suces|".$downloadCount;
+        } else {
+               echo "error";
+	}
+	exit;
+    }
 	/*
      Function Name : admin_historyform
      Desc : actions used for admin history form
