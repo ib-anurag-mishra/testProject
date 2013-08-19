@@ -619,7 +619,8 @@
 										<?php $count = 1;
 									foreach($news as $key => $value)
 									{
-										  $newsText = str_replace('<div', '<p', strip_tags(($value['News']['body']), '<p>'));
+										//  $newsText = str_replace('<div', '<p', strip_tags(($value['News']['body']), '<p>'));
+                                                                                  $newsText = str_replace('<div', '<p', $value['News']['body']);
                                                                                   $newsText = str_replace('</div>', '</p>', $newsText);
 									?>
 										<li>
