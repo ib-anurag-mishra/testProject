@@ -619,7 +619,8 @@
 										<?php $count = 1;
 									foreach($news as $key => $value)
 									{
-										  $newsText = str_replace('<div', '<p', strip_tags(($value['News']['body']), '<p>'));
+										  //$newsText = str_replace('<div', '<p', strip_tags(($value['News']['body']), '<p>'));
+                                                                                  $newsText = str_replace('<div', '<p', ($value['News']['body']), '<p>');
                                                                                   $newsText = str_replace('</div>', '</p>', $newsText);
 									?>
 										<li>
@@ -633,38 +634,12 @@
 												<div class="post-date">
 													<?php echo $value['News']['place']?> : <?php echo date( "F d, Y", strtotime($value['News']['created'])) ?>
 												</div>
-												<!-- <div class="post-excerpt"  id="shortNews<?php echo $value['News']['id']; ?>">
-													 <?php 
-                                                                                                               // echo $this->getTextEncode(substr($newsText,0, 325));                                                                                                                 
-                                                                                                               // echo $this->getTextEncode(substr($newsText,0, strpos($newsText, "</p>")+4));
-                                                                                                            ?>		
-													 <div class="more">
-													 <?php  
-                                                                                                            //if(strlen($newsText) > strpos($newsText, "</p>")+4)
-                                                                                                           /* if(strlen($newsText) >= 325)
-                                                                                                            {
-                                                                                                                  ?>
-                                                                                                                  <a href="javascript:void(0);" onClick="showhide('detail', '<?php echo $value['News']['id']; ?>')")">More ></a>
-                                                                                                                  <?php
-                                                                                                            } */ ?>		</div>									
-												</div>
-												
-												<div id="detailsNews<?php //echo $value['News']['id']; ?>" style="display:none" class="post-excerpt">
-												<?php //echo $newsText; ?>
-								 				 <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php //echo $value['News']['id']; ?>')">- See Less</a>
-												</div> -->
-                                                                                                          
                                                                                                   
                                                                                                 <div id="detailsNews" class="post-excerpt">
                                                                                                <?php echo  wordwrap($newsText, 65, "<br />\n", TRUE); ?>
                                                                                                <!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
                                                                                                </div>
-
-                                                                                                                         
-                                                                                                          
-                                                                                                          
-												
-											</div>
+                                                                                        </div>
 										</li>
 										
                                                                         <?php
