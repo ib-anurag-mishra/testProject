@@ -123,8 +123,8 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title">
                     <?php 
-						if (strlen($downloadResult['Download']['track_title']) >= 22) {
-							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 22) . '...</span>';							
+						if (strlen($downloadResult['Download']['track_title']) >= 19) {
+							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</span>';							
 						} else {
 							echo $downloadResult['Download']['track_title']; 
 					 	}
@@ -133,8 +133,8 @@ $ieVersion =  ieversion();
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="#">
                                              <?php 
-						if (strlen($downloadResult['Song']['Title']) >= 22) {
-							echo '<span title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 22) . '...</span>';							
+						if (strlen($downloadResult['Song']['Title']) >= 19) {
+							echo '<span title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 19) . '...</span>';							
 						} else {
 							echo $downloadResult['Song']['Title']; 
 					 	}
@@ -269,22 +269,19 @@ $ieVersion =  ieversion();
                         <p>
                         <?php
                         
-                     
-                        
-                        
                             $productInfo = $mvideo->getDownloadData($videoDownloadResult['Videodownload']['ProdID'],$videoDownloadResult['Videodownload']['provider_type']);
                             $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-							$finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
-							$finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
+                            $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
+                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>
                             <span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
-								<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-									<a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
-								<?php } else {?>
-								<!--[if IE]>
-									<a onclick='return historyDownloadVideo("<?php echo $videoDownloadResult['Download']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href='<?php echo $finalVideoUrl; ?>'><?php __('Download');?></a> 										
-								<![endif]-->
-								<?php } ?>
+                                                            <?php if($ieVersion > 8 || $ieVersion < 0){ ?>
+                                                                    <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+                                                            <?php } else {?>
+                                                            <!--[if IE]>
+                                                                    <a onclick='return historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href='<?php echo $finalVideoUrl; ?>'><?php __('Download');?></a> 										
+                                                            <![endif]-->
+                                                            <?php } ?>
 							</span>
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 							<span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
@@ -294,7 +291,7 @@ $ieVersion =  ieversion();
 				<?php
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded video from this week or last week."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>
