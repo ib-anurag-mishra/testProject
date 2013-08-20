@@ -9,12 +9,18 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'NationalTopTen.ph
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'LibraryTopTen.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongData.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoSongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'WishlistData.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueDetailData.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueListData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownloadData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SuccessResponse.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueOperation.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserTypeResponse.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongDownloadSuccess.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoDownloadSuccess.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalFeaturedAlbum.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SearchData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'PageContent.php');
@@ -27,8 +33,24 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Videodownload');
-  var $components = array('Downloads', 'AuthRequest', 'Solr');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail'); 
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr');
+
+   
+  function beforeFilter(){
+    
+    $arr_models = $this->uses;
+    foreach($arr_models as $val) {
+      $this->$val->setDataSource('soap');
+    }
+    $this->Session->write('call_db3', 1); 
+  }
+
+  function afterFilter(){
+
+    $this->Session->delete('call_db3');        
+  }
+
 
 
   function index(){
@@ -59,12 +81,18 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AlbumDataByArtist.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."GenreData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongData.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoSongData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."WishlistData.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueListData.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueDetailData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserCurrentDownloadData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SuccessResponse.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueOperation.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserTypeResponse.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongDownloadSuccess.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoDownloadSuccess.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."FreegalFeaturedAlbum.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SearchData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."PageContent.php");
@@ -78,12 +106,18 @@ class SoapsController extends AppController {
     $test->addURLToClass("AlbumDataByArtist", $siteUrl."soaps/");
     $test->addURLToClass("GenreData", $siteUrl."soaps/");
     $test->addURLToClass("SongData", $siteUrl."soaps/");
+    $test->addURLToClass("VideoSongData", $siteUrl."soaps/");
     $test->addURLToClass("WishlistData", $siteUrl."soaps/");
+    $test->addURLToClass("QueueListData", $siteUrl."soaps/");
+    $test->addURLToClass("QueueDetailData", $siteUrl."soaps/");
     $test->addURLToClass("UserCurrentDownloadData", $siteUrl."soaps/");
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
     $test->addURLToClass("UserData", $siteUrl."soaps/");
     $test->addURLToClass("SuccessResponse", $siteUrl."soaps/");
+    $test->addURLToClass("QueueOperation", $siteUrl."soaps/");
+    $test->addURLToClass("UserTypeResponse", $siteUrl."soaps/");
     $test->addURLToClass("SongDownloadSuccess", $siteUrl."soaps/");
+    $test->addURLToClass("VideoDownloadSuccess", $siteUrl."soaps/");
     $test->addURLToClass("FreegalFeaturedAlbum", $siteUrl."soaps/");
     $test->addURLToClass("SearchData", $siteUrl."soaps/");
     $test->addURLToClass("PageContent", $siteUrl."soaps/");
@@ -672,13 +706,15 @@ class SoapsController extends AppController {
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           
           if($this->IsDownloadable($data['Song']['ProdID'], $territory, $data['Song']['provider_type'])) {
-            $obj->fileURL                 =  'nostring';
+            $obj->fileURL                 = 'nostring';
+            $obj->FullLength_FIleURL      = 'nostring';
           } else {
             $obj->fileURL                 = (string)$fileURL;
+            $obj->FullLength_FIleURL      = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Full_Files']['CdnPath']."/".$data['Full_Files']['SaveAsName']);
           }
           
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
-
+          
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'NationalTopTenType');
 
       }
@@ -768,13 +804,13 @@ class SoapsController extends AppController {
 						LEFT JOIN
 					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
 						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					$breakdown_table AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+					$breakdown_table AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
-					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))  )  AND 1 = 1
+					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$library_territory') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,
 						$ids) ASC
@@ -820,12 +856,15 @@ STR;
           
           
           if($this->IsDownloadable($data['Song']['ProdID'], $library_territory, $data['Song']['provider_type'])) {
-            $obj->fileURL                 =  'nostring';
+            $obj->fileURL                 = 'nostring';
+            $obj->FullLength_FIleURL      = 'nostring';
           } else {
             $obj->fileURL                 = (string)$fileURL;
+            $obj->FullLength_FIleURL      = $this->getFullLengthFileURL($data['Full_Files']['FileID']);
           }
 
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
+          
 
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'LibraryTopTenType');
 
@@ -1021,14 +1060,17 @@ STR;
             $sampFileData = $this->Files->find('first',array('conditions' => array('FileID' => $val['Sample_FileID'])));
             $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $sampFileData['Files']['CdnPath']."/".$sampFileData['Files']['SaveAsName']);
             
+            
+            
             if($sobj->DownloadStatus) {
               $sobj->Sample_FileURL        = 'nostring';
+              $sobj->FullLength_FIleURL    = 'nostring';
             }else{
               $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
+              $sobj->FullLength_FIleURL    = $this->getFullLengthFileURL($val['FullLength_FIleID']);
             }
             
-            
-            $sobj->FullLength_FIleID     = (int)$val['FullLength_FIleID'];
+            $sobj->FullLength_FIleID     = (int)$val['FullLength_FIleID'];           
             $sobj->CreatedOn             = (string)$val['CreatedOn'];
             $sobj->UpdateOn              = (string)$val['UpdateOn'];
 
@@ -1048,7 +1090,7 @@ STR;
       throw new SOAPFault('Soap:client', 'Freegal is unable to find details for the Album.');
     }
   }
-  
+
   /**
    * Function Name : getUserCurrentDownload
    * Desc : To get the current download of a user
@@ -1057,7 +1099,7 @@ STR;
 	 * @return UserCurrentDownloadDataType[]
    */
 	function getUserCurrentDownload($libraryId, $authenticationToken) {
-
+  
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -1065,7 +1107,7 @@ STR;
     $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
     
     $downloadCount = $this->getTotalDownloadCound($libraryId, $patronId);
-
+    
     $this->Library->recursive = -1;
     $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libraryId)));
 
@@ -1192,10 +1234,13 @@ STR;
 
       if($row_save_status){
 
-        $this->Library->setDataSource('master');
+        //$this->Library->setDataSource('master');
+	$this->Library->setDataSource('soap');
         $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-1 Where id=".$libraryId;
         $this->Library->query($sql);
-        $this->Library->setDataSource('default');
+        //$this->Library->setDataSource('default');
+	$this->Library->setDataSource('soap');
+
 
 
         $message = 'Song added successfully';
@@ -1228,10 +1273,12 @@ STR;
     }
 
     if($this->Wishlist->delete($deleteSongId)) {
-			$this->Library->setDataSource('master');
+      //$this->Library->setDataSource('master');
+      $this->Library->setDataSource('soap');
       $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
       $this->Library->query($sql);
-			$this->Library->setDataSource('default');
+      $this->Library->setDataSource('soap');
+      //$this->Library->setDataSource('default');
 
       $message = 'Song deleted successfully';
       return $this->createsSuccessResponseObject(true, $message);
@@ -1623,8 +1670,46 @@ STR;
       default:
     }
 
+    
+    $resp->enc_value->enc_value->user_type = $this->getUserType('', $library_id, 1);
+
+    
     return $resp;
   }
+
+  
+  /**
+   * Function Name : getUserType
+   * Desc : Returns user type i.e. whether it belongs to Freegal4.O or Freegal4.O+  
+   * @param int innerCall
+   * @param string token
+   * @param int libID
+   * @return UserTypeResponseType[]
+   */
+  function getUserType($token, $libID, $innerCall = 0) {
+  
+    if(1 != $innerCall){
+      if(!($this->isValidAuthenticationToken($token))) {
+        throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      }
+    }
+    
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libID),
+      'fields' => array('library_type'),
+      'recursive' => -1
+      )
+    );
+
+    if(1 != $innerCall){
+      return $this->createsUserTypeResponseObject($libraryDetails['Library']['library_type']);
+    }else{
+      return $libraryDetails['Library']['library_type'];
+    }
+    
+
+  }
+  
 
   /**
   * Authenticates user by login method
@@ -3924,7 +4009,26 @@ STR;
 
   }
 
+  /**
+   * Function Name : getAuthMethodFromAuthenticationToken
+   * Desc : To fetch library's auth method from authentication token
+   * @param string $token
+	 * @return array
+   */
 
+  private function getAuthMethodFromAuthenticationToken($token){
+
+
+    $authenticationtoken = $this->AuthenticationToken->find('first',array(
+      'fields' => array('auth_method'),
+      'conditions' => array('token' => $token))
+    );
+
+    return $authenticationtoken['AuthenticationToken']['auth_method'];
+
+  }
+  
+  
   /**
    * Function Name : getLibraryTerritory
    * Desc : To fetch library's Territory
@@ -4000,16 +4104,63 @@ STR;
 
     $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+    
     $wishlist = 0;
-    return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+1, $totalDownloadLimit, $wishlist);
+    return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, 0, 0, 0);
 
 
   }
 
+  /**
+   * Function Name : regenerateVideoDownloadRequest
+   * Desc : Actions that is used for regenerating download URL for video
+   * @param string $authentication_token
+   * @param string $prodId
+   * @param string $agent
+	 * @return VideoDownloadSuccessType[]
+   */
 
+  function regenerateVideoDownloadRequest($authentication_token, $prodId, $agent) {
+
+    if(!($this->isValidAuthenticationToken($authentication_token))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+    
+    
+    $data = $this->Video->find('first',
+      array('joins' =>
+        array(
+          array(
+            'table' => 'File',
+            'alias' => 'f',
+            'type' => 'inner',
+            'foreignKey' => false,
+
+            'conditions'=> array('f.FileID = Video.FullLength_FIleID', 'Video.ProdID = ' . $prodId, 'Video.provider_type' => $provider_type)
+          )
+        )
+      )
+    );
+
+    $CdnPath = $data['Full_Files']['CdnPath'];
+    $SaveAsName = $data['Full_Files']['SaveAsName'];
+
+    $songUrl = shell_exec('perl files/tokengen ' . "sony_test/".$CdnPath . "/" . $SaveAsName);
+    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+
+    return $this->createVideoDownloadSuccessObject('Download permitted.', $finalSongUrl, true, 0, 0, 0);
+    
+
+  }
+  
+  
   /**
    * Function Name : songDownloadRequest
-   * Desc : Actions that is used for updating user download
+   * Desc : Actions that is used for updating user download request for audio
    * @param string $authentication_token
    * @param string $prodId
    * @param string $agent
@@ -4067,13 +4218,7 @@ STR;
         
         if(3 == $validationResult[2]) {
           throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
-        }  
-        
-        if(2 == $validationResult[2]) {
-          throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
-        }
-        
-        
+        }        
       }
     } else {
       
@@ -4081,9 +4226,13 @@ STR;
         throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
       }
       
-      if('inactive' == $libraryDetails['Library']['library_status']) {
+     if( 
+          ('inactive' == $libraryDetails['Library']['library_status']) || 
+          ($libraryDetails['Library']['library_download_limit'] <= $libraryDetails['Library']['library_current_downloads']) || 
+          ($libraryDetails['Library']['library_available_downloads'] > 1) 
+        ) {
         throw new SOAPFault('Soap:client', 'Requested library is Inactive.');
-      }   
+      }    
 
       if(!($this->IsTerrotiry($prodId, $provider_type, $libId))) {
         throw new SOAPFault('Soap:client', 'Song does not belong to current library territory.');
@@ -4094,8 +4243,8 @@ STR;
       }
       
     }
-	
-	$currentDownloadCount = $this->getTotalDownloadCound($libId, $patId);
+    
+    $currentDownloadCount = $this->getTotalDownloadCound($libId, $patId);
 
     $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
 
@@ -4127,10 +4276,7 @@ STR;
     $insertArr['ProductID'] = $TrackData['Song']['ProductID'];
     $insertArr['ISRC'] = $TrackData['Song']['ISRC'];
 
-
-    $lib_data = $this->Library->getlibrarydata($libId);
-    $library_authentication_method = $lib_data['Library']['library_authentication_method'];
-
+    $library_authentication_method = $libraryDetails['Library']['library_authentication_method'];
 
     if('user_account' == $library_authentication_method) {
 
@@ -4149,7 +4295,8 @@ STR;
     $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
-	  $this->Library->setDataSource('master');
+	  //$this->Library->setDataSource('master');
+	  $this->Library->setDataSource('soap');
     
     if($maintainLatestDownload){
       $procedure = 'sonyproc_new';
@@ -4171,7 +4318,9 @@ STR;
     
     if(is_numeric($return)){
       
-      $this->LatestDownload->setDataSource('master');
+      //$this->LatestDownload->setDataSource('master');
+      $this->LatestDownload->setDataSource('soap');
+
       $data = $this->LatestDownload->find('count', array(
         'conditions'=> array(
             "LatestDownload.library_id " => $libId,
@@ -4191,7 +4340,8 @@ STR;
       if(false === $data){
         $log_data .= ":SelectLDFail";
       }
-      $this->LatestDownload->setDataSource('default');
+      //$this->LatestDownload->setDataSource('default');
+      $this->LatestDownload->setDataSource('soap');
     }
     
     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
@@ -4200,7 +4350,8 @@ STR;
     $this->log($log_data, $log_name);
     
     
-		$this->Library->setDataSource('default');
+		//$this->Library->setDataSource('default');
+		$this->Library->setDataSource('soap');
     $wishlist = 0;
 		if(is_numeric($return)){
       
@@ -4238,6 +4389,248 @@ STR;
 
           $wishlist = 0;
           return $this->createSongDownloadSuccessObject('Library limit exceeded.', '', false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
+        }
+      }
+
+    }
+
+  }
+  
+  /**
+   * Function Name : videoDownloadRequest
+   * Desc : Actions that is used for updating user download request for video
+   * @param string $authentication_token
+   * @param string $prodId
+   * @param string $agent
+	 * @return VideoDownloadSuccessType[]
+   */
+
+  function videoDownloadRequest($authentication_token, $prodId, $agent) {
+    
+    
+    if(!($this->isValidAuthenticationToken($authentication_token))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+
+    $patId = $this->getPatronIdFromAuthenticationToken($authentication_token);
+    $libId = $this->getLibraryIdFromAuthenticationToken($authentication_token);
+    
+    $this->Library->recursive = -1;
+    $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libId)));
+    
+    
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+		 
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'single_channel'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);  
+        
+    $log_name = 'video_stored_procedure_app_log_'.date('Y_m_d');
+    $log_id = md5(time());
+    $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
+        
+    if($checkValidation){
+      
+      $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider_type, true, $libraryDetails['Library']['library_territory'], $patId, $agent, $libId);
+      
+      $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider_type."':DownloadComponentParameters-isMobileDownload= 'true':DownloadComponentParameters-Territory= '".$libraryDetails['Library']['library_territory']."':DownloadComponentParameters-PatronID='".$patId."':DownloadComponentParameters-Agent='".$agent."':DownloadComponentParameters-LibID='".$libId."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
+
+      if(false === $validationResult[0])  {
+        
+        $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+        $this->log($log_data, $log_name);
+        
+        if(5 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+        }
+            
+        if(4 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+        }
+        
+        if(3 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+        }        
+      }
+    } else {
+      
+      if(0 == $this->getDownloadStatusOfSong($prodId, $provider_type)) {
+        throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+      }
+           
+      if( 
+          ('inactive' == $libraryDetails['Library']['library_status']) || 
+          ($libraryDetails['Library']['library_download_limit'] <= $libraryDetails['Library']['library_current_downloads']) || 
+          ($libraryDetails['Library']['library_available_downloads'] > 1) 
+        ) {
+        throw new SOAPFault('Soap:client', 'Requested library is Inactive.');
+      }   
+
+      if(!($this->IsTerrotiry($prodId, $provider_type, $libId))) {
+        throw new SOAPFault('Soap:client', 'Video does not belong to current library territory.');
+      }
+      
+      if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $provider_type)) {
+        throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+      }
+      
+    }
+
+    $currentDownloadCount =  $this->getTotalDownloadCound($libId, $patId);
+
+    $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
+
+    $TrackData = $this->Video->find('first',
+        array(
+          'fields' => array(
+            'Video.ProdID',
+            'Video.ProductID',
+            'Video.Title',
+            'Video.VideoTitle',
+            'Video.Artist',
+            'Video.ISRC',
+            'Video.FullLength_FIleID'
+          ),
+          'conditions' => array(
+            'Video.ProdID' => $prodId,
+            'Video.provider_type' => $provider_type,
+          ),
+          'recursive' => -1,
+        )
+    );
+    
+    $insertArr = Array();
+    $insertArr['library_id'] = $libId;
+    $insertArr['patron_id'] = $patId;
+    $insertArr['ProdID'] = $prodId;
+    $insertArr['artist'] = addslashes($TrackData['Video']['Artist']);
+    $insertArr['track_title'] = addslashes($TrackData['Video']['VideoTitle']);
+    $insertArr['ProductID'] = $TrackData['Video']['ProductID'];
+    $insertArr['ISRC'] = $TrackData['Video']['ISRC'];
+
+    $library_authentication_method = $libraryDetails['Library']['library_authentication_method'];
+
+    if('user_account' == $library_authentication_method) {
+
+      $user = $this->User->find('first',array(
+          'fields' => array('email'),
+          'conditions' => array('User.id' => $patId),
+        )
+      );
+
+      $insertArr['email'] = $user['User']['email'];
+    } else {
+      $insertArr['email'] = '';
+    }
+
+    $insertArr['user_login_type'] = $library_authentication_method;
+    $insertArr['user_agent'] = mysql_real_escape_string($agent);
+    $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
+	  //$this->Library->setDataSource('master');
+   	  $this->Library->setDataSource('soap');
+ 
+    if($maintainLatestDownload){
+      $procedure = 'videos_proc_d_ld';
+      $sql = "CALL videos_proc_d_ld('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Video']['ProductID']."', '".$TrackData['Video']['ISRC']."', '".addslashes($TrackData['Video']['Artist'])."', '".addslashes($TrackData['Video']['VideoTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+      
+    }else{
+      $procedure = 'videos_proc_d';
+      $sql = "CALL videos_proc_d('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Video']['ProductID']."', '".$TrackData['Video']['ISRC']."', '".addslashes($TrackData['Video']['Artist'])."', '".addslashes($TrackData['Video']['VideoTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+    }
+    
+    
+
+    $this->Library->query($sql);
+		$sql = "SELECT @ret";
+		$data = $this->Library->query($sql);
+		$return = $data[0][0]['@ret'];
+    
+    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$TrackData['Video']['ProductID']."':StoredProcedureParameters-ISRC='".$TrackData['Video']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($TrackData['Video']['Artist'])."':StoredProcedureParameters-VideoTitle='".addslashes($TrackData['Video']['VideoTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$provider_type."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
+    
+    if(is_numeric($return)){
+      
+      //$this->LatestVideodownload->setDataSource('master');
+	$this->LatestVideodownload->setDataSource('soap');
+
+
+      $data = $this->LatestVideodownload->find('count', array(
+        'conditions'=> array(
+            "LatestVideodownload.library_id " => $libId,
+            "LatestVideodownload.patron_id " => $patId, 
+            "LatestVideodownload.ProdID " => $prodId,
+            "LatestVideodownload.provider_type " => $provider_type,     
+            "DATE(LatestVideodownload.created) " => date('Y-m-d'),
+        ),
+        'recursive' => -1,
+      ));
+      
+
+      if(0 === $data){
+        $log_data .= ":NotInLD";
+      }
+      
+      if(false === $data){
+        $log_data .= ":SelectLDFail";
+      }
+      //$this->LatestVideodownload->setDataSource('default');
+	$this->LatestVideodownload->setDataSource('soap');
+
+    }
+    
+    $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
+    
+    
+    $this->log($log_data, $log_name);
+    
+    
+		//$this->Library->setDataSource('default');
+		$this->Library->setDataSource('soap');
+
+    $wishlist = 0;
+		if(is_numeric($return)){
+      
+      $data = $this->Files->find('first',
+        array(
+          'fields' => array(
+            'CdnPath',
+            'SaveAsName'
+          ),
+          'conditions' => array(
+            'FileID' => $TrackData['Video']['FullLength_FIleID']
+          ),
+          'recursive' => -1
+        )
+      );
+
+      $CdnPath = $data['Files']['CdnPath'];
+      $SaveAsName = $data['Files']['SaveAsName'];
+
+      $songUrl = shell_exec('perl files/tokengen ' . "sony_test/".$CdnPath . "/" . $SaveAsName);
+      
+      $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+      
+      $wishlist = 0;
+      return $this->createVideoDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+2, $totalDownloadLimit, $wishlist);
+
+		}
+		else{
+
+      if('incld' == $return) {
+      
+        $wishlist = 0;
+        return $this->createVideoDownloadSuccessObject('Already downloaded.', '',false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
+      } else {
+        if('error' == $return) {
+
+          $wishlist = 0;
+          return $this->createVideoDownloadSuccessObject('Library limit exceeded.', '', false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
         }
       }
 
@@ -4321,11 +4714,15 @@ STR;
         $searchData = $this->getSearchAlbumList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry);
       }
       break;
-
       case '4': {
         $searchData = $this->getSearchSongList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry);
       }
+      break;     
+      case '5': {
+        $searchData = $this->getSearchVideoSongList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry);
+      }
       break;
+      
       default:
 
     }
@@ -4490,14 +4887,17 @@ STR;
           $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['Sample_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Sample_Files']['SaveAsName']);
           
           if($sobj->DownloadStatus) {
-            $sobj->Sample_FileURL         = 'nostring';
+            $sobj->Sample_FileURL        = 'nostring';
+            $sobj->FullLength_FIleURL    = 'nostring';
           } else {
-            $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
+            $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
+            $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['Full_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Full_Files']['SaveAsName']);
           }
           
           
 
           $sobj->FullLength_FIleID     = (int)    '';
+          
           $sobj->CreatedOn             = (string) '';
           $sobj->UpdateOn              = (string) '';
 
@@ -4516,6 +4916,92 @@ STR;
     }
 
   }
+  
+  /**
+   * Function Name : getMyMusicVideos
+   * Desc : To get My Music Videos list
+   * @param string $authenticationToken
+   * @param int $startFrom
+   * @param int $recordCount
+	 * @return VideoSongDataType[]
+   */
+  function getMyMusicVideos($authenticationToken, $startFrom, $recordCount) {
+    
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libraryId),
+      'fields' => array('library_territory'),
+      'recursive' => -1
+      )
+    );
+    $library_territory = $libraryDetails['Library']['library_territory'];
+    
+    if ( ((Cache::read("AppMyMusicVideosList_".$library_territory)) === false) || (Cache::read("AppMyMusicVideosList_".$library_territory) === null) ) {
+      
+      $this->Session->write('territory', $library_territory); 
+      $this->switchCpuntriesTable();
+      $breakdown_table = $this->Session->read('multiple_countries').'countries';
+      
+      $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
+        v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
+        imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
+        FROM video AS v
+        INNER JOIN '.$breakdown_table.' AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
+        INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
+        INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
+        INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
+        INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
+        LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
+        WHERE c.Territory = "'.$library_territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
+        ORDER BY cnt DESC';
+        
+      $arr_video = array();  
+      $arr_video = $this->Video->query($str_query);
+      
+      if(!(empty($arr_video))){
+        Cache::write("AppMyMusicVideosList_".$library_territory, $arr_video);
+      }else{
+        throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
+      }
+   
+    }
+    
+    $arrTemp = Cache::read("AppMyMusicVideosList_".$library_territory);
+
+    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+      if(!(empty($arrTemp[$cnt]))) {
+        $sobj = new VideoSongDataType;
+        $sobj->VideoProdID           = $arrTemp[$cnt]['prd']['pid'];
+        $sobj->VideoReferenceID      = $arrTemp[$cnt]['v']['ReferenceID'];
+        $sobj->VideoTitle            = $this->getTextUTF($arrTemp[$cnt]['v']['Title']);
+        $sobj->VideoSongTitle        = $this->getTextUTF($arrTemp[$cnt]['v']['VideoTitle']);
+        $sobj->VideoArtistText       = $this->getTextUTF($arrTemp[$cnt]['v']['ArtistText']);
+        $sobj->VideoArtist           = $this->getTextUTF($arrTemp[$cnt]['v']['Artist']);
+        $sobj->VideoAdvisory         = $arrTemp[$cnt]['v']['Advisory'];
+        $sobj->VideoISRC             = $arrTemp[$cnt]['v']['ISRC'];
+        $sobj->VideoComposer         = $this->getTextUTF($arrTemp[$cnt]['v']['Composer']);
+        $sobj->VideoGenre            = $this->getTextUTF($arrTemp[$cnt]['gr']['Genre']);
+        $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
+        ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
+        $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
+        $sobj->VideoFullLength_FileURL = '';
+        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . 'sony_test/'.$arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
+            
+        $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongDataType');
+      }
+    }
+
+    $data = new SoapVar($video_list,SOAP_ENC_OBJECT,null,null,'ArrayVideoSongData');
+
+    return $data;
+
+  }
+   
 
   /**
    * Function Name : getTopArtist
@@ -4657,14 +5143,14 @@ STR;
         
         if($sobj->DownloadStatus) {
           $sobj->Sample_FileURL         = 'nostring';
+          $sobj->FullLength_FIleURL     = 'nostring';
         } else {
-          $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
+          $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
+          $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Full_Files']['CdnPath']."/".$val['Full_Files']['SaveAsName']);
         }
-          
-          
-        
 
         $sobj->FullLength_FIleID     = (int)    '';
+
         $sobj->CreatedOn             = (string) '';
         $sobj->UpdateOn              = (string) '';
 
@@ -4716,6 +5202,327 @@ STR;
       
   }
 
+  /**
+   * Function Name : getQueueList
+   * Desc : returns default/custom queue list
+   * @param string $authenticationToken
+   * @param int $startFrom
+   * @param int $recordCount
+   * @param int $uid
+	 * @return QueueListDataType[]
+   */
+   
+  function getQueueList($authenticationToken, $startFrom, $recordCount, $uid){
+
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    } 
+             
+    $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    if(2 != $this->getUserType('', $library_id, 1)) {
+       throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
+    }
+ 
+    if( 1 == $uid ){
+    
+      $cond = array('status' => '1', 'queue_type' => '1');
+    }else{
+            
+      $patronID = $this->getPatronIdFromAuthenticationToken($authenticationToken); 
+      $cond = array('patron_id' => $patronID, 'status' => '1', 'queue_type' => '0');
+    }
+    
+    $QueueList = $this->QueueList->find('all', array(
+      'conditions' => $cond,
+      'recursive' => -1,
+      'order' => 'created DESC'
+    ));
+
+    if( empty($QueueList) ) {
+      throw new SOAPFault('Soap:DefaultQueueList', 'No Queue lists found');
+    } else {
+      
+      for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+        if(!(empty($QueueList[$cnt]['QueueList']['queue_id']))) {
+          $obj = new QueueListDataType;
+      
+          $obj->QueueID                    = $QueueList[$cnt]['QueueList']['queue_id'];
+          $obj->QueueName                  = $QueueList[$cnt]['QueueList']['queue_name'];
+          $obj->QueueCreated               = $QueueList[$cnt]['QueueList']['created'];
+          $obj->QueueModified              = $QueueList[$cnt]['QueueList']['modified'];          
+
+    	  $songsCount = $this->QueueDetail->find('count', array(
+     	 	'conditions' => array('queue_id' => $QueueList[$cnt]['QueueList']['queue_id']),
+	        'recursive' => -1,
+   	  ));
+
+          $obj->QueueUser                  = $songsCount;
+       
+          $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
+        }
+      }
+    
+      $data = new SoapVar($queue_list,SOAP_ENC_OBJECT,null,null,'ArrayQueueListDataType');    
+
+      return $data;
+      
+    }
+        
+    
+  }
+  
+  /**
+   * Function Name : manageQueue
+   * Desc : returns operation status
+   * @param string $authenticationToken
+   * @param string $queueName
+   * @param string $queueID
+   * @param string $arrsongs
+   * @param string $action
+   * @param string $queueDescription
+	 * @return QueueOperationType[]
+   */
+  function manageQueue($authenticationToken, $queueName, $queueID, $arrsongs, $action, $queueDescription = null){
+ 
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+
+    $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    if(2 != $this->getUserType('', $library_id, 1)) {
+       throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
+    }
+ 
+    $arrsongs = explode(',', $arrsongs);
+    
+    $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    
+    
+    switch($action){
+    
+      case 'c':
+      
+        $cnt = 0;
+        $cnt = $this->QueueList->find('count', array(
+          'conditions' => array( 'queue_name' => $queueName, 'patron_id' => $patronId),
+          'recursive' => -1      
+        ));
+        if(0 != $cnt) {
+          return $this->createsQueueOperationObject(false, 'Name already exist');
+        }
+    
+        $insertArr['queue_name'] = $queueName;
+        $insertArr['patron_id'] = $patronId;
+        $insertArr['status'] = 1;
+        $insertArr['queue_type'] = '0';
+        $insertArr['description'] = $queueDescription;
+        $this->QueueList->save($insertArr);
+      
+        $queueID = $this->QueueList->getLastInsertID();
+
+        $this->setQueueSongs($arrsongs, $queueID);
+        
+        return $this->createsQueueOperationObject(true, 'You have successfully created your Queue');
+      
+      break;
+      case 'r':
+
+        $cnt = 0;
+        $cnt = $this->QueueList->find('count', array(
+          'conditions' => array( 'queue_name' => $queueName, 'patron_id' => $patronId),
+          'recursive' => -1      
+        ));
+        if(0 != $cnt) {
+          return $this->createsQueueOperationObject(false, 'Name already exist');
+        }
+        
+        $this->QueueList->read('queue_id', $queueID);
+        $this->QueueList->set(array(
+          'queue_name' => $queueName,
+	  'description' => $queueDescription
+        ));     
+        $this->QueueList->save();
+        
+        return $this->createsQueueOperationObject(true, "You have successfully updated your Queue");
+      
+      break;
+      case 'u':
+      
+        $cnt = 0;
+        $cnt = $this->QueueList->find('count', array(
+          'conditions' => array( 'queue_name' => $queueName, 'patron_id' => $patronId, 'queue_id != "'.$queueID.'"'),
+          'recursive' => -1      
+        ));
+        if(0 != $cnt) {
+          return $this->createsQueueOperationObject(false, 'Name already exist');
+        }         
+        
+        $this->QueueList->read('queue_id', $queueID);
+        $this->QueueList->set(array(
+          'queue_name' => $queueName,
+	  'description' => $queueDescription
+        ));
+        $this->QueueList->save();
+        $this->setQueueSongs($arrsongs, $queueID);
+      
+        return $this->createsQueueOperationObject(true, "You have successfully updated your Queue");
+      
+      break;
+      default:
+        
+    }
+    
+
+  }
+   
+  /**
+   * Function Name : deleteQueue
+   * Desc : delete queue 
+   * @param string $authenticationToken
+   * @param string $queueID
+	 * @return QueueOperationType[]
+   */
+  function deleteQueue($authenticationToken, $queueID){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $st2 = $st1 = false;
+    $st2 = $this->QueueDetail->deleteAll(array('queue_id' => $queueID), false);
+    if(true === $st2){
+      $st1 = $this->QueueList->deleteAll(array('queue_id' => $queueID), false);
+    }
+      
+    if( (true === $st1) ) {
+      return $this->createsQueueOperationObject(true, 'You have deleted Queue successfully');
+    }else{
+      return $this->createsQueueOperationObject(false, 'Failed to delete Queue');
+    }
+  
+  } 
+  
+  /**
+   * Function Name : getQueueDetails
+   * Desc : returns default/custom queue details
+   * @param string $authenticationToken
+   * @param string $queueID
+   * @param int $startFrom
+   * @param int $recordCount
+	 * @return QueueDetailDataType[]
+   */
+  function getQueueDetails($authenticationToken, $queueID, $startFrom, $recordCount){
+   
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    } 
+
+    $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    if(2 != $this->getUserType('', $library_id, 1)) {
+       throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
+    } 
+    
+    $data = $this->QueueDetail->find('all',
+      array(
+        'fields' =>  array('QueueList.queue_name', 'Songs.SongTitle', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Songs.FullLength_Duration', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'AProduct.pid as AlbumProdID', 'SProduct.pid as SongProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+        'joins' => array(
+          array(
+            'type' => 'INNER',
+            'table' => 'queue_lists',
+            'alias' => 'QueueList',
+            'foreignKey' => false,
+            'conditions' => array('QueueList.queue_id = QueueDetail.queue_id'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'Songs',
+            'alias' => 'Songs',
+            'foreignKey' => false,
+            'conditions' => array('Songs.ProdID = QueueDetail.song_prodid', 'Songs.provider_type = QueueDetail.song_providertype'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'Albums',
+            'alias' => 'Albums',
+            'foreignKey' => false,
+            'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'PRODUCT',
+            'alias' => 'AProduct',
+            'foreignKey' => false,
+            'conditions' => array('Albums.ProdID = AProduct.ProdID', 'Albums.provider_type = AProduct.provider_type'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'PRODUCT',
+            'alias' => 'SProduct',
+            'foreignKey' => false,
+            'conditions' => array('Songs.ProdID = SProduct.ProdID', 'Songs.provider_type = SProduct.provider_type'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'File',
+            'alias' => 'AlbumFile',
+            'foreignKey' => false,
+            'conditions' => array('Albums.FileID = AlbumFile.FileID'),        
+          ),  
+          array(
+            'type' => 'INNER',
+            'table' => 'File',
+            'alias' => 'SongFile',
+            'foreignKey' => false,
+            'conditions' => array('Songs.FullLength_FileID = SongFile.FileID'),        
+          ),           
+        ),
+        'recursive' => -1,
+        'conditions' => array('QueueList.status' => 1, 'QueueList.queue_id' => $queueID),        
+      )
+    );
+    
+    if(empty($data)) {
+      throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
+    }
+    
+    $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
+         
+    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+      
+      if(!(empty($data[$cnt]['QueueList']['queue_name']))) {
+        if(0 == $this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
+          $obj = new QueueDetailDataType;
+        
+          $obj->QueueName                    = $data[$cnt]['QueueList']['queue_name'];
+          $obj->QueueSongSongTitle           = $data[$cnt]['Songs']['SongTitle'];
+          $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
+          $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
+          $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
+          $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
+          $obj->QueueAlbumProdID             = $data[$cnt]['AProduct']['AlbumProdID'];
+          $obj->QueueSongProdID              = $data[$cnt]['SProduct']['SongProdID'];
+          $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
+          $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
+          $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
+   	  $obj->QueueFullLength_Duration     = $data[$cnt]['Songs']['FullLength_Duration'];
+              
+          $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
+        }  
+      }     
+    }
+    
+    $queueDetail = new SoapVar($queue,SOAP_ENC_OBJECT,null,null,'ArrayQueueDetailDataType'); 
+    
+    return $queueDetail;
+   
+   
+   
+  }
+
+  
   /**
    * Function Name : getLiveSearchSongList
    * Desc : To get the songs searched
@@ -4912,7 +5719,7 @@ STR;
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
-
+    
     foreach($AllData AS $key => $val){
         
       $sobj = new SearchDataType;
@@ -4930,8 +5737,10 @@ STR;
         
       if($sobj->DownloadStatus) {
         $sobj->fileURL            = 'nostring';
+        $sobj->FullLengthFileURL  = 'nostring';
       }else{
         $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+        $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
       }
         
       $albumData = $this->Album->find('first',
@@ -4987,7 +5796,7 @@ STR;
     $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
-
+      
     
     $search_list = array();  
     foreach($ArtistData AS $key => $val){    
@@ -5007,10 +5816,10 @@ STR;
       
       if($sobj->DownloadStatus) {
         $sobj->fileURL            = 'nostring';
-        
+        $sobj->FullLengthFileURL  = 'nostring';
       }else{
         $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
-       
+        $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
       }
         
       $albumData = $this->Album->find('first',
@@ -5056,6 +5865,7 @@ STR;
    */
 	private function getSearchAlbumList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
+
     $queryVar   = $searchText;
     $typeVar    = 'album';
     $sortVar    = 'ArtistText';
@@ -5085,8 +5895,10 @@ STR;
       
       if($sobj->DownloadStatus) {
         $sobj->fileURL            = 'nostring';
+        $sobj->FullLengthFileURL  = 'nostring';
       }else{
         $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+        $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
       }
         
         
@@ -5160,8 +5972,10 @@ STR;
         
       if($sobj->DownloadStatus) {
         $sobj->fileURL            = 'nostring';
+        $sobj->FullLengthFileURL  = 'nostring';
       }else{
         $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+        $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
       }
         
         
@@ -5193,6 +6007,88 @@ STR;
 
   }
 
+  
+  /**
+   * Function Name : getSearchVideoSongList
+   * Desc : return sole serach result for videos
+   * @param string $searchText
+   * @param string $startFrom
+   * @param string $recordCount
+   * @param string $searchType
+   * @param string $libraryId
+   * @param string $library_terriotry
+	 * @return SearchDataType[]
+   */
+	private function getSearchVideoSongList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
+
+    $queryVar   = $searchText;
+    $typeVar    = 'video';
+    $sortVar    = 'VideoTitle';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $VideoData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
+    
+
+    foreach($VideoData AS $key => $val){        
+        
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $this->getTextUTF($val->VideoTitle);
+      $sobj->Title                = $this->getTextUTF($val->Title);
+      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
+      $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
+      $sobj->Sample_Duration      = '';
+      $sobj->FullLength_Duration  = $val->FullLength_Duration;
+      $sobj->ISRC                 = $val->ISRC;
+
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+        
+        
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+        $sobj->FullLengthFileURL  = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . 'sony_test/'.$val->ACdnPath."/".$val->ASourceURL);
+        $vdata = $this->Files->find('first',
+          array(
+            'fields' => array(
+              'CdnPath',
+              'SaveAsName'
+            ),
+            'conditions' => array(
+              'FileID' => $val->FullLength_FIleID
+            ),
+            'recursive' => -1
+        ));      
+        $sobj->FullLengthFileURL  = Configure::read('App.Music_Path') . shell_exec('perl files/tokengen ' . "sony_test/".$vdata['Files']['CdnPath'] . "/" . $vdata['Files']['SaveAsName']);
+      } 
+
+      $sobj->AlbumProdID          = '';
+      $sobj->AlbumTitle           = '';
+      $sobj->AlbumArtist          = '';
+
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+
+    }
+
+    $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
+
+
+    if(!empty($VideoData)){
+      return $data;
+    }
+    else {
+      throw new SOAPFault('Soap:client', 'Freegal is unable to find any Video containing the provided keyword.');
+    }
+
+  }
+  
+  
   /**
    * return class(AuthenticationResponseData) object with response data
    * @param bool response
@@ -5235,7 +6131,46 @@ STR;
 
     return $data;
   }
+  
+  /**
+   * return class(QueueOperation) object with response data
+   * @param bool $success
+   * @param string $message
+   * @return QueueOperationType[]
+   */
 
+  private function createsQueueOperationObject($success, $message){
+
+
+    $obj = new QueueOperationType;
+    $obj->success       = $success;
+    $obj->message       = $message;
+
+    $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueOperationType');
+    $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArrayQueueOperationType');
+
+    return $data;
+  }
+
+  /** 
+   * return class(UserTypeResponse) object with response data
+   * @param integer user_type
+   * @return UserTypeResponseType[]
+   */
+
+  private function createsUserTypeResponseObject($user_type){
+
+  
+    $obj = new UserTypeResponseType;
+    $obj->usertype       = $user_type;
+
+    $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'UserTypeResponseType');
+    $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArrayUserTypeResponseType');
+
+    return $data;
+  }
+  
+  
   /**
    * return int (0,1)
    * @param int $ProdID
@@ -5314,6 +6249,28 @@ STR;
 
   }
 
+  /**
+   * return VideoDownloadSuccessType object
+   * @param string $method
+   * @return VideoDownloadSuccessType[]
+   */
+  private function createVideoDownloadSuccessObject($message, $video_url, $success, $currentDownloadCount, $totalDownloadLimit, $showWishlist){
+
+    $obj = new VideoDownloadSuccessType;
+
+    $obj->message                   = $message;
+    $obj->video_url                 = $video_url;
+    $obj->success                   = $success;
+    $obj->currentDownloadCount      = $currentDownloadCount;
+    $obj->totalDownloadLimit        = $totalDownloadLimit;
+    $obj->showWishlist              = $showWishlist;
+
+
+    $download_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'VideoDownloadSuccessType');
+    return new SoapVar($download_list,SOAP_ENC_OBJECT,null,null,'ArrayVideoDownloadSuccessType');
+
+  }
+  
   /**
    * return int (0,1)
    * @param int $songProdID
@@ -5493,17 +6450,60 @@ STR;
     return $response_patron_id;
           
   }
+  
   /**
    * Function Name : getTextUTF
    * Desc : To return UTF8 string
    * @param string text
    * @return string
    */
-   private function getTextUTF($text) {
+  private function getTextUTF($text) {
 
     $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
     return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
   }
+  
+  /**
+   * Function Name : getFullLengthFileURL
+   * Desc : returns full length file url for music audio
+   * @param string FullLengthFileID
+   * @return string
+   */
+  private function getFullLengthFileURL($FullLengthFileID) {
+  
+    $FileData = $this->Files->find('first',array('conditions' => array('FileID' => $FullLengthFileID)));
+    return Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $FileData['Files']['CdnPath']."/".$FileData['Files']['SaveAsName']);
+    
+  }
+
+  /**
+   * Function Name : getFullLengthFileURLFromProdID
+   * Desc : returns full length file url for music audio
+   * @param string SongProdID
+   * @param string provider_type
+   * @return string
+   */
+  private function getFullLengthFileURLFromProdID($SongProdID, $provider_type) {
+  
+    $data = $this->Song->find('first',
+      array('joins' =>
+        array(
+          array(
+            'table' => 'File',
+            'alias' => 'f',
+            'type' => 'inner',
+            'foreignKey' => false,
+
+            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $SongProdID, 'Song.provider_type' => $provider_type)
+          )
+        )
+      )
+    );
+    
+    return Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Full_Files']['CdnPath']."/".$data['Full_Files']['SaveAsName']);   
+    
+  }
+  
   
   /**
    * Function Name : getTotalDownloadCound
@@ -5523,5 +6523,60 @@ STR;
     return $downloadCount + $videoDownloadCount;
     
   }
-
+ 
+  
+  /**
+   * Function Name : setQueueSongs
+   * Desc : delete all & insert given songs for queue
+   * @param int arrSongs
+   * @return int
+   */
+  private function setQueueSongs($arrSongs, $queueID) {
+    
+    $this->QueueDetail->deleteAll(array('queue_id' => $queueID), false);
+    if(!(empty($arrSongs))) {  
+      foreach($arrSongs as $Spid){
+        $Spid = trim($Spid);
+        if('' != $Spid) {
+          $productDetails = $this->Product->find('first',array(
+            'conditions' => array('pid' => $Spid),
+            'fields' => array('ProdID', 'provider_type'),
+            'recursive' => -1
+          ));
+      
+          $albumDetails = $this->Song->find('first',array(
+            'joins' => array(
+                array(
+                    'type' => 'INNER',
+                    'table' => 'Albums',
+                    'alias' => 'Albums',
+                    'foreignKey' => false,
+                    'conditions' => array('Song.ReferenceID = Albums.ProdID', 'Song.provider_type = Albums.provider_type'),        
+                )
+            ),  
+            'conditions' => array(
+              'Song.ProdID' => $productDetails['Product']['ProdID'], 
+              'Song.provider_type' => $productDetails['Product']['provider_type']
+            ),
+            'fields' => array('Albums.ProdID', 'Albums.provider_type'),
+            'recursive' => -1
+          ));
+      
+          $insertArr['queue_id'] = $queueID;
+          $insertArr['song_prodid'] = $productDetails['Product']['ProdID'];
+          $insertArr['song_providertype'] = $productDetails['Product']['provider_type'];
+          $insertArr['album_prodid'] = $albumDetails['Albums']['ProdID'];
+          $insertArr['album_providertype'] = $albumDetails['Albums']['provider_type'];
+          $status = $this->QueueDetail->save($insertArr);
+        }
+      }
+    }
+  
+    return true;
+  }
+ 
+  
+ 
+  
+  
 }
