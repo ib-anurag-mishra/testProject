@@ -880,17 +880,19 @@ function historyDownload(id,libID,patronID)
 			}			
 			else if(msg == 'suces')
 			{
-				var count = response.substring(0,1);
-					if(count == 2){
-						if(languageSet == 'en'){
-							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
-						}else{
-							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
-						}
-					}
-				document.getElementById('download_loader_'+id).style.display = 'none';
-				$('.afterClick').hide();
-				$('.beforeClick').show();				
+				
+                                $('.afterClick').hide();
+				$('.beforeClick').show();
+                                document.getElementById('download_loader_'+id).style.display = 'none';
+                                var count = response.substring(0,1);
+                                if(count == 2){
+                                        if(languageSet == 'en'){
+                                                document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
+                                        }else{
+                                                document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
+                                        }
+                                }			
+								
 			}
 			else
 			{
@@ -974,17 +976,20 @@ function historyDownloadVideo(id,libID,patronID)
 			}			
 			else if(msg == 'suces')
 			{
-				var count = response.substring(0,1);
-					if(count == 2){
-						if(languageSet == 'en'){
-							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
-						}else{
-							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
-						}
-					}
-				document.getElementById('video_download_loader_'+id).style.display = 'none';
+				
+                                document.getElementById('video_download_loader_'+id).style.display = 'none';
 				$('.afterClick_video').hide();
-				$('.beforeClick_video').show();				
+				$('.beforeClick_video').show();	
+                                
+                                var count = response.substring(0,1);
+                                if(count == 2){
+                                        if(languageSet == 'en'){
+                                                document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
+                                        }else{
+                                                document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
+                                        }
+                                }
+							
 			}
 			else
 			{
