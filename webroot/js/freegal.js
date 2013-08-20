@@ -880,19 +880,17 @@ function historyDownload(id,libID,patronID)
 			}			
 			else if(msg == 'suces')
 			{
-				
-                                $('.afterClick').hide();
-				$('.beforeClick').show();
-                                document.getElementById('download_loader_'+id).style.display = 'none';
-                                var count = response.substring(0,1);
-                                if(count == 2){
-                                        if(languageSet == 'en'){
-                                                document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
-                                        }else{
-                                                document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
-                                        }
-                                }			
-								
+				var count = response.substring(0,1);
+					if(count == 2){
+						if(languageSet == 'en'){
+							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
+						}else{
+							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
+						}
+					}
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
 			}
 			else
 			{
@@ -957,9 +955,9 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 
 function historyDownloadVideo(id,libID,patronID)
 {
-	$('.beforeClick_video').hide();
-	$('.afterClick_video').show();
-	document.getElementById('video_download_loader_'+id).style.display = 'block';
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('download_loader_'+id).style.display = 'block';
 	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -970,26 +968,22 @@ function historyDownloadVideo(id,libID,patronID)
 			if(msg == 'error')
 			{
 				alert("Your have already downloaded this song twice.");
-                                document.getElementById('video_download_loader_'+id).style.display = 'none';
 				location.reload();
 				return false;
 			}			
 			else if(msg == 'suces')
 			{
-				
-                                document.getElementById('video_download_loader_'+id).style.display = 'none';
-				$('.afterClick_video').hide();
-				$('.beforeClick_video').show();	
-                                
-                                var count = response.substring(0,1);
-                                if(count == 2){
-                                        if(languageSet == 'en'){
-                                                document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
-                                        }else{
-                                                document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
-                                        }
-                                }
-							
+				var count = response.substring(0,1);
+					if(count == 2){
+						if(languageSet == 'en'){
+							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
+						}else{
+							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
+						}
+					}
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
 			}
 			else
 			{
@@ -1005,9 +999,9 @@ function historyDownloadVideo(id,libID,patronID)
 
 function historyDownloadVideoOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downloadUrl3)
 {
-	$('.beforeClick_video').hide();
-	$('.afterClick_video').show();
-	document.getElementById('video_download_loader_'+id).style.display = 'block';
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('download_loader_'+id).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
 	finalURL += downloadUrl3;
@@ -1021,7 +1015,7 @@ function historyDownloadVideoOthers(id,libID,patronID,downloadUrl1,downloadUrl2,
 			if(msg == 'error')
 			{
 				alert("Your download limit has exceeded.");
-				document.getElementById('video_download_loader_'+id).style.display = 'none';
+				document.getElementById('download_loader_'+id).style.display = 'none';
 				location.reload();
 				return false;
 			}
@@ -1035,9 +1029,9 @@ function historyDownloadVideoOthers(id,libID,patronID,downloadUrl1,downloadUrl2,
 							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
 						}
 					}
-				$('.afterClick_video').hide();
-				$('.beforeClick_video').show()					
-				document.getElementById('video_download_loader_'+id).style.display = 'none';
+				$('.afterClick').hide();
+				$('.beforeClick').show();					
+				document.getElementById('download_loader_'+id).style.display = 'none';
 				location.href = unescape(finalURL);
 			}
 			else
