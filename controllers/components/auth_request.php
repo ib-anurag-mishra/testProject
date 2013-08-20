@@ -22,11 +22,6 @@ Class AuthRequestComponent extends Object
 		$post_data = array('xml'=>$str);
 		$url = $authUrl;
 		$ch=curl_init();
-                echo "<pre>";
-                print_r($post_data);
-                echo $url;
-                
-                
 		// tell curl target url
 		curl_setopt($ch, CURLOPT_URL, $url);
 		// tell curl we will be sending via POST
@@ -41,10 +36,6 @@ Class AuthRequestComponent extends Object
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 		// make the connection
 		$result = curl_exec($ch);
-                echo "<pre>";
-                print_r($result);
-                echo $url;
-                die;
                 $this->log($str."---".$result,"auth");
                 if($result === false)
                 {
@@ -53,7 +44,6 @@ Class AuthRequestComponent extends Object
 		curl_close($ch);
    		$result =& new Xml($result);
 		$result = Set::reverse($result);
-                
 		return $result;
     }
 
