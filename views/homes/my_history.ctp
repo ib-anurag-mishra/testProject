@@ -123,8 +123,8 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title">
                     <?php 
-						if (strlen($downloadResult['Download']['track_title']) >= 22) {
-							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 22) . '...</span>';							
+						if (strlen($downloadResult['Download']['track_title']) >= 19) {
+							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</span>';							
 						} else {
 							echo $downloadResult['Download']['track_title']; 
 					 	}
@@ -133,8 +133,8 @@ $ieVersion =  ieversion();
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="#">
                                              <?php 
-						if (strlen($downloadResult['Song']['Title']) >= 22) {
-							echo '<span title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 22) . '...</span>';							
+						if (strlen($downloadResult['Song']['Title']) >= 19) {
+							echo '<span title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 19) . '...</span>';							
 						} else {
 							echo $downloadResult['Song']['Title']; 
 					 	}

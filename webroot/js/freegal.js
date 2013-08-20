@@ -864,7 +864,7 @@ function historyDownload(id,libID,patronID)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	document.getElementById('download_loader_'+id).style.display = 'block';
+	//document.getElementById('download_loader_'+id).style.display = 'block';
 	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -888,7 +888,7 @@ function historyDownload(id,libID,patronID)
 							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
 						}
 					}
-				document.getElementById('download_loader_'+id).style.display = 'none';
+				//document.getElementById('download_loader_'+id).style.display = 'none';
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
 			}
@@ -957,7 +957,7 @@ function historyDownloadVideo(id,libID,patronID)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	document.getElementById('download_loader_'+id).style.display = 'block';
+	//document.getElementById('download_loader_'+id).style.display = 'block';
 	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -981,7 +981,7 @@ function historyDownloadVideo(id,libID,patronID)
 							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
 						}
 					}
-				document.getElementById('download_loader_'+id).style.display = 'none';
+				//document.getElementById('download_loader_'+id).style.display = 'none';
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
 			}
