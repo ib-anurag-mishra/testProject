@@ -959,8 +959,7 @@ function historyDownloadVideo(id,libID,patronID)
 {
 	$('.beforeClick_video').hide();
 	$('.afterClick_video').show();
-	//document.getElementById('video_download_loader_'+id).style.display = 'block';
-        $('#video_download_loader_'+id).show();
+	document.getElementById('video_download_loader_'+id).style.display = 'block';
 	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -971,14 +970,14 @@ function historyDownloadVideo(id,libID,patronID)
 			if(msg == 'error')
 			{
 				alert("Your have already downloaded this song twice.");
-                                $('#video_download_loader_'+id).hide();
+                                document.getElementById('video_download_loader_'+id).style.display = 'none';
 				location.reload();
 				return false;
 			}			
 			else if(msg == 'suces')
 			{
 				
-                               $('#video_download_loader_'+id).hide();
+                                document.getElementById('video_download_loader_'+id).style.display = 'none';
 				$('.afterClick_video').hide();
 				$('.beforeClick_video').show();	
                                 
@@ -1008,8 +1007,7 @@ function historyDownloadVideoOthers(id,libID,patronID,downloadUrl1,downloadUrl2,
 {
 	$('.beforeClick_video').hide();
 	$('.afterClick_video').show();
-	//document.getElementById('video_download_loader_'+id).style.display = 'block';
-        $('#video_download_loader_'+id).show();
+	document.getElementById('video_download_loader_'+id).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
 	finalURL += downloadUrl3;
@@ -1023,7 +1021,7 @@ function historyDownloadVideoOthers(id,libID,patronID,downloadUrl1,downloadUrl2,
 			if(msg == 'error')
 			{
 				alert("Your download limit has exceeded.");
-				$('#video_download_loader_'+id).hide();
+				document.getElementById('video_download_loader_'+id).style.display = 'none';
 				location.reload();
 				return false;
 			}
@@ -1039,7 +1037,7 @@ function historyDownloadVideoOthers(id,libID,patronID,downloadUrl1,downloadUrl2,
 					}
 				$('.afterClick_video').hide();
 				$('.beforeClick_video').show()					
-				$('#video_download_loader_'+id).hide();
+				document.getElementById('video_download_loader_'+id).style.display = 'none';
 				location.href = unescape(finalURL);
 			}
 			else
