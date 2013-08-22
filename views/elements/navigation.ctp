@@ -112,7 +112,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php
                                                 } elseif(!$libraryInfo['Library']['show_library_name']) {
                                                 ?>
-                                                   <div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+                                                   <div style="padding-top: 45px;"><?php echo $libraryInfo['Library']['library_name']; ?></div>
                                                 <?php
                                                 } else {
                                                 ?>
