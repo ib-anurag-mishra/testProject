@@ -103,7 +103,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							<input type="text" id="search-text" name="q" value="<?php echo $keyword; ?>" />							
                             <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
 						</form>
-						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
+						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="13" height="13"></button>
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
 					</div>
 					<div class="master-music-search-results">
