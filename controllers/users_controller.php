@@ -543,9 +543,17 @@ Class UsersController extends AppController
 			//writing to memcache and writing to both the memcached servers
 			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
-				$redirectUrl = $this->Session->read('referral_url');
-				$this->Session->destroy();
-				$this->redirect($redirectUrl, null, true);
+//				$redirectUrl = $this->Session->read('referral_url');
+//				$this->Session->destroy();
+//				$this->redirect($redirectUrl, null, true);
+                                                                
+                                $redirectUrl = $this->Session->read('referral_url');
+                                $this->deleteSessionVars();
+                                $this->Session->destroy();
+                                $this->Cookie->destroy();
+                                setcookie('referer',$referral[0],-3600,'/','freegalmusic.com');
+                                $this->redirect($redirectUrl, null, true);
+                                
 			}
 			elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
 				if($this->Session->read('referral')){
