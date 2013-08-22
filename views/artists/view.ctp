@@ -162,7 +162,7 @@
                                                                         if($libraryDownload == '1' && $patronDownload == '1')
                                                                         {	
 
-                                                                                $albumSong['Song']['status'] = 'avail1';
+                                                                                //$albumSong['Song']['status'] = 'avail1';
                                                                                 if(isset($albumSong['Song']['status']) && ($albumSong['Song']['status'] != 'avail')) {
 
                                                                 ?>

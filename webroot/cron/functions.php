@@ -191,7 +191,7 @@ function resetDownloads()
                 mysql_query($sql);
             }
         }
-
+/*
         $libraryId = $resultsArr['id'];	
         $sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	
         $result = mysql_query($sql);
@@ -206,6 +206,8 @@ function resetDownloads()
             $qry = "UPDATE wishlists SET `delete_on` = '".$nextDay."' WHERE `library_id` = ".$libraryId;		
             mysql_query($qry);
         }
+ * 
+ */
     }
 }
 
