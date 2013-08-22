@@ -119,7 +119,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8">							
                             <select name="type" id="master-filter">
-								<option value="all">All</option>
+								<option value="all">Search All</option>
 								<option value="album">Albums</option>
 								<option value="artist">Artist</option>
 								<option value="composer">Composers</option>
