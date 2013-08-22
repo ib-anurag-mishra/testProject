@@ -91,8 +91,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8">							
+                            <select name="type" id="master-filter">
+								<option value="all">All</option>
+								<option value="album">Albums</option>
+								<option value="artist">Artist</option>
+								<option value="composer">Composers</option>
+								<option value="genre">Genres</option>
+								<option value="song">Songs</option>
+								<option value="video">Videos</option>
+							</select>
 							<input type="text" id="search-text" name="q" value="<?php echo $keyword; ?>" />							
-                            <input type="hidden" name="type" id="header-search-type" value="all" />
+                            <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
 						</form>
 						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
