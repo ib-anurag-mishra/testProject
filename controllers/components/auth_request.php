@@ -43,6 +43,8 @@ Class AuthRequestComponent extends Object
 		$result = curl_exec($ch);
                 $this->log($str."---".$result,"auth");
                 
+                echo "Result: ".$result;
+                
                 if($result === false)
                 {
                     $this->log('Curl error: ' . curl_error($ch),"auth");
