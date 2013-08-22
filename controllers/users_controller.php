@@ -548,9 +548,11 @@ Class UsersController extends AppController
 //				$this->redirect($redirectUrl, null, true);
                                                                 
                                 $redirectUrl = $this->Session->read('referral_url');
-                                //$this->deleteSessionVars();
+                                //$this->deleteSessionVars();                                
                                 $this->Session->destroy();
                                 $this->Cookie->destroy();
+                                $this->Cookie->delete('baker_id');
+                                setcookie("baker_id", "", time()-3600);
                                 setcookie('referer',$referral[0],-3600,'/','freegalmusic.com');
                                 $this->redirect($redirectUrl, null, true);
                                 
