@@ -229,7 +229,9 @@ if ($this->Session->read('Config.language') == 'en') {
             <?php
                 }
             ?>
-
+            <!--[if IE 8]>
+                <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
+            <![endif]-->
 
             <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>  
             
