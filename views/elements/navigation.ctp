@@ -91,8 +91,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8">							
+                            <select name="type" id="master-filter">
+								<option value="all">All</option>
+								<option value="album">Albums</option>
+								<option value="artist">Artist</option>
+								<option value="composer">Composers</option>
+								<option value="genre">Genres</option>
+								<option value="song">Songs</option>
+								<option value="video">Videos</option>
+							</select>
 							<input type="text" id="search-text" name="q" value="<?php echo $keyword; ?>" />							
-                            <input type="hidden" name="type" id="header-search-type" value="all" />
+                            <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
 						</form>
 						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
@@ -263,7 +272,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <ul class="clearfix">
 			<li class="regular"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
                         <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
-                        <li class="most-popular"><a href="#" class="<?php echo $mostPopularCss; ?>" style="cursor:default"><?php __('Most Popular'); ?></a></li>
+                        <li class="most-popular"><?php if($this->Session->read("patron")){ echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); } else { echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'us_top_10')); } ?></li>
                         <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss)); ?></li></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   
                         <li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss)); ?></li>
