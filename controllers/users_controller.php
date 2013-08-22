@@ -1756,7 +1756,7 @@ Class UsersController extends AppController
 						$authUrl = Configure::read('App.AuthUrl')."idlogin_validation";
 					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					//echo $result; echo "hiii";exit;
+					echo $result; echo "hiii";exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
