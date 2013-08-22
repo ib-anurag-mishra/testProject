@@ -21,6 +21,10 @@ Class AuthRequestComponent extends Object
 		}
 		$post_data = array('xml'=>$str);
 		$url = $authUrl;
+                
+                echo "IN Auth Request<pre>";
+                print_r($post_data);
+                
 		$ch=curl_init();
 		// tell curl target url
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -37,6 +41,7 @@ Class AuthRequestComponent extends Object
 		// make the connection
 		$result = curl_exec($ch);
                 $this->log($str."---".$result,"auth");
+                die;
                 if($result === false)
                 {
                     $this->log('Curl error: ' . curl_error($ch),"auth");
