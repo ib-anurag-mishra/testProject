@@ -544,11 +544,8 @@ Class UsersController extends AppController
 			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 				$redirectUrl = $this->Session->read('referral_url');
-				$this->Session->destroy();				                                
-                                $this->deleteSessionVars();                               
-                                $this->Cookie->destroy();
-                                setcookie('referer',$redirectUrl,-3600,'/','freegalmusic.com'); 
-                                $this->redirect($redirectUrl, null, true);
+				$this->Session->destroy();
+				$this->redirect($redirectUrl, null, true);
 			}
 			elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
 				if($this->Session->read('referral')){
