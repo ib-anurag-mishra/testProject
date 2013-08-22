@@ -110,8 +110,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     }
                                                     ?>
                                                     <?php
-                                                }
-                                            } else {
+                                                } elseif(!$libraryInfo['Library']['show_library_name']) {
+                                                ?>
+                                                   <div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
+                                               <?php }
+	                                    } else {
                                             ?>
                                             <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
                                            <?php } ?>
