@@ -111,9 +111,14 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     ?>
                                                     <?php
                                                 } elseif(!$libraryInfo['Library']['show_library_name']) {
+                                                    if($libraryInfo['Library']['library_home_url'] != "") {
                                                 ?>
-                                                   <div style="padding-top: 45px;"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+                                                   <div style="padding-top: 45px;"><a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><?php echo $libraryInfo['Library']['library_name']; ?></a></div>
                                                 <?php
+                                                    } else { ?>
+                                                   <div style="padding-top: 45px;"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+                                                   <?php
+                                                    }
                                                 } else {
                                                 ?>
                                                 <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
