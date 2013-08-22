@@ -88,7 +88,34 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
     <div class="wrapper">
 			<!-- site header -->
 			<header class="site-header">                                    
-                                    <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
+                                        <div>
+                                            <?php
+                                            $url = $_SERVER['SERVER_NAME'];
+                                            $host = explode('.', $url);
+                                            $subdomains = array_slice($host, 0, count($host) - 2 );									
+                                            $subdomains = $subdomains[0] ;  
+
+                                            if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){
+                                                if($libraryInfo['Library']['library_image_name'] != "") {
+                                                    ?>
+                                                    <?php
+                                                    if($libraryInfo['Library']['library_home_url'] != "") {
+                                                    ?>
+                                                        <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;"></a>
+                                                        <?php
+                                                    }else{
+                                                        ?>
+                                                        <img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;">
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                    <?php
+                                                }
+                                            } else {
+                                            ?>
+                                            <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
+                                           <?php } ?>
+                                        </div>
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8">							
                             <select name="type" id="master-filter">
