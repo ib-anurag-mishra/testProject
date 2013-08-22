@@ -42,12 +42,13 @@ Class AuthRequestComponent extends Object
 		// make the connection
 		$result = curl_exec($ch);
                 $this->log($str."---".$result,"auth");
-                die;
+                
                 if($result === false)
                 {
                     $this->log('Curl error: ' . curl_error($ch),"auth");
                 }
 		curl_close($ch);
+                die;
    		$result =& new Xml($result);
 		$result = Set::reverse($result);
 		return $result;
