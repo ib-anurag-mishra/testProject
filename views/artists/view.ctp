@@ -162,7 +162,7 @@
                                                                         if($libraryDownload == '1' && $patronDownload == '1')
                                                                         {	
 
-                                                                                $albumSong['Song']['status'] = 'avail1';
+                                                                                //$albumSong['Song']['status'] = 'avail1';
                                                                                 if(isset($albumSong['Song']['status']) && ($albumSong['Song']['status'] != 'avail')) {
 
                                                                 ?>
@@ -178,7 +178,7 @@
                                                                                         <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait..");?>
                                                                                         <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span> </a> </span>
                                                                                            
-                                                                </form>													
+                                                                                </form>													
 
                                                         <?php	
                                                                                 } else {
