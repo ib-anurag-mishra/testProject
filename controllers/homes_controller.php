@@ -2328,15 +2328,7 @@ STR;
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];		
 		$patronid = base64_decode($_REQUEST['patronid']);
-		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));      
-                echo "<br>Query: ".$this->Currentpatron->lastQuery();
-                echo "<br>libid: ".$libid;
-                echo "<br>patronid: ".$patronid;    
-                echo "<br>Count: ".count($currentPatron);         
-                echo "<pre>currentpatron"; print_r($currentPatron); 
-                echo "<pre>post"; print_r($_POST); 
-                echo "<pre>request"; print_r($_REQUEST); 
-                
+		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));                      
                 
 		if(count($currentPatron) > 0){
 			$updateArr = array();
