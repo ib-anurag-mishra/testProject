@@ -560,8 +560,8 @@ $ieVersion =  ieversion();
 					?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResultsVideo['WishlistVideo']['ArtistText']);?>/<?= $wishlistResultsVideo['WishlistVideo']['ReferenceID']; ?>/<?= base64_encode($wishlistResultsVideo['WishlistVideo']['provider_type']);?>"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
-					<div class="artist-name"><a href="/artists/album/<?= base64_encode($wishlistResultsVideo['WishlistVideo']['ArtistText']); ?>">
+					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResultsVideo['Video']['ArtistText']);?>/<?= $wishlistResultsVideo['Video']['ReferenceID']; ?>/<?= base64_encode($wishlistResultsVideo['WishlistVideo']['provider_type']);?>"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
+					<div class="artist-name"><a href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 15) {
 							echo '<span title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .substr($wishlistResultsVideo['WishlistVideo']['artist'], 0, 15) . '...</span>';							
