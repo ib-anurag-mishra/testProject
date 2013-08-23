@@ -510,7 +510,7 @@ class SolrComponent extends Object {
                             $combinationArray[] = $word;
                         }
                     }
-                    
+                    print_r($combinationArray); die;
                     
                     if(count($keywords)>= 2){
                         // there are more than one word
