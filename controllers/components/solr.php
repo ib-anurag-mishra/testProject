@@ -497,9 +497,9 @@ class SolrComponent extends Object {
                 case 'album':
                     if(preg_match('/artist\:/i',$keyword)){
                         $position = strpos($searchkeyword,'artist\:');
-                        $artist = substr($searchkeyword, $position+7);
-                        echo $artist; die;
+                        $artist = substr($searchkeyword, $position+8);
                         $searchkeyword = substr($searchkeyword, 0, $position);
+                        echo $searchkeyword;
                         $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$artist.') OR CComposer:('.$searchkeyword.'))';
                     } else {
                         $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
