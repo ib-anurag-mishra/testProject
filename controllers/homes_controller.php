@@ -2318,7 +2318,10 @@ STR;
 		$libid = $_REQUEST['libid'];
 		$patronid = $_REQUEST['patronid'];
 		$patronid = $_REQUEST['patronid'];
-		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => "'".$patronid."'")));                
+		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => "'".$patronid."'")));             
+                echo "<br>libid: ".$libid;
+                echo "<br>patronid: ".$patronid;                
+                echo "<pre>"; print_r($currentPatron); 
                 
 		if(count($currentPatron) > 0){
 			$updateArr = array();
