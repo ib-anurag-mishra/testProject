@@ -545,6 +545,8 @@ Class UsersController extends AppController
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 				$redirectUrl = $this->Session->read('referral_url');
 				$this->Session->destroy();
+                                $this->Cookie->destroy();
+                                setcookie('referer',$referral[0],-3600,'/','freegalmusic.com');
 				$this->redirect($redirectUrl, null, true);
 			}
 			elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
