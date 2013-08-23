@@ -495,9 +495,7 @@ class SolrComponent extends Object {
                     $field = 'Genre';
                     break;
                 case 'album':
-                    echo stristr($searchkeyword,'artist:');
-                    die;
-                    if(stristr($searchkeyword,'artist:')){
+                    if(preg_match('/artist:/',$searchkeyword)){
                         $position = strpos($searchkeyword,'artist:');
                         $artist = substr($searchkeyword, $position+7);
                         $searchkeyword = substr($searchkeyword, 0, $position);
