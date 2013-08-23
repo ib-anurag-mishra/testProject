@@ -233,7 +233,7 @@ $ieVersion =  ieversion();
 					?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($videoDownloadResult['Videodownload']['ArtistText']);?>/<?= $videoDownloadResult['Videodownload']['ReferenceID']; ?>/<?= base64_encode($videoDownloadResult['Videodownload']['provider_type']);?>">
+					<div class="album-title"><a href="/artists/view/<?=base64_encode($videoDownloadResult['Video']['ArtistText']);?>/<?= $videoDownloadResult['Video']['ReferenceID']; ?>/<?= base64_encode($videoDownloadResult['Videodownload']['provider_type']);?>">
                                              <?php 
 						if (strlen($videoDownloadResult['Video']['Title']) >= 22) {
 							echo '<span title="'.htmlentities($videoDownloadResult['Video']['Title']).'">' .substr($videoDownloadResult['Video']['Title'], 0, 22) . '...</span>';							
@@ -242,7 +242,7 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                                             </a></div>
-					<div class="artist-name"><a href="/artists/album/<?= base64_encode($videoDownloadResult['Videodownload']['ArtistText']); ?>">
+					<div class="artist-name"><a href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19) {
 							echo '<span title="'.htmlentities($videoDownloadResult['Videodownload']['artist']).'">' .substr($videoDownloadResult['Videodownload']['artist'], 0, 19) . '...</span>';							
