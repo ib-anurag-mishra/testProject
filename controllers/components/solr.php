@@ -480,7 +480,7 @@ class SolrComponent extends Object {
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
-        $keywords = explode(' ',$searchkeyword);
+        $keywords = explode(' ',strtolower($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
                 self::initialize(null);
