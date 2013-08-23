@@ -1449,33 +1449,63 @@ STR;
         }     
         //--------------------------------Default Freegal Queues End--------------------------------------------------------------
        
-    */  
-        //--------------------------------set each music video in the cache start-------------------------------------------------        
+    */
+      
+      //sets cache of videos
+      $this->setVideoCacheVar();
+
+      //sets cache for Library Top Ten
+      $this->setLibraryTopTenCache();
+      
+
+
+      echo "============" . date("Y-m-d H:i:s") . "===============";
+      $this->requestAction('/Resetcache/genrateXML');
+      exit;
+    
+    }
+    
+    /**
+      * @function setVideoCacheVar
+      * @desc sets video cache Variable
+      */
+    
+    function setVideoCacheVar(){
+    
+      //--------------------------------set each music video in the cache start-------------------------------------------------        
         
-       
- 
-       $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
-       
-       foreach($musicVideoRecs as $musicVideoRec){
+      $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
+        
+      $territories = $this->Territory->find("all"); 
+      for($mm=0;$mm<count($territories);$mm++)  {
+        $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
+      }
+        
+      $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+      $siteConfigData = $this->Album->query($siteConfigSQL);
+      $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+      
+      for($i=0;$i<count($territoryNames);$i++){
+		
+        $territory = $territoryNames[$i];
+          
+        if(0 == $multiple_countries){
+          $countryPrefix = '';
+          $this->Country->setTablePrefix('');
+        } else {
+          $countryPrefix = strtolower($territory)."_";
+          $this->Country->setTablePrefix($countryPrefix);
+        }
+        
+        foreach($musicVideoRecs as $musicVideoRec){
            
            $indiMusicVidID =  $musicVideoRec['Video']['ProdID'];
            
            $individualVideoSQL  =
-            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
-            Sample_Files.SaveAsName,
-            Full_Files.CdnPath,
-            Full_Files.SaveAsName,
-            File.CdnPath,
-            File.SourceURL,
-            File.SaveAsName,
-            Sample_Files.FileID,
-            Country.Territory,
-            Country.SalesDate
-            FROM video as Video
-            LEFT JOIN 
-            {$countryPrefix}countries As Country ON (Video.ProdID = Country.ProdID AND Video.provider_type = Country.provider_type)
-            LEFT JOIN
-            File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration,
+            Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,
+            Full_Files.CdnPath,Full_Files.SaveAsName,File.CdnPath,File.SourceURL,File.SaveAsName
+            FROM video as Video            
             LEFT JOIN
             File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
             LEFT JOIN
@@ -1559,16 +1589,21 @@ STR;
                     }
                     //echo "<pre>"; print_r($TopVideoGenreData); die;
             }            
-     } 
+        } 
+        
+      }  
        
-       //--------------------------------set each music video in the cache end---------------------------------------------------
-        
-       
-        
-        
-        
-       
-
+      //--------------------------------set each music video in the cache end---------------------------------------------------
+    
+    }
+    
+    /**
+      * @function setLibraryTopTenCache
+      * @desc sets Cache for LibraryTopTen
+      */
+    
+    function setLibraryTopTenCache(){
+      
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
 
         $libraryDetails = $this->Library->find('all', array(
@@ -2007,15 +2042,18 @@ STR;
                 echo "<br />library top 10 videos cache set for lib: $libId $country <br />";
             }
             
-           //library top 10 cache set for videos end
-           
+           //library top 10 cache set for videos end  
         }
-        
-
-        //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
-
-        echo "============" . date("Y-m-d H:i:s") . "===============";
-        $this->requestAction('/Resetcache/genrateXML');
-        exit;
+      //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
+    
+    
+    
+    
     }
+    
+    
+    
+    
+    
+
 }
