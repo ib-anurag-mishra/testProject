@@ -499,7 +499,7 @@ class SolrComponent extends Object {
                     $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
                     if(count($keywords)>= 2){
                         // there are more than one word
-                        $query .= 'OR CTitle:('.implode(') OR CTitle:(',$keywords).') OR CArtistText:('.implode(') OR CArtistText:(',$keywords).') OR CComposer:('.implode(') OR CComposer:(',$keywords).'))';
+                        $query .= ' OR CTitle:('.implode(') OR CTitle:(',$keywords).') OR CArtistText:('.implode(') OR CArtistText:(',$keywords).') OR CComposer:('.implode(') OR CComposer:(',$keywords).'))';
                     }
                     //$field = 'Title';
                     $field = 'rpjoin';
@@ -528,7 +528,7 @@ class SolrComponent extends Object {
             }
 
             $query = $query . ' AND Territory:' . $country;
-            // echo $query; // die;
+            echo $query; // die;
             if ($page == 1) {
                 $start = 0;
             } else {
