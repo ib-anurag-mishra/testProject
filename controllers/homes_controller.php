@@ -2328,7 +2328,7 @@ STR;
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];		
 		$patronid = base64_decode($_REQUEST['patronid']);
-		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => "'".$patronid."'")));      
+		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));      
                 echo "<br>Query: ".$this->Currentpatron->lastQuery();
                 echo "<br>libid: ".$libid;
                 echo "<br>patronid: ".$patronid;                
