@@ -103,7 +103,7 @@
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <?php
-                    if(!empty($downloads)) {
+                    if(!empty($downloads) || !empty($videoDownloads)) {
                     ?>
                     <tr>
                         <td colspan="3" align="center">
