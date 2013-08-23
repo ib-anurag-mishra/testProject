@@ -495,29 +495,14 @@ class SolrComponent extends Object {
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
-                    $keywords = explode(' ',strtolower($keyword));
-                    
-                    //create combinations of words and remove blank words
-                    $combinationArray = array();
-                    foreach($keywords as $key=>$word){
-                        if(empty($word)){
-                            unset($keywords[$key]); 
-                        } else {
-                            foreach($combinationArray as $combinationword){
-                                $combinationArray[] = $combinationword.'\ '.$word;
-                            }
-                            $combinationArray[] = $word;
-                        }
+                    if(stristr($searchkeyword,'artist:')){
+                        $position = strpos($searchkeyword,'artist:');
+                        $artist = substr($searchkeyword, $position+7);
+                        $searchkeyword = substr($searchkeyword, 0, $position);
+                        $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$artist.') OR CComposer:('.$searchkeyword.'))';
+                    } else {
+                        $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
                     }
-                    // print_r($combinationArray); die;
-                    
-                    if(count($keywords)>= 2){
-                        // there are more than one word
-                        $query = '('.$query.' OR (CTitle:('.implode(') OR CTitle:(',$keywords).') OR CArtistText:('.implode(') OR CArtistText:(',$keywords).') OR CComposer:('.implode(') OR CComposer:(',$keywords).'))';
-                        $query .= ' OR (CTitle:('.implode(') OR CTitle:(',$combinationArray).') OR CArtistText:('.implode(') OR CArtistText:(',$combinationArray).') OR CComposer:('.implode(') OR CComposer:(',$combinationArray).')))';
-                    }
-                    
                     //$field = 'Title';
                     $field = 'rpjoin';
                     break;
