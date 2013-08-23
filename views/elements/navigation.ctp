@@ -61,8 +61,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
                             <input type="submit" class="save" value="Create New Queue"></input>
-                    </form>
                     </div>
+                    </form>
             </div>
         
             <div class="delete-queue-dialog-box">
