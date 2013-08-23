@@ -2322,6 +2322,7 @@ STR;
                 echo "<br>libid: ".$libid;
                 echo "<br>patronid: ".$patronid;                
                 echo "<pre>"; print_r($currentPatron); 
+                die;
                 
 		if(count($currentPatron) > 0){
 			$updateArr = array();
