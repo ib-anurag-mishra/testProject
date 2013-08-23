@@ -480,7 +480,6 @@ class SolrComponent extends Object {
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
-        $keywords = explode(' ',strtolower($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
                 self::initialize(null);
@@ -497,10 +496,30 @@ class SolrComponent extends Object {
                     break;
                 case 'album':
                     $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
+                    $keywords = explode(' ',strtolower($keyword));
+                    
+                    //create combinations of words and remove blank words
+                    $combinationArray = array();
+                    $counter = 0;
+                    foreach($keywords as $key=>$word){
+                        if(empty($word)){
+                            unset($keywords[$key]); 
+                        } else {
+                            if($counter > 0){
+                                $combinationArray[$counter] = $combinationArray[$counter - 1].'\ '.$word;
+                            } else {
+                                $combinationArray[$counter] = $word;
+                            }
+                        }
+                    }
+                    
+                    
                     if(count($keywords)>= 2){
                         // there are more than one word
                         $query .= ' OR (CTitle:('.implode(') OR CTitle:(',$keywords).') OR CArtistText:('.implode(') OR CArtistText:(',$keywords).') OR CComposer:('.implode(') OR CComposer:(',$keywords).'))';
+                        $query .= ' OR (CTitle:('.implode(') OR CTitle:(',$combinationArray).') OR CArtistText:('.implode(') OR CArtistText:(',$combinationArray).') OR CComposer:('.implode(') OR CComposer:(',$combinationArray).'))';
                     }
+                    
                     //$field = 'Title';
                     $field = 'rpjoin';
                     break;
