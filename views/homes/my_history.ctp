@@ -233,7 +233,7 @@ $ieVersion =  ieversion();
 					?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($videoDownloadResult['Video']['ArtistText']);?>/<?= $videoDownloadResult['Video']['ReferenceID']; ?>/<?= base64_encode($videoDownloadResult['Video']['provider_type']);?>">
+					<div class="album-title"><a href="#">
                                              <?php 
 						if (strlen($videoDownloadResult['Video']['Title']) >= 22) {
 							echo '<span title="'.htmlentities($videoDownloadResult['Video']['Title']).'">' .substr($videoDownloadResult['Video']['Title'], 0, 22) . '...</span>';							
@@ -280,8 +280,7 @@ $ieVersion =  ieversion();
                                                             <?php if($ieVersion > 8 || $ieVersion < 0){ ?>
                                                                     <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
                                                             <?php } else {?>
-                                                                <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
-
+                                                                    <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
                                                             <?php } ?>
 							</span>
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
