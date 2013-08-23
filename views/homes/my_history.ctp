@@ -233,7 +233,7 @@ $ieVersion =  ieversion();
 					?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($videoDownloadResult['Video']['ArtistText']);?>/<?= $videoDownloadResult['Video']['ReferenceID']; ?>/<?= base64_encode($videoDownloadResult['Videodownload']['provider_type']);?>">
+					<div class="album-title"><a href="/artists/view/<?=base64_encode($videoDownloadResult['Video']['ArtistText']);?>/<?= $videoDownloadResult['Video']['ReferenceID']; ?>/<?= base64_encode($videoDownloadResult['Video']['provider_type']);?>">
                                              <?php 
 						if (strlen($videoDownloadResult['Video']['Title']) >= 22) {
 							echo '<span title="'.htmlentities($videoDownloadResult['Video']['Title']).'">' .substr($videoDownloadResult['Video']['Title'], 0, 22) . '...</span>';							
