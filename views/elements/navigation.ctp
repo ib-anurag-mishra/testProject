@@ -61,9 +61,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
                             <input type="submit" class="save" value="Create New Queue"></input>
+                    </div>
                     </form>
                     </div>
-            </div>
         
             <div class="delete-queue-dialog-box">
                 
@@ -105,7 +105,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         <?php
                                                     }else{
                                                         ?>
-                                                        <img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;">
+                                                        <img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;" />
                                                         <?php
                                                     }
                                                     ?>
@@ -125,15 +125,24 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                <?php }
 	                                    } else {
                                             ?>
-                                            <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
+                                            <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108" /></a></h1>
                                            <?php } ?>
                                         </div>
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8">							
+                            <select name="type" id="master-filter">
+								<option value="all">Search All</option>
+								<option value="album">Albums</option>
+								<option value="artist">Artist</option>
+								<option value="composer">Composers</option>
+								<option value="genre">Genres</option>
+								<option value="song">Songs</option>
+								<option value="video">Videos</option>
+							</select>
 							<input type="text" id="search-text" name="q" value="<?php echo $keyword; ?>" />							
-                            <input type="hidden" name="type" id="header-search-type" value="all" />
+                            <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
 						</form>
-						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
+						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="13" height="13"></button>
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
 					</div>
 					<div class="master-music-search-results">
