@@ -530,7 +530,7 @@ class SolrComponent extends Object {
             }
 
             $query = $query . ' AND Territory:' . $country;
-            echo $query; // die;
+            // echo $query; // die;
             if ($page == 1) {
                 $start = 0;
             } else {
