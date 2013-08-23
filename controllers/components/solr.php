@@ -517,8 +517,8 @@ class SolrComponent extends Object {
                     
                     if(count($keywords)>= 2){
                         // there are more than one word
-                        $query .= ' OR (CTitle:('.implode(') OR CTitle:(',$keywords).') OR CArtistText:('.implode(') OR CArtistText:(',$keywords).') OR CComposer:('.implode(') OR CComposer:(',$keywords).'))';
-                        $query .= ' OR (CTitle:('.implode(') OR CTitle:(',$combinationArray).') OR CArtistText:('.implode(') OR CArtistText:(',$combinationArray).') OR CComposer:('.implode(') OR CComposer:(',$combinationArray).'))';
+                        $query = '('.$query.' OR (CTitle:('.implode(') OR CTitle:(',$keywords).') OR CArtistText:('.implode(') OR CArtistText:(',$keywords).') OR CComposer:('.implode(') OR CComposer:(',$keywords).'))';
+                        $query .= ' OR (CTitle:('.implode(') OR CTitle:(',$combinationArray).') OR CArtistText:('.implode(') OR CArtistText:(',$combinationArray).') OR CComposer:('.implode(') OR CComposer:(',$combinationArray).')))';
                     }
                     
                     //$field = 'Title';
