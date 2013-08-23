@@ -108,6 +108,7 @@ $ieVersion =  ieversion();
                 {
                     $i = 1;
                     foreach($downloadResults as $key => $downloadResult):
+                        print_r($downloadResult);
                 ?>
 				
 				<div class="row clearfix">
