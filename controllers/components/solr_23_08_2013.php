@@ -480,7 +480,6 @@ class SolrComponent extends Object {
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
-        $keywords = explode(' ',$searchkeyword);
         if (!empty($country)) {
             if (!isset(self::$solr)) {
                 self::initialize(null);
@@ -497,10 +496,6 @@ class SolrComponent extends Object {
                     break;
                 case 'album':
                     $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
-                    if(count($keywords)>= 2){
-                        // there are more than one word
-                        $query .= 'OR CTitle:('.implode(') OR CTitle:(',$keywords).') OR CArtistText:('.implode(') OR CArtistText:(',$keywords).') OR CComposer:('.implode(') OR CComposer:(',$keywords).'))';
-                    }
                     //$field = 'Title';
                     $field = 'rpjoin';
                     break;
