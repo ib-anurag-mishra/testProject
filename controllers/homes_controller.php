@@ -2321,7 +2321,9 @@ STR;
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => "'".$patronid."'")));             
                 echo "<br>libid: ".$libid;
                 echo "<br>patronid: ".$patronid;                
-                echo "<pre>"; print_r($currentPatron); 
+                echo "<pre>currentpatron"; print_r($currentPatron); 
+                echo "<pre>post"; print_r($_POST); 
+                echo "<pre>request"; print_r($_REQUEST); 
                 die;
                 
 		if(count($currentPatron) > 0){
