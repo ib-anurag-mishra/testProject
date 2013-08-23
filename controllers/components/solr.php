@@ -510,6 +510,7 @@ class SolrComponent extends Object {
                             } else {
                                 $combinationArray[$counter] = $word;
                             }
+                            $counter++;
                         }
                     }
                     
