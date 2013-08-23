@@ -207,7 +207,6 @@ $ieVersion =  ieversion();
                 {
                     //$i = 1;
                     foreach($videoDownloadResults as $key => $videoDownloadResult):
-                        print_r($videoDownloadResult);
                     /*$class = null;
                     if ($i++ % 2 == 0) {
                         $class = ' class="altrow"';
