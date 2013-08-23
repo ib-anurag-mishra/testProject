@@ -534,7 +534,6 @@ $ieVersion =  ieversion();
                 {
                    //$i = 1;
                     foreach($wishlistResultsVideos as $key => $wishlistResultsVideo):
-                        print_r($wishlistResultsVideo);
                     /*$class = null;
                     if ($i++ % 2 == 0) {
                         $class = ' class="altrow"';
