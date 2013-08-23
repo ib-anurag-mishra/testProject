@@ -2336,7 +2336,7 @@ STR;
                 echo "<pre>currentpatron"; print_r($currentPatron); 
                 echo "<pre>post"; print_r($_POST); 
                 echo "<pre>request"; print_r($_REQUEST); 
-                die;
+                
                 
 		if(count($currentPatron) > 0){
 			$updateArr = array();
