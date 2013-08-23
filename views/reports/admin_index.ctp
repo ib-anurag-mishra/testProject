@@ -448,7 +448,7 @@
                     
                     <?php
                     }
-                    elseif(empty($downloads) && empty($errors) && isset($this->data)) {
+                    elseif(empty($downloads) && empty($videoDownloads) && empty($errors) && isset($this->data)) {
                     ?>
                     <tr>
                         <td colspan="6" align="center"><label>There are not downloads found for the selected criteria.</label></td>
