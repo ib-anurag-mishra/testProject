@@ -133,7 +133,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             <select name="type" id="master-filter">
 								<option value="all">Search All</option>
 								<option value="album">Albums</option>
-								<option value="artist">Artist</option>
+								<option value="artist">Artists</option>
 								<option value="composer">Composers</option>
 								<option value="genre">Genres</option>
 								<option value="song">Songs</option>
