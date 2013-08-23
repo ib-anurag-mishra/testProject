@@ -1158,6 +1158,7 @@ function approvePatron(libid,patronid)
 	var _loaderDiv = $("#loaderDiv");
 	_loaderDiv.show();
 	var data = "libid="+libid+"&patronid="+patronid;
+        alert(data);
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/approvePatron", // URL to request
