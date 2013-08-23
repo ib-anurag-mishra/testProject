@@ -2345,6 +2345,7 @@ STR;
 			}
 			$updateArr['is_approved'] = 'yes';
 			$this->Currentpatron->save($updateArr);
+                        echo "<br>Query: ".$this->Currentpatron->lastQuery();
 			$this->Session->write('approved', 'yes');
 		}
 		echo "Success";
