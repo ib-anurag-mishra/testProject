@@ -460,7 +460,7 @@ if ($this->Session->read('Config.language') == 'en') {
                                 </div>
                                 <b>You need to accept the terms and conditions to browse the site.</b><br />
                                 <div style="overflow:auto;height:200px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;"><?php echo $page->getPageContent('terms'); ?></div><br />
-                                <input type="button" value="Accept" onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>','<?php echo urlencode($this->Session->read('patron')); ?>');"> <input type="button" value="Deny" onclick="Javascript: history.back();">
+                                <input type="button" value="Accept" onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>','<?php echo base64_encode($this->Session->read('patron')); ?>');"> <input type="button" value="Deny" onclick="Javascript: history.back();">
                                         </div>
                                         </div>
                                     <?php } ?>

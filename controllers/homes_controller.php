@@ -2327,7 +2327,7 @@ STR;
 		Configure::write('debug', 0);
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];		
-		$patronid = urldecode($_REQUEST['patronid']);
+		$patronid = base64_decode($_REQUEST['patronid']);
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => "'".$patronid."'")));             
                 echo "<br>libid: ".$libid;
                 echo "<br>patronid: ".$patronid;                
