@@ -805,7 +805,7 @@ class SearchController extends AppController {
                                 $widthRight = "300px";
                             } else {
                                 $widthLeft = "65px";
-                                $widthRight = "180px";
+                                $widthRight = "170px";
                             }
                             
                             $regex = "/^$queryVar/i";
