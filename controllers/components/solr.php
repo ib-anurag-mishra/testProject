@@ -500,17 +500,14 @@ class SolrComponent extends Object {
                     
                     //create combinations of words and remove blank words
                     $combinationArray = array();
-                    $counter = 0;
                     foreach($keywords as $key=>$word){
                         if(empty($word)){
                             unset($keywords[$key]); 
                         } else {
-                            if($counter > 0){
-                                $combinationArray[$counter] = $combinationArray[$counter - 1].'\ '.$word;
-                            } else {
-                                $combinationArray[$counter] = $word;
+                            foreach($combinationArray as $combinationword){
+                                $combinationArray[] = $combinationword.'\ '.$word;
                             }
-                            $counter++;
+                            $combinationArray[] = $word;
                         }
                     }
                     
