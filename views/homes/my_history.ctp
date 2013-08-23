@@ -108,7 +108,6 @@ $ieVersion =  ieversion();
                 {
                     $i = 1;
                     foreach($downloadResults as $key => $downloadResult):
-                        print_r($downloadResult);
                 ?>
 				
 				<div class="row clearfix">
@@ -208,6 +207,7 @@ $ieVersion =  ieversion();
                 {
                     //$i = 1;
                     foreach($videoDownloadResults as $key => $videoDownloadResult):
+                        print_r($videoDownloadResult);
                     /*$class = null;
                     if ($i++ % 2 == 0) {
                         $class = ' class="altrow"';
