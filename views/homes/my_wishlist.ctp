@@ -560,7 +560,7 @@ $ieVersion =  ieversion();
 					?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResultsVideo['Video']['ArtistText']);?>/<?= $wishlistResultsVideo['Video']['ReferenceID']; ?>/<?= base64_encode($wishlistResultsVideo['Video']['provider_type']);?>"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
+					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResultsVideo['Video']['ArtistText']);?>/<?= $wishlistResultsVideo['Video']['ReferenceID']; ?>/<?= base64_encode($wishlistResultsVideo['Videodownload']['provider_type']);?>"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 15) {
