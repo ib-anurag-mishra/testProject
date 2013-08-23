@@ -1164,6 +1164,7 @@ function approvePatron(libid,patronid)
 		url: webroot+"homes/approvePatron", // URL to request
 		data: data,  // post data
 		success: function(response) {
+                        alert(response);
 			location.reload();
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
