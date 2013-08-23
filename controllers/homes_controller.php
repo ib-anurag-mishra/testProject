@@ -4169,15 +4169,16 @@ STR;
             //GROUP BY  Song.ReferenceID
             $new_releases_albums_rs = $this->Album->query($new_releases_albums_query); 
             foreach($new_releases_albums_rs as $key => $value){
-                if($value['Song']['provider_type'] == 'ioda')
+                /*if($value['Song']['provider_type'] == 'ioda')
                 {
-                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."".$value['File']['SourceURL']);
+                    //$album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."".$value['File']['SourceURL']);
                 }
                 else
                 {
                     $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                }
-                
+                }*/
+                    
+                $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                 $album_img =  Configure::read('App.Music_Path').$album_img;
                 $new_releases_albums_rs[$key]['albumImage'] = $album_img;                             
             }
