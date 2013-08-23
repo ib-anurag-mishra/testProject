@@ -1,14 +1,13 @@
 <?php
 /*
- File Name : download.php
- File Description : Models page for the  downloads table.
+ File Name : download_video_patrons.php
+ File Description : Models page for the  download_video_patrons table.
  Author : m68interactive
 */
 
-class Downloadpatron extends AppModel
+class DownloadVideoPatron extends AppModel
 {
-  var $name = 'Downloadpatron';
-  var $useTable = 'downloadpatrons';
+  var $name = 'DownloadVideoPatron';
 
   
   /*
@@ -16,32 +15,7 @@ class Downloadpatron extends AppModel
    Desc : get array of total patron downloads for the day
   */
   function getTotalPatronDownloadDay($libraryID, $date, $territory) {
-  /*
-    $arr_all_patron_downloads = array();
-    $all_Ids = '';
-    $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '".$territory."'  ORDER BY library_name ASC";
-    $result = mysql_query($sql);
-       
-    while ($row = mysql_fetch_assoc($result)) {    
   
-        $date_arr = explode("/", $date);
-        $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-
-        $libraryID = $row["id"];
-        $libraryName = $row["library_name"]; 
-        $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'"
-                UNION
-                SELECT * FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'") AS table1 GROUP BY patron_id';
-        $patronDownload = $this->query($sql);
-        if(!empty($patronDownload)){
-           $count = count($patronDownload); 
-
-        }
-        $arr_all_patron_downloads[$libraryName] = $count;
-
-    }
-    return $arr_all_patron_downloads;
-   */
     $arr_all_patron_downloads = array();
     $all_Ids = '';
 		$sql = "SELECT id, library_name FROM libraries WHERE library_territory = '".$territory."'  ORDER BY library_name ASC";
@@ -72,7 +46,7 @@ class Downloadpatron extends AppModel
 		}
     
     return $arr_all_patron_downloads;
- }
+  }
   
   /*
    Function Name : getTotalPatronDownloadWeek
@@ -276,33 +250,6 @@ class Downloadpatron extends AppModel
     return $record;
   }
   
-  /*
-   Function Name : getpatronVideoDaysDownloadInformation
-   Desc : lists all the downloads for for the selected day
-  */
-  function getpatronVideoDaysDownloadInformation($libraryID, $date, $territory) {
-    if($libraryID == "all") {
-		  $all_Ids = '';
-		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
-		  $result = mysql_query($sql);
-		  while ($row = mysql_fetch_assoc($result)) {
-				$all_Ids = $all_Ids.$row["id"].",";
-			}
-      $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
-    }
-    else {
-      $lib_condition = "and library_id = ".$libraryID;
-    }
-    $date_arr = explode("/", $date);
-    $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-    //$startDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 00:00:00";
-    //$endDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 23:59:59";
-    $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE download_date ="'.$downloadDate.'" '.$lib_condition.'
-            UNION
-            SELECT * FROM download_video_patrons WHERE download_date ="'.$downloadDate.'" '.$lib_condition.' ) AS table1 GROUP BY patron_id ORDER BY download_date DESC';
-    $record = $this->query($sql);    
-    return $record;
-  }
 
 
   /*
