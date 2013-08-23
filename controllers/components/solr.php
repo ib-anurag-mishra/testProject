@@ -499,7 +499,6 @@ class SolrComponent extends Object {
                         $position = strpos($searchkeyword,'artist\:');
                         $artist = substr($searchkeyword, $position+8);
                         $searchkeyword = substr($searchkeyword, 0, $position);
-                        echo $searchkeyword;
                         $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$artist.') OR CComposer:('.$searchkeyword.'))';
                     } else {
                         $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
