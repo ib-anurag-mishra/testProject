@@ -42,7 +42,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -687,9 +687,20 @@ STR;
 		
                         
                 $this->layout = 'home';           
-                $libId = $this->Session->read('library');
-		$patId = $this->Session->read('patron');
+                $patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
+		$subdomain = $this->Session->read('subdomain');
+                $libId = $this->Session->read('library');
+                
+                if(!$this->Session->read("patron")){
+                    if($subdomain !== '' && $subdomain != 'www' && $subdomain != 'freegalmusic'){
+                        $q_for_subd = $this->Library->find('first', array(
+                            'fields' => 'id',
+                            'conditions' => array('library_subdomain' => $subdomain)
+                        ));
+                        $libId = $q_for_subd['Library']['id'];
+                    }
+                }
                 
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
@@ -2315,10 +2326,18 @@ STR;
     function approvePatron() {
 		Configure::write('debug', 0);
 		$this->layout = false;
-		$libid = $_REQUEST['libid'];
-		$patronid = $_REQUEST['patronid'];
-		$patronid = $_REQUEST['patronid'];
-		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));
+		$libid = $_REQUEST['libid'];		
+		$patronid = base64_decode($_REQUEST['patronid']);
+		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));      
+                echo "<br>Query: ".$this->Currentpatron->lastQuery();
+                echo "<br>libid: ".$libid;
+                echo "<br>patronid: ".$patronid;    
+                echo "<br>Count: ".count($currentPatron);         
+                echo "<pre>currentpatron"; print_r($currentPatron); 
+                echo "<pre>post"; print_r($_POST); 
+                echo "<pre>request"; print_r($_REQUEST); 
+                die;
+                
 		if(count($currentPatron) > 0){
 			$updateArr = array();
 			$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
@@ -2327,6 +2346,7 @@ STR;
 			}
 			$updateArr['is_approved'] = 'yes';
 			$this->Currentpatron->save($updateArr);
+                        echo "<br>Query: ".$this->Currentpatron->lastQuery();
 			$this->Session->write('approved', 'yes');
 		}
 		echo "Success";

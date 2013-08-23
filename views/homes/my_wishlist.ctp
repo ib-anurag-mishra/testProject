@@ -582,8 +582,6 @@ $ieVersion =  ieversion();
 						
 					</div>-->
 					<div class="download">
-                        <a href="#">
-                            
                         <p>
                         <?php
                             $productInfo = $mvideo->getDownloadData($wishlistResultsVideo['WishlistVideo']['ProdID'],$wishlistResultsVideo['WishlistVideo']['provider_type']);
