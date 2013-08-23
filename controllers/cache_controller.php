@@ -1452,7 +1452,7 @@ STR;
     */
       
       //sets cache of videos
-      $this->setVideoCacheVar();
+      //$this->setVideoCacheVar();
 
       //sets cache for Library Top Ten
       $this->setLibraryTopTenCache();
