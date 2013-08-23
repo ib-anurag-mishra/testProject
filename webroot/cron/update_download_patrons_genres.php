@@ -32,6 +32,30 @@ function updateDownloadPatrons($date){
 }
 
 /*
+Function Name : updateDownloadVideoPatrons
+Description : Function to update download_video_patrons table for download reports
+*/
+function updateDownloadVideoPatrons($date){
+  $checkQuery = "SELECT Count(*) as count FROM download_video_patrons WHERE download_date = '".$date."'";
+  $checkRes = mysql_query($checkQuery);
+  $row = mysql_fetch_array($checkRes);
+  if($row['count']!=0){
+    echo "DownloadVideopatrons data already added for the date ".$date;
+    mailUpdate(1,$date,"DownloadVideopatrons data already added for the date ".$date);
+    return;
+  } else {
+    $updateDownloadPatronsQuery = "INSERT INTO download_video_patrons SELECT date_format(VideoDownload.created,'%Y-%m-%d') as day_downloaded, VideoDownload.library_id,VideoDownload.patron_id, CASE VideoDownload.email WHEN '' THEN NULL ELSE VideoDownload.email END AS emailtest, COUNT(patron_id) AS total FROM videodownloads AS VideoDownload WHERE VideoDownload.created >= DATE('".$date."') AND VideoDownload.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY day_downloaded,patron_id,library_id, emailtest";
+    if(!mysql_query($updateDownloadPatronsQuery)){
+      echo "DownloadPatrons Table Not Updated\n";
+      mailUpdate(3,$date,$updateDownloadPatronsQuery);
+    } else {
+      echo "DownloadPatrons Table Updated Successfullly\n";
+      mailUpdate(5,$date,$updateDownloadPatronsQuery);
+    }
+  }
+}
+
+/*
 Function Name : updateDownloadGenres
 Description : Function to update downloadgenres table for download reports
 */
@@ -45,6 +69,30 @@ function updateDownloadGenres($date){
     return;
   } else {
     $updateDownloadGenresQuery = "INSERT INTO downloadgenres SELECT day_downloaded,library_id,Genre,count(id) as total FROM (SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded, Download.id, Download.library_id, Genre.Genre FROM downloads AS Download LEFT JOIN Genre AS Genre ON (Download.ProdID = Genre.ProdId) WHERE Download.created >= DATE('".$date."') AND Download.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY Download.id) as table1 Group by day_downloaded,library_id,Genre";
+    if(!mysql_query($updateDownloadGenresQuery)){
+      echo "DownloadGenres Table Not Updated\n";
+      mailUpdate(4,$date,$updateDownloadGenresQuery);
+    } else {
+      echo "DownloadGenres Table Updated Successfullly\n";
+      mailUpdate(6,$date,$updateDownloadGenresQuery);
+    }
+  }
+}
+
+/*
+Function Name : updateVideoDownloadGenres
+Description : Function to update downloadgenres table for download reports
+*/
+function updateVideoDownloadGenres($date){
+  $checkQuery = "SELECT Count(*) as count FROM downloadgenres WHERE download_date = '".$date."'";
+  $checkRes = mysql_query($checkQuery);
+  $row = mysql_fetch_array($checkRes);
+  if($row['count']!=0){
+    echo "Downloadgenres data already added for the date ".$date;
+    mailUpdate(2,$date,"Downloadgenres data already added for the date ".$date);
+    return;
+  } else {
+    $updateDownloadGenresQuery = "INSERT INTO download_video_genres SELECT day_downloaded,library_id,Genre,count(id) as total FROM (SELECT date_format(VideoDownload.created,'%Y-%m-%d') as day_downloaded, VideoDownload.id, VideoDownload.library_id, Genre.Genre FROM videodownloads AS VideoDownload LEFT JOIN Genre AS Genre ON (VideoDownload.ProdID = Genre.ProdId) WHERE VideoDownload.created >= DATE('".$date."') AND VideoDownload.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY VideoDownload.id) as table1 Group by day_downloaded,library_id,Genre";
     if(!mysql_query($updateDownloadGenresQuery)){
       echo "DownloadGenres Table Not Updated\n";
       mailUpdate(4,$date,$updateDownloadGenresQuery);
