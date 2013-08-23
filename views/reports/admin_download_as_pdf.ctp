@@ -56,7 +56,7 @@
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
     $tcpdf->xheadertext = 'Libraries/Patrons Download Report for '.$displaylibraryName.$displaydateRange;
-    $tcpdf->xfootertext = 'Copyright © %d FreegalMusic.com. All rights reserved.';
+    $tcpdf->xfootertext = 'Copyright ï¿½ %d FreegalMusic.com. All rights reserved.';
 
     //set margins
     $tcpdf->SetMargins("10", "15", "0");
@@ -186,7 +186,7 @@
     $fill = 0;
 	
  
-    $arr_all_library_downloads_data[] = array(count($downloads));
+    $arr_all_library_downloads_data[] = array(count($downloads)+count($videoDownloads));
 
     
     foreach($arr_all_library_downloads_data as $k=>$row) {
@@ -257,7 +257,7 @@
     $key = 1;
     foreach($arr_all_library_downloads as $LibraryName => $DownloadCount) {
       
-      $arr_all_library_downloads_data[] = array($key, $LibraryName, $DownloadCount);
+      $arr_all_library_downloads_data[] = array($key, $LibraryName, $DownloadCount+$arr_all_video_library_downloads[$LibraryName]);
       $key++;
     }
     
@@ -448,8 +448,11 @@
 
     //Column titles
     $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
+    $video_header = array('','Library Name', 'Patron ID', 'Artists Name', 'Video title', 'Download');
     $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $patron_video_header = array('', 'Patron ID', 'Library Name', 'Total Number of Videos Downloaded');
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
+    $genre_video_header = array('', 'Genre Name', 'Total Number of Videos Downloaded');
 
     //Data loading
     foreach($downloads as $key => $download) {
@@ -462,6 +465,16 @@
         $libraryName = $library->getLibraryName($download['Download']['library_id']);
         $data[] = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     }
+    foreach($videoDownloads as $key => $download) {
+		if($download['Videodownload']['email']!=''){
+			$patron = $download['Videodownload']['email'];
+		}
+		else{
+			$patron = $download['Videodownload']['patron_id'];
+		}
+        $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
+        $video_data[] = array($key+1, $libraryName, $patron, $download['Videodownload']['artist'], $download['Videodownload']['track_title'], date('Y-m-d', strtotime($download['Videodownload']['created'])));
+    }
 
     foreach($patronDownloads as $key => $patronDownload) {
 		if($patronDownload['Downloadpatron']['email']!=''){
@@ -472,10 +485,24 @@
 		}
         $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Downloadpatron']['library_id']), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
     }
+    
+    foreach($patronVideoDownloads as $key => $patronDownload) {
+		if($patronDownload['DownloadVideoPatron']['email']!=''){
+			$patron_id = $patronDownload['DownloadVideoPatron']['email'];
+		}
+		else{
+			$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
+		}
+        $patron_video_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id']), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+    }    
 
     foreach($genreDownloads as $key => $genreDownload) {
         $genre_data[] = array($key+1, $genreDownload['Downloadgenre']['genre_name'], (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
     }
+    
+    foreach($genreVideoDownloads as $key => $genreDownload) {
+        $genre_video_data[] = array($key+1, $genreDownload['DownloadVideoGenre']['genre_name'], (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
+    }    
 
     // print colored table
     // Colors, line width and bold font
@@ -534,7 +561,65 @@
         $tcpdf->Ln();
         $fill=!$fill;
     }
+     // add a page
+    $tcpdf->AddPage();
+    // print colored table
+    // Colors, line width and bold font
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    $tcpdf->Cell(250, 7, 'Library Video Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Ln();
 
+    $tcpdf->SetFillColor(0, 153, 255);
+    $tcpdf->SetTextColor(255);
+    $tcpdf->SetDrawColor(224, 224, 224);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    // Header
+    $w = array(10, 50, 40, 60, 80, 20);
+    for($i = 0; $i < count($video_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $video_header[$i], 1, 0, 'C', 1);
+        $tcpdf->Ln();
+    // Color and font restoration
+    $tcpdf->SetFillColor(224, 235, 255);
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetFont('');
+    // Data
+    $fill = 0;
+    foreach($video_data as $k=>$row) {
+        if($k%27 == 0 && $k != 0) {
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            $tcpdf->Cell(250, 7, 'Library Video Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Ln();
+
+            // Colors, line width and bold font
+            $tcpdf->SetFillColor(0, 153, 255);
+            $tcpdf->SetTextColor(255);
+            $tcpdf->SetDrawColor(224, 224, 224);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            // Header
+            for($i = 0; $i < count($video_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+                $tcpdf->Ln();
+        }
+        // Color and font restoration
+        $tcpdf->SetFillColor(224, 235, 255);
+        $tcpdf->SetTextColor(0);
+        $tcpdf->SetFont('');
+
+        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill, '', 3);
+	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Ln();
+        $fill=!$fill;
+    }
     // add a page
     $tcpdf->AddPage();
 
@@ -598,6 +683,63 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
+    $tcpdf->Cell(250, 7, 'Patron Video Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Ln();
+
+    $tcpdf->SetFillColor(0, 153, 255);
+    $tcpdf->SetTextColor(255);
+    $tcpdf->SetDrawColor(224, 224, 224);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    // Header
+    $w = array(10, 50, 100, 90);
+    for($i = 0; $i < count($patron_video_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $patron_video_header[$i], 1, 0, 'C', 1);
+        $tcpdf->Ln();
+    // Color and font restoration
+    $tcpdf->SetFillColor(224, 235, 255);
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetFont('');
+    // Data
+    $fill = 0;
+    foreach($patron_video_data as $k=>$row) {
+        if($k%27 == 0 && $k != 0) {
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            $tcpdf->Cell(250, 7, 'Patron Video Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Ln();
+
+            // Colors, line width and bold font
+            $tcpdf->SetFillColor(0, 153, 255);
+            $tcpdf->SetTextColor(255);
+            $tcpdf->SetDrawColor(224, 224, 224);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            // Header
+            for($i = 0; $i < count($patron_video_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $patron_video_header[$i], 1, 0, 'C', 1);
+                $tcpdf->Ln();
+        }
+        // Color and font restoration
+        $tcpdf->SetFillColor(224, 235, 255);
+        $tcpdf->SetTextColor(0);
+        $tcpdf->SetFont('');
+
+        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'C', $fill, '', 3);
+        $tcpdf->Ln();
+        $fill=!$fill;
+    }
+    
+    // add a page
+    $tcpdf->AddPage();
+
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
     $tcpdf->Cell(250, 7, 'Genres Downloads Report', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
@@ -648,6 +790,63 @@
         $fill=!$fill;
     }
 
+    
+    // add a page
+    $tcpdf->AddPage();
+
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    $tcpdf->Cell(250, 7, 'Genres Video Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Ln();
+
+    $tcpdf->SetFillColor(0, 153, 255);
+    $tcpdf->SetTextColor(255);
+    $tcpdf->SetDrawColor(224, 224, 224);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    // Header
+    $w = array(10, 50, 190);
+    for($i = 0; $i < count($genre_video_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $genre_video_header[$i], 1, 0, 'C', 1);
+        $tcpdf->Ln();
+    // Color and font restoration
+    $tcpdf->SetFillColor(224, 235, 255);
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetFont('');
+    // Data
+    $fill = 0;
+    foreach($genre_video_data as $k=>$row) {
+        if($k%27 == 0 && $k != 0) {
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            $tcpdf->Cell(250, 7, 'Genres Video Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Ln();
+
+            // Colors, line width and bold font
+            $tcpdf->SetFillColor(0, 153, 255);
+            $tcpdf->SetTextColor(255);
+            $tcpdf->SetDrawColor(224, 224, 224);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            // Header
+            for($i = 0; $i < count($genre_video_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $genre_video_header[$i], 1, 0, 'C', 1);
+                $tcpdf->Ln();
+        }
+        // Color and font restoration
+        $tcpdf->SetFillColor(224, 235, 255);
+        $tcpdf->SetTextColor(0);
+        $tcpdf->SetFont('');
+
+        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'C', $fill, '', 3);
+        $tcpdf->Ln();
+        $fill=!$fill;
+    }
+    
     $tcpdf->Cell(array_sum($w), 0, '', 'T');
 
     echo $tcpdf->Output('DownloadsReport_'.$savelibraryName.$savedateRange.'.pdf', 'D');
