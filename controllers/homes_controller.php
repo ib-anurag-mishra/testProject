@@ -72,6 +72,8 @@ class HomesController extends AppController
         $country = $this->Session->read('territory');
         $territory = $this->Session->read('territory');
        
+        //get Advisory condition
+        $advisory_status = $this->getLibraryExplicitStatus($libId);     
       
         $nationalTopDownload = array();
         if(!empty($patId)){
@@ -84,7 +86,7 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-       // if (($national = Cache::read("national".$territory)) === false) {
+        if (($national = Cache::read("national".$territory)) === false) {
       
             $country = $territory;
             
@@ -191,14 +193,17 @@ STR;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
 			Cache::write("national".$territory, $nationalTopDownload);
-//		}else{
-//                    $nationalTopDownload = Cache::read("national".$territory);                
-//                }
+		}else{
+                    $nationalTopDownload = Cache::read("national".$territory);                
+                }
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
               
-          
-             
+	//get Advisory condition
+        //dvisory_status = $this->getLibraryExplicitStatus($libId);        
+
+  
+	Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
             
@@ -284,7 +289,7 @@ STR;
                 LEFT JOIN
                                 File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
+                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  ) $advisory_status  AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
                 LIMIT 100 
@@ -487,6 +492,7 @@ STR;
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
+		Cache::delete("coming_soon_videos".$territory);
                 if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 //if(1)
                 {
@@ -521,7 +527,7 @@ STR;
     LEFT JOIN
         File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
     WHERE
-        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
+        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW()) $advisory_status
     ORDER BY Country.SalesDate ASC
     LIMIT 20
 STR;
