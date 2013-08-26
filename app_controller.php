@@ -31,6 +31,8 @@ class AppController extends Controller
 		$subdomains = $subdomains[0] ;               
                 
 		if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){	
+                    $patronid = $this->Session->read("patron");
+                    if(empty($patronid)){
                     
                     $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url','library_image_name', 'library_country', 'library_territory','library_authentication_method','library_type','library_block_explicit_content'), 'recursive' => -1));
 
@@ -42,7 +44,7 @@ class AppController extends Controller
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
                     $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1')?'yes':'no'));
-                    
+                    }                    
 		}else{
                     $patronid = $this->Session->read("patron");
                     if(empty($patronid)){
