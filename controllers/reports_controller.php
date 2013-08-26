@@ -90,7 +90,9 @@ Class ReportsController extends AppController
                   }
                   $videoDownloads = $this->Videodownload->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);  
                   $patronDownloads = $this->Downloadpatron->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                  //$patronBothDownloads = $this->Downloadpatron->getpatronVideoDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  if($library_id != "all"){
+                        $patronBothDownloads = $this->Downloadpatron->getDaysBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  }
                   $patronVideoDownloads = $this->DownloadVideoPatron->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                   $genreVideoDownloads = $this->DownloadVideoGenre->getDaysDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                   $arr_all_patron_downloads = array();
@@ -127,8 +129,10 @@ Class ReportsController extends AppController
                   }
                   
                   $videoDownloads = $this->Videodownload->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);  
-                  
                   $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  if($library_id != "all"){
+                        $patronBothDownloads = $this->Downloadpatron->getWeeksBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  } 
                   $patronVideoDownloads = $this->DownloadVideoPatron->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                   $genreVideoDownloads = $this->DownloadVideoGenre->getWeeksDownloadInformation($library_id,$this->data['Report']['date'] , $territory);                  
 
@@ -136,7 +140,6 @@ Class ReportsController extends AppController
                   if($library_id == "all") {
                     $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadWeek($library_id, $this->data['Report']['date'], $territory);
                   }
-
                   $genreDownloads = $this->Downloadgenre->getWeeksDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
@@ -156,6 +159,9 @@ Class ReportsController extends AppController
                   $videoDownloads = $this->Videodownload->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);  
                   
                   $patronDownloads = $this->Downloadpatron->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+                  if($library_id != "all"){
+                        $patronBothDownloads = $this->Downloadpatron->getMonthsBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  }                   
                   $patronVideoDownloads = $this->DownloadVideoPatron->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                   $genreVideoDownloads = $this->DownloadVideoGenre->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);                   
 
@@ -184,6 +190,9 @@ Class ReportsController extends AppController
                   $videoDownloads = $this->Videodownload->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);  
 
                   $patronDownloads = $this->Downloadpatron->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+                  if($library_id != "all"){
+                        $patronBothDownloads = $this->Downloadpatron->getYearsBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  }                   
                   $patronVideoDownloads = $this->DownloadVideoPatron->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                   $genreVideoDownloads = $this->DownloadVideoGenre->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory); 
                   $arr_all_patron_downloads = array();
@@ -210,6 +219,9 @@ Class ReportsController extends AppController
                   $videoDownloads = $this->Videodownload->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);  
 
                   $patronDownloads = $this->Downloadpatron->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  if($library_id != "all"){
+                        $patronBothDownloads = $this->Downloadpatron->getManualBothDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  }                   
                   $patronVideoDownloads = $this->DownloadVideoPatron->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                   $genreVideoDownloads = $this->DownloadVideoGenre->getManualDownloadInformation($library_id,$this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory); 
                   $arr_all_patron_downloads = array();
@@ -220,9 +232,14 @@ Class ReportsController extends AppController
                   $genreDownloads = $this->Downloadgenre->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
 
                 }
+                
                 $date = date('Y-m-d',time());
+                //$date = '2013-06-28';
                 if($compareDate == $date){
                   $currentPatronDownload = $this->Download->getCurrentPatronDownloads($library_id,$date,$territory,$all_Ids);
+                  if($library_id != "all") {
+                    $currentPatronBothDownload = $this->Download->getCurrentPatronBothDownloads($library_id,$date,$territory,$all_Ids);
+                  }
                   $currentGenreDownload = $this->Download->getCurrentGenreDownloads($library_id,$date,$territory,$all_Ids);
                   $currentVideoPatronDownload = $this->Videodownload->getCurrentPatronDownloads($library_id,$date,$territory,$all_Ids);
                   $currentVideoGenreDownload = $this->Videodownload->getCurrentGenreDownloads($library_id,$date,$territory,$all_Ids);                  
@@ -230,8 +247,10 @@ Class ReportsController extends AppController
                   $currentPatronDownload = array();
                   $currentGenreDownload = array();
                   $currentVideoPatronDownload = array();
-                  $currentVideoGenreDownload = array();                  
+                  $currentVideoGenreDownload = array();
+                  $currentPatronBothDownload = array();
                 }
+                
 
                 $this->set('downloads', $downloads);
                 $this->set('arr_all_library_downloads', $arr_all_library_downloads);
@@ -277,6 +296,45 @@ Class ReportsController extends AppController
                     //die;
                   }
                   $this->set('patronDownloads', $patronDownloads[0]);
+                }
+                if($this->data['Report']['reports_daterange'] == 'day'){
+                  if(!empty($currentPatronBothDownload)){
+                    foreach($currentPatronBothDownload as $patronRecord){
+                      $i = count($patronBothDownloads);
+                      $patronBothDownloads[$i]['table1']['library_id'] = $patronRecord['table1']['library_id'];
+                      $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
+                      $patronBothDownloads[$i]['table1']['total'] = $patronRecord['table1']['total'];
+                    }
+                  }
+                  $this->set('patronBothDownloads', $patronBothDownloads);
+                } else {
+                  if(!empty($currentPatronBothDownload)){
+                    foreach($currentPatronBothDownload as $patronRecord){
+                      if(!empty($patronBothDownloads)){
+                        $i = count($patronBothDownloads);
+                        $flag = false;
+                        foreach($patronBothDownloads as $pkey=>$patronDownload){
+                          if($patronRecord['table1']['patron_id'] == $patronDownload['table1']['patron_id']){
+                            $patronBothDownloads[$pkey]['table1']['total'] += $patronRecord['table1']['total'];
+                            $flag=true;
+                            break;
+                          }
+                        }
+                        if($flag==false){
+                          $patronBothDownloads[$i]['table1']['library_id'] = $patronRecord['table1']['library_id'];
+                          $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
+                          $patronBothDownloads[$i]['table1']['total'] = $patronRecord['table1']['total'];
+                        }
+                      } else {
+                        $i = count($patronBothDownloads);
+                        $patronBothDownloads[$i]['table1']['library_id'] = $patronRecord['table1']['patron_id'];
+                        $patronBothDownloads[$i]['table1']['patron_id'] = $patronRecord['table1']['patron_id'];
+                        $patronBothDownloads[$i]['table1']['total'] = $patronRecord['table1']['total'];
+                      }
+                    }
+                    //die;
+                  }
+                  $this->set('patronBothDownloads', $patronBothDownloads);
                 }
                 if($this->data['Report']['reports_daterange'] == 'day'){
                   if(!empty($currentVideoPatronDownload)){
