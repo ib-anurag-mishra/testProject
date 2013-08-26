@@ -131,7 +131,7 @@ $ieVersion =  ieversion();
 					?>
                     </div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="#">
+					<div class="album-title"><a href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
                                              <?php 
 						if (strlen($downloadResult['Song']['Title']) >= 19) {
 							echo '<span title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 19) . '...</span>';							
@@ -141,7 +141,7 @@ $ieVersion =  ieversion();
 					?>
                                             
                                             </div>
-					<div class="artist-name"><a href="#"><?php
+					<div class="artist-name"><a href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"><?php
 						if (strlen($downloadResult['Download']['artist']) >= 19) {
 							echo '<span title="'.htmlentities($downloadResult['Download']['artist']).'">' .substr($downloadResult['Download']['artist'], 0, 19) . '...</span>';							
 						} else {
@@ -242,7 +242,7 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                                             </a></div>
-					<div class="artist-name"><a href="#">
+					<div class="artist-name"><a href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19) {
 							echo '<span title="'.htmlentities($videoDownloadResult['Videodownload']['artist']).'">' .substr($videoDownloadResult['Videodownload']['artist'], 0, 19) . '...</span>';							
