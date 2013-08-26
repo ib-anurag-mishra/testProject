@@ -22,7 +22,7 @@
                 $total_videos = count($featuredVideos);
                 $sr_no = 0;
                 
-                foreach($featuredVideos as $featureVideo){
+                foreach($featuredVideos as $featureVideo){  //echo '<pre>'; print_r($featureVideo['Video']['Advisory']); 
                     //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
                     // print_r($featureVideo); die;
                     //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
@@ -83,7 +83,7 @@
                             }
                             ?>
                             <?php echo $this->getTextEncode($featureVideo['Video']['VideoTitle']);?>
-                            </a>
+                            </a> <?php if('T' == $featureVideo['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                             </div>
                             <div class="video-name">
                             <?php
@@ -199,7 +199,7 @@ foreach($topVideoDownloads as $topDownload)
                             }
                             ?>
                             <?php echo $this->getTextEncode($topDownload['Video']['VideoTitle']);?>
-                            </a>
+                            </a> <?php if('T' == $topDownload['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                         </div>
                         <div class="video-name">
                             <a href="javascript:void(0);">

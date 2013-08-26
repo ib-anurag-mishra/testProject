@@ -31,6 +31,8 @@ class AppController extends Controller
 		$subdomains = $subdomains[0] ;               
                 
 		if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){	
+                    $patronid = $this->Session->read("patron");
+                    if(empty($patronid)){
                     
                     $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url','library_image_name', 'library_country', 'library_territory','library_authentication_method','library_type','library_block_explicit_content'), 'recursive' => -1));
 
@@ -42,7 +44,7 @@ class AppController extends Controller
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
                     $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1')?'yes':'no'));
-                    
+                    }                    
 		}else{
                     $patronid = $this->Session->read("patron");
                     if(empty($patronid)){
@@ -490,5 +492,38 @@ class AppController extends Controller
         $this->Country->setTablePrefix($this->Session->read('multiple_countries'));
 
       }
+
+/**
+ * @function getLibraryExplicitStatus
+ * @desc check library_block_explicit_content column of given librray & returns Advisory condition for query
+/**
+ * @function getLibraryExplicitStatus
+ * @desc check library_block_explicit_content column of given librray & returns Advisory condition for query
+ * @param $libID : ID of Library
+ * @return string
+ */
+
+  function getLibraryExplicitStatus($libID) {
+
+    $libraryData = $this->Library->find('first', array(
+      'fields' => array('library_block_explicit_content'),
+      'conditions' => array(
+        'id' => $libID
+      ),
+     'recursive' => -1
+
+    ));
+
+
+    if(1 == $libraryData['Library']['library_block_explicit_content']) {
+        $advisory = " AND Advisory = 'F'";
+    } else {
+        $advisory = "";
+    }
+    return $advisory;
+
+  }
+
+
 }
 ?>
