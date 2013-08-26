@@ -3814,7 +3814,8 @@ Class UsersController extends AppController
 		if($this->data){
 			$card = $this->data['User']['card'];
 			$data['card_orig'] = $card;
-			$card = str_replace(" ","",$card);
+			//$card = str_replace(" ","",$card);        // Commented this statment to allow cards with blank space in between 
+                        $card = trim($card); 
 		//	$card = strtolower($card);
 			$data['card'] = $card;
 			$patronId = $card;
