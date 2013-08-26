@@ -84,7 +84,7 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {
+       // if (($national = Cache::read("national".$territory)) === false) {
       
             $country = $territory;
             
@@ -191,9 +191,9 @@ STR;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
 			Cache::write("national".$territory, $nationalTopDownload);
-		}else{
-                    $nationalTopDownload = Cache::read("national".$territory);                
-                }
+//		}else{
+//                    $nationalTopDownload = Cache::read("national".$territory);                
+//                }
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
               
