@@ -60,7 +60,7 @@ class SolrComponent extends Object {
         $query = '';
         $docs = array();
         $cond = " AND DownloadStatus:1";
-
+        echo $this->Session->read('block');
         if ($this->Session->read('block') == 'yes') {
             $cond .= " AND Advisory:F";
         }
