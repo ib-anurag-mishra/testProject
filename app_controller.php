@@ -32,7 +32,7 @@ class AppController extends Controller
                 
 		if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){	
                     
-                    $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url','library_image_name', 'library_country', 'library_territory','library_authentication_method','library_type'), 'recursive' => -1));
+                    $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url','library_image_name', 'library_country', 'library_territory','library_authentication_method','library_type','library_block_explicit_content'), 'recursive' => -1));
 
                     $this->Session->write("subdomain",$subdomains);
                     $this->Session->write("lId",$libraryIDArray['Library']['id']);                    
@@ -41,17 +41,19 @@ class AppController extends Controller
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library", $libraryIDArray['Library']['id']);
                     $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
-                    
+                    $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1')?'yes':'no'));
+                                        
 		}else{
                     $patronid = $this->Session->read("patron");
                     if(empty($patronid)){
-                        $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory','library_type'), 'recursive' => -1));            
+                        $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory','library_type','library_block_explicit_content'), 'recursive' => -1));            
                         $country = $libraryData['Library']['library_territory'];
                         $this->Session->write("libCountry",$country);
                         $this->Session->write("territory",$country);
                         $this->Session->write("lId",1);  
                         $this->Session->write("library", 1);
                         $this->Session->write("library_type", $libraryData['Library']['library_type']);
+                        $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1')?'yes':'no'));
                     }
                 }               
 		$this->Auth->authorize = 'actions';
