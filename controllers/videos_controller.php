@@ -67,8 +67,6 @@ class VideosController extends AppController {
  	//Cache::delete("top_download_videos".$territory);
 	if ($topDownloads = Cache::read("top_download_videos" . $territory) === false) {
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `Country`.`SalesDate` <= NOW() ".$advisory_status." GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
-
-
             $topDownloads = $this->Album->query($topDownloadSQL);
             if (!empty($topDownloads)) {
                 foreach($topDownloads as $key => $topDownload)
@@ -344,17 +342,26 @@ class VideosController extends AppController {
      {        
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        $country = $this->Session->read('territory');
+        $country = $this->Session->read('territory');        
+        $advisory_status ='';
+        //get Advisory condition
+	$advisory_status = $this->getLibraryExplicitStatus($libId);
+        $condition = array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate')));
+        $specificCondition = array();
+        if($advisory_status !=''){
+            //$advisory_status = ", 'Advisory' => 'F'";
+            $specificCondition = array('Advisory' => 'F');   
+        }
+        $condition = array_merge($specificCondition, $condition);
         $ids_provider_type_video = '';
-
-                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)
-                    {
+                    Cache::delete("lib_videos".$libId);
+                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)  {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
-                            $topDownloaded_videos = $this->LatestVideodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
+                            $topDownloaded_videos = $this->LatestVideodownload->find('all', array('conditions' => $condition, 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
                         } else {
-                            $topDownloaded_videos = $this->Videodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                            $topDownloaded_videos = $this->Videodownload->find('all', array('conditions' => $condition, 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
                         }
                                                
 			$ids = '';
