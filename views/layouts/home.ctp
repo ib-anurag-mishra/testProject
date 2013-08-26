@@ -216,7 +216,7 @@ if ($this->Session->read('Config.language') == 'en') {
             
             <!-- <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script> -->
             
-            <?php if(preg_match('/(?i)msie 8/',$_SERVER['HTTP_USER_AGENT']))
+            <?php /*if(preg_match('/(?i)msie 8/',$_SERVER['HTTP_USER_AGENT']))
                 {
             ?>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.min.css" />
@@ -227,8 +227,10 @@ if ($this->Session->read('Config.language') == 'en') {
                 <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
                 <script src="<?php echo $this->webroot; ?>app/webroot/js/less.js"></script>
             <?php
-                }
+                }*/
             ?>
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.css" />
+            
             <!--[if IE 8]>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->
