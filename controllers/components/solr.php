@@ -59,10 +59,10 @@ class SolrComponent extends Object {
     function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false) {
         $query = '';
         $docs = array();
-        $cond = "";
-
+        $cond = " AND DownloadStatus:1";
+        echo $this->Session->read('block');
         if ($this->Session->read('block') == 'yes') {
-            $cond = " AND Advisory:F";
+            $cond .= " AND Advisory:F";
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
@@ -136,7 +136,9 @@ class SolrComponent extends Object {
             }*/
 
             $query = $query . ' AND Territory:' . $country . $cond;
-
+            
+            
+            
             // echo '<br /> Rows :'.$query.'<br />'; die;
 
             if ($page == 1) {
@@ -279,9 +281,9 @@ class SolrComponent extends Object {
     function facetSearch($keyword, $type='song', $page=1, $limit = 5) {
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = "";
+        $cond = " AND DownloadStatus:1";
         if ($this->Session->read('block') == 'yes') {
-            $cond = " AND Advisory:F";
+            $cond .= " AND Advisory:F";
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -376,10 +378,10 @@ class SolrComponent extends Object {
     function getFacetSearchTotal($keyword, $type='song') {
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = "";
+        $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond = " AND Advisory:F";
+            $cond .= " AND Advisory:F";
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
@@ -473,7 +475,7 @@ class SolrComponent extends Object {
     function groupSearch($keyword, $type='song', $page=1, $limit = 5) {
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = "";
+        $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
             $cond = " AND Advisory:F";
@@ -529,7 +531,7 @@ class SolrComponent extends Object {
                     break;
             }
 
-            $query = $query . ' AND Territory:' . $country;
+            $query = $query . ' AND Territory:' . $country . $cond;
             // echo $query; // die;
             if ($page == 1) {
                 $start = 0;
@@ -602,10 +604,10 @@ class SolrComponent extends Object {
     function getGroupSearchTotal($keyword, $type='song') {
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = "";
+        $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond = " AND Advisory:F";
+            $cond .= " AND Advisory:F";
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -699,10 +701,10 @@ class SolrComponent extends Object {
 
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = "";
+        $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond = " AND Advisory:F";
+            $cond .= " AND Advisory:F";
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         $char = substr($keyword, 0, 1);
