@@ -591,12 +591,13 @@ $ieVersion =  ieversion();
                             ?>
                             <span class="beforeClick" id="download_song_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
                                 <?php if($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { ?>
-                                    <?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-                                            <a href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+                                            <![if !IE]>
+                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+                                            <![endif]>
+                                            <!--[if IE]>
+                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadIE("<?php echo $wishlistResultsVideo['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResultsVideo['Wishlist']['id']; ?>" , "<?php echo $wishlistResultsVideo['Wishlist']["provider_type"]; ?>");' href='<?php echo $finalVideoUrl; ?>'><?php __('Download Now');?></a>
+                                            <![endif]-->
                                     <?php } else { ?>
-                                            <a href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
-                                    <?php } ?>
-                                <?php } else { ?>
                                             <![if !IE]>
                                             <?php __('Coming Soon'); ?>
                                             <![endif]>
