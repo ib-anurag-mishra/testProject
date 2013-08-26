@@ -266,7 +266,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>
                                         </div>
-					<div class="play-count"><span id='downloads_used'>0</div>     
+					<div class="play-count"><span id='downloads_used'>0</span></div>     
                                </div>
                                 <?php  } ?>
                                     
