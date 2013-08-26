@@ -533,7 +533,7 @@
 
     });
     <?php
-        if(!empty($downloads)) {
+        if(!empty($downloads) || !empty($videoDownloads)) {
     ?>
             $("#generateReportSubmit").click(function() {
                 $("#ReportAdminIndexForm").attr('action','/admin/reports/index');
