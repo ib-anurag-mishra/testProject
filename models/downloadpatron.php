@@ -23,23 +23,21 @@ class Downloadpatron extends AppModel
     $result = mysql_query($sql);
        
     while ($row = mysql_fetch_assoc($result)) {    
-  
+        $count = 0;
         $date_arr = explode("/", $date);
         $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
 
         $libraryID = $row["id"];
         $libraryName = $row["library_name"]; 
-        $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'"
+        $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'"
                 UNION
-                SELECT * FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'") AS table1 GROUP BY patron_id';
+                SELECT patron_id FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'") AS table1 GROUP BY patron_id';
         $patronDownload = $this->query($sql);
         if(!empty($patronDownload)){
            $count = count($patronDownload); 
 
         }
         $arr_all_patron_downloads[$libraryName] = $count;
-        unset($count);
-
     }
     return $arr_all_patron_downloads;
    /*
@@ -88,7 +86,7 @@ class Downloadpatron extends AppModel
 		$sql = "SELECT id, library_name FROM libraries WHERE library_territory = '".$territory."'  ORDER BY library_name ASC";
 		$result = mysql_query($sql);
 		while ($row = mysql_fetch_assoc($result)) {
-      
+      $count = 0;
       $date_arr = explode("/", $date);
       if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
         $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));
@@ -101,9 +99,9 @@ class Downloadpatron extends AppModel
       
       $libraryID = $row["id"];
       $libraryName = $row["library_name"]; 
-      $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
+      $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
             UNION
-            SELECT * FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
+            SELECT patron_id FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
       
       $patronDownload = $this->query($sql);
         if(!empty($patronDownload)){
@@ -112,7 +110,6 @@ class Downloadpatron extends AppModel
         }      
           
       $arr_all_patron_downloads[$libraryName] = $count;
-      unset($count);
 
 		}
     
@@ -132,7 +129,7 @@ class Downloadpatron extends AppModel
 		$result = mysql_query($sql);
        
 		while ($row = mysql_fetch_assoc($result)) {    
-  
+      $count = 0;
       $date_arr = explode("/", $date);
       $startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
       $endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
@@ -140,9 +137,9 @@ class Downloadpatron extends AppModel
       
       $libraryID = $row["id"]; 
       $libraryName = $row["library_name"]; 
-      $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
+      $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
             UNION
-            SELECT * FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
+            SELECT patron_id FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
       
       $patronDownload = $this->query($sql);
         if(!empty($patronDownload)){
@@ -151,8 +148,6 @@ class Downloadpatron extends AppModel
         }      
           
       $arr_all_patron_downloads[$libraryName] = $count;
-      unset($count);
-
 		}
     
     return $arr_all_patron_downloads;  
@@ -172,16 +167,16 @@ class Downloadpatron extends AppModel
 		$result = mysql_query($sql);
        
 		while ($row = mysql_fetch_assoc($result)) {    
-  
+      $count = 0;
       $date_arr = explode("/", $date);
       $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[2]));
       $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[2]));
       
       $libraryID = $row["id"]; 
       $libraryName = $row["library_name"]; 
-      $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
+      $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
             UNION
-            SELECT * FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
+            SELECT patron_id FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
       
       $patronDownload = $this->query($sql);
         if(!empty($patronDownload)){
@@ -190,8 +185,6 @@ class Downloadpatron extends AppModel
         }      
           
       $arr_all_patron_downloads[$libraryName] = $count;
-      unset($count);
-
 		}
     
     return $arr_all_patron_downloads;  
@@ -211,7 +204,7 @@ class Downloadpatron extends AppModel
 		$result = mysql_query($sql);
        
 		while ($row = mysql_fetch_assoc($result)) {    
-  
+      $count =0;  
       $date_arr_from = explode("/", $date_from);
       $date_arr_to = explode("/", $date_to);
       $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
@@ -219,9 +212,9 @@ class Downloadpatron extends AppModel
       
       $libraryID = $row["id"]; 
       $libraryName = $row["library_name"]; 
-      $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
+      $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN"'.$startDate.'" and "'.$endDate.'"
             UNION
-            SELECT * FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
+            SELECT patron_id FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date BETWEEN "'.$startDate.'" and "'.$endDate.'") AS table1 GROUP BY patron_id';      
       
       $patronDownload = $this->query($sql);
         if(!empty($patronDownload)){
@@ -230,8 +223,6 @@ class Downloadpatron extends AppModel
         }      
           
       $arr_all_patron_downloads[$libraryName] = $count;
-      unset($count);
-
 		}
     
     
@@ -289,9 +280,9 @@ class Downloadpatron extends AppModel
     }
     $date_arr = explode("/", $date);
     $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-    $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE download_date = "'.$downloadDate.'"'.$lib_condition.'
+    $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE download_date = "'.$downloadDate.'"'.$lib_condition.'
             UNION
-            SELECT * FROM download_video_patrons WHERE  download_date = "'.$downloadDate.'"'.$lib_condition.') AS table1 GROUP BY patron_id';
+            SELECT patron_id FROM download_video_patrons WHERE  download_date = "'.$downloadDate.'"'.$lib_condition.') AS table1 GROUP BY patron_id';
     $patronDownload = $this->query($sql);
     return $patronDownload;      
 
@@ -352,9 +343,9 @@ class Downloadpatron extends AppModel
 			$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
 			$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 		}
-            $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
+            $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
             UNION
-            SELECT * FROM download_video_patrons WHERE  download_date BETWEEN = "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
+            SELECT patron_id FROM download_video_patrons WHERE  download_date BETWEEN "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
             $patronDownload = $this->query($sql);
             return $patronDownload;            
 
@@ -406,9 +397,9 @@ class Downloadpatron extends AppModel
       $date_arr = explode("/", $date);
       $startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
       $endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
-    $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
+    $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
     UNION
-    SELECT * FROM download_video_patrons WHERE  download_date BETWEEN = "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
+    SELECT patron_id FROM download_video_patrons WHERE  download_date BETWEEN "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
     $patronDownload = $this->query($sql);
     return $patronDownload;
   }  
@@ -459,9 +450,9 @@ class Downloadpatron extends AppModel
       $date_arr = explode("/", $date);
       $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[2]));
       $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[2]));
-    $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
+    $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
     UNION
-    SELECT * FROM download_video_patrons WHERE  download_date BETWEEN = "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
+    SELECT patron_id FROM download_video_patrons WHERE  download_date BETWEEN "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
     $patronDownload = $this->query($sql);
     return $patronDownload;
   }  
@@ -514,9 +505,9 @@ class Downloadpatron extends AppModel
       $date_arr_to = explode("/", $date_to);
       $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
       $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
-    $sql = 'SELECT * FROM (SELECT * FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
+    $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE download_date BETWEEN  "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.'
     UNION
-    SELECT * FROM download_video_patrons WHERE  download_date BETWEEN = "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
+    SELECT patron_id FROM download_video_patrons WHERE  download_date BETWEEN "'.$startDate.'"and "'.$endDate.'" '.$lib_condition.') AS table1 GROUP BY patron_id';
     $patronDownload = $this->query($sql);
     return $patronDownload;
   }  

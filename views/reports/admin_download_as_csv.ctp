@@ -80,7 +80,7 @@ if(empty($arr_all_patron_downloads)) {
   $line = array('Total Number of Patrons who have downloaded during Reporting Period');
   $csv->addRow($line);
 
-  $line = array(count($patronDownloads));
+  $line = array(count($patronBothDownloads));
   $csv->addRow($line);
   
   $line = array('', '', '', '', '', '');

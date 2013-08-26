@@ -331,7 +331,7 @@
     // Data
     $fill = 0;
   
-    $arr_all_patron_downloads_data[] = array(count($patronDownloads));
+    $arr_all_patron_downloads_data[] = array(count($patronBothDownloads));
 
     
     foreach($arr_all_patron_downloads_data as $k=>$row) {
