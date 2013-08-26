@@ -439,14 +439,30 @@ class Download extends AppModel
         //$data = $this->query("SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded,Download.library_id,Download.patron_id, CASE Download.email WHEN '' THEN NULL ELSE Download.email END AS emailtest, COUNT(patron_id) AS total FROM downloads AS Download WHERE Download.created >= DATE('".$date."') AND Download.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY day_downloaded,patron_id,library_id, emailtest");
       }
     }
-    //print_r($data);
-    //die;
+//    print_r($data);
+//    die;
     if(!empty($data)){
       return $data;
     } else {
       return false;
     }
   }
+  
+  function getCurrentPatronBothDownloads($library,$date,$territory=null,$allIds=null) { //,$startTime,$endTime
+    if(is_numeric($library)){
+      $library = (int)$library;
+      
+      $sql = "select * from (SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded,Download.library_id,Download.patron_id, CASE Download.email WHEN '' THEN NULL ELSE Download.email END AS emailtest, COUNT(patron_id) AS total FROM downloads AS Download WHERE Download.created >= DATE('".$date."') AND Download.created < (DATE('".$date."') + INTERVAL 1 DAY) AND Download.library_id=$library GROUP BY day_downloaded,patron_id,emailtest 
+              UNION
+              SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded,Download.library_id,Download.patron_id, CASE Download.email WHEN '' THEN NULL ELSE Download.email END AS emailtest, COUNT(patron_id) AS total FROM videodownloads AS Download WHERE Download.created >= DATE('".$date."') AND Download.created < (DATE('".$date."') + INTERVAL 1 DAY) AND Download.library_id=$library GROUP BY day_downloaded,patron_id,emailtest ) AS table1 GROUP BY patron_id";
+      $data = $this->query($sql);
+    } 
+    if(!empty($data)){
+      return $data;
+    } else {
+      return false;
+    }
+  }  
 
   function getCurrentGenreDownloads($library,$date,$territory=null,$allIds=null) { //,$startTime,$endTime
     if(is_numeric($library)){

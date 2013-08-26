@@ -213,7 +213,7 @@
                   <td colspan="6" align="center">
                     <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                       <tr><th>Total Number of Patrons who have downloaded during Reporting Period</th></tr>
-                      <tr><td align="center"><?php echo count($patronDownloads); ?></td></tr>
+                      <tr><td align="center"><?php echo count($patronBothDownloads); ?></td></tr>
                     </table>
                   </td>
                 </tr>
