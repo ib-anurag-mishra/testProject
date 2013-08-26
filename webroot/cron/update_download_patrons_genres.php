@@ -84,7 +84,7 @@ Function Name : updateVideoDownloadGenres
 Description : Function to update downloadgenres table for download reports
 */
 function updateVideoDownloadGenres($date){
-  $checkQuery = "SELECT Count(*) as count FROM downloadgenres WHERE download_date = '".$date."'";
+  $checkQuery = "SELECT Count(*) as count FROM download_video_genres WHERE download_date = '".$date."'";
   $checkRes = mysql_query($checkQuery);
   $row = mysql_fetch_array($checkRes);
   if($row['count']!=0){
