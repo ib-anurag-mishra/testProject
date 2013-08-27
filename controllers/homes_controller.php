@@ -3655,7 +3655,6 @@ STR;
 			$user = $this->Session->read('patron');
         }
       if($validationPassed == true){
-          print_r("Mangesh");
         $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
 
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
@@ -3747,8 +3746,9 @@ STR;
         $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
         $downloadStatus = $latestdownloadStatus = 0;          
+        echo 123;
         //save to downloads table
-        if($this->VideoDownload->save($insertArr)){
+        if($this->VideoDownload->save($insertArr)){echo 1436;
           $downloadStatus = 1;  
           $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
           $siteConfigData = $this->Album->query($siteConfigSQL);
