@@ -3179,9 +3179,9 @@ STR;
                     foreach($wishlistResult as $key => $value){
                         $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
                         if(count($downloadsUsed) > 0){
-                            $wishlistResults[$k][$key]['Song']['status'] = 'avail';
+                            $wishlistResults[$key]['Song']['status'] = 'avail';
                         } else{
-                            $wishlistResults[$k][$key]['Song']['status'] = 'not';
+                            $wishlistResults[$key]['Song']['status'] = 'not';
                         }
                     }
                 }

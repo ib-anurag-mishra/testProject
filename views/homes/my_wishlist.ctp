@@ -421,7 +421,7 @@ $ieVersion =  ieversion();
              
 	
             for($i = 0; $i < count($wishlistResults); $i++) {
-		print_r($wishlistResults[$i]);
+		
 			
 	?>
 				
@@ -542,7 +542,6 @@ $ieVersion =  ieversion();
                 {
                    //$i = 1;
                     foreach($wishlistResultsVideos as $key => $wishlistResultsVideo):
-                        print_r($wishlistResultsVideo);
                     /*$class = null;
                     if ($i++ % 2 == 0) {
                         $class = ' class="altrow"';
@@ -601,7 +600,7 @@ $ieVersion =  ieversion();
                             <span class="beforeClick" id="download_song_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
                                 <?php if($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { 
                                             if($libraryDownload == '1' && $patronDownload == '1'){	
-                                                if(isset($wishlistResultsVideo['Video']['status']) && ($wishlistResultsVideo['Video']['status'] != 'avail')) {?>
+                                                if(isset($wishlistResultsVideo['Song']['status']) && ($wishlistResultsVideo['Song']['status'] != 'avail')) {?>
                                                     <![if !IE]>
                                                             <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
                                                     <![endif]>
