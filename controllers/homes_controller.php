@@ -3608,9 +3608,7 @@ STR;
                 $this->Videodownload->query($sql);
                 $this->Videodownload->setDataSource('default');
                 $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
-                print_r($downloadsUsed . "<br>");
                 $downloadCount =  $downloadsUsed[0]['Videodownload']['history'];
-                print_r($downloadCount);die;
         echo "suces|".$downloadCount;
         } else {
                echo "error";
