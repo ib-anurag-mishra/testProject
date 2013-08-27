@@ -3606,7 +3606,6 @@ STR;
       if($checkValidation == 1){
           
           $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
-          print_r($validationResult);die;
           
           /**
             records download component request & response
