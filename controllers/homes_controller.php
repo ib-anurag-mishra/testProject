@@ -3575,7 +3575,7 @@ STR;
       
       //check for download availability
       if($libraryDownload != '1' || $patronDownload != '1'){
-          echo "error";
+          echo "error1";
           exit;
       }
       
