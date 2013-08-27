@@ -3776,7 +3776,7 @@ STR;
     
         $this->log($log_data, $log_name);
         
-        
+        echo 123;
         
         //delete from wishlist table
         $deleteSongId = $id;
