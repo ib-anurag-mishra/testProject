@@ -3572,10 +3572,10 @@ STR;
       $downloadsDetail = array();
       $libraryDownload = $this->Videodownload->checkLibraryDownload($libId);
       $patronDownload = $this->Videodownload->checkPatronDownload($patId,$libId);
-      
+      echo $libraryDownload . "--" . $patronDownload;
       //check for download availability
       if($libraryDownload != '1' || $patronDownload != '1'){
-          echo "error1";
+          echo "error";
           exit;
       }
       
