@@ -3746,9 +3746,8 @@ STR;
         $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
         $downloadStatus = $latestdownloadStatus = 0;          
-        echo 123;
         //save to downloads table
-        if($this->VideoDownload->save($insertArr)){echo 1436;
+        if($this->Videodownload->save($insertArr)){
           $downloadStatus = 1;  
           $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
           $siteConfigData = $this->Album->query($siteConfigSQL);
