@@ -203,13 +203,13 @@ STR;
         //dvisory_status = $this->getLibraryExplicitStatus($libId);        
 
   
-	Cache::delete("nationalvideos".$territory);             
+	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
             
                   
                 $country = $territory;
-                
+
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
@@ -218,7 +218,7 @@ STR;
                                                  
                    if($maintainLatestVideoDownload){                       
 
-                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -228,7 +228,7 @@ STR;
                         LIMIT 110";
                    } else {
 
-                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -492,7 +492,7 @@ STR;
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
-		Cache::delete("coming_soon_videos".$territory);
+		//Cache::delete("coming_soon_videos".$territory);
                 if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 //if(1)
                 {
@@ -1017,7 +1017,7 @@ STR;
             // National Top Downloads functionality
             if(!empty($territory)){  
             if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-            //if(1) {                   
+                             
                     $country = $territory;
                     if($maintainLatestDownload){
                                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -1218,9 +1218,12 @@ STR;
 
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
                
-               $country = $this->Session->read('territory');
+            //get Advisory condition
+            $advisory_status = $this->getLibraryExplicitStatus($libId);   
+            $country = $this->Session->read('territory');
                 
                if(!empty($country)){ 
+                   //Cache::delete("national_us_top10_videos".$territory);
                if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
                //if(1) {               
                    if($maintainLatestVideoDownload){
@@ -1285,7 +1288,7 @@ STR;
                 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
                 LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+                WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate < NOW()) 
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
                 LIMIT 10                   
@@ -3171,11 +3174,29 @@ STR;
 	  
 STR;
                     //execute the query
-                    $wishlistResults = $this->Wishlist->query($wishlistQuery); 
+                $wishlistResults = $this->Wishlist->query($wishlistQuery); 
+                /*foreach($wishlistResults as $k => $wishlistResult){
+                    foreach($wishlistResult as $key => $value){
+                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                            $wishlistResults[$k][$key]['Song']['status'] = 'avail';
+                        } else{
+                            $wishlistResults[$k][$key]['Song']['status'] = 'not';
+                        }
+                    }
+                }*/
                     
                     
-                    
-              $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID')),array('table' => $countryPrefix.'countries','alias' => 'Country','type' => 'LEFT','conditions' => array('Country.ProdID = Video.ProdID','Video.provider_type = Country.provider_type','Country.SalesDate != ""'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.id','WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title','Video.ReferenceID','Video.ArtistText','Video.provider_type', 'File.CdnPath', 'File.SourceURL','Country.Territory','Country.SalesDate'),'order'=>"$videoSortBy $sortType"));
+                $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID')),array('table' => $countryPrefix.'countries','alias' => 'Country','type' => 'LEFT','conditions' => array('Country.ProdID = Video.ProdID','Video.provider_type = Country.provider_type','Country.SalesDate != ""'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.id','WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title','Video.ReferenceID','Video.ArtistText','Video.provider_type', 'File.CdnPath', 'File.SourceURL','Country.Territory','Country.SalesDate'),'order'=>"$videoSortBy $sortType"));
+                /*foreach($wishlistResultsVideos as $key => $value){
+                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                        $wishlistResultsVideos[$key]['Song']['status'] = 'avail';
+                    } else{
+                        $wishlistResultsVideos[$key]['Song']['status'] = 'not';
+                    }
+                }*/
+                
 
                 
         $this->set('wishlistResults',$wishlistResults);
@@ -4081,9 +4102,10 @@ STR;
             }
             
             $territory = $this->Session->read('territory');
-            
+            //get Advisory condition
+            $advisory_status = $this->getLibraryExplicitStatus($libraryId);
             //////////////////////////////////Videos/////////////////////////////////////////////////////////            
-             
+            //Cache::delete("new_releases_videos".$territory); 
             if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
             //if(1)
             {               
@@ -4117,7 +4139,7 @@ LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
 LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
+WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate <= NOW()) 
 GROUP BY Video.ProdID 
 ORDER BY Country.SalesDate DESC 
 LIMIT 100 

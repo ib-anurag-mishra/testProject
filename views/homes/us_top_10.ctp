@@ -300,11 +300,11 @@
 						<div class="album-title">
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Video']['VideoTitle'])>32)
-                                                                echo substr($value['Video']['VideoTitle'],0,32)."..."; 
+                                                                if(strlen($value['Video']['VideoTitle'])>20)
+                                                                echo substr($value['Video']['VideoTitle'],0,20)."..."; 
                                                                 else echo $value['Video']['VideoTitle'];
                                                          ?>
-                                                    </a>
+                                                    </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
