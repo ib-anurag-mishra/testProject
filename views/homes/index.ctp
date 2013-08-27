@@ -224,7 +224,7 @@
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
                                                                                             
-                                                                                             //hide song if library block the explicit content
+                                                                                          //hide song if library block the explicit content
                                                                                           if(($this->Session->read('block') == 'yes') && ($nationalTopVideoDownload[$i]['Video']['Advisory'] =='T')) {
                                                                                               continue;
                                                                                           }
@@ -232,7 +232,7 @@
 											//$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
                                                                                         //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
- /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
+                                                                                        /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
 										?>
 											<li>
 												<div class="top-100-video-detail">
@@ -393,7 +393,7 @@
 									<ul style="width:3690px;">
 										<?php
 								foreach($featuredArtists as $k => $v){
-								
+								print_r($featuredArtists);
 									//$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
 									//$image =  Configure::read('App.Music_Path').$albumArtwork;
 									if(strlen($v['Album']['AlbumTitle']) > 14){
