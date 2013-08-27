@@ -11,7 +11,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideoDownload', 'News', 'Video', 'Videodownload','Zipcode');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
 
     /*
      Function Name : beforeFilter
@@ -3753,7 +3753,7 @@ STR;
           $siteConfigData = $this->Album->query($siteConfigSQL);
           $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
           if($maintainLatestDownload){
-            if($this->LatestVideoDownload->save($insertArr)){
+            if($this->LatestVideodownload->save($insertArr)){
               $latestdownloadStatus = 1;
             }
           }
