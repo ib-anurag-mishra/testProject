@@ -115,7 +115,7 @@ class ResetcacheController extends AppController
 		}
 		
     //Restore Library top 10
-    $libraryDetails = array();
+    /*$libraryDetails = array();
 		$libraryDetails = $this->Library->find('all',array(
       'fields' => array('id', 'library_territory'),
 			 'conditions' => array('library_status' => 'active'),
@@ -127,7 +127,7 @@ class ResetcacheController extends AppController
 			$libId = $val['Library']['id'];
 			$librarytop10Data = Cache::read("lib".$libId);
 			$xml_data['librarytop10'][$libId] = $librarytop10Data;				 
-    }
+    }*/
       
     //echo '<pre>'; print_r($xml_data); exit;
     /**
