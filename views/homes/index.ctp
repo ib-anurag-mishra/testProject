@@ -393,7 +393,7 @@
 									<ul style="width:3690px;">
 										<?php
 								foreach($featuredArtists as $k => $v){
-								print_r($featuredArtists);
+								
 									//$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
 									//$image =  Configure::read('App.Music_Path').$albumArtwork;
 									if(strlen($v['Album']['AlbumTitle']) > 14){
