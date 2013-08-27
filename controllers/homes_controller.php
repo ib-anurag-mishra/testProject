@@ -3607,7 +3607,8 @@ STR;
                 $sql = "UPDATE `videodownloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."' ORDER BY created DESC";
                 $this->Videodownload->query($sql);
                 $this->Videodownload->setDataSource('default');
-                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
+                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdI' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
+                print_r($downloadsUsed);die;
                 $downloadCount =  $downloadsUsed[0]['Videodownload']['history'];
         echo "suces|".$downloadCount;
         } else {
