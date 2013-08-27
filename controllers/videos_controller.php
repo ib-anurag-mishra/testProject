@@ -372,7 +372,7 @@ class VideosController extends AppController {
                         
 //			$topDownloaded_videos = Cache::read("lib".$libId); 
 			foreach($topDownloaded_videos as $k => $v){
-			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
+                            if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
 			   	if(empty($ids)){
 				  $ids .= $v['LatestVideodownload']['ProdID'];
 				  $ids_provider_type_video .= "(" . $v['LatestVideodownload']['ProdID'] .",'" . $v['LatestVideodownload']['provider_type'] ."')";
@@ -422,8 +422,7 @@ class VideosController extends AppController {
 				$this->Video->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');
                                 
-                                //  videos                             
-                                
+                                //videos
 				$topDownloaded_query_videos =<<<STR
 				SELECT 
 					Video.ProdID,
