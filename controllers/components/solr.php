@@ -62,7 +62,7 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
         
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
+            $cond .= " AND Advisory:F AND AAdvisory:F";
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
