@@ -3581,7 +3581,6 @@ STR;
       
       $id = $_REQUEST['id'];
       $provider = $_REQUEST['provider'];
-      print_R($_REQUEST);die;
       
       //get details for this song
       $trackDetails = $this->Video->getdownloaddata($prodId , $provider);
