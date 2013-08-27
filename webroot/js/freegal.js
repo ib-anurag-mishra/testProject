@@ -860,6 +860,51 @@ function wishlistDownloadIE(prodId,id,provider)
 	return false;
 }
 
+function wishlistVideoDownloadIE(prodId,id,provider)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
+	var data = "prodId="+prodId+"&id="+id+"&provider="+provider;
+	id = prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/wishlistVideoDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}		
+			else if(msg == 'suces')
+			{
+				$('.afterClick').hide();
+				$('.beforeClick').show();			
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}			
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false;
+}
+
+
 function historyDownload(id,libID,patronID)
 {
 	$('.beforeClick').hide();
@@ -1098,6 +1143,59 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
 	return false;	
+}
+
+function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3,provider)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "prodId="+prodId+"&id="+id+"&provider="+provider;
+	id = prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/wishlistVideoDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+                   // alert(response);
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else if(msg == 'suces')
+			{
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+				if(languageSet == 'en'){
+					document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+				}else{
+					document.getElementById('wishlist_song_'+prodId).innerHTML = 'bajaedas';
+				}
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+				location.href = unescape(finalURL);
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}	
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false;
 }
 
 function checkPatron(libid,patronid)
