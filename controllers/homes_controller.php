@@ -1017,7 +1017,7 @@ STR;
             // National Top Downloads functionality
             if(!empty($territory)){  
             if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-            //if(1) {                   
+                             
                     $country = $territory;
                     if($maintainLatestDownload){
                                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 

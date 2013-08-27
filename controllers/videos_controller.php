@@ -354,7 +354,7 @@ class VideosController extends AppController {
         }
         $condition = array_merge($specificCondition, $condition);
         $ids_provider_type_video = '';
-                    Cache::delete("lib_videos".$libId);
+                   // Cache::delete("lib_videos".$libId);
                     if (($libDownload = Cache::read("lib_videos".$libId)) === false)  {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
