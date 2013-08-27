@@ -407,7 +407,7 @@ $(function() {
 
 
 
-	fmp.mediaelementplayer({
+	/*fmp.mediaelementplayer({
 		
 		audioWidth:780,
 		audioHeight:60,
@@ -418,7 +418,7 @@ $(function() {
         features: ['playlistfeature', 'prevtrack', 'playpause', 'nexttrack', 'current', 'progress', 'duration', 'volume','shuffle','loop','playlist'],
 
 
-	});
+	});*/
 	
 	
 	category_filter_a.on('click',function(e){
