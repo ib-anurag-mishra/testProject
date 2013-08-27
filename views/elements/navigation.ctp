@@ -311,16 +311,16 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <ul class="clearfix">
 			<li class="regular"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
                         <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li>
-                        <li class="most-popular"><?php if($this->Session->read("patron")){ echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); } else { echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'us_top_10')); } ?></li>
+                        <li class="most-popular"><?php echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></li>
                         <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss)); ?></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li>   
                         <li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss)); ?></li>
                     </ul>
                     
                     <div class="most-popular-sub-nav">
-                            <?php if($this->Session->read("patron")){ ?>
+                            <?php //if($this->Session->read("patron")){ ?>
                             <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
-                            <?php } ?>
+                            <?php //} ?>
                             <div><?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
                     </div>                   
 
@@ -389,9 +389,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a class="sidebar-anchor" style="cursor:default"><?php __('Most Popular'); ?></a>
                                                             <ul class="<?php echo $ul_class; ?>">
-                                                                    <?php if($this->Session->read("patron")){ ?>
+                                                                    <?php //if($this->Session->read("patron")){ ?>
                                                                     <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
-                                                                    <?php } ?>
+                                                                    <?php //} ?>
                                                                     <li><?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'),array('class'=>$us_top_css)); ?></li>
                                                             </ul>
                                                     </li>  

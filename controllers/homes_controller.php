@@ -42,7 +42,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -687,9 +687,21 @@ STR;
 		
                         
                 $this->layout = 'home';           
-                $libId = $this->Session->read('library');
-		$patId = $this->Session->read('patron');
+                $patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
+		$subdomain = $this->Session->read('subdomain');
+                $libId = $this->Session->read('library');
+                
+                if(!$this->Session->read("patron")){
+                    if($subdomain !== '' && $subdomain != 'www' && $subdomain != 'freegalmusic'){
+                        $q_for_subd = $this->Library->find('first', array(
+                            'fields' => 'id',
+                            'conditions' => array('library_subdomain' => $subdomain)
+                        ));
+                        $libId = $q_for_subd['Library']['id'];
+                    }
+                }
+                
                 
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
