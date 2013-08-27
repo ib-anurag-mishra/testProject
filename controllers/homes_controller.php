@@ -3589,7 +3589,7 @@ STR;
       $insertArr['patron_id'] = $patId;
       $insertArr['ProdID'] = $prodId;
       $insertArr['artist'] = $trackDetails['0']['Video']['Artist'];
-      $insertArr['track_title'] = $trackDetails['0']['Video']['SongTitle'];
+      $insertArr['track_title'] = $trackDetails['0']['Video']['VideoTitle'];
       $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
       $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
       $insertArr['provider_type'] = $provider;
