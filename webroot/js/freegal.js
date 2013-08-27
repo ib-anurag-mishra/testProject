@@ -864,9 +864,9 @@ function wishlistVideoDownloadIE(prodId,id,provider)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
-	document.getElementById('downloading_'+prodId).style.display = 'block';
-	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
+	document.getElementById('vdownloading_'+prodId).style.display = 'block';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
+	document.getElementById('vdownload_loader_'+prodId).style.display = 'block';
 	var data = "prodId="+prodId+"&id="+id+"&provider="+provider;
 	id = prodId;
 	jQuery.ajax({
@@ -887,10 +887,10 @@ function wishlistVideoDownloadIE(prodId,id,provider)
 				$('.beforeClick').show();			
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
-				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+				document.getElementById('download_video_'+prodId).innerHTML = 'Downloaded';
+				document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
+				document.getElementById('vdownloading_'+prodId).style.display = 'none';
+				document.getElementById('download_video_'+prodId).style.display = 'block';
 			}
 			else
 			{
@@ -1149,9 +1149,9 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	document.getElementById('downloading_'+prodId).style.display = 'block';
-	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
-	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	document.getElementById('vdownloading_'+prodId).style.display = 'block';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
+	document.getElementById('vdownload_loader_'+prodId).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
 	finalURL += downloadUrl3;
@@ -1175,13 +1175,13 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				if(languageSet == 'en'){
-					document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+					document.getElementById('download_video_'+prodId).innerHTML = 'Downloaded';
 				}else{
-					document.getElementById('wishlist_song_'+prodId).innerHTML = 'bajaedas';
+					document.getElementById('download_video_'+prodId).innerHTML = 'bajaedas';
 				}
-				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+				document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
+				document.getElementById('vdownloading_'+prodId).style.display = 'none';
+				document.getElementById('download_video_'+prodId).style.display = 'block';
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
 				$('.beforeClick').show();				

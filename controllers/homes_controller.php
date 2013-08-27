@@ -11,7 +11,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video', 'Videodownload','Zipcode');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideoDownload', 'News', 'Video', 'Videodownload','Zipcode');
 
     /*
      Function Name : beforeFilter
@@ -3588,10 +3588,10 @@ STR;
       $insertArr['library_id'] = $libId;
       $insertArr['patron_id'] = $patId;
       $insertArr['ProdID'] = $prodId;
-      $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-      $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-      $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-      $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+      $insertArr['artist'] = $trackDetails['0']['Video']['Artist'];
+      $insertArr['track_title'] = $trackDetails['0']['Video']['SongTitle'];
+      $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
+      $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
       $insertArr['provider_type'] = $provider;
         
       /**
@@ -3781,7 +3781,7 @@ STR;
         
         //delete from wishlist table
         $deleteSongId = $id;
-        $this->Wishlist->delete($deleteSongId);
+        $this->WishlistVideo->delete($deleteSongId);
         //get no of downloads for this week
         $this->VideoDownload->recursive = -1;
         $downloadsUsed =  $this->VideoDownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));

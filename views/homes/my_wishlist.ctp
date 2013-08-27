@@ -589,7 +589,7 @@ $ieVersion =  ieversion();
                             $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>
-                            <span class="beforeClick" id="download_song_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
+                            <span class="beforeClick" id="download_video_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
                                 <?php if($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { ?>
                                                     <![if !IE]>
                                                             <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." href='#' onclick='return wishlistVideoDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
@@ -606,8 +606,8 @@ $ieVersion =  ieversion();
                                                 <![endif]-->							
                                 <?php } ?>
                             </span>
-                            <span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
-                            <span id="download_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                            <span class="afterClick" id="vdownloading_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>"style="display:none;float:left"><?php __("Please Wait...");?></span>
+                            <span id="vdownload_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p>
                     </div>
 		    <div class="delete-btn videodelete"></div>
