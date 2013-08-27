@@ -3580,7 +3580,7 @@ STR;
                 $this->Download->setDataSource('default');
                 $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
                 $downloadCount =  $downloadsUsed[0]['Download']['history'];
-        echo "suces|".$downloadCount;
+        echo "sucess|".$downloadCount;
         } else {
                echo "error";
 	}
@@ -3609,7 +3609,7 @@ STR;
                 $this->Videodownload->setDataSource('default');
                 $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
                 $downloadCount =  $downloadsUsed[0]['Videodownload']['history'];
-        echo "suces|".$downloadCount;
+        echo "sucess|".$downloadCount;
         } else {
                echo "error";
 	}

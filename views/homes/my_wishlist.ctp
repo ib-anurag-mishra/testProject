@@ -586,16 +586,16 @@ $ieVersion =  ieversion();
                         <?php
                             $productInfo = $mvideo->getDownloadData($wishlistResultsVideo['WishlistVideo']['ProdID'],$wishlistResultsVideo['WishlistVideo']['provider_type']);
                             $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-							$finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
-							$finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
+                            $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
+                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>
                             <span class="beforeClick" id="download_song_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
                                 <?php if($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { ?>
                                                     <![if !IE]>
-                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." href='#' onclick='return historyDownloadVideoOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
                                                     <![endif]>
                                                     <!--[if IE]>
-                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadIE("<?php echo $wishlistResultsVideo['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResultsVideo['Wishlist']['id']; ?>" , "<?php echo $wishlistResultsVideo['Wishlist']["provider_type"]; ?>");' href='<?php echo $finalVideoUrl; ?>'><?php __('Download Now');?></a>
+                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return historyDownloadVideo("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>");' href='<?php echo $finalVideoUrl; ?>'><?php __('Download');?></a>
                                                     <![endif]-->
                                 <?php } else { ?>
                                                 <![if !IE]>
