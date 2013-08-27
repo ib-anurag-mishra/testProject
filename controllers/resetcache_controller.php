@@ -129,7 +129,7 @@ class ResetcacheController extends AppController
 			$xml_data['librarytop10'][$libId] = $librarytop10Data;				 
     }*/
       
-    //echo '<pre>'; print_r($xml_data); exit;
+    echo '<pre>'; print_r($xml_data); exit;
     /**
      * writes array into file (local)
     **/
