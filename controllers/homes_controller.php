@@ -203,13 +203,13 @@ STR;
         //dvisory_status = $this->getLibraryExplicitStatus($libId);        
 
   
-	Cache::delete("nationalvideos".$territory);             
+	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
             
                   
                 $country = $territory;
-                
+
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
@@ -218,7 +218,7 @@ STR;
                                                  
                    if($maintainLatestVideoDownload){                       
 
-                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -228,7 +228,7 @@ STR;
                         LIMIT 110";
                    } else {
 
-                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -492,7 +492,7 @@ STR;
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
-		Cache::delete("coming_soon_videos".$territory);
+		//Cache::delete("coming_soon_videos".$territory);
                 if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 //if(1)
                 {
@@ -1223,7 +1223,7 @@ STR;
             $country = $this->Session->read('territory');
                 
                if(!empty($country)){ 
-                   Cache::delete("national_us_top10_videos".$territory);
+                   //Cache::delete("national_us_top10_videos".$territory);
                if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
                //if(1) {               
                    if($maintainLatestVideoDownload){
