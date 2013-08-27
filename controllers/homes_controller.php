@@ -4084,9 +4084,10 @@ STR;
             }
             
             $territory = $this->Session->read('territory');
-            
+            //get Advisory condition
+            $advisory_status = $this->getLibraryExplicitStatus($libraryId);
             //////////////////////////////////Videos/////////////////////////////////////////////////////////            
-             
+            Cache::delete("new_releases_videos".$territory); 
             if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
             //if(1)
             {               
@@ -4120,7 +4121,7 @@ LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
 LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
+WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate <= NOW()) 
 GROUP BY Video.ProdID 
 ORDER BY Country.SalesDate DESC 
 LIMIT 100 
