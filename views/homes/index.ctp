@@ -34,7 +34,7 @@
 											$j = 0;
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopDownload); $i++) {
-                                                                                           echo $this->Session->read('block'); echo $nationalTopDownload[$i]['Song']['Advisory'];
+                                                                                          
                                                                                           //hide song if library block the explicit content
                                                                                           if(($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] =='T')) {
                                                                                               continue;
@@ -191,7 +191,7 @@
 														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
 													</div>
 													<div class="artist-name">                                                                                                            
-														<a href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
+														<a href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText);  echo $this->Session->read('block'); echo $nationalTopDownload[$i]['Song']['Advisory'];?></a>
 													</div>
 												</div>
 											</li>
