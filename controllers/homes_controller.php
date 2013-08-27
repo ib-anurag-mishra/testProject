@@ -3572,7 +3572,7 @@ STR;
       $downloadsDetail = array();
       $libraryDownload = $this->Downloadsvideos->checkLibraryDownloadVideos($libId);
       $patronDownload = $this->Downloadsvideos->checkPatronDownloadVideos($patId,$libId);
-      echo $libraryDownload . "--" . $patronDownload;
+      
       //check for download availability
       if($libraryDownload != '1' || $patronDownload != '1'){
           echo "error";
@@ -3606,6 +3606,7 @@ STR;
       if($checkValidation == 1){
           
           $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
+          print_r($validationResult);die;
           
           /**
             records download component request & response
