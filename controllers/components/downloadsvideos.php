@@ -100,7 +100,6 @@ Class DownloadsvideosComponent extends Object
         $songInstance = ClassRegistry::init('Video');
         $songInstance->recursive = -1;
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'DownloadStatus'=>'1')));
-        echo "<br>Query1: ".$this->$songInstance->lastQuery();die;
         if(!empty($song['Video'])){
             return true;
         } else {
