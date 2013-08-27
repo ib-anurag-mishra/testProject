@@ -4087,7 +4087,7 @@ STR;
             //get Advisory condition
             $advisory_status = $this->getLibraryExplicitStatus($libraryId);
             //////////////////////////////////Videos/////////////////////////////////////////////////////////            
-            Cache::delete("new_releases_videos".$territory); 
+            //Cache::delete("new_releases_videos".$territory); 
             if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
             //if(1)
             {               
