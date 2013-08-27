@@ -27,7 +27,7 @@ class ResetcacheController extends AppController
 	function genrateXML() {
 
     
-		$territoryNames = array('US','CA','AU','IT','NZ');
+		$territoryNames = array('US', 'CA', 'AU', 'IT', 'NZ', 'GB', 'IE');
 		$xml_data = array();
 		
 		//loop for all country
@@ -62,6 +62,47 @@ class ResetcacheController extends AppController
 			$featured_albumsdata = Cache::read('featured'.$territory);
 			$xml_data[$territory]['featured_albums'] = $featured_albumsdata;			
 			
+      //Restore featured_videos
+      $featured_videos = Cache::read("featured_videos" . $territory);
+      $xml_data[$territory]['featured_videos'] = $featured_videos;
+      
+      //Restore top_download_videos
+      $top_download_videos = Cache::read("top_download_videos".$territory);
+      $xml_data[$territory]['top_download_videos'] = $top_download_videos;      
+      
+      //Restore nationalvideos
+      $nationalvideos = Cache::read("nationalvideos" . $territory); 
+      $xml_data[$territory]['nationalvideos'] = $nationalvideos;      
+      
+      //Restore coming_soon_songs
+      $coming_soon_songs = Cache::read("coming_soon_songs" . $territory); 
+      $xml_data[$territory]['coming_soon_songs'] = $coming_soon_songs; 
+       
+      //Restore coming_soon_videos
+      $coming_soon_videos = Cache::read("coming_soon_videos." . $territory);  
+      $xml_data[$territory]['coming_soon_videos'] = $coming_soon_videos;
+      
+      //Restore national_us_top10_songs
+      $national_us_top10_songs = Cache::read("national_us_top10_songs" . $territory);   
+      $xml_data[$territory]['national_us_top10_songs'] = $national_us_top10_songs;
+      
+      //Restore national_us_top10_albums
+      $national_us_top10_albums = Cache::read("national_us_top10_albums" . $territory);   
+      $xml_data[$territory]['national_us_top10_albums'] = $national_us_top10_albums;
+      
+      //Restore national_us_top10_videos
+      $national_us_top10_videos = Cache::read("national_us_top10_videos" . $territory);   
+      $xml_data[$territory]['national_us_top10_videos'] = $national_us_top10_videos;
+      
+      //Restore new_releases_albums  
+      $new_releases_albums = Cache::read("new_releases_albums" . $territory);     
+      $xml_data[$territory]['new_releases_albums'] = $new_releases_albums;      
+      
+      //Restore new_releases_videos  
+      $new_releases_videos = Cache::read("new_releases_videos" . $territory);     
+      $xml_data[$territory]['new_releases_videos'] = $new_releases_videos;
+      
+      
 			//Need to comment this line
 			//break;
 		}
