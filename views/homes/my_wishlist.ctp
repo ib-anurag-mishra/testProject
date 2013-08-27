@@ -588,7 +588,7 @@ $ieVersion =  ieversion();
                             $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                             $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
-                            print_r($finalVideoUrlArr);die;
+                            print_r($productInfo);die;
                             ?>
                             <span class="beforeClick" id="download_video_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
                                 <?php if($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { ?>
