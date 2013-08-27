@@ -1,3 +1,4 @@
+/* test comment by David, 082713 */
 $('#top-100-albums-grid .lazy').lazyload({
 	
 	effect:'fadeIn',
