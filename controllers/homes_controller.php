@@ -3570,9 +3570,8 @@ STR;
       $patId = $this->Session->read('patron');
       $prodId = $_REQUEST['prodId'];
       $downloadsDetail = array();
-      $libraryDownload = $this->Videodownload->checkLibraryDownload($libId);
-      $patronDownload = $this->Videodownload->checkPatronDownload($patId,$libId);
-      echo $libraryDownload . "--" . $patronDownload;
+      $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+      $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
       //check for download availability
       if($libraryDownload != '1' || $patronDownload != '1'){
           echo "error";
@@ -3605,7 +3604,7 @@ STR;
       $checkValidation = $Setting['Siteconfig']['svalue'];
       if($checkValidation == 1){
           
-          $validationResult = $this->Videodownload->validateDownload($prodId, $provider);
+          $validationResult = $this->Downloads->validateDownload($prodId, $provider);
           
           /**
             records download component request & response
