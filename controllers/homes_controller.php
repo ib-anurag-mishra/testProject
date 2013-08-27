@@ -10,7 +10,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
 
     /*
@@ -3570,8 +3570,9 @@ STR;
       $patId = $this->Session->read('patron');
       $prodId = $_REQUEST['prodId'];
       $downloadsDetail = array();
-      $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-      $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+      $libraryDownload = $this->Downloadsvideos->checkLibraryDownloadVideos($libId);
+      $patronDownload = $this->Downloadsvideos->checkPatronDownloadVideos($patId,$libId);
+      echo $libraryDownload . "--" . $patronDownload;
       //check for download availability
       if($libraryDownload != '1' || $patronDownload != '1'){
           echo "error";
@@ -3604,7 +3605,7 @@ STR;
       $checkValidation = $Setting['Siteconfig']['svalue'];
       if($checkValidation == 1){
           
-          $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+          $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
           
           /**
             records download component request & response
