@@ -1261,7 +1261,7 @@ STR;
 
                  $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
-                 $sql_us_10_v =<<<STR
+               echo  $sql_us_10_v =<<<STR
                  SELECT 
                         Video.ProdID,
                         Video.ReferenceID,
