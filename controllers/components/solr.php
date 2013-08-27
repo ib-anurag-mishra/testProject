@@ -62,7 +62,7 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
         
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
@@ -283,7 +283,7 @@ class SolrComponent extends Object {
         $country = $this->Session->read('territory');
         $cond = " AND DownloadStatus:1";
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -381,7 +381,7 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
@@ -478,7 +478,7 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -607,7 +607,7 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -704,7 +704,7 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         $char = substr($keyword, 0, 1);
