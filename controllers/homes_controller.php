@@ -3844,7 +3844,6 @@ STR;
         $patId = $_REQUEST['patronid'];
         $this->Videodownload->recursive = -1;
         $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
-        echo "<br>Query1: ".$this->Videodownload->lastQuery();
         $downloadCount =  $downloadsUsed[0]['Videodownload']['history'];
         //check for download availability
         if($downloadCount < 2){
