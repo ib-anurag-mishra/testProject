@@ -34,6 +34,12 @@
 											$j = 0;
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopDownload); $i++) {
+                                                                                            
+                                                                                          //hide song if library block the explicit content
+                                                                                          if(($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] =='T')) {
+                                                                                              continue;
+                                                                                          }
+                                                                                            
 											if($j==5){
 												break;
 											}
@@ -206,6 +212,11 @@
 											$j = 0;
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
+                                                                                            
+                                                                                             //hide song if library block the explicit content
+                                                                                          if(($this->Session->read('block') == 'yes') && ($nationalTopVideoDownload[$i]['Video']['Advisory'] =='T')) {
+                                                                                              continue;
+                                                                                          }
 	
 											//$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
                                                                                         //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
