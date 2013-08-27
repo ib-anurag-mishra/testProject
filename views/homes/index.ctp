@@ -174,6 +174,18 @@
                                                                                                     } else {
                                                                                                             $songTitle = $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
                                                                                                     }
+                                                                                                    
+                                                                                                  if('T' == $nationalTopDownload[$i]['Song']['Advisory']) { 
+                                                                                                      if (strlen($songTitle) >= 20 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 20)) . "..";
+                                                                                                      }                                                                                                     
+                                                                                                      $songTitle .='<span style="color: red;display: inline;"> (Explicit)</span> ';                                                                                                      
+                                                                                                  }
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
                                                                                                     ?>
 
 
