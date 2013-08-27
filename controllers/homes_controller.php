@@ -3583,7 +3583,7 @@ STR;
       $provider = $_REQUEST['provider'];
       
       //get details for this song
-      $trackDetails = $this->Video->getdownloaddata($prodId , $provider);
+      $trackDetails = $this->Video->getVideoData($prodId , $provider);
       $insertArr = Array();
       $insertArr['library_id'] = $libId;
       $insertArr['patron_id'] = $patId;
@@ -3747,18 +3747,16 @@ STR;
 
         $downloadStatus = $latestdownloadStatus = 0;          
         //save to downloads table
-        if($this->Videodownload->save($insertArr)){echo 123;
+        if($this->Videodownload->save($insertArr)){
           $downloadStatus = 1;  
           $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
           $siteConfigData = $this->Album->query($siteConfigSQL);
           $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
           if($maintainLatestDownload){
-              echo 34;
             if($this->LatestVideodownload->save($insertArr)){
               $latestdownloadStatus = 1;
             }
           }
-          echo 0468;          
           //update library table
           $this->Library->setDataSource('master');
           $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
