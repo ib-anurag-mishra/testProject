@@ -1223,6 +1223,7 @@ STR;
             $country = $this->Session->read('territory');
                 
                if(!empty($country)){ 
+                   Cache::delete("national_us_top10_videos".$territory);
                if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
                //if(1) {               
                    if($maintainLatestVideoDownload){
