@@ -3598,33 +3598,6 @@ STR;
           */
             $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
             
-          // patorn downloaded limit validation
-          /* if(!($this->Downloads->checkPatronDownload($patId, $libId))){
-            
-            /**
-              complete records with validation fail
-            */
-            /*$log_data .= ":checkPatronDownload= 'stop'";
-            $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
-            $this->log($log_data, $log_name);
-
-          }
-          $log_data .= ":checkPatronDownload= 'allow'"; */ 
-          
-          // already downloaded validation
-         /*  if(!($this->Downloads->checkSongAlreadyDownloaded($prodId, $provider, $libId, $patId))){
-            
-            /**
-              complete records with validation fail
-            */
-            /*$log_data .= ":checkSongAlreadyDownloaded= 'stop'";
-            $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
-            $this->log($log_data, $log_name);
-
-            
-          }
-          $log_data .= ":checkSongAlreadyDownloaded= 'allow'"; */            
-            
           $checked = "true";
           $validationPassed = $validationResult[0];
           $validationPassedMessage = (($validationResult[0] == 0)?'false':'true');

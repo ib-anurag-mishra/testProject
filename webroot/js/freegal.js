@@ -1133,8 +1133,7 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
-				$('.beforeClick').show();
-                                location.reload();				
+				$('.beforeClick').show();				
 			}
 			else
 			{
@@ -1188,7 +1187,6 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
 				$('.beforeClick').show();
-                                location.reload();
 			}
 			else
 			{
