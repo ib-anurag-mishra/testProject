@@ -689,16 +689,15 @@ STR;
                 $this->layout = 'home';           
                 $patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
-		$subdomain = $this->Session->read('subdomain');
+		$url = $_SERVER['SERVER_NAME'];
+                $host = explode('.', $url);
+                $subdomains = array_slice($host, 0, count($host) - 2 );									
+                $subdomains = $subdomains[0] ;
                 $libId = $this->Session->read('library');
                 
-                if(!$this->Session->read("patron")){
-                    if($subdomain !== '' && $subdomain != 'www' && $subdomain != 'freegalmusic'){
-                        $q_for_subd = $this->Library->find('first', array(
-                            'fields' => 'id',
-                            'conditions' => array('library_subdomain' => $subdomain)
-                        ));
-                        $libId = $q_for_subd['Library']['id'];
+                if($subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic'){
+                    if(!$this->Session->read("patron")){
+                        $this->redirect(array('controller' => 'homes', 'action' => 'index'));
                     }
                 }
                 
