@@ -696,9 +696,11 @@ STR;
 		$country = $this->Session->read('territory');
 		$subdomain = $this->Session->read('subdomain');
                 $libId = $this->Session->read('library');
-                
+                echo $subdomain;
                 if($subdomain == '' || $subdomain == 'www' || $subdomain == 'freegalmusic'){
+                    echo "Found Sub Domain" . $subdomain;
                     if(!$this->Session->read("patron")){
+                        echo "I think user is loged in";
                         $this->redirect(array('controller' => 'homes', 'action' => 'index'));
                     }
                 }
