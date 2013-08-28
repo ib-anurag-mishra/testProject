@@ -1457,7 +1457,7 @@ STR;
         
         
 	function admin_getAlbums(){
-            Configure::write('debug', 0);
+            Configure::write('debug', 2);
 		$result = array();
 		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
                 $val = '';
