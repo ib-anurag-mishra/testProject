@@ -422,8 +422,7 @@ $ieVersion =  ieversion();
 	
             for($i = 0; $i < count($wishlistResults); $i++) {
 		
-			print_r($wishlistResults);
-	?>
+			?>
 				
 				<div class="row clearfix wishlistsong"  id="wishlistsong-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
