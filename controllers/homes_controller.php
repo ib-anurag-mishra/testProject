@@ -697,15 +697,12 @@ STR;
 		$subdomain = $this->Session->read('subdomain');
                 $libId = $this->Session->read('library');
                 
-                if(!$this->Session->read("patron")){
-                    if($subdomain !== '' && $subdomain != 'www' && $subdomain != 'freegalmusic'){
-                        $q_for_subd = $this->Library->find('first', array(
-                            'fields' => 'id',
-                            'conditions' => array('library_subdomain' => $subdomain)
-                        ));
-                        $libId = $q_for_subd['Library']['id'];
+                if($subdomain == '' || $subdomain == 'www' || $subdomain == 'freegalmusic'){
+                    if(!$this->Session->read("patron")){
+                        $this->redirect(array('controller' => 'homes', 'action' => 'index'));
                     }
                 }
+                
                  //get Advisory condition
                 $advisory_status = $this->getLibraryExplicitStatus($libId);  
                 /////////////////////////////////////Songs///////////////////////////////////////////////
