@@ -52,7 +52,7 @@ table {
 
 .wrapper {
 	
-	background: url(freegal-skin/player-repeat-bkg.png) repeat-x;
+	background: url(../player_skin/player-repeat-bkg.png) repeat-x;
 	height: 102px;
 	overflow: hidden;
 }
@@ -64,7 +64,7 @@ table {
 	width: 974px;
 	height: 85px;
 	
-	background: url(freegal-skin/player-bkg-with-border.png);
+	background: url(../player_skin/player-bkg-with-border.png);
 	position: relative;
 	overflow: hidden;
 
@@ -85,8 +85,7 @@ table {
 
 </style>
 
-
-	<script type="text/javascript" src="jwplayer.js"></script>
+        <?php echo $this->Html->script('jwplayer'); ?>
 	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
 </head>
 

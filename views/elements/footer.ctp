@@ -74,7 +74,7 @@
                                                 }
                                                 ?>
 					</div>
-                                        <iframe class="player" src="queues/playqueue"></iframe>
+                                        <iframe class="player" src="/queues/playqueue"></iframe>
 				</div>
 			</footer>
 	
