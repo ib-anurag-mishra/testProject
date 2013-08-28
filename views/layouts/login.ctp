@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-    	<?php /*<meta http-equiv="X-UA-Compatible" content="IE=edge">*/ ?>
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
         <?php echo $this->Html->charset(); ?>
         <title>
             <?php __('Freegal Music : Your New Music Library :'); ?>
