@@ -1444,14 +1444,23 @@ STR;
 
 	}
         
+ /**
+   *@getAlbums
+   *  return top 5 artist names with ajax call
+   *
+   *$name
+   *  string to be searchedin atrist name
+   *
+   *@return
+   *  
+   **/
         
         
 	function admin_getAlbums(){
             Configure::write('debug', 0);
 		$result = array();
 		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
-                return "<br>Query1: ".$this->Album->lastQuery();
-		$val = '';
+                $val = '';
 		$this->Song->Behaviors->attach('Containable');
 		foreach($allAlbum as $k => $v){
 			$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
