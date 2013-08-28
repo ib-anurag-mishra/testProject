@@ -347,12 +347,7 @@ class VideosController extends AppController {
         //get Advisory condition
 	$advisory_status = $this->getLibraryExplicitStatus($libId);
         $condition = array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate')));
-        $specificCondition = array();
-        if($advisory_status !=''){
-            //$advisory_status = ", 'Advisory' => 'F'";
-            $specificCondition = array('Advisory' => 'F');   
-        }
-        $condition = array_merge($specificCondition, $condition);
+        
         $ids_provider_type_video = '';
                    // Cache::delete("lib_videos".$libId);
                     if (($libDownload = Cache::read("lib_videos".$libId)) === false)  {
