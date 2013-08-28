@@ -75,7 +75,7 @@
                                                             if (strlen($albumSong['Song']['SongTitle']) >= 20) {
                                                                     echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</span>';
                                                             } else {
-                                                                    echo '<p>' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</p>';
+                                                                    echo '<p style="float:left;">' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</p>';
                                                             }
                                                             if ($albumSong['Song']['Advisory'] == 'T') {
                                                                     echo '<span class="explicit"> (Explicit)</span>';
