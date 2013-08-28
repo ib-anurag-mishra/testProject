@@ -19,9 +19,6 @@
 											<a href="#top-100-videos" data-category-type="videos">Videos</a>
 										</li>
 									</ul>
-									
-							new		
-									
 								</nav>
 								<div class="grids">
 									
