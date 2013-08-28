@@ -435,7 +435,7 @@ STR;
         *  Code For Coming Soon --- START
         */ 
         $territory = $this->Session->read('territory');
-Cache::delete("coming_soon_songs".$territory);
+
         if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {  
         //if(1) {
           // Show from DB          
@@ -491,8 +491,7 @@ STR;
                 
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
-                // Videos
-		Cache::delete("coming_soon_videos".$territory);
+                // Videos		
                 if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 //if(1)
                 {

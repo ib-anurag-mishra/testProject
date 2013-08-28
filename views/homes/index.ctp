@@ -531,8 +531,8 @@
                                                                                                             
                                                                                                             if('T' == $value['Song']['Advisory']) { 
                                                                                                                 
-                                                                                                                if(strlen($commingSoonSongTitle)>15)
-                                                                                                                    echo substr($value['Song']['SongTitle'],0,15)."...";
+                                                                                                                if(strlen($commingSoonSongTitle)>13)
+                                                                                                                    echo substr($value['Song']['SongTitle'],0,13)."...";
                                                                                                                  else echo $commingSoonSongTitle; 
                                                                                                                      
                                                                                                             }else{
