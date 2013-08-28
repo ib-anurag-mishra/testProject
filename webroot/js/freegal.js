@@ -1172,8 +1172,7 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 			}
 			else if(msg == 'suces')
 			{
-				alert('Downloading');
-                                var downloadUsedArr = response.split('|');		
+				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				if(languageSet == 'en'){
 					document.getElementById('download_video_'+prodId).innerHTML = 'Downloaded';
