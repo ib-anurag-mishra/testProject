@@ -3784,6 +3784,7 @@ STR;
         //delete from wishlist table
         $deleteSongId = $id;
         $this->WishlistVideo->delete($deleteSongId);
+        echo "<br>Query1: ".$this->WishlistVideo->lastQuery();
         //get no of downloads for this week
         $this->VideoDownload->recursive = -1;
         $downloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
