@@ -26,6 +26,11 @@
                     //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
                     // print_r($featureVideo); die;
                     //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                    
+                    //hide song if library block the explicit content
+                    if(($this->Session->read('block') == 'yes') && ($featureVideo["FeaturedVideo"]['Advisory'] =='T')) {
+                        continue;
+                    }
                 ?>
 	<?php if($sr_no%2==0) {?><li> <?php }?>
                     <div class="featured-video-detail">
@@ -78,8 +83,8 @@
                                 
                             <a href="javascript:void(0);">
                             <?php
-                            if(strlen($featureVideo['Video']['VideoTitle']) >= 30){
-                                    $featureVideo['Video']['VideoTitle'] = substr($featureVideo['Video']['VideoTitle'], 0, 30). '...';
+                            if(strlen($featureVideo['Video']['VideoTitle']) >= 20){
+                                    $featureVideo['Video']['VideoTitle'] = substr($featureVideo['Video']['VideoTitle'], 0, 20). '...';
                             }
                             ?>
                             <?php echo $this->getTextEncode($featureVideo['Video']['VideoTitle']);?>
@@ -87,8 +92,8 @@
                             </div>
                             <div class="video-name">
                             <?php
-                            if(strlen($featureVideo['Video']['ArtistText']) >= 30){
-                                    $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 30). '...';
+                            if(strlen($featureVideo['Video']['ArtistText']) >= 20){
+                                    $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 20). '...';
                             }
                             ?>
                             <?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?>
