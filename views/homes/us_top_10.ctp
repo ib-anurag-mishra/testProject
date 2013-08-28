@@ -26,6 +26,11 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($ustop10Albums as $key => $value){
                                             
+                                             //hide song if library block the explicit content
+                                        if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
+                                            continue;
+                                        } 
+                                            
                                              //$album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              //$album_img =  Configure::read('App.Music_Path').$album_img;                                            					
 					?>					
@@ -40,11 +45,11 @@
 						<div class="album-title">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Albums']['AlbumTitle'])>32)
-                                                                echo substr($value['Albums']['AlbumTitle'],0,32)."..."; 
+                                                                if(strlen($value['Albums']['AlbumTitle'])>20)
+                                                                echo substr($value['Albums']['AlbumTitle'],0,20)."..."; 
                                                                 else echo $value['Albums']['AlbumTitle'];
                                                          ?>
-                                                    </a>
+                                                    </a><?php if('T' == $value['Albums']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
@@ -73,6 +78,11 @@
 
                                           $count =1;
                                         foreach($nationalTopDownload as $key => $value){
+                                            
+                                            //hide song if library block the explicit content
+                                        if(($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] =='T')) {
+                                            continue;
+                                        } 
                                             
                                             if($count>10) break;
                                             
@@ -171,11 +181,11 @@
 						<div class="album-title">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Song']['SongTitle'])>32)
-                                                                echo substr($value['Song']['SongTitle'],0,32)."..."; 
+                                                                if(strlen($value['Song']['SongTitle'])>20)
+                                                                echo substr($value['Song']['SongTitle'],0,20)."..."; 
                                                                 else echo $value['Song']['SongTitle'];
                                                          ?>
-                                                    </a>
+                                                    </a><?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
@@ -209,6 +219,12 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($usTop10VideoDownload as $key => $value){
                                             
+                                            
+                                            //hide song if library block the explicit content
+                                            if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
+                                                continue;
+                                            } 
+
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
 

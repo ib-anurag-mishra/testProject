@@ -1018,6 +1018,8 @@ STR;
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
+                
+                Cache::delete("national_us_top10_songs".$territory);
             if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
                              
                     $country = $territory;
@@ -1119,7 +1121,8 @@ STR;
                
             $country = $this->Session->read('territory');
             
-            if(!empty($country)){  
+            if(!empty($country)){
+                Cache::delete("national_us_top10_albums".$territory);
               if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
               //if(1){
                     $country = $territory;
@@ -1225,7 +1228,7 @@ STR;
             $country = $this->Session->read('territory');
                 
                if(!empty($country)){ 
-                   //Cache::delete("national_us_top10_videos".$territory);
+                   Cache::delete("national_us_top10_videos".$territory);
                if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
                //if(1) {               
                    if($maintainLatestVideoDownload){
