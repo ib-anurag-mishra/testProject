@@ -3181,29 +3181,9 @@ STR;
 STR;
                     //execute the query
                 $wishlistResults = $this->Wishlist->query($wishlistQuery); 
-                /*foreach($wishlistResults as $k => $wishlistResult){
-                    foreach($wishlistResult as $key => $value){
-                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                            $wishlistResults[$k][$key]['Song']['status'] = 'avail';
-                        } else{
-                            $wishlistResults[$k][$key]['Song']['status'] = 'not';
-                        }
-                    }
-                }*/
-                    
                     
                 $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID')),array('table' => $countryPrefix.'countries','alias' => 'Country','type' => 'LEFT','conditions' => array('Country.ProdID = Video.ProdID','Video.provider_type = Country.provider_type','Country.SalesDate != ""'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.id','WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title','Video.ReferenceID','Video.ArtistText','Video.Advisory','Video.provider_type', 'File.CdnPath', 'File.SourceURL','Country.Territory','Country.SalesDate'),'order'=>"$videoSortBy $sortType"));
-                /*foreach($wishlistResultsVideos as $key => $value){
-                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                    if(count($downloadsUsed) > 0){
-                        $wishlistResultsVideos[$key]['Song']['status'] = 'avail';
-                    } else{
-                        $wishlistResultsVideos[$key]['Song']['status'] = 'not';
-                    }
-                }*/
                 
-
                 
         $this->set('wishlistResults',$wishlistResults);
         $this->set('wishlistResultsVideos',$wishlistResultsVideos);
@@ -3783,10 +3763,10 @@ STR;
         $this->log($log_data, $log_name);
         
         //delete from wishlist table
-        $deleteSongId = $id;
-        $this->WishlistVideo->delete($deleteSongId);
+        $deleteVideoId = $id;
+        $this->WishlistVideo->delete($deleteVideoId);
         //get no of downloads for this week
-        $this->VideoDownload->recursive = -1;
+        $this->Videodownload->recursive = -1;
         $downloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 
         echo "suces|".$downloadsUsed;
