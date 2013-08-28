@@ -716,7 +716,7 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-                Cache::delete("lib".$libId);
+                //Cache::delete("lib".$libId);
                     if (($libDownload = Cache::read("lib".$libId)) === false)
                     //if(1)
                     {
@@ -852,7 +852,7 @@ STR;
                 $ids_provider_type_album = '';
 		
                     
-                Cache::delete("lib_album".$libId);
+               // Cache::delete("lib_album".$libId);
                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
