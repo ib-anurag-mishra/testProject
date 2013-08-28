@@ -52,7 +52,7 @@ table {
 
 .wrapper {
 	
-	background: url(../player_skin/player-repeat-bkg.png) repeat-x;
+	background: url(../img/player_skin/player-repeat-bkg.png) repeat-x;
 	height: 102px;
 	overflow: hidden;
 }
@@ -64,7 +64,7 @@ table {
 	width: 974px;
 	height: 85px;
 	
-	background: url(../player_skin/player-bkg-with-border.png);
+	background: url(../img/player_skin/player-bkg-with-border.png);
 	position: relative;
 	overflow: hidden;
 
@@ -121,7 +121,7 @@ table {
 	    height: 70,
 	    width: 960,
 	    primary: "flash",
-	    skin: "../player_skin/freegal-custom-skin.xml",
+	    skin: "../img/player_skin/freegal-custom-skin.xml",
 		listbar: {
 			
 			position:"right",
