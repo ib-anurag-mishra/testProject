@@ -9,7 +9,7 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo','Download');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
 
@@ -3525,10 +3525,7 @@ STR;
         $deleteSongId = $id;
         $this->Wishlist->delete($deleteSongId);
         //get no of downloads for this week
-        $this->Download->recursive = -1;
-        $this->Videodownload->recursive = -1;
-        $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-        $downloadsUsed =  $videodownloadsUsed + $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
         
 
         echo "suces|".$downloadsUsed;
@@ -3742,10 +3739,7 @@ STR;
         $deleteVideoId = $id;
         $this->WishlistVideo->delete($deleteVideoId);
         //get no of downloads for this week
-        $this->Download->recursive = -1;
-        $this->Videodownload->recursive = -1;
-        $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-        $downloadsUsed =  $videodownloadsUsed + $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 
         echo "suces|".$downloadsUsed;
         exit;
