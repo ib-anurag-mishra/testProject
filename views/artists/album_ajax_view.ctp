@@ -50,7 +50,11 @@
 					$i = 1;
 					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):			
 						
-					?>	
+					 //hide song if library block the explicit content
+                                            if(($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] =='T')) {
+                                                continue;
+                                            } 
+                                         ?>	
 				
 				<div class="tracklist">
                                     
@@ -68,8 +72,8 @@
                                 
                                 
                                         <div class="song"><?php
-                                                            if (strlen($albumSong['Song']['SongTitle']) >= 30) {
-                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</span>';
+                                                            if (strlen($albumSong['Song']['SongTitle']) >= 20) {
+                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</span>';
                                                             } else {
                                                                     echo '<p>' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</p>';
                                                             }
