@@ -71,7 +71,7 @@
 					
                                 
                                 
-                                        <div class="song"><?php
+                                        <div class="song" style="width:200px;"><?php
                                                             if (strlen($albumSong['Song']['SongTitle']) >= 20) {
                                                                     echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</span>';
                                                             } else {
