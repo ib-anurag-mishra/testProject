@@ -85,7 +85,9 @@
                                                 }
                                                 ?>
 					</div>
+                                    <?php if($this->Session->read("patron")){ ?>
                                         <iframe class="player" src="/queues/playqueue"></iframe>
+                                    <?php } ?>
 				</div>
 			</footer>
 	
