@@ -3776,14 +3776,12 @@ STR;
     
         $this->log($log_data, $log_name);
         
-        echo 123;
-        
         //delete from wishlist table
         $deleteSongId = $id;
         $this->WishlistVideo->delete($deleteSongId);
         //get no of downloads for this week
         $this->VideoDownload->recursive = -1;
-        $downloadsUsed =  $this->VideoDownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $downloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 
         echo "suces|".$downloadsUsed;
         exit;
