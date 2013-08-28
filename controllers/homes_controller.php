@@ -694,13 +694,14 @@ STR;
                 $this->layout = 'home';           
                 $patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
-		$subdomain = $this->Session->read('subdomain');
+		$url = $_SERVER['SERVER_NAME'];
+                $host = explode('.', $url);
+                $subdomains = array_slice($host, 0, count($host) - 2 );									
+                $subdomains = $subdomains[0] ;
                 $libId = $this->Session->read('library');
-                echo $subdomain;
-                if($subdomain == '' || $subdomain == 'www' || $subdomain == 'freegalmusic'){
-                    echo "Found Sub Domain" . $subdomain;
+                
+                if($subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic'){
                     if(!$this->Session->read("patron")){
-                        echo "I think user is loged in";
                         $this->redirect(array('controller' => 'homes', 'action' => 'index'));
                     }
                 }
