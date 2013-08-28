@@ -121,7 +121,7 @@ table {
 	    height: 70,
 	    width: 960,
 	    primary: "flash",
-	    skin: "freegal-skin/freegal-custom-skin.xml",
+	    skin: "../player_skin/freegal-custom-skin.xml",
 		listbar: {
 			
 			position:"right",
