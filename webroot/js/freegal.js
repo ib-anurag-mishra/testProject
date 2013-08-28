@@ -1172,16 +1172,15 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 			}
 			else if(msg == 'suces')
 			{
-				var downloadUsedArr = response.split('|');		
+				alert('Downloading');
+                                var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				if(languageSet == 'en'){
 					document.getElementById('download_video_'+prodId).innerHTML = 'Downloaded';
 				}else{
 					document.getElementById('download_video_'+prodId).innerHTML = 'bajaedas';
 				}
-                                alert(document.getElementById('download_video_'+prodId).innerHTML);
-                                alert('download_video_'+prodId);
-				document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
+                                document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
 				document.getElementById('vdownloading_'+prodId).style.display = 'none';
 				document.getElementById('download_video_'+prodId).style.display = 'block';
 				location.href = unescape(finalURL);
