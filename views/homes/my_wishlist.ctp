@@ -438,10 +438,12 @@ $ieVersion =  ieversion();
                                         <?php 
 						if (strlen($wishlistResults[$i]['wishlists']['track_title']) >= 15) {
 							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['track_title'])).'">' .$this->getTextEncode(substr($wishlistResults[$i]['wishlists']['track_title'], 0, 15)) . '...</span>';
+                                                        if('T' == $wishlistResults[$i]["Song"]['Advisory']) { echo '<span style="color: red;display: inline;font-size: 6px;"> (Explicit)</span>'; }
 						} else {
 							echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
+                                                        if('T' == $wishlistResults[$i]["Song"]['Advisory']) { echo '<span style="color: red;display: inline;font-size: 6px;"> (Explicit)</span>'; }
 					 	}
-					?><?php if('T' == $wishlistResults[$i]["Song"]['Advisory']) { ?> <span style="color: red;display: inline;font-size: 6px;"> (Explicit)</span> <?php } ?></div>
+					?></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResults[$i]['Song']['ArtistText']);?>/<?= $wishlistResults[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResults[$i]['Song']['provider_type']);?>">
                                          <?php
@@ -553,10 +555,12 @@ $ieVersion =  ieversion();
                     <?php 
 						if (strlen($wishlistResultsVideo['WishlistVideo']['track_title']) >= 15) {
 							echo '<span title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .substr($wishlistResultsVideo['Download']['track_title'], 0, 15) . '...</span>';							
+                                                        if('T' == $wishlistResultsVideo["Video"]['Advisory']) { echo '<span style="color: red;display: inline;font-size: 6px;"> (Explicit)</span>'; }
 						} else {
 							echo $wishlistResultsVideo['WishlistVideo']['track_title']; 
+                                                        if('T' == $wishlistResultsVideo["Video"]['Advisory']) { echo '<span style="color: red;display: inline;font-size: 6px;"> (Explicit)</span>'; }
 					 	}
-					?><?php if('T' == $wishlistResultsVideo["Video"]['Advisory']) { ?> <span style="color: red;display: inline;font-size: 6px;"> (Explicit)</span> <?php } ?>
+					?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
