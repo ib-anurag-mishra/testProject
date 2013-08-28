@@ -422,7 +422,7 @@ $ieVersion =  ieversion();
 	
             for($i = 0; $i < count($wishlistResults); $i++) {
 		
-			
+			print_r($wishlistResults);
 	?>
 				
 				<div class="row clearfix wishlistsong"  id="wishlistsong-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
