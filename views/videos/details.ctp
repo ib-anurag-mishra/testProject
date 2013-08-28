@@ -71,8 +71,8 @@
 				
 				<h2 class="song-title">
 					<?php echo wordwrap($VideosData[0]['Video']['VideoTitle'], 15, "<br />");; ?>
-                                    <?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
-				</h2>
+                                    
+				</h2><?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 				<h3 class="artist-name">
 					<a href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
