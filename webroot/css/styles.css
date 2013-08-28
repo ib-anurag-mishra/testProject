@@ -8149,6 +8149,7 @@ img {
   position: absolute;
   left: 5px;
   top: 5px;
+  background: #ffffff;
   background: rgba(255, 255, 255, 0.8);
   width: 80px;
   height: 32px;
@@ -8360,6 +8361,7 @@ img {
   position: absolute;
   left: 5px;
   top: 5px;
+  background: #ffffff;
   background: rgba(255, 255, 255, 0.8);
   width: 80px;
   height: 32px;
@@ -9176,6 +9178,7 @@ img {
   position: absolute;
   left: 5px;
   top: 5px;
+  background: #ffffff;
   background: rgba(255, 255, 255, 0.8);
   width: 80px;
   height: 32px;
