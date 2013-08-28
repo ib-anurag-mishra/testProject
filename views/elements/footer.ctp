@@ -74,6 +74,7 @@
                                                 }
                                                 ?>
 					</div>
+                                        <iframe class="player" src="player"></iframe>
 				</div>
 			</footer>
 	
