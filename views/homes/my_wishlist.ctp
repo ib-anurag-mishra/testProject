@@ -442,7 +442,7 @@ $ieVersion =  ieversion();
 						} else {
 							echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
 					 	}
-					?></div>
+					?><?php if('T' == $wishlistResults[$i]["Song"]['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="/artists/view/<?=base64_encode($wishlistResults[$i]['Song']['ArtistText']);?>/<?= $wishlistResults[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResults[$i]['Song']['provider_type']);?>">
                                          <?php
@@ -557,7 +557,7 @@ $ieVersion =  ieversion();
 						} else {
 							echo $wishlistResultsVideo['WishlistVideo']['track_title']; 
 					 	}
-					?>
+					?><?php if('T' == $wishlistResultsVideo["Video"]['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
