@@ -131,7 +131,7 @@ $ieVersion =  ieversion();
 							echo $downloadResult['Download']['track_title']; 
 					 	}
 					?>
-                    </div>
+                    <?php if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
                                              <?php 
@@ -140,7 +140,7 @@ $ieVersion =  ieversion();
 						} else {
 							echo $downloadResult['Song']['Title']; 
 					 	}
-					?><?php if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
+					?>
                                             
                                             </div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"><?php
@@ -232,7 +232,7 @@ $ieVersion =  ieversion();
 						} else {
 							echo $videoDownloadResult['Videodownload']['track_title']; 
 					 	}
-					?>
+					?><?php if('T' == $videoDownloadResult['Video']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#">
@@ -243,7 +243,7 @@ $ieVersion =  ieversion();
 							echo $videoDownloadResult['Video']['Title']; 
 					 	}
 					?>
-                                            </a></div><?php if('T' == $videoDownloadResult['Video']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
+                                            </a></div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19) {
