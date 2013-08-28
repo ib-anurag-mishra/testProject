@@ -1179,6 +1179,8 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 				}else{
 					document.getElementById('download_video_'+prodId).innerHTML = 'bajaedas';
 				}
+                                alert(document.getElementById('download_video_'+prodId).innerHTML);
+                                alert('download_video_'+prodId);
 				document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
 				document.getElementById('vdownloading_'+prodId).style.display = 'none';
 				document.getElementById('download_video_'+prodId).style.display = 'block';
