@@ -16,7 +16,7 @@ class QueuesController extends AppController{
     
     function beforeFilter(){
             parent::beforeFilter();
-            $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue','playQueue');
+            $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue','playqueue');
     }
     
     /**
@@ -129,8 +129,9 @@ class QueuesController extends AppController{
      * Description    :  This function is used to get default queues created by Admin
      */
 
-    function playQueue(){
-        $this->autoRender = false;
+    function playqueue(){
+//        $this->autoRender = false;
+        $this->layout = false;
         /*$cond = array('queue_type' => 1, 'status' => '1');
 
         // Unbinded User model
