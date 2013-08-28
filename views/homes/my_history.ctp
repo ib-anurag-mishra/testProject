@@ -7,12 +7,12 @@
 
 function ieversion()
 {
-	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
-	  if(!isset($reg[1])) {
-		return -1;
-	  } else {
-		return floatval($reg[1]);
-	  }
+    ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
+    if(!isset($reg[1])) {
+        return -1;
+    } else {
+        return floatval($reg[1]);
+    }
 }
 $ieVersion =  ieversion();
 ?>
@@ -106,6 +106,8 @@ $ieVersion =  ieversion();
 				<?php
                 if(count($downloadResults) != 0)
                 {
+                    
+                    
                     $i = 1;
                     foreach($downloadResults as $key => $downloadResult):
                 ?>
@@ -138,7 +140,7 @@ $ieVersion =  ieversion();
 						} else {
 							echo $downloadResult['Song']['Title']; 
 					 	}
-					?>
+					?><?php if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                             
                                             </div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"><?php
@@ -241,7 +243,7 @@ $ieVersion =  ieversion();
 							echo $videoDownloadResult['Video']['Title']; 
 					 	}
 					?>
-                                            </a></div>
+                                            </a></div><?php if('T' == $videoDownloadResult['Video']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19) {
