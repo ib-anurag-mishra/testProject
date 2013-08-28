@@ -3526,7 +3526,10 @@ STR;
         $this->Wishlist->delete($deleteSongId);
         //get no of downloads for this week
         $this->Download->recursive = -1;
-        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $this->Videodownload->recursive = -1;
+        $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $downloadsUsed =  $videodownloadsUsed + $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        
 
         echo "suces|".$downloadsUsed;
         exit;
@@ -3739,8 +3742,10 @@ STR;
         $deleteVideoId = $id;
         $this->WishlistVideo->delete($deleteVideoId);
         //get no of downloads for this week
+        $this->Download->recursive = -1;
         $this->Videodownload->recursive = -1;
-        $downloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $downloadsUsed =  $videodownloadsUsed + $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 
         echo "suces|".$downloadsUsed;
         exit;

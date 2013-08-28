@@ -1124,9 +1124,9 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				if(languageSet == 'en'){
-					document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+					document.getElementById('wishlist_song_'+prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
 				}else{
-					document.getElementById('wishlist_song_'+prodId).innerHTML = 'bajaedas';
+					document.getElementById('wishlist_song_'+prodId).innerHTML = '<a href="/homes/my_history">bajaedas</a>';
 				}
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
@@ -1177,9 +1177,9 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				if(languageSet == 'en'){
-					document.getElementById('download_video_'+prodId).innerHTML = 'Downloaded';
+					document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
 				}else{
-					document.getElementById('download_video_'+prodId).innerHTML = 'bajaedas';
+					document.getElementById('download_video_'+prodId).innerHTML = '<a href="/homes/my_history">bajaedas</a>';
 				}
                                 document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
 				document.getElementById('vdownloading_'+prodId).style.display = 'none';
