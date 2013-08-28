@@ -496,7 +496,7 @@ STR;
         if(isset($this->params['pass'][0]))
         {
             
-            Cache::delete("musicVideoDetails" . $this->params['pass'][0]);
+            //Cache::delete("musicVideoDetails" . $this->params['pass'][0]);
             if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
             $prefix = strtolower($this->Session->read('territory')).'_';  
             $VideosSql  =
@@ -548,7 +548,7 @@ STR;
             if(count($VideosData)>0)
             {    
                 
-                Cache::delete("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);
+               // Cache::delete("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);
                 if ($MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']) === false) {
                    $MoreVideosSql  =
                     "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
@@ -602,7 +602,7 @@ STR;
                 if(count($VideosData)>0)
                 {
                     
-                    Cache::delete("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']);
+                   // Cache::delete("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']);
                     if ($TopVideoGenreData = Cache::read("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']) === false) {                    
                         $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
                             `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
