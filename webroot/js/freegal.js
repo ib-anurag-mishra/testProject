@@ -847,12 +847,13 @@ function wishlistDownloadIE(prodId,id,provider)
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+                                location.reload();
 			}
 			else
 			{
 				alert("You have been logged out from the system. Please login again.");
 				location.reload();
-				return false;				
+				return false;
 			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -891,6 +892,7 @@ function wishlistVideoDownloadIE(prodId,id,provider)
 				document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
 				document.getElementById('vdownloading_'+prodId).style.display = 'none';
 				document.getElementById('download_video_'+prodId).style.display = 'block';
+                                location.reload();
 			}
 			else
 			{
@@ -1131,7 +1133,8 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
-				$('.beforeClick').show();				
+				$('.beforeClick').show();
+                                location.reload();				
 			}
 			else
 			{
@@ -1184,7 +1187,8 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 				document.getElementById('download_video_'+prodId).style.display = 'block';
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
-				$('.beforeClick').show();				
+				$('.beforeClick').show();
+                                location.reload();
 			}
 			else
 			{
