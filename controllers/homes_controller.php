@@ -4352,7 +4352,7 @@ STR;
             //get Advisory condition
             $advisory_status = $this->getLibraryExplicitStatus($libraryId);
             //////////////////////////////////Videos/////////////////////////////////////////////////////////            
-            Cache::delete("new_releases_videos".$territory); 
+            //Cache::delete("new_releases_videos".$territory); 
             if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
             //if(1)
             {               
@@ -4411,7 +4411,7 @@ STR;
         $this->set('new_releases_videos', $coming_soon_videos);           
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
-          Cache::delete("new_releases_albums".$territory);     
+         // Cache::delete("new_releases_albums".$territory);     
         if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
         //if(1)
         {            
