@@ -819,7 +819,7 @@ STR;
                                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                                 LEFT JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                                 INNER JOIN File ON (Albums.FileID = File.FileID)
-				WHERE ((Song.DownloadStatus = '1') AND (($top_ten_condition_songs))  AND 1 = 1 AND (Country.Territory = '$country') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate < NOW()))
+				WHERE ((Song.DownloadStatus = '1') AND (($top_ten_condition_songs))  AND 1 = 1 AND (Country.Territory = '$country') AND (Country.SalesDate != '')  AND (Country.SalesDate < NOW()))
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,$ids) ASC
 				LIMIT 10
@@ -957,7 +957,7 @@ STR;
 				LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
 				INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                                 INNER JOIN File ON (Albums.FileID = File.FileID)
-				WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate < NOW())
+				WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '')  AND (Country.SalesDate < NOW())
 				GROUP BY Song.ReferenceID
 				ORDER BY count(Song.ProdID) DESC
 				LIMIT 10
