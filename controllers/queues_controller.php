@@ -130,6 +130,7 @@ class QueuesController extends AppController{
      */
 
     function playQueue(){
+        
         /*$cond = array('queue_type' => 1, 'status' => '1');
 
         // Unbinded User model
