@@ -9,7 +9,7 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo','Download');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
 
@@ -3352,34 +3352,7 @@ STR;
           /**
             records download component request & response
           */
-            $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
-            
-          // patorn downloaded limit validation
-          /* if(!($this->Downloads->checkPatronDownload($patId, $libId))){
-            
-            /**
-              complete records with validation fail
-            */
-            /*$log_data .= ":checkPatronDownload= 'stop'";
-            $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
-            $this->log($log_data, $log_name);
-
-          }
-          $log_data .= ":checkPatronDownload= 'allow'"; */ 
-          
-          // already downloaded validation
-         /*  if(!($this->Downloads->checkSongAlreadyDownloaded($prodId, $provider, $libId, $patId))){
-            
-            /**
-              complete records with validation fail
-            */
-            /*$log_data .= ":checkSongAlreadyDownloaded= 'stop'";
-            $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
-            $this->log($log_data, $log_name);
-
-            
-          }
-          $log_data .= ":checkSongAlreadyDownloaded= 'allow'"; */            
+            $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'";          
             
           $checked = "true";
           $validationPassed = $validationResult[0];
@@ -3525,9 +3498,13 @@ STR;
         $deleteSongId = $id;
         $this->Wishlist->delete($deleteSongId);
         //get no of downloads for this week
-        $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
         
-
+        $this->Videodownload->recursive = -1;
+        $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $this->Download->recursive = -1;
+        $downloadscount =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $downloadsUsed = $videodownloadsUsed + $downloadscount;
+        
         echo "suces|".$downloadsUsed;
         exit;
       }
@@ -3739,8 +3716,13 @@ STR;
         $deleteVideoId = $id;
         $this->WishlistVideo->delete($deleteVideoId);
         //get no of downloads for this week
-        $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
-
+        
+        $this->Videodownload->recursive = -1;
+        $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $this->Download->recursive = -1;
+        $downloadscount =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $downloadsUsed = $videodownloadsUsed + $downloadscount;
+        
         echo "suces|".$downloadsUsed;
         exit;
       }
