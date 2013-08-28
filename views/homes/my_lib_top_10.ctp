@@ -23,6 +23,11 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($topDownload_albums as $key => $value){
                                             
+                                           //hide song if library block the explicit content
+                                        if(($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] =='T')) {
+                                            continue;
+                                        } 
+
                                             // $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                             // $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
 					?>					
@@ -74,6 +79,13 @@
                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($top_10_songs as $key => $value){
+                                            
+                                            
+                                            
+                                             //hide song if library block the explicit content
+                                        if(($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] =='T')) {
+                                            continue;
+                                        } 
 
                                             if($count>10) break;
                                             
@@ -246,6 +258,11 @@
 					//for($d=1;$d<$count;$d++) {
 // print_r($topDownload_videos_data); die;
                                         foreach($topDownload_videos_data as $key => $value){
+                                            
+                                             //hide song if library block the explicit content
+                                        if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
+                                            continue;
+                                        } 
                                             
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;

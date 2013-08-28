@@ -706,7 +706,8 @@ STR;
                         $libId = $q_for_subd['Library']['id'];
                     }
                 }
-                
+                 //get Advisory condition
+                $advisory_status = $this->getLibraryExplicitStatus($libId);  
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
 		$ids = '';
@@ -715,6 +716,7 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
+                Cache::delete("lib".$libId);
                     if (($libDownload = Cache::read("lib".$libId)) === false)
                     //if(1)
                     {
@@ -817,7 +819,7 @@ STR;
                                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                                 LEFT JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                                 INNER JOIN File ON (Albums.FileID = File.FileID)
-				WHERE ((Song.DownloadStatus = '1') AND (($top_ten_condition_songs))  AND 1 = 1 AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()))
+				WHERE ((Song.DownloadStatus = '1') AND (($top_ten_condition_songs))  AND 1 = 1 AND (Country.Territory = '$country') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate < NOW()))
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,$ids) ASC
 				LIMIT 10
@@ -849,7 +851,8 @@ STR;
                 
                 $ids_provider_type_album = '';
 		
-                    //if(1)
+                    
+                Cache::delete("lib_album".$libId);
                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
@@ -954,7 +957,7 @@ STR;
 				LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
 				INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                                 INNER JOIN File ON (Albums.FileID = File.FileID)
-				WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+				WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate < NOW())
 				GROUP BY Song.ReferenceID
 				ORDER BY count(Song.ProdID) DESC
 				LIMIT 10
