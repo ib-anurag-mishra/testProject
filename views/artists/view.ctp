@@ -144,62 +144,60 @@
                                              if($this->Session->read('patron')) { ?>
                                             <div class="wishlist-popover" style="top:-58px;">
                                                <?php if( $this->Session->read('library_type') == 2 ){ ?> 
-                                                           
-                                                    <div class="playlist-options">
-                                                        <ul>
-                                                                <li><a href="#">Create New Playlist</a></li>
-                                                                <li><a href="#">Playlist 1</a></li>
-                                                                <li><a href="#">Playlist 2</a></li>
-                                                                <li><a href="#">Playlist 3</a></li>
-                                                                <li><a href="#">Playlist 4</a></li>
-                                                                <li><a href="#">Playlist 5</a></li>
-                                                                <li><a href="#">Playlist 6</a></li>
-                                                                <li><a href="#">Playlist 7</a></li>
-                                                                <li><a href="#">Playlist 8</a></li>
-                                                                <li><a href="#">Playlist 9</a></li>
-                                                                <li><a href="#">Playlist 10</a></li>
-                                                        </ul>
-                                                    </div>
-                                                            
-                                                         <?php  }  
-                                                            
-                                                                if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
-                                                                {
-                                                                        if($libraryDownload == '1' && $patronDownload == '1')
-                                                                        {	
+                                                            <div class="playlist-options">
+                                                                <ul>
+                                                                        <li><a href="#">Create New Playlist</a></li>
+                                                                        <li><a href="#">Playlist 1</a></li>
+                                                                        <li><a href="#">Playlist 2</a></li>
+                                                                        <li><a href="#">Playlist 3</a></li>
+                                                                        <li><a href="#">Playlist 4</a></li>
+                                                                        <li><a href="#">Playlist 5</a></li>
+                                                                        <li><a href="#">Playlist 6</a></li>
+                                                                        <li><a href="#">Playlist 7</a></li>
+                                                                        <li><a href="#">Playlist 8</a></li>
+                                                                        <li><a href="#">Playlist 9</a></li>
+                                                                        <li><a href="#">Playlist 10</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
+                                               <?php  }     
+                                                    if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
+                                                    {
+                                                            if($libraryDownload == '1' && $patronDownload == '1')
+                                                            {	
 
-                                                                                //$albumSong['Song']['status'] = 'avail1';
-                                                                                if(isset($albumSong['Song']['status']) && ($albumSong['Song']['status'] != 'avail')) {
+                                                                    //$albumSong['Song']['status'] = 'avail1';
+                                                                    if(isset($albumSong['Song']['status']) && ($albumSong['Song']['status'] != 'avail')) {
 
-                                                                ?>
+                                                    ?>
 
-                                                                                <form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
-                                                                                        <input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
-                                                                                        <input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
+                                                                    <form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
+                                                                            <input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
+                                                                            <input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
 
-                                                                                        <span class="beforeClick" style="cursor:pointer;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
-                                                                                                <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now'); ?></a>
-                                                                                        </span>
-                                                                                
-                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait..");?>
-                                                                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span> </a> </span>
-                                                                                           
-                                                                </form>													
+                                                                            <span class="beforeClick" style="cursor:pointer;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+                                                                                    <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now'); ?></a>
+                                                                            </span>
 
-                                                        <?php	
-                                                                                } else {
-                                                                                        ?><a class='add-to-wishlist' href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
-                                                                                }
-                                                                        }					
-                                                                        else{
-                                                                                ?>
-                                                                                <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>        
-                                                                                <?php
-                                                                        }
-                                                                }else{
-                                                        ?>
-                                                                        <a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
-                                                                                date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'><?php __('Coming Soon'); ?></span></a>
+                                                                            <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait..");?>
+                                                                            <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span> </a> </span>
+
+                                                    </form>													
+
+                                            <?php	
+                                                                    } else {
+                                                                            ?><a class='add-to-wishlist' href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
+                                                                    }
+                                                            }					
+                                                            else{
+                                                                    ?>
+                                                                    <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>        
+                                                                    <?php
+                                                            }
+                                                    }else{
+                                            ?>
+                                                            <a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
+                                                                    date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'><?php __('Coming Soon'); ?></span></a>
                                                     <?php
                                                     } 
                                                 } else {
