@@ -1693,7 +1693,7 @@ $(function() {
 		
 			$(this).addClass('playing');
 			$(this).parents('.row').addClass('playing');
-			$(this).parent().addClass('playing');$(this).siblings('.date').addClass('playing');
+			$(this).parent().addClass('playing');			$(this).siblings('.date').addClass('playing');
 			$(this).siblings('.album-title').addClass('playing');
 			$(this).siblings('.artist-name').addClass('playing');
 			$(this).siblings('.time').addClass('playing');
@@ -2451,6 +2451,5 @@ $('document').ready(function(){
             $('#header-search-type').val('song');
         }*/
     });
-    
 });
 
