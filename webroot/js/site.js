@@ -2454,11 +2454,9 @@ $('document').ready(function(){
 });
 
 function reload () {
-alert('hello');
     var fr=document.getElementById('player-wrapper');
     if(fr!=null) document.getElementById('player-wrapper').removeChild(fr);
     var iframehtml='<iframe id="jwplayer" class="player" src="/queues/playqueue"></iframe>';
     document.getElementById('player-wrapper').innerHTML=iframehtml;
-    alert('done');
 }
 reload();
