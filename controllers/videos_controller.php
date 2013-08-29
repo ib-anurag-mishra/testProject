@@ -493,7 +493,7 @@ STR;
         
         
         //  Video Details   //
-        Cache::delete("musicVideoDetails" . $this->params['pass'][0]);
+       // Cache::delete("musicVideoDetails" . $this->params['pass'][0]);
         if(isset($this->params['pass'][0]))
         {
             if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
@@ -547,7 +547,7 @@ STR;
             if(count($VideosData)>0)
             {    
                 
-                Cache::delete("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);
+                //Cache::delete("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);
                 if ($MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']) === false) {
                    $MoreVideosSql  =
                     "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
@@ -594,7 +594,7 @@ STR;
             
                 $this->set('MoreVideosData',$MoreVideosData);
 
-                Cache::delete("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']);
+               // Cache::delete("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']);
                 //Top Genre Videos By Artist 
                 //if ($topDownloads = Cache::read("top_videos_genre" . $territory) === false)
                               
