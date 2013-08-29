@@ -85,13 +85,13 @@
                                                 }
                                                 ?>
 					</div>
-                                    <?php if($this->Session->read("patron")){ ?>
-                                        <?php if($this->Session->read('library_type') == '2') { ?>
-                                            <div id="player-wrapper" onload="loadIframe('jwplayer','')">
+                                    <?php //if($this->Session->read("patron")){ ?>
+                                        <?php //if($this->Session->read('library_type') == '2') { ?>
+                                            <!--div id="player-wrapper" onload="loadIframe('jwplayer','')">
                                                 <iframe id="jwplayer" class="player" src="/queues/playqueue"></iframe>
-                                            </div>
-                                        <?php } ?>
-                                    <?php } ?>
+                                            </div-->
+                                        <?php //} ?>
+                                    <?php //} ?>
 				</div>
 			</footer>
 	
