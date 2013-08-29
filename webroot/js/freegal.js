@@ -818,6 +818,8 @@ function addToWishlist_top(prodId , providerType)
 
 function wishlistDownloadIE(prodId,id,provider)
 {
+	$('.beforeClick').hide();
+	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
@@ -837,6 +839,8 @@ function wishlistDownloadIE(prodId,id,provider)
 			}		
 			else if(msg == 'suces')
 			{
+				$('.afterClick').hide();
+				$('.beforeClick').show();			
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('wishlist_song_'+prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
@@ -858,6 +862,9 @@ function wishlistDownloadIE(prodId,id,provider)
 
 function wishlistVideoDownloadIE(prodId,id,provider)
 {
+    alert('vdownloading_'+prodId);
+	$('.beforeClick').hide();
+	$('.afterClick').show();
 	document.getElementById('vdownloading_'+prodId).style.display = 'block';
 	document.getElementById('download_video_'+prodId).style.display = 'none';
 	document.getElementById('vdownload_loader_'+prodId).style.display = 'block';
@@ -877,6 +884,8 @@ function wishlistVideoDownloadIE(prodId,id,provider)
 			}		
 			else if(msg == 'suces')
 			{
+				$('.afterClick').hide();
+				$('.beforeClick').show();			
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
