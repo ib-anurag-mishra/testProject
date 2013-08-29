@@ -37,6 +37,10 @@ class CacheController extends AppController {
 
     //for caching data
     function cacheGenre() {
+    
+      exit('Temp Stop');
+    
+    
         set_time_limit(0);
         //error_reporting(1); ini_set('display_errors', 1);
        
@@ -1451,12 +1455,12 @@ STR;
        
     */
       
-      //sets cache of videos
-      //$this->setVideoCacheVar();
-
       //sets cache for Library Top Ten
       $this->setLibraryTopTenCache();
       
+      
+      //sets cache of videos
+      $this->setVideoCacheVar();
 
 
       echo "============" . date("Y-m-d H:i:s") . "===============";
