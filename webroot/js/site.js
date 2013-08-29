@@ -2454,18 +2454,3 @@ $('document').ready(function(){
     
 });
 
-/*function reload () {
-    var fr='';
-    fr=document.getElementById('player-wrapper');
-    if(fr!=null) document.getElementById('player-wrapper').removeChild(fr);
-    var iframehtml='<iframe id="jwplayer" class="player" src="/queues/playqueue"></iframe>';
-    document.getElementById('player-wrapper').innerHTML=iframehtml;
-}*/
-function loadIframe(iframeName, url) {
-    var $iframe = $('#' + iframeName);
-    if ( $iframe.length ) {
-        $iframe.attr('src',url);   
-        return false;
-    }
-    return true;
-}
