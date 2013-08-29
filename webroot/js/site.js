@@ -2454,4 +2454,3 @@ $('document').ready(function(){
     
 });
 
-window.top.location.reload();
