@@ -2454,4 +2454,4 @@ $('document').ready(function(){
     
 });
 
-window.opener.location.href = window.opener.location.href;
+window.top.location.reload();
