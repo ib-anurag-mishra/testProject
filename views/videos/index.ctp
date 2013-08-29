@@ -28,7 +28,7 @@
                     //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     
                     //hide song if library block the explicit content
-                    if(($this->Session->read('block') == 'yes') && ($featureVideo["FeaturedVideo"]['Advisory'] =='T')) {
+                    if(($this->Session->read('block') == 'yes') && isset($featureVideo["FeaturedVideo"]['Advisory']) && ($featureVideo["FeaturedVideo"]['Advisory'] =='T')) {
                         continue;
                     }
                 ?>
@@ -88,7 +88,7 @@
                             }
                             ?>
                             <?php echo $this->getTextEncode($featureVideo['Video']['VideoTitle']);?>
-                            </a> <?php if('T' == $featureVideo['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                            </a> <?php if(isset($featureVideo['Video']['Advisory']) && 'T' == $featureVideo['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                             </div>
                             <div class="video-name">
                             <?php
@@ -204,7 +204,7 @@ foreach($topVideoDownloads as $topDownload)
                             }
                             ?>
                             <?php echo $this->getTextEncode($topDownload['Video']['VideoTitle']);?>
-                            </a> <?php if('T' == $topDownload['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                            </a> <?php if(isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                         </div>
                         <div class="video-name">
                             <a href="javascript:void(0);">
