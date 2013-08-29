@@ -26,7 +26,7 @@ class ResetcacheController extends AppController
 
 	function genrateXML() {
 
-    
+		echo '<br /> fm1 <br />';    
 		$territoryNames = array('US', 'CA', 'AU', 'IT', 'NZ', 'GB', 'IE');
 		$xml_data = array();
 		
@@ -115,7 +115,7 @@ class ResetcacheController extends AppController
 		}
 		
     //Restore Library top 10
-    /*$libraryDetails = array();
+    $libraryDetails = array();
 		$libraryDetails = $this->Library->find('all',array(
       'fields' => array('id', 'library_territory'),
 			 'conditions' => array('library_status' => 'active'),
@@ -127,9 +127,9 @@ class ResetcacheController extends AppController
 			$libId = $val['Library']['id'];
 			$librarytop10Data = Cache::read("lib".$libId);
 			$xml_data['librarytop10'][$libId] = $librarytop10Data;				 
-    }*/
+    } 
       
-    echo '<pre>'; print_r($xml_data); exit;
+    echo '<pre>'; print_r($xml_data); echo '</pre>'; //exit;
     /**
      * writes array into file (local)
     **/
