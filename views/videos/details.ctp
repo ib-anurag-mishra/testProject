@@ -78,7 +78,8 @@
 				
 				<h2 class="song-title">
 					<?php echo wordwrap($VideosData[0]['Video']['VideoTitle'], 15, "<br />");; ?>
-				</h2>
+                                    
+				</h2><?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 				<h3 class="artist-name">
 					<a href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
@@ -105,6 +106,12 @@
 						
 						foreach($MoreVideosData as $key => $value)
 						{		
+
+                                                    //hide video if library block the explicit content
+                                                    if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
+                                                        continue;
+                                                    } 
+                                                    
 
                                                     //echo "<pre>"; print_r($value);
                                                     //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
@@ -170,14 +177,14 @@
 									<div class="song-title">
 										<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                 <?php 
-                                                                                                if (strlen($value['Video']['VideoTitle']) >= 35 ) {
-                                                                                                            $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
+                                                                                                if (strlen($value['Video']['VideoTitle']) >= 20 ) {
+                                                                                                            $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 20)) . "..";
                                                                                                     } else {
                                                                                                             $VideoTitle = $this->getTextEncode($value['Video']['VideoTitle']);
                                                                                                     }    
                                                                                                 echo $VideoTitle; 
                                                                                             ?>
-                                                                                </a>
+                                                                                </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 									</div>
 									<div class="artist-name">										
                                                                                 <a href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
@@ -213,6 +220,12 @@
 				<?php
 					foreach($TopVideoGenreData as $key => $value)
                                         {
+
+                                              
+                                            //hide video if library block the explicit content
+                                            if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
+                                                continue;
+                                            } 
 
                                               //  echo "<pre>"; print_r($value);
                                                 //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
@@ -273,14 +286,14 @@
 								</div>
 								<div class="song-title">
 									<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><?php 
-                                                                                                if (strlen($value['Video']['VideoTitle']) >= 35 ) {
-                                                                                                            $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
+                                                                                                if (strlen($value['Video']['VideoTitle']) >= 20 ) {
+                                                                                                            $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 20)) . "..";
                                                                                                     } else {
                                                                                                             $VideoTitle = $this->getTextEncode($value['Video']['VideoTitle']);
                                                                                                     }    
                                                                                                 echo $VideoTitle; 
                                                                                             ?>
-                                                                                </a>
+                                                                                </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 								</div>
 								<div class="artist-name">
 									<a href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">

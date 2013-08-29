@@ -490,5 +490,38 @@ class AppController extends Controller
         $this->Country->setTablePrefix($this->Session->read('multiple_countries'));
 
       }
+
+/**
+ * @function getLibraryExplicitStatus
+ * @desc check library_block_explicit_content column of given librray & returns Advisory condition for query
+/**
+ * @function getLibraryExplicitStatus
+ * @desc check library_block_explicit_content column of given librray & returns Advisory condition for query
+ * @param $libID : ID of Library
+ * @return string
+ */
+
+  function getLibraryExplicitStatus($libID) {
+
+    $libraryData = $this->Library->find('first', array(
+      'fields' => array('library_block_explicit_content'),
+      'conditions' => array(
+        'id' => $libID
+      ),
+     'recursive' => -1
+
+    ));
+
+
+    if(1 == $libraryData['Library']['library_block_explicit_content']) {
+        $advisory = " AND Advisory = 'F'";
+    } else {
+        $advisory = "";
+    }
+    return $advisory;
+
+  }
+
+
 }
 ?>

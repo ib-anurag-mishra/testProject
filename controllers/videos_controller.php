@@ -36,6 +36,10 @@ class VideosController extends AppController {
         
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
+
+	//get Advisory condition
+	$advisory_status = $this->getLibraryExplicitStatus($libId);
+
         if(!empty($patId)){
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -335,17 +339,21 @@ class VideosController extends AppController {
      {        
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        $country = $this->Session->read('territory');
+        $country = $this->Session->read('territory');        
+        $advisory_status ='';
+        //get Advisory condition
+	$advisory_status = $this->getLibraryExplicitStatus($libId);
+        $condition = array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate')));
+        
         $ids_provider_type_video = '';
-
-                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)
-                    {
+                   // Cache::delete("lib_videos".$libId);
+                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)  {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
-                            $topDownloaded_videos = $this->LatestVideodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
+                            $topDownloaded_videos = $this->LatestVideodownload->find('all', array('conditions' => $condition, 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
                         } else {
-                            $topDownloaded_videos = $this->Videodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                            $topDownloaded_videos = $this->Videodownload->find('all', array('conditions' => $condition, 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
                         }
                                                
 			$ids = '';
@@ -488,7 +496,7 @@ STR;
             if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
             $prefix = strtolower($this->Session->read('territory')).'_';  
             $VideosSql  =
-            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
+            "SELECT Video.ProdID,Video.Advisory, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
             Sample_Files.SaveAsName,
             Full_Files.CdnPath,
             Full_Files.SaveAsName,
@@ -535,9 +543,11 @@ STR;
             
             if(count($VideosData)>0)
             {    
+                
+                //Cache::delete("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);
                 if ($MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']) === false) {
                    $MoreVideosSql  =
-                    "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
+                    "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
                     Sample_Files.SaveAsName,
                     Full_Files.CdnPath,
                     Full_Files.SaveAsName,
@@ -588,7 +598,7 @@ STR;
                 if(count($VideosData)>0)
                 {
                     if ($TopVideoGenreData = Cache::read("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']) === false) {                    
-                        $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
+                        $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
                             `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
                             LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
                             LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
