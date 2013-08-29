@@ -289,7 +289,7 @@ STR;
                 LEFT JOIN
                                 File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  ) $advisory_status  AND 1 = 1
+                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
                 LIMIT 100 
@@ -526,7 +526,7 @@ STR;
     LEFT JOIN
         File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
     WHERE
-        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW()) $advisory_status
+        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
     ORDER BY Country.SalesDate ASC
     LIMIT 20
 STR;
@@ -1293,7 +1293,7 @@ STR;
                 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
                 LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') $advisory_status AND (Country.SalesDate < NOW()) 
+                WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '')  AND (Country.SalesDate < NOW()) 
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
                 LIMIT 10                   
@@ -2351,8 +2351,7 @@ STR;
 				$updateArr['consortium'] = $this->Session->read('consortium');
 			}
 			$updateArr['is_approved'] = 'yes';
-			$this->Currentpatron->save($updateArr);
-                        echo "<br>Query: ".$this->Currentpatron->lastQuery();
+			$this->Currentpatron->save($updateArr);                        
 			$this->Session->write('approved', 'yes');
 		}
 		echo "Success";
