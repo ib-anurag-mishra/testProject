@@ -182,7 +182,7 @@ $ieVersion =  ieversion();
                                                     <a href='#' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download');?></a>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <a onclick='return historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>");' href="<?php echo $finalSongUrl;  ?>"><?php __('Download');?></a>
+                                                    <a onclick='historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download');?></a>
                                             <![endif]-->
                                     </span>
                                     <span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
@@ -283,7 +283,7 @@ $ieVersion =  ieversion();
                                                                     <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
                                                             <![endif]>
                                                             <!--[if IE]>
-                                                                    <a onclick='return historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href="<?php echo $finalVideoUrl; ?>" ><?php __('Download');?></a>
+                                                                    <a onclick='historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
                                                             <![endif]-->
 							</span>
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
