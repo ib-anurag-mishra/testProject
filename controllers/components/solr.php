@@ -62,7 +62,10 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
+            if($type != 'video'){
+                $cond .= " AND AAdvisory:F";
+            }
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
@@ -283,7 +286,10 @@ class SolrComponent extends Object {
         $country = $this->Session->read('territory');
         $cond = " AND DownloadStatus:1";
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
+            if($type != 'video'){
+                $cond .= " AND AAdvisory:F";
+            }
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -381,7 +387,10 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
+            if($type != 'video'){
+                $cond .= " AND AAdvisory:F";
+            }
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
@@ -478,7 +487,10 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F"; 
+            if($type != 'video'){
+                $cond .= " AND AAdvisory:F";
+            }
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -600,7 +612,10 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
+            if($type != 'video'){
+                $cond .= " AND AAdvisory:F";
+            }
         }
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -697,7 +712,10 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
+            if($type != 'video'){
+                $cond .= " AND AAdvisory:F";
+            }
         }
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         $char = substr($keyword, 0, 1);
@@ -812,7 +830,10 @@ class SolrComponent extends Object {
         $cond = " AND DownloadStatus:1";
 
         if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F AND AAdvisory:F";
+            $cond .= " AND Advisory:F";
+            /*if($type != 'video'){
+                $cond .= " AND AAdvisory:F";
+            }*/
         }
         
         $query = $query . ' AND Territory:' . $country . $cond;
