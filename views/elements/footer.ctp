@@ -87,7 +87,9 @@
 					</div>
                                     <?php if($this->Session->read("patron")){ ?>
                                         <?php if($this->Session->read('library_type') == '2') { ?>
-                                            <iframe class="player" src="/queues/playqueue"></iframe>
+                                            <div id="player-wrapper">
+                                                <iframe id="jwplayer" class="player" src="/queues/playqueue"></iframe>
+                                            </div>
                                         <?php } ?>
                                     <?php } ?>
 				</div>
