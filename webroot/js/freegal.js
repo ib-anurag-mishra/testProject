@@ -862,8 +862,7 @@ function wishlistDownloadIE(prodId,id,provider)
 
 function wishlistVideoDownloadIE(prodId,id,provider)
 {
-    alert('vdownloading_'+prodId);
-	$('.beforeClick').hide();
+    	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('vdownloading_'+prodId).style.display = 'block';
 	document.getElementById('download_video_'+prodId).style.display = 'none';
