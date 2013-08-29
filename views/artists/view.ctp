@@ -159,7 +159,7 @@
                                                                         <li><a href="#">Playlist 10</a></li>
                                                                 </ul>
                                                             </div>
-                                                            <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
+                                                            <a class="add-to-playlist" style="margin-top:-30px;" href="javascript:void(0);">Add To Queue</a>
                                                <?php  }     
                                                     if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
                                                     {
