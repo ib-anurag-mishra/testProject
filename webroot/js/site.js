@@ -1693,7 +1693,7 @@ $(function() {
 		
 			$(this).addClass('playing');
 			$(this).parents('.row').addClass('playing');
-			$(this).parent().addClass('playing');			$(this).siblings('.date').addClass('playing');
+			$(this).parent().addClass('playing');$(this).siblings('.date').addClass('playing');
 			$(this).siblings('.album-title').addClass('playing');
 			$(this).siblings('.artist-name').addClass('playing');
 			$(this).siblings('.time').addClass('playing');
@@ -2451,13 +2451,7 @@ $('document').ready(function(){
             $('#header-search-type').val('song');
         }*/
     });
+    
 });
 
-function reload () {
-    var fr='';
-    fr=document.getElementById('player-wrapper');
-    if(fr!=null) document.getElementById('player-wrapper').removeChild(fr);
-    var iframehtml='<iframe id="jwplayer" class="player" src="/queues/playqueue"></iframe>';
-    document.getElementById('player-wrapper').innerHTML=iframehtml;
-}
-reload();
+window.opener.location.href = window.opener.location.href;
