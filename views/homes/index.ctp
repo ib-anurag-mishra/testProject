@@ -547,9 +547,11 @@
 												<div class="artist-name">
 													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Song']['Artist'])>20)
-                                                                                                                    echo substr($this->getTextEncode($value['Song']['Artist'],0,20))."..."; 
-                                                                                                                    else echo $this->getTextEncode($value['Song']['Artist']);
+                                                                                                                    
+                                                                                                        $commingSoonSongArtistTitle = $this->getTextEncode($value['Song']['Artist']);
+                                                                                                                    if(strlen($commingSoonSongArtistTitle)>20)
+                                                                                                                    echo substr($commingSoonSongArtistTitle,0,20)."..."; 
+                                                                                                                    else echo $commingSoonSongArtistTitle;
                                                                                                              ?>
                                                                                                         </a>
 												</div>
