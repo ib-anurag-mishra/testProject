@@ -273,8 +273,8 @@
 												echo $download['Download']['patron_id'];
 											}?>
 										</td>
-                                        <td><?php echo $download['Download']['artist']; ?></td>
-                                        <td><?php echo $download['Download']['track_title']; ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
                                     </tr>
                                 <?php
@@ -334,7 +334,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php echo $genreDownload['Downloadgenre']['genre_name']; ?></td>
+                                        <td><?php echo $this->getTextEncode($genreDownload['Downloadgenre']['genre_name']); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
