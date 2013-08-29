@@ -33,7 +33,12 @@
 										<?php
 											$j = 0;
 											$k = 2000;
-											for($i = 0; $i < count($nationalTopDownload); $i++) {
+											for($i = 0; $i < count($nationalTopDownload); $i++) {                                                                                            
+                                                                                          //hide song if library block the explicit content
+                                                                                          if(($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] =='T')) {
+                                                                                              continue;
+                                                                                          }
+                                                                                            
 											if($j==5){
 												break;
 											}
@@ -169,6 +174,18 @@
                                                                                                     } else {
                                                                                                             $songTitle = $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
                                                                                                     }
+                                                                                                    
+                                                                                                  if('T' == $nationalTopDownload[$i]['Song']['Advisory']) { 
+                                                                                                      if (strlen($songTitle) >= 20 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 20)) . "..";
+                                                                                                      }                                                                                                     
+                                                                                                      $songTitle .='<span style="color: red;display: inline;"> (Explicit)</span> ';                                                                                                      
+                                                                                                  }
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
                                                                                                     ?>
 
 
@@ -206,6 +223,11 @@
 											$j = 0;
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
+                                                                                            
+                                                                                          //hide song if library block the explicit content
+                                                                                          if(($this->Session->read('block') == 'yes') && ($nationalTopVideoDownload[$i]['Video']['Advisory'] =='T')) {
+                                                                                              continue;
+                                                                                          }
 	
 											//$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
                                                                                         //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
@@ -342,10 +364,11 @@
                                                                                                             $ArtistText = $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText']);
                                                                                                     }
                                                                                                 ?>
-													<div class="song-title">
-													<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
-                                                                                                        <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
-													</div>
+			<div class="song-title">
+			<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
+                                <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
+	<?php if('T' == $nationalTopVideoDownload[$i]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+			</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
                                                                                                                 <a href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
@@ -446,6 +469,13 @@
 
                                                                             foreach($coming_soon_rs as $key => $value)
                                                                             {     
+                                                                            
+                                                                            //hide song if library block the explicit content
+                                                                            if(($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] =='T')) {
+                                                                                continue;
+                                                                            }
+
+
                                                                             //$cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                                                             //$cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                                                                             
@@ -494,11 +524,25 @@
 												<div class="song-title">
 													<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                                                                    if(strlen($value['Song']['SongTitle'])>20)
-                                                                                                                    echo substr($value['Song']['SongTitle'],0,20)."..."; 
-                                                                                                                    else echo $this->getTextEncode($value['Song']['SongTitle']);
+                                                                                                                    
+                                                                                                            $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
+                                                                                                            
+                                                                                                            if('T' == $value['Song']['Advisory']) { 
+                                                                                                                
+                                                                                                                if(strlen($commingSoonSongTitle)>13)
+                                                                                                                    echo substr($value['Song']['SongTitle'],0,13)."...";
+                                                                                                                 else echo $commingSoonSongTitle; 
+                                                                                                                     
+                                                                                                            }else{
+                                                                                                                if(strlen($commingSoonSongTitle)>20)
+                                                                                                                    echo substr($commingSoonSongTitle,0,20)."...";
+                                                                                                                else echo $commingSoonSongTitle; 
+                                                                                                            }
+                                                                                                            
+                                                                                                                
+                                                                                                                   
                                                                                                              ?>
-                                                                                                        </a>
+                                                                                                        </a>	<?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 												</div>
 												<div class="artist-name">
 													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
@@ -526,7 +570,12 @@
                                                                             $total_videos = count($coming_soon_videos);
                                                                             $sr_no = 0;
                                                                             foreach($coming_soon_videos as $key => $value)
-                                                                            {                                                                                     
+                                                                            {  
+                                                                                
+                                                                                //hide song if library block the explicit content
+                                                                            if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
+                                                                                continue;
+                                                                            }
                                                                                 
                                                                            //$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                                                            //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
@@ -559,17 +608,22 @@
 
                                                                                                         <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                             <?php
-                                                                                                                    if(strlen($value['Video']['VideoTitle'])>20)
-                                                                                                                    echo substr($value['Video']['VideoTitle'],0,20)."..."; 
-                                                                                                                    else echo $this->getTextEncode($value['Video']['VideoTitle']);
-                                                                                                         ?> </a>
+                                                                                                                                                                                                                                
+                                                                                                            $commingSoonVideoTitle= $this->getTextEncode($value['Video']['VideoTitle']);
+                                                                                                            
+                                                                                                            if('T' == $value['Video']['Advisory']) {
+                                                                                                                if(strlen($commingSoonVideoTitle)>15)
+                                                                                                                    echo substr($commingSoonVideoTitle,0,15)."..."; 
+                                                                                                                    else echo $commingSoonVideoTitle;
+                                                                                                            
+                                                                                                            }else{
+                                                                                                                if(strlen($commingSoonVideoTitle)>20)
+                                                                                                                    echo substr($commingSoonVideoTitle,0,20)."..."; 
+                                                                                                                    else echo $commingSoonVideoTitle;                                                                                                                
+                                                                                                            }                                                                                                                    
+                                                                                                                    
+                                                                                                           ?> </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 
-												<!--	 <a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
-                                                                                                            <?php
-                                                                                                                    if(strlen($value['Video']['VideoTitle'])>20)
-                                                                                                                    echo substr($value['Video']['VideoTitle'],0,20)."..."; 
-                                                                                                                    else echo $this->getTextEncode($value['Video']['VideoTitle']);
-                                                                                                             ?> </a> -->
 												</div>
 												<div class="artist-name">
 
