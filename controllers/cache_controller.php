@@ -37,9 +37,7 @@ class CacheController extends AppController {
 
     //for caching data
     function cacheGenre() {
-    
-      exit('Temp Stop');
-    
+        
     
         set_time_limit(0);
         //error_reporting(1); ini_set('display_errors', 1);
