@@ -842,7 +842,7 @@ STR;
                {
                         $topDownload_songs = Cache::read("lib".$libId);
                 }
-		$topDownload_songs= array();
+		
 		$this->set('top_10_songs',$topDownload_songs);
                 
                 
@@ -981,7 +981,6 @@ STR;
                 { 
                     $topDownload_albums = Cache::read("lib_album".$libId);
                 }
-                $topDownload_albums= array();
 		$this->set('topDownload_albums',$topDownload_albums); 
                 
                 ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
@@ -995,7 +994,6 @@ STR;
                                         )
                                     )
                                 );
-                 $topDownload_videos_data= array();
 
                $this->set('topDownload_videos_data',$topDownload_videos_data);                   
 	}
