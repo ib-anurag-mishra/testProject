@@ -85,13 +85,15 @@
                                                 }
                                                 ?>
 					</div>
-                                    <?php //if($this->Session->read("patron")){ ?>
-                                        <?php //if($this->Session->read('library_type') == '2') { ?>
-                                            <!--div id="player-wrapper" onload="loadIframe('jwplayer','')">
-                                                <iframe id="jwplayer" class="player" src="/queues/playqueue"></iframe>
-                                            </div-->
-                                        <?php //} ?>
-                                    <?php //} ?>
+                                    <?php if($this->Session->read("patron")){ ?>
+                                        <?php if($this->Session->read('library_type') == '2') { ?>
+                                            <div class="player">
+                                                    <div class="player-container">
+                                                            <div id="myElement">Loading the player...</div>
+                                                    </div>			
+                                            </div>
+                                        <?php } ?>
+                                    <?php } ?>
 				</div>
 			</footer>
 	
@@ -109,5 +111,51 @@ var pageTracker = _gat._getTracker("UA-16162084-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
         
+<!-- Code for player -->
+<!-- History.js -->
+	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
+	
+	<!-- Ajaxify -->
+	<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
+	
+	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
+	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
+	
+	<script type="text/javascript">
+	jwplayer("myElement").setup({
+	    playlist:[{
+		    
+		    file:"DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3",
+		    title:"Get Lucky",
+		    description:"Daft Punk"
+	    },{
+		    
+		    file:"JustinTimberlake_Mirrors_G0100029371261_1_1-256K_44S_2C_cbr1x.mp3",
+		    title:"Mirrors",
+		    description:"Justin Timberlake"		    
+	    },{
+		    
+		   	file:"Journey_DontStopBelievin_G0100027183574_1_2-256K_44S_2C_cbr1x.mp3",
+		    title:"Don't Stop Believin"	,
+		    description:"Journey"
+	    }],
+	    
+	    height: 70,
+	    width: 960,
+	    primary: "flash",
+	    skin: "../img/player_skin/freegal-custom-skin.xml",
+		listbar: {
+			
+			position:"right",
+			size:150
+		},
+		repeat: true
+		
+		
+	    
+	    
 
+	});
+	</script>
 
+<!-- Code for player end -->

@@ -42,7 +42,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10','newindex');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -4412,9 +4412,6 @@ STR;
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs); 
-    }
-    function newindex(){
-        $this->layout = false;
     }
 }
 ?>

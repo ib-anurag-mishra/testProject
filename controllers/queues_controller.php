@@ -16,7 +16,7 @@ class QueuesController extends AppController{
     
     function beforeFilter(){
             parent::beforeFilter();
-            $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue','playqueue');
+            $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue');
     }
     
     /**
@@ -123,37 +123,6 @@ class QueuesController extends AppController{
         return $queueData;             
 
     }  
-    
-    /**
-     * Function Name  :  getDefaultQueues
-     * Description    :  This function is used to get default queues created by Admin
-     */
-
-    function playqueue(){
-//        $this->autoRender = false;
-        $this->layout = false;
-        /*$cond = array('queue_type' => 1, 'status' => '1');
-
-        // Unbinded User model
-        $this->QueueList->unbindModel(
-            array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
-        );        
-
-        if ( ((Cache::read('defaultqueuelist')) === false)  || (Cache::read('defaultqueuelist') === null) ) {
-            $queueData = $this->QueueList->find('all', array(
-                    'conditions' => $cond,
-                    'fields' => array('queue_id','queue_name','queue_type'),
-                    'order' => 'QueueList.created DESC',
-                    'limit' => 100
-                  ));
-            Cache::write("defaultqueuelist", $queueData);
-        }else{
-            $queueData = Cache::read("defaultqueuelist");
-        }        
-        return $queueData;   */          
-
-    } 
-    
     
 }
 
