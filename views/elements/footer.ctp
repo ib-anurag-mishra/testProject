@@ -85,7 +85,10 @@
                                                 }
                                                 ?>
 					</div>
-                                    <?php if($this->Session->read("patron")){ ?>
+                                    
+				</div>
+			</footer>
+	<?php if($this->Session->read("patron")){ ?>
                                         <?php if($this->Session->read('library_type') == '2') { ?>
                                             <div class="player">
                                                     <div class="player-container">
@@ -94,9 +97,6 @@
                                             </div>
                                         <?php } ?>
                                     <?php } ?>
-				</div>
-			</footer>
-	
 	
     <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
     <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
