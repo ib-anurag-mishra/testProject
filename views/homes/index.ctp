@@ -712,7 +712,7 @@
                                                                                                           
                                                                                                   
                                                                                                 <div id="detailsNews" class="post-excerpt">
-                                                                                               <?php //echo  wordwrap($newsText, 65, "<br />\n", TRUE); ?>
+                                                                                               <?php echo  wordwrap($newsText, 65, "<br />\n", TRUE); ?>
                                                                                                <!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
                                                                                                </div>
 
