@@ -842,7 +842,7 @@ STR;
                {
                         $topDownload_songs = Cache::read("lib".$libId);
                 }
-		
+		$topDownload_songs= array();
 		$this->set('top_10_songs',$topDownload_songs);
                 
                 

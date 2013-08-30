@@ -75,8 +75,8 @@
 				<ul style="width:2700px;">
 					<?php
                                                 
-                                        $count  =   1;                                                                                
-                                        
+                                      $count  =   1;                                                                                
+                                      if(count($top_10_songs) > 0) {
 					//for($d=1;$d<$count;$d++) {
                                         foreach($top_10_songs as $key => $value){
                                             
@@ -239,7 +239,10 @@
 					<?php
                                                 $count++;
 					}
-					
+                                      }else{
+                                          
+                                          echo '<span>Sorry,there are no downloads.<span>';
+                                      }
 					?>
 					
 					
