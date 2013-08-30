@@ -121,8 +121,21 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                 <ul>
 <?php
 	foreach($albumData as $album_key => $album):
+            
+            
+             //hide album if library block the explicit content
+            if(($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] =='T')) {
+                continue;
+            } 
+            
+            
+            
+            
 ?>
-            <li>
+           
+                    
+                    
+                    <li>
                     <div class="album-container">
                         <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
                             <?php
