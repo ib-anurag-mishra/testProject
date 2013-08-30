@@ -20,7 +20,7 @@
 					<?php
                                         
 					 $count  =   1;           
-					//for($d=1;$d<$count;$d++) {
+				if(count($topDownload_albums) > 0) {
                                         foreach($topDownload_albums as $key => $value){
                                             
                                            //hide song if library block the explicit content
@@ -65,6 +65,10 @@
 					<?php
                                                 $count++;
 					}
+                                    }else{
+
+                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                    }
 					?>
 				</ul>
 			</div>
@@ -75,8 +79,8 @@
 				<ul style="width:2700px;">
 					<?php
                                                 
-                                        $count  =   1;                                                                                
-                                        
+                                      $count  =   1;                                                                                
+                                      if(count($top_10_songs) > 0) {
 					//for($d=1;$d<$count;$d++) {
                                         foreach($top_10_songs as $key => $value){
                                             
@@ -239,7 +243,10 @@
 					<?php
                                                 $count++;
 					}
-					
+                                      }else{
+                                          
+                                          echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                      }
 					?>
 					
 					
@@ -255,8 +262,8 @@
                                         
                                         $count  =   1;  
                                                                                                                         
-					//for($d=1;$d<$count;$d++) {
-// print_r($topDownload_videos_data); die;
+				if(count($topDownload_videos_data) > 0) {
+                                    
                                         foreach($topDownload_videos_data as $key => $value){
                                             
                                              //hide song if library block the explicit content
@@ -387,7 +394,12 @@
 					
 					<?php
                                                  $count++;
-					}
+					} 
+                                        
+                                    }else{
+
+                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                    }
 					
 					?>
 					
