@@ -103,7 +103,7 @@
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <?php
-                    if(!empty($downloads) || !empty($videoDownloads)) {
+                    if(!empty($downloads)) {
                     ?>
                     <tr>
                         <td colspan="3" align="center">
@@ -168,7 +168,7 @@
                           <th>Total Downloads</th>
                         </tr>
                         <tr>
-                          <td align="center"><?php echo count($downloads)+count($videoDownloads); ?></td>
+                          <td align="center"><?php echo count($downloads); ?></td>
                         </tr>
                       </table>
                     </td>
@@ -195,8 +195,7 @@
                   <tr>
                    <td> <?php echo $index; ?> </td>
                    <td> <?php echo $key; ?> </td>
-                   
-                   <td align="center"> <?php echo $val+$arr_all_video_library_downloads[$key]; ?> </td>
+                   <td align="center"> <?php echo $val; ?> </td>
                   </tr>
                   
                   <?php $index++; } ?>
@@ -213,7 +212,7 @@
                   <td colspan="6" align="center">
                     <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                       <tr><th>Total Number of Patrons who have downloaded during Reporting Period</th></tr>
-                      <tr><td align="center"><?php echo count($patronBothDownloads); ?></td></tr>
+                      <tr><td align="center"><?php echo count($patronDownloads); ?></td></tr>
                     </table>
                   </td>
                 </tr>
@@ -285,46 +284,6 @@
                             </table>
                         </td>
                     </tr>
-                    
-					<tr><td colspan="6">&nbsp;</td></tr>
-                    <tr><th colspan="6" align="center">Library Video Downloads Report</th></tr>
-                    <tr>
-                        <td colspan="6" align="center">
-                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                <tr>
-				    <th>&nbsp;</th>
-                                    <th>Library Name</th>
-                                    <th>Patron ID</th>
-                                    <th>Artists Name</th>
-                                    <th>Video Title</th>
-                                    <th>Download</th>
-                                </tr>
-                                <?php
-								$i = 1;
-				//				print "<pre>";print_r($downloads);exit;
-                                foreach($videoDownloads as $key => $download) {
-                                ?>
-                                    <tr>
-										<td><?php echo $i; ?></td>
-                                        <td><?php echo $library->getLibraryName($download['Videodownload']['library_id']); ?></td>
-                                        <td><?php
-											if($download['Videodownload']['email']!=''){
-												echo $download['Videodownload']['email'];
-											}else{
-												echo $download['Videodownload']['patron_id'];
-											}?>
-										</td>
-                                        <td><?php echo $download['Videodownload']['artist']; ?></td>
-                                        <td><?php echo $download['Videodownload']['track_title']; ?></td>
-                                        <td><?php echo date('Y-m-d', strtotime($download['Videodownload']['created'])); ?></td>
-                                    </tr>
-                                <?php
-				    $i++;
-                                }
-                                ?>
-                            </table>
-                        </td>
-                    </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <tr><th colspan="6" align="center">Patron Downloads Report</th></tr>
                     <tr>
@@ -360,40 +319,6 @@
                         </td>
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
-                    <tr><th colspan="6" align="center">Patron Videos Downloads Report</th></tr>
-                    <tr>
-                        <td colspan="6" align="center">
-                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                <tr>
-				    <th>&nbsp;</th>
-                                    <th>Patron ID</th>
-                                    <th>Library Name</th>
-                                    <th>Total Number of Videos Downloaded</th>
-                                </tr>
-                                <?php
-				$i = 1;
-                                foreach($patronVideoDownloads as $key => $patronDownload) {
-                                ?>
-                                    <tr>
-					<td><?php echo $i; ?></td>
-										<td><?php
-										if(isset($patronDownload['DownloadVideoPatron']['email']) && $patronDownload['DownloadVideoPatron']['email']!=''){
-											echo $patronDownload['DownloadVideoPatron']['email'];
-										}else{
-											echo $patronDownload['DownloadVideoPatron']['patron_id'];
-										}?>
-										</td>
-                                        <td><?php echo $library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id']); ?></td>
-                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']); ?></td>
-                                    </tr>
-                                <?php
-				    $i++;
-                                }
-                                ?>
-                            </table>
-                        </td>
-                    </tr>                    
-                    <tr><td colspan="6">&nbsp;</td></tr>
                     <tr><th colspan="6" align="center">Genres Downloads Report</th></tr>
                     <tr>
                         <td colspan="6" align="center">
@@ -419,36 +344,9 @@
                             </table>
                         </td>
                     </tr>
-                    <tr><td colspan="6">&nbsp;</td></tr>
-                    <tr><th colspan="6" align="center">Genres Video Downloads Report</th></tr>
-                    <tr>
-                        <td colspan="6" align="center">
-                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                <tr>
-				    <th>&nbsp;</th>
-                                    <th>Genre Name</th>
-                                    <th>Total Number of Videos Downloaded</th>
-                                </tr>
-                                <?php
-                                $i = 1;
-                                foreach($genreVideoDownloads as $key => $genreDownload) {
-                                ?>
-                                    <tr>
-					<td><?php echo $i; ?></td>
-                                        <td><?php echo $genreDownload['DownloadVideoGenre']['genre_name']; ?></td>
-                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']); ?></td>
-                                    </tr>
-                                <?php
-				    $i++;
-                                }
-                                ?>
-                            </table>
-                        </td>
-                    </tr>
-                    
                     <?php
                     }
-                    elseif(empty($downloads) && empty($videoDownloads) && empty($errors) && isset($this->data)) {
+                    elseif(empty($downloads) && empty($errors) && isset($this->data)) {
                     ?>
                     <tr>
                         <td colspan="6" align="center"><label>There are not downloads found for the selected criteria.</label></td>
@@ -533,7 +431,7 @@
 
     });
     <?php
-        if(!empty($downloads) || !empty($videoDownloads)) {
+        if(!empty($downloads)) {
     ?>
             $("#generateReportSubmit").click(function() {
                 $("#ReportAdminIndexForm").attr('action','/admin/reports/index');
