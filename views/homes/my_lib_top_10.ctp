@@ -20,7 +20,7 @@
 					<?php
                                         
 					 $count  =   1;           
-					//for($d=1;$d<$count;$d++) {
+				if(count($topDownload_albums) > 0) {
                                         foreach($topDownload_albums as $key => $value){
                                             
                                            //hide song if library block the explicit content
@@ -65,6 +65,10 @@
 					<?php
                                                 $count++;
 					}
+                                    }else{
+
+                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                    }
 					?>
 				</ul>
 			</div>
@@ -241,7 +245,7 @@
 					}
                                       }else{
                                           
-                                          echo '<span>Sorry,there are no downloads.<span>';
+                                          echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                                       }
 					?>
 					
@@ -258,8 +262,8 @@
                                         
                                         $count  =   1;  
                                                                                                                         
-					//for($d=1;$d<$count;$d++) {
-// print_r($topDownload_videos_data); die;
+				if(count($topDownload_videos_data) > 0) {
+                                    
                                         foreach($topDownload_videos_data as $key => $value){
                                             
                                              //hide song if library block the explicit content
@@ -390,7 +394,12 @@
 					
 					<?php
                                                  $count++;
-					}
+					} 
+                                        
+                                    }else{
+
+                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                    }
 					
 					?>
 					
