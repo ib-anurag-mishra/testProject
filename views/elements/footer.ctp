@@ -144,7 +144,7 @@ pageTracker._trackPageview();
 	    height: 70,
 	    width: 960,
 	    primary: "flash",
-	    skin: "../img/player_skin/freegal-custom-skin.xml",
+	    skin: "../../webroot/img/player_skin/freegal-custom-skin.xml",
 		listbar: {
 			
 			position:"right",
