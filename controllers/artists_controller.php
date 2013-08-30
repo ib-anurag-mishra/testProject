@@ -1347,6 +1347,15 @@ STR;
             if(count($albumData) > 0 ){
                     foreach($albumData as $album_key => $album){             
 
+                        
+                        //hide song if library block the explicit content
+                        if(($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] =='T')) {
+                            continue;
+                        } 
+
+
+
+
                         //get the album image
                         if(empty($album['Files']['CdnPath'])){
                             if(empty($album['Files']['SourceURL'])){
