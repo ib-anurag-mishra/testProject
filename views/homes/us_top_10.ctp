@@ -225,7 +225,7 @@
 					<?php
                                                                                 
                                             $count = 1;
-                                if(count($usTop10VideoDownload) > 0) {
+                                if(!empty($usTop10VideoDownload) > 0) {
                                         foreach($usTop10VideoDownload as $key => $value){
                                             
                                             
