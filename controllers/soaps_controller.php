@@ -6575,6 +6575,30 @@ STR;
     return true;
   }
  
+  /**
+   * Function Name : getHLSURL
+   * Desc : Returns HLS (mp4) URL for given Song  
+   * @param int prodID
+   * @param string provider_type
+   * @return string
+   */  
+  function getHLSURL($prodID, $provider_type) {
+    
+    $SongData = $this->Song->find('first', array(
+      'fields' => array('MP4_FileID'),
+      'conditions' => array('ProdID' => $prodID, 'provider_type' => $provider_type),
+      'recursive' => -1
+    ));
+
+    $FileData = $this->File_mp4->find('first', array(
+      'conditions' => array('FileID' => $SongData['Song']['MP4_FileID'] ),
+    ));
+
+    $url = Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['SaveAsName'].' '.$FileData['File_mp4']['CdnPath']);
+
+    echo $url; exit;
+
+  }
   
  
   
