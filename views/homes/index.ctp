@@ -4,12 +4,12 @@
 $(document).ready(function(){
     var preValue= 1;
     var artistPage = 2;
-    $("#top-100-songs-grid").scroll(function(){         
-        if($(this).scrollTop() + $(this).innerWidth() >= $(this)[0].scrollWidth){                  
+    $("#top-100-songs-grid").scroll(function(){       alert("111");  
+        if($(this).scrollTop() + $(this).innerWidth() >= $(this)[0].scrollWidth){  alert("222");                   
                                
             $('#natSongs_loader').show();
-            var totalPages = <?=$totalPages?>;
-            var data = "npage="+artistPage;
+           // var totalPages = <?=$totalPages?>;
+            //var data = "npage="+artistPage;
             
           /*  if( (preValue != artistPage ) && (artistPage <= totalPages ) ){  
                 
