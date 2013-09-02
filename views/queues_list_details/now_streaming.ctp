@@ -10,7 +10,7 @@
 				<div class="album-cover-container">
 					
 					<img src="<? echo $this->webroot; ?>app/webroot/img/playlist/album-cover.jpg" alt="album-cover" width="155" height="155" />
-					<a class="add-to-playlist-button" href="#"></a>
+					<a class="add-to-playlist-button no-ajaxy" href="#"></a>
                                         <?php //$queueList = $this->Queue->getQueuesList($this->Session->read('patron'));?>
 					<div class="wishlist-popover">
 						<div class="playlist-options">
@@ -50,7 +50,7 @@
 					
 			<div class="gear-container">
 
-				<div class="gear-icon">
+				<div class="gear-icon no-ajaxy">
 					
 				</div>
 				
@@ -96,7 +96,7 @@
 
                                             ?>
 						<div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
-						<a class="add-to-wishlist-button" href="#"></a>
+						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
                                                 <?php
                                                 if (strlen($value['Songs']['ArtistText']) >= 30 ) {
                                                         $artistText = $this->getTextEncode(substr($value['Songs']['ArtistText'], 0, 30)) . "..";
