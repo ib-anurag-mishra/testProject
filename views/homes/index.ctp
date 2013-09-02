@@ -1,3 +1,48 @@
+<script> 
+
+//load the artist list when  scroll reached at the end
+$(document).ready(function(){
+    var preValue= 1;
+    var artistPage = 2;
+    $("#top-100-songs-grid").scroll(function(){         
+        if($(this).scrollTop() + $(this).innerWidth() >= $(this)[0].scrollWidth){                  
+                               
+            $('#natSongs_loader').show();
+            var totalPages = <?=$totalPages?>;
+            var data = "npage="+artistPage;
+            
+          /*  if( (preValue != artistPage ) && (artistPage <= totalPages ) ){  
+                
+                if(artistPage <= totalPages ){
+                    
+                    preValue= artistPage ;
+                    var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
+
+                    jQuery.ajax({
+                        type: "post",  // Request method: post, get
+                        url: link, // URL to request
+                        data: data,  // post data
+                        success: function(newitems) {                        
+                            artistPage++;
+                            $('#artist_loader').hide();
+                            $('#artistlistrecord').append(newitems);                    
+                        },
+                        async:   true,
+                        error:function (XMLHttpRequest, textStatus, errorThrown) { 
+                            //alert('No artist list available');
+                        }
+                    });            
+                
+                }else{
+                    $('#natSongs_loader').hide();
+                }
+            } */            
+        }
+    });
+});
+</script>  
+
+
                                                 <?php echo $session->flash(); ?>					
 						<section class="news">
 							<div class="top-100">
@@ -23,7 +68,7 @@
 								<div class="grids">
 									
 									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
-										<ul style="width:27064px;">
+										<ul style="width:5500px;">
 
                                                                                <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
 
@@ -210,6 +255,9 @@
                                                                                     }
                                                                                      ?>	
 										</ul>
+                                                                            
+                                                                            <span id="natSongs_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" style="padding-left:115px;padding-buttom:25px;"/></span>
+                                                                            
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
 										<ul style="width:47000px;">
