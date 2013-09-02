@@ -6586,7 +6586,7 @@ STR;
     
     $SongData = $this->Song->find('first', array(
       'fields' => array('MP4_FileID'),
-      'conditions' => array('ProdID' => $prodID, 'provider_type' => $provider_type),
+      'conditions' => array('ProdID' => $prodID, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
       'recursive' => -1
     ));
 
