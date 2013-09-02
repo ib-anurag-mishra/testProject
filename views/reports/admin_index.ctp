@@ -274,8 +274,8 @@
 												echo $download['Download']['patron_id'];
 											}?>
 										</td>
-                                        <td><?php echo $download['Download']['artist']; ?></td>
-                                        <td><?php echo $download['Download']['track_title']; ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
                                     </tr>
                                 <?php
