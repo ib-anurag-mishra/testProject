@@ -77,7 +77,7 @@ $(document).ready(function(){
 										<?php
 											$j = 0;
 											$k = 2000;
-											for($i = 0; $i < count($nationalTopDownload); $i++) {                                                                                            
+											for($i = 0; $i < count($nationalTopDownload); $i++) { if($i==20) break;
                                                                                           //hide song if library block the explicit content
                                                                                           if(($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] =='T')) {
                                                                                               continue;
