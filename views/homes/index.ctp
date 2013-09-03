@@ -44,6 +44,53 @@ $(document).ready(function(){
             }           
         }
     });
+
+
+    var preValueVideo= 1;
+    var nationalPageVideo = 2;
+
+$("#top-100-videos-grid").scroll(function(){        
+        // if ( $(this).scrollLeft() == ($('#top-100-videos-grid ul').width() - $(this).width())) {  //alert("222");   
+
+         if ( $(this).scrollLeft() >= (10100*preValueVideo)) {
+                               
+            $('#natVideos_loader').show();
+            var totalPages = 5;
+            var data = "npage="+nationalPageVideo;
+            
+            if( (preValueVideo != nationalPageVideo ) && (nationalPageVideo <= totalPages ) ){  
+                
+                if(nationalPageVideo <= totalPages ){ 
+                    
+                    preValueVideo= nationalPageVideo ;
+                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPageVideo+'/type=videos';
+                    //alert("URL: "+link);
+
+                    jQuery.ajax({
+                        type: "post",  // Request method: post, get
+                        url: link, // URL to request
+                        data: data,  // post data
+                        success: function(newitems) { 
+                           //alert("newitems: "+newitems);
+                            nationalPageVideo++;
+                            $('#natVideos_loader').hide();
+
+                            $('#nationalVideosRecord').append(newitems);                    
+                        },
+                        async:   true,
+                        error:function (XMLHttpRequest, textStatus, errorThrown) { 
+                            //alert('No artist list available');
+                        }
+                    });            
+                
+                }else{
+                    $('#natVideos_loader').hide();
+                }
+            }           
+        }
+    });
+
+
 });
 </script>  
 
@@ -269,7 +316,7 @@ $(document).ready(function(){
                                                                             
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-										<ul style="width:47000px;">
+										<ul id="nationalVideosRecord" style="width:48000px;">
 
                                                     <?php if(is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0){ ?>
 
@@ -434,6 +481,12 @@ $(document).ready(function(){
 											}
                                                                                     }
                                                                                      ?>	
+                                                                                     <li>
+                                                                                    <div class="top-100-video-detail">
+                                                                                       <span id="natVideos_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
+                                                                                       </div>
+                                                                                       </li>
+
 										</ul>
 									</div>
 								</div> <!-- end .grids -->

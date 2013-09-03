@@ -206,7 +206,7 @@ STR;
   
 	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
-        if (($national = Cache::read("nationalvideos".$territory)) === false) {
+        if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
             
                   
                 $country = $territory;
@@ -306,12 +306,12 @@ STR;
                 }                
                
                 //write in the cache                                   
-                Cache::write("nationalvideos".$country, $nationalTopVideoDownload );
+                Cache::write("nationalvideos".$country."Page1", $nationalTopVideoDownload );
                
                }               
        }else{
         
-            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
+            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page1");     
        }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
         
@@ -4439,6 +4439,9 @@ STR;
         $country = $this->Session->read('territory');
         $territory = $this->Session->read('territory');
        
+        
+        if($Type=='songs')
+        {
         //get Advisory condition
         $advisory_status = $this->getLibraryExplicitStatus($libId);     
       
@@ -4557,7 +4560,7 @@ STR;
 	  
 STR;
                           
-                        echo "Variable: "."national".$territory."Page".$Page;
+                       // echo "Variable: "."national".$territory."Page".$Page;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);
                         foreach($nationalTopDownload as $key => $value){
@@ -4570,7 +4573,122 @@ STR;
                     $nationalTopDownload = Cache::read("national".$territory."Page".$Page);                
                 }
 		$this->set('nationalTopDownload',$nationalTopDownload);
+                
+            }
+            else if($Type=='videos')
+            {  
+                
+                 // National Top Videos list and Downloads functionality code 
+          if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
             
+                  
+                $country = $territory;
+
+                $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                $siteConfigData = $this->Album->query($siteConfigSQL);
+                $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+                $maintainLatestVideoDownload = 0;           
+               if(!empty($country)){ 
+                                                 
+                   if($maintainLatestVideoDownload){                       
+
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `latest_videodownloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                   } else {
+
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `videodownloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                   }                   
+                
+                $ids = '';
+                $ids_provider_type = '';
+                $natTopDownloaded = $this->Album->query($sql); 
+                foreach($natTopDownloaded as $natTopSong){
+                    if(empty($ids)){
+                        $ids .= $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+                    } else {
+                        $ids .= ','.$natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+                    }
+                }                
+
+                $nationalTopVideoDownload = array();
+                 $countryPrefix = $this->Session->read('multiple_countries');                 
+                  $sql_national_100_v =<<<STR
+                SELECT 
+                                Video.ProdID,
+                                Video.ReferenceID,
+                                Video.Title,
+                                Video.ArtistText,
+                                Video.DownloadStatus,
+                                Video.VideoTitle,
+                                Video.Artist,
+                                Video.Advisory,
+                                Video.Sample_Duration,
+                                Video.FullLength_Duration,
+                                Video.provider_type,
+                                Genre.Genre,
+                                Country.Territory,
+                                Country.SalesDate,
+                                Full_Files.CdnPath,
+                                Full_Files.SaveAsName,
+                                Full_Files.FileID,
+                                Image_Files.FileID,
+                                Image_Files.CdnPath,
+                                Image_Files.SourceURL,
+                                PRODUCT.pid
+                FROM
+                                video AS Video
+                                                LEFT JOIN
+                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                                                LEFT JOIN
+                                Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
+                                                LEFT JOIN
+                {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type) AND Country.SalesDate != '' AND Country.SalesDate < NOW()
+                                                LEFT JOIN
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
+                LEFT JOIN
+                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                WHERE
+                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
+                GROUP BY Video.ProdID
+                ORDER BY FIELD(Video.ProdID, $ids) ASC
+                LIMIT 100 
+                  
+STR;
+                //execute the query          
+                $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
+                
+                foreach($nationalTopVideoDownload as $key => $value){
+                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
+                    $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
+               
+                //write in the cache                                   
+                Cache::write("nationalvideos".$country."Page1", $nationalTopVideoDownload );
+               
+               }               
+       }else{
+        
+            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page1");     
+       }
+        $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
+                
+            }   
                    
 	}
     
