@@ -7,7 +7,7 @@ $(document).ready(function(){
     $("#top-100-songs-grid").scroll(function(){        
         // if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");   
 
-         if ( $(this).scrollLeft() >= (5500*preValue)) {
+         if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
             $('#natSongs_loader').show();
             var totalPages = 5;
