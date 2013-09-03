@@ -4422,12 +4422,18 @@ STR;
     function ajax_view_national_pagination($Page = null, $Type=null) {               
            
         $this -> layout = 'ajax';
-
+       
+        $Page    =   substr($Page, 5, strlen($Page));
+        $Type    =  substr($Type, 5, strlen($Type));   
+       
         $this->set('Page', $Page);
         $this->set('Type', $Type);
+        $startLimit =   20*($Page-1);
+        $endLimit   =   $startLimit+20;
         
-        echo "<br>Page: ".substr($Page, 5, strlen($Page));
-        echo "<br>Type: ".substr($Type, 5, strlen($Type));       
+        
+        echo "<br>startLimit: ".$startLimit;
+        echo "<br>endLimit: ".$endLimit;
         
             
             
