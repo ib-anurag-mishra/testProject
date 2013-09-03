@@ -8,7 +8,7 @@ $(document).ready(function(){
 
             var scrollBottom = $(this).scrollTop() + $(this).width() + $(this).innerWidth();
             alert("stop: "+$(this).scrollTop() );
-            alert("height: "+$(this).height());
+            alert("height: "+$(this).width());
             alert("innerWidth: "+$(this).innerWidth());
             alert("A: "+ scrollBottom); 
             alert("B: "+$(this)[0].scrollWidth);  
