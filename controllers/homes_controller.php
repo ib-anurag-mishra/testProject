@@ -4450,6 +4450,8 @@ STR;
             $this->set('patronDownload',$patronDownload);
         }
 
+          echo "outside Territory:";
+        
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
