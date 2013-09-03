@@ -86,7 +86,8 @@ class HomesController extends AppController
 
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {
+        //if (($national = Cache::read("national".$territory)) === false) {
+        if(1) {
       
             $country = $territory;
             
@@ -182,7 +183,7 @@ class HomesController extends AppController
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT 100
+                    LIMIT 20
 	  
 STR;
                         //execute the query
