@@ -407,6 +407,7 @@ $(function() {
 
 
 
+/*
 	fmp.mediaelementplayer({
 		
 		audioWidth:780,
@@ -419,6 +420,7 @@ $(function() {
 
 
 	});
+*/
 	
 	
 	category_filter_a.on('click',function(e){
@@ -440,7 +442,8 @@ $(function() {
 
 	
 	
-	min_max.on('click',function(e){
+	/*
+min_max.on('click',function(e){
 		e.preventDefault();
 		
 		if(music_player_container.hasClass('minimized')) {
@@ -515,6 +518,7 @@ $(function() {
 		
 		
 	});
+*/
 	
 	
 	add_to_playlist.on('mouseenter',function(){
