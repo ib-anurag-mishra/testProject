@@ -146,6 +146,12 @@ class CacheController extends AppController {
                 }
                 $data = array();
 
+                
+                for($counter=1;$counter<=5;$counter++)
+                {
+                            $startLimit =   20*($counter-1);
+                            $endLimit   =   $startLimit+20;
+                            
                 $sql_national_100 = <<<STR
                     SELECT 
                             Song.ProdID,
@@ -191,7 +197,7 @@ class CacheController extends AppController {
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT 100 
+                    LIMIT '$startLimit','$endLimit'
    
 STR;
                 $data = $this->Album->query($sql_national_100);
@@ -203,21 +209,23 @@ STR;
                 }
 
                 if (!empty($data)) {
-                    Cache::delete("national" . $country);
+                    Cache::delete("national" . $country ."Page".$counter);
                     foreach($data as $key => $value){
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                             $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                             $data[$key]['songAlbumImage'] = $songAlbumImage;
                     }                    
-                    Cache::write("national" . $country, $data);
+                    Cache::write("national" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten for $territory", "cache");
                     echo "cache written for national top ten for $territory";
                 } else {
 
-                    Cache::write("national" . $country, Cache::read("national" . $country));
+                    Cache::write("national" . $country ."Page".$counter, Cache::read("national" . $country ."Page".$counter));
                     echo "Unable to update key";
                     $this->log("Unable to update national 100 for " . $territory, "cache");
                     echo "Unable to update national 100 for " . $territory;
+                }
+                
                 }
             }
             $this->log("cache written for national top 100 for $territory", 'debug');

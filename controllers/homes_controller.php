@@ -4431,7 +4431,8 @@ STR;
         $startLimit =   20*($Page-1);
         $endLimit   =   $startLimit+20;
             
-            
+        ini_set('display_errors',1); 
+        
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $country = $this->Session->read('territory');
