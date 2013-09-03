@@ -6,7 +6,7 @@ $(document).ready(function(){
     var artistPage = 2;
     $("#top-100-songs-grid").scroll(function(){   
 
-            var scrollBottom = $(this).scrollTop() + $(this).height() + $(this).scrollWidth();
+            var scrollBottom = $(this).scrollTop() + $(this).height() + $(this).innerWidth();
             alert("stop: "+$(this).scrollTop() );
             alert("height: "+$(this).height());
             alert("innerWidth: "+$(this).innerWidth());
