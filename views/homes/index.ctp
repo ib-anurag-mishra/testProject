@@ -9,7 +9,7 @@ $(document).ready(function(){
             var scrollBottom = $(this).scrollTop() + $(this).height() + $(this).innerWidth();
             alert("stop: "+$(this).scrollTop() );
             alert("height: "+$(this).height());
-            alert("innerWidth: "+$(this).innerWidth()());
+            alert("innerWidth: "+$(this).innerWidth());
             alert("A: "+ scrollBottom); 
             alert("B: "+$(this)[0].scrollWidth);  
         
