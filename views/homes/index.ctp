@@ -13,10 +13,11 @@ $(document).ready(function(){
             
             if( (preValue != nationalPage ) && (nationalPage <= totalPages ) ){  
                 
-                if(nationalPage <= totalPages ){ alert("IN condition");
+                if(nationalPage <= totalPages ){ 
                     
                     preValue= nationalPage ;
                     var link =webroot+'homes/ajax_view_national_pagination/page:'+nationalPage+'type=songs';
+                    alert("URL: "+link);
 
                     jQuery.ajax({
                         type: "post",  // Request method: post, get
