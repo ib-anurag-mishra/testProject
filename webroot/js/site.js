@@ -407,20 +407,7 @@ $(function() {
 
 
 
-/*
-	fmp.mediaelementplayer({
-		
-		audioWidth:780,
-		audioHeight:60,
-		loop: true,
-        shuffle: true,
-        playlist: false,
-        playlistposition: 'top',
-        features: ['playlistfeature', 'prevtrack', 'playpause', 'nexttrack', 'current', 'progress', 'duration', 'volume','shuffle','loop','playlist'],
 
-
-	});
-*/
 	
 	
 	category_filter_a.on('click',function(e){
@@ -442,84 +429,7 @@ $(function() {
 
 	
 	
-	/*
-min_max.on('click',function(e){
-		e.preventDefault();
-		
-		if(music_player_container.hasClass('minimized')) {
 
-			
-			$('.music-player-container .music-player .album-title').removeClass('minimized');
-
-			$('.music-player-container .music-player .album-cover-art').fadeIn(500);
-
-			music_player_container.removeClass('minimized');
-			
-
-			$('.music-player-container .music-player .player-mgmt-container').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-play').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-pause').removeClass('minimized');
-
-			
-			$('.mejs-controls .mejs-button.mejs-playlist-button').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-prevtrack').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-nexttrack').removeClass('minimized');
-			$('.music-player-container .music-player .album-title').removeClass('minimized');
-			$('.mejs-controls .mejs-time-rail .mejs-time-total').removeClass('minimized');
-			$('.mejs-controls div.mejs-time-rail').removeClass('minimized');
-			$('.mejs-container .mejs-controls .mejs-time').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-volume-button').removeClass('minimized');
-			$('.mejs-controls div.mejs-horizontal-volume-slider').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-shuffle-on').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-shuffle-off').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-loop-off').removeClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-loop-on').removeClass('minimized');
-			min_max.css({backgroundImage:'url(img/music_player/minimize.png)'});
-			
-		} else {
-			
-
-			
-			$('.music-player-container .music-player .album-title').addClass('minimized');
-			
-			$('.mejs-container').animate({
-				marginTop:0
-				
-			},500);
-			
-			$('.music-player-container .music-player .album-cover-art').fadeOut(500);
-
-			music_player_container.addClass('minimized');
-			
-
-			$('.music-player-container .music-player .player-mgmt-container').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-play').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-pause').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-nexttrack').addClass('minimized');
-
-			
-			$('.mejs-controls .mejs-button.mejs-playlist-button').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-prevtrack').addClass('minimized');
-			$('.music-player-container .music-player .album-title').addClass('minimized');
-			$('.mejs-controls .mejs-time-rail .mejs-time-total').addClass('minimized');
-			$('.mejs-controls div.mejs-time-rail').addClass('minimized');
-			$('.mejs-container .mejs-controls .mejs-time').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-volume-button').addClass('minimized');
-			$('.mejs-controls div.mejs-horizontal-volume-slider').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-shuffle-on').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-shuffle-off').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-loop-off').addClass('minimized');
-			$('.mejs-controls .mejs-button.mejs-loop-on').addClass('minimized');
-						
-			min_max.css({backgroundImage:'url(img/music_player/maximize.png)'});
-		}
-
-		
-		
-		
-	});
-*/
-	
 	
 	add_to_playlist.on('mouseenter',function(){
 		
