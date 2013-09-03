@@ -260,11 +260,13 @@ $(document).ready(function(){
                                                                                     }
                                                                                      ?>	
 
-										</ul>
-<li>
-                                                                                        <div class="top-100-songs-detail">
+                                                                                     <div class="top-100-songs-detail">
                                                                                         <span id="natSongs_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" /></span>
                                                                                         </div>
+
+										</ul>
+<li>
+                                                                                        
                                                                                 </li>
                                                                             
                                                                             
