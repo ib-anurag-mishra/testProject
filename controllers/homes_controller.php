@@ -86,7 +86,7 @@ class HomesController extends AppController
 
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {
+        if (($national = Cache::read("national".$territory."Page1")) === false) {
         
       
             $country = $territory;
@@ -193,9 +193,9 @@ STR;
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
-			Cache::write("national".$territory, $nationalTopDownload);
+			Cache::write("national".$territory."Page1", $nationalTopDownload);
 		}else{
-                    $nationalTopDownload = Cache::read("national".$territory);                
+                    $nationalTopDownload = Cache::read("national".$territory."Page1");                
                 }
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
@@ -4430,11 +4430,6 @@ STR;
         $this->set('Type', $Type);
         $startLimit =   20*($Page-1);
         $endLimit   =   $startLimit+20;
-        
-        
-        echo "<br>startLimit: ".$startLimit;
-        echo "<br>endLimit: ".$endLimit;
-        
             
             
         $libId = $this->Session->read('library');
@@ -4456,7 +4451,7 @@ STR;
 
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {
+        if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
         
       
             $country = $territory;
@@ -4553,7 +4548,7 @@ STR;
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT 0,20
+                    LIMIT '$startLimit','$endLimit'
 	  
 STR;
                         //execute the query
@@ -4563,9 +4558,9 @@ STR;
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
-			Cache::write("national".$territory, $nationalTopDownload);
+			Cache::write("national".$territory."Page".$Page, $nationalTopDownload);
 		}else{
-                    $nationalTopDownload = Cache::read("national".$territory);                
+                    $nationalTopDownload = Cache::read("national".$territory."Page".$Page);                
                 }
 		$this->set('nationalTopDownload',$nationalTopDownload);
             
