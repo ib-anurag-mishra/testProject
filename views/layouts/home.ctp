@@ -511,6 +511,7 @@ if ($this->Session->read('Config.language') == 'en') {
                                                             ?>
                                                             
                                                         </div>
-
+													<?php /*
                                                     </body>
                                                         </html>
+                                                        */ ?>
