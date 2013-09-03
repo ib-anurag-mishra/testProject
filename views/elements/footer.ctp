@@ -121,42 +121,28 @@ pageTracker._trackPageview();
 	
 	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
-	
 	<script type="text/javascript">
-	jwplayer("myElement").setup({
-	    playlist:[{
-		    
-		    file:"DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3",
+            $(document).ready(function(){
+                jwplayer("myElement").setup({
+                        playlist:[{file:"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe",
 		    title:"Get Lucky",
-		    description:"Daft Punk"
-	    },{
-		    
-		    file:"JustinTimberlake_Mirrors_G0100029371261_1_1-256K_44S_2C_cbr1x.mp3",
-		    title:"Mirrors",
-		    description:"Justin Timberlake"		    
-	    },{
-		    
-		   	file:"Journey_DontStopBelievin_G0100027183574_1_2-256K_44S_2C_cbr1x.mp3",
-		    title:"Don't Stop Believin"	,
-		    description:"Journey"
-	    }],
-	    
-	    height: 70,
-	    width: 960,
-	    primary: "flash",
-	    skin: "/img/player_skin/freegal-custom-skin.xml",
-		listbar: {
-			
-			position:"right",
-			size:150
-		},
-		repeat: true
-		
-		
-	    
-	    
+		    description:"Daft Punk"}],
+                        height: 70,
+                        width: 960,
+                        primary: "flash",
+                        skin: "/img/player_skin/freegal-custom-skin.xml",
+                            listbar: {
 
-	});
-	</script>
+                                    position:"right",
+                                    size:150
+                            },
+                            repeat: true
+                    });                
+                $('.play-queue-btn').click(function(){
+                    var files = [{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get funky","description":"Daft Punk"},{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get Lucky1","description":"Daft Punk1"}];                
+                    jwplayer("myElement").load(files); 
+                });
+            });
+        </script>    
 
 <!-- Code for player end -->
