@@ -4552,7 +4552,7 @@ STR;
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT '$startLimit','$endLimit'
+                    LIMIT $startLimit, $endLimit
 	  
 STR;
                          echo "Query: ".$sql_national_100;   
