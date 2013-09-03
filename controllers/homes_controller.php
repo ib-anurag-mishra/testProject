@@ -4426,8 +4426,8 @@ STR;
         $this->set('Page', $Page);
         $this->set('Type', $Type);
         
-        echo "<br>Page: ".$Page;
-        echo "<br>Type: ".$Type;        
+        echo "<br>Page: ".substr($Page, 5, strlen($Page));
+        echo "<br>Type: ".substr($Type, 5, strlen($Type));       
         
             
             
