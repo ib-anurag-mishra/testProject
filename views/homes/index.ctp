@@ -3,29 +3,29 @@
 //load the artist list when  scroll reached at the end
 $(document).ready(function(){
     var preValue= 1;
-    var artistPage = 2;
+    var nationalPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
-         if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  alert("222");                   
+         if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");                   
                                
             $('#natSongs_loader').show();
-           // var totalPages = <?=$totalPages?>;
-            //var data = "npage="+artistPage;
+            var totalPages = 5;
+            var data = "npage="+nationalPage;
             
-          /*  if( (preValue != artistPage ) && (artistPage <= totalPages ) ){  
+            if( (preValue != nationalPage ) && (nationalPage <= totalPages ) ){  
                 
-                if(artistPage <= totalPages ){
+                if(nationalPage <= totalPages ){
                     
-                    preValue= artistPage ;
-                    var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
+                    preValue= nationalPage ;
+                    var link =webroot+'homes/ajax_view_national_pagination/page:'+nationalPage+';
 
                     jQuery.ajax({
                         type: "post",  // Request method: post, get
                         url: link, // URL to request
                         data: data,  // post data
                         success: function(newitems) {                        
-                            artistPage++;
-                            $('#artist_loader').hide();
-                            $('#artistlistrecord').append(newitems);                    
+                            nationalPage++;
+                            $('#natSongs_loader').hide();
+                            $('#nationalSongsRecord').append(newitems);                    
                         },
                         async:   true,
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 
@@ -36,7 +36,7 @@ $(document).ready(function(){
                 }else{
                     $('#natSongs_loader').hide();
                 }
-            } */            
+            }           
         }
     });
 });
@@ -68,7 +68,7 @@ $(document).ready(function(){
 								<div class="grids">
 									
 									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
-										<ul style="width:5500px;">
+										<ul id="nationalSongsRecord" style="width:5500px;">
 
                                                                                <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
 
