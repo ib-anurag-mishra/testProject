@@ -6,9 +6,10 @@ $(document).ready(function(){
     var artistPage = 2;
     $("#top-100-songs-grid").scroll(function(){   
 
-            alert("A: "+$(this).scrollTop() + $(this).height() + $(this).innerWidth());   alert("B: "+$(this)[0].scrollWidth);  
+            var scrollBottom = $(this).scrollTop() + $(this).height() + $(this).innerWidth();
+            alert("A: "+ scrollBottom);   alert("B: "+$(this)[0].scrollWidth);  
         
-        if($(this).scrollTop() + $(this).height() + $(this).innerWidth() >= $(this)[0].scrollWidth){     alert("222");                   
+        if( >= $(this)[0].scrollWidth){     alert("222");                   
                                
             $('#natSongs_loader').show();
            // var totalPages = <?=$totalPages?>;
