@@ -18,7 +18,7 @@ $(document).ready(function(){
                 if(nationalPage <= totalPages ){ 
                     
                     preValue= nationalPage ;
-                    var link =webroot+'homes/ajax_view_national_pagination/page:'+nationalPage+'/type=songs';
+                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
                     //alert("URL: "+link);
 
                     jQuery.ajax({
