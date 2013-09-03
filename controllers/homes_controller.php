@@ -4555,6 +4555,8 @@ STR;
                     LIMIT '$startLimit','$endLimit'
 	  
 STR;
+                         echo "Query: ".$sql_national_100;   
+                            
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);
                         foreach($nationalTopDownload as $key => $value){
