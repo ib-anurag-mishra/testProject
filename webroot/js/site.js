@@ -411,7 +411,7 @@ $(function() {
 	
 	
 	category_filter_a.on('click',function(e){
-		console.log('cat filter a clicked');
+		/* console.log('cat filter a clicked'); */
 		e.preventDefault();
 		category_filter_a.removeClass('active');
 		coming_soon_album_grid.removeClass('active');
