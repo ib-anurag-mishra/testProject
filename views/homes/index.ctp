@@ -27,6 +27,7 @@ $(document).ready(function(){
                            // alert("newitems: "+newitems);
                             nationalPage++;
                             $('#natSongs_loader').hide();
+                            $('#nationalSongsRecord').width($('#nationalSongsRecord').width(newitems)+5500);  
                             $('#nationalSongsRecord').append(newitems);                    
                         },
                         async:   true,
