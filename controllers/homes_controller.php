@@ -4425,6 +4425,10 @@ STR;
 
         $this->set('Page', $Page);
         $this->set('Type', $Type);
+        
+        echo "<br>Page: ".$Page;
+        echo "<br>Type: ".$Type;        
+        
             
             
         $libId = $this->Session->read('library');
