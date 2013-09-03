@@ -5,7 +5,7 @@ $(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
-         if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");                   
+         //if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");                   
                                
             $('#natSongs_loader').show();
             var totalPages = 5;
@@ -24,7 +24,7 @@ $(document).ready(function(){
                         url: link, // URL to request
                         data: data,  // post data
                         success: function(newitems) { 
-                           // alert("newitems: "+newitems);
+                           //alert("newitems: "+newitems);
                             nationalPage++;
                             $('#natSongs_loader').hide();
                            // totalWidth  =   $('#nationalSongsRecord').width(newitems)+5500;
@@ -41,7 +41,7 @@ $(document).ready(function(){
                     $('#natSongs_loader').hide();
                 }
             }           
-        }
+        //}
     });
 });
 </script>  
@@ -72,7 +72,7 @@ $(document).ready(function(){
 								<div class="grids">
 									
 									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
-										<ul id="nationalSongsRecord" style="width:27064px;">
+										<ul id="nationalSongsRecord" style="width:5700px;">
 
                                                                                <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
 
