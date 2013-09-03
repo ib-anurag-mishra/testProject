@@ -9,7 +9,7 @@ $(document).ready(function(){
             var scrollBottom = $(this).scrollTop() + $(this).height() + $(this).innerWidth();
             alert("A: "+ scrollBottom);   alert("B: "+$(this)[0].scrollWidth);  
         
-        if( >= $(this)[0].scrollWidth){     alert("222");                   
+        if( scrollBottom >= $(this)[0].scrollWidth){     alert("222");                   
                                
             $('#natSongs_loader').show();
            // var totalPages = <?=$totalPages?>;
