@@ -4453,7 +4453,7 @@ STR;
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
         
-      
+            echo "in Territory:";
             $country = $territory;
             
             //check the config value which show, which table should use
