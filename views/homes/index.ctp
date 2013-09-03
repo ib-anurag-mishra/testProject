@@ -73,7 +73,7 @@ $(document).ready(function(){
 								<div class="grids">
 									
 									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
-										<ul id="nationalSongsRecord" style="width:27064px;">
+										<ul id="nationalSongsRecord" style="width:28064px;">
 
                                                                                <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
 
