@@ -7,12 +7,12 @@ $(document).ready(function(){
     $("#top-100-songs-grid").scroll(function(){   
 
             var scrollBottom = $(this).scrollTop() + $(this).width() + $(this).innerWidth();
-            alert("stop: "+$(this).scrollTop() );
+           /* alert("stop: "+$(this).scrollTop() );
             alert("height: "+$(this).width());
             alert("innerWidth: "+$(this).innerWidth());
             alert("A: "+ scrollBottom); 
             alert("B: "+$(this)[0].scrollWidth);  
-        
+        */
         if( scrollBottom >= $(this)[0].scrollWidth){     alert("222");                   
                                
             $('#natSongs_loader').show();
