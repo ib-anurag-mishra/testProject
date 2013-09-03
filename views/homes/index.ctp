@@ -5,7 +5,7 @@ $(document).ready(function(){
     var preValue= 1;
     var artistPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
-        i if ( $(this).scrollLeft() == ($(this).width() - $(this).width())) {  alert("222");                   
+        i if ( $(this).scrollLeft() == ($(this).width() - $('#top-100-songs-grid ul').width())) {  alert("222");                   
                                
             $('#natSongs_loader').show();
            // var totalPages = <?=$totalPages?>;
