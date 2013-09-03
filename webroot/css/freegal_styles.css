@@ -394,7 +394,7 @@ div.paging span a, div.paging a {
     text-transform: uppercase;
     top: -29px;
     width: 124px;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* fix for IE8 */  
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";  
     opacity: 0;
 }
 .top-music-video-cover-container{
