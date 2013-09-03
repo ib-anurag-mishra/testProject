@@ -6,10 +6,6 @@ $(document).ready(function(){
     var nationalPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
          if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");         
-
-            alert("scrollLEFT: "+$(this).scrollLeft());
-            alert("swidth: "+$('#top-100-songs-grid ul').width());
-            alert("width: "+$(this).width()());
                                
             $('#natSongs_loader').show();
             var totalPages = 5;
