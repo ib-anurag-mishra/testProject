@@ -16,7 +16,7 @@ $(document).ready(function(){
                 if(nationalPage <= totalPages ){
                     
                     preValue= nationalPage ;
-                    var link =webroot+'homes/ajax_view_national_pagination/page:'+nationalPage+';
+                    var link =webroot+'homes/ajax_view_national_pagination/page:'+nationalPage+'type=songs';
 
                     jQuery.ajax({
                         type: "post",  // Request method: post, get
@@ -254,9 +254,16 @@ $(document).ready(function(){
 											}
                                                                                     }
                                                                                      ?>	
+                                                                                        
+                                                                                <li>
+                                                                                        <div class="top-100-songs-detail">
+                                                                                        <span id="natSongs_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" /></span>
+                                                                                        </div>
+                                                                                </li>
+
 										</ul>
                                                                             
-                                                                            <span id="natSongs_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" style="padding-left:115px;padding-buttom:25px;"/></span>
+                                                                            
                                                                             
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
