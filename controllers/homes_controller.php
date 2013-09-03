@@ -4454,8 +4454,8 @@ STR;
         
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
-        //if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
-          if(1) {
+        if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
+          //if(1) {
         
           
             $country = $territory;
@@ -4487,7 +4487,7 @@ STR;
                 }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		 
-                echo "in Territory:";
+                
                 
                   //make the provide type and prodid array for selecting records
                   $ids = '';
@@ -4555,8 +4555,8 @@ STR;
                     LIMIT $startLimit, $endLimit
 	  
 STR;
-                         echo "Query: ".$sql_national_100;   
-                            
+                          
+                            echo "Variable: "."national".$territory."Page".$Page;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);
                         foreach($nationalTopDownload as $key => $value){
