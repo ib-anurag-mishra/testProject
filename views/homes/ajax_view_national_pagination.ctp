@@ -1,4 +1,7 @@
 <?php
+
+        $slNo = ($startLimit + 1);
+
         for($i = 0; $i < count($nationalTopDownload); $i++) { 
                                                                                           //hide song if library block the explicit content
                                                                                           if(($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] =='T')) {
@@ -36,9 +39,10 @@
 												<div class="top-100-songs-detail">
 													<div class="song-cover-container">
 														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
-														<div class="top-100-ranking"><?php
-												$slNo = ($i + 1);
+														<div class="top-100-ranking"><?php												
 												echo $slNo;
+                                                                                                $slNo++;
+                                                                                                
 											?></div>
 														
 <?php if($this->Session->read("patron")){ ?> 

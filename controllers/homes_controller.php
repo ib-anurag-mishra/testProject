@@ -4430,6 +4430,7 @@ STR;
         $this->set('Type', $Type);
         $startLimit =   20*($Page-1);
         $endLimit   =   $startLimit+20;
+        $this->set('startLimit', $startLimit);
             
         ini_set('display_errors',1); 
         
@@ -4556,7 +4557,7 @@ STR;
 	  
 STR;
                           
-                            echo "Variable: "."national".$territory."Page".$Page;
+                        echo "Variable: "."national".$territory."Page".$Page;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);
                         foreach($nationalTopDownload as $key => $value){
