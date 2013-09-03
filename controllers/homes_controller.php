@@ -4669,6 +4669,8 @@ STR;
                 LIMIT $startLimit, $endLimit
                   
 STR;
+                echo "Query: ".$sql_national_100_v;
+                
                 //execute the query          
                 $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
                 
