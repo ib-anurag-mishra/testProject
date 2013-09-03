@@ -4450,14 +4450,14 @@ STR;
             $this->set('patronDownload',$patronDownload);
         }
 
-          echo "outside Territory:";
+          //echo "outside Territory:";
         
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
         //if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
           if(1) {
         
-            echo "in Territory:";
+          
             $country = $territory;
             
             //check the config value which show, which table should use
@@ -4487,7 +4487,7 @@ STR;
                 }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		 
-               
+                echo "in Territory:";
                 
                   //make the provide type and prodid array for selecting records
                   $ids = '';
