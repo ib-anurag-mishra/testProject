@@ -5,7 +5,7 @@ $(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
-         //if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");                   
+         if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - ($(this).width())*nationalPage*5500)) {  //alert("222");                   
                                
             $('#natSongs_loader').show();
             var totalPages = 5;
@@ -27,9 +27,7 @@ $(document).ready(function(){
                            //alert("newitems: "+newitems);
                             nationalPage++;
                             $('#natSongs_loader').hide();
-                           totalWidth  =   $('nationalSongsRecord').width()+5500;
-                            alert(totalWidth);
-                            //$('#nationalSongsRecord').width(totalWidth+"px");  
+
                             $('#nationalSongsRecord').append(newitems);                    
                         },
                         async:   true,
