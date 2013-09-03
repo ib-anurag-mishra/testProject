@@ -55,7 +55,7 @@ class AppController extends Controller
                         $this->Session->write("lId",1);  
                         $this->Session->write("library", 1);
                         $this->Session->write("library_type", $libraryData['Library']['library_type']);
-                        $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1')?'yes':'no'));
+                        $this->Session->write("block", (($libraryData['Library']['library_block_explicit_content'] == '1')?'yes':'no'));
                     }
                 }               
 		$this->Auth->authorize = 'actions';
