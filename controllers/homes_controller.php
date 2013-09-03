@@ -4420,6 +4420,10 @@ STR;
     function ajax_view_national_pagination($Page = null, $Type=null) {               
            
             $this -> layout = 'ajax';
+            
+            $this->set('Page', $Page);
+            $this->set('Type', $Type);
+            
             //error_reporting(1);
             //ini_set('display_errors',1);
           
