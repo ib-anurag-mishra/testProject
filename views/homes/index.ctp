@@ -23,7 +23,8 @@ $(document).ready(function(){
                         type: "post",  // Request method: post, get
                         url: link, // URL to request
                         data: data,  // post data
-                        success: function(newitems) {                        
+                        success: function(newitems) { 
+                            alert("newitems: "+newitems);
                             nationalPage++;
                             $('#natSongs_loader').hide();
                             $('#nationalSongsRecord').append(newitems);                    
