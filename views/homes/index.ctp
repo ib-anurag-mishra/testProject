@@ -4,16 +4,8 @@
 $(document).ready(function(){
     var preValue= 1;
     var artistPage = 2;
-    $("#top-100-songs-grid").scroll(function(){   
-
-            var scrollBottom = $(this).scrollTop() + $(this).width() + $(this).innerWidth();
-           /* alert("stop: "+$(this).scrollTop() );
-            alert("height: "+$(this).width());
-            alert("innerWidth: "+$(this).innerWidth());
-            alert("A: "+ scrollBottom); 
-            alert("B: "+$(this)[0].scrollWidth);  
-        */
-        if( scrollBottom >= $(this)[0].scrollWidth){     alert("222");                   
+    $("#top-100-songs-grid").scroll(function(){        
+        i if ( $(this).scrollLeft() == ($(this).width() - $(this).width())) {  alert("222");                   
                                
             $('#natSongs_loader').show();
            // var totalPages = <?=$totalPages?>;
