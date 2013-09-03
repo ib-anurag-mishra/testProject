@@ -114,6 +114,7 @@ pageTracker._trackPageview();
         
 <!-- Code for player -->
 <!-- History.js -->
+<?php /*
 	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 	
 	<!-- Ajaxify -->
@@ -158,5 +159,5 @@ pageTracker._trackPageview();
 
 	});
 	</script>
-
+*/ ?>
 <!-- Code for player end -->
