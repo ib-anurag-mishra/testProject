@@ -24,7 +24,7 @@ $(document).ready(function(){
                         url: link, // URL to request
                         data: data,  // post data
                         success: function(newitems) { 
-                            alert("newitems: "+newitems);
+                           // alert("newitems: "+newitems);
                             nationalPage++;
                             $('#natSongs_loader').hide();
                             $('#nationalSongsRecord').append(newitems);                    
