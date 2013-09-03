@@ -5,7 +5,11 @@ $(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
-         if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - ($(this).width())*nationalPage*5500)) {  //alert("222");                   
+         if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - ($(this).width()()) {  //alert("222");  
+
+            alert("scrollLEFT: "+$(this).scrollLeft());
+            alert("swidth: "+$('#top-100-songs-grid ul').width());
+            alert("width: "+$(this).width()());
                                
             $('#natSongs_loader').show();
             var totalPages = 5;
@@ -71,7 +75,7 @@ $(document).ready(function(){
 								<div class="grids">
 									
 									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
-										<ul id="nationalSongsRecord" style="width:5700px;">
+										<ul id="nationalSongsRecord" style="width:27064px;">
 
                                                                                <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
 
