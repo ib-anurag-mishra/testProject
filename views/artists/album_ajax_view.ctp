@@ -99,7 +99,7 @@
                                                                                 <div class="wishlist-popover">                                                                        
 										<?php if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
-                                                                                        $productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'],$albumSong["Song"]['provider_type']);
+                                                                                        $productInfo = $this->Songs->getDownloadData($albumSong["Song"]['ProdID'],$albumSong["Song"]['provider_type']);
                                                                                         
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{
