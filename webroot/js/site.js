@@ -65,7 +65,7 @@ $('#top-100-videos-list-view .lazy').lazyload({
 $('.featured-grid .lazy').lazyload({
 	
 	effect:'fadeIn',
-	container:$('.featured-grid')
+	container:$('.featured-grid');
 })
 
 
@@ -310,7 +310,7 @@ $(function() {
 		if(view_type === 'grid') {
 			
 			var target_str = target + '-grid';
-			lists.removeClass('active')
+			lists.removeClass('active');
 			grids.addClass('active');
 			top_100_albums_grid.removeClass('active');
 			top_100_songs_grid.removeClass('active');
@@ -887,12 +887,12 @@ $(function() {
 	
 	artwork_container.on('mouseenter',function(){
 		
-		$(this).find('.preview').css({opacity:1})
+		$(this).find('.preview').css({opacity:1});
 	});
 	
 	artwork_container.on('mouseleave',function(){
 		
-		$(this).find('.preview').css({opacity:.5})
+		$(this).find('.preview').css({opacity:.5});
 		
 	});
 	
