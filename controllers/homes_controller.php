@@ -293,7 +293,7 @@ STR;
                                 ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
-                LIMIT 100 
+                LIMIT 20 
                   
 STR;
                 //execute the query          
@@ -4666,7 +4666,7 @@ STR;
                                 ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
-                LIMIT 100 
+                LIMIT $startLimit, $endLimit
                   
 STR;
                 //execute the query          
