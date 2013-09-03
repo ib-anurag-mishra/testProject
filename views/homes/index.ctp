@@ -447,7 +447,10 @@ $(document).ready(function(){
 								</header>
 								<div class="featured-grid horiz-scroll">
 									<ul style="width:3690px;">
-										<?php
+<!--
+<?php print_r($featuredArtists);die; ?>
+-->
+								<?php
 								foreach($featuredArtists as $k => $v){
                                                                     
                                                                     
