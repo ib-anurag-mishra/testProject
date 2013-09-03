@@ -44,7 +44,7 @@ $(document).ready(function(){
                     $('#natSongs_loader').hide();
                 }
             }           
-        //}
+        }
     });
 });
 </script>  
