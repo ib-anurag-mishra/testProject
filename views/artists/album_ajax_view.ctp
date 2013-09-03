@@ -111,7 +111,7 @@
                                                                                                             <input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
                                                                                                             <input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
 
-                                                                                                            <span class="beforeClick" style="cursor:pointer;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+                                                                                                            <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
                                                                                                                 <![if !IE]>
                                                                                                                    <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistDownloadOthers("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download');?></a>
                                                                                                                 <![endif]>
@@ -121,14 +121,14 @@
                                                                                                             </span>
 
                                                                                                             <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait..");?>
-                                                                                                            <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span> </a> </span>
+                                                                                                            <span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span> </a> </span>
 
                                                                                                     </form>
                                                                                 <?php	
 												} else {
 													?><a class='add-to-wishlist' href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 												}
-											}											
+											}
 											else{
 											?>
                                                                                         <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>                
