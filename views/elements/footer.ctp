@@ -111,7 +111,7 @@ try {
 var pageTracker = _gat._getTracker("UA-16162084-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
-        
+<?php /*
 <!-- Code for player -->
 <!-- History.js -->
 	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
@@ -146,3 +146,5 @@ pageTracker._trackPageview();
         </script>    
 
 <!-- Code for player end -->
+*/
+?>
