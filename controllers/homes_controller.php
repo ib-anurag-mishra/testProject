@@ -4684,7 +4684,7 @@ STR;
                
                 //write in the cache                                   
                 Cache::write("nationalvideos".$territory."Page1", $nationalTopVideoDownload );
-               echo "Cache IS SET"."nationalvideos: "."nationalvideos".$territory."Page1";
+               echo "Cache IS SET"."nationalvideos: "."nationalvideos".$territory."Page1"; 
                }               
        }else{
         
