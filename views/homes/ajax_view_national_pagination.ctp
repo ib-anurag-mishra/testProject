@@ -1,5 +1,19 @@
 <script>
-    
+
+$('.add-to-playlist-button').on('click',function(e){
+        e.preventDefault();
+
+        $('.wishlist-popover').removeClass('active');
+
+        if($(this).next('.wishlist-popover').hasClass('active')) {
+                $(this).next('.wishlist-popover').removeClass('active');
+                $(this).find('.add-to-playlist-button').css({opacity:.5});
+        } else {
+
+                $(this).next('.wishlist-popover').addClass('active');
+        }
+});
+
 $('.song-cover-container').on('mouseenter',function(){
 		
 
