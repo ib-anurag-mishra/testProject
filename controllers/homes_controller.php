@@ -4806,10 +4806,10 @@ STR;
                
             $songDuration = 300;
             
-            $validateStreamingInfo = $this->Streaming->validateStreamingInfo($libId, $user);
-            $validateStreamingInfoFlag = $validateStreamingInfo[0];
-            $validateStreamingInfoMessage = $validateStreamingInfo[1];
-            $validateStreamingInfoIndex = $validateStreamingInfo[2];
+            $validateStreamingInfoResult = $this->Streaming->validateStreamingInfo($libId, $user);
+            $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
+            $validateStreamingInfoMessage = $validateStreamingInfoResult[1];
+            $validateStreamingInfoIndex = $validateStreamingInfoResult[2];
             
             if($validateStreamingInfoFlag){
                 
