@@ -221,16 +221,9 @@ $('.video-cover-container').on('mouseleave',function(){
        
 </script>    
 
-<!--<script src="<? echo $this->webroot; ?>app/webroot/js/audioPlayer.js"></script>
-<script src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>-->
-<?php
-        	echo $javascript->link('jquery-1.10.2.min');
-          echo $javascript->link('swfobject');
-          echo $javascript->link('audioPlayer');
-           echo $javascript->link('qtip');
-           echo $javascript->link('qtip_add');
-           
-?>           
+<script src="<? echo $this->webroot; ?>app/webroot/js/audioPlayer.js"></script>
+<script src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
+      
 
 <?php
 
