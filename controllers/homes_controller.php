@@ -4711,7 +4711,7 @@ STR;
     */
     function userStreaming() {
         
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         
         //set layout false
         $this->layout = false;
