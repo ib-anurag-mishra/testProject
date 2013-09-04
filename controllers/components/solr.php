@@ -765,36 +765,52 @@ class SolrComponent extends Object {
             if ($type != 'all') {
                 switch ($type) {
                     case 'song':
-                        $query = '(CSongTitle:(' . $searchkeyword . '))';
+                        //$query = '(CSongTitle:(' . $searchkeyword . '))';
+                        $query = $searchkeyword;
+                        $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                         $field = 'SongTitle';
                         break;
                     case 'genre':
-                        $query = '(CGenre:(' . $searchkeyword . '))';
+                        //$query = '(CGenre:(' . $searchkeyword . '))';
+                        $query = $searchkeyword;
+                        $queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
                         $field = 'Genre';
                         break;
                     case 'album':
-                        $query = '(CTitle:(' . $searchkeyword . '))';
+                        //$query = '(CTitle:(' . $searchkeyword . '))';
+                        $query = $searchkeyword;
+                        $queryFields = "CTitle^100 CArtistText^80 CComposer^60 CGenre^20 CSongTitle";
                         $field = 'Title';
                         break;
                     case 'artist':
-                        $query = '(CArtistText:(' . $searchkeyword . '))';
+                        //$query = '(CArtistText:(' . $searchkeyword . '))';
+                        $query = $searchkeyword;
+                        $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
                         $field = 'ArtistText';
                         break;
                     case 'label':
-                        $query = '(CLabel:(' . $searchkeyword . '))';
+                        //$query = '(CLabel:(' . $searchkeyword . '))';
+                        $query = $searchkeyword;
+                        $queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                         $field = 'Label';
                         break;
                     case 'video':
-                        $query = '(CVideoTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.'))';
+                        //$query = '(CVideoTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.'))';
+                        $query = $searchkeyword;
+                        $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $field = 'VideoTitle';
                         break;
                     case 'composer':
                         //$query = '(CComposer:('.strtolower($searchkeyword).') OR TComposer:('.$searchkeyword.') OR Composer:('.$searchkeyword.'))';
-                        $query = '(CComposer:(' . $searchkeyword . '))';
+                        //$query = '(CComposer:(' . $searchkeyword . '))';
+                        $query = $searchkeyword;
+                        $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         $field = 'Composer';
                         break;
                     default:
-                        $query = '(CSongTitle:(' . $searchkeyword . '))';
+                        //$query = '(CSongTitle:(' . $searchkeyword . '))';
+                        $query = $searchkeyword;
+                        $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                         $field = 'SongTitle';
                         break;
                 }
@@ -804,6 +820,8 @@ class SolrComponent extends Object {
                 //echo $query.'<br />'; //die;
 
                 $additionalParams = array(
+                    'defType' => 'edismax',
+                    'qf' => $queryFields,
                     'facet' => 'true',
                     'facet.field' => array(
                         $field
