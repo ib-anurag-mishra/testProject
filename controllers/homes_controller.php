@@ -4724,12 +4724,12 @@ STR;
         $provider = 'ioda';
         
         //get user id
-        $user = $this->Session->read('Auth.User.id');
-        if(empty($user)){
-                $user = $this->Session->read('patron');
-        }
+//        $user = $this->Session->read('Auth.User.id');
+//        if(empty($user)){
+//                $user = $this->Session->read('patron');
+//        }
         $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
+        echo $patId = $this->Session->read('patron');
         
         //if ProdID and Provider type is not set then
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){

@@ -27,7 +27,7 @@ Class StreamingComponent extends Object
     */
     function validateStreamingInfo($patId,$libId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
-        echo $patId;
+       
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
         $streamingRecordsInstance->recursive = -1;
         
