@@ -4763,8 +4763,8 @@ STR;
            
             
             //check the patron record is exist or not
-            $checkStreamingInfoFlag = $this->Streaming->checkStreamingInfoExist($libId, $patId);            
-            if($checkStreamingInfoFlag){
+            $streamingInfoFlag = $this->Streaming->checkStreamingInfoExist($libId, $patId);            
+            if($streamingInfoFlag){
                 //if patron record is exist then fetch the details
                 $patronStreamingresults = $this->StreamingRecords->find('first',array('conditions' => array('id'=> $streamingInfoFlag),'fields' => 'modified_date'));        
                 if(count($patronStreamingresults) > 0) {                    
