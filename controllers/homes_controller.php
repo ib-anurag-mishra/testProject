@@ -4441,12 +4441,7 @@ STR;
         $territory = $this->Session->read('territory');
        
         
-        if($Type=='songs')
-        {
-        //get Advisory condition
-        $advisory_status = $this->getLibraryExplicitStatus($libId);     
-      
-        $nationalTopDownload = array();
+        $advisory_status = $this->getLibraryExplicitStatus($libId);  
         if(!empty($patId)){
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -4454,6 +4449,14 @@ STR;
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
         }
+        
+        if($Type=='songs')
+        {
+        //get Advisory condition
+           
+      
+        $nationalTopDownload = array();
+        
 
           //echo "outside Territory:";
         
