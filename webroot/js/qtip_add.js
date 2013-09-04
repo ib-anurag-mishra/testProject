@@ -8,7 +8,8 @@ $(document).ready(function()
          }
       },
       style: {
-	 name:'cream',
+/*
+		 name:'cream',
          padding: '5px 10px',
          width: {
             max: 350,
@@ -19,6 +20,19 @@ $(document).ready(function()
                radius: 8,
                color: '#FAF7AA'
          },
+*/
+		background:'#fff',
+		color:'#999'
+		padding:'5px 10px',
+		width:{
+			max:350,
+			min:0;
+		},
+		border:{
+			width:1,
+			radius:8,
+			color:'#999'
+		}
          tip: true
       }
    });
