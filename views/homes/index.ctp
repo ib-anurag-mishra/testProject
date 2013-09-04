@@ -52,7 +52,7 @@ $(document).ready(function(){
 $("#top-100-videos-grid").scroll(function(){        
         // if ( $(this).scrollLeft() == ($('#top-100-videos-grid ul').width() - $(this).width())) {  //alert("222");   
 
-         if ( $(this).scrollLeft() >= (10100*preValueVideo)) {
+         if ( $(this).scrollLeft() >= (9500*preValueVideo)) {
                                
             $('#natVideos_loader').show();
             var totalPages = 5;
