@@ -335,7 +335,7 @@ $(function() {
 	});
 	
 	wishlist_popover.children('a').on('hover',function(e){
-		console.log('hovered');
+		
 		e.preventDefault();
 		
 		if(playlist_list.hasClass('active')) {
@@ -411,7 +411,7 @@ $(function() {
 	
 	
 	category_filter_a.on('click',function(e){
-		console.log('cat filter a clicked');
+		
 		e.preventDefault();
 		category_filter_a.removeClass('active');
 		coming_soon_album_grid.removeClass('active');
@@ -931,7 +931,7 @@ $(function() {
 
 	$('.site-nav .most-popular a').on('mouseenter',function(e){
 		e.preventDefault(); 
-              /*  console.log('entered'); */
+            
 		$('.most-popular-sub-nav').addClass('active');
 		
 	});
