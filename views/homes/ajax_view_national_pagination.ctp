@@ -1,5 +1,5 @@
 <script>
-
+/*
 $('.add-to-playlist-button').on('click',function(e){
         e.preventDefault();
 
@@ -50,12 +50,12 @@ $('.video-cover-container').on('mouseleave',function(){
         $(this).find('.top-100-download-now-button').css({opacity:0});
 
 
-});
+}); */
 
 
 /* overlays */
 	
-	$('.rename-queue').on('click',function(e){
+	/*$('.rename-queue').on('click',function(e){
 		e.preventDefault();
 		$('.queue-overlay').addClass('active');
 		$('.rename-queue-dialog-box').addClass('active');
@@ -86,11 +86,14 @@ $('.video-cover-container').on('mouseleave',function(){
 		$('.rename-queue-dialog-box').removeClass('active');
 		$('.delete-queue-dialog-box').removeClass('active');
 		$('.create-queue-dialog-box').removeClass('active');
-	});
+	}); */
 	
 	/* end overlays */
         
+       
 </script>    
+
+<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
 
 <?php
 
