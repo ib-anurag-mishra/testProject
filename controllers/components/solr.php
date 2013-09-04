@@ -766,50 +766,50 @@ class SolrComponent extends Object {
                 switch ($type) {
                     case 'song':
                         //$query = '(CSongTitle:(' . $searchkeyword . '))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CSongTitle";
                         $field = 'SongTitle';
                         break;
                     case 'genre':
                         //$query = '(CGenre:(' . $searchkeyword . '))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CGenre";
                         $field = 'Genre';
                         break;
                     case 'album':
                         //$query = '(CTitle:(' . $searchkeyword . '))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CTitle";
                         $field = 'Title';
                         break;
                     case 'artist':
                         //$query = '(CArtistText:(' . $searchkeyword . '))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CArtistText";
                         $field = 'ArtistText';
                         break;
                     case 'label':
                         //$query = '(CLabel:(' . $searchkeyword . '))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CLabel";
                         $field = 'Label';
                         break;
                     case 'video':
                         //$query = '(CVideoTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.'))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $field = 'VideoTitle';
                         break;
                     case 'composer':
                         //$query = '(CComposer:('.strtolower($searchkeyword).') OR TComposer:('.$searchkeyword.') OR Composer:('.$searchkeyword.'))';
                         //$query = '(CComposer:(' . $searchkeyword . '))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CComposer";
                         $field = 'Composer';
                         break;
                     default:
                         //$query = '(CSongTitle:(' . $searchkeyword . '))';
-                        $query = $searchkeyword;
+                        $query = $searchkeyword.'*';
                         $queryFields = "CSongTitle";
                         $field = 'SongTitle';
                         break;
