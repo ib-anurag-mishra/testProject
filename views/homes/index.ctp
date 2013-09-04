@@ -58,6 +58,8 @@ $("#top-100-videos-grid").scroll(function(){
          if ( $(this).scrollLeft() >= (8500*preValueVideo)) {
                                
             $('#natVideos_loader').show();
+            $('#videos_loader_li').show();
+
             var totalPages = 5;
             var data = "npage="+nationalPageVideo;
             
@@ -77,6 +79,7 @@ $("#top-100-videos-grid").scroll(function(){
                            //alert("newitems: "+newitems);
                             nationalPageVideo++;
                             $('#natVideos_loader').hide();
+                            $('#videos_loader_li').hide();
 
                             $('#nationalVideosRecord').append(newitems);                    
                         },
@@ -88,6 +91,7 @@ $("#top-100-videos-grid").scroll(function(){
                 
                 }else{
                     $('#natVideos_loader').hide();
+                    $('#videos_loader_li').hide();
                 }
             }           
         }
@@ -482,10 +486,8 @@ $("#top-100-videos-grid").scroll(function(){
 											}
                                                                                     }
                                                                                      ?>	
-                                                                                     <li>
-                                                                                    <div class="top-100-video-detail">
-                                                                                       <span id="natVideos_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
-                                                                                       </div>
+                                                                                      <li id="videos_loader_li" style="display:none;" >                                                                                    
+                                                                                       <span id="natVideos_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
                                                                                        </li>
 
 										</ul>

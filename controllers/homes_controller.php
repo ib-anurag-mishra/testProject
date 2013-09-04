@@ -307,7 +307,7 @@ STR;
                 }                
                
                 //write in the cache                                   
-                Cache::write("nationalvideos".$country."Page1", $nationalTopVideoDownload );
+                Cache::write("nationalvideos".$territory."Page1", $nationalTopVideoDownload );
                
                }               
        }else{
@@ -4683,7 +4683,7 @@ STR;
                 }                
                
                 //write in the cache                                   
-                Cache::write("nationalvideos".$country."Page1", $nationalTopVideoDownload );
+                Cache::write("nationalvideos".$territory."Page1", $nationalTopVideoDownload );
                
                }               
        }else{
