@@ -314,6 +314,7 @@ STR;
         
             $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page1");     
        }
+       echo "nationalvideos".$territory."Page1";
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
         
         $ids = '';
