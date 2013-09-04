@@ -1,25 +1,19 @@
 <script> 
 
 //load the artist list when  scroll reached at the end
-$(document).ready(function(){
-    var preValue= 1;
-    var nationalPage = 2;
-    $("#top-100-songs-grid").scroll(function(){        
-        
 
-         if ( $(this).scrollLeft() >= (5000*preValue)) {
-                               
-            $('#natSongs_loader').show();
-            $('#songs_loader_li').show();
-            var totalPages = 5;
-            var data = "npage="+nationalPage;
-            
-            if( (preValue != nationalPage ) && (nationalPage <= totalPages ) ){  
-                
-                if(nationalPage <= totalPages ){ 
+
+function showSongsDetails(link){
+
+                 var totalPages = 5;
+                 var data = "npage="+nationalPage;
+
+                    $('#natSongs_loader').show();
+                    $('#songs_loader_li').show();
+
                     
                     preValue= nationalPage ;
-                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
+                   // var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
                     
 
                     jQuery.ajax({
@@ -38,7 +32,31 @@ $(document).ready(function(){
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 
                             //alert('No artist list available');
                         }
-                    });            
+                    });  
+       
+}
+
+
+$(document).ready(function(){
+    var preValue= 1;
+    var nationalPage = 2;
+    $("#top-100-songs-grid").scroll(function(){        
+        
+
+         if ( $(this).scrollLeft() >= (5000*preValue)) {                                          
+            
+            if( (preValue != nationalPage ) && (nationalPage <= totalPages ) ){  
+                
+                if(nationalPage <= totalPages ){
+
+
+
+                    
+                   
+                    var link1 =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
+                    
+                        showSongsDetails(link1);
+            
                 
                 }else{
                     $('#natSongs_loader').hide();
@@ -80,9 +98,10 @@ $("#top-100-videos-grid").scroll(function(){
                             $('#natVideos_loader').hide();
                             $('#videos_loader_li').hide();
 
-                            //$('#nationalVideosRecord').append(newitems);                    
-                              $('#nationalVideosRecord').html(newitems);
-                        },                      
+                            $('#nationalVideosRecord').append(newitems);                    
+                              //$('#nationalVideosRecord').html(newitems);
+                        },
+                        
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 
                           
                         }
