@@ -2,6 +2,14 @@
 
         $slNo = ($startLimit + 1);
         
+        
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
+
+        
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+        
         if($Type=='songs')
         {
 

@@ -5,7 +5,7 @@ $(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
-        // if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");   
+        
 
          if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
@@ -20,14 +20,14 @@ $(document).ready(function(){
                     
                     preValue= nationalPage ;
                     var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
-                    //alert("URL: "+link);
+                    
 
                     jQuery.ajax({
                         type: "post",  // Request method: post, get
                         url: link, // URL to request
                         data: data,  // post data
                         success: function(newitems) { 
-                           //alert("newitems: "+newitems);
+                          
                             nationalPage++;
                             $('#natSongs_loader').hide();
                             $('#songs_loader_li').hide();
@@ -52,8 +52,7 @@ $(document).ready(function(){
     var preValueVideo= 1;
     var nationalPageVideo = 2;
 
-$("#top-100-videos-grid").scroll(function(){        
-        // if ( $(this).scrollLeft() == ($('#top-100-videos-grid ul').width() - $(this).width())) {  //alert("222");   
+$("#top-100-videos-grid").scroll(function(){               
 
          if ( $(this).scrollLeft() >= (8500*preValueVideo)) {
                                
@@ -69,14 +68,14 @@ $("#top-100-videos-grid").scroll(function(){
                     
                     preValueVideo= nationalPageVideo ;
                     var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPageVideo+'/type=videos';
-                    //alert("URL: "+link);
+                    
 
                     jQuery.ajax({
                         type: "post",  // Request method: post, get
                         url: link, // URL to request
                         data: data,  // post data
                         success: function(newitems) { 
-                           //alert("newitems: "+newitems);
+                           
                             nationalPageVideo++;
                             $('#natVideos_loader').hide();
                             $('#videos_loader_li').hide();
@@ -85,7 +84,7 @@ $("#top-100-videos-grid").scroll(function(){
                         },
                         async:   true,
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 
-                            //alert('No artist list available');
+                          
                         }
                     });            
                 
