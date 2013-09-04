@@ -90,6 +90,60 @@ $('.video-cover-container').on('mouseleave',function(){
 	
 	/* end overlays */
         
+        
+        
+        playlist_list.on('mouseleave',function(){
+		
+		playlist_list.removeClass('active');
+	});
+	
+	add_to_queue.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	add_to_wishlist.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	wishlist_popover.on('mouseleave',function(){
+		
+		$(this).removeClass('active');
+	});
+	
+	
+	
+
+	playlist_list.bind('mousewheel',function(e){
+		
+
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+
+		
+	});
+        
        
 </script>    
 
