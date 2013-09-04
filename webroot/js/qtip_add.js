@@ -32,8 +32,8 @@ $(document).ready(function()
 			width:1,
 			radius:8,
 			color:'#999'
-		}
-         tip: true
+		},
+        tip: true
       }
    });
    $('span[title]').qtip({
