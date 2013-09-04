@@ -214,15 +214,15 @@ Class StreamingComponent extends Object
     function checkLibraryStreaming($libId) {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
-        $results = $libraryInstance->find('count',array('conditions' => array('library_type'=> 2,'id' => $libId,'library_status'=>'active')));
-       
+       echo $count = $libraryInstance->find('count',array('conditions' => array('library_type'=> 2,'id' => $libId,'library_status'=>'active')));
+       die;
         if($results > 0) {
             
-            return true;
+           // return true;
         }
         else {
             
-            return false;
+            //return false;
         }
      
     }
