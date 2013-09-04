@@ -52,6 +52,43 @@ $('.video-cover-container').on('mouseleave',function(){
 
 });
 
+
+/* overlays */
+	
+	$('.rename-queue').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');
+		$('.rename-queue-dialog-box').addClass('active');
+		$('.rename-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+		
+	});
+	
+	$('.delete-queue').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');
+		$('.delete-queue-dialog-box').addClass('active');
+		$('.delete-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+	});
+	
+	$('.create-new-queue,.create-new-queue-btn').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');		
+		$('.create-queue-dialog-box').addClass('active');
+		$('.create-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+		$('.wishlist-popover').removeClass('active');
+			
+	});
+	
+
+	
+	$('.close,.text-close').on('click',function(e){
+		$('.queue-overlay').removeClass('active');
+		$('.rename-queue-dialog-box').removeClass('active');
+		$('.delete-queue-dialog-box').removeClass('active');
+		$('.create-queue-dialog-box').removeClass('active');
+	});
+	
+	/* end overlays */
         
 </script>    
 
