@@ -30,7 +30,7 @@ $(document).ready(function()
 		},
 		border:{
 			width:1,
-			radius:8,
+			radius:5,
 			color:'#999'
 		},
         tip: true
