@@ -1,3 +1,4 @@
+alert("hi");
 $('#top-100-albums-grid .lazy').lazyload({
 	
 	effect:'fadeIn',
@@ -713,7 +714,7 @@ alert("Enter");
 	
 	$('.single-cover-container').on('mouseleave',function(){
 		
-	alert("Exit1");
+	alert("Exit");
 
 		$(this).find('.add-to-playlist-button').css({opacity:0});
 		
