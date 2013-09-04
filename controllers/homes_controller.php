@@ -4734,7 +4734,7 @@ STR;
         //if ProdID and Provider type is not set then
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$user,'streaming');            
+            $this->log("error|Not able to stream this song,variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
             echo "error|Not able to stream this song.";
         }
         
@@ -4746,7 +4746,7 @@ STR;
         $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
         
         $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$user.PHP_EOL; 
+        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId.PHP_EOL; 
         
         //check the streaming validation
         $validationResult = $this->Streaming->validateStreaming($prodId, $provider);
@@ -4761,7 +4761,7 @@ STR;
             $log_data .= PHP_EOL."First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage.PHP_EOL;        
 
             //check the patron record is exist or not
-            $checkStreamingInfoFlag = $this->Streaming->checkStreamingInfoExist($libId, $user);            
+            $checkStreamingInfoFlag = $this->Streaming->checkStreamingInfoExist($libId, $patId);            
             if($streamingInfoFlag){
                 //if patron record is exist then fetch the details
                 $patronStreamingresults = $this->StreamingRecords->find('first',array('conditions' => array('id'=> $streamingInfoFlag),'fields' => 'modified_date'));        
@@ -4806,21 +4806,21 @@ STR;
                
             $songDuration = 300;
             
-            $validateStreamingInfoResult = $this->Streaming->validateStreamingInfo($libId, $user);
+            $validateStreamingInfoResult = $this->Streaming->validateStreamingInfo($libId, $patId);
             $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
             $validateStreamingInfoMessage = $validateStreamingInfoResult[1];
             $validateStreamingInfoIndex = $validateStreamingInfoResult[2];
             
             if($validateStreamingInfoFlag){
                 
-               $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$user,'streaming');            
+               $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
 
                 //update streaming_record table table
                 $cdate = date('Y:m:d H:i:s');
                 $this->StreamingRecords->setDataSource('master');
-                $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$songDuration.",modified_date='".$cdate."' Where patron_id='".$user."' and library_id='".$libId."'";
+                $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$songDuration.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
                 if($this->StreamingRecords->query($StreamingRecordsSQL)){
-                      $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$user."':songDuration='".$songDuration.PHP_EOL;
+                      $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
                 }
                 $this->StreamingRecords->setDataSource('default');
                 
@@ -4837,7 +4837,7 @@ STR;
                 $insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
                 $this->StreamingHistory->setDataSource('master');
                 if($this->StreamingHistory->save($insertArr)){
-                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$user."':songDuration='".$songDuration.PHP_EOL;
+                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
                   $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
                   $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
                   $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
