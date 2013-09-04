@@ -206,8 +206,8 @@ STR;
   
 	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
-       // if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-                if(1) {
+        if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+              //  if(1) {
             
                   
                 $country = $territory;
@@ -4580,8 +4580,8 @@ STR;
             {  
                 
                  // National Top Videos list and Downloads functionality code 
-         // if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-                if(1) {
+          if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+              //  if(1) {
             
                   
                 $country = $territory;
@@ -4671,7 +4671,7 @@ STR;
                 LIMIT $startLimit, $endLimit
                   
 STR;
-                echo "Query: ".$sql_national_100_v;
+                
                 
                 //execute the query          
                 $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
