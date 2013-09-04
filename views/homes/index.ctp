@@ -60,7 +60,7 @@ $("#top-100-videos-grid").scroll(function(){
             $('#videos_loader_li').show();
 
             var totalPages = 5;
-            var data = "npage="+nationalPageVideo;
+            var data = "";
             
             if( (preValueVideo != nationalPageVideo ) && (nationalPageVideo <= totalPages ) ){  
                 
