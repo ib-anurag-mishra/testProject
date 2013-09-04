@@ -135,7 +135,7 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-  
+        $uid = $this->Session->read('patron');
         if($this->checkLibraryStreaming($libId)){ 
             if($this->checkSongExists($prodId, $providerType)){                
                 if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
