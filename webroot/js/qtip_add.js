@@ -26,7 +26,7 @@ $(document).ready(function()
 		padding:'5px 10px',
 		width:{
 			max:350,
-			min:0;
+			min:0
 		},
 		border:{
 			width:1,
