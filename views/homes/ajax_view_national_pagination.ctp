@@ -94,55 +94,41 @@ $('.video-cover-container').on('mouseleave',function(){
         
         
         
-        playlist_list.on('mouseleave',function(){
+        top_100_nav.on('click',function(e){
+		e.preventDefault();
+		top_100_nav.removeClass('active');
+		$(this).addClass('active');
 		
-		playlist_list.removeClass('active');
-	});
-	
-	add_to_queue.on('mouseenter',function(){
+		top_100_grids.removeClass('active');
+		var target = $(this).attr('href');
 		
+		category_type = $(this).attr('data-category-type');
 		
-		if(playlist_list.hasClass('active')) {
+		if(view_type === 'grid') {
 			
-			playlist_list.removeClass('active');
+			var target_str = target + '-grid';
+			lists.removeClass('active')
+			grids.addClass('active');
+			top_100_albums_grid.removeClass('active');
+			top_100_songs_grid.removeClass('active');
+			top_100_videos_grid.removeClass('active');
+			
 		}
 		
-		
-		
-	});
-	
-	add_to_wishlist.on('mouseenter',function(){
-		
-		
-		if(playlist_list.hasClass('active')) {
+		if(view_type === 'list') {
 			
-			playlist_list.removeClass('active');
+			var target_str = target + '-list-view';
+			grids.removeClass('active');
+			lists.addClass('active');
+			top_100_albums_list_view.removeClass('active');
+			top_100_songs_list_view.removeClass('active');
+			top_100_videos_list_view.removeClass('active');
 		}
 		
-		
-		
-	});
-	
-	wishlist_popover.on('mouseleave',function(){
-		
-		$(this).removeClass('active');
-	});
-	
-	
-	
-
-	playlist_list.bind('mousewheel',function(e){
-		
-
-		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		$(target_str).addClass('active');
 		
 		
 		
-		
-
-	    //prevent page fom scrolling
-	    return false;
-
 		
 	});
         
