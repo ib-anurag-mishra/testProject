@@ -445,7 +445,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     $temp_text  =   strip_tags($announcment_value);
                                                     if($temp_text!="")
                                                     {
-                                                        $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                        $announcment_class  =   "display:block;";
                                                     }
                                                     else
                                                     {
