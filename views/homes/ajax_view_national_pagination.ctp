@@ -1,5 +1,7 @@
 <script>
 
+var add_to_queue = $('.add-to-queue');
+
 $('.add-to-playlist-button').on('click',function(e){
         e.preventDefault();
 
