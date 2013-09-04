@@ -80,7 +80,7 @@ $.Autocompleter = function(input, options) {
 	var blockSubmit;
 	
 	// prevent form submit in opera when selecting with return key
-	navigator.userAgent.match('/opera') && $(input.form).bind("submit.autocomplete", function() {
+	navigator.userAgent.match('/opera/') && $(input.form).bind("submit.autocomplete", function() {
 		if (blockSubmit) {
 			blockSubmit = false;
 			return false;
@@ -737,7 +737,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 					overflow: 'auto'
 				});
 				
-                if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
+                if(navigator.userAgent.match('/msie/') && typeof document.body.style.maxHeight === "undefined") {
 					var listHeight = 0;
 					listItems.each(function() {
 						listHeight += this.offsetHeight;
