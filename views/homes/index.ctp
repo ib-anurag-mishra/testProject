@@ -80,7 +80,8 @@ $("#top-100-videos-grid").scroll(function(){
                             $('#natVideos_loader').hide();
                             $('#videos_loader_li').hide();
 
-                            $('#nationalVideosRecord').append(newitems);                    
+                            //$('#nationalVideosRecord').append(newitems);                    
+                                 $('#nationalVideosRecord').html(newitems);
                         },
                         async:   true,
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 

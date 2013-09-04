@@ -462,8 +462,7 @@ $ieVersion =  ieversion();
 						} else {
 							$ArtistName = $wishlistResults[$i]['wishlists']['artist'];
 							echo $this->getTextEncode($ArtistName);
-						}
-						
+						}						
                                          ?>
                                             </a></div>
 					

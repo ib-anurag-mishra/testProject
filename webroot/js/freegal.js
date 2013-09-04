@@ -1500,3 +1500,44 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 	} );
 	return false; 
 }
+
+    function loadSong(songFile,songTitle) { 
+      jwplayer().load([{
+        file: songFile,
+        title: songTitle
+      }]);
+    } 
+
+$(document).ready(function (){
+
+    $('.play-queue-btn').click(function (){
+        var item = $('#play_item_1').text();
+        if(item.length){
+            var songData = item.split(',');
+            var prodId = songData[0];
+            var providerType = songData[1];
+        }
+        var postURL = webroot+'queuelistdetails/getPlaylistData';
+        $.ajax({
+            type: "POST",
+            cache:false,
+            url: postURL,
+            data: {prodId : prodId,providerType : providerType},
+            success: playlistSuccess,
+            error: playlistFails
+        });                
+
+    });
+
+    function playlistSuccess(){
+        playlist = $('#playlist_data').text();
+        playlist = JSON.parse(playlist);
+        if(playlist.length){
+            jwplayer("myElement").load(playlist);
+        }
+    }
+
+    function playlistFails(){
+        alert('loading playlist fails');exit;
+    }
+});

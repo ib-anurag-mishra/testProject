@@ -17,7 +17,7 @@ class QueueListDetailsController extends AppController{
     function beforeFilter(){
            
             parent::beforeFilter();
-            $this->Auth->allow('now_streaming', 'queue_details', 'index');
+            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData');
     }
     
     
@@ -93,6 +93,12 @@ class QueueListDetailsController extends AppController{
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
         $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+        foreach($queue_list_array as $k => $v)
+         {
+             $filePath = shell_exec('perl files/tokengen_artwork '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+             $streamUrl =  Configure::read('App.Streaming_Server_Path').$filePath;
+             $queue_list_array[$k]['streamUrl'] = $streamUrl;            
+         }        
         $this->set('queue_list_array',$queue_list_array); 
         $this->set('queue_id',$this->params['pass'][0]); 
     }
@@ -108,7 +114,6 @@ class QueueListDetailsController extends AppController{
         $this->set('libraryDownload',$libraryDownload);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
-        
         
         if($this->params['pass'][0]=='1')   //  Default Queue
         {        
@@ -131,7 +136,6 @@ class QueueListDetailsController extends AppController{
         //echo 456;
         //Find Total Duration
         $total_seconds = 0;
-
         foreach($queue_list_array as $k => $v)
         {
             $full_length    =   $v['Songs']['FullLength_Duration'];
@@ -139,6 +143,9 @@ class QueueListDetailsController extends AppController{
             $minutes        =   $temp_arr[0];
             $seconds        =   $temp_arr[1];
             $total_seconds +=   $minutes*60+$seconds;
+            $filePath = shell_exec('perl files/tokengen_artwork ' . $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+            $streamUrl =  Configure::read('App.Streaming_Server_Path').$filePath;
+            $queue_list_array[$k]['streamUrl'] = $streamUrl;            
         }
 
         $total_duration     =    $total_seconds/60;
@@ -150,6 +157,17 @@ class QueueListDetailsController extends AppController{
         $this->set('queue_songs_count',count($queue_list_array)); 
         $this->set('total_time',$total_minutes.":".$total_seconds); 
     }
+    
+    function getPlaylistData(){
+       Configure::write('debug', 0);
+       if(!empty($_POST['prodId']) && !empty($_POST['providerType'])){
+            echo "Success";
+            exit;           
+       }else{
+            echo 'error';
+            exit;
+       }
+    }    
     
     
     

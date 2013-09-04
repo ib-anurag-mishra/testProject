@@ -10,8 +10,8 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Streaming');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode','StreamingRecords','StreamingHistory');
 
     /*
      Function Name : beforeFilter
@@ -42,7 +42,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10', 'ajax_view_national_pagination');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10','userStreaming');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -4698,6 +4698,191 @@ STR;
             }   
                    
 	}
+        
+        
+     /*
+     Function Name : userStreaming
+     Desc : Ajax function used for streaming song
+     * 
+     * @param $prodId Int  'song prodID'
+     * @param $providerType varChar 'song provider type'
+     * 
+     * @return mix result
+    */
+    function userStreaming() {
+        
+        Configure::write('debug', 0);
+        
+        //set layout false
+        $this->layout = false;
+        
+        //get required parameter 
+       // $prodId = $_POST['ProdID'];
+        //$provider = $_POST['ProviderType'];
+        
+        $prodId = '4530701';
+        $provider = 'ioda';
+        
+        //get user id
+        $user = $this->Session->read('Auth.User.id');
+        if(empty($user)){
+                $user = $this->Session->read('patron');
+        }
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
+        
+        //if ProdID and Provider type is not set then
+        if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
+             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            $this->log("error|Not able to stream this song,variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$user,'streaming');            
+            echo "error|Not able to stream this song.";
+        }
+        
+        /**
+          creates log file name
+        */
+        $log_name = 'stored_procedure_web_log_'.date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
+        
+        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
+        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$user.PHP_EOL; 
+        
+        //check the streaming validation
+        $validationResult = $this->Streaming->validateStreaming($prodId, $provider);
+        $validationFlag = $validationResult[0];
+        $validationMessage = $validationResult[1];
+        $validationIndex = $validationResult[2];
+        
+	//if first validation passed then	
+        if($validationFlag){
+            
+            $this->log("First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage,'streaming');             
+            $log_data .= PHP_EOL."First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage.PHP_EOL;        
+
+            //check the patron record is exist or not
+            $checkStreamingInfoFlag = $this->Streaming->checkStreamingInfoExist($libId, $user);            
+            if($streamingInfoFlag){
+                //if patron record is exist then fetch the details
+                $patronStreamingresults = $this->StreamingRecords->find('first',array('conditions' => array('id'=> $streamingInfoFlag),'fields' => 'modified_date'));        
+                if(count($patronStreamingresults) > 0) {                    
+                     $modified_date = $patronStreamingresults['StreamingRecords']['modified_date'];                     
+                     $onlyDate = date('Y-m-d',strtotime($modified_date));                     
+
+                     $log_data .= PHP_EOL."Streaming Info Exist : modified_date  : ".$modified_date;
+                     
+                     //check if the current streaming date is equal to today's date or not
+                     if(strtotime($onlyDate) != strtotime(date('Y-m-d'))){                                       
+                         $updateArr = Array();
+                         $updateArr['id'] = $streamingInfoFlag;                       
+                         $updateArr['consumed_time'] = 0;
+                         $updateArr['modified_date'] = date('Y-m-d H:i:s');
+                         
+                         $log_data .= "update record from current date : modified_date  : ".$modified_date.PHP_EOL;        
+                         
+                         $this->StreamingRecords->setDataSource('master');
+                         //update the date and reset the consumed time as the day start
+                         $this->StreamingRecords->save($updateArr);
+                         $this->StreamingRecords->setDataSource('default');
+                     }else{
+                        $log_data .= PHP_EOL;     
+                     }
+                }                
+            } else {
+                //insert the patron record if not exist in the streaming records table
+                $insertArr = Array();
+                $insertArr['library_id'] = $libId;
+                $insertArr['patron_id'] = $patId;
+                $insertArr['consumed_time'] = 0;
+                $insertArr['modified_date'] = date('Y-m-d H:i:s');
+                $insertArr['createdOn'] = date('Y-m-d H:i:s');    
+                $this->StreamingRecords->setDataSource('master');
+                if($this->StreamingRecords->save($insertArr)){
+                    $log_data .= PHP_EOL."Insert Streaming_records table :-  library_id: ".$libId." ;patron_id : ".$patId." ;consumed_time :0 ;modified_date : ".date('Y-m-d H:i:s').PHP_EOL;        
+                }
+                $this->StreamingRecords->setDataSource('default');
+            }
+                
+               
+            $songDuration = 300;
+            
+            $validateStreamingInfo = $this->Streaming->validateStreamingInfo($libId, $user);
+            $validateStreamingInfoFlag = $validateStreamingInfo[0];
+            $validateStreamingInfoMessage = $validateStreamingInfo[1];
+            $validateStreamingInfoIndex = $validateStreamingInfo[2];
+            
+            if($validateStreamingInfoFlag){
+                
+               $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$user,'streaming');            
+
+                //update streaming_record table table
+                $cdate = date('Y:m:d H:i:s');
+                $this->StreamingRecords->setDataSource('master');
+                $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$songDuration.",modified_date='".$cdate."' Where patron_id='".$user."' and library_id='".$libId."'";
+                if($this->StreamingRecords->query($StreamingRecordsSQL)){
+                      $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$user."':songDuration='".$songDuration.PHP_EOL;
+                }
+                $this->StreamingRecords->setDataSource('default');
+                
+                //insert the patron record if not exist in the streaming records table
+                $insertArr = Array();
+                $insertArr['library_id'] = $libId;
+                $insertArr['patron_id'] = $patId;
+                $insertArr['ProdID'] = $prodId;
+                $insertArr['provider_type'] = $provider;
+                $insertArr['consumed_time'] = $songDuration;
+                $insertArr['modified_date'] = date('Y-m-d H:i:s');
+                $insertArr['createdOn'] = date('Y-m-d H:i:s');
+                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
+                $this->StreamingHistory->setDataSource('master');
+                if($this->StreamingHistory->save($insertArr)){
+                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$user."':songDuration='".$songDuration.PHP_EOL;
+                  $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
+                  $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
+                  $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
+                  $this->createStreamingLog($log_data, $log_name);
+                }
+                $this->StreamingHistory->setDataSource('default');                
+                echo "suces|".$validateStreamingInfoMessage; 
+                
+            }else{
+                $this->log("error|message=".$validateStreamingInfoMessage.";validatin Index :".$validateStreamingInfoIndex,'streaming');            
+                $log_data .= PHP_EOL."error|".$validateStreamingInfoMessage."|".$validateStreamingInfoIndex.PHP_EOL;
+                $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
+                $this->createStreamingLog($log_data, $log_name);          
+                echo "error|".$validateStreamingInfoMessage;
+            }
+
+        } else {        
+          /*
+            complete records with validation fail
+          */
+          $log_data .= PHP_EOL."error|".$validationMessage."|".$validationIndex.PHP_EOL;
+          $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+          $this->createStreamingLog($log_data, $log_name);          
+          echo "error|".$validationMessage;
+        
+        }
+    }
+    
+    /*
+     Function Name : createStreamingLog
+     Desc : function used for creating logs for streaming song
+     * 
+     * @param $log_data String  'complete logs string' 
+     * @param $log_name String  'daily create log file name'     
+     * 
+     * @return mix result
+    */
+    function createStreamingLog($log_data,$log_name){
+        
+        //check log create condition on or off
+        $streamingLogFlag = Configure::read('App.streaming_log');
+        if($streamingLogFlag == 'on'){
+            $this->log($log_data, $log_name);
+        }
+    }    
     
 }
 ?>
