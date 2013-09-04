@@ -36,6 +36,7 @@ $(document).ready(function()
         tip: true
       }
    });
+   /*
    $('span[title]').qtip({
       position: {
          corner: {
@@ -102,5 +103,6 @@ $(document).ready(function()
          },
          tip: true
       }
-   });   
+   }); 
+   */  
 });
