@@ -241,9 +241,10 @@ Class StreamingComponent extends Object
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
         $results = $streamingRecordsInstance->find('first',array('conditions' => array('patron_id'=> $patId,'library_id' => $libId),'fields' => 'id'));
-        
+        print_r($results);
+        die;
         if(!empty($results)) {
-            return $results['0']['StreamingRecords']['id'];
+            return $results['StreamingRecords']['id'];
         }
         else {
             return false;
