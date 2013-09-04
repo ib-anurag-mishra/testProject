@@ -2363,12 +2363,5 @@ $('document').ready(function(){
         } else if(item[2]==3){
             $('#header-search-type').val('song');
         }*/
-        if(item[2]==1){
-            $('#master-filter').val('artist');
-        } else if(item[2]==2){
-            $('#master-filter').val('album');
-        } else if(item[2]==3){
-            $('#master-filter').val('song');
-        }
     });
 });
