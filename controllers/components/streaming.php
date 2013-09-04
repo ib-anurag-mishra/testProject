@@ -25,7 +25,7 @@ Class StreamingComponent extends Object
      * @param $library_id Int  'Uniq library id'
      * @return Boolean
     */
-    function validateStreamingInfo($patId,$libId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
+    function validateStreamingInfo($libId,$patId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
        
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
@@ -47,16 +47,14 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-        echo '-nagesh-';
-        echo $patId;
+        $uid = $this->Session->read('patron');
         $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         
-        die;
-        
         if(!empty($streamingRecordsResults)){
-            $consumed_time = $streamingRecordsResults['0']['StreamingRecords']['consumed_time'];
-            $updatedDate = $streamingRecordsResults['0']['StreamingRecords']['modified_date'];
-            
+           
+            $consumed_time = $streamingRecordsResults['StreamingRecords']['consumed_time'];
+            $updatedDate = $streamingRecordsResults['StreamingRecords']['modified_date'];
+           
             //check patron time limit 
             if($this->checkPatronStreamingLimitForDay($consumed_time,$updatedDate)){
                 $limitToPlaySong = $songDuration + $consumed_time;

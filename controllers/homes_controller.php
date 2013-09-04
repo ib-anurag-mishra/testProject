@@ -4729,7 +4729,7 @@ STR;
 //                $user = $this->Session->read('patron');
 //        }
         $libId = $this->Session->read('library');
-        echo $patId = $this->Session->read('patron');
+        $patId = $this->Session->read('patron');
         
         //if ProdID and Provider type is not set then
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
@@ -4760,8 +4760,7 @@ STR;
             $this->log("First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage,'streaming');             
             $log_data .= PHP_EOL."First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage.PHP_EOL;        
 
-            echo $patId;
-            echo '-narendra';
+           
             
             //check the patron record is exist or not
             $checkStreamingInfoFlag = $this->Streaming->checkStreamingInfoExist($libId, $patId);            
@@ -4808,6 +4807,8 @@ STR;
                 
                
             $songDuration = 300;
+            
+           
             
             $validateStreamingInfoResult = $this->Streaming->validateStreamingInfo($libId, $patId);
             $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
