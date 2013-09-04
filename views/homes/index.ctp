@@ -19,7 +19,7 @@ $(document).ready(function(){
                 if(nationalPage <= totalPages ){ 
                     
                     preValue= nationalPage ;
-                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs/libraryDownload='+<?php echo $libraryDownload; ?>+'/patronDownload='+<?php echo $patronDownload; ?>;
+                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
                     
 
                     jQuery.ajax({
@@ -67,7 +67,7 @@ $("#top-100-videos-grid").scroll(function(){
                 if(nationalPageVideo <= totalPages ){ 
                     
                     preValueVideo= nationalPageVideo ;
-                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPageVideo+'/type=videos/libraryDownload='+<?php echo $libraryDownload; ?>+'/patronDownload='+<?php echo $patronDownload; ?>;
+                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPageVideo+'/type=videos';
                     
 
                     jQuery.ajax({
