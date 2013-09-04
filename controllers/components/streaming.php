@@ -27,6 +27,7 @@ Class StreamingComponent extends Object
     */
     function validateStreamingInfo($patId,$libId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
+        echo $patId;
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
         $streamingRecordsInstance->recursive = -1;
         
@@ -46,8 +47,9 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-        
-        $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id1' => $libId,'patron_id' => $patId)));
+        echo '-nagesh-';
+        echo $patId;
+        $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         
         die;
         
