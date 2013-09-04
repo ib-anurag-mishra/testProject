@@ -1,19 +1,27 @@
 <script> 
 
 //load the artist list when  scroll reached at the end
+$(document).ready(function(){
+    var preValue= 1;
+    var nationalPage = 2;
+    $("#top-100-songs-grid").scroll(function(){        
+        
 
-
-function showSongsDetails(link){
-
-                 var totalPages = 5;
-                 var data = "npage="+nationalPage;
+         if ( $(this).scrollLeft() >= (5000*preValue)) {
+                               
+            var totalPages = 5;
+            var data = "npage="+nationalPage;
+            
+            if( (preValue != nationalPage ) && (nationalPage <= totalPages ) ){  
+                
+                if(nationalPage <= totalPages ){ 
 
                     $('#natSongs_loader').show();
                     $('#songs_loader_li').show();
 
                     
                     preValue= nationalPage ;
-                   // var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
+                    var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
                     
 
                     jQuery.ajax({
@@ -32,31 +40,7 @@ function showSongsDetails(link){
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 
                             //alert('No artist list available');
                         }
-                    });  
-       
-}
-
-
-$(document).ready(function(){
-    var preValue= 1;
-    var nationalPage = 2;
-    $("#top-100-songs-grid").scroll(function(){        
-        
-
-         if ( $(this).scrollLeft() >= (5000*preValue)) {                                          
-            
-            if( (preValue != nationalPage ) && (nationalPage <= totalPages ) ){  
-                
-                if(nationalPage <= totalPages ){
-
-
-
-                    
-                   
-                    var link1 =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
-                    
-                        showSongsDetails(link1);
-            
+                    });            
                 
                 }else{
                     $('#natSongs_loader').hide();
