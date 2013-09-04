@@ -1,5 +1,5 @@
 <script>
-/*
+
 $('.add-to-playlist-button').on('click',function(e){
         e.preventDefault();
 
@@ -50,12 +50,12 @@ $('.video-cover-container').on('mouseleave',function(){
         $(this).find('.top-100-download-now-button').css({opacity:0});
 
 
-}); */
+}); 
 
 
 /* overlays */
 	
-	/*$('.rename-queue').on('click',function(e){
+	$('.rename-queue').on('click',function(e){
 		e.preventDefault();
 		$('.queue-overlay').addClass('active');
 		$('.rename-queue-dialog-box').addClass('active');
@@ -86,14 +86,68 @@ $('.video-cover-container').on('mouseleave',function(){
 		$('.rename-queue-dialog-box').removeClass('active');
 		$('.delete-queue-dialog-box').removeClass('active');
 		$('.create-queue-dialog-box').removeClass('active');
-	}); */
+	}); 
 	
 	/* end overlays */
+        
+        
+        
+        playlist_list.on('mouseleave',function(){
+		
+		playlist_list.removeClass('active');
+	});
+	
+	add_to_queue.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	add_to_wishlist.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	wishlist_popover.on('mouseleave',function(){
+		
+		$(this).removeClass('active');
+	});
+	
+	
+	
+
+	playlist_list.bind('mousewheel',function(e){
+		
+
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+
+		
+	});
         
        
 </script>    
 
-<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
+<!--<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>-->
 
 <?php
 
