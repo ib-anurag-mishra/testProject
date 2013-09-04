@@ -4808,8 +4808,7 @@ STR;
                
             $songDuration = 300;
             
-            echo $patId;
-            echo '-narendra';
+           
             
             $validateStreamingInfoResult = $this->Streaming->validateStreamingInfo($libId, $patId);
             $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
