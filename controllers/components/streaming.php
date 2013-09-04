@@ -215,6 +215,7 @@ Class StreamingComponent extends Object
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
         $results = $libraryInstance->find('count',array('conditions' => array('library_type1'=> 2,'id' => $libId,'library_status'=>'active')));
+       die;
         if($results > 0) {
             return true;
         }
