@@ -136,15 +136,15 @@ Class StreamingComponent extends Object
                 if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
                     return array(true,'', 1);
                 } else {
-                    $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory),'download');
+                    $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory),'streaming');
                     return array(false,'The song streaming is not available for this Country.', 2);
                 }
             } else {
-                $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table",'download');
+                $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table",'streaming');
                 return array(false,'The song requested for streaming does not exist', 3);
             }
         } else {
-            $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table",'download');
+            $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as streaming is not allowed for this library",'streaming');
             return array(false,'Streaming is not allowed for this library.', 4);
         }        
     }
