@@ -52,21 +52,25 @@
 				<div class="playlist-scrollable">
 					<div class="row-container">
 					<?php
-					
+                                            $playListData = array();$i=0;
                                             foreach($queue_list_array as $key => $value)
-                                            {    
+                                            {  
+                                                $i++;
 					?>
 					
 					<div class="row clearfix">
 						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
 
-                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Songs']['ProdID'].', "'.base64_encode($value['Songs']['provider_type']).'", "'.$this->webroot.'");')); 
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Songs']['SongTitle'].'");')); 
                                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); 
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
 
                                             ?>
-						<div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
+                                                <?php if(!empty($value['Songs']['ProdID'])){ ?>
+                                                    <div id="play_item_<?php echo $i;?>"style="display:none;"><?php echo $value['Songs']['ProdID'].','.$value['Songs']['provider_type']; ?></div>
+						<?php } ?>
+                                                <div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
                                                 <?php											
                                                 if (strlen($value['Songs']['ArtistText']) >= 30 ) {
                                                         $artistText = $this->getTextEncode(substr($value['Songs']['ArtistText'], 0, 30)) . "..";
@@ -127,9 +131,25 @@
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 						</div>
 					</div>
-					<?php 
+					<?php
+                                            if(!empty($value['streamUrl']) || !empty($value['Songs']['SongTitle'])){
+                                                $playItem = array('file' => $value['streamUrl'], 'title' => $value['Songs']['SongTitle']);
+                                                $jsonPlayItem = json_encode($playItem);
+                                                $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
+                                                $playListData[] =$jsonPlayItem;
+                                            }
 					}
 					?>
+                                        <?php if(!empty($playListData)){ ?>    
+                                        <div id="playlist_data" style="display:none;">
+                                            <?php 
+                                                $playList = implode(',', $playListData);
+                                                if(!empty($playList)){
+                                                    echo '['.$playList.']';
+                                                }
+                                            ?>
+                                        </div>
+                                        <?php } ?>    
 					</div>
 				</div>
 			</div>
