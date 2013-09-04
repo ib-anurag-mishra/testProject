@@ -4717,8 +4717,11 @@ STR;
         $this->layout = false;
         
         //get required parameter 
-        $prodId = $_POST['ProdID'];
-        $provider = $_POST['ProviderType'];
+       // $prodId = $_POST['ProdID'];
+        //$provider = $_POST['ProviderType'];
+        
+        $prodId = '4530701';
+        $provider = 'ioda';
         
         //get user id
         $user = $this->Session->read('Auth.User.id');
