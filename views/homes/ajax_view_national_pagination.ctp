@@ -5,6 +5,12 @@
 	var add_to_queue = $('.add-to-queue');
 	var add_to_wishlist = $('.add-to-wishlist');
 	var playlist_list = $('.playlist-options');
+        
+        var languageSet = '<?php echo $setLang; ?>';
+        var webroot = '<?php echo $this->webroot; ?>';
+        var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
+        var attributes = { id: "audioplayer" }; 
+        swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
 
 $('.add-to-playlist-button').on('click',function(e){
         e.preventDefault();
