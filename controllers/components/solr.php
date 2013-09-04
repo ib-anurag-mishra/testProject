@@ -76,41 +76,50 @@ class SolrComponent extends Object {
                 switch ($type) {
                     case 'song':
                         //$query = '(CSongTitle:('.strtolower($searchkeyword).') OR SongTitle:'.$searchkeyword.')';
-                        $query = $keyword . ' OR ((CSongTitle:(' . $searchkeyword . ') OR CTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . ') OR CComposer:(' . $searchkeyword . ')))';
+                        //$query = $keyword . ' OR ((CSongTitle:(' . $searchkeyword . ') OR CTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . ') OR CComposer:(' . $searchkeyword . ')))';
+                        $query = $keyword;
                         $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                         break;
                     case 'genre':
-                        $query = $keyword . ' OR (CGenre:(' . $searchkeyword . '))';
+                        //$query = $keyword . ' OR (CGenre:(' . $searchkeyword . '))';
+                        $query = $keyword;
                         $queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
                         break;
                     case 'album':
-                        $query = $keyword . ' OR (CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
+                        //$query = $keyword . ' OR (CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
+                        $query = $keyword;
                         $queryFields = "CTitle^100 CArtistText^80 CComposer^60 CGenre^20 CSongTitle";
                         break;
                     case 'artist':
                         //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.' OR ArtistText:'.$searchkeyword.')';
-                        $query = $keyword . ' OR (CArtistText:(' . $searchkeyword . '))';
+                        //$query = $keyword . ' OR (CArtistText:(' . $searchkeyword . '))';
+                        $query = $keyword;
                         $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
                         break;
                     case 'label':
-                        $query = $keyword . ' OR (CLabel:(' . $searchkeyword . '))';
+                        //$query = $keyword . ' OR (CLabel:(' . $searchkeyword . '))';
+                        $query = $keyword;
                         $queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                         break;
                     case 'video':
-                        $query = $keyword . ' OR (CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
+                        //$query = $keyword . ' OR (CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
+                        $query = $keyword;
                         $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         break;
                     case 'composer':
                         //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.' OR Composer:'.$searchkeyword.')';
-                        $query = $keyword . ' OR (CComposer:(' . $searchkeyword . '))';
+                        //$query = $keyword . ' OR (CComposer:(' . $searchkeyword . '))';
+                        $query = $keyword;
                         $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                         break;
                     case 'all':
-                        $query = $keyword . ' OR ((CSongTitle:('.$searchkeyword.') OR CGenre:('.$searchkeyword.') OR CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CLabel:('.$searchkeyword.') OR CComposer:('.$searchkeyword.')))';
+                        //$query = $keyword . ' OR ((CSongTitle:('.$searchkeyword.') OR CGenre:('.$searchkeyword.') OR CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CLabel:('.$searchkeyword.') OR CComposer:('.$searchkeyword.')))';
+                        $query = $keyword;
                         $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
                         break;
                     default:
-                        $query = $keyword . ' OR ((CSongTitle:('.$searchkeyword.') OR CGenre:('.$searchkeyword.') OR CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CLabel:('.$searchkeyword.') OR CComposer:('.$searchkeyword.')))';
+                        //$query = $keyword . ' OR ((CSongTitle:('.$searchkeyword.') OR CGenre:('.$searchkeyword.') OR CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CLabel:('.$searchkeyword.') OR CComposer:('.$searchkeyword.')))';
+                        $query = $keyword;
                         $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
                         break;
                 }
@@ -512,44 +521,52 @@ class SolrComponent extends Object {
 
             switch ($type) {
                 case 'song':
-                    $query = $keyword . ' OR (CSongTitle:(' . $searchkeyword . '))';
+                    //$query = $keyword . ' OR (CSongTitle:(' . $searchkeyword . '))';
+                    $query = $keyword;
                     $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                     $field = 'SongTitle';
                     break;
                 case 'genre':
-                    $query = $keyword . ' OR (CGenre:(' . $searchkeyword . '))';
+                    //$query = $keyword . ' OR (CGenre:(' . $searchkeyword . '))';
                     $queryFields = "CGenre^100 CTitle^80 CSongTitle^60 CArtistText^20 CComposer";
+                    $query = $keyword;
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = $keyword . ' OR (CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
+                    //$query = $keyword . ' OR (CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
                     $queryFields = "CTitle^100 CArtistText^80 CComposer^60 CGenre^20 CSongTitle";
+                    $query = $keyword;
                     //$field = 'Title';
                     $field = 'rpjoin';
                     break;
                 case 'artist':
-                    $query = $keyword . ' OR (CArtistText:(' . $searchkeyword . '))';
+                    //$query = $keyword . ' OR (CArtistText:(' . $searchkeyword . '))';
                     $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+                    $query = $keyword;
                     $field = 'ArtistText';
                     break;
                 case 'label':
-                    $query = $keyword . ' OR (CLabel:(' . $searchkeyword . '))';
+                    //$query = $keyword . ' OR (CLabel:(' . $searchkeyword . '))';
                     $queryFields = "CLabel^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
+                    $query = $keyword;
                     $field = 'Label';
                     break;
                 case 'video':
-                    $query = $keyword . ' OR (CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
+                    //$query = $keyword . ' OR (CVideoTitle:(' . $searchkeyword . ') OR CArtistText:(' . $searchkeyword . '))';
+                    $query = $keyword;
                     $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                     $field = 'VideoTitle';
                     break;
                 case 'composer':
                     //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
-                    $query = $keyword . ' OR (CComposer:(' . $searchkeyword . '))';
+                    //$query = $keyword . ' OR (CComposer:(' . $searchkeyword . '))';
+                    $query = $keyword;
                     $queryFields = "CComposer^100 CArtistText^80 CTitle^60 CSongTitle^20 CGenre";
                     $field = 'Composer';
                     break;
                 default:
-                    $query = $keyword . '( OR CSongTitle:(' . $searchkeyword . '))';
+                    //$query = $keyword . '( OR CSongTitle:(' . $searchkeyword . '))';
+                    $query = $keyword;
                     $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
                     $field = 'SongTitle';
                     break;
