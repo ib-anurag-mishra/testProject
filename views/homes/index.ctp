@@ -1,7 +1,7 @@
 <script> 
 
 //load the artist list when  scroll reached at the end
-
+$(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
     $("#top-100-songs-grid").scroll(function(){        
@@ -97,7 +97,7 @@ $("#top-100-videos-grid").scroll(function(){
     });
 
 
-
+});
 </script>  
 
 
