@@ -3,7 +3,12 @@
  <p>  Email: <?php echo $Patron['User']['email']; ?><br />
    Password: <?php echo $password; ?></p>
  <p>Please copy the link and paste in the address bar to login to the site.</p>  
- <p> <?php echo Configure::read('App.base_url').'users/login'; ?></p>
+ <p> 
+ <?php 
+ $libraryDetails = $library->getLibraryDetails($Patron['User']['library_id']);
+ echo 'https://'.$libraryDetails['Library']['library_subdomain'].'.'.Configure::read('App.name').'/users/login'; 
+ ?>
+ </p>
    
  <p>Thanks<br />
  <?php echo Configure::read('App.name'); ?></p>

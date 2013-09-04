@@ -3,7 +3,7 @@
 			
 			</div><!-- end .content-wrapper -->
 
-<?php if($this->Session->read("patron")){ ?>
+<?php /*if($this->Session->read("patron")){ ?>
                         <?php if( $this->Session->read('library_type') == 2 ){ ?>
 			<div class="music-player-container clearfix">
 
@@ -39,7 +39,7 @@
 
 			</div>
 			
-<?php } }?>
+<?php } }*/?>
 			
 		</div>			
 			

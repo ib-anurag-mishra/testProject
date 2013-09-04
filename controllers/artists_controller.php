@@ -1144,7 +1144,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
@@ -1210,9 +1210,7 @@ Class ArtistsController extends AppController
                 WHERE
                                 ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
                 GROUP BY Video.ProdID
-                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC
-                LIMIT 10 
-                  
+                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC 
 STR;
          
                     //echo $sql_national_100_v; die;
@@ -1345,6 +1343,15 @@ STR;
             if(count($albumData) > 0 ){
                     foreach($albumData as $album_key => $album){             
 
+                        
+                        //hide song if library block the explicit content
+                        if(($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] =='T')) {
+                            continue;
+                        } 
+
+
+
+
                         //get the album image
                         if(empty($album['Files']['CdnPath'])){
                             if(empty($album['Files']['SourceURL'])){
@@ -1450,6 +1457,7 @@ STR;
 		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
 		$val = '';
 		$this->Song->Behaviors->attach('Containable');
+        $this->Country->setTablePrefix($_REQUEST['Territory']);
 		foreach($allAlbum as $k => $v){
 			$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
 			if(count($recordCount) > 0){

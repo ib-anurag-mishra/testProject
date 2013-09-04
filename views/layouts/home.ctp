@@ -1,7 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php /*<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">*/ ?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php echo $this->Html->charset(); ?>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>
             <?php __('Freegal Music : Your New Music Library :'); ?>
             <?php
@@ -216,7 +218,7 @@ if ($this->Session->read('Config.language') == 'en') {
             
             <!-- <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script> -->
             
-            <?php if(preg_match('/(?i)msie 8/',$_SERVER['HTTP_USER_AGENT']))
+            <?php /*if(preg_match('/(?i)msie 8/',$_SERVER['HTTP_USER_AGENT']))
                 {
             ?>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.min.css" />
@@ -227,18 +229,21 @@ if ($this->Session->read('Config.language') == 'en') {
                 <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
                 <script src="<?php echo $this->webroot; ?>app/webroot/js/less.js"></script>
             <?php
-                }
+                }*/
             ?>
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.css" />
             <!--[if IE 8]>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->
 
             <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>  
             
+<!--
             <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
             <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
             <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
             <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
+-->
            
            
 
@@ -507,6 +512,7 @@ if ($this->Session->read('Config.language') == 'en') {
                                                             ?>
                                                             
                                                         </div>
-
+													<?/*
                                                     </body>
                                                         </html>
+                                                        */?>

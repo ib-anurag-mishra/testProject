@@ -23,7 +23,7 @@
                                             
 
 					 $count  =   1;           
-					//for($d=1;$d<$count;$d++) {
+				if(count($ustop10Albums) > 0) {
                                         foreach($ustop10Albums as $key => $value){
                                             
                                              //hide song if library block the explicit content
@@ -64,6 +64,10 @@
 					<?php
                                                 $count++;
 					}
+                                        }else{
+
+                                    echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                }
 					?>
 				</ul>
 			</div>
@@ -77,6 +81,7 @@
 					//for($d=1;$d<$count;$d++) {
 
                                           $count =1;
+                                     if(count($nationalTopDownload) > 0) {
                                         foreach($nationalTopDownload as $key => $value){
                                             
                                             //hide song if library block the explicit content
@@ -201,6 +206,10 @@
 					<?php
                                                 $count++;
 					}
+                                      }else{
+
+                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                    }
 					
 					?>
 					
@@ -216,7 +225,7 @@
 					<?php
                                                                                 
                                             $count = 1;
-					//for($d=1;$d<$count;$d++) {
+                                if(!empty($usTop10VideoDownload) > 0) {
                                         foreach($usTop10VideoDownload as $key => $value){
                                             
                                             
@@ -336,7 +345,10 @@
 					<?php
                                                 $count++; 
 					}
-					
+                                    }else{
+
+                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                    }
 					?>
 					
 					

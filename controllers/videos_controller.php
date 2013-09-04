@@ -493,7 +493,7 @@ STR;
         
         
         //  Video Details   //
-        
+       // Cache::delete("musicVideoDetails" . $this->params['pass'][0]);
         if(isset($this->params['pass'][0]))
         {
             if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
@@ -594,7 +594,7 @@ STR;
             
                 $this->set('MoreVideosData',$MoreVideosData);
 
-                
+               // Cache::delete("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']);
                 //Top Genre Videos By Artist 
                 //if ($topDownloads = Cache::read("top_videos_genre" . $territory) === false)
                               
