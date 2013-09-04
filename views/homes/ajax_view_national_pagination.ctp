@@ -5,6 +5,7 @@
 	var add_to_queue = $('.add-to-queue');
 	var add_to_wishlist = $('.add-to-wishlist');
 	var playlist_list = $('.playlist-options');
+        var preview = $('.preview');
         
         //var languageSet = '<?php echo $setLang; ?>';
         var webroot = '<?php echo $this->webroot; ?>';
@@ -205,10 +206,24 @@ $('.video-cover-container').on('mouseleave',function(){
 		
 	});
         
+        preview.on('mousedown',function(e){
+                e.preventDefault();
+
+                $(this).addClass('active');
+	});
+	
+	preview.on('mouseup',function(e){
+		e.preventDefault();
+		
+		$(this).removeClass('active');
+	});
+        
        
 </script>    
 
 <script src="<? echo $this->webroot; ?>app/webroot/js/audioPlayer.js"></script>
+<script src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
+
 
 <?php
 

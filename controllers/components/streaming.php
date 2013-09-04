@@ -27,6 +27,7 @@ Class StreamingComponent extends Object
     */
     function validateStreamingInfo($patId,$libId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
+       
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
         $streamingRecordsInstance->recursive = -1;
         
@@ -46,8 +47,12 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-        
+        echo '-nagesh-';
+        echo $patId;
         $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
+        
+        die;
+        
         if(!empty($streamingRecordsResults)){
             $consumed_time = $streamingRecordsResults['0']['StreamingRecords']['consumed_time'];
             $updatedDate = $streamingRecordsResults['0']['StreamingRecords']['modified_date'];
@@ -130,7 +135,7 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-  
+        $uid = $this->Session->read('patron');
         if($this->checkLibraryStreaming($libId)){ 
             if($this->checkSongExists($prodId, $providerType)){                
                 if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
