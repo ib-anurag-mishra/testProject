@@ -4729,7 +4729,7 @@ STR;
 //                $user = $this->Session->read('patron');
 //        }
         $libId = $this->Session->read('library');
-        echo $patId = $this->Session->read('patron');
+        $patId = $this->Session->read('patron');
         
         //if ProdID and Provider type is not set then
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
