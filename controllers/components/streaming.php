@@ -47,8 +47,7 @@ Class StreamingComponent extends Object
             $libId = $library_id;
         }
         
-        $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id1' => $libId,'patron_id' => $patId)));
-        die;
+        $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         if(!empty($streamingRecordsResults)){
             $consumed_time = $streamingRecordsResults['0']['StreamingRecords']['consumed_time'];
             $updatedDate = $streamingRecordsResults['0']['StreamingRecords']['modified_date'];
