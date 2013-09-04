@@ -68,10 +68,10 @@
     if($this->Session->read('patron')) { echo "111";
         if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {  echo "222";
 
-            if($libraryDownload == '1' && $patronDownload == '1') { echo "333";
+            if($libraryDownload == '1' && $patronDownload == '1') { echo "333: [".$nationalTopDownload[$i]['Song']['status']."]";
 
                     $nationalTopDownload[$i]['Song']['status'] = 'avail1';
-                    if(isset($nationalTopDownload[$i]['Song']['status']) && ($nationalTopDownload[$i]['Song']['status'] != 'avail')) {
+                    if(isset($nationalTopDownload[$i]['Song']['status']) && ($nationalTopDownload[$i]['Song']['status'] != 'avail')) { echo "444";
                             ?>
         <span class="top-100-download-now-button">
                             <form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -85,25 +85,25 @@
                             </form>
         </span>
                             <?php	
-                    } else {
+                    } else { echo "555";
                     ?>
                             <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                     <?php
                     }
 
-            } else {
+            } else { echo "666";
                 ?>
                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a> 
                                         
                 <?php
                 												
             }
-        } else {
+        } else { echo "777";
         ?>
             <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
         <?php
         }
-}else{
+}else{  echo "888";
 
 ?>
      <a class="top-100-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
