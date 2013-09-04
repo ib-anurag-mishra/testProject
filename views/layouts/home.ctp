@@ -20,7 +20,7 @@
   
             
         <?php
-            echo $javascript->link('jquery-1.10.2.min');
+        	echo $javascript->link('jquery-1.10.2.min');
             echo $this->Html->meta('icon');
             //echo $javascript->link('ImageDisableRightClick');
             echo $this->Html->css('freegal_styles');
@@ -37,6 +37,8 @@
           echo $javascript->link('recent-downloads');
           echo $javascript->link('search-results');
            echo $javascript->link('jquery.colorbox');
+           echo $javascript->link('qtip');
+            echo $javascript->link('qtip_add');
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
