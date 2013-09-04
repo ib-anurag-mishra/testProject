@@ -51,10 +51,10 @@ Class StreamingComponent extends Object
         $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         
         if(!empty($streamingRecordsResults)){
-            print_r($streamingRecordsResults);
-           echo $consumed_time = $streamingRecordsResults['StreamingRecords']['consumed_time'];
+           
+            $consumed_time = $streamingRecordsResults['StreamingRecords']['consumed_time'];
             $updatedDate = $streamingRecordsResults['StreamingRecords']['modified_date'];
-            die;
+           
             //check patron time limit 
             if($this->checkPatronStreamingLimitForDay($consumed_time,$updatedDate)){
                 $limitToPlaySong = $songDuration + $consumed_time;
