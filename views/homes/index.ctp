@@ -306,9 +306,9 @@ $("#top-100-videos-grid").scroll(function(){
 											}
                                                                                     }
                                                                                      ?>	
-                                                                                     <li>
+                                                                                     <li id="natSongs_loader">
                                                                                      
-                                                                                        <span id="natSongs_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
+                                                                                        <span  style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
                                                                                        
                                                                                         </li>
 										</ul>
@@ -482,8 +482,8 @@ $("#top-100-videos-grid").scroll(function(){
                                                                                     }
                                                                                      ?>	
                                                                                      <li>
-                                                                                    <div class="top-100-video-detail">
-                                                                                       <span id="natVideos_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
+                                                                                    <div id="natVideos_loader">
+                                                                                       <span  style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
                                                                                        </div>
                                                                                        </li>
 
