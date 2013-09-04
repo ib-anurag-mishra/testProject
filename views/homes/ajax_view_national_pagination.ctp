@@ -19,6 +19,25 @@ $('.song-cover-container').on('mouseleave',function(){
         $(this).find('.preview').css({opacity:0});
 
 });
+
+$('.video-cover-container').on('mouseenter',function(){
+		
+
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-100-download-now-button').css({opacity:1});
+		
+	});
+	
+	$('.video-cover-container').on('mouseleave',function(){
+		
+	
+
+		$(this).find('.add-to-playlist-button').css({opacity:0});
+		$(this).find('.top-100-download-now-button').css({opacity:0});
+		
+	
+	});
+
         
 </script>    
 
