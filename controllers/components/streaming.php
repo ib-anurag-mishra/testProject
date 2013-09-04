@@ -25,7 +25,7 @@ Class StreamingComponent extends Object
      * @param $library_id Int  'Uniq library id'
      * @return Boolean
     */
-    function validateStreamingInfo($patId,$libId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null, $patId = null, $agent = null, $library_id = null) {
+    function validateStreamingInfo($patId,$libId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
         $streamingRecordsInstance->recursive = -1;
@@ -47,7 +47,8 @@ Class StreamingComponent extends Object
             $libId = $library_id;
         }
         
-        $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
+        $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id1' => $libId,'patron_id' => $patId)));
+        die;
         if(!empty($streamingRecordsResults)){
             $consumed_time = $streamingRecordsResults['0']['StreamingRecords']['consumed_time'];
             $updatedDate = $streamingRecordsResults['0']['StreamingRecords']['modified_date'];
@@ -164,7 +165,7 @@ Class StreamingComponent extends Object
     function checkSongExists($prodId, $providerType){
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'1')));
+        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0')));
         if(!empty($song['Song'])){
             return true;
         } else {
@@ -214,15 +215,13 @@ Class StreamingComponent extends Object
     function checkLibraryStreaming($libId) {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
-       echo $count = $libraryInstance->find('count',array('conditions' => array('library_type = "2"','id' => $libId,'library_status'=>'active')));
-       die;
-        if($results > 0) {
-            
-           // return true;
+        $results = $libraryInstance->find('count',array('conditions' => array('library_type = "2"','id' => $libId,'library_status'=>'active')));
+       
+        if($results > 0) {            
+            return true;
         }
-        else {
-            
-            //return false;
+        else {            
+            return false;
         }
      
     }
