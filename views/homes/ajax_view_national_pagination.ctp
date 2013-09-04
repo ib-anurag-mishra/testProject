@@ -1,6 +1,10 @@
 <script>
 
-var add_to_queue = $('.add-to-queue');
+	var top_100_nav = $('.top-100-nav li a');
+	var add_to_playlist = $('.add-to-playlist');
+	var add_to_queue = $('.add-to-queue');
+	var add_to_wishlist = $('.add-to-wishlist');
+	var playlist_list = $('.playlist-options');
 
 $('.add-to-playlist-button').on('click',function(e){
         e.preventDefault();
@@ -129,6 +133,69 @@ $('.video-cover-container').on('mouseleave',function(){
 		
 		
 		
+		
+	});
+        
+        add_to_playlist.on('mouseenter',function(){
+		
+		playlist_list.addClass('active');
+	});
+	
+	
+	
+	
+
+	
+	
+	playlist_list.on('mouseleave',function(){
+		
+		playlist_list.removeClass('active');
+	});
+	
+	add_to_queue.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	add_to_wishlist.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	wishlist_popover.on('mouseleave',function(){
+		
+		$(this).removeClass('active');
+	});
+	
+	
+	
+
+	playlist_list.bind('mousewheel',function(e){
+		
+
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+
 		
 	});
         
