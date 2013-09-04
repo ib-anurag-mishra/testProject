@@ -682,7 +682,7 @@ $(function() {
 	
 	
 	$('.song-cover-container').on('mouseenter',function(){
-		alert("Enter1");
+		
 
 		$(this).find('.add-to-playlist-button').css({opacity:1});
 		$(this).find('.top-100-download-now-button').css({opacity:1});
@@ -693,7 +693,7 @@ $(function() {
 	
 	$('.song-cover-container').on('mouseleave',function(){
 		
-	alert("Exit1");
+	
 
 		$(this).find('.add-to-playlist-button').css({opacity:0});
 		$(this).find('.top-100-download-now-button').css({opacity:0});
@@ -704,7 +704,7 @@ $(function() {
 	
 	$('.single-cover-container').on('mouseenter',function(){
 		
-alert("Enter");
+
 		$(this).find('.add-to-playlist-button').css({opacity:1});
 
 		
@@ -713,7 +713,7 @@ alert("Enter");
 	
 	$('.single-cover-container').on('mouseleave',function(){
 		
-	alert("Exit");
+	
 
 		$(this).find('.add-to-playlist-button').css({opacity:0});
 		
