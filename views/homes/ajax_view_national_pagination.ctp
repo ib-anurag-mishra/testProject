@@ -2,7 +2,6 @@
 
         $slNo = ($startLimit + 1);
         
-        
         if($Type=='songs')
         {
 
@@ -66,10 +65,10 @@
 
 <?php
 
-    if($this->Session->read('patron')) {
-        if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
+    if($this->Session->read('patron')) { echo "111";
+        if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {  echo "222";
 
-            if($libraryDownload == '1' && $patronDownload == '1') {
+            if($libraryDownload == '1' && $patronDownload == '1') { echo "333";
 
                     $nationalTopDownload[$i]['Song']['status'] = 'avail1';
                     if(isset($nationalTopDownload[$i]['Song']['status']) && ($nationalTopDownload[$i]['Song']['status'] != 'avail')) {
