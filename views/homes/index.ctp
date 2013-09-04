@@ -52,7 +52,7 @@ $(document).ready(function(){
 $("#top-100-videos-grid").scroll(function(){        
         // if ( $(this).scrollLeft() == ($('#top-100-videos-grid ul').width() - $(this).width())) {  //alert("222");   
 
-         if ( $(this).scrollLeft() >= (9500*preValueVideo)) {
+         if ( $(this).scrollLeft() >= (8500*preValueVideo)) {
                                
             $('#natVideos_loader').show();
             var totalPages = 5;
@@ -307,9 +307,9 @@ $("#top-100-videos-grid").scroll(function(){
                                                                                     }
                                                                                      ?>	
                                                                                      <li>
-                                                                                     <div class="top-100-songs-detail">
+                                                                                     
                                                                                         <span id="natSongs_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
-                                                                                        </div>
+                                                                                       
                                                                                         </li>
 										</ul>
                                                                             
