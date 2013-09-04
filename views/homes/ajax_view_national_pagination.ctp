@@ -1,3 +1,100 @@
+<script>
+/*
+$('.add-to-playlist-button').on('click',function(e){
+        e.preventDefault();
+
+        $('.wishlist-popover').removeClass('active');
+
+        if($(this).next('.wishlist-popover').hasClass('active')) {
+                $(this).next('.wishlist-popover').removeClass('active');
+                $(this).find('.add-to-playlist-button').css({opacity:.5});
+        } else {
+
+                $(this).next('.wishlist-popover').addClass('active');
+        }
+});
+
+$('.song-cover-container').on('mouseenter',function(){
+		
+
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-100-download-now-button').css({opacity:1});
+		$(this).find('.preview').css({opacity:1});
+		
+	
+	});
+	
+$('.song-cover-container').on('mouseleave',function(){
+
+
+
+        $(this).find('.add-to-playlist-button').css({opacity:0});
+        $(this).find('.top-100-download-now-button').css({opacity:0});
+        $(this).find('.preview').css({opacity:0});
+
+});
+
+$('.video-cover-container').on('mouseenter',function(){
+		
+
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-100-download-now-button').css({opacity:1});
+		
+	});
+	
+$('.video-cover-container').on('mouseleave',function(){
+
+
+
+        $(this).find('.add-to-playlist-button').css({opacity:0});
+        $(this).find('.top-100-download-now-button').css({opacity:0});
+
+
+}); */
+
+
+/* overlays */
+	
+	/*$('.rename-queue').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');
+		$('.rename-queue-dialog-box').addClass('active');
+		$('.rename-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+		
+	});
+	
+	$('.delete-queue').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');
+		$('.delete-queue-dialog-box').addClass('active');
+		$('.delete-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+	});
+	
+	$('.create-new-queue,.create-new-queue-btn').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');		
+		$('.create-queue-dialog-box').addClass('active');
+		$('.create-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+		$('.wishlist-popover').removeClass('active');
+			
+	});
+	
+
+	
+	$('.close,.text-close').on('click',function(e){
+		$('.queue-overlay').removeClass('active');
+		$('.rename-queue-dialog-box').removeClass('active');
+		$('.delete-queue-dialog-box').removeClass('active');
+		$('.create-queue-dialog-box').removeClass('active');
+	}); */
+	
+	/* end overlays */
+        
+       
+</script>    
+
+<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
+
 <?php
 
         $slNo = ($startLimit + 1);
