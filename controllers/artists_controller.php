@@ -1210,9 +1210,7 @@ Class ArtistsController extends AppController
                 WHERE
                                 ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
                 GROUP BY Video.ProdID
-                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC
-                LIMIT 10 
-                  
+                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC 
 STR;
          
                     //echo $sql_national_100_v; die;
