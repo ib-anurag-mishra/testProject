@@ -1,4 +1,3 @@
-alert("hi");
 $('#top-100-albums-grid .lazy').lazyload({
 	
 	effect:'fadeIn',
