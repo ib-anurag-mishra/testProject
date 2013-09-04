@@ -4864,6 +4864,7 @@ STR;
           echo "error|".$validationMessage;
         
         }
+        exit;
     }
     
     /*
