@@ -486,8 +486,8 @@ $("#top-100-videos-grid").scroll(function(){
 											}
                                                                                     }
                                                                                      ?>	
-                                                                                      <li id="videos_loader_li" style="display:none;" >                                                                                    
-                                                                                       <span id="natVideos_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                                                                                       <li id="videos_loader_li" style="display:none;" >                                                                                    
+                                                                                       <span id="natVideos_loader" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
                                                                                        </li>
 
 										</ul>
