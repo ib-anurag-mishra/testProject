@@ -6,7 +6,7 @@
 	var add_to_wishlist = $('.add-to-wishlist');
 	var playlist_list = $('.playlist-options');
         
-        var languageSet = '<?php echo $setLang; ?>';
+        //var languageSet = '<?php echo $setLang; ?>';
         var webroot = '<?php echo $this->webroot; ?>';
         var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
         var attributes = { id: "audioplayer" }; 
@@ -208,7 +208,7 @@ $('.video-cover-container').on('mouseleave',function(){
        
 </script>    
 
-<!--<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>-->
+<script src="<? echo $this->webroot; ?>app/webroot/js/audioPlayer.js"></script>
 
 <?php
 
