@@ -138,10 +138,10 @@ pageTracker._trackPageview();
                             },
                             repeat: true
                     });                
-                $('.play-queue-btn').click(function(){
-                    var files = [{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get funky","description":"Daft Punk"},{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get Lucky1","description":"Daft Punk1"}];                
-                    jwplayer("myElement").load(files); 
-                });
+//                $('.play-queue-btn').click(function(){
+//                    var files = [{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get funky","description":"Daft Punk"},{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get Lucky1","description":"Daft Punk1"}];                
+//                    jwplayer("myElement").load(files); 
+//                });
             });
         </script>    
 
