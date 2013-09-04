@@ -64,7 +64,7 @@
 
 
 <?php
-
+        echo "Session: ".$this->Session->read('patron');
     if($this->Session->read('patron')) { echo "111";
         if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {  echo "222";
 
