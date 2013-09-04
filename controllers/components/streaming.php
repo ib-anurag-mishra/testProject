@@ -59,7 +59,7 @@ Class StreamingComponent extends Object
             if($this->checkPatronStreamingLimitForDay($consumed_time,$updatedDate)){
                 $limitToPlaySong = $songDuration + $consumed_time;
                 if($this->checkPatronStreamingLimitForDay($limitToPlaySong,$updatedDate)){
-                    return array(true,'', 1);
+                    return array(true,'successfully able to streaming this song.', 1);
                 }else{
                     $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
                     return array(false,'Your song streaming limit is over for the day.', 2);
@@ -241,9 +241,8 @@ Class StreamingComponent extends Object
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
         $results = $streamingRecordsInstance->find('first',array('conditions' => array('patron_id'=> $patId,'library_id' => $libId),'fields' => 'id'));
-        
         if(!empty($results)) {
-            return $results['0']['StreamingRecords']['id'];
+            return $results['StreamingRecords']['id'];
         }
         else {
             return false;
