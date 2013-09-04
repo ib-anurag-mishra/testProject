@@ -1144,7 +1144,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
