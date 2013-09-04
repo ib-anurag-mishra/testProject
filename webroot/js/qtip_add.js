@@ -8,7 +8,7 @@ $(document).ready(function()
          }
       },
       style: {
-/*
+
 		 name:'cream',
          padding: '5px 10px',
          width: {
@@ -20,23 +20,12 @@ $(document).ready(function()
                radius: 8,
                color: '#FAF7AA'
          },
-*/
-		background:'#fff',
-		color:'#999',
-		padding:'5px 10px',
-		width:{
-			max:350,
-			min:0
-		},
-		border:{
-			width:1,
-			radius:5,
-			color:'#999'
-		},
+
+
         tip: true
       }
    });
-   /*
+   
    $('span[title]').qtip({
       position: {
          corner: {
@@ -104,5 +93,5 @@ $(document).ready(function()
          tip: true
       }
    }); 
-   */  
+ 
 });
