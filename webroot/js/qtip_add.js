@@ -22,7 +22,7 @@ $(document).ready(function()
          },
 */
 		background:'#fff',
-		color:'#999'
+		color:'#999',
 		padding:'5px 10px',
 		width:{
 			max:350,
