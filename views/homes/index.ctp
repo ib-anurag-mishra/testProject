@@ -10,6 +10,7 @@ $(document).ready(function(){
          if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
             $('#natSongs_loader').show();
+            $('#songs_loader_li').show();
             var totalPages = 5;
             var data = "npage="+nationalPage;
             
@@ -29,6 +30,7 @@ $(document).ready(function(){
                            //alert("newitems: "+newitems);
                             nationalPage++;
                             $('#natSongs_loader').hide();
+                            $('#songs_loader_li').hide();
 
                             $('#nationalSongsRecord').append(newitems);                    
                         },
@@ -40,6 +42,7 @@ $(document).ready(function(){
                 
                 }else{
                     $('#natSongs_loader').hide();
+                    $('#songs_loader_li').hide();
                 }
             }           
         }
@@ -306,11 +309,9 @@ $("#top-100-videos-grid").scroll(function(){
 											}
                                                                                     }
                                                                                      ?>	
-                                                                                     <li id="natSongs_loader">
-                                                                                     
-                                                                                        <span  style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
-                                                                                       
-                                                                                        </li>
+                                                                                     <li id="songs_loader_li" style="display:none;" >                                                                                     
+                                                                                        <span id="natSongs_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                                                                                     </li>
 										</ul>
                                                                             
                                                                             
@@ -482,8 +483,8 @@ $("#top-100-videos-grid").scroll(function(){
                                                                                     }
                                                                                      ?>	
                                                                                      <li>
-                                                                                    <div id="natVideos_loader">
-                                                                                       <span  style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
+                                                                                    <div class="top-100-video-detail">
+                                                                                       <span id="natVideos_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>
                                                                                        </div>
                                                                                        </li>
 
