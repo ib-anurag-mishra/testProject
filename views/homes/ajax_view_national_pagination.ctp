@@ -1,5 +1,3 @@
-<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script> 
-
 <?php
 
         $slNo = ($startLimit + 1);
