@@ -325,7 +325,7 @@ STR;
            
             
             //get all featured artist and make array
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
             foreach($featured as $k => $v){
                     if($v['Featuredartist']['album'] != 0){
                             if(empty($ids)){
@@ -377,7 +377,7 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
+                                    ), 'order' => 'FIELD( Album.ProdID, '.$ids.') DESC', 'limit'=>20
                             )
                     );
                     
