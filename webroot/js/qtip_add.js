@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+	/*
    $('a[title]').qtip({
       position: {
          corner: {
@@ -25,6 +26,33 @@ $(document).ready(function()
         tip: true
       }
    });
+   */
+   
+
+	$('a[title]').qtip({
+		position: {
+			corner: {
+				target: 'topLeft',
+				tooltip: 'bottomRight'
+			}
+		},
+		style: { 
+				
+				color:'#999',
+				fontSize:12,
+		
+				tip:{
+					corner:'bottomRight',
+					size: {
+						x:5,
+						y:5
+					}
+				}
+				
+		
+		}
+	});
+
    
    $('span[title]').qtip({
       position: {
