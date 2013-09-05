@@ -170,7 +170,7 @@ Class StreamingComponent extends Object
     function checkSongExists($prodId, $providerType){
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'1'), 'fields' => array('FullLength_Duration')));      
+        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0'), 'fields' => array('FullLength_Duration')));      
         if(isset($song['Song']['FullLength_Duration'])){
             $secondsValue =$this->getSeconds($song['Song']['FullLength_Duration']);
             if(isset($secondsValue) && is_numeric($secondsValue)){
