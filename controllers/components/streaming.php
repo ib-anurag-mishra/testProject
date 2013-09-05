@@ -88,7 +88,7 @@ Class StreamingComponent extends Object
                     return array(true,'successfully able to streaming this song.', 1);
                 }else{
                     $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
-                    return array(false,'Your song streaming limit is over for the day.', 2);
+                    return array(false,'You have not enough streaming time to play this song.', 2);
                 }                
             }else{
                 $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over for the day",'streaming');
@@ -164,7 +164,7 @@ Class StreamingComponent extends Object
         if($this->checkLibraryStreaming($libId)){ 
             if($this->checkSongExists($prodId, $providerType)){                
                 if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
-                    return array(true,'', 1);
+                    return array(true,'First validatin passed', 1);
                 } else {
                     $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory),'streaming');
                     return array(false,'The song streaming is not available for this Country.', 2);
