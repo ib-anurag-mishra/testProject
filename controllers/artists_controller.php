@@ -1232,7 +1232,7 @@ STR;
         
         function album_ajax($id=null,$album=null,$provider=null)
 	{
-            Configure::write('debug', 2);	
+            Configure::write('debug', 0);	
             $this->layout = false;
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
