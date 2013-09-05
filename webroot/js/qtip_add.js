@@ -43,7 +43,7 @@ $(document).ready(function()
 				border: {
 
 					color: '#444',
-					radius: 5
+					radius: 1
 				},
 		
 				tip:{
