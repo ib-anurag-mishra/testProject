@@ -4583,7 +4583,7 @@ STR;
             {  
                 
                  // National Top Videos list and Downloads functionality code 
-         // if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+         // if (($national = Cache::read("nationalvideos".$territory."Page".$Page)) === false) {
                 if(1) {
             
                   
@@ -4686,12 +4686,12 @@ STR;
                 }                
                
                 //write in the cache                                   
-                Cache::write("nationalvideos".$territory."Page1", $nationalTopVideoDownload );
+                Cache::write("nationalvideos".$territory."Page".$Page, $nationalTopVideoDownload );
                //echo "Cache IS SET"."nationalvideos: "."nationalvideos".$territory."Page1"; 
                }               
        }else{
         
-            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page1");     
+            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page".$Page);     
        }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
                 
