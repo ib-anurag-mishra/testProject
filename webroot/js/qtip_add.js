@@ -40,7 +40,6 @@ $(document).ready(function()
 				
 				color:'#999',
 				fontSize:12,
-				boxShadow:'0 0 4px #333',
 		
 				tip:{
 					corner:'bottomRight',
