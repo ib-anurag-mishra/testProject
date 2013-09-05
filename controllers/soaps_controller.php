@@ -589,13 +589,13 @@ class SoapsController extends AppController {
     }
     
     
-    foreach($featured as $key => $val) {
+/*     foreach($featured as $key => $val) {
       $obj = new FreegalFeaturedAlbumFreegal4Type;
       $obj->ProdId          = '';
       $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalFeaturedAlbumFreegal4Type');
     
     }
-    $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalFeaturedAlbumFreegal4Type');
+    $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalFeaturedAlbumFreegal4Type'); */
     
   
   }
