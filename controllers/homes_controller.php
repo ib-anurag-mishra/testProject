@@ -4731,6 +4731,16 @@ STR;
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         
+        /**
+          creates log file name
+        */
+        $log_name = 'song_streaming_web_log_'.date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
+        
+        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
+        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId.PHP_EOL; 
+        
         //if ProdID and Provider type is not set then
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
@@ -4755,15 +4765,7 @@ STR;
             exit;
         }
         
-        /**
-          creates log file name
-        */
-        $log_name = 'stored_procedure_web_log_'.date('Y_m_d');
-        $log_id = md5(time());
-        $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
         
-        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId.PHP_EOL; 
         
         //check the streaming validation
         $validationResult = $this->Streaming->validateStreaming($prodId, $provider);
