@@ -105,6 +105,12 @@ class CacheController extends AppController {
         echo "no data available for genre".$territory;
       }
 	  
+      
+        for($counter=1;$counter<=5;$counter++)
+       {
+                   $startLimit =   20*($counter-1);
+                   $endLimit   =   $startLimit+20;
+      
 		$country = $territory;
 		if(!empty($country)){
 		  if($maintainLatestDownload){
@@ -147,10 +153,7 @@ class CacheController extends AppController {
                 $data = array();
 
                 
-                for($counter=1;$counter<=5;$counter++)
-                {
-                            $startLimit =   20*($counter-1);
-                            $endLimit   =   $startLimit+20;
+
                             
                 $sql_national_100 = <<<STR
                     SELECT 
@@ -197,7 +200,7 @@ class CacheController extends AppController {
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT '$startLimit','$endLimit'
+                    LIMIT $startLimit, $endLimit
    
 STR;
                 $data = $this->Album->query($sql_national_100);
@@ -226,11 +229,11 @@ STR;
                     echo "Unable to update national 100 for " . $territory;
                 }
                 
-                }
+                
             }
             $this->log("cache written for national top 100 for $territory", 'debug');
 
- 
+       }
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`,`Video`.`Advisory`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID  and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
@@ -298,7 +301,10 @@ STR;
               
             // Added caching functionality for national top 100 videos   
         
-      
+            for($counter=1;$counter<=5;$counter++)
+           {
+                       $startLimit =   20*($counter-1);
+                       $endLimit   =   $startLimit+20;      
     
             $country = $territory;
 
@@ -351,10 +357,7 @@ STR;
 
                 $data = array();
                 
-                for($counter=1;$counter<=5;$counter++)
-                {
-                            $startLimit =   20*($counter-1);
-                            $endLimit   =   $startLimit+20;
+
 
                 $sql_national_100_v = <<<STR
 	        SELECT 
@@ -395,7 +398,7 @@ STR;
                                 ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
-                 LIMIT '$startLimit','$endLimit'
+                 LIMIT $startLimit, $endLimit
 STR;
 
                 // echo $sql_national_100_v; die;
@@ -428,12 +431,12 @@ STR;
                     echo "Unable to update national 100 videos for " . $territory;
                 }
                 
-                }
+                
             }
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
             
-            
+           }
            
               
 
@@ -2067,175 +2070,6 @@ STR;
     
     
     }
-    
-    
-     function national_top_100_cache() 
-    {
-         
-         
-        set_time_limit(0);
-        //error_reporting(1); ini_set('display_errors', 1);
-       
-        
-        $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
-        echo "============" . date("Y-m-d H:i:s") . "===============";
-        //$territoryNames = array('US','CA','AU','NZ','IT','GB','IE');
-        $territories = $this->Territory->find("all");
-        for($mm=0;$mm<count($territories);$mm++)
-        {
-            $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
-        }
-        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-        $siteConfigData = $this->Album->query($siteConfigSQL);
-        $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
-        $siteConfigData = $this->Album->query($siteConfigSQL);
-        $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-		for($i=0;$i<count($territoryNames);$i++){
-			$territory = $territoryNames[$i];
-                        if(0 == $multiple_countries){
-                            $countryPrefix = '';
-                            $this->Country->setTablePrefix('');
-
-                        } else {
-                            $countryPrefix = strtolower($territory)."_";
-                            $this->Country->setTablePrefix($countryPrefix);
-                        }
-                        
-			$this->log("Starting caching for $territory",'debug');
-
-                 $counter = '';       
-	  
-		$country = $territory;
-		if(!empty($country)){
-		  if($maintainLatestDownload){
-
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `latest_downloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '" . $country . "' 
-              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
-                } else {
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `downloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '" . $country . "' 
-              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
-                }
-                $ids = '';
-                $ids_provider_type = '';
-                $natTopDownloaded = $this->Album->query($sql);
-                foreach ($natTopDownloaded as $natTopSong) {
-                    if (empty($ids)) {
-                        $ids .= $natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
-                    } else {
-                        $ids .= ',' . $natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
-                    }
-                }
-
-                if ((count($natTopDownloaded) < 1) || ($natTopDownloaded === false)) {
-                    $this->log("download data not recevied for " . $territory, "cache");
-                    echo "download data not recevied for " . $territory;
-                }
-                $data = array();
-
-                            
-                $sql_national_100 = <<<STR
-                    SELECT 
-                            Song.ProdID,
-                            Song.ReferenceID,
-                            Song.Title,
-                            Song.ArtistText,
-                            Song.DownloadStatus,
-                            Song.SongTitle,
-                            Song.Artist,
-                            Song.Advisory,
-                            Song.Sample_Duration,
-                            Song.FullLength_Duration,
-                            Song.provider_type,
-                            Genre.Genre,
-                            Country.Territory,
-                            Country.SalesDate,
-                            Sample_Files.CdnPath,
-                            Sample_Files.SaveAsName,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            File.CdnPath,
-                            File.SourceURL,
-                            File.SaveAsName,
-                            Sample_Files.FileID,
-                            PRODUCT.pid
-                    FROM
-                            Songs AS Song
-                                    LEFT JOIN
-                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                    LEFT JOIN
-                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                    LEFT JOIN
-                            Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-                                    LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
-                                    LEFT JOIN
-                            PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
-                                    INNER JOIN 
-                            Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                    INNER JOIN 
-                            File ON (Albums.FileID = File.FileID) 
-                    WHERE
-                            ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
-                    GROUP BY Song.ProdID
-                    ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT '$startLimit','$endLimit'
-   
-STR;
-                $data = $this->Album->query($sql_national_100);
-                $this->log("National top 100 songs for " . $territory, "cachequery");
-                $this->log($sql_national_100, "cachequery");
-                if ($ids_provider_type == "") {
-                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-                    echo "ids_provider_type is set blank for " . $territory;
-                }
-
-                if (!empty($data)) {
-                    Cache::delete("national" . $country ."Page".$counter);
-                    foreach($data as $key => $value){
-                            $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                            $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                            $data[$key]['songAlbumImage'] = $songAlbumImage;
-                    }                    
-                    Cache::write("national" . $country ."Page".$counter, $data);
-                    $this->log("cache written for national top ten for $territory", "cache");
-                    echo "cache written for national top ten for $territory";
-                } else {
-
-                    Cache::write("national" . $country ."Page".$counter, Cache::read("national" . $country ."Page".$counter));
-                    echo "Unable to update key";
-                    $this->log("Unable to update national 100 for " . $territory, "cache");
-                    echo "Unable to update national 100 for " . $territory;
-                }
-                
-                }
-            }
-            $this->log("cache written for national top 100 for $territory", 'debug');
-
- 
-
-
-      echo "============" . date("Y-m-d H:i:s") . "===============";
-      $this->requestAction('/Resetcache/genrateXML');
-      exit;
-         
-         
-     
-     }
     
     
     
