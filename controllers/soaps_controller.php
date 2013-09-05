@@ -589,15 +589,17 @@ class SoapsController extends AppController {
     }
     
     
-/*     foreach($featured as $key => $val) {
+    foreach($featured as $key => $val) {
+      
       $obj = new FreegalFeaturedAlbumFreegal4Type;
-      $obj->ProdId          = '';
+      $obj->AlbumProdId      = '';
+      $obj->AlbumTitle       = '';
+      $obj->FileURL          = '';
       $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalFeaturedAlbumFreegal4Type');
-    
     }
-    $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalFeaturedAlbumFreegal4Type'); */
     
-  
+    return new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalFeaturedAlbumFreegal4Type');
+
   }
 
   /**
