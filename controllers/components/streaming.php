@@ -170,6 +170,7 @@ Class StreamingComponent extends Object
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'1')));
         
         print_r($song);
+        die;
         
         if(!empty($song['Song'])){
             return true;
