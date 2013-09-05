@@ -2092,10 +2092,12 @@ STR;
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
     
-    for($counter=1;$counter<=5;$counter++)
-    {        
-                $startLimit =   20*($counter-1);
-                $endLimit   =   $startLimit+20;
+//    for($counter=1;$counter<=5;$counter++)
+//    {        
+//                $startLimit =   20*($counter-1);
+//                $endLimit   =   $startLimit+20;
+    
+                $counter = '';
         
 		for($i=0;$i<count($territoryNames);$i++){
 			$territory = $territoryNames[$i];
@@ -2246,7 +2248,7 @@ STR;
           
             
         }
-    } 
+    //} 
         
       
 
