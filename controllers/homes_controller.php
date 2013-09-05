@@ -3477,11 +3477,12 @@ STR;
         $this->log($log_data, $log_name);
         
         
-        
-        //delete from wishlist table
-        $deleteSongId = $id;
-        $this->Wishlist->delete($deleteSongId);
-        //get no of downloads for this week
+        if($id > 0){
+            //delete from wishlist table
+            $deleteSongId = $id;
+            $this->Wishlist->delete($deleteSongId);
+            //get no of downloads for this week
+        }
         
         $this->Videodownload->recursive = -1;
         $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
@@ -3696,10 +3697,12 @@ STR;
     
         $this->log($log_data, $log_name);
         
-        //delete from wishlist table
-        $deleteVideoId = $id;
-        $this->WishlistVideo->delete($deleteVideoId);
-        //get no of downloads for this week
+        if($id > 0){
+            //delete from wishlist table
+            $deleteVideoId = $id;
+            $this->WishlistVideo->delete($deleteVideoId);
+            //get no of downloads for this week
+        }
         
         $this->Videodownload->recursive = -1;
         $videodownloadsUsed =  $this->Videodownload->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
