@@ -2,9 +2,9 @@
 
 //load the artist list when  scroll reached at the end
 
- var $j = jQuery.noConflict();
+jQuery.noConflict();
 
-$j(document).ready(function() {
+$(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
    
