@@ -4890,23 +4890,7 @@ STR;
         */
     }
     
-    /*
-     Function Name : createStreamingLog
-     Desc : function used for creating logs for streaming song
-     * 
-     * @param $log_data String  'complete logs string' 
-     * @param $log_name String  'daily create log file name'     
-     * 
-     * @return mix result
-    */
-    function createStreamingLog($log_data,$log_name){
-        
-        //check log create condition on or off
-        $streamingLogFlag = Configure::read('App.streaming_log');
-        if($streamingLogFlag == 'on'){
-            $this->log($log_data, $log_name);
-        }
-    }    
+    
     
 }
 ?>
