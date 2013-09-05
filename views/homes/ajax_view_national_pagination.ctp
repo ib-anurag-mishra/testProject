@@ -6,6 +6,7 @@
 	var add_to_wishlist = $('.add-to-wishlist');
 	var playlist_list = $('.playlist-options');
         var preview = $('.preview');
+        var wishlist_popover = $('.wishlist-popover');
         
         //var languageSet = '<?php echo $setLang; ?>';
         var webroot = '<?php echo $this->webroot; ?>';
