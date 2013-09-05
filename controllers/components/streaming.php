@@ -168,7 +168,7 @@ Class StreamingComponent extends Object
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'1')));
-        
+        echo $prodId;
         print_r($song);
         die;
         
