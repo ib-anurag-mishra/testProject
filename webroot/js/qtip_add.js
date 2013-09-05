@@ -42,7 +42,8 @@ $(document).ready(function()
 				fontSize:12,
 				border: {
 
-					color: '#444'
+					color: '#444',
+					radius: 5
 				},
 		
 				tip:{
