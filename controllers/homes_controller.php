@@ -4744,7 +4744,7 @@ STR;
         //if ProdID and Provider type is not set then
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+            $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
             echo "error|Not able to stream this song.";
             exit;
         }
