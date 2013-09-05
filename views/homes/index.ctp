@@ -2,7 +2,6 @@
 
 //load the artist list when  scroll reached at the end
 
-
 $(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
@@ -13,8 +12,8 @@ $(document).ready(function(){
 
          if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
-            $('#natSongs_loader').show();
-            $('#songs_loader_li').show();
+            $('#natSongs_loader'+preValue).show();
+            $('#songs_loader_li'+preValue).show();
             var totalPages = 5;
             var data = "npage="+nationalPage;
             
@@ -33,8 +32,8 @@ $(document).ready(function(){
                         success: function(newitems) { 
                            //alert("newitems: "+newitems);
                             nationalPage++;
-                            $('#natSongs_loader').hide();
-                            $('#songs_loader_li').hide();
+                            $('#natSongs_loader'+preValue).hide();
+                            $('#songs_loader_li'+preValue).hide();
 
                             $('#nationalSongsRecord').append(newitems);        
             
@@ -46,8 +45,8 @@ $(document).ready(function(){
                     });            
                 
                 }else{
-                    $('#natSongs_loader').hide();
-                    $('#songs_loader_li').hide();
+                    $('#natSongs_loader'+preValue).hide();
+                    $('#songs_loader_li'+preValue).hide();
                 }
             }           
         }
@@ -62,8 +61,8 @@ $("#top-100-videos-grid").scroll(function(){
 
          if ( $(this).scrollLeft() >= (8500*preValueVideo)) {
                                
-            $('#natVideos_loader').show();
-            $('#videos_loader_li').show();
+            $('#natVideos_loader'+preValue).show();
+            $('#videos_loader_li'+preValue).show();
 
             var totalPages = 5;
             var data = "npage="+nationalPageVideo;
@@ -83,8 +82,8 @@ $("#top-100-videos-grid").scroll(function(){
                         success: function(newitems) { 
                            //alert("newitems: "+newitems);
                             nationalPageVideo++;
-                            $('#natVideos_loader').hide();
-                            $('#videos_loader_li').hide();
+                            $('#natVideos_loader'+preValue).hide();
+                            $('#videos_loader_li'+preValue).hide();
 
                             $('#nationalVideosRecord').append(newitems);                    
                         },
@@ -95,8 +94,8 @@ $("#top-100-videos-grid").scroll(function(){
                     });            
                 
                 }else{
-                    $('#natVideos_loader').hide();
-                    $('#videos_loader_li').hide();
+                    $('#natVideos_loader'+preValue).hide();
+                    $('#videos_loader_li'+preValue).hide();
                 }
             }           
         }
@@ -318,8 +317,8 @@ $("#top-100-videos-grid").scroll(function(){
 											}
                                                                                     }
                                                                                      ?>	
-                                                                                     <li id="songs_loader_li" style="display:none;" >                                                                                     
-                                                                                        <span id="natSongs_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                                                                                     <li id="songs_loader_li1" style="display:none;" >                                                                                     
+                                                                                        <span id="natSongs_loader1" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
                                                                                      </li>
 										</ul>
                                                                             
@@ -491,8 +490,8 @@ $("#top-100-videos-grid").scroll(function(){
 											}
                                                                                     }
                                                                                      ?>	
-                                                                                       <li id="videos_loader_li" style="display:none;" >                                                                                    
-                                                                                       <span id="natVideos_loader" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                                                                                       <li id="videos_loader_li1" style="display:none;" >                                                                                    
+                                                                                       <span id="natVideos_loader1" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
                                                                                        </li>
 
 										</ul>

@@ -405,6 +405,10 @@ $('.video-cover-container').on('mouseleave',function(){
 													</div>
 												</div>
 											</li>
+                                                                                        
+                                                                                        <li id="songs_loader_li<?php echo $Page; ?>" style="display:none;" >                                                                                     
+                                                                                        <span id="natSongs_loader<?php echo $Page; ?>" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                                                                                        </li>
 
                                                                                 <?php 
 
@@ -565,8 +569,11 @@ $('.video-cover-container').on('mouseleave',function(){
 													</div>
 												</div>
 											</li>
-											<?php 
-											$k++;
+                                                                                        
+                                                                                       <li id="videos_loader_li<?php echo $Page; ?>" style="display:none;" >                                                                                    
+                                                                                       <span id="natVideos_loader<?php echo $Page; ?>" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                                                                                       </li>
+											<?php 											
 											
         }
     }
