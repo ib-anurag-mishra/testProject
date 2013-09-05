@@ -156,6 +156,7 @@ class CacheController extends AppController {
                 echo "<br>ids_provider_type: ".$ids_provider_type;
                 echo "<br>ids: ".$ids;
                 echo "<br>country: ".$country;
+                echo "<br>Page: ".$counter;
                             
                 $sql_national_100 = <<<STR
                     SELECT 
