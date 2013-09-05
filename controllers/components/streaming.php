@@ -44,21 +44,19 @@ Class StreamingComponent extends Object
      * 
      * 
      * @param $patId Int  'Patron Unique id'
-     * @param $libId Int  'library Unique id'
-     * @param $isMobileDownload Boolean  'check for mobile download'
-     * @param $mobileTerritory Boolean  'check for mobile territory'
+     * @param $libId Int  'library Unique id'     
      * @param $patId Int  'Uniqe patron id'
      * @param $agent Int  'Browser user agent'
      * @param $library_id Int  'Uniq library id'
      * @return Boolean
     */
-    function validateStreamingDurationInfo($libId,$patId, $songDuration,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
+    function validateStreamingDurationInfo($libId,$patId,$songDuration,$agent = null) {
         
        
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
         $streamingRecordsInstance->recursive = -1;
         
-        if(!$isMobileDownload){
+        if(!$agent){
           
           $uid = $patId;
           $libId = $libId;
@@ -88,7 +86,7 @@ Class StreamingComponent extends Object
                     return array(true,'successfully able to streaming this song.', 1);
                 }else{
                     $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
-                    return array(false,'Your song streaming limit is over for the day.', 2);
+                    return array(false,'You have not enough streaming time left to play this song.', 2);
                 }                
             }else{
                 $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over for the day",'streaming');
@@ -132,19 +130,16 @@ Class StreamingComponent extends Object
      Desc : function used for checking patron streaming
      * 
      * @param $prodId Int  'song prod id'
-     * @param $providerType varChar  'song provider type'
-     * @param $isMobileDownload Boolean  'check for mobile download'
-     * @param $mobileTerritory Boolean  'check for mobile territory'
+     * @param $providerType varChar  'song provider type'    
      * @param $patId Int  'Uniqe patron id'
      * @param $agent Int  'Browser user agent'
      * @param $library_id Int  'Uniq library id'
      * 
      * @return Boolean
     */
-    function validateStreaming($prodId, $providerType,$libId,$patId, $isMobileDownload = false, $mobileTerritory = null, $agent = null){
+    function validateStreaming($prodId, $providerType,$libId,$patId,$agent = null){
        
-        if(!$isMobileDownload){
-          
+        if(!$agent){          
           $uid = $patId;
           $libId = $libId;
           $ip = $_SERVER['REMOTE_ADDR'];
@@ -155,20 +150,14 @@ Class StreamingComponent extends Object
             $uid = $patId;
             $libId = $libId;
             $ip = $agent;
-            $channel = 'Mobile App';
-            
+            $channel = 'Mobile App';            
         }
        
         
-        
+        //check the validation
         if($this->checkLibraryStreaming($libId)){ 
             if($this->checkSongExists($prodId, $providerType)){                
-                if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
-                    return array(true,'', 1);
-                } else {
-                    $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory),'streaming');
-                    return array(false,'The song streaming is not available for this Country.', 2);
-                }
+                return array(true,'First validatin passed', 1);
             } else {
                 $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested for streaming does not allow for streaming or its mp4 file id is empty in Songs table",'streaming');
                 return array(false,'The song requested for streaming does not exist', 3);
@@ -207,35 +196,7 @@ Class StreamingComponent extends Object
         }
     }
     
-    /*
-     Function Name : checkAllowedCountry
-     Desc : function used for checking songs territory allowed for streaming
-     * 
-     * @param $prodId Int  'song prodID'
-     * @param $providerType varChar 'song provider type'
-     * 
-     * @param $isMobileDownload Int optional
-     * @param $mobileTerritory varChar optional
-     * 
-     * @return Boolean
-     * 
-    */
-    function checkAllowedCountry($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null){
-        $countryInstance = ClassRegistry::init('Country');
-        $countryInstance->recursive = -1;
-        if(!$isMobileDownload){
-            $territory = $this->Session->read('territory');
-        } else {
-            $territory = $mobileTerritory;
-        }
-        $countryInstance->tablePrefix = strtolower($territory)."_";
-        $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
-        if(!empty($country['Country'])){            
-            return true;
-        } else {            
-            return false;
-        }
-    }
+ 
     
     
     /*

@@ -206,8 +206,8 @@ STR;
   
 	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
-       // if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-                if(1) {
+        if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+          //      if(1) {
             
                   
                 $country = $territory;
@@ -4435,7 +4435,7 @@ STR;
         $endLimit   =   $startLimit+20;
         $this->set('startLimit', $startLimit);
             
-        ini_set('display_errors',1); 
+       // ini_set('display_errors',1); 
         
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -4585,8 +4585,8 @@ STR;
             {  
                 
                  // National Top Videos list and Downloads functionality code 
-         // if (($national = Cache::read("nationalvideos".$territory."Page".$Page)) === false) {
-                if(1) {
+          if (($national = Cache::read("nationalvideos".$territory."Page".$Page)) === false) {
+         //       if(1) {
             
                   
                 $country = $territory;
@@ -4801,7 +4801,7 @@ STR;
                          $updateArr['consumed_time'] = 0;
                          $updateArr['modified_date'] = date('Y-m-d H:i:s');
                          
-                         $log_data .= "update record from current date : modified_date  : ".$modified_date.PHP_EOL;        
+                         $log_data .= "update Streaming_records table(todays first request) :- modified_date  : ".$modified_date.PHP_EOL;        
                          
                          $this->StreamingRecords->setDataSource('master');
                          //update the date and reset the consumed time as the day start
@@ -4838,7 +4838,7 @@ STR;
             
             if($validateStreamingInfoFlag){
                 
-               $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+                $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
 
                 //update streaming_record table table
                 $cdate = date('Y:m:d H:i:s');
@@ -4863,7 +4863,7 @@ STR;
                 $insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
                 $this->StreamingHistory->setDataSource('master');
                 if($this->StreamingHistory->save($insertArr)){
-                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
+                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
                   $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
                   $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
                   $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
