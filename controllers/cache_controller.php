@@ -67,7 +67,7 @@ class CacheController extends AppController {
                         }
                         
 			$this->log("Starting caching for $territory",'debug');
-			$this->Genre->Behaviors->attach('Containable');
+		/*	$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
@@ -104,7 +104,7 @@ class CacheController extends AppController {
         $this->log( "no data available for genre".$territory, "cache");
         echo "no data available for genre".$territory;
       }
-	  
+	 */ 
       
         for($counter=1;$counter<=5;$counter++)
        {
@@ -231,9 +231,9 @@ STR;
                 
                 
             }
+        }
+        
             $this->log("cache written for national top 100 for $territory", 'debug');
-
-       }
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`,`Video`.`Advisory`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID  and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
@@ -433,12 +433,12 @@ STR;
                 
                 
             }
+            
+            }
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
-            
-           }
            
-              
+             /* 
 
             // Added caching functionality for coming soon songs
             $sql_coming_soon_s = <<<STR
@@ -1418,7 +1418,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-         
+         */
             
         }
       
@@ -1472,7 +1472,7 @@ STR;
     */
       
       //sets cache of videos
-      $this->setVideoCacheVar();
+    /*  $this->setVideoCacheVar();
 
       //sets cache for Library Top Ten
       $this->setLibraryTopTenCache();
@@ -1480,7 +1480,7 @@ STR;
 
 
       echo "============" . date("Y-m-d H:i:s") . "===============";
-      $this->requestAction('/Resetcache/genrateXML');
+      $this->requestAction('/Resetcache/genrateXML'); */
       exit;
     
     }
