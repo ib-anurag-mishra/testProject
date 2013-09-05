@@ -4829,7 +4829,7 @@ STR;
             $songDuration = $this->Streaming->checkSongExists($prodId, $provider);
            
             
-            $validateStreamingInfoResult = $this->Streaming->validateStreamingDurationInfo($libId, $patId);
+            $validateStreamingInfoResult = $this->Streaming->validateStreamingDurationInfo($libId, $patId,$songDuration);
             $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
             $validateStreamingInfoMessage = $validateStreamingInfoResult[1];
             $validateStreamingInfoIndex = $validateStreamingInfoResult[2];
