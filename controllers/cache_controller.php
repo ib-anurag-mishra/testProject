@@ -67,7 +67,7 @@ class CacheController extends AppController {
                         }
                         
 			$this->log("Starting caching for $territory",'debug');
-			$this->Genre->Behaviors->attach('Containable');
+		/*	$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
@@ -104,7 +104,7 @@ class CacheController extends AppController {
         $this->log( "no data available for genre".$territory, "cache");
         echo "no data available for genre".$territory;
       }
-	  
+	  */
 		$country = $territory;
 		if(!empty($country)){
 		  if($maintainLatestDownload){
@@ -146,6 +146,12 @@ class CacheController extends AppController {
                 }
                 $data = array();
 
+                
+                for($counter=1;$counter<=5;$counter++)
+                {
+                            $startLimit =   20*($counter-1);
+                            $endLimit   =   $startLimit+20;
+                            
                 $sql_national_100 = <<<STR
                     SELECT 
                             Song.ProdID,
@@ -191,7 +197,7 @@ class CacheController extends AppController {
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT 100 
+                    LIMIT '$startLimit','$endLimit'
    
 STR;
                 $data = $this->Album->query($sql_national_100);
@@ -203,21 +209,23 @@ STR;
                 }
 
                 if (!empty($data)) {
-                    Cache::delete("national" . $country);
+                    Cache::delete("national" . $country ."Page".$counter);
                     foreach($data as $key => $value){
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                             $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                             $data[$key]['songAlbumImage'] = $songAlbumImage;
                     }                    
-                    Cache::write("national" . $country, $data);
+                    Cache::write("national" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten for $territory", "cache");
                     echo "cache written for national top ten for $territory";
                 } else {
 
-                    Cache::write("national" . $country, Cache::read("national" . $country));
+                    Cache::write("national" . $country ."Page".$counter, Cache::read("national" . $country ."Page".$counter));
                     echo "Unable to update key";
                     $this->log("Unable to update national 100 for " . $territory, "cache");
                     echo "Unable to update national 100 for " . $territory;
+                }
+                
                 }
             }
             $this->log("cache written for national top 100 for $territory", 'debug');
@@ -342,6 +350,11 @@ STR;
 
 
                 $data = array();
+                
+                for($counter=1;$counter<=5;$counter++)
+                {
+                            $startLimit =   20*($counter-1);
+                            $endLimit   =   $startLimit+20;
 
                 $sql_national_100_v = <<<STR
 	        SELECT 
@@ -382,7 +395,7 @@ STR;
                                 ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
-                LIMIT 100 
+                 LIMIT '$startLimit','$endLimit'
 STR;
 
                 // echo $sql_national_100_v; die;
@@ -398,21 +411,23 @@ STR;
                 }
 
                 if (!empty($data)) {
-                    Cache::delete("nationalvideos" . $country);
+                    Cache::delete("nationalvideos" . $country ."Page".$counter);
                     foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                     }                    
-                    Cache::write("nationalvideos" . $country, $data);
+                    Cache::write("nationalvideos" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten  videos for $territory", "cache");
                     echo "cache written for national top ten  videos for $territory";
                 } else {
 
-                    Cache::write("nationalvideos" . $country, Cache::read("nationalvideos" . $country));
+                    Cache::write("nationalvideos" . $country ."Page".$counter, Cache::read("nationalvideos" . $country ."Page".$counter));
                     echo "Unable to update key";
                     $this->log("Unable to update national 100  videos for " . $territory, "cache");
                     echo "Unable to update national 100 videos for " . $territory;
+                }
+                
                 }
             }
             $this->log("cache written for national top ten  videos for $territory", 'debug');
@@ -423,7 +438,7 @@ STR;
               
 
             // Added caching functionality for coming soon songs
-            $sql_coming_soon_s = <<<STR
+  /*          $sql_coming_soon_s = <<<STR
             SELECT 
               Song.ProdID,
               Song.ReferenceID,
@@ -1403,7 +1418,7 @@ STR;
          
             
         }
-      
+      */
 
 /*       
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
@@ -1457,7 +1472,7 @@ STR;
       $this->setVideoCacheVar();
 
       //sets cache for Library Top Ten
-      $this->setLibraryTopTenCache();
+    //  $this->setLibraryTopTenCache();
       
 
 
