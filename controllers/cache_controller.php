@@ -2148,6 +2148,8 @@ STR;
                     echo "download data not recevied for " . $territory;
                 }
                 $data = array();
+                
+                echo "ids_provider_type: ".$ids_provider_type; die;
 
                 
                 for($counter=1;$counter<=5;$counter++)
