@@ -171,6 +171,11 @@ Class StreamingComponent extends Object
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0'), 'fields' => array('FullLength_Duration')));      
+        print_r($song);
+        
+        
+        die;
+        
         if(isset($song['Song']['FullLength_Duration'])){
             $secondsValue =$this->getSeconds($song['Song']['FullLength_Duration']);
             if(isset($secondsValue) && is_numeric($secondsValue)){
@@ -224,7 +229,7 @@ Class StreamingComponent extends Object
     */
     function checkLibraryStreaming($libId) {
         $libraryInstance = ClassRegistry::init('Library');
-        $libraryInstance->recursive = -1;
+        $libraryInstance->recursive = -1;        
         $results = $libraryInstance->find('count',array('conditions' => array('library_type = "2"','id' => $libId,'library_status'=>'active')));
        
         if($results > 0) {            
