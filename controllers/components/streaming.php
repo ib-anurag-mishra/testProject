@@ -67,7 +67,7 @@ Class StreamingComponent extends Object
         }
         
         //check the streaming validation
-        $validationResult = $this->validateStreaming($prodId, $provider,$libId,$patId,);
+        $validationResult = $this->validateStreaming($prodId, $provider,$libId,$patId,$agent);
         $validationFlag = $validationResult[0];
         $validationMessage = $validationResult[1];
         $validationIndex = $validationResult[2];
