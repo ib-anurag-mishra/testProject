@@ -4722,18 +4722,15 @@ STR;
         
         $prodId = '4530701';
         $provider = 'ioda';
-        
-        //get user id
-//        $user = $this->Session->read('Auth.User.id');
-//        if(empty($user)){
-//                $user = $this->Session->read('patron');
-//        }
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         
-        /**
-          creates log file name
-        */
+        
+        $this->Streaming->validateStreaming($libId,$patId,$prodId, $provider,'');
+        die;
+       
+        /*
+       
         $log_name = 'song_streaming_web_log_'.date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
@@ -4881,9 +4878,7 @@ STR;
             }
 
         } else {        
-          /*
-            complete records with validation fail
-          */
+         
           $log_data .= PHP_EOL."error|".$validationMessage."|".$validationIndex.PHP_EOL;
           $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
           $this->createStreamingLog($log_data, $log_name);          
@@ -4892,6 +4887,8 @@ STR;
         
         }
         exit;
+        
+        */
     }
     
     /*
