@@ -2200,7 +2200,7 @@ STR;
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT '$startLimit','$endLimit'
+                    LIMIT $startLimit , $endLimit
    
 STR;
                 $data = $this->Album->query($sql_national_100);
@@ -2339,7 +2339,7 @@ STR;
                                 ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
-                 LIMIT '$startLimit','$endLimit'
+                 LIMIT $startLimit ,$endLimit
 STR;
 
                 // echo $sql_national_100_v; die;
