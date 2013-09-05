@@ -2069,34 +2069,28 @@ STR;
     }
     
     
-    
-    function national_top_100_cache()
+     function national_top_100_cache() 
     {
-        
+         
+         
         set_time_limit(0);
         //error_reporting(1); ini_set('display_errors', 1);
        
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
-    //$territoryNames = array('US','CA','AU','NZ','IT','GB','IE');
-    $territories = $this->Territory->find("all");
-    for($mm=0;$mm<count($territories);$mm++)
-    {
-        $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
-    }
-    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-    $siteConfigData = $this->Album->query($siteConfigSQL);
-    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
-    $siteConfigData = $this->Album->query($siteConfigSQL);
-    $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-    
-    for($counter=1;$counter<=5;$counter++)
-    {        
-                $startLimit =   20*($counter-1);
-                $endLimit   =   $startLimit+20;
-        
+        //$territoryNames = array('US','CA','AU','NZ','IT','GB','IE');
+        $territories = $this->Territory->find("all");
+        for($mm=0;$mm<count($territories);$mm++)
+        {
+            $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
+        }
+        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+        $siteConfigData = $this->Album->query($siteConfigSQL);
+        $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+        $siteConfigData = $this->Album->query($siteConfigSQL);
+        $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 		for($i=0;$i<count($territoryNames);$i++){
 			$territory = $territoryNames[$i];
                         if(0 == $multiple_countries){
@@ -2109,11 +2103,9 @@ STR;
                         }
                         
 			$this->log("Starting caching for $territory",'debug');
-			
-            
-                        $this->log("cache written for genre for $territory",'debug');      
-      
 
+                 $counter = '';       
+	  
 		$country = $territory;
 		if(!empty($country)){
 		  if($maintainLatestDownload){
@@ -2154,13 +2146,6 @@ STR;
                     echo "download data not recevied for " . $territory;
                 }
                 $data = array();
-                
-                echo "<br>ids_provider_type: ".$ids_provider_type; 
-                echo "<br>territory: ".$territory; 
-                echo "<br>ids: ".$ids; 
-
-                
-                
 
                             
                 $sql_national_100 = <<<STR
@@ -2208,7 +2193,7 @@ STR;
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT $startLimit , $endLimit
+                    LIMIT '$startLimit','$endLimit'
    
 STR;
                 $data = $this->Album->query($sql_national_100);
@@ -2236,81 +2221,25 @@ STR;
                     $this->log("Unable to update national 100 for " . $territory, "cache");
                     echo "Unable to update national 100 for " . $territory;
                 }
-                    
                 
-                
-                
-                
+                }
             }
             $this->log("cache written for national top 100 for $territory", 'debug');
-          
-            
-        }
-    } 
-        
-      
 
-/*       
-        //--------------------------------Default Freegal Queues Start----------------------------------------------------               
-        $cond = array('queue_type' => 1, 'status' => '1');
-        //Unbinded User model
-        $this->QueueList->unbindModel(
-            array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
-        );
-        //fetched the default list
-        $queueData = $this->QueueList->find('all', array(
-        'conditions' => $cond,
-        'fields' => array('queue_id','queue_name'),
-        'order' => 'QueueList.created DESC',
-        'limit' => 100
-        ));        
-        
-        //freegal Query Cache set
-        if ((count($queueData) < 1) || ($queueData === false)) {            
-            Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
-            $this->log("Freegal Defaut Queues returns null ", "cache");
-            echo "<br /> Freegal Defaut Queues returns null<br />";
-        } else {           
-            Cache::delete("defaultqueuelist");
-            Cache::write("defaultqueuelist", $queueData);
-            
-            //library top 10 cache set
-            $this->log("Freegal Defaut Queues cache set", "cache");
-            echo "<br />Freegal Defaut Queues cache set <br />";
-        }  
-        
-        //set the variable for each freegal default queue 
-        foreach($queueData as $value){
-           $defaultQueueId = $value['QueueList']['queue_id'];
-           $defaultQueueName = $value['QueueList']['queue_name'];      
-           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId);
-           
-           if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
-                $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
-                echo "<br /> Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null<br />";
-           } else {                 
-                Cache::write("defaultqueuelistdetails".$defaultQueueId, $eachQueueDetails);       
-                $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set", "cache");
-                echo "<br />Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";              
-           }            
-        }     
-        //--------------------------------Default Freegal Queues End--------------------------------------------------------------
-       
-    */
-      
-      //sets cache of videos
-      //$this->setVideoCacheVar();
-
-      //sets cache for Library Top Ten
-    //  $this->setLibraryTopTenCache();
-      
+ 
 
 
       echo "============" . date("Y-m-d H:i:s") . "===============";
       $this->requestAction('/Resetcache/genrateXML');
       exit;
+         
+         
+     
+     }
     
-    }
+    
+    
+    
     
 
 }
