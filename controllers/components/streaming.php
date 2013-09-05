@@ -32,11 +32,12 @@ Class StreamingComponent extends Object
         $streamingRecordsInstance->recursive = -1;
         
         if(!$isMobileDownload){
-          $uid = $this->Session->read('Auth.User.id');
-          if(empty($uid)){
-          	$uid = $this->Session->read('patron');
-          }
+//          $uid = $this->Session->read('Auth.User.id');
+//          if(empty($uid)){
+//          	$uid = $this->Session->read('patron');
+//          }
           
+          $uid = $this->Session->read('patron');
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
           $libId = $this->Session->read('library');
@@ -47,7 +48,7 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-        $uid = $this->Session->read('patron');
+      
         $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         
         if(!empty($streamingRecordsResults)){
@@ -118,11 +119,11 @@ Class StreamingComponent extends Object
     function validateStreaming($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null, $patId = null, $agent = null, $library_id = null){
        
         if(!$isMobileDownload){
-          $uid = $this->Session->read('Auth.User.id');
-          if(empty($uid)){
-          	$uid = $this->Session->read('patron');
-          }
-          
+//          $uid = $this->Session->read('Auth.User.id');
+//          if(empty($uid)){
+//          	$uid = $this->Session->read('patron');
+//          }
+          $uid = $this->Session->read('patron');
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
           $libId = $this->Session->read('library');
@@ -133,7 +134,9 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-        $uid = $this->Session->read('patron');
+       
+        
+        
         if($this->checkLibraryStreaming($libId)){ 
             if($this->checkSongExists($prodId, $providerType)){                
                 if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
@@ -143,7 +146,7 @@ Class StreamingComponent extends Object
                     return array(false,'The song streaming is not available for this Country.', 2);
                 }
             } else {
-                $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table",'streaming');
+                $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested for streaming does not allow for streaming or its mp4 file id is empty in Songs table",'streaming');
                 return array(false,'The song requested for streaming does not exist', 3);
             }
         } else {
