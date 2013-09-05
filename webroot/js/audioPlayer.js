@@ -160,11 +160,11 @@ function stopThis(event, objID) {
 }
 
 function playSample(obj, objID, playID, pt, webRoot) {
-    //   alert("obj:"+obj);
-//    alert("objID:"+objID);
-//    alert("playID:"+playID);
-//    alert("pt:"+pt);
-//    alert("webRoot:"+webRoot);
+       alert("obj:"+obj);
+    alert("objID:"+objID);
+    alert("playID:"+playID);
+    alert("pt:"+pt);
+    alert("webRoot:"+webRoot);
 
 
     $("img[id^='play_audio']").each(function() { 
