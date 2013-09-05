@@ -321,12 +321,13 @@ STR;
         //featured artist slideshow code start
         
         //if(1){
-        if (($artists = Cache::read("featured".$country)) === false) {
+        //if (($artists = Cache::read("featured".$country)) === false) {
            
             
             //get all featured artist and make array
             $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-
+            print_r(count($featured));
+            echo "<br>Query1: ".$this->News->lastQuery();
             foreach($featured as $k => $v){
                     if($v['Featuredartist']['album'] != 0){
                             if(empty($ids)){
@@ -338,7 +339,7 @@ STR;
                             }	
                     }
             }
-
+print_r($ids_provider_type);die;
             //get all the details for featured albums
             if($ids != ''){
                     $this->Album->recursive = 2;
@@ -396,10 +397,11 @@ STR;
             
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
-        }
+        //}
         
         //fetched all the information from the cache
-        $featured = Cache::read("featured".$country);
+        //$featured = Cache::read("featured".$country);
+            
         $this->set('featuredArtists', $featured);
         
         /*
