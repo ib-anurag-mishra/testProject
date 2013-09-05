@@ -35,7 +35,7 @@ $(document).ready(function(){
                             nationalPage++;
                             $('#natSongs_loader'+(counter_loader-1)).hide();
                             $('#songs_loader_li'+(counter_loader-1)).hide();
-                            alert('#natSongs_loader'+counter_loader);
+                           // alert('#natSongs_loader'+counter_loader);
                             $('#nationalSongsRecord').append(newitems);        
             
                         },
@@ -46,8 +46,8 @@ $(document).ready(function(){
                     });            
                 
                 }else{
-                    $('#natSongs_loader'+counter_loader).hide();
-                    $('#songs_loader_li'+counter_loader).hide();
+                    $('#natSongs_loader'+(counter_loader-1)).hide();
+                    $('#songs_loader_li'+(counter_loader-1)).hide();
                 }
 
                     counter_loader++;
@@ -58,14 +58,15 @@ $(document).ready(function(){
 
     var preValueVideo= 1;
     var nationalPageVideo = 2;
+    var counter_loader_videos = 1;
 
 $("#top-100-videos-grid").scroll(function(){        
         // if ( $(this).scrollLeft() == ($('#top-100-videos-grid ul').width() - $(this).width())) {  //alert("222");   
 
          if ( $(this).scrollLeft() >= (8500*preValueVideo)) {
                                
-            $('#natVideos_loader'+preValue).show();
-            $('#videos_loader_li'+preValue).show();
+            $('#natVideos_loader'+counter_loader_videos).show();
+            $('#videos_loader_li'+counter_loader_videos).show();
 
             var totalPages = 5;
             var data = "npage="+nationalPageVideo;
@@ -85,8 +86,8 @@ $("#top-100-videos-grid").scroll(function(){
                         success: function(newitems) { 
                            //alert("newitems: "+newitems);
                             nationalPageVideo++;
-                            $('#natVideos_loader'+preValue).hide();
-                            $('#videos_loader_li'+preValue).hide();
+                            $('#natVideos_loader'+(counter_loader_videos-1)).hide();
+                            $('#videos_loader_li'+(counter_loader_videos-1)).hide();
 
                             $('#nationalVideosRecord').append(newitems);                    
                         },
@@ -97,8 +98,8 @@ $("#top-100-videos-grid").scroll(function(){
                     });            
                 
                 }else{
-                    $('#natVideos_loader'+preValue).hide();
-                    $('#videos_loader_li'+preValue).hide();
+                    $('#natVideos_loader'+(counter_loader_videos-1)).hide();
+                    $('#videos_loader_li'+(counter_loader_videos-1)).hide();
                 }
             }           
         }
