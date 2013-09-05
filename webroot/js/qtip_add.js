@@ -38,8 +38,12 @@ $(document).ready(function()
 		},
 		style: { 
 				
-				color:'#999',
+				color:'#222',
 				fontSize:12,
+				border: {
+
+					color: '#222'
+				},
 		
 				tip:{
 					corner:'bottomRight',
