@@ -33,8 +33,8 @@ $(document).ready(function(){
                         success: function(newitems) { 
                            //alert("newitems: "+newitems);
                             nationalPage++;
-                            $('#natSongs_loader'+counter_loader).hide();
-                            $('#songs_loader_li'+counter_loader).hide();
+                            $('#natSongs_loader'+(counter_loader-1)).hide();
+                            $('#songs_loader_li'+(counter_loader-1)).hide();
                             alert('#natSongs_loader'+counter_loader);
                             $('#nationalSongsRecord').append(newitems);        
             
