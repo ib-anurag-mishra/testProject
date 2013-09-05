@@ -84,8 +84,7 @@ $("#top-100-videos-grid").scroll(function(){
                           
                             nationalPageVideo++;
                             $('#natVideos_loader'+(counter_loader_videos-1)).hide();
-                            $('#videos_loader_li'+(counter_loader_videos-1)).hide();
-                             alert('#videos_loader_li'+(counter_loader_videos-1));
+                            $('#videos_loader_li'+(counter_loader_videos-1)).hide();                             
 
                             $('#nationalVideosRecord').append(newitems);                    
                         },
