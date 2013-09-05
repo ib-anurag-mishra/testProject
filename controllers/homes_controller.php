@@ -206,8 +206,8 @@ STR;
   
 	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
-        if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-       //         if(1) {
+       // if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+                if(1) {
             
                   
                 $country = $territory;
