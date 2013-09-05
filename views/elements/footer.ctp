@@ -114,9 +114,9 @@ pageTracker._trackPageview();
 
 <!-- Code for player -->
 <!-- History.js -->
-	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
+<!--	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 	
-	<!-- Ajaxify -->
+	 Ajaxify 
 	<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
 	
 	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
@@ -143,7 +143,7 @@ pageTracker._trackPageview();
 //                    jwplayer("myElement").load(files); 
 //                });
             });
-        </script>    
+        </script>    -->
 
 <!-- Code for player end -->
 
