@@ -2149,7 +2149,7 @@ STR;
                 }
                 $data = array();
                 
-                echo "ids_provider_type: ".$ids_provider_type; die;
+                echo "ids_provider_type: ".$ids_provider_type; 
 
                 
                 for($counter=1;$counter<=5;$counter++)
@@ -2230,8 +2230,11 @@ STR;
                     $this->log("Unable to update national 100 for " . $territory, "cache");
                     echo "Unable to update national 100 for " . $territory;
                 }
-                
+                    die;
                 }
+                
+                
+                
             }
             $this->log("cache written for national top 100 for $territory", 'debug');
 
