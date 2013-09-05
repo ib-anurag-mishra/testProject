@@ -12,7 +12,7 @@ $(document).ready(function(){
 
          if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
-            $('#natSongs_loader'+counter_loader).show();
+           // $('#natSongs_loader'+counter_loader).show();
             $('#songs_loader_li'+counter_loader).show();
             var totalPages = 5;
             var data = "npage="+nationalPage;
@@ -32,7 +32,7 @@ $(document).ready(function(){
                         success: function(newitems) { 
                            //alert("newitems: "+newitems);
                             nationalPage++;
-                            $('#natSongs_loader'+(counter_loader-1)).hide();
+                           // $('#natSongs_loader'+(counter_loader-1)).hide();
                             $('#songs_loader_li'+(counter_loader-1)).hide();
                            // alert('#natSongs_loader'+counter_loader);
                             $('#nationalSongsRecord').append(newitems);        
@@ -45,7 +45,7 @@ $(document).ready(function(){
                     });            
                 
                 }else{
-                    $('#natSongs_loader'+(counter_loader-1)).hide();
+                 //   $('#natSongs_loader'+(counter_loader-1)).hide();
                     $('#songs_loader_li'+(counter_loader-1)).hide();
                 }
 
