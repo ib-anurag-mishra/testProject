@@ -4736,6 +4736,7 @@ STR;
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
             echo "error|Not able to stream this song.";
+            exit;
         }
         
         //if ProdID and Provider type is not set then
@@ -4743,6 +4744,7 @@ STR;
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
             echo "error|Not able to stream this song.You need to re-login again.";
+            exit;
         }
         
         //if ProdID and Provider type is not set then
@@ -4750,6 +4752,7 @@ STR;
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
             echo "error|Not able to stream this song.";
+            exit;
         }
         
         /**
@@ -4862,7 +4865,8 @@ STR;
                   $this->createStreamingLog($log_data, $log_name);
                 }
                 $this->StreamingHistory->setDataSource('default');                
-                echo "suces|".$validateStreamingInfoMessage; 
+                echo "suces|".$validateStreamingInfoMessage;
+                exit;
                 
             }else{
                 $this->log("error|message=".$validateStreamingInfoMessage.";validatin Index :".$validateStreamingInfoIndex,'streaming');            
@@ -4870,6 +4874,7 @@ STR;
                 $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
                 $this->createStreamingLog($log_data, $log_name);          
                 echo "error|".$validateStreamingInfoMessage;
+                exit;
             }
 
         } else {        
@@ -4880,6 +4885,7 @@ STR;
           $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
           $this->createStreamingLog($log_data, $log_name);          
           echo "error|".$validationMessage;
+          exit;
         
         }
         exit;
