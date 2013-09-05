@@ -2091,6 +2091,12 @@ STR;
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+    
+    for($counter=1;$counter<=5;$counter++)
+    {        
+                $startLimit =   20*($counter-1);
+                $endLimit   =   $startLimit+20;
+        
 		for($i=0;$i<count($territoryNames);$i++){
 			$territory = $territoryNames[$i];
                         if(0 == $multiple_countries){
@@ -2152,10 +2158,8 @@ STR;
                 echo "<br>ids_provider_type: ".$ids_provider_type; 
 
                 
-                for($counter=1;$counter<=5;$counter++)
-                {
-                            $startLimit =   20*($counter-1);
-                            $endLimit   =   $startLimit+20;
+                
+
                             
                 $sql_national_100 = <<<STR
                     SELECT 
@@ -2231,7 +2235,7 @@ STR;
                     echo "Unable to update national 100 for " . $territory;
                 }
                     
-                }
+                
                 
                 
                 
@@ -2299,11 +2303,6 @@ STR;
 
 
                 $data = array();
-                
-                for($counter=1;$counter<=5;$counter++)
-                {
-                            $startLimit =   20*($counter-1);
-                            $endLimit   =   $startLimit+20;
 
                 $sql_national_100_v = <<<STR
 	        SELECT 
@@ -2377,35 +2376,14 @@ STR;
                     echo "Unable to update national 100 videos for " . $territory;
                 }
                 
-                }
+                
             }
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
             
-            
-           
-              
-
-
-            
-         
-            
-    
-            
-         
-           
- 
-
-
-            
-     
-        
-            
-          
-          
-         
-            
         }
+    } 
+        
       
 
 /*       
