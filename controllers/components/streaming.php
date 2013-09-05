@@ -25,7 +25,7 @@ Class StreamingComponent extends Object
      * @param $library_id Int  'Uniq library id'
      * @return Boolean
     */
-    function validateStreamingInfo($patId,$libId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
+    function validateStreamingInfo($libId,$patId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
        
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
@@ -47,21 +47,19 @@ Class StreamingComponent extends Object
             $channel = 'Mobile App';
             $libId = $library_id;
         }
-        echo '-nagesh-';
-        echo $patId;
+        $uid = $this->Session->read('patron');
         $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         
-        die;
-        
         if(!empty($streamingRecordsResults)){
-            $consumed_time = $streamingRecordsResults['0']['StreamingRecords']['consumed_time'];
-            $updatedDate = $streamingRecordsResults['0']['StreamingRecords']['modified_date'];
-            
+           
+            $consumed_time = $streamingRecordsResults['StreamingRecords']['consumed_time'];
+            $updatedDate = $streamingRecordsResults['StreamingRecords']['modified_date'];
+           
             //check patron time limit 
             if($this->checkPatronStreamingLimitForDay($consumed_time,$updatedDate)){
                 $limitToPlaySong = $songDuration + $consumed_time;
                 if($this->checkPatronStreamingLimitForDay($limitToPlaySong,$updatedDate)){
-                    return array(true,'', 1);
+                    return array(true,'successfully able to streaming this song.', 1);
                 }else{
                     $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
                     return array(false,'Your song streaming limit is over for the day.', 2);
@@ -243,9 +241,8 @@ Class StreamingComponent extends Object
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
         $results = $streamingRecordsInstance->find('first',array('conditions' => array('patron_id'=> $patId,'library_id' => $libId),'fields' => 'id'));
-        
         if(!empty($results)) {
-            return $results['0']['StreamingRecords']['id'];
+            return $results['StreamingRecords']['id'];
         }
         else {
             return false;
