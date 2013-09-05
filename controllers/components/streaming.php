@@ -11,8 +11,35 @@ Class StreamingComponent extends Object
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /*
-     Function Name : validateStreamingInfo
+     Function Name : validateStreamingDurationInfo
      Desc : function used for checking patron streaming
      * 
      * 
@@ -25,28 +52,26 @@ Class StreamingComponent extends Object
      * @param $library_id Int  'Uniq library id'
      * @return Boolean
     */
-    function validateStreamingInfo($libId,$patId, $songDuration,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
+    function validateStreamingDurationInfo($libId,$patId, $songDuration,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
        
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
         $streamingRecordsInstance->recursive = -1;
         
         if(!$isMobileDownload){
-//          $uid = $this->Session->read('Auth.User.id');
-//          if(empty($uid)){
-//          	$uid = $this->Session->read('patron');
-//          }
           
-          $uid = $this->Session->read('patron');
+          $uid = $patId;
+          $libId = $libId;
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
-          $libId = $this->Session->read('library');
+          
         
         } else {
             $uid = $patId;
+            $libId = $libId;
             $ip = $agent;
             $channel = 'Mobile App';
-            $libId = $library_id;
+            
         }
       
         $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
@@ -119,20 +144,19 @@ Class StreamingComponent extends Object
     function validateStreaming($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null, $patId = null, $agent = null, $library_id = null){
        
         if(!$isMobileDownload){
-//          $uid = $this->Session->read('Auth.User.id');
-//          if(empty($uid)){
-//          	$uid = $this->Session->read('patron');
-//          }
-          $uid = $this->Session->read('patron');
+          
+          $uid = $patId;
+          $libId = $libId;
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
-          $libId = $this->Session->read('library');
+          
         
         } else {
             $uid = $patId;
+            $libId = $libId;
             $ip = $agent;
             $channel = 'Mobile App';
-            $libId = $library_id;
+            
         }
        
         
@@ -170,11 +194,9 @@ Class StreamingComponent extends Object
     function checkSongExists($prodId, $providerType){
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0'), 'fields' => array('FullLength_Duration')));      
-               
+        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0'), 'fields' => array('FullLength_Duration')));                
         if(isset($song['Song']['FullLength_Duration'])){
-           echo  $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);
-           die;
+            $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);          
             if(isset($secondsValue) && is_numeric($secondsValue)){
                 return $secondsValue;
             }else{
