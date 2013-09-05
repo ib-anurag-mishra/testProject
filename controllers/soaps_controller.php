@@ -592,9 +592,9 @@ class SoapsController extends AppController {
     foreach($featured as $key => $val) {
       
       $obj = new FreegalFeaturedAlbumFreegal4Type;
-      $obj->AlbumProdId      = '';
-      $obj->AlbumTitle       = '';
-      $obj->FileURL          = '';
+      $obj->AlbumProdId      = $this->getProductAutoID($val['Album']['ProdID'], $val['Album']['provider_type']);
+      $obj->AlbumTitle       = $this->getTextUTF($val['Album']['AlbumTitle']);
+      $obj->FileURL          = $val['featuredImage'];
       $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalFeaturedAlbumFreegal4Type');
     }
     
