@@ -206,8 +206,8 @@ STR;
   
 	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
-       // if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-                if(1) {
+        if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+          //      if(1) {
             
                   
                 $country = $territory;
@@ -325,8 +325,7 @@ STR;
            
             
             //get all featured artist and make array
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-
+            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
             foreach($featured as $k => $v){
                     if($v['Featuredartist']['album'] != 0){
                             if(empty($ids)){
@@ -338,7 +337,6 @@ STR;
                             }	
                     }
             }
-
             //get all the details for featured albums
             if($ids != ''){
                     $this->Album->recursive = 2;
@@ -379,7 +377,7 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
+                                    ), 'order' => 'FIELD( Album.ProdID, '.$ids.') DESC', 'limit'=>20
                             )
                     );
                     
@@ -400,6 +398,7 @@ STR;
         
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
+            
         $this->set('featuredArtists', $featured);
         
         /*
@@ -4433,7 +4432,7 @@ STR;
         $endLimit   =   $startLimit+20;
         $this->set('startLimit', $startLimit);
             
-        ini_set('display_errors',1); 
+       // ini_set('display_errors',1); 
         
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -4583,8 +4582,8 @@ STR;
             {  
                 
                  // National Top Videos list and Downloads functionality code 
-         // if (($national = Cache::read("nationalvideos".$territory."Page".$Page)) === false) {
-                if(1) {
+          if (($national = Cache::read("nationalvideos".$territory."Page".$Page)) === false) {
+         //       if(1) {
             
                   
                 $country = $territory;
