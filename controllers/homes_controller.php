@@ -339,7 +339,7 @@ STR;
                             }	
                     }
             }
-print_r($ids_provider_type);die;
+print_r($ids_provider_type);
             //get all the details for featured albums
             if($ids != ''){
                     $this->Album->recursive = 2;
