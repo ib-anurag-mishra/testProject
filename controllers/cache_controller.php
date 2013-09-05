@@ -2156,6 +2156,8 @@ STR;
                 $data = array();
                 
                 echo "<br>ids_provider_type: ".$ids_provider_type; 
+                echo "<br>territory: ".$territory; 
+                echo "<br>ids: ".$ids; 
 
                 
                 
@@ -2241,145 +2243,7 @@ STR;
                 
             }
             $this->log("cache written for national top 100 for $territory", 'debug');
-
- 
-                
-           
- 
           
-            
-              
-            // Added caching functionality for national top 100 videos   
-        
-      
-    
-            $country = $territory;
-
-            if (!empty($country)) {
-                if ($maintainLatestVideoDownload) {
-
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `latest_videodownloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '" . $country . "' 
-              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
-                } else {
-
-                   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `videodownloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '" . $country . "' 
-              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
-                }
-
-                $this->log("national top 100 videos first query for $territory", "cachequery");
-                $this->log($sql, "cachequery");
-                
-                $ids = '';
-                $ids_provider_type = '';
-                $natTopDownloaded = $this->Album->query($sql);
-                // echo $sql;
-                // print_r($natTopDownloaded); die;
-                foreach ($natTopDownloaded as $natTopSong) {
-                    if (empty($ids)) {
-                        $ids .= $natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
-                    } else {
-                        $ids .= ',' . $natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
-                    }
-                }
-
-                if ((count($natTopDownloaded) < 1) || ($natTopDownloaded === false)) {
-                    $this->log("download data not recevied for " . $territory, "cache");
-                    echo "download data not recevied for " . $territory;
-                }
-
-
-                $data = array();
-
-                $sql_national_100_v = <<<STR
-	        SELECT 
-                                Video.ProdID,
-                                Video.ReferenceID,
-                                Video.Title,
-                                Video.ArtistText,
-                                Video.DownloadStatus,
-                                Video.VideoTitle,
-                                Video.Artist,
-                                Video.Advisory,
-                                Video.Sample_Duration,
-                                Video.FullLength_Duration,
-                                Video.provider_type,
-                                Genre.Genre,
-                                Country.Territory,
-                                Country.SalesDate,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
-                                PRODUCT.pid
-                FROM
-                                video AS Video
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
-                                Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
-                                                LEFT JOIN
-                {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type) AND Country.SalesDate != '' AND Country.SalesDate < NOW()
-                                                LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
-                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
-                GROUP BY Video.ProdID
-                ORDER BY FIELD(Video.ProdID, $ids) ASC
-                 LIMIT $startLimit ,$endLimit
-STR;
-
-                // echo $sql_national_100_v; die;
-                $data = $this->Album->query($sql_national_100_v);
-                $this->log("national top 100 videos second query for $territory", "cachequery");
-                $this->log($sql_national_100_v, "cachequery");
-                
-                
-                
-                if ($ids_provider_type == "") {
-                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
-                    echo "ids_provider_type is set blank for " . $territory;
-                }
-
-                if (!empty($data)) {
-                    Cache::delete("nationalvideos" . $country ."Page".$counter);
-                    foreach($data as $key => $value){
-                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
-                        $data[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    }                    
-                    Cache::write("nationalvideos" . $country ."Page".$counter, $data);
-                    $this->log("cache written for national top ten  videos for $territory", "cache");
-                    echo "cache written for national top ten  videos for $territory";
-                } else {
-
-                    Cache::write("nationalvideos" . $country ."Page".$counter, Cache::read("nationalvideos" . $country ."Page".$counter));
-                    echo "Unable to update key";
-                    $this->log("Unable to update national 100  videos for " . $territory, "cache");
-                    echo "Unable to update national 100 videos for " . $territory;
-                }
-                
-                
-            }
-            $this->log("cache written for national top ten  videos for $territory", 'debug');
-            // End Caching functionality for national top 10 videos
             
         }
     } 
