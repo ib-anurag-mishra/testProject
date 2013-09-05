@@ -4738,6 +4738,20 @@ STR;
             echo "error|Not able to stream this song.";
         }
         
+        //if ProdID and Provider type is not set then
+        if(($patId == '' || $patId == 0)){
+             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+            echo "error|Not able to stream this song.You need to re-login again.";
+        }
+        
+        //if ProdID and Provider type is not set then
+        if(($libId == '' || $libId == 0)){
+             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+            echo "error|Not able to stream this song.";
+        }
+        
         /**
           creates log file name
         */
