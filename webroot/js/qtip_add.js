@@ -44,6 +44,11 @@ $(document).ready(function()
 
 					color: '#444'
 				},
+				
+				width: {
+					max:350,
+					min:0
+				},
 		
 				tip:{
 					corner:'bottomRight',
