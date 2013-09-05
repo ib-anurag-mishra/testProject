@@ -1,7 +1,5 @@
 <script> 
 
-//load the artist list when  scroll reached at the end
-
 $(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
@@ -12,10 +10,11 @@ $(document).ready(function(){
 
          if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
-           // $('#natSongs_loader'+counter_loader).show();
+            $('#natSongs_loader'+counter_loader).show();
             $('#songs_loader_li'+counter_loader).show();
+
             var totalPages = 5;
-            var data = "npage="+nationalPage;
+            var data = "";
             
             if( (preValue != nationalPage ) && (nationalPage <= totalPages ) ){  
                 
@@ -23,29 +22,29 @@ $(document).ready(function(){
                     
                     preValue= nationalPage ;
                     var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPage+'/type=songs';
-                    //alert("URL: "+link);
+                  
 
                     jQuery.ajax({
                         type: "post",  // Request method: post, get
                         url: link, // URL to request
                         data: data,  // post data
                         success: function(newitems) { 
-                           //alert("newitems: "+newitems);
+                         
                             nationalPage++;
-                           // $('#natSongs_loader'+(counter_loader-1)).hide();
+                            $('#natSongs_loader'+(counter_loader-1)).hide();
                             $('#songs_loader_li'+(counter_loader-1)).hide();
-                           // alert('#natSongs_loader'+counter_loader);
+                          
                             $('#nationalSongsRecord').append(newitems);        
             
                         },
                         async:   true,
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 
-                            //alert('No artist list available');
+                            
                         }
                     });            
                 
                 }else{
-                 //   $('#natSongs_loader'+(counter_loader-1)).hide();
+                    $('#natSongs_loader'+(counter_loader-1)).hide();
                     $('#songs_loader_li'+(counter_loader-1)).hide();
                 }
 
@@ -75,14 +74,14 @@ $("#top-100-videos-grid").scroll(function(){
                     
                     preValueVideo= nationalPageVideo ;
                     var link =webroot+'homes/ajax_view_national_pagination/page='+nationalPageVideo+'/type=videos';
-                    //alert("URL: "+link);
+                   
 
                     jQuery.ajax({
                         type: "post",  // Request method: post, get
                         url: link, // URL to request
                         data: data,  // post data
                         success: function(newitems) { 
-                           //alert("newitems: "+newitems);
+                          
                             nationalPageVideo++;
                             $('#natVideos_loader'+(counter_loader_videos-1)).hide();
                             $('#videos_loader_li'+(counter_loader_videos-1)).hide();
