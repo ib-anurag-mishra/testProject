@@ -1,3 +1,231 @@
+<script>
+
+	var top_100_nav = $('.top-100-nav li a');
+	var add_to_playlist = $('.add-to-playlist');
+	var add_to_queue = $('.add-to-queue');
+	var add_to_wishlist = $('.add-to-wishlist');
+	var playlist_list = $('.playlist-options');
+        var preview = $('.preview');
+        var wishlist_popover = $('.wishlist-popover');
+        
+        //var languageSet = '<?php echo $setLang; ?>';
+        var webroot = '<?php echo $this->webroot; ?>';
+        var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
+        var attributes = { id: "audioplayer" }; 
+        swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+
+$('.add-to-playlist-button').on('click',function(e){
+        e.preventDefault();
+
+        $('.wishlist-popover').removeClass('active');
+
+        if($(this).next('.wishlist-popover').hasClass('active')) {
+                $(this).next('.wishlist-popover').removeClass('active');
+                $(this).find('.add-to-playlist-button').css({opacity:.5});
+        } else {
+
+                $(this).next('.wishlist-popover').addClass('active');
+        }
+});
+
+$('.song-cover-container').on('mouseenter',function(){
+		
+
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-100-download-now-button').css({opacity:1});
+		$(this).find('.preview').css({opacity:1});
+		
+	
+	});
+	
+$('.song-cover-container').on('mouseleave',function(){
+
+
+
+        $(this).find('.add-to-playlist-button').css({opacity:0});
+        $(this).find('.top-100-download-now-button').css({opacity:0});
+        $(this).find('.preview').css({opacity:0});
+
+});
+
+$('.video-cover-container').on('mouseenter',function(){
+		
+
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-100-download-now-button').css({opacity:1});
+		
+	});
+	
+$('.video-cover-container').on('mouseleave',function(){
+
+
+
+        $(this).find('.add-to-playlist-button').css({opacity:0});
+        $(this).find('.top-100-download-now-button').css({opacity:0});
+
+
+}); 
+
+
+/* overlays */
+	
+	$('.rename-queue').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');
+		$('.rename-queue-dialog-box').addClass('active');
+		$('.rename-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+		
+	});
+	
+	$('.delete-queue').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');
+		$('.delete-queue-dialog-box').addClass('active');
+		$('.delete-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+	});
+	
+	$('.create-new-queue,.create-new-queue-btn').on('click',function(e){
+		e.preventDefault();
+		$('.queue-overlay').addClass('active');		
+		$('.create-queue-dialog-box').addClass('active');
+		$('.create-queue-dialog-box').css('margin-top',100 + $(document).scrollTop());
+		$('.wishlist-popover').removeClass('active');
+			
+	});
+	
+
+	
+	$('.close,.text-close').on('click',function(e){
+		$('.queue-overlay').removeClass('active');
+		$('.rename-queue-dialog-box').removeClass('active');
+		$('.delete-queue-dialog-box').removeClass('active');
+		$('.create-queue-dialog-box').removeClass('active');
+	}); 
+	
+	/* end overlays */
+        
+        
+        
+        top_100_nav.on('click',function(e){
+		e.preventDefault();
+		top_100_nav.removeClass('active');
+		$(this).addClass('active');
+		
+		top_100_grids.removeClass('active');
+		var target = $(this).attr('href');
+		
+		category_type = $(this).attr('data-category-type');
+		
+		if(view_type === 'grid') {
+			
+			var target_str = target + '-grid';
+			lists.removeClass('active')
+			grids.addClass('active');
+			top_100_albums_grid.removeClass('active');
+			top_100_songs_grid.removeClass('active');
+			top_100_videos_grid.removeClass('active');
+			
+		}
+		
+		if(view_type === 'list') {
+			
+			var target_str = target + '-list-view';
+			grids.removeClass('active');
+			lists.addClass('active');
+			top_100_albums_list_view.removeClass('active');
+			top_100_songs_list_view.removeClass('active');
+			top_100_videos_list_view.removeClass('active');
+		}
+		
+		$(target_str).addClass('active');
+		
+		
+		
+		
+	});
+        
+        add_to_playlist.on('mouseenter',function(){
+		
+		playlist_list.addClass('active');
+	});
+	
+	
+	
+	
+
+	
+	
+	playlist_list.on('mouseleave',function(){
+		
+		playlist_list.removeClass('active');
+	});
+	
+	add_to_queue.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	add_to_wishlist.on('mouseenter',function(){
+		
+		
+		if(playlist_list.hasClass('active')) {
+			
+			playlist_list.removeClass('active');
+		}
+		
+		
+		
+	});
+	
+	wishlist_popover.on('mouseleave',function(){
+		
+		$(this).removeClass('active');
+	});
+	
+	
+	
+
+	playlist_list.bind('mousewheel',function(e){
+		
+
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+
+		
+	});
+        
+        preview.on('mousedown',function(e){
+                e.preventDefault();
+
+                $(this).addClass('active');
+	});
+	
+	preview.on('mouseup',function(e){
+		e.preventDefault();
+		
+		$(this).removeClass('active');
+	});
+        
+       
+</script>    
+
+<script src="<? echo $this->webroot; ?>app/webroot/js/audioPlayer.js"></script>
+<script src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
+      
+
 <?php
 
         $slNo = ($startLimit + 1);
@@ -44,7 +272,7 @@
 														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php												
 												echo $slNo;
-                                                                                                $slNo++;
+                                                                                                
                                                                                                 
 											?></div>
 														
@@ -52,9 +280,9 @@
 <!-- <a href="#" class="preview"></a>  -->
 <?php           
             if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
-                    echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.base64_encode($nationalTopDownload[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
-                    echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
-                    echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
+                    echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".($slNo-1), "onClick" => 'playSample(this, "'.($slNo-1).'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.base64_encode($nationalTopDownload[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                    echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".($slNo-1))); 
+                    echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".($slNo-1), "onClick" => 'stopThis(this, "'.($slNo-1).'");')); 
             }
 ?>
 <?php } ?>
@@ -63,7 +291,7 @@
 												
 
 
-<?php
+<?php       $slNo++;
 
     if($this->Session->read('patron')) {
         if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
@@ -177,10 +405,16 @@
 													</div>
 												</div>
 											</li>
-
                                                                                 <?php 
 
                                                                                     }
+                                                                                    ?>
+                                                                                    <li id="songs_loader_li<?php echo $Page; ?>" style="display:none;" >                                                                                     
+                                                                                        <span id="natSongs_loader<?php echo $Page; ?>" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                                                                                        </li>
+                                                                                        <?php
+                                                                                    
+                                                                                    
         }
         else if($Type=='videos')
         {
@@ -337,9 +571,16 @@
 													</div>
 												</div>
 											</li>
-											<?php 
-											$k++;
+                                                                                        
+                                                                                       
+											<?php 											
 											
         }
+        ?>
+                                <li id="videos_loader_li<?php echo $Page; ?>" style="display:none;" >                                                                                    
+                               <span id="natVideos_loader<?php echo $Page; ?>" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                               </li>
+<?php                                                                                        
+        
     }
 ?>
