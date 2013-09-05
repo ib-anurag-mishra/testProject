@@ -168,11 +168,8 @@ Class StreamingComponent extends Object
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0')));
-        echo $prodId;
-        print_r($song);
-        die;
         
-        if(!empty($song['Song'])){
+        if(!empty($song['Song']['MP4_FileID'])){
             return true;
         } else {
             return false;
