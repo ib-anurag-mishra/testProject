@@ -4433,7 +4433,7 @@ STR;
         $endLimit   =   $startLimit+20;
         $this->set('startLimit', $startLimit);
             
-        ini_set('display_errors',1); 
+       // ini_set('display_errors',1); 
         
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
