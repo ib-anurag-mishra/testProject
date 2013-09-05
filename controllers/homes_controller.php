@@ -4846,6 +4846,7 @@ STR;
                       $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
                 }
                 $this->StreamingRecords->setDataSource('default');
+                $currentDate= date('Y-m-d H:i:s');
                 
                 //insert the patron record if not exist in the streaming records table
                 $insertArr = Array();
@@ -4854,14 +4855,14 @@ STR;
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $songDuration;
-                $insertArr['modified_date'] = date('Y-m-d H:i:s');
-                $insertArr['createdOn'] = date('Y-m-d H:i:s');
+                $insertArr['modified_date'] = $currentDate;
+                $insertArr['createdOn'] = $currentDate;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
                 $this->StreamingHistory->setDataSource('master');
                 if($this->StreamingHistory->save($insertArr)){
-                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
-                  $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
+                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
+                  $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
                   $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
                   $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
                   $this->createStreamingLog($log_data, $log_name);
