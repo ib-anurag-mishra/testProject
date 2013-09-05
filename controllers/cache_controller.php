@@ -67,7 +67,7 @@ class CacheController extends AppController {
                         }
                         
 			$this->log("Starting caching for $territory",'debug');
-		/*	$this->Genre->Behaviors->attach('Containable');
+			$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
@@ -104,7 +104,7 @@ class CacheController extends AppController {
         $this->log( "no data available for genre".$territory, "cache");
         echo "no data available for genre".$territory;
       }
-	 */ 
+	  
       
         for($counter=1;$counter<=5;$counter++)
        {
@@ -153,10 +153,7 @@ class CacheController extends AppController {
                 $data = array();
 
                 
-                echo "<br>ids_provider_type: ".$ids_provider_type;
-                echo "<br>ids: ".$ids;
-                echo "<br>country: ".$country;
-                echo "<br>Page: ".$counter;
+
                             
                 $sql_national_100 = <<<STR
                     SELECT 
@@ -441,7 +438,7 @@ STR;
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
            
-             /* 
+              
 
             // Added caching functionality for coming soon songs
             $sql_coming_soon_s = <<<STR
@@ -1421,7 +1418,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-         */
+         
             
         }
       
@@ -1475,7 +1472,7 @@ STR;
     */
       
       //sets cache of videos
-    /*  $this->setVideoCacheVar();
+      $this->setVideoCacheVar();
 
       //sets cache for Library Top Ten
       $this->setLibraryTopTenCache();
@@ -1483,7 +1480,7 @@ STR;
 
 
       echo "============" . date("Y-m-d H:i:s") . "===============";
-      $this->requestAction('/Resetcache/genrateXML'); */
+      $this->requestAction('/Resetcache/genrateXML');
       exit;
     
     }
