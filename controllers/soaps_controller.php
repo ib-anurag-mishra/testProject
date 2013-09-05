@@ -35,7 +35,7 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist'); 
-  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr');
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr'); 
 
    
   function beforeFilter(){
