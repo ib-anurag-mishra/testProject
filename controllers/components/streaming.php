@@ -171,13 +171,9 @@ Class StreamingComponent extends Object
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0'), 'fields' => array('FullLength_Duration')));      
-        print_r($song);
-        
-        
-        die;
-        
+               
         if(isset($song['Song']['FullLength_Duration'])){
-            $secondsValue =$this->getSeconds($song['Song']['FullLength_Duration']);
+            $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);
             if(isset($secondsValue) && is_numeric($secondsValue)){
                 return $secondsValue;
             }else{
@@ -276,7 +272,8 @@ Class StreamingComponent extends Object
         
        if(!$durationString){
            sscanf($durationString, "%d:%d", $minutes, $seconds);
-           $time_seconds = $minutes * 60 + $seconds;
+          echo $time_seconds = $minutes * 60 + $seconds;
+          die;
            return $time_seconds;
        } else {
            return 0;
