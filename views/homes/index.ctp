@@ -1,9 +1,14 @@
 <script> 
 
 //load the artist list when  scroll reached at the end
-$(document).ready(function(){
+
+ var $j = jQuery.noConflict();
+
+$j(document).ready(function() {
     var preValue= 1;
     var nationalPage = 2;
+   
+
     $("#top-100-songs-grid").scroll(function(){        
         // if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");   
 
