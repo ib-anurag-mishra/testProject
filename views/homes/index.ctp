@@ -8,8 +8,7 @@ $(document).ready(function(){
     var counter_loader = 1;
    
 
-    $("#top-100-songs-grid").scroll(function(){        
-        // if ( $(this).scrollLeft() == ($('#top-100-songs-grid ul').width() - $(this).width())) {  //alert("222");   
+    $("#top-100-songs-grid").scroll(function(){                
 
          if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
@@ -61,7 +60,6 @@ $(document).ready(function(){
     var counter_loader_videos = 1;
 
 $("#top-100-videos-grid").scroll(function(){        
-        // if ( $(this).scrollLeft() == ($('#top-100-videos-grid ul').width() - $(this).width())) {  //alert("222");   
 
          if ( $(this).scrollLeft() >= (8500*preValueVideo)) {
                                
@@ -102,7 +100,10 @@ $("#top-100-videos-grid").scroll(function(){
                     $('#natVideos_loader'+(counter_loader_videos-1)).hide();
                     $('#videos_loader_li'+(counter_loader_videos-1)).hide();
                 }
-            }           
+
+                    counter_loader_videos++;
+            }
+           
         }
     });
 
