@@ -35,7 +35,7 @@ $(document).ready(function(){
                             nationalPage++;
                             $('#natSongs_loader'+counter_loader).hide();
                             $('#songs_loader_li'+counter_loader).hide();
-
+                            alert('#natSongs_loader'+counter_loader);
                             $('#nationalSongsRecord').append(newitems);        
             
                         },
