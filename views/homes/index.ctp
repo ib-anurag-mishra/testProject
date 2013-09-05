@@ -32,8 +32,8 @@ $(document).ready(function(){
                             $('#natSongs_loader').hide();
                             $('#songs_loader_li').hide();
 
-                           // $('#nationalSongsRecord').append(newitems);        
-                                document.getElementById('nationalSongsRecord').innerHTML = newitems;
+                            $('#nationalSongsRecord').append(newitems);        
+            
                         },
                         async:   true,
                         error:function (XMLHttpRequest, textStatus, errorThrown) { 
