@@ -2,7 +2,6 @@
 
 //load the artist list when  scroll reached at the end
 
-jQuery.noConflict();
 
 $(document).ready(function(){
     var preValue= 1;
