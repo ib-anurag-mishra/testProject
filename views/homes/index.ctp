@@ -5,6 +5,7 @@
 $(document).ready(function(){
     var preValue= 1;
     var nationalPage = 2;
+    var counter_loader = 1;
    
 
     $("#top-100-songs-grid").scroll(function(){        
@@ -12,8 +13,8 @@ $(document).ready(function(){
 
          if ( $(this).scrollLeft() >= (5000*preValue)) {
                                
-            $('#natSongs_loader'+preValue).show();
-            $('#songs_loader_li'+preValue).show();
+            $('#natSongs_loader'+counter_loader).show();
+            $('#songs_loader_li'+counter_loader).show();
             var totalPages = 5;
             var data = "npage="+nationalPage;
             
@@ -32,8 +33,8 @@ $(document).ready(function(){
                         success: function(newitems) { 
                            //alert("newitems: "+newitems);
                             nationalPage++;
-                            $('#natSongs_loader'+preValue).hide();
-                            $('#songs_loader_li'+preValue).hide();
+                            $('#natSongs_loader'+counter_loader).hide();
+                            $('#songs_loader_li'+counter_loader).hide();
 
                             $('#nationalSongsRecord').append(newitems);        
             
@@ -45,9 +46,11 @@ $(document).ready(function(){
                     });            
                 
                 }else{
-                    $('#natSongs_loader'+preValue).hide();
-                    $('#songs_loader_li'+preValue).hide();
+                    $('#natSongs_loader'+counter_loader).hide();
+                    $('#songs_loader_li'+counter_loader).hide();
                 }
+
+                    counter_loader++;
             }           
         }
     });

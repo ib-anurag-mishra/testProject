@@ -4462,8 +4462,8 @@ STR;
         
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
-        //if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
-          if(1) {
+        if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
+         // if(1) {
         
           
             $country = $territory;
