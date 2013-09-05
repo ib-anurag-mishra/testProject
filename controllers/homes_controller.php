@@ -4724,8 +4724,8 @@ STR;
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         
-        
-        $this->Streaming->validateStreaming($libId,$patId,$prodId, $provider,'');
+        $result =  $this->Streaming->validateStreaming($libId,$patId,$prodId, $provider,'');
+        print_r($result);
         die;
        
         /*
