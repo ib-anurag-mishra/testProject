@@ -95,7 +95,7 @@ Class StreamingComponent extends Object
                 return array(false,'Your song streaming limit is over for the day.', 3);
             }
         }else {
-            $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip." as the not library and patron information exist in streaming_records tables",'streaming');
+            $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip." as the  library and patron information not exist in streaming_records tables",'streaming');
             return array(false,'There are no record exist for update.', 4);
         }
     }
@@ -141,7 +141,7 @@ Class StreamingComponent extends Object
      * 
      * @return Boolean
     */
-    function validateStreaming($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null, $patId = null, $agent = null, $library_id = null){
+    function validateStreaming($prodId, $providerType,$libId,$patId, $isMobileDownload = false, $mobileTerritory = null, $agent = null){
        
         if(!$isMobileDownload){
           

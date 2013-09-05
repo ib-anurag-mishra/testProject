@@ -4768,7 +4768,7 @@ STR;
         
         
         //check the streaming validation
-        $validationResult = $this->Streaming->validateStreaming($prodId, $provider);
+        $validationResult = $this->Streaming->validateStreaming($prodId, $provider,$libId,$patId);
         $validationFlag = $validationResult[0];
         $validationMessage = $validationResult[1];
         $validationIndex = $validationResult[2];
