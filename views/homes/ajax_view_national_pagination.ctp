@@ -272,7 +272,7 @@ $('.video-cover-container').on('mouseleave',function(){
 														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php												
 												echo $slNo;
-                                                                                                $slNo++;
+                                                                                                
                                                                                                 
 											?></div>
 														
@@ -280,9 +280,9 @@ $('.video-cover-container').on('mouseleave',function(){
 <!-- <a href="#" class="preview"></a>  -->
 <?php           
             if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
-                    echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.base64_encode($nationalTopDownload[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                    echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".($slNo-1), "onClick" => 'playSample(this, "'.($slNo-1).'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.base64_encode($nationalTopDownload[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
                     echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
-                    echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
+                    echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".($slNo-1), "onClick" => 'stopThis(this, "'.($slNo-1).'");')); 
             }
 ?>
 <?php } ?>
@@ -291,7 +291,7 @@ $('.video-cover-container').on('mouseleave',function(){
 												
 
 
-<?php
+<?php       $slNo++;
 
     if($this->Session->read('patron')) {
         if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
