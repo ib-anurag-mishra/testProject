@@ -173,7 +173,8 @@ Class StreamingComponent extends Object
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0'), 'fields' => array('FullLength_Duration')));      
                
         if(isset($song['Song']['FullLength_Duration'])){
-            $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);
+           echo  $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);
+           die;
             if(isset($secondsValue) && is_numeric($secondsValue)){
                 return $secondsValue;
             }else{
