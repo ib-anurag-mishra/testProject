@@ -38,11 +38,11 @@ $(document).ready(function()
 		},
 		style: { 
 				
-				color:'#222',
+				color:'#333',
 				fontSize:12,
 				border: {
 
-					color: '#222'
+					color: '#333'
 				},
 		
 				tip:{
