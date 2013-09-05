@@ -4825,8 +4825,8 @@ STR;
             }
                 
                
-            $songDuration = 300;
             
+            $songDuration = $this->Streaming->checkSongExists($prodId, $provider);
            
             
             $validateStreamingInfoResult = $this->Streaming->validateStreamingInfo($libId, $patId);

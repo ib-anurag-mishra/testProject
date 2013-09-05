@@ -25,7 +25,7 @@ Class StreamingComponent extends Object
      * @param $library_id Int  'Uniq library id'
      * @return Boolean
     */
-    function validateStreamingInfo($libId,$patId, $songDuration = 0,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
+    function validateStreamingInfo($libId,$patId, $songDuration,$isMobileDownload = false, $mobileTerritory = null,$agent = null) {
         
        
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
@@ -160,7 +160,7 @@ Class StreamingComponent extends Object
     
     /*
      Function Name : checkSongExists
-     Desc : function used for checking songs exist for streaming
+     Desc : function used for checking songs  exist for streaming
      * 
      * @param $prodId Int  'song prodID'
      * @param $providerType varChar 'song provider type'
@@ -170,9 +170,14 @@ Class StreamingComponent extends Object
     function checkSongExists($prodId, $providerType){
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0')));      
-        if(isset($song['Song']['MP4_FileID']) && !empty($song['Song']['MP4_FileID'])){
-            return true;
+        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'1'), 'fields' => array('FullLength_Duration')));      
+        if(isset($song['Song']['FullLength_Duration'])){
+            $secondsValue =$this->getSeconds($song['Song']['FullLength_Duration']);
+            if(isset($secondsValue) && is_numeric($secondsValue)){
+                return $secondsValue;
+            }else{
+                 return false;
+            }          
         } else {
             return false;
         }
@@ -251,5 +256,29 @@ Class StreamingComponent extends Object
             return false;
         }
     }
+    
+    
+    /*
+     Function Name : getSeconds
+     Desc : function used convert minut:second value in to seconds values
+     * 
+     * @param $durationString varChar  'library uniqe id'     
+     *          
+     * @return Boolean or second value
+    */
+    function getSeconds($durationString){
+        
+        
+       if(!$durationString){
+           sscanf($durationString, "%d:%d", $minutes, $seconds);
+           $time_seconds = $minutes * 60 + $seconds;
+           return $time_seconds;
+       } else {
+           return 0;
+       }        
+    }
+    
+    
+
 }
 ?>
