@@ -344,7 +344,7 @@ STR;
                             'joins'=> array(
                                 array(
                                   'type' => 'INNER',
-                                  'table' => 'Featuredartist',
+                                  'table' => 'featuredartist',
                                   'alias' => 'fa',
                                   'conditions' => array('Album.ProdID = fa.album')
                                 )
