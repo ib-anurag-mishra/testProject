@@ -4724,18 +4724,22 @@ STR;
         //set layout false
         $this->layout = false;
         
+        $prodId = '4530701';
+        $provider = 'ioda';
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
+        
         //get required parameter 
-       // $prodId = $_POST['ProdID'];
-        //$provider = $_POST['ProviderType'];
+        if(isset($_REQUEST['ProdID']) && isset($_REQUEST['ProviderType']) && isset($_REQUEST['library_id']) && isset($_REQUEST['patron_id'])){
+            $prodId = $_REQUEST['ProdID'];
+            $provider = $_REQUEST['ProviderType'];
+            $libId = $_REQUEST['library_id'];
+            $patId = $_REQUEST['patron_id'];
+        }
         
-       // $prodId = '4530701';
-       // $provider = 'ioda';
-       // $libId = $this->Session->read('library');
-       // $patId = $this->Session->read('patron');
         
-        $result =  $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');
-        return $result;
-        die;
+        
+        $result =  $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');       
         print_r($result);
         die;
        

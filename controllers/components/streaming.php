@@ -171,15 +171,15 @@ Class StreamingComponent extends Object
                 if($streamingHistoryInstance->save($insertArr)){
                     $queryInsertFlag = 1;
                     $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
-                    $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
-                    $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
+                    $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
+                    $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
                     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
                     $this->createStreamingLog($log_data, $log_name);
                 }
                 $streamingHistoryInstance->setDataSource('default');
                 if( ($queryUpdateFlag == 1) && ($queryUpdateFlag == 1) ){
                      $updatedTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
-                     return array('suces',$validateStreamingInfoMessage,$updatedTimeDuration);                  
+                     return array('success',$validateStreamingInfoMessage,$updatedTimeDuration);                  
                 }                
                 exit;
                 
@@ -406,7 +406,7 @@ Class StreamingComponent extends Object
     function checkStreamingInfoExist($libId,$patId) {
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
-        $results = $streamingRecordsInstance->find('first',array('conditions' => array('patron_id'=> $patId,'library_id' => $libId),'fields' => 'id'));
+        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId),'fields' => 'id'));
         if(!empty($results)) {
             return $results['StreamingRecords']['id'];
         }
@@ -450,7 +450,7 @@ Class StreamingComponent extends Object
     function getPatronUsedStreamingTime($libId,$patId) {
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
-        $results = $streamingRecordsInstance->find('first',array('conditions' => array('patron_id'=> $patId,'library_id' => $libId,'date(modified_date)=date(now())'),'fields' => 'consumed_time'));
+        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId,'date(modified_date)=date(now())'),'fields' => 'consumed_time'));
         if(!empty($results)) {
             return $results['StreamingRecords']['consumed_time'];
         } else {
