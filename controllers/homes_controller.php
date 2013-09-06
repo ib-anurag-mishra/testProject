@@ -341,10 +341,10 @@ STR;
             if($ids != ''){
                     $this->Album->recursive = 2;
                     $featured =  $this->Album->find('all',array(
-                            'joins'=>array(
+                            'joins'=> array(
+                                  'type' => 'INNER',
                                   'table' => 'Featuredartist',
                                   'alias' => 'fa',
-                                  'type' => 'LEFT',
                                   'conditions' => array('Album.ProdID = fa.album')
                             ),
                             'conditions' =>array(
