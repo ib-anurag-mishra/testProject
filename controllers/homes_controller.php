@@ -4719,12 +4719,14 @@ STR;
        // $prodId = $_POST['ProdID'];
         //$provider = $_POST['ProviderType'];
         
-        $prodId = '4530701';
-        $provider = 'ioda';
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
+       // $prodId = '4530701';
+       // $provider = 'ioda';
+       // $libId = $this->Session->read('library');
+       // $patId = $this->Session->read('patron');
         
         $result =  $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');
+        return $result;
+        die;
         print_r($result);
         die;
        

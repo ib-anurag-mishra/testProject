@@ -20,7 +20,7 @@ Class StreamingComponent extends Object
      * @param $patId Int  'patron unique id'
      * @param $prodId Int  'song unique id'     
      * @param $provider varCh  'song provider type'
-     * @param $agent Int  'Browser user agent' 
+     * @param $agent Int (optional)  'Browser user agent' 
      *   
      * @return array
     */
@@ -85,8 +85,6 @@ Class StreamingComponent extends Object
             
             $this->log("First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage,'streaming');             
             $log_data .= PHP_EOL."First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage.PHP_EOL;        
-
-           
             
             //check the patron record is exist or not
             $streamingInfoFlag = $this->checkStreamingInfoExist($libId, $patId);            
@@ -108,7 +106,7 @@ Class StreamingComponent extends Object
                          $streamingRecordsInstance->setDataSource('master');
                          //update the date and reset the consumed time as the day start
                          if($streamingRecordsInstance->save($updateArr)){
-                              $log_data .= "update Streaming_records table(todays first request) :- modified_date  : ".$modified_date.PHP_EOL;  
+                              $log_data .= "update Streaming_records table(day first request) :- modified_date  : ".$modified_date.PHP_EOL;  
                          }
                          $streamingRecordsInstance->setDataSource('default');
                      }else{
@@ -355,7 +353,7 @@ Class StreamingComponent extends Object
     function checkSongExists($prodId, $providerType){
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'0'), 'fields' => array('FullLength_Duration')));                
+        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'1'), 'fields' => array('FullLength_Duration')));                
         if(isset($song['Song']['FullLength_Duration'])){
             $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);          
             if(isset($secondsValue) && is_numeric($secondsValue)){
