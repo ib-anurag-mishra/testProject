@@ -342,10 +342,12 @@ STR;
                     $this->Album->recursive = 2;
                     $featured =  $this->Album->find('all',array(
                             'joins'=> array(
+                                array(
                                   'type' => 'INNER',
                                   'table' => 'Featuredartist',
                                   'alias' => 'fa',
                                   'conditions' => array('Album.ProdID = fa.album')
+                                )
                             ),
                             'conditions' =>array(
                                 'and' =>array(
