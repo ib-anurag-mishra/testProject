@@ -1501,11 +1501,31 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 	return false; 
 }
 
-    function loadSong(songFile,songTitle) { 
-      jwplayer().load([{
-        file: songFile,
-        title: songTitle
-      }]);
+    function loadSong(songFile,songTitle,prodId,providerType) { 
+        
+        var postURL = webroot+'queuelistdetails/getPlaylistData';
+        $.ajax({
+            type: "POST",
+            cache:false,
+            url: postURL,
+            data: {prodId : prodId,providerType : providerType}
+        }).done(function(data){
+                var json = JSON.parse(data);
+                if(json.error){
+                    var result = json.error;
+                    alert(result[1]);
+                    exit;
+                }else if(json.success){
+                    jwplayer().load([{
+                      file: songFile,
+                      title: songTitle
+                    }]);                    
+                }
+        })
+        .fail(function(){
+            alert('Ajax Call to Validate song has been failed');
+        });         
+
     } 
 
 $(document).ready(function (){
@@ -1522,22 +1542,24 @@ $(document).ready(function (){
             type: "POST",
             cache:false,
             url: postURL,
-            data: {prodId : prodId,providerType : providerType},
-            success: playlistSuccess,
-            error: playlistFails
-        });                
-
+            data: {prodId : prodId,providerType : providerType}
+        }).done(function(data){
+                var json = JSON.parse(data);
+                if(json.error){
+                    alert(json.error[1]);
+                    exit;
+                }else if(json.success){
+                    playlist = $('#playlist_data').text();
+                    playlist = JSON.parse(playlist);
+                    if(playlist.length){
+                        jwplayer("myElement").load(playlist);
+                    }                   
+                }
+        })
+        .fail(function(){
+            alert('Ajax Call to Validate Playlist has been failed');
+        });         
+  
+              
     });
-
-    function playlistSuccess(){
-        playlist = $('#playlist_data').text();
-        playlist = JSON.parse(playlist);
-        if(playlist.length){
-            jwplayer("myElement").load(playlist);
-        }
-    }
-
-    function playlistFails(){
-        alert('loading playlist fails');exit;
-    }
 });

@@ -11,7 +11,7 @@ class QueueListDetailsController extends AppController{
     var $name = 'QueuesListDetails';
     var $layout = 'home';
     var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist','Queue');
-    var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Downloads');
+    var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Downloads','Streaming');
     var $uses = array( 'QueueDetail','User','Album','Song', 'Wishlist','QueueList');
     
     function beforeFilter(){
@@ -160,12 +160,22 @@ class QueueListDetailsController extends AppController{
     
     function getPlaylistData(){
        Configure::write('debug', 0);
-       if(!empty($_POST['prodId']) && !empty($_POST['providerType'])){
-            echo "Success";
-            exit;           
-       }else{
-            echo 'error';
-            exit;
+       $prodId = $_POST['prodId'];
+       $provider = $_POST['providerType'];
+       $libId = $this->Session->read('library');
+       $patId = $this->Session->read('patron');
+       $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');
+       if(!empty($validationResponse)){
+           if($validationResponse[0] == 'error'){
+               $error_message = array('error' => $validationResponse);
+               echo json_encode($error_message);
+               exit;
+           }else if($validationResponse[0] == 'success'){
+               $success_message = array('success' => $validationResponse);
+               echo json_encode($success_message);
+               exit;
+           }
+           
        }
     }    
     
