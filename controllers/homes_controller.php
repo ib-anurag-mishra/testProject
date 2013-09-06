@@ -386,7 +386,7 @@ STR;
                                     ),
                                 )
                             ), 
-                            'order' => 'fa.id ASC',
+                            'order' => 'fa.id DESC',
                             'limit'=>20
                     ));
                     
