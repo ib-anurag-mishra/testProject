@@ -40,12 +40,12 @@ Class StreamingComponent extends Object
         $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
         
         $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent,'streaming');            
-        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId." ;agent : ".$agent.PHP_EOL; 
+        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent.PHP_EOL; 
         
         //if ProdID and Provider type is not set then
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+            $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             return array('error','Not able to stream this song.You need to login again.',$currentTimeDuration);           
             exit;
         }
@@ -53,7 +53,7 @@ Class StreamingComponent extends Object
         //if ProdID and Provider type is not set then
         if(($patId == '' || $patId == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+            $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             return array('error','Not able to play this song.You need to login again.',$currentTimeDuration);            
             exit;
         }
@@ -61,7 +61,7 @@ Class StreamingComponent extends Object
         //if ProdID and Provider type is not set then
         if(($libId == '' || $libId == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+            $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             return array('error','Not able to play this song.You need to login again.',$currentTimeDuration);  
             exit;
         }
@@ -143,7 +143,7 @@ Class StreamingComponent extends Object
             
             if($validateStreamingInfoFlag){
                 
-                $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+                $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
 
                 //update streaming_record table table
                 $cdate = date('Y:m:d H:i:s');
@@ -327,7 +327,7 @@ Class StreamingComponent extends Object
         //check the validation
         if($this->checkLibraryStreaming($libId)){ 
             if($this->checkSongExists($prodId, $providerType)){                
-                return array(true,'First validatin passed', 1);
+                return array(true,'First validation passed', 1);
             } else {
                 $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested for streaming does not allow for streaming or its mp4 file id is empty in Songs table",'streaming');
                 return array(false,'The song requested for streaming does not exist', 3);
