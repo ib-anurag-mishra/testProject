@@ -422,7 +422,7 @@ if ($type != 'all') {
                     $count = $composer->numFound;
                     $name = $this->getTextEncode($name);
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
@@ -482,7 +482,7 @@ if ($type != 'all') {
                     $name = $genre->Genre;
                     $count = $genre->numFound;
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
@@ -542,7 +542,7 @@ if ($type != 'all') {
                     $name = $label->Label;
                     $count = $label->numFound;
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=label"; ?>" title="<?php echo $this->getTextEncode($name); ?>"><?php echo $this->getTextEncode($label_name_text); ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=label"; ?>" title="<?php echo $this->getTextEncode($name); ?>"><?php echo $this->getTextEncode($label_name_text); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
