@@ -657,9 +657,10 @@ if ($type != 'all') {
                     $tilte = urlencode($artist->ArtistText);
                     $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
                     $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))));
+                    if(!empty($artist_name_text)) {
                     ?>
                                 <div><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></div>
-        <?php }
+        <?php } }
     } else {
         ?>
                             <div style='color:red'><?php __("No Artists Found"); ?></div>
@@ -691,9 +692,10 @@ if ($type != 'all') {
         foreach ($composers as $composer) {
             $tilte = urlencode($composer->Composer);
             $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
+            if(!empty($composer_name)){
             ?>
                                 <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title='<?php echo $this->getTextEncode($composer->Composer) ?>'><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
-        <?php }
+        <?php } }
     } else {
         ?>
                             <div style='color:red'><?php __("No Composers Found"); ?></div>  
@@ -744,10 +746,13 @@ if ($type != 'all') {
                     $genre_name_text = truncate_text($this->getTextEncode($genre_name), 30, $this);
                     $name = $genre->Genre;
                     $count = $genre->numFound;
+                    if(!empty($genre_name_text)) {
                     ?>
                                 <div><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $genre_name_text; ?><span>(<?php echo $count; ?>)</span></a></div>
                                 <?php
-                            }
+                    } 
+                    
+                    }
                         } else {
                             ?>
                             <div style='color:red'><?php __("No Genres Found"); ?></div>  
@@ -799,9 +804,10 @@ if ($type != 'all') {
                     $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
                     $name = $this->getTextEncode($video->VideoTitle);
                     // $count = $video->numFound;
+                    if(!empty($video_name_text)){
                     ?>
                                     <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
-                <?php }
+                <?php } }
             } else {
                 ?>
                                      <div style='color:red'><?php __("No Videos Found"); ?></div>     

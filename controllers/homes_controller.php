@@ -321,7 +321,7 @@ STR;
         //featured artist slideshow code start
         
         //if(1){
-        //if (($artists = Cache::read("featured".$country)) === false) {
+        if (($artists = Cache::read("featured".$country)) === false) {
            
             
             //get all featured artist and make array
@@ -340,51 +340,60 @@ STR;
             //get all the details for featured albums
             if($ids != ''){
                     $this->Album->recursive = 2;
-                    $featured =  $this->Album->find('all',array('conditions' =>
-                                            array('and' =>
-                                                    array(
-                                                            array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
-                                                    ), "1 = 1 GROUP BY Album.ProdID"
-                                            ),
-
-                                            'fields' => array(
-                                                    'Album.ProdID',
-                                                    'Album.Title',
-                                                    'Album.ArtistText',
-                                                    'Album.AlbumTitle',
-                                                    'Album.Artist',
-                                                    'Album.ArtistURL',
-                                                    'Album.Label',
-                                                    'Album.Copyright',
-                                                    'Album.provider_type'
-
-                                                    ),
-                                            'contain' => array(
-                                                    'Genre' => array(
-                                                            'fields' => array(
-                                                                    'Genre.Genre'
-                                                                    )
-                                                            ),
-                                                    'Country' => array(
-                                                            'fields' => array(
-                                                                    'Country.Territory'
-                                                                    )
-                                                            ),
-                                                    'Files' => array(
-                                                            'fields' => array(
-                                                                    'Files.CdnPath' ,
-                                                                    'Files.SaveAsName',
-                                                                    'Files.SourceURL'
-                                                    ),
-                                            )
-                                    ), 'order' => 'FIELD( Album.ProdID, '.$ids.') DESC', 'limit'=>20
-                            )
-                    );
+                    $featured =  $this->Album->find('all',array(
+                            'joins'=> array(
+                                array(
+                                  'type' => 'INNER',
+                                  'table' => 'featuredartists',
+                                  'alias' => 'fa',
+                                  'conditions' => array('Album.ProdID = fa.album')
+                                )
+                            ),
+                            'conditions' =>array(
+                                'and' =>array(
+                                    array(
+                                        "Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"
+                                    ),
+                                 ), "1 = 1 GROUP BY Album.ProdID"
+                             ),
+                            'fields' => array(
+                                'Album.ProdID',
+                                'Album.Title',
+                                'Album.ArtistText',
+                                'Album.AlbumTitle',
+                                'Album.Artist',
+                                'Album.ArtistURL',
+                                'Album.Label',
+                                'Album.Copyright',
+                                'Album.provider_type'
+                            ),
+                            'contain' => array(
+                                'Genre' => array(
+                                    'fields' => array(
+                                        'Genre.Genre'
+                                    )
+                                ),
+                                'Country' => array(
+                                    'fields' => array(
+                                        'Country.Territory'
+                                    )
+                                ),
+                                'Files' => array(
+                                    'fields' => array(
+                                        'Files.CdnPath' ,
+                                        'Files.SaveAsName',
+                                        'Files.SourceURL'
+                                    ),
+                                )
+                            ), 
+                            'order' => 'fa.id DESC',
+                            'limit'=>20
+                    ));
                     
             } else {
                     $featured = array();
             }
-            
+            //echo "<br>Query2: ".$this->Album->lastQuery();
             foreach($featured as $k => $v){
 
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
@@ -394,7 +403,7 @@ STR;
             
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
-        //}
+        }
         
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
