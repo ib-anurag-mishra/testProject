@@ -593,67 +593,58 @@ $("#top-100-videos-grid").scroll(function(){
                             if($sr_no>=20) break;
 ?>
                             <?php if($sr_no%2==0) {?><li> <?php }?>
-                                        <div class="video-detail">
-                                                <div class="video-cover-container">
-                                                        <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                        <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle']); ?>" width="275" height="162" />
-                                                        </a>
-                                                <?php if($this->Session->read("patron")){ ?> 
-                                                        <a class="add-to-playlist-button" href="#">
+                                    <div class="video-detail">
+                                        <div class="video-cover-container">
+                                                <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle']); ?>" width="275" height="162" />
+                                                </a>
+                                        <?php if($this->Session->read("patron")){ ?> 
+                                                <a class="add-to-playlist-button" href="#">
 
-                                                        </a>
-                                                        <div class="wishlist-popover">	
-                                                             <?php
+                                                </a>
+                                                <div class="wishlist-popover">	
+                                                     <?php
 
-                                                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
-                                                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$value["Video"]["ProdID"],$value["Video"]["provider_type"]);
-                                                                    echo $this->Queue->getSocialNetworkinglinksMarkup();  
-                                                                ?>
+                                                            $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
+                                                            echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$value["Video"]["ProdID"],$value["Video"]["provider_type"]);
+                                                            echo $this->Queue->getSocialNetworkinglinksMarkup();  
+                                                        ?>
 
-
-                                                        </div>
-                                                <?php } ?>
-                                                </div>
-                                                <div class="video-title">
-
-                                                        <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                            <?php
-
-                                                            $commingSoonVideoTitle= $this->getTextEncode($value['Video']['VideoTitle']);
-
-                                                            if('T' == $value['Video']['Advisory']) {
-                                                                if(strlen($commingSoonVideoTitle)>15)
-                                                                    echo substr($commingSoonVideoTitle,0,15)."..."; 
-                                                                    else echo $commingSoonVideoTitle;
-
-                                                            }else{
-                                                                if(strlen($commingSoonVideoTitle)>20)
-                                                                    echo substr($commingSoonVideoTitle,0,20)."..."; 
-                                                                    else echo $commingSoonVideoTitle;                                                                                                                
-                                                            }                                                                                                                    
-
-                                                           ?> </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 
                                                 </div>
-                                                <div class="artist-name">
-
-
-                                                            <a href="javascript:void(0)">
-                                                         <?php 
-                                                                    if(strlen($value['Video']['Artist'])>20)
-                                                                    echo substr($value['Video']['Artist'],0,20)."..."; 
-                                                                    else echo $value['Video']['Artist'];
-                                                             ?></a>
-
-                                                <!--	<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
-                                                         <?php 
-                                                                    $videoartist = $this->getTextEncode($value['Video']['Artist']);
-                                                                    if(strlen($videoartist)>20)
-                                                                    echo substr($videoartist,0,20)."..."; 
-                                                                    else echo $videoartist;
-                                                             ?></a>  -->
-                                                </div>
+                                        <?php } ?>
                                         </div>
+                                        <div class="video-title">
+
+                                                <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                    <?php
+
+                                                    $commingSoonVideoTitle= $this->getTextEncode($value['Video']['VideoTitle']);
+
+                                                    if('T' == $value['Video']['Advisory']) {
+                                                        if(strlen($commingSoonVideoTitle)>15)
+                                                            echo substr($commingSoonVideoTitle,0,15)."..."; 
+                                                            else echo $commingSoonVideoTitle;
+
+                                                    }else{
+                                                        if(strlen($commingSoonVideoTitle)>20)
+                                                            echo substr($commingSoonVideoTitle,0,20)."..."; 
+                                                            else echo $commingSoonVideoTitle;                                                                                                                
+                                                    }                                                                                                                    
+
+                                                   ?> </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+
+                                        </div>
+                                        <div class="artist-name">
+                                            <a href="javascript:void(0)">
+                                            <?php 
+                                                $videoartist = $this->getTextEncode($value['Video']['Artist']);
+                                                if(strlen($videoartist)>20)
+                                                    echo substr($videoartist,0,20)."..."; 
+                                                    else echo $videoartist;
+                                            ?></a>
+                                        </div>
+                                    </div>
 
                                 <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
 
