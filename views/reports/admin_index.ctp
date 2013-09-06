@@ -168,7 +168,7 @@
                           <th>Total Downloads</th>
                         </tr>
                         <tr>
-                          <td align="center"><?php echo count($downloads)+count($videoDownloads); ?></td>
+                          <td align="center"><?php echo count($downloads)+(count($videoDownloads)*2); ?></td>
                         </tr>
                       </table>
                     </td>
@@ -196,7 +196,7 @@
                    <td> <?php echo $index; ?> </td>
                    <td> <?php echo $key; ?> </td>
                    
-                   <td align="center"> <?php echo $val+$arr_all_video_library_downloads[$key]; ?> </td>
+                   <td align="center"> <?php echo $val+($arr_all_video_library_downloads[$key]*2); ?> </td>
                   </tr>
                   
                   <?php $index++; } ?>
