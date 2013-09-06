@@ -112,7 +112,7 @@
 		} else {
 			$text = $DownloadCount['Library']['library_available_downloads'];
 		}
-        $libraries_downloads[] = array($key, $DownloadCount['Library']['library_name'], $text);
+        $libraries_downloads[] = array($key, $this->getTextEncode($DownloadCount['Library']['library_name']), $text);
 		$key++;
     }
     foreach($libraries_downloads as $k=>$row) {
@@ -401,7 +401,7 @@
     $key = 1;
     foreach($arr_all_patron_downloads as $LibraryName => $DownloadCount) {
       
-      $arr_all_patron_downloads_data[] = array($key, $LibraryName, $DownloadCount);
+      $arr_all_patron_downloads_data[] = array($key, $this->getTextEncode($LibraryName), $DownloadCount);
       $key++;
     }
     
@@ -462,8 +462,8 @@
 		else{
 			$patron = $download['Download']['patron_id'];
 		}
-        $libraryName = $library->getLibraryName($download['Download']['library_id']);
-        $data[] = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+        $libraryName = $this->getTextEncode($library->getLibraryName($download['Download']['library_id']));
+        $data[] = array($key+1, $libraryName, $patron, $this->getTextEncode($download['Download']['artist']), $this->getTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
     }
     foreach($videoDownloads as $key => $download) {
 		if($download['Videodownload']['email']!=''){
@@ -473,7 +473,7 @@
 			$patron = $download['Videodownload']['patron_id'];
 		}
         $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
-        $video_data[] = array($key+1, $libraryName, $patron, $download['Videodownload']['artist'], $download['Videodownload']['track_title'], date('Y-m-d', strtotime($download['Videodownload']['created'])));
+        $video_data[] = array($key+1, $this->getTextEncode($libraryName), $patron, $this->getTextEncode($download['Videodownload']['artist']), $this->getTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
     }
 
     foreach($patronDownloads as $key => $patronDownload) {
@@ -483,7 +483,7 @@
 		else{
 			$patron_id = $patronDownload['Downloadpatron']['patron_id'];
 		}
-        $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Downloadpatron']['library_id']), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+        $patron_data[] = array($key+1, $patron_id, $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
     }
     
     foreach($patronVideoDownloads as $key => $patronDownload) {
@@ -493,15 +493,15 @@
 		else{
 			$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
 		}
-        $patron_video_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id']), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+        $patron_video_data[] = array($key+1, $patron_id, $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
     }    
 
     foreach($genreDownloads as $key => $genreDownload) {
-        $genre_data[] = array($key+1, $genreDownload['Downloadgenre']['genre_name'], (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
+        $genre_data[] = array($key+1, $this->getTextEncode($genreDownload['Downloadgenre']['genre_name']), (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
     }
     
     foreach($genreVideoDownloads as $key => $genreDownload) {
-        $genre_video_data[] = array($key+1, $genreDownload['DownloadVideoGenre']['genre_name'], (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
+        $genre_video_data[] = array($key+1, $this->getTextEncode($genreDownload['DownloadVideoGenre']['genre_name']), (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
     }    
 
     // print colored table
