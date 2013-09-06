@@ -105,6 +105,12 @@ class CacheController extends AppController {
         echo "no data available for genre".$territory;
       }
 	  
+      
+        for($counter=1;$counter<=5;$counter++)
+       {
+                   $startLimit =   20*($counter-1);
+                   $endLimit   =   $startLimit+20;
+      
 		$country = $territory;
 		if(!empty($country)){
 		  if($maintainLatestDownload){
@@ -147,10 +153,7 @@ class CacheController extends AppController {
                 $data = array();
 
                 
-                for($counter=1;$counter<=5;$counter++)
-                {
-                            $startLimit =   20*($counter-1);
-                            $endLimit   =   $startLimit+20;
+
                             
                 $sql_national_100 = <<<STR
                     SELECT 
@@ -197,7 +200,7 @@ class CacheController extends AppController {
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT '$startLimit','$endLimit'
+                    LIMIT $startLimit, $endLimit
    
 STR;
                 $data = $this->Album->query($sql_national_100);
@@ -226,11 +229,11 @@ STR;
                     echo "Unable to update national 100 for " . $territory;
                 }
                 
-                }
+                
             }
+        }
+        
             $this->log("cache written for national top 100 for $territory", 'debug');
-
- 
           
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`,`Video`.`Advisory`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID  and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
@@ -298,7 +301,10 @@ STR;
               
             // Added caching functionality for national top 100 videos   
         
-      
+            for($counter=1;$counter<=5;$counter++)
+           {
+                       $startLimit =   20*($counter-1);
+                       $endLimit   =   $startLimit+20;      
     
             $country = $territory;
 
@@ -350,6 +356,8 @@ STR;
 
 
                 $data = array();
+                
+
 
                 $sql_national_100_v = <<<STR
 	        SELECT 
@@ -390,7 +398,7 @@ STR;
                                 ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
-                LIMIT 100 
+                 LIMIT $startLimit, $endLimit
 STR;
 
                 // echo $sql_national_100_v; die;
@@ -406,27 +414,29 @@ STR;
                 }
 
                 if (!empty($data)) {
-                    Cache::delete("nationalvideos" . $country);
+                    Cache::delete("nationalvideos" . $country ."Page".$counter);
                     foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                     }                    
-                    Cache::write("nationalvideos" . $country, $data);
+                    Cache::write("nationalvideos" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten  videos for $territory", "cache");
                     echo "cache written for national top ten  videos for $territory";
                 } else {
 
-                    Cache::write("nationalvideos" . $country, Cache::read("nationalvideos" . $country));
+                    Cache::write("nationalvideos" . $country ."Page".$counter, Cache::read("nationalvideos" . $country ."Page".$counter));
                     echo "Unable to update key";
                     $this->log("Unable to update national 100  videos for " . $territory, "cache");
                     echo "Unable to update national 100 videos for " . $territory;
                 }
+                
+                
+            }
+            
             }
             $this->log("cache written for national top ten  videos for $territory", 'debug');
             // End Caching functionality for national top 10 videos
-            
-            
            
               
 
@@ -1027,7 +1037,7 @@ STR;
             $featured = array();
             $ids = '';
             $ids_provider_type = '';
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory, 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
             foreach ($featured as $k => $v) {
                 if ($v['Featuredartist']['album'] != 0) {
                     if (empty($ids)) {
@@ -1047,45 +1057,55 @@ STR;
 
             if ($ids != '') {
                 $this->Album->recursive = 2;
-                $featured = $this->Album->find('all', array('conditions' =>
-                    array('and' =>
-                        array(
-                            array("(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")", "Country.Territory" => $territory, "Album.provider_type = Country.provider_type"),
-                        ), "1 = 1 GROUP BY Album.ProdID"
-                    ),
-                    'fields' => array(
-                        'Album.ProdID',
-                        'Album.Title',
-                        'Album.ArtistText',
-                        'Album.AlbumTitle',
-                        'Album.Artist',
-                        'Album.ArtistURL',
-                        'Album.Label',
-                        'Album.Copyright',
-                        'Album.provider_type'
-                    ),
-                    'contain' => array(
-                        'Genre' => array(
-                            'fields' => array(
-                                'Genre.Genre'
+                $featured =  $this->Album->find('all',array(
+                        'joins'=> array(
+                            array(
+                              'type' => 'INNER',
+                              'table' => 'featuredartists',
+                              'alias' => 'fa',
+                              'conditions' => array('Album.ProdID = fa.album')
                             )
                         ),
-                        'Country' => array(
-                            'fields' => array(
-                                'Country.Territory'
-                            )
+                        'conditions' =>array(
+                            'and' =>array(
+                                array(
+                                    "Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"
+                                ),
+                             ), "1 = 1 GROUP BY Album.ProdID"
+                         ),
+                        'fields' => array(
+                            'Album.ProdID',
+                            'Album.Title',
+                            'Album.ArtistText',
+                            'Album.AlbumTitle',
+                            'Album.Artist',
+                            'Album.ArtistURL',
+                            'Album.Label',
+                            'Album.Copyright',
+                            'Album.provider_type'
                         ),
-                        'Files' => array(
-                            'fields' => array(
-                                'Files.CdnPath',
-                                'Files.SaveAsName',
-                                'Files.SourceURL'
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
                             ),
-                        )
-                    ), 
-                    'order' => array('Country.SalesDate' => 'desc', 'limit'=>20)
-                    )
-                );
+                            'Country' => array(
+                                'fields' => array(
+                                    'Country.Territory'
+                                )
+                            ),
+                            'Files' => array(
+                                'fields' => array(
+                                    'Files.CdnPath' ,
+                                    'Files.SaveAsName',
+                                    'Files.SourceURL'
+                                ),
+                            )
+                        ), 
+                        'order' => 'fa.id DESC',
+                        'limit'=>20
+                    ));
             } else {
                 $featured = array();
             }

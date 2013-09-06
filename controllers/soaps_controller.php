@@ -22,6 +22,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserTypeResponse.
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongDownloadSuccess.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoDownloadSuccess.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalFeaturedAlbum.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalFeaturedAlbumFreegal4.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SearchData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'PageContent.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumDataByArtist.php');
@@ -33,8 +34,8 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail'); 
-  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist'); 
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr'); 
 
    
   function beforeFilter(){
@@ -94,6 +95,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongDownloadSuccess.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoDownloadSuccess.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."FreegalFeaturedAlbum.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."FreegalFeaturedAlbumFreegal4.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SearchData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."PageContent.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."soaps_controller.php");
@@ -119,6 +121,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("SongDownloadSuccess", $siteUrl."soaps/");
     $test->addURLToClass("VideoDownloadSuccess", $siteUrl."soaps/");
     $test->addURLToClass("FreegalFeaturedAlbum", $siteUrl."soaps/");
+    $test->addURLToClass("FreegalFeaturedAlbumFreegal4", $siteUrl."soaps/");
     $test->addURLToClass("SearchData", $siteUrl."soaps/");
     $test->addURLToClass("PageContent", $siteUrl."soaps/");
     $test->addURLToClass("SoapsController", $siteUrl."soaps/");
@@ -491,7 +494,113 @@ class SoapsController extends AppController {
 
 	}
 
+  /**
+   * Function Name : getFeaturedAlbumFreegal4
+   * Desc : To get the featured albums for FReegal4.O
+   * @param string $authenticationToken
+	 * @return FreegalFeaturedAlbumFreegal4Type[]
+   */
+	function getFeaturedAlbumFreegal4($authenticationToken) {
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
 
+    $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+    $library_terriotry = $this->getLibraryTerritory($libraryId);
+  
+    if (($artists = Cache::read("featured".$library_terriotry)) === false) {
+      
+      //get all featured artist and make array
+      $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $library_terriotry,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+
+      foreach($featured as $k => $v){
+        if($v['Featuredartist']['album'] != 0){
+          if(empty($ids)){
+            $ids .= $v['Featuredartist']['album'];
+            $ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+          } else {
+            $ids .= ','.$v['Featuredartist']['album'];
+            $ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+          }	
+        }
+      }
+
+      //get all the details for featured albums
+      $featured = array();
+      if($ids != ''){     
+        $this->Album->recursive = 2;
+        $featured =  $this->Album->find('all',array('conditions' =>
+          array('and' =>
+            array(
+              array("Country.Territory" => $library_terriotry, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
+            ), "1 = 1 GROUP BY Album.ProdID"
+          ),
+          'fields' => array(
+            'Album.ProdID',
+            'Album.Title',
+            'Album.ArtistText',
+            'Album.AlbumTitle',
+            'Album.Artist',
+            'Album.ArtistURL',
+            'Album.Label',
+            'Album.Copyright',
+            'Album.provider_type'
+          ),
+          'contain' => array(
+            'Genre' => array(
+              'fields' => array(
+                'Genre.Genre'
+              )
+            ),
+            'Country' => array(
+              'fields' => array(
+                'Country.Territory'
+              )
+            ),
+            'Files' => array(
+              'fields' => array(
+                'Files.CdnPath' ,
+                'Files.SaveAsName',
+                'Files.SourceURL'
+              ),
+            )
+          ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit' => 20
+        ));
+                    
+      }
+        
+      if(!(empty($featured))) {     
+        foreach($featured as $k => $v){
+
+          $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+          $image =  Configure::read('App.Music_Path').$albumArtwork;
+          $featured[$k]['featuredImage'] = $image;
+        }
+      }  
+                     
+      Cache::write("featured".$library_terriotry, $featured);
+    }
+        
+    $featured = Cache::read("featured".$library_terriotry);
+    
+    if(empty($featured)){
+      throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
+    }
+    
+    
+    foreach($featured as $key => $val) {
+      
+      $obj = new FreegalFeaturedAlbumFreegal4Type;
+      $obj->AlbumProdId      = $this->getProductAutoID($val['Album']['ProdID'], $val['Album']['provider_type']);
+      $obj->AlbumTitle       = $this->getTextUTF($val['Album']['AlbumTitle']);
+      $obj->FileURL          = $val['featuredImage'];
+      $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalFeaturedAlbumFreegal4Type');
+    }
+    
+    return new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalFeaturedAlbumFreegal4Type');
+
+  }
 
   /**
    * Function Name : getFeaturedArtistSlides

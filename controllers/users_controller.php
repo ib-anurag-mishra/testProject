@@ -55,8 +55,8 @@ Class UsersController extends AppController
 	}
 	function redirection_manager($library = null)
 	{
-
-		if($library != null)
+                $this->Cookie->write('redirecting', $_SERVER[HTTP_REFERER]);
+                if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));                      
                         
@@ -108,8 +108,8 @@ Class UsersController extends AppController
 				$this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/aboutus');
 			}
 		} else {
-            $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/chooser');
-        }
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/chooser');
+                }
 	}
         
         function redirection($library = null)

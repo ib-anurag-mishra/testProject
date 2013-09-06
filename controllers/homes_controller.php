@@ -207,7 +207,7 @@ STR;
 	//Cache::delete("nationalvideos".$territory);             
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-       //         if(1) {
+          //      if(1) {
             
                   
                 $country = $territory;
@@ -325,8 +325,7 @@ STR;
            
             
             //get all featured artist and make array
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-
+            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
             foreach($featured as $k => $v){
                     if($v['Featuredartist']['album'] != 0){
                             if(empty($ids)){
@@ -338,55 +337,63 @@ STR;
                             }	
                     }
             }
-
             //get all the details for featured albums
             if($ids != ''){
                     $this->Album->recursive = 2;
-                    $featured =  $this->Album->find('all',array('conditions' =>
-                                            array('and' =>
-                                                    array(
-                                                            array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
-                                                    ), "1 = 1 GROUP BY Album.ProdID"
-                                            ),
-
-                                            'fields' => array(
-                                                    'Album.ProdID',
-                                                    'Album.Title',
-                                                    'Album.ArtistText',
-                                                    'Album.AlbumTitle',
-                                                    'Album.Artist',
-                                                    'Album.ArtistURL',
-                                                    'Album.Label',
-                                                    'Album.Copyright',
-                                                    'Album.provider_type'
-
-                                                    ),
-                                            'contain' => array(
-                                                    'Genre' => array(
-                                                            'fields' => array(
-                                                                    'Genre.Genre'
-                                                                    )
-                                                            ),
-                                                    'Country' => array(
-                                                            'fields' => array(
-                                                                    'Country.Territory'
-                                                                    )
-                                                            ),
-                                                    'Files' => array(
-                                                            'fields' => array(
-                                                                    'Files.CdnPath' ,
-                                                                    'Files.SaveAsName',
-                                                                    'Files.SourceURL'
-                                                    ),
-                                            )
-                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
-                            )
-                    );
+                    $featured =  $this->Album->find('all',array(
+                            'joins'=> array(
+                                array(
+                                  'type' => 'INNER',
+                                  'table' => 'featuredartists',
+                                  'alias' => 'fa',
+                                  'conditions' => array('Album.ProdID = fa.album')
+                                )
+                            ),
+                            'conditions' =>array(
+                                'and' =>array(
+                                    array(
+                                        "Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"
+                                    ),
+                                 ), "1 = 1 GROUP BY Album.ProdID"
+                             ),
+                            'fields' => array(
+                                'Album.ProdID',
+                                'Album.Title',
+                                'Album.ArtistText',
+                                'Album.AlbumTitle',
+                                'Album.Artist',
+                                'Album.ArtistURL',
+                                'Album.Label',
+                                'Album.Copyright',
+                                'Album.provider_type'
+                            ),
+                            'contain' => array(
+                                'Genre' => array(
+                                    'fields' => array(
+                                        'Genre.Genre'
+                                    )
+                                ),
+                                'Country' => array(
+                                    'fields' => array(
+                                        'Country.Territory'
+                                    )
+                                ),
+                                'Files' => array(
+                                    'fields' => array(
+                                        'Files.CdnPath' ,
+                                        'Files.SaveAsName',
+                                        'Files.SourceURL'
+                                    ),
+                                )
+                            ), 
+                            'order' => 'fa.id DESC',
+                            'limit'=>20
+                    ));
                     
             } else {
                     $featured = array();
             }
-            
+            //echo "<br>Query2: ".$this->Album->lastQuery();
             foreach($featured as $k => $v){
 
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
@@ -400,6 +407,7 @@ STR;
         
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
+            
         $this->set('featuredArtists', $featured);
         
         /*
@@ -4433,7 +4441,7 @@ STR;
         $endLimit   =   $startLimit+20;
         $this->set('startLimit', $startLimit);
             
-        ini_set('display_errors',1); 
+       // ini_set('display_errors',1); 
         
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -4463,7 +4471,7 @@ STR;
         //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory."Page".$Page)) === false) {
-        //  if(1) {
+         // if(1) {
         
           
             $country = $territory;
@@ -4583,8 +4591,8 @@ STR;
             {  
                 
                  // National Top Videos list and Downloads functionality code 
-         // if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-                if(1) {
+          if (($national = Cache::read("nationalvideos".$territory."Page".$Page)) === false) {
+         //       if(1) {
             
                   
                 $country = $territory;
@@ -4686,12 +4694,12 @@ STR;
                 }                
                
                 //write in the cache                                   
-                Cache::write("nationalvideos".$territory."Page1", $nationalTopVideoDownload );
+                Cache::write("nationalvideos".$territory."Page".$Page, $nationalTopVideoDownload );
                //echo "Cache IS SET"."nationalvideos: "."nationalvideos".$territory."Page1"; 
                }               
        }else{
         
-            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page1");     
+            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page".$Page);     
        }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
                 
@@ -4720,20 +4728,19 @@ STR;
        // $prodId = $_POST['ProdID'];
         //$provider = $_POST['ProviderType'];
         
-        $prodId = '4530701';
-        $provider = 'ioda';
+       // $prodId = '4530701';
+       // $provider = 'ioda';
+       // $libId = $this->Session->read('library');
+       // $patId = $this->Session->read('patron');
         
-        //get user id
-//        $user = $this->Session->read('Auth.User.id');
-//        if(empty($user)){
-//                $user = $this->Session->read('patron');
-//        }
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
-        
-        /**
-          creates log file name
-        */
+        $result =  $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');
+        return $result;
+        die;
+        print_r($result);
+        die;
+       
+        /*
+       
         $log_name = 'song_streaming_web_log_'.date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
@@ -4768,7 +4775,7 @@ STR;
         
         
         //check the streaming validation
-        $validationResult = $this->Streaming->validateStreaming($prodId, $provider);
+        $validationResult = $this->Streaming->validateStreaming($prodId, $provider,$libId,$patId);
         $validationFlag = $validationResult[0];
         $validationMessage = $validationResult[1];
         $validationIndex = $validationResult[2];
@@ -4799,7 +4806,7 @@ STR;
                          $updateArr['consumed_time'] = 0;
                          $updateArr['modified_date'] = date('Y-m-d H:i:s');
                          
-                         $log_data .= "update record from current date : modified_date  : ".$modified_date.PHP_EOL;        
+                         $log_data .= "update Streaming_records table(todays first request) :- modified_date  : ".$modified_date.PHP_EOL;        
                          
                          $this->StreamingRecords->setDataSource('master');
                          //update the date and reset the consumed time as the day start
@@ -4825,18 +4832,18 @@ STR;
             }
                 
                
-            $songDuration = 300;
             
+            $songDuration = $this->Streaming->checkSongExists($prodId, $provider);
            
             
-            $validateStreamingInfoResult = $this->Streaming->validateStreamingInfo($libId, $patId);
+            $validateStreamingInfoResult = $this->Streaming->validateStreamingDurationInfo($libId, $patId,$songDuration);
             $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
             $validateStreamingInfoMessage = $validateStreamingInfoResult[1];
             $validateStreamingInfoIndex = $validateStreamingInfoResult[2];
             
             if($validateStreamingInfoFlag){
                 
-               $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
+                $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
 
                 //update streaming_record table table
                 $cdate = date('Y:m:d H:i:s');
@@ -4846,6 +4853,7 @@ STR;
                       $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
                 }
                 $this->StreamingRecords->setDataSource('default');
+                $currentDate= date('Y-m-d H:i:s');
                 
                 //insert the patron record if not exist in the streaming records table
                 $insertArr = Array();
@@ -4854,14 +4862,14 @@ STR;
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $songDuration;
-                $insertArr['modified_date'] = date('Y-m-d H:i:s');
-                $insertArr['createdOn'] = date('Y-m-d H:i:s');
+                $insertArr['modified_date'] = $currentDate;
+                $insertArr['createdOn'] = $currentDate;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
                 $this->StreamingHistory->setDataSource('master');
                 if($this->StreamingHistory->save($insertArr)){
-                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
-                  $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
+                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
+                  $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
                   $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
                   $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
                   $this->createStreamingLog($log_data, $log_name);
@@ -4880,9 +4888,7 @@ STR;
             }
 
         } else {        
-          /*
-            complete records with validation fail
-          */
+         
           $log_data .= PHP_EOL."error|".$validationMessage."|".$validationIndex.PHP_EOL;
           $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
           $this->createStreamingLog($log_data, $log_name);          
@@ -4891,25 +4897,11 @@ STR;
         
         }
         exit;
+        
+        */
     }
     
-    /*
-     Function Name : createStreamingLog
-     Desc : function used for creating logs for streaming song
-     * 
-     * @param $log_data String  'complete logs string' 
-     * @param $log_name String  'daily create log file name'     
-     * 
-     * @return mix result
-    */
-    function createStreamingLog($log_data,$log_name){
-        
-        //check log create condition on or off
-        $streamingLogFlag = Configure::read('App.streaming_log');
-        if($streamingLogFlag == 'on'){
-            $this->log($log_data, $log_name);
-        }
-    }    
+    
     
 }
 ?>

@@ -43,7 +43,7 @@ Class AuthRequestComponent extends Object
 		$result = curl_exec($ch);
                 $this->log($str."---".$result,"auth");
                 
-                //echo "Result: ".$result;
+               // echo "Result: ".$result;
                 
                 if($result === false)
                 {

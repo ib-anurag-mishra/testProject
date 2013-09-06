@@ -213,14 +213,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                             <ul>
                                 <?php 
                                 foreach($artistVideoList as $key => $value){
-                                            
-                                            // $video_img = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                             //$video_img =  Configure::read('App.Music_Path').$video_img;
-
-                                               // $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                               // $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
-					?>  
+                                ?>  
 					<li>
 						
 						<div class="video-container">
@@ -233,6 +226,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
+                $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"],$value["Video"]["provider_type"]);
+                $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+                $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
+                $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
 
                     $value['Video']['status'] = 'avail1';
                     if($value['Video']['status'] != 'avail' ) {
@@ -241,11 +238,16 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                             <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                             <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
-                            <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="top-10-download-now-button" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                            <span class="beforeClick" id="download_video_<?php echo $value["Video"]["ProdID"]; ?>">
+                                <![if !IE]>
+                                    <a title="<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?> href='#' onclick='return wishlistVideoDownloadOthers("<?php echo $$value["Video"]["ProdID"]; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value["Video"]["provider_type"]; ?>");'><?php __('Download');?></a>
+                                <![endif]>
+                                <!--[if IE]>
+                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $value["Video"]["ProdID"]; ?>","0","<?php echo $value["Video"]['provider_type']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
+                                <![endif]-->
                             </span>
-                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
-                            <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                            <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                            <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                             </form>
                             </span>
                             <?php	
@@ -298,19 +300,13 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
     <?php
     }
     ?>
-							<!-- <a class="top-100-download-now-button" href="#">Download Now</a> -->
-							
 								
 								<?php if($this->Session->read("patron")){ ?> 
 														
 														<a class="add-to-playlist-button" href="#"></a>
 														
 														<div class="wishlist-popover">
-															<!--
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-															-->
-                                                                                                                        <?php
+															<?php
 
                                                                                                                         $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
@@ -325,14 +321,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                                                                                                         <?php	
                                                                                                                         }
 
-                                                                                                                        ?>
-															
-															<!-- <div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div> -->
-															
+                                                                                                                        ?>														
 														</div>
                                                                                                   <?php } ?>
 								
@@ -341,7 +330,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 						</div>
 						<div class="song-title">
 							<a href="javascript:void(0);">
-                                                        <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                                        <?php 
                                                                 if(strlen($value['Video']['VideoTitle'])>25)
                                                                 echo substr($value['Video']['VideoTitle'],0,25)."..."; 
                                                                 else echo $value['Video']['VideoTitle'];
@@ -365,17 +354,5 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                          </div>
                     </div>
                             <?php } ?>
-<?php  /*$pages = $this->Paginator->counter(array('format' => '%pages%')); 
-if($pages > 1) {
-?>
-
-<div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-    
- <?php } */?>
- 
-<br class="clr">
+            <br class="clr">
 </section>
