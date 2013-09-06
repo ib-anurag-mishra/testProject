@@ -20,7 +20,7 @@
     }
 ?>
 <fieldset>
-<legend>Generate Consortium Report <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
+<legend>Generate Consortium Report <?php if($libraryID != "") { echo "for \"".$this->getTextEncode($libraryname)."\""; }?></legend>
     <div class="formFieldsContainer">
         <div class="formFieldsbox">
             <div id="form_step" class="form_steps">
@@ -132,14 +132,14 @@
                                 ?>
                                     <tr>
 										<td><?php echo $i; ?></td>
-                                        <td><?php echo $libraryid['Library']['library_name']; ?></td>
-											<?php
-											if($libraryid['Library']['library_unlimited'] == 1){
-												$text = "Unlimited";
-											} else {
-												$text = $libraryid['Library']['library_available_downloads'];
-											}
-											?>
+                                        <td><?php echo $this->getTextEncode($libraryid['Library']['library_name']); ?></td>
+                                        <?php
+                                        if($libraryid['Library']['library_unlimited'] == 1){
+                                                $text = "Unlimited";
+                                        } else {
+                                                $text = $libraryid['Library']['library_available_downloads'];
+                                        }
+                                        ?>
                                         <td align="center"><?php echo $text; ?></td>
                                     </tr>
                                 <?php
@@ -168,16 +168,16 @@
                                 ?>
                                     <tr>
 										<td><?php echo $i; ?></td>
-                                        <td><?php echo $library->getLibraryName($download['Download']['library_id']); ?></td>
+                                        <td><?php echo $this->getTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
                                         <td><?php 
-											if($download['Download']['email']!=''){
-												echo $download['Download']['email'];
-											}else{
-												echo $download['Download']['patron_id'];
-											}?>
+                                            if($download['Download']['email']!=''){
+                                                    echo $download['Download']['email'];
+                                            }else{
+                                                    echo $download['Download']['patron_id'];
+                                            }?>
 										</td>
-                                        <td><?php echo $download['Download']['artist']; ?></td>
-                                        <td><?php echo $download['Download']['track_title']; ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
                                     </tr>
                                 <?php
@@ -204,14 +204,14 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-										<td><?php 
-										if($patronDownload['Download']['email']!=''){
-											echo $patronDownload['Download']['email'];
-										}else{
-											echo $patronDownload['Download']['patron_id'];
-										}?>
-										</td>
-                                        <td><?php echo $library->getLibraryName($patronDownload['Download']['library_id']); ?></td>
+                                        <td><?php 
+                                        if($patronDownload['Download']['email']!=''){
+                                                echo $patronDownload['Download']['email'];
+                                        }else{
+                                                echo $patronDownload['Download']['patron_id'];
+                                        }?>
+                                        </td>
+                                        <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); ?></td>
                                         <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
                                     </tr>
                                 <?php
@@ -237,7 +237,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php echo $genreDownload['Genre']['Genre']; ?></td>
+                                        <td><?php echo $this->getTextEncode($genreDownload['Genre']['Genre']); ?></td>
                                         <td align="center"><?php echo $genreDownload[0]['totalProds']; ?></td>
                                     </tr>
                                 <?php
