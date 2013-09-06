@@ -406,7 +406,7 @@ Class StreamingComponent extends Object
     function checkStreamingInfoExist($libId,$patId) {
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
-        $results = $streamingRecordsInstance->find('first',array('conditions' => array('patron_id'=> $patId,'library_id' => $libId),'fields' => 'id'));
+        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId),'fields' => 'id'));
         if(!empty($results)) {
             return $results['StreamingRecords']['id'];
         }
@@ -450,7 +450,7 @@ Class StreamingComponent extends Object
     function getPatronUsedStreamingTime($libId,$patId) {
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
-        $results = $streamingRecordsInstance->find('first',array('conditions' => array('patron_id'=> $patId,'library_id' => $libId,'date(modified_date)=date(now())'),'fields' => 'consumed_time'));
+        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId,'date(modified_date)=date(now())'),'fields' => 'consumed_time'));
         if(!empty($results)) {
             return $results['StreamingRecords']['consumed_time'];
         } else {
