@@ -171,15 +171,15 @@ Class StreamingComponent extends Object
                 if($streamingHistoryInstance->save($insertArr)){
                     $queryInsertFlag = 1;
                     $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
-                    $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
-                    $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
+                    $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
+                    $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
                     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
                     $this->createStreamingLog($log_data, $log_name);
                 }
                 $streamingHistoryInstance->setDataSource('default');
                 if( ($queryUpdateFlag == 1) && ($queryUpdateFlag == 1) ){
                      $updatedTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
-                     return array('suces',$validateStreamingInfoMessage,$updatedTimeDuration);                  
+                     return array('success',$validateStreamingInfoMessage,$updatedTimeDuration);                  
                 }                
                 exit;
                 
