@@ -186,7 +186,7 @@
     $fill = 0;
 	
  
-    $arr_all_library_downloads_data[] = array(count($downloads)+count($videoDownloads));
+    $arr_all_library_downloads_data[] = array(count($downloads)+(count($videoDownloads)*2));
 
     
     foreach($arr_all_library_downloads_data as $k=>$row) {
@@ -257,7 +257,7 @@
     $key = 1;
     foreach($arr_all_library_downloads as $LibraryName => $DownloadCount) {
       
-      $arr_all_library_downloads_data[] = array($key, $LibraryName, $DownloadCount+$arr_all_video_library_downloads[$LibraryName]);
+      $arr_all_library_downloads_data[] = array($key, $LibraryName, $DownloadCount+($arr_all_video_library_downloads[$LibraryName]*2));
       $key++;
     }
     

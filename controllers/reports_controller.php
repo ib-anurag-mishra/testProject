@@ -606,8 +606,7 @@ Class ReportsController extends AppController
                   if($library_id == "all") {
                     $arr_all_video_library_downloads = $this->Videodownload->getAllLibraryDownloadsMonth($library_id, $this->data['Report']['date'], $territory);
                   }
-                  $videoDownloads = $this->Videodownload->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);  
-
+                  $videoDownloads = $this->Videodownload->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);  
                   $patronDownloads = $this->Downloadpatron->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                   if($library_id != "all"){
                         $patronBothDownloads = $this->Downloadpatron->getMonthsBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);

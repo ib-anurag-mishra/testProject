@@ -39,7 +39,7 @@ if(empty($arr_all_library_downloads)) {
   $line = array('Total Downloads');
   $csv->addRow($line);
 
-  $line = array(count($downloads)+count($videoDownloads));
+  $line = array(count($downloads)+(count($videoDownloads)*2));
   $csv->addRow($line);
 
   $line = array('', '', '', '', '', '');
@@ -55,7 +55,7 @@ if(empty($arr_all_library_downloads)) {
   $key=1;
   foreach($arr_all_library_downloads as $LibraryName => $DownloadCount) {
    
-    $line = array($key, $LibraryName, $DownloadCount+$arr_all_video_library_downloads[$LibraryName]);
+    $line = array($key, $LibraryName, $DownloadCount+($arr_all_video_library_downloads[$LibraryName]*2));
     $csv->addRow($line);
     $key++;
   }
