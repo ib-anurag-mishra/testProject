@@ -167,20 +167,37 @@ foreach($credential as $k=>$v){
 			$result = curl_exec($ch);
 		}
 		echo $libraryArr[0]['id']."\n\n";
-		if(strpos($result,"successful") != false){
-		//	echo $libraryArr[0]['library_name']. " is working";
-		//	$working[$v['library_id']][$libraryArr[0]['library_name']] = 'working';
+		
+                if(strpos($result,"successful") != false){
+			echo $libraryArr[0]['library_name']. " is working";
+			//$working[$v['library_id']][$libraryArr[0]['library_name']] = 'working';
+                        $login .= $libraryArr[0]['library_name']." is working\n\n\n\n";
 		}
 		else{
-			if($libraryArr[0]['library_name']){
+			/*if($libraryArr[0]['library_name']){
 				$login .= $libraryArr[0]['library_name']." is not working\n\n\n\n";
 			//	$notWorking[$v['library_id']][$libraryArr[0]['library_name']] = "not working";
 				echo $libraryArr[0]['library_name']." is not working\n\n\n\n";
-			}
+			}*/
+                    
+                        if($libraryArr[0]['library_name']){
+					$arr = xml2array($result);
+					//echo "<pre>"; print_r($arr['posts']['message']);
+					if(($libraryArr[0]['library_authentication_method'] != 'mdlogin_reference') && ($libraryArr[0]['library_authentication_method'] != 'mndlogin_reference')){
+					$message = $arr['posts']['message'];
+}
+					$login .= $libraryArr[0]['library_name']." is not working.".$message."\n\n\n\n";
+				//	$notWorking[$v['library_id']][$libraryArr[0]['library_name']] = "not working";
+					echo $libraryArr[0]['library_name']." is not working<BR>".$message;
+				}
+                    
+                    
 		}
 	}
 }
 //print $login;exit tech@m68interactive.com;
 echo mail('tech@m68interactive.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
 //print "<pre>";print_r($working);print_r($notWorking);exit;
+
+
 ?>
