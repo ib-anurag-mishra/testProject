@@ -136,7 +136,38 @@ pageTracker._trackPageview();
                                     position:"right",
                                     size:150
                             },
-                            repeat: false   
+                        events: {
+                        onPlaylistItem: function(event) {
+                        var currentItem = jwplayer("myElement").getPlaylistIndex();
+                        if(currentItem != 0){
+                            
+                            var item = $('#play_item_'+currentItem).text();
+                            if(item.length){
+                                var songData = item.split(',');
+                                var prodId = songData[0];
+                                var providerType = songData[1];
+                            }
+                            var postURL = webroot+'queuelistdetails/getPlaylistData';
+                            $.ajax({
+                                type: "POST",
+                                cache:false,
+                                url: postURL,
+                                data: {prodId : prodId,providerType : providerType}
+                            }).done(function(data){
+                                    var json = JSON.parse(data);
+                                    if(json.error){
+                                        jwplayer("myElement").stop();
+                                        alert(json.error[1]);
+                                    }else if(json.success){
+                                        jwplayer("myElement").play();
+                                    }
+                            })
+                            .fail(function(){
+                                alert('Ajax Call to Validate NextPlaylistItem has been failed');
+                            });                              
+                        }
+                        }},
+                        repeat: false   
                     });                
 //                $('.play-queue-btn').click(function(){
 //                    var files = [{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get funky","description":"Daft Punk"},{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get Lucky1","description":"Daft Punk1"}];                
