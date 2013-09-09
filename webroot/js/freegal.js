@@ -1519,7 +1519,8 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                     jwplayer().load([{
                       file: songFile,
                       title: songTitle
-                    }]);                    
+                    }]);
+                    jwplayer("myElement").play();
                 }
         })
         .fail(function(){
@@ -1553,7 +1554,8 @@ $(document).ready(function (){
                     playlist = JSON.parse(playlist);
                     if(playlist.length){
                         jwplayer("myElement").load(playlist);
-                    }                   
+                    }
+                    jwplayer("myElement").play();
                 }
         })
         .fail(function(){
