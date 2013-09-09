@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 set_time_limit(0);
 include 'functions.php';
-$sql = 'SELECT * FROM `credentials` WHERE library_id NOT IN(20,22,37,49,44,68,69,79,147,170,419,497,477,81,82,85,97,116,155,163,244,267,327,328,168,169,108,109,210,216,222,224,228,232,234,235,242,253,262,282,283,284,351,378,385,408,425,426,427,428,392,429,456,473,465,481) Limit 10';
+$sql = 'SELECT * FROM `credentials` WHERE library_id NOT IN(20,22,37,49,44,68,69,79,147,170,419,497,477,81,82,85,97,116,155,163,244,267,327,328,168,169,108,109,210,216,222,224,228,232,234,235,242,253,262,282,283,284,351,378,385,408,425,426,427,428,392,429,456,473,465,481) Limit 50';
 //$sql = 'SELECT * FROM `credentials` WHERE library_id NOT IN (109,425,426,79)';
 $result = mysql_query($sql);
 while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
