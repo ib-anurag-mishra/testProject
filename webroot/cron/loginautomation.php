@@ -186,7 +186,7 @@ foreach($credential as $k=>$v){
 					if(($libraryArr[0]['library_authentication_method'] != 'mdlogin_reference') && ($libraryArr[0]['library_authentication_method'] != 'mndlogin_reference')){
 					$message = $arr['posts']['message'];
 }
-					$login .= $libraryArr[0]['library_name']." is not working\n\n\n\n";
+					$login .= $libraryArr[0]['library_name']." is not working.".$message."\n\n\n\n";
 				//	$notWorking[$v['library_id']][$libraryArr[0]['library_name']] = "not working";
 					echo $libraryArr[0]['library_name']." is not working<BR>".$message;
 				}
