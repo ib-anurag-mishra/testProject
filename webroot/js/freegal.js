@@ -1564,9 +1564,4 @@ $(document).ready(function (){
   
               
     });
-    
-    jwplayer("myElement").onPlaylistItem(function(){
-        alert('in');
-        
-    });
 });
