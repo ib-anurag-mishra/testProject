@@ -10,7 +10,8 @@ File Description : This file is used to establish connection with the data base
 //$conn = mysql_connect("192.168.2.178","infobeans","infobeans");
 //mysql_select_db("fmusic", $conn);
 
-$conn = mysql_connect("192.168.100.114","freegal_prod","}e47^B1EO9hD");
+//$conn = mysql_connect("192.168.100.114","freegal_prod","}e47^B1EO9hD");
+$conn = mysql_connect("10.181.56.177","freegal_test","c45X^E1X7:TQ");
 mysql_select_db("freegal", $conn);
 
 ?>

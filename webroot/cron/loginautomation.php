@@ -181,6 +181,7 @@ foreach($credential as $k=>$v){
 	}
 }
 //print $login;exit tech@m68interactive.com;
-echo mail('tech@m68interactive.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
+//echo mail('tech@m68interactive.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
+echo mail('kushal.pogul@infobeans.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
 //print "<pre>";print_r($working);print_r($notWorking);exit;
 ?>
