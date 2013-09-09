@@ -95,7 +95,7 @@ class QueueListDetailsController extends AppController{
         $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
         foreach($queue_list_array as $k => $v)
          {
-             $filePath = shell_exec('perl files/tokengen_artwork '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+             $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
              $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
              $queue_list_array[$k]['streamUrl'] = $streamUrl;            
          }        
@@ -143,7 +143,7 @@ class QueueListDetailsController extends AppController{
             $minutes        =   $temp_arr[0];
             $seconds        =   $temp_arr[1];
             $total_seconds +=   $minutes*60+$seconds;
-            $filePath = shell_exec('perl files/tokengen_artwork ' . $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+            $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
             $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
             $queue_list_array[$k]['streamUrl'] = $streamUrl;            
         }
