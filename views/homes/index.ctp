@@ -160,7 +160,7 @@ $("#top-100-videos-grid").scroll(function(){
                     ?>
                     <li>
                     <div class="top-100-songs-detail">
-                        <div class="song-cover-container">
+                        <div class="song-cover-container no-ajaxy">
                             <a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
                             <div class="top-100-ranking"><?php
                                 $slNo = ($i + 1);
