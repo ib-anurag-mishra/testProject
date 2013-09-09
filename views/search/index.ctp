@@ -826,6 +826,7 @@ if ($type != 'all') {
             $reverseSortOrder = (($sortOrder=='asc')?'desc':'asc');
         ?>
     <section class="tracklist-container">
+    	<h5>Songs</h5>
         <section class="tracklist-header clearfix">
             <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>"><span class="artist">Artist</span></a>
             <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>"><span class="composer">Composer</span></a>
