@@ -156,10 +156,9 @@ pageTracker._trackPageview();
                             }).done(function(data){
                                     var json = JSON.parse(data);
                                     if(json.error){
-                                        jwplayer("myElement").stop();
+                                        $(".player").remove();
                                         alert(json.error[1]);
                                     }else if(json.success){
-                                        jwplayer("myElement").play();
                                     }
                             })
                             .fail(function(){
