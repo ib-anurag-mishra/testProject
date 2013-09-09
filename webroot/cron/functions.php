@@ -205,7 +205,7 @@ function resetDownloads()
         if(($resultsArr['library_available_downloads'] > 0) && ($resultsArr['library_download_limit'] > $resultsArr['library_current_downloads'])){		
             $qry = "UPDATE wishlists SET `delete_on` = '".$nextDay."' WHERE `library_id` = ".$libraryId;		
             mysql_query($qry);
-        }
+        } 
  * 
  */
     }
@@ -265,7 +265,6 @@ function sendFile($src,$dst)
 		}
 	}
 }
-
 
 function xml2array($contents, $get_attributes=1, $priority = 'tag') {
     if(!$contents) return array();
@@ -390,6 +389,5 @@ function xml2array($contents, $get_attributes=1, $priority = 'tag') {
     
     return($xml_array);
 }
-
 
 ?>
