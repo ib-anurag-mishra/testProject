@@ -1514,7 +1514,6 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                 if(json.error){
                     var result = json.error;
                     alert(result[1]);
-                    exit;
                 }else if(json.success){
                     jwplayer().load([{
                       file: songFile,
@@ -1548,7 +1547,6 @@ $(document).ready(function (){
                 var json = JSON.parse(data);
                 if(json.error){
                     alert(json.error[1]);
-                    exit;
                 }else if(json.success){
                     playlist = $('#playlist_data').text();
                     playlist = JSON.parse(playlist);
