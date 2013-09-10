@@ -126,8 +126,8 @@ $("#top-100-videos-grid").scroll(function(){
                 </li>
             </ul>
         </nav>
-        <div class="grids active">
-            <div id="top-100-songs-grid" class="top-100-grids horiz-scroll active">
+        <div class="grids">
+            <div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
                 <ul id="nationalSongsRecord" style="width:29064px;">
                     <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){
                                 $j = 0;
