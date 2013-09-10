@@ -165,7 +165,7 @@ pageTracker._trackPageview();
                                 alert('Ajax Call to Validate NextPlaylistItem has been failed');
                             });                              
                         }
-                        }},
+                        },
                         onPlaylistComplete:function(){
                             var item = $('#play_item_1').text();
                             if(item.length){
@@ -190,7 +190,7 @@ pageTracker._trackPageview();
                             .fail(function(){
                                 alert('Ajax Call to Validate Playlist has been failed');
                             });                              
-                        },
+                        }},
                         repeat: false   
                     });                
 //                $('.play-queue-btn').click(function(){
