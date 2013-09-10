@@ -166,6 +166,31 @@ pageTracker._trackPageview();
                             });                              
                         }
                         }},
+                        onPlaylistComplete:function(){
+                            var item = $('#play_item_1').text();
+                            if(item.length){
+                                var songData = item.split(',');
+                                var prodId = songData[0];
+                                var providerType = songData[1];
+                            }
+                            var postURL = webroot+'queuelistdetails/getPlaylistData';
+                            $.ajax({
+                                type: "POST",
+                                cache:false,
+                                url: postURL,
+                                data: {prodId : prodId,providerType : providerType}
+                            }).done(function(data){
+                                    var json = JSON.parse(data);
+                                    if(json.error){
+                                        $(".player").remove();
+                                        alert(json.error[1]);
+                                    }else if(json.success){
+                                    }
+                            })
+                            .fail(function(){
+                                alert('Ajax Call to Validate Playlist has been failed');
+                            });                              
+                        },
                         repeat: false   
                     });                
 //                $('.play-queue-btn').click(function(){
