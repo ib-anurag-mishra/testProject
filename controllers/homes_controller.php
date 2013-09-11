@@ -357,7 +357,7 @@ STR;
                                  ), "1 = 1 GROUP BY Album.ProdID"
                              ),
                             'fields' => array(
-                                'Album.ProdI',
+                                'Album.ProdID',
                                 'Album.Title',
                                 'Album.ArtistText',
                                 'Album.AlbumTitle',
@@ -393,7 +393,7 @@ STR;
             } else {
                     $featured = array();
             }
-            echo "<br>Query2: ".$this->Album->lastQuery();
+            //echo "<br>Query2: ".$this->Album->lastQuery();
             foreach($featured as $k => $v){
 
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
