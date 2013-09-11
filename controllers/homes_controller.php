@@ -321,7 +321,7 @@ STR;
         //featured artist slideshow code start
         
         //if(1){
-        //if (($artists = Cache::read("featured".$country)) === false) {
+        if (($artists = Cache::read("featured".$country)) === false) {
            
             
             //get all featured artist and make array
@@ -352,7 +352,7 @@ STR;
                             'conditions' =>array(
                                 'and' =>array(
                                     array(
-                                        "Country.Territory" => $territory, "(Album.ProdI, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"
+                                        "Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"
                                     ),
                                  ), "1 = 1 GROUP BY Album.ProdID"
                              ),
@@ -393,7 +393,7 @@ STR;
             } else {
                     $featured = array();
             }
-            echo "<br>Query2: ".$this->Album->lastQuery();
+            //echo "<br>Query2: ".$this->Album->lastQuery();
             foreach($featured as $k => $v){
 
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
@@ -403,7 +403,7 @@ STR;
             
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
-        //}
+        }
         
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
