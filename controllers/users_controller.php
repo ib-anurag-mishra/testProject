@@ -1136,9 +1136,8 @@ Class UsersController extends AppController
                  
                 
 		$this->set('Patron', $Patron);
-		$this->set('password', $password);
-		$this->Email->to = 'nagesh4group@gmail.com';
-                //$this->Email->to = $Patron['User']['email'];
+		$this->set('password', $password);		
+                $this->Email->to = $Patron['User']['email'];
 		
                 $this->Email->from = Configure::read('App.adminEmail');
 		$this->Email->fromName = Configure::read('App.fromName');
