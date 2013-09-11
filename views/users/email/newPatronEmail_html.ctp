@@ -4,9 +4,12 @@
    Password: <?php echo $password; ?></p>
    
  <p>Please copy the link and paste in the address bar to login to the site.</p>  
- <p><?php 
- $libraryDetails = $library->getLibraryDetails($Patron['User']['library_id']);
- echo 'https://'.$libraryDetails['Library']['library_subdomain'].'.'.Configure::read('App.name').'/users/login'; 
+ <p><?php
+ if($library_subdomain){
+     echo 'https://'.$library_subdomain.'.'.Configure::read('App.name').'/users/login';
+ }else{
+    echo 'https://www.'.Configure::read('App.name').'/users/login';
+ }
  ?></p>
    
  <p>Thanks<br />
