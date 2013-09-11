@@ -177,8 +177,8 @@ class QueueListDetailsController extends AppController{
        $provider = $_POST['providerType'];
        $libId = $this->Session->read('library');
        $patId = $this->Session->read('patron');
-       $this->Session->destroy('queuePlaying');
-       $this->Session->destroy('songPlaying');
+       $this->Session->delete('queuePlaying');
+       $this->Session->delete('songPlaying');
        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');
        if(!empty($validationResponse)){
            if($validationResponse[0] == 'error'){
