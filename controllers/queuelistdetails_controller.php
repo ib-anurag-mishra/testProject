@@ -99,14 +99,13 @@ class QueueListDetailsController extends AppController{
             $trackDetails = $this->Queue->getNowstreamingSongDetails($value['ProdID'] , $value['providerType']);
             $queue_list_array[] = $trackDetails;
         }
-        print_r($queue_list_array);exit;
-        $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
         foreach($queue_list_array as $k => $v)
          {
-             $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+             $filePath = shell_exec('perl files/tokengen_streaming '. $v[0]['SongFile']['SCdnPath']."/".$v[0]['SongFile']['SSaveAsName']);
              $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
-             $queue_list_array[$k]['streamUrl'] = $streamUrl;            
-         }        
+             $queue_list_array[$k][0]['streamUrl'] = $streamUrl;            
+         } 
+         print_r($queue_list_array);exit;
         $this->set('queue_list_array',$queue_list_array); 
         $this->set('queue_id',$this->params['pass'][0]); 
     }
