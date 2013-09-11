@@ -135,7 +135,7 @@ Class QueueComponent extends Object
             'conditions' => array('Songs.ProdID = '.$prodId, 'Songs.provider_type = '.$providerType),                
           )
         );
-        return $queueDetail;
+        return $nowStreamingSongDetail;
         
         
   }
