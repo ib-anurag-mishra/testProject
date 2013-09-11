@@ -132,7 +132,7 @@ Class QueueComponent extends Object
               ),           
             ),
             'recursive' => -1,
-            'conditions' => array('Songs.ProdID = '.$prodId, 'Songs.provider_type = '.$providerType),                
+            'conditions' => array('Songs.ProdID = '.$prodId, 'Songs.provider_type = '.'"'.$providerType.'"'),                
           )
         );
         return $nowStreamingSongDetail;
