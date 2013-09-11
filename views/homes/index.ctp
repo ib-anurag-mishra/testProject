@@ -409,7 +409,6 @@ $("#top-100-videos-grid").scroll(function(){
                 <div class="featured-grid horiz-scroll">
                         <ul style="width:3690px;">
                                 <?php
-print_r($featuredArtists);echo "Testing";
                 foreach($featuredArtists as $k => $v){
                         if(strlen($v['Album']['AlbumTitle']) > 14){
                                 $title = substr($v['Album']['AlbumTitle'], 0, 14)."..";
