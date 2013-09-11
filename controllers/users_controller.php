@@ -1120,8 +1120,10 @@ Class UsersController extends AppController
 		$Patron = $this->User->read(null,$id);
 		$this->set('Patron', $Patron);
 		$this->set('password', $password);
-		$this->Email->to = $Patron['User']['email'];
-		$this->Email->from = Configure::read('App.adminEmail');
+		$this->Email->to = 'nagesh4group@gmail.com';
+                //$this->Email->to = $Patron['User']['email'];
+		
+                $this->Email->from = Configure::read('App.adminEmail');
 		$this->Email->fromName = Configure::read('App.fromName');
 		$this->Email->subject = 'FreegalMusic - New patron account information';
 		$this->Email->smtpHostNames = Configure::read('App.SMTP');
@@ -1144,7 +1146,8 @@ Class UsersController extends AppController
 		$Patron = $this->User->read(null,$id);
 		$this->set('Patron', $Patron);
 		$this->set('password', $password);
-		$this->Email->to = $Patron['User']['email'];
+		//$this->Email->to = $Patron['User']['email'];
+                $this->Email->to = 'nagesh4group@gmail.com';
 		$this->Email->from = Configure::read('App.adminEmail');
 		$this->Email->fromName = Configure::read('App.fromName');
 		$this->Email->subject = 'FreegalMusic - Patron account password changed!!';
