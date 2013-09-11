@@ -138,7 +138,7 @@
 										}
 									?></a></div>
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
-					<a class="add-to-playlist-button no-ajaxy" href="/popup"></a>
+					<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 					
                                            <?php
                                              if($this->Session->read('patron')) { ?>
