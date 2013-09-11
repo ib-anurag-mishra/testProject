@@ -107,7 +107,7 @@ Class QueueComponent extends Object
                 'table' => 'Albums',
                 'alias' => 'Albums',
                 'foreignKey' => false,
-                'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
+                'conditions' => array('Albums.ProdID = Song.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
               ),
               array(
                 'type' => 'INNER',
@@ -128,7 +128,7 @@ Class QueueComponent extends Object
                 'table' => 'File',
                 'alias' => 'SongFile',
                 'foreignKey' => false,
-                'conditions' => array('Songs.FullLength_FileID = SongFile.FileID'),        
+                'conditions' => array('Song.FullLength_FileID = SongFile.FileID'),        
               ),           
             ),
             'recursive' => -1,
