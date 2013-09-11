@@ -96,7 +96,7 @@ class QueueListDetailsController extends AppController{
         $songArray = array(0 => array('ProdID' => 26117435, 'providerType' => 'sony'),1 => array('ProdID' => 26117435, 'providerType' => 'sony'));
         
         foreach($songArray as $value){
-            $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
+            $trackDetails = $this->Queue->getNowstreamingSongDetails($value['ProdID'] , $value['providerType']);
             $queue_list_array[] = $trackDetails;
         }
         print_r($queue_list_array);exit;
