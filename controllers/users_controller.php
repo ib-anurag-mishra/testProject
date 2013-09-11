@@ -1155,7 +1155,7 @@ Class UsersController extends AppController
    */
 
 	function _sendModifyPatronMail($id, $password) {
-		Configure::write('debug', 0);
+		Configure::write('debug', 2);
 		$this->Email->template = 'email/modifyPatronEmail';
 		$this->User->recursive = -1;
 		$Patron = $this->User->read(null,$id);
