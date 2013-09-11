@@ -1162,7 +1162,7 @@ Class UsersController extends AppController
                 print_r($Patron);
                 //check the library subdomain
                 if(isset($Patron['User']['library_id']) && ($Patron['User']['library_id']!=0) && ($Patron['User']['library_id']!='')){
-                    $library_data = $this->Library->find('first', array('conditions' => array('id' => $Patron['User']['library_id']))); 
+                    $library_data = $this->Library->find('first', array('conditions' => array('Library.id' => $Patron['User']['library_id']))); 
                      print_r($library_data);
                     if(isset($library_data['Library']['library_subdomain']) && $library_data['Library']['library_subdomain']!=''){
                         $this->set('library_subdomain', $library_data['Library']['library_subdomain']);
