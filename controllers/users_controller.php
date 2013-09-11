@@ -1118,6 +1118,21 @@ Class UsersController extends AppController
 		$this->Email->template = 'email/newPatronEmail';
 		$this->User->recursive = -1;
 		$Patron = $this->User->read(null,$id);
+                
+                //check the library subdomain
+                if(isset($Patron['User']['library_id']) && ($Patron['User']['library_id']!=0) && ($Patron['User']['library_id']!='')){
+                    $library_data = $this->Library->find('first', array('conditions' => array('id' => $Patron['User']['library_id']))); 
+                    if(isset($library_data['Library']['library_subdomain']) && $library_data['Library']['library_subdomain']!=''){
+                        $this->set('library_subdomain', $library_data['Library']['library_subdomain']);
+                    }else{
+                        $this->set('library_subdomain', 'www');
+                    }                    
+                }else{
+                    $this->set('library_subdomain', 'www');
+                }
+                                         
+                 
+                
 		$this->set('Patron', $Patron);
 		$this->set('password', $password);
 		$this->Email->to = 'nagesh4group@gmail.com';
@@ -1144,6 +1159,19 @@ Class UsersController extends AppController
 		$this->Email->template = 'email/modifyPatronEmail';
 		$this->User->recursive = -1;
 		$Patron = $this->User->read(null,$id);
+                
+                //check the library subdomain
+                if(isset($Patron['User']['library_id']) && ($Patron['User']['library_id']!=0) && ($Patron['User']['library_id']!='')){
+                    $library_data = $this->Library->find('first', array('conditions' => array('id' => $Patron['User']['library_id']))); 
+                    if(isset($library_data['Library']['library_subdomain']) && $library_data['Library']['library_subdomain']!=''){
+                        $this->set('library_subdomain', $library_data['Library']['library_subdomain']);
+                    }else{
+                        $this->set('library_subdomain', 'www');
+                    }                    
+                }else{
+                    $this->set('library_subdomain', 'www');
+                }
+                
 		$this->set('Patron', $Patron);
 		$this->set('password', $password);
 		//$this->Email->to = $Patron['User']['email'];
