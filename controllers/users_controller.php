@@ -1119,9 +1119,11 @@ Class UsersController extends AppController
 		$this->User->recursive = -1;
 		$Patron = $this->User->read(null,$id);
                 
+                $this->Library->recursive = -1;
                 //check the library subdomain
                 if(isset($Patron['User']['library_id']) && ($Patron['User']['library_id']!=0) && ($Patron['User']['library_id']!='')){
-                    $library_data = $this->Library->find('first', array('conditions' => array('id' => $Patron['User']['library_id']))); 
+                    $library_data = $this->Library->find('first', array('conditions' => array('Library.id' => $Patron['User']['library_id']),'fields'=>array('library_subdomain'))); 
+                     
                     if(isset($library_data['Library']['library_subdomain']) && $library_data['Library']['library_subdomain']!=''){
                         $this->set('library_subdomain', $library_data['Library']['library_subdomain']);
                     }else{
