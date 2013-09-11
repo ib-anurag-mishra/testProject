@@ -407,7 +407,7 @@ STR;
         
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
-            
+        print_r($featured);
         $this->set('featuredArtists', $featured);
         
         /*
