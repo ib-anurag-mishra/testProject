@@ -1539,13 +1539,12 @@ $(document).ready(function (){
             var providerType = songData[1];
         }
         var queueId = $('#hid_Plid').val();
-        alert(queueId);
         var postURL = webroot+'queuelistdetails/getPlaylistData';
         $.ajax({
             type: "POST",
             cache:false,
             url: postURL,
-            data: {prodId : prodId,providerType : providerType}
+            data: {prodId : prodId,providerType : providerType,queueId : queueId}
         }).done(function(data){
                 var json = JSON.parse(data);
                 if(json.error){
