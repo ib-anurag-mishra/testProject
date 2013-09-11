@@ -1538,6 +1538,8 @@ $(document).ready(function (){
             var prodId = songData[0];
             var providerType = songData[1];
         }
+        var queueId = $('#hid_Plid').val();
+        alert(queueId);
         var postURL = webroot+'queuelistdetails/getPlaylistData';
         $.ajax({
             type: "POST",
