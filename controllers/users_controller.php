@@ -770,9 +770,16 @@ Class UsersController extends AppController
    */
 
 	function admin_userform() {
-		if(!empty($this->params['named']['id'])){ //gets the values from the url in form  of array
-			$adminUserId = $this->params['named']['id'];
-			if(trim($adminUserId) != "" && is_numeric($adminUserId)){
+            $su_admin = $this->Auth->user();
+            $this->set('su_admin',$su_admin);
+            if("" == $this->data['User']['library_list']){
+                $lid = $_SESSION['lId'];
+            } else {
+                $lid = $this->data['User']['library_list'];
+            }
+            if(!empty($this->params['named']['id'])){ //gets the values from the url in form  of array
+                $adminUserId = $this->params['named']['id'];
+                        if(trim($adminUserId) != "" && is_numeric($adminUserId)){
 				$this->set('formAction','admin_userform/id:'.$adminUserId);
 				$this->set('formHeader','Edit User');
 				$this->set('getData', $this->User->getuserdata($adminUserId));
@@ -790,7 +797,12 @@ Class UsersController extends AppController
 						$this->data['User']['consortium'] = '';
 					}
 					$getData['Group']['id'] = $this->data['User']['type_id'];
-					$this->set('getData', $getData);
+                                        if($this->data['User']['type_id'] == 1){
+                                            $this->data['User']['library_id'] = 0;
+                                        } else {
+                                            $this->data['User']['library_id'] = $lid;
+                                        }
+                                        $this->set('getData', $getData);
 					$this->User->id = $this->data['User']['id'];
 					if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5"){
 						// do not update the password
@@ -803,8 +815,8 @@ Class UsersController extends AppController
 					}
 				}
 			}
-		}else{
-			$arr = array();
+		} else {
+                    	$arr = array();
 			$this->set('getData',$arr);
 			$this->set('formAction','admin_userform');
 			$this->set('formHeader','Create User');
@@ -821,12 +833,17 @@ Class UsersController extends AppController
 				}else{
 					$this->data['User']['consortium'] = '';
 				}
+                                if($this->data['User']['type_id'] == 1){
+                                    $this->data['User']['library_id'] = 0;
+                                } else {
+                                    $this->data['User']['library_id'] = $lid;
+                                }
 				$getData['Group']['id'] = $this->data['User']['type_id'];
 				$this->set('getData', $getData);
 				if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5"){
 					$this->data['User']['password'] = "";
 				}
-				$this->User->set($this->data['User']);
+                                $this->User->set($this->data['User']);
 				if($this->User->save()){
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 					$this->redirect('manageuser');
@@ -839,7 +856,12 @@ Class UsersController extends AppController
 		}
 		$this->set('options',$this->Group->getallusertype());
 		$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
-		$this->set('consortium', $consortium);
+                $library_del = array();
+		if(1 == $su_admin['User']['type_id']){
+                    $library_del = $this->Library->find('list', array('fields' => array('id','library_name'), 'order' => 'id ASC', 'conditions' => array('library_status' => 'active')));
+                }
+                $this->set('consortium', $consortium);
+                $this->set('library_del', $library_del);
 	}
 
    /*

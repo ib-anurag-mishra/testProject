@@ -6,7 +6,7 @@
  */
 ?>
        <?php
-			  $this->pageTitle = 'Admin';
+                $this->pageTitle = 'Admin';
               echo $this->Form->create('User', array( 'controller' => 'User','action' => $formAction));
 			  $options[6] = "Consortium";
               if(empty($getData))
@@ -73,14 +73,26 @@
                                    <?php       
                                    }
                                    ?>
-									<tr id="showConsortium" <?php if($getData['User']['consortium'] == ''){ ?>style="display:none" <?php }?>>
-										<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Consortium');?></td>
-										<td align="left">
-											<?php
-												echo $this->Form->input('consortium', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['User']['consortium']));
-											?>						
-										</td>
-									</tr>								   
+                                    <tr id="showConsortium" <?php if($getData['User']['consortium'] == ''){ ?>style="display:none" <?php }?>>
+                                            <td align="right" width="250"><?php echo $this->Form->label(null, 'Library Consortium');?></td>
+                                            <td align="left">
+                                                    <?php
+                                                            echo $this->Form->input('consortium', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['User']['consortium']));
+                                                    ?>						
+                                            </td>
+                                    </tr>								   
+                                    <tr>
+                                        <?php if(1 == $su_admin['User']['type_id']){?>
+                                        <td align="right" width="390"><?php echo $this->Form->label('Library Name');?></td>
+                                        <td align="left">
+                                            <?php
+                                                echo $this->Form->input('library_list', array('options' => $library_del, 'label' => False, 'div' => false, 'class' => 'select_fields', 'empty' => 'Select Library'));
+                                            ?>						
+                                        </td>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tr>
                                    <tr>
                                           <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
                                    </tr>
