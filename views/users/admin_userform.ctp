@@ -22,6 +22,11 @@
 			  if($getData['User']['consortium'] != ''){
 					$getData['Group']['id'] = 6;
 			  }
+                          if(0 == $getData['User']['library_id']){
+                              $def = 0;
+                          }else{
+                              $def = $getData['User']['library_id'];
+                          }
        ?>
        <fieldset>
               <legend><?php echo $formHeader;?></legend>
@@ -86,7 +91,7 @@
                                         <td align="right" width="390"><?php echo $this->Form->label('Library Name');?></td>
                                         <td align="left">
                                             <?php
-                                                echo $this->Form->input('library_list', array('options' => $library_del, 'label' => False, 'div' => false, 'class' => 'select_fields', 'empty' => 'Select Library'));
+                                                echo $this->Form->input('library_list', array('options' => $library_del, 'label' => False, 'div' => false, 'class' => 'select_fields', 'default' => $def, 'empty' => 'Select Library'));
                                             ?>						
                                         </td>
                                         <?php
