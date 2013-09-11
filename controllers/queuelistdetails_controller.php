@@ -92,6 +92,14 @@ class QueueListDetailsController extends AppController{
         $this->set('libraryDownload',$libraryDownload);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
+        
+        $songArray = array(0 => array('ProdID' => 26117435, 'providerType' => 'sony'),1 => array('ProdID' => 26117435, 'providerType' => 'sony'));
+        
+        foreach($songArray as $value){
+            $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
+            $queue_list_array[] = $trackDetails;
+        }
+        print_r($queue_list_array);exit;
         $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
         foreach($queue_list_array as $k => $v)
          {
