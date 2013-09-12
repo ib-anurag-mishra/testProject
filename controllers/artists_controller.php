@@ -121,6 +121,7 @@ Class ArtistsController extends AppController
                 $album_provider_type = '';
                 $album_prodid = 0;
                 $alb_det = explode('-',$this->data[ 'Artist' ][ 'album' ]);
+                print_r($_REQUEST);
                 print_r($this->data);die;
                 if(isset($alb_det[0])){
                     $album_prodid = $alb_det[0];
