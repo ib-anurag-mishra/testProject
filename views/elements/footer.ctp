@@ -158,8 +158,8 @@ pageTracker._trackPageview();
                             }).done(function(data){
                                     var json = JSON.parse(data);
                                     if(json.error){
-                                        $(".player").remove();
                                         alert(json.error[1]);
+                                        jwplayer().remove();
                                     }else if(json.success){
                                     }
                             })
@@ -188,8 +188,8 @@ pageTracker._trackPageview();
                                     }).done(function(data){
                                             var json = JSON.parse(data);
                                             if(json.error){
-                                                $(".player").remove();
                                                 alert(json.error[1]);
+                                                jwplayer().remove();                                                
                                             }else if(json.success){
                                             }
                                     })
@@ -210,8 +210,8 @@ pageTracker._trackPageview();
                                             var json = JSON.parse(data);
                                             if(json.error){
                                                 var result = json.error;
-                                                $(".player").remove();
                                                 alert(result[1]);
+                                                jwplayer().remove();
                                             }else if(json.success){
                                                 jwplayer("myElement").play(true);
                                             }

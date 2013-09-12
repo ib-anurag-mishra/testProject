@@ -1513,8 +1513,8 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                 var json = JSON.parse(data);
                 if(json.error){
                     var result = json.error;
-                    $(".player").remove();
                     alert(result[1]);
+                    jwplayer().remove();
                 }else if(json.success){
                     $('#songDetails').val(prodId+'-'+providerType);
                     jwplayer().load([{
@@ -1549,8 +1549,8 @@ $(document).ready(function (){
         }).done(function(data){
                 var json = JSON.parse(data);
                 if(json.error){
-                    $(".player").remove();
                     alert(json.error[1]);
+                    jwplayer().remove();
                 }else if(json.success){
                     playlist = $('#playlist_data').text();
                     playlist = JSON.parse(playlist);
