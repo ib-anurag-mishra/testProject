@@ -319,7 +319,7 @@ STR;
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
-        
+        Cache::delete("featured".$country);
         //if(1){
         if (($artists = Cache::read("featured".$country)) === false) {
            
