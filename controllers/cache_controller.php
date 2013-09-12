@@ -1074,7 +1074,7 @@ STR;
                              ), "1 = 1 GROUP BY Album.ProdID"
                          ),
                         'fields' => array(
-                            'Album.ProdID',
+                            'Album.ProdI',
                             'Album.Title',
                             'Album.ArtistText',
                             'Album.AlbumTitle',
