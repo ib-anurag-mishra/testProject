@@ -196,7 +196,6 @@ pageTracker._trackPageview();
                                     .fail(function(){
                                         alert('Ajax Call to Validate replay playlist has been failed');
                                     });                                      
-                                }
                                 }else{
                                     var postURL = webroot+'queuelistdetails/getPlaylistData';
                                     $songDetails = $('#songDetails').val().split('-');
@@ -221,6 +220,7 @@ pageTracker._trackPageview();
                                         alert('Ajax Call to Validate song has been failed');
                                     });                                     
                                 }
+                              }
                            },
                            onPlaylistComplete:function(){
                                 var postURL = webroot+'queuelistdetails/clearNowStreamingSession';
