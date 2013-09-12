@@ -169,9 +169,9 @@ foreach($credential as $k=>$v){
 		echo $libraryArr[0]['id']."\n\n";
 		
                 if(strpos($result,"successful") != false){
-			echo $libraryArr[0]['library_name']. " is working";
+		//	echo $libraryArr[0]['library_name']. " is working";
 			//$working[$v['library_id']][$libraryArr[0]['library_name']] = 'working';
-                        $login .= $libraryArr[0]['library_name']." is working\n\n\n\n";
+                      //  $login .= $libraryArr[0]['library_name']." is working\n\n\n\n";
 		}
 		else{
 			/*if($libraryArr[0]['library_name']){
@@ -198,6 +198,5 @@ foreach($credential as $k=>$v){
 //print $login;exit tech@m68interactive.com;
 echo mail('tech@m68interactive.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
 //print "<pre>";print_r($working);print_r($notWorking);exit;
-
 
 ?>
