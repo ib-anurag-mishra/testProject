@@ -352,7 +352,7 @@ STR;
                             'conditions' =>array(
                                 'and' =>array(
                                     array(
-                                        "Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"
+                                        "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")"
                                     ),
                                  ), "1 = 1 GROUP BY Album.ProdID"
                              ),
@@ -371,11 +371,6 @@ STR;
                                 'Genre' => array(
                                     'fields' => array(
                                         'Genre.Genre'
-                                    )
-                                ),
-                                'Country' => array(
-                                    'fields' => array(
-                                        'Country.Territory'
                                     )
                                 ),
                                 'Files' => array(
