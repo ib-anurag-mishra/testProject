@@ -94,7 +94,8 @@
                                             <div class="player">
                                                     <div class="player-container">
                                                             <div id="myElement">Loading the player...</div>
-                                                    </div>			
+                                                    </div>
+                                                <input type="hidden" name="songDetails" id="songDetails" value="" />
                                             </div>
                                         <?php } ?>
                                     <?php } ?>
@@ -198,11 +199,14 @@ pageTracker._trackPageview();
                                 }
                                 }else{
                                     var postURL = webroot+'queuelistdetails/getPlaylistData';
+                                    $songDetails = $('#songDetails').val().split('-');
+                                    prodId = $songDetails[0];
+                                    providerType = $songDetails[1];
                                     $.ajax({
                                         type: "POST",
                                         cache:false,
                                         url: postURL,
-                                        data: {prodId : prodId,providerType : providerType,repeatSong:1}
+                                        data: {prodId : prodId,providerType : providerType}
                                     }).done(function(data){
                                             var json = JSON.parse(data);
                                             if(json.error){

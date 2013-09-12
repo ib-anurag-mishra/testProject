@@ -1516,6 +1516,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                     $(".player").remove();
                     alert(result[1]);
                 }else if(json.success){
+                    $('#songDetails').val(prodId+'-'+providerType);
                     jwplayer().load([{
                       file: songFile,
                       title: songTitle
