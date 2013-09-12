@@ -321,7 +321,7 @@ STR;
         //featured artist slideshow code start
         
         //if(1){
-        //if (($artists = Cache::read("featured".$country)) === false) {
+        if (($artists = Cache::read("featured".$country)) === false) {
            
             
             //get all featured artist and make array
@@ -398,7 +398,7 @@ STR;
             
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
-        //}
+        }
         
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
