@@ -173,8 +173,16 @@ class QueueListDetailsController extends AppController{
     
     function getPlaylistData(){
        Configure::write('debug', 0);
-       $prodId = $_POST['prodId'];
-       $provider = $_POST['providerType'];
+       if(empty($_POST['repeatSong'])){
+            $prodId = $_POST['prodId'];
+            $provider = $_POST['providerType'];
+       }else{
+            $songPlaying = $this->Session->read('songPlaying');
+            if(!empty($songPlaying)){
+                $prodId = $songPlaying['prodId'];
+                $provider = $songPlaying['providerType'];
+            }
+       }
        $libId = $this->Session->read('library');
        $patId = $this->Session->read('patron');
        $this->Session->delete('queuePlaying');
@@ -200,7 +208,14 @@ class QueueListDetailsController extends AppController{
            }
            
        }
-    }    
+    } 
+    
+    function clearNowStreamingSession(){
+       $this->Session->delete('queuePlaying');
+       $this->Session->delete('songPlaying');
+       echo "success";
+       exit;
+    }
     
     
     
