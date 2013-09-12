@@ -1054,7 +1054,7 @@ STR;
                 $this->log("featured artist data is not available for" . $territory, "cache");
                 echo "featured artist data is not available for" . $territory;
             }
-
+            print_r($featured);
             if ($ids != '') {
                 $this->Album->recursive = 2;
                 $featured =  $this->Album->find('all',array(
