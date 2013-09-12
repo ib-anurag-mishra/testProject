@@ -121,11 +121,12 @@ Class ArtistsController extends AppController
                 $album_provider_type = '';
                 $album_prodid = 0;
                 $alb_det = explode('-',$this->data[ 'Artist' ][ 'album' ]);
+                print_r($alb_det);
                 if(isset($alb_det[0])){
                     $album_prodid = $alb_det[0];
                 }
                 if(isset($alb_det[1])){
-                    $album_provider_type = $alb_det[1];
+                    echo $album_provider_type = $alb_det[1];
                 }
 		if(isset($_REQUEST[ 'artistName' ])){
 			$artist = $_REQUEST[ 'artistName' ];
@@ -152,9 +153,10 @@ Class ArtistsController extends AppController
 		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$insertArr[ 'language' ] = Configure::read('App.LANGUAGE');
                 if(isset($album_provider_type)){
-                    $insertArr[ 'provider_type' ] = $album_provider_type;
+                   echo $insertArr[ 'provider_type' ] = $album_provider_type;
                 }
-		$insertObj = new Featuredartist();
+                die;
+                $insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
