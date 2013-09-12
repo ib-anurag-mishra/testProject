@@ -168,6 +168,7 @@ pageTracker._trackPageview();
                         }
                         },
                         onPlaylistComplete:function(){
+                            alert(jwplayer().getControls());exit;
                             var item = $('#play_item_1').text();
                             if(item.length){
                                 var songData = item.split(',');
