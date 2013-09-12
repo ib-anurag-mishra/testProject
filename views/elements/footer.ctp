@@ -167,32 +167,72 @@ pageTracker._trackPageview();
                             });                              
                         }
                         },
-                        onPlaylistComplete:function(){
-                            alert(jwplayer().getControls());exit;
-                            var item = $('#play_item_1').text();
-                            if(item.length){
-                                var songData = item.split(',');
-                                var prodId = songData[0];
-                                var providerType = songData[1];
-                            }
-                            var postURL = webroot+'queuelistdetails/getPlaylistData';
-                            $.ajax({
-                                type: "POST",
-                                cache:false,
-                                url: postURL,
-                                data: {prodId : prodId,providerType : providerType}
-                            }).done(function(data){
-                                    var json = JSON.parse(data);
-                                    if(json.error){
-                                        $(".player").remove();
-                                        alert(json.error[1]);
-                                    }else if(json.success){
+                        onDisplayClick:function(){
+                            if(jwplayer().getState() == 'BUFFERING'){
+                                if(jwplayer().getPlaylist().length != 1){
+                                    
+                                    var item = $('#play_item_1').text();
+                                    if(item.length){
+                                        var songData = item.split(',');
+                                        var prodId = songData[0];
+                                        var providerType = songData[1];
                                     }
-                            })
-                            .fail(function(){
-                                alert('Ajax Call to Validate Playlist has been failed');
-                            });                              
-                        }},
+                                    var queueId = $('#hid_Plid').val();
+                                    var postURL = webroot+'queuelistdetails/getPlaylistData';
+                                    $.ajax({
+                                        type: "POST",
+                                        cache:false,
+                                        url: postURL,
+                                        data: {prodId : prodId,providerType : providerType, queueId : queueId}
+                                    }).done(function(data){
+                                            var json = JSON.parse(data);
+                                            if(json.error){
+                                                $(".player").remove();
+                                                alert(json.error[1]);
+                                            }else if(json.success){
+                                            }
+                                    })
+                                    .fail(function(){
+                                        alert('Ajax Call to Validate replay playlist has been failed');
+                                    });                                      
+                                }
+                                }else{
+                                    var postURL = webroot+'queuelistdetails/getPlaylistData';
+                                    $.ajax({
+                                        type: "POST",
+                                        cache:false,
+                                        url: postURL,
+                                        data: {prodId : prodId,providerType : providerType,repeatSong:1}
+                                    }).done(function(data){
+                                            var json = JSON.parse(data);
+                                            if(json.error){
+                                                var result = json.error;
+                                                $(".player").remove();
+                                                alert(result[1]);
+                                            }else if(json.success){
+                                                jwplayer("myElement").play(true);
+                                            }
+                                    })
+                                    .fail(function(){
+                                        alert('Ajax Call to Validate song has been failed');
+                                    });                                     
+                                }
+                           },
+                           onPlaylistComplete:function(){
+                                var postURL = webroot+'queuelistdetails/clearNowStreamingSession';
+                                $.ajax({
+                                    type: "POST",
+                                    cache:false,
+                                    url: postURL
+                                }).done(function(data){
+
+                                })
+                                .fail(function(){
+                                    alert('Ajax Call to clear now streaming session has been failed');
+                                });                                
+                                
+                           }                          
+                        },
                         repeat: false   
                     });
 //                $('.play-queue-btn').click(function(){
