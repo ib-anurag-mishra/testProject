@@ -118,6 +118,15 @@ Class ArtistsController extends AppController
 	function admin_insertfeaturedartist() {
 		$errorMsg = '';
 		$artist = '';
+                $album_provider_type = '';
+                $album_prodid = 0;
+                $alb_det = explode('-',$this->data[ 'Artist' ][ 'album' ]);
+                if(isset($alb_det[0])){
+                    $album_prodid = $alb_det[0];
+                }
+                if(isset($alb_det[1])){
+                    $album_provider_type = $alb_det[1];
+                }
 		if(isset($_REQUEST[ 'artistName' ])){
 			$artist = $_REQUEST[ 'artistName' ];
 		} else{
@@ -126,7 +135,7 @@ Class ArtistsController extends AppController
 		if(isset($_REQUEST[ 'album' ])){
 			$album = $_REQUEST[ 'album' ];
 		} else{
-			$album = $this->data[ 'Artist' ][ 'album' ];
+			$album = $alb_det[0];
 		}
 		if( $artist == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
@@ -142,6 +151,9 @@ Class ArtistsController extends AppController
 		$insertArr[ 'album' ] = $album;
 		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$insertArr[ 'language' ] = Configure::read('App.LANGUAGE');
+                if(isset($album_provider_type)){
+                    $insertArr[ 'provider_type' ] = $album_provider_type;
+                }
 		$insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
@@ -169,8 +181,17 @@ Class ArtistsController extends AppController
         */
 	function admin_updatefeaturedartist() {
 		$errorMsg = '';
+                $album_provider_type = '';
+                $album_prodid = 0;
 		$this->Featuredartist->id = $this -> data[ 'Artist' ][ 'id' ];
-		$artistName = '';
+                $alb_det = explode('-',$this->data[ 'Artist' ][ 'album' ]);
+                if(isset($alb_det[0])){
+                    $album_prodid = $alb_det[0];
+                }
+                if(isset($alb_det[1])){
+                    $album_provider_type = $alb_det[1];
+                }
+                $artistName = '';
 		if(isset($_REQUEST[ 'artistName' ])){
 			$artistName = $_REQUEST[ 'artistName' ];
 		}
@@ -183,7 +204,7 @@ Class ArtistsController extends AppController
 		if(isset($_REQUEST[ 'album' ])){
 			$album = $_REQUEST[ 'album' ];
 		} else{
-			$album = $this->data[ 'Artist' ][ 'album' ];
+			$album = $album_prodid;
 		}
 		if( $artist == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
@@ -200,6 +221,9 @@ Class ArtistsController extends AppController
 		$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$updateArr[ 'language' ] = Configure::read('App.LANGUAGE');
 		$updateArr[ 'album' ] = $album;
+                if(isset($album_provider_type)){
+                    $updateArr[ 'provider_type' ] = $album_provider_type;
+                }
 		$updateObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
