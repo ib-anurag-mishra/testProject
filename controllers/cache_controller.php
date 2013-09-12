@@ -65,7 +65,7 @@ class CacheController extends AppController {
                             $countryPrefix = strtolower($territory)."_";
                             $this->Country->setTablePrefix($countryPrefix);
                         }
-                   /*     
+                        
 			$this->log("Starting caching for $territory",'debug');
 			$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
@@ -1031,7 +1031,7 @@ STR;
             //End Caching functionality for new releases videos         
             
          
-           */
+           
  
             // Checking for download status
             $featured = array();
@@ -1120,7 +1120,7 @@ STR;
             $this->log("cache written for featured artists for $territory", 'debug');
             $this->log("cache written for featured artists for: $territory", "cache");
             echo "cache written for featured artists for: $territory";
-/*
+
             $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
                 "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 
@@ -1423,7 +1423,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-         */
+         
             
         }
       
@@ -1477,10 +1477,10 @@ STR;
     */
       
       //sets cache of videos
-      //$this->setVideoCacheVar();
+      $this->setVideoCacheVar();
 
       //sets cache for Library Top Ten
-      //$this->setLibraryTopTenCache();
+      $this->setLibraryTopTenCache();
       
 
 
