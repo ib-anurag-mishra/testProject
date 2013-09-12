@@ -67,7 +67,6 @@ class CacheController extends AppController {
                         }
                         
 			$this->log("Starting caching for $territory",'debug');
-                        /*
 			$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
 			$genreAll = $this->Genre->find('all',array(
@@ -1008,7 +1007,6 @@ LIMIT 100
 STR;
                  
                 $data = $this->Album->query($sql_video_new_release);
-                
                 $this->log("new release album for $territory", "cachequery");
                 $this->log($sql_video_new_release, "cachequery");
 
@@ -1031,8 +1029,10 @@ STR;
             }
             $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases videos         
+            
          
- */
+           
+ 
             // Checking for download status
             $featured = array();
             $ids = '';
@@ -1054,7 +1054,7 @@ STR;
                 $this->log("featured artist data is not available for" . $territory, "cache");
                 echo "featured artist data is not available for" . $territory;
             }
-            
+
             if ($ids != '') {
                 $this->Album->recursive = 2;
                 $featured =  $this->Album->find('all',array(
@@ -1109,7 +1109,7 @@ STR;
             } else {
                 $featured = array();
             }
-            
+
             if (empty($featured)) {
                 Cache::write("featured" . $territory, Cache::read("featured" . $territory));
             } else {
@@ -1125,7 +1125,7 @@ STR;
             $this->log("cache written for featured artists for $territory", 'debug');
             $this->log("cache written for featured artists for: $territory", "cache");
             echo "cache written for featured artists for: $territory";
-/*
+
             $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
                 "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 
@@ -1428,7 +1428,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-         */
+         
             
         }
       
@@ -1482,10 +1482,10 @@ STR;
     */
       
       //sets cache of videos
-      //$this->setVideoCacheVar();
+      $this->setVideoCacheVar();
 
       //sets cache for Library Top Ten
-      //$this->setLibraryTopTenCache();
+      $this->setLibraryTopTenCache();
       
 
 
