@@ -1007,6 +1007,7 @@ LIMIT 100
 STR;
                  
                 $data = $this->Album->query($sql_video_new_release);
+                print_r($data);die;
                 $this->log("new release album for $territory", "cachequery");
                 $this->log($sql_video_new_release, "cachequery");
 
@@ -1029,9 +1030,7 @@ STR;
             }
             $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases videos         
-            
          
-           print_r('Mangesh');die;
  
             // Checking for download status
             $featured = array();
