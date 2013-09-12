@@ -39,7 +39,7 @@ class CacheController extends AppController {
     function cacheGenre() {
         set_time_limit(0);
         //error_reporting(1); ini_set('display_errors', 1);
-       echo "Mangesh";die;
+       
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
@@ -67,6 +67,7 @@ class CacheController extends AppController {
                         }
                         
 			$this->log("Starting caching for $territory",'debug');
+                        /*
 			$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
 			$genreAll = $this->Genre->find('all',array(
@@ -1031,7 +1032,7 @@ STR;
             $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases videos         
          
- 
+ */
             // Checking for download status
             $featured = array();
             $ids = '';
@@ -1124,7 +1125,7 @@ STR;
             $this->log("cache written for featured artists for $territory", 'debug');
             $this->log("cache written for featured artists for: $territory", "cache");
             echo "cache written for featured artists for: $territory";
-
+/*
             $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
                 "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 
@@ -1427,7 +1428,7 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
           
-         
+         */
             
         }
       
@@ -1481,10 +1482,10 @@ STR;
     */
       
       //sets cache of videos
-      $this->setVideoCacheVar();
+      //$this->setVideoCacheVar();
 
       //sets cache for Library Top Ten
-      $this->setLibraryTopTenCache();
+      //$this->setLibraryTopTenCache();
       
 
 
