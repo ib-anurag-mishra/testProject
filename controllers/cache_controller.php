@@ -1109,7 +1109,7 @@ STR;
             } else {
                 $featured = array();
             }
-            echo "<br>Query2: ".$this->Album->lastQuery();die;
+            
             if (empty($featured)) {
                 Cache::write("featured" . $territory, Cache::read("featured" . $territory));
             } else {
