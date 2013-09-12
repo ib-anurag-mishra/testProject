@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 set_time_limit(0);
 include 'functions.php';
-$sql = 'SELECT * FROM `credentials` WHERE library_id NOT IN(20,22,37,49,44,68,69,79,147,170,419,497,477,81,82,85,97,116,155,163,244,267,327,328,168,169,108,109,210,216,222,224,228,232,234,235,242,253,262,282,283,284,351,378,385,408,425,426,427,428,392,429,456,473,465,481)';
+$sql = 'SELECT * FROM `credentials` WHERE library_id NOT IN(20,22,37,49,44,68,69,79,147,170,419,497,477,81,82,85,97,116,155,163,244,267,327,328,168,169,108,109,210,216,222,224,228,232,234,235,242,253,262,282,283,284,351,378,385,408,425,426,427,428,392,429,456,473,465,481) limit 25';
 //$sql = 'SELECT * FROM `credentials` WHERE library_id NOT IN (109,425,426,79)';
 $result = mysql_query($sql);
 while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
@@ -169,9 +169,9 @@ foreach($credential as $k=>$v){
 		echo $libraryArr[0]['id']."\n\n";
 		
                 if(strpos($result,"successful") != false){
-			echo $libraryArr[0]['library_name']. " is working";
+		//	echo $libraryArr[0]['library_name']. " is working";
 			//$working[$v['library_id']][$libraryArr[0]['library_name']] = 'working';
-                        $login .= $libraryArr[0]['library_name']." is working\n\n\n\n";
+                      //  $login .= $libraryArr[0]['library_name']." is working\n\n\n\n";
 		}
 		else{
 			/*if($libraryArr[0]['library_name']){
@@ -196,8 +196,8 @@ foreach($credential as $k=>$v){
 	}
 }
 //print $login;exit tech@m68interactive.com;
-echo mail('tech@m68interactive.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
+//echo mail('tech@m68interactive.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
+echo mail('kushal.pogul@infobeans.com',"Library Login Test",$login,'From:no-reply@freegalmusic.com');exit;
 //print "<pre>";print_r($working);print_r($notWorking);exit;
-
 
 ?>
