@@ -1031,7 +1031,7 @@ STR;
             //End Caching functionality for new releases videos         
             
          
-           
+           print_r('Mangesh');die;
  
             // Checking for download status
             $featured = array();
@@ -1054,7 +1054,7 @@ STR;
                 $this->log("featured artist data is not available for" . $territory, "cache");
                 echo "featured artist data is not available for" . $territory;
             }
-            print_r($featured);
+            
             if ($ids != '') {
                 $this->Album->recursive = 2;
                 $featured =  $this->Album->find('all',array(
