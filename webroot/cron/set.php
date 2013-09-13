@@ -15,7 +15,7 @@ $Streaming->LimitIndex = 0;
 //2nd value in LIMIT in SELECT query (Songs,Files) : Totals rows count
 $Streaming->LimitCount = 10;
 //if script will run in live or test environment
-$Streaming->LIVE       = 1;
+$Streaming->LIVE       = 0;
 
 //get start
 $Streaming->getAllSongsData();

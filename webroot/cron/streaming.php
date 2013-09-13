@@ -104,9 +104,11 @@ class Streaming {
         $index = $this->LimitIndex;
         $limit = $this->ChunkSize;
       }
+      echo$songQuery ='SELECT Songs.ProdID, Songs.provider_type FROM Songs where Songs.DownloadStatus=1 and  Songs.provider_type="sony" ORDER BY Songs.ProdID ASC 
+                                    LIMIT '.$index.', '.$limit;
       
-      $obj_resultset = mysql_query('SELECT Songs.ProdID, Songs.provider_type FROM Songs where Songs.DownloadStatus=1 and  Songs.provider_type="sony" ORDER BY Songs.ProdID ASC 
-                                    LIMIT '.$index.', '.$limit, $this->freegalDBConnectioObj);
+      echo '<br><br>';
+      $obj_resultset = mysql_query( $songQuery, $this->freegalDBConnectioObj);
                                  
       while($arr_row = mysql_fetch_assoc($obj_resultset)){
         
