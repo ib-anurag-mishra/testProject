@@ -1,9 +1,9 @@
-<script>
+<!--<script>
     $('.add-to-playlist-button').on('click',function(e){
         e.preventDefault();
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-</script>
+</script>-->
 <section class="albums-page">
 	<section class="album-detail-container clearfix">
 		<div class="breadcrumbs"><span><?php
