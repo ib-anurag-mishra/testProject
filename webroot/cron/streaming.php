@@ -15,7 +15,7 @@ class Streaming {
   var $STAGE_DB_HOST = '10.181.56.177';
   var $STAGE_DB_USER = 'freegal_test';
   var $STAGE_DB_PASS = 'c45X^E1X7:TQ';
-  var $STAGE_SONY_DB   = 'sony2';
+  var $STAGE_SONY_DB   = 'freading';
   var $STAGE_FREEGAL_DB   = 'freegal';
   
   
@@ -75,8 +75,7 @@ class Streaming {
           $this->freegalDBConnectioObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS)
             or die('Could not connect to mysql server for freegal db of stage.' );
           mysql_select_db($this->STAGE_FREEGAL_DB, $this->freegalDBConnectioObj) 
-            or die('Could not select database freegal stage.');
-         
+            or die('Could not select database freegal stage.');         
      }
           
   }
