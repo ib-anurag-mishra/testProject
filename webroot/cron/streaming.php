@@ -66,10 +66,7 @@ class Streaming {
          echo 1;
           // connect to  stage 
           //connect to sony database
-          $this->sonyDBConnectioObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS)
-            or die('Could not connect to mysql server for sony db of stage.' );
-          mysql_select_db($this->STAGE_DB1_DB, $this->sonyDBConnectioObj) 
-            or die('Could not select database sony stage.');          
+                   
           
           //connect to freegal database
           $this->freegalDBConnectioObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS)
