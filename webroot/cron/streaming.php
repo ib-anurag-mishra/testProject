@@ -15,16 +15,16 @@ class Streaming {
   var $STAGE_DB_HOST = '10.181.56.177';
   var $STAGE_DB_USER = 'freegal_test';
   var $STAGE_DB_PASS = 'c45X^E1X7:TQ';
-  var $STAGE_DB1_DB   = 'sony2';
-  var $STAGE_DB2_DB   = 'freegal';
+  var $STAGE_SONY_DB   = 'sony2';
+  var $STAGE_FREEGAL_DB   = 'freegal';
   
   
   //set the database connection for production 
   var $PODUCTION_DB_HOST = '192.168.100.114';
   var $PODUCTION_DB_USER = 'freegal_prod';
   var $PODUCTION_DB_PASS = '}e47^B1EO9hD';
-  var $PODUCTION_DB1_DB   = 'sony';
-  var $PODUCTION_DB2_DB   = 'freegal';
+  var $PODUCTION_SONY_DB   = 'sony';
+  var $PODUCTION_FREEGAL_DB   = 'freegal';
   
   
   var $sonyDBConnectioObj;
@@ -53,13 +53,13 @@ class Streaming {
           //connect to sony database
           $this->sonyDBConnectioObj = mysql_connect($this->PODUCTION_DB_HOST, $this->PODUCTION_DB_USER, $this->PODUCTION_DB_PASS)
             or die('Could not connect to mysql server for sony db of live.' );
-          mysql_select_db($this->PODUCTION_DB1_DB, $this->sonyDBConnectioObj) 
+          mysql_select_db($this->PODUCTION_SONY_DB, $this->sonyDBConnectioObj) 
             or die('Could not select database sony stage.');          
           
           //connect to freegal database
           $this->freegalDBConnectioObj = mysql_connect($this->PODUCTION_DB_HOST, $this->PODUCTION_DB_USER, $this->PODUCTION_DB_PASS)
             or die('Could not connect to mysql server for freegal db of live.' );
-          mysql_select_db($this->PODUCTION_DB2_DB, $this->freegalDBConnectioObj) 
+          mysql_select_db($this->PODUCTION_FREEGAL_DB, $this->freegalDBConnectioObj) 
             or die('Could not select database freegal stage.');   
     
      } else {
@@ -68,13 +68,13 @@ class Streaming {
           //connect to sony database
           $this->sonyDBConnectioObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS)
             or die('Could not connect to mysql server for sony db of stage.' );
-          mysql_select_db($this->STAGE_DB1_DB, $this->sonyDBConnectioObj) 
-            or die('Could not select database sony stage.'.$this->STAGE_DB1_DB);          
+          mysql_select_db($this->STAGE_SONY_DB, $this->sonyDBConnectioObj) 
+            or die('Could not select database sony stage.'.$this->STAGE_SONY_DB);          
           
           //connect to freegal database
           $this->freegalDBConnectioObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS)
             or die('Could not connect to mysql server for freegal db of stage.' );
-          mysql_select_db($this->STAGE_DB2_DB, $this->freegalDBConnectioObj) 
+          mysql_select_db($this->STAGE_FREEGAL_DB, $this->freegalDBConnectioObj) 
             or die('Could not select database freegal stage.');
          
      }
