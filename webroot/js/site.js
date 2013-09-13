@@ -646,7 +646,19 @@ $(function() {
 		$(this).find('.preview').css({opacity:0});
 	});
 	
+	$(document).on('mouseenter','.video-thumbnail-container',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.featured-video-download-now-button').css({opacity:1});
+		$(this).find('.preview').css({opacity:1});	
+		
+	});
 	
+	$(document).on('mouseleave','.video-thumbnail-container',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:0});
+		$(this).find('.featured-video-download-now-button').css({opacity:0});
+		$(this).find('.preview').css({opacity:0});	
+		
+	});
         
     top_music_video_cover_container.on('mouseenter',function(){
 		
