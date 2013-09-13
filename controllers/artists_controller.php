@@ -159,7 +159,7 @@ Class ArtistsController extends AppController
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
                                 $memcache = new Memcache;
                                 $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-                                memcache_delete($memcache, Configure::read('app_dev_featured_u_s'));
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
@@ -230,7 +230,10 @@ Class ArtistsController extends AppController
 				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
                                 $memcache = new Memcache;
                                 $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-                                memcache_delete($memcache, Configure::read('app_dev_featured_u_s'));
+                                print_r(Configure::read('App.memcache_key')."_featured_u_s");
+                                echo Configure::read('App.memcache_key');
+                                die;
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
