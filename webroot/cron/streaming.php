@@ -130,13 +130,14 @@ class Streaming {
 
   function checkRecordInSonyDB($arr_row) {   
      
-      $ProdID = $arrSong['ProdID'];      
+      echo $ProdID = $arrSong['ProdID'];   
+      die;
       
       $sql = "SELECT PRODUCT_OFFER.ProdID, Availability.AvailabilityStatus,SALES_TERRITORY.SALES_START_DATE \n"
                         . "FROM Availability INNER JOIN PRODUCT_OFFER ON Availability.ProdID = PRODUCT_OFFER.ProdID \n"
                         . " INNER JOIN SALES_TERRITORY ON SALES_TERRITORY.PRODUCT_OFFER_ID = PRODUCT_OFFER.PRODUCT_OFFER_ID \n"
-                        . "WHERE Availability.AvailabilityType = 'PERMANENT' AND \n"
-                        . " SALES_TERRITORY.PRICE_CATEGORY = 'PERMANENT' AND \n"
+                        . "WHERE Availability.AvailabilityType = 'SUBSCRIPTION' AND \n"
+                        . " SALES_TERRITORY.PRICE_CATEGORY = 'SUBSCRIPTION' AND \n"
                         . " Availability.AvailabilityStatus = 'I' AND \n"
                         . " PRODUCT_OFFER.ProdID = $ProdID";
       
@@ -144,8 +145,9 @@ class Streaming {
                                  
       while($arr_row = mysql_fetch_assoc($obj_resultset)){
         print_r($arr_row);
-        die;
+        
       }
+     
       
  }   
     
