@@ -475,7 +475,7 @@ $("#top-100-videos-grid").scroll(function(){
                 ?>
 
 
-                <div id="coming-soon-singles-grid" class="horiz-scroll">
+                <div id="coming-soon-singles-grid" class="horiz-scroll active">
                         <ul class="clearfix">
                             <?php  
                             $total_songs = count($coming_soon_rs);
