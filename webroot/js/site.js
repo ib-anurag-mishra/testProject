@@ -701,6 +701,20 @@ $(function() {
 	
 	});
 	
+	$(document).on('mouseenter','.song-cover-container', function(){
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-100-download-now-button').css({opacity:1});
+		$(this).find('.preview').css({opacity:1});
+		
+	});
+	
+	$(document).on('mouseleave','.song-cover-container', function(){
+		$(this).find('.add-to-playlist-button').css({opacity:0});
+		$(this).find('.top-100-download-now-button').css({opacity:0});
+		$(this).find('.preview').css({opacity:0});
+		
+	});
+	
 	
 	$('.single-cover-container').on('mouseenter',function(){
 		
