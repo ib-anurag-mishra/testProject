@@ -7,16 +7,16 @@
  * 
  * you need to to put (&) person at the end of the script command executation
  **/
- 
+
 class Streaming {
 
  
   //set the database connection variables for staging for test only  
   var $STAGE_DB_HOST = '10.181.56.177';
-  var $STAGE_DB_USER = 'freegal_test';
-  var $STAGE_DB_PASS = 'c45X^E1X7:TQ';
-  var $STAGE_SONY_DB   = 'freading';
-  var $STAGE_FREEGAL_DB   = 'freegal';
+  var $STAGE_DB_USER = 'sony_ingest';
+  var $STAGE_DB_PASS = 'T@u>8t89Rm0D';
+  var $STAGE_SONY_DB   = 'sony2';
+  var $STAGE_FREEGAL_DB   = 'freegal_test2';
   
   
   //set the database connection for production 
