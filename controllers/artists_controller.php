@@ -165,7 +165,7 @@ Class ArtistsController extends AppController
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
                                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
                                 memcache_close($memcache);*/
-                                echo Cache::read("featured_u_s");die;
+                                print_r(Cache::read("featured_u_s"));die;
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
