@@ -645,8 +645,10 @@ $(function() {
 		$(this).find('.featured-video-download-now-button').css({opacity:0});
 		$(this).find('.preview').css({opacity:0});
 	});
+	
+	
         
-        top_music_video_cover_container.on('mouseenter',function(){
+    top_music_video_cover_container.on('mouseenter',function(){
 		
 		$(this).find('.add-to-playlist-button').css({opacity:1});
 		$(this).find('.top-video-login-button').css({opacity:1});
