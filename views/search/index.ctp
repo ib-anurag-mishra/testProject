@@ -858,7 +858,7 @@ if ($type != 'all') {
                         }
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText) )); ?></div>
-                            <a class="add-to-playlist-button" href="#"></a>
+                            <a class="add-to-playlist-button no-ajaxy" href="/popup"></a>
                             <div class="composer"><span title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></span></div>
 
 
@@ -933,7 +933,7 @@ if ($type != 'all') {
                                                 <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
                                                 <span class="beforeClick" id="wishlist_song_<?php echo $psong->ProdID; ?>">
                                                      <![if !IE]>
-                                                        <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistDownloadOthers("<?php echo $psong->ProdID; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $psong->provider_type; ?>");'><?php __('Download');?></a>
+                                                        <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistDownloadOthers("<?php echo $psong->ProdID; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $psong->provider_type; ?>");'><?php __('Download');?></a>
                                                      <![endif]>
                                                      <!--[if IE]>
                                                             <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download');?></a>
