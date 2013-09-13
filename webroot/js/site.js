@@ -794,6 +794,7 @@ $(function() {
 	
 	$(document).on('click','.add-to-playlist-button', function(e){
 		e.preventDefault();
+		console.log("button clicked");
 		
 		$('.wishlist-popover').removeClass('active');
 		
