@@ -104,7 +104,7 @@ class Streaming {
         $index = $this->LimitIndex;
         $limit = $this->ChunkSize;
       }
-      echo$songQuery ='SELECT Songs.ProdID, Songs.provider_type FROM Songs where Songs.DownloadStatus=1 and  Songs.provider_type="sony" ORDER BY Songs.ProdID ASC 
+      echo $songQuery ='SELECT Songs.ProdID, Songs.provider_type FROM Songs where Songs.DownloadStatus=1 and  Songs.provider_type="sony" ORDER BY Songs.ProdID ASC 
                                     LIMIT '.$index.', '.$limit;
       
       echo '<br><br>';
