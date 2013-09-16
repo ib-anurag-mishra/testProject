@@ -1655,7 +1655,11 @@ STR;
    */
   
   function validateStreamRequest($authenticationToken, $ProdID, $agent){
-  
+    
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
     $patId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
     $libId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     
