@@ -46,7 +46,7 @@ Class StreamingComponent extends Object
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-            return array('error','Not able to stream this song.You need to login again.',$currentTimeDuration);           
+            return array('error','Not able to stream this song.You need to login again.',$currentTimeDuration, 1);           
             exit;
         }
         
@@ -54,7 +54,7 @@ Class StreamingComponent extends Object
         if(($patId == '' || $patId == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-            return array('error','Not able to play this song.You need to login again.',$currentTimeDuration);            
+            return array('error','Not able to play this song.You need to login again.',$currentTimeDuration, 2);            
             exit;
         }
         
@@ -62,7 +62,7 @@ Class StreamingComponent extends Object
         if(($libId == '' || $libId == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-            return array('error','Not able to play this song.You need to login again.',$currentTimeDuration);  
+            return array('error','Not able to play this song.You need to login again.',$currentTimeDuration, 3);  
             exit;
         }
         
@@ -179,7 +179,7 @@ Class StreamingComponent extends Object
                 $streamingHistoryInstance->setDataSource('default');
                 if( ($queryUpdateFlag == 1) && ($queryUpdateFlag == 1) ){
                      $updatedTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
-                     return array('success',$validateStreamingInfoMessage,$updatedTimeDuration);                  
+                     return array('success',$validateStreamingInfoMessage,$updatedTimeDuration, 4);                  
                 }                
                 exit;
                 
@@ -188,7 +188,7 @@ Class StreamingComponent extends Object
                 $log_data .= PHP_EOL."error|".$validateStreamingInfoMessage."|".$validateStreamingInfoIndex.PHP_EOL;
                 $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
                 $this->createStreamingLog($log_data, $log_name);
-                return array('error',$validateStreamingInfoMessage,$currentTimeDuration);               
+                return array('error',$validateStreamingInfoMessage,$currentTimeDuration, 5);               
                 exit;
             }
 
@@ -199,7 +199,7 @@ Class StreamingComponent extends Object
           $log_data .= PHP_EOL."error|".$validationMessage."|".$validationIndex.PHP_EOL;
           $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
           $this->createStreamingLog($log_data, $log_name); 
-          return array('error',$validationMessage,$currentTimeDuration);         
+          return array('error',$validationMessage,$currentTimeDuration, 6);         
           exit;
         
         }
