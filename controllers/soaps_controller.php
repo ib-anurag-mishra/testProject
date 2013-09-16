@@ -17,6 +17,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownlo
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SuccessResponse.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'StreamingResponse.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueOperation.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserTypeResponse.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongDownloadSuccess.php');
@@ -35,25 +36,9 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist'); 
-  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr'); 
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr'); 
 
-   
-  function beforeFilter(){
-    
-    $arr_models = $this->uses;
-    foreach($arr_models as $val) {
-      $this->$val->setDataSource('soap');
-    }
-    $this->Session->write('call_db3', 1); 
-  }
-
-  function afterFilter(){
-
-    $this->Session->delete('call_db3');        
-  }
-
-
-
+  
   function index(){
     
     Configure::write('debug',0);
@@ -90,6 +75,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SuccessResponse.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."StreamingResponse.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueOperation.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserTypeResponse.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongDownloadSuccess.php");
@@ -116,6 +102,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
     $test->addURLToClass("UserData", $siteUrl."soaps/");
     $test->addURLToClass("SuccessResponse", $siteUrl."soaps/");
+    $test->addURLToClass("StreamingResponse", $siteUrl."soaps/");
     $test->addURLToClass("QueueOperation", $siteUrl."soaps/");
     $test->addURLToClass("UserTypeResponse", $siteUrl."soaps/");
     $test->addURLToClass("SongDownloadSuccess", $siteUrl."soaps/");
@@ -1343,12 +1330,11 @@ STR;
 
       if($row_save_status){
 
-        //$this->Library->setDataSource('master');
-	$this->Library->setDataSource('soap');
+        $this->Library->setDataSource('master');
         $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-1 Where id=".$libraryId;
         $this->Library->query($sql);
-        //$this->Library->setDataSource('default');
-	$this->Library->setDataSource('soap');
+        $this->Library->setDataSource('default');
+	
 
 
 
@@ -1382,12 +1368,10 @@ STR;
     }
 
     if($this->Wishlist->delete($deleteSongId)) {
-      //$this->Library->setDataSource('master');
-      $this->Library->setDataSource('soap');
+      $this->Library->setDataSource('master');
       $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
       $this->Library->query($sql);
-      $this->Library->setDataSource('soap');
-      //$this->Library->setDataSource('default');
+      $this->Library->setDataSource('default');
 
       $message = 'Song deleted successfully';
       return $this->createsSuccessResponseObject(true, $message);
@@ -1636,7 +1620,7 @@ STR;
    * Function Name : validateLibInTimezone
    * Desc : To validate that given lib has its timezone recorded
    * @param string authenticationToken
-	 * @return SuccessResponseType[]
+   * * @return SuccessResponseType[]
    */
   
   function validateLibInTimezone($authenticationToken){
@@ -1661,6 +1645,28 @@ STR;
      
   }
 
+    /**
+   * Function Name : validateStreamRequest
+   * Desc : To validate stream request, allow legal with stream url, disallow invalid one 
+   * @param string authenticationToken
+   * @param string ProdID
+   * @param string agent
+   * * @return StreamingResponse[]
+   */
+  
+  function validateStreamRequest($authenticationToken, $ProdID, $agent){
+  
+    $patId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+    
+    $product_detail = $this->getProductDetail($ProdID);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+     
+      
+    $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, 'App-'.$agent);
+      
+  }
 
    /**
    * Function Name : loginByWebservice
@@ -4404,8 +4410,7 @@ STR;
     $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
-	  //$this->Library->setDataSource('master');
-	  $this->Library->setDataSource('soap');
+	  $this->Library->setDataSource('master'); 
     
     if($maintainLatestDownload){
       $procedure = 'sonyproc_new';
@@ -4427,8 +4432,7 @@ STR;
     
     if(is_numeric($return)){
       
-      //$this->LatestDownload->setDataSource('master');
-      $this->LatestDownload->setDataSource('soap');
+      $this->LatestDownload->setDataSource('master'); 
 
       $data = $this->LatestDownload->find('count', array(
         'conditions'=> array(
@@ -4449,8 +4453,7 @@ STR;
       if(false === $data){
         $log_data .= ":SelectLDFail";
       }
-      //$this->LatestDownload->setDataSource('default');
-      $this->LatestDownload->setDataSource('soap');
+      $this->LatestDownload->setDataSource('default'); 
     }
     
     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
@@ -4459,8 +4462,8 @@ STR;
     $this->log($log_data, $log_name);
     
     
-		//$this->Library->setDataSource('default');
-		$this->Library->setDataSource('soap');
+		$this->Library->setDataSource('default');
+		
     $wishlist = 0;
 		if(is_numeric($return)){
       
@@ -4642,8 +4645,7 @@ STR;
     $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
-	  //$this->Library->setDataSource('master');
-   	  $this->Library->setDataSource('soap');
+	  $this->Library->setDataSource('master');
  
     if($maintainLatestDownload){
       $procedure = 'videos_proc_d_ld';
@@ -4665,10 +4667,8 @@ STR;
     
     if(is_numeric($return)){
       
-      //$this->LatestVideodownload->setDataSource('master');
-	$this->LatestVideodownload->setDataSource('soap');
-
-
+      $this->LatestVideodownload->setDataSource('master');
+	
       $data = $this->LatestVideodownload->find('count', array(
         'conditions'=> array(
             "LatestVideodownload.library_id " => $libId,
@@ -4688,8 +4688,7 @@ STR;
       if(false === $data){
         $log_data .= ":SelectLDFail";
       }
-      //$this->LatestVideodownload->setDataSource('default');
-	$this->LatestVideodownload->setDataSource('soap');
+      $this->LatestVideodownload->setDataSource('default');
 
     }
     
@@ -4699,9 +4698,8 @@ STR;
     $this->log($log_data, $log_name);
     
     
-		//$this->Library->setDataSource('default');
-		$this->Library->setDataSource('soap');
-
+		$this->Library->setDataSource('default');
+		
     $wishlist = 0;
 		if(is_numeric($return)){
       
