@@ -1500,3 +1500,70 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 	} );
 	return false; 
 }
+
+    function loadSong(songFile,songTitle,prodId,providerType) { 
+        
+        var postURL = webroot+'queuelistdetails/getPlaylistData';
+        $.ajax({
+            type: "POST",
+            cache:false,
+            url: postURL,
+            data: {prodId : prodId,providerType : providerType}
+        }).done(function(data){
+                var json = JSON.parse(data);
+                if(json.error){
+                    var result = json.error;
+                    alert(result[1]);
+                    jwplayer().remove();
+                }else if(json.success){
+                    $('#songDetails').val(prodId+'-'+providerType);
+                    jwplayer().load([{
+                      file: songFile,
+                      title: songTitle
+                    }]);
+                    jwplayer("myElement").play(true);
+                }
+        })
+        .fail(function(){
+            alert('Ajax Call to Validate song has been failed');
+        });         
+
+    } 
+
+$(document).ready(function (){
+
+    $('.play-queue-btn').click(function (){
+        var item = $('#play_item_1').text();
+        if(item.length){
+            var songData = item.split(',');
+            var prodId = songData[0];
+            var providerType = songData[1];
+        }
+        var queueId = $('#hid_Plid').val();
+        var postURL = webroot+'queuelistdetails/getPlaylistData';
+        $.ajax({
+            type: "POST",
+            cache:false,
+            url: postURL,
+            data: {prodId : prodId,providerType : providerType,queueId : queueId}
+        }).done(function(data){
+                var json = JSON.parse(data);
+                if(json.error){
+                    alert(json.error[1]);
+                    jwplayer().remove();
+                }else if(json.success){
+                    playlist = $('#playlist_data').text();
+                    playlist = JSON.parse(playlist);
+                    if(playlist.length){
+                        jwplayer("myElement").load(playlist);
+                    }
+                    jwplayer("myElement").play(true);
+                }
+        })
+        .fail(function(){
+            alert('Ajax Call to Validate Playlist has been failed');
+        });         
+  
+              
+    });
+});

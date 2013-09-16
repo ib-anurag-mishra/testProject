@@ -645,6 +645,20 @@ $(function() {
 		$(this).find('.featured-video-download-now-button').css({opacity:0});
 		$(this).find('.preview').css({opacity:0});
 	});
+	
+	$(document).on('mouseenter','.video-thumbnail-container',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.featured-video-download-now-button').css({opacity:1});
+		$(this).find('.preview').css({opacity:1});	
+		
+	});
+	
+	$(document).on('mouseleave','.video-thumbnail-container',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:0});
+		$(this).find('.featured-video-download-now-button').css({opacity:0});
+		$(this).find('.preview').css({opacity:0});	
+		
+	});
         
         top_music_video_cover_container.on('mouseenter',function(){
 		
@@ -699,6 +713,20 @@ $(function() {
 		$(this).find('.top-100-download-now-button').css({opacity:0});
 		$(this).find('.preview').css({opacity:0});
 	
+	});
+	
+	$(document).on('mouseenter','.song-cover-container', function(){
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-100-download-now-button').css({opacity:1});
+		$(this).find('.preview').css({opacity:1});
+		
+	});
+	
+	$(document).on('mouseleave','.song-cover-container', function(){
+		$(this).find('.add-to-playlist-button').css({opacity:0});
+		$(this).find('.top-100-download-now-button').css({opacity:0});
+		$(this).find('.preview').css({opacity:0});
+		
 	});
 	
 	
@@ -791,6 +819,25 @@ $(function() {
 			$(this).next('.wishlist-popover').addClass('active');
 		}
 	});
+	
+	$(document).on('click','.add-to-playlist-button', function(e){
+		e.preventDefault();
+		
+		
+		$('.wishlist-popover').removeClass('active');
+		
+		if($(this).next('.wishlist-popover').hasClass('active')) {
+			$(this).next('.wishlist-popover').removeClass('active');
+			$(this).find('.add-to-playlist-button').css({opacity:.5});
+		} else {
+			
+			$(this).next('.wishlist-popover').addClass('active');
+		}	
+	
+	
+	});
+	
+
 	
 	site_nav_a.on('click',function(e){
 		

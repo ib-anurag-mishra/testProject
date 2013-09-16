@@ -415,7 +415,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor"><?php __('Freegal Queues'); ?></a>
+                                                            <a href="#" class="sidebar-anchor no-ajaxy"><?php __('Freegal Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
                                                                     <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
@@ -424,9 +424,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                                     <?php } ?>
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor saved-queue"><?php __('My Queues'); ?></a>
+                                                            <a href="#" class="sidebar-anchor saved-queue no-ajaxy"><?php __('My Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
-                                                                    <li><a href="/queuelistdetails/now_streaming/1"><?php __('Now Streaming'); ?></a></li>
+                                                                    <li><a href="/queuelistdetails/now_streaming"><?php __('Now Streaming'); ?></a></li>
                                                                     <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Saved Queues'); ?></a></li>
                                                             </ul>
                                                     </li>

@@ -40,6 +40,18 @@
 			</div>
 			
 <?php } }*/?>
+<style>
+.player {
+	
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: 100px;
+	overflow: hidden;
+
+	
+}
+</style>
 			
 		</div>			
 			
@@ -76,7 +88,17 @@
 					</div>
 				</div>
 			</footer>
-	
+                <div class="filler" style="height:100px"></div>
+	<?php if($this->Session->read("patron")){ ?>
+                                        <?php if($this->Session->read('library_type') == '2') { ?>
+                                            <div class="player">
+                                                    <div class="player-container">
+                                                            <div id="myElement">Loading the player...</div>
+                                                    </div>
+                                                <input type="hidden" name="songDetails" id="songDetails" value="" />
+                                            </div>
+                                        <?php } ?>
+                                    <?php } ?>
 	
     <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
     <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
@@ -90,6 +112,139 @@ try {
 var pageTracker = _gat._getTracker("UA-16162084-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
-        
 
+<!-- Code for player -->
+<!-- History.js -->
+	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
+	
+	<!-- Ajaxify -->
+	<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
+	
+	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
+	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
+	<script type="text/javascript">
+            $(document).ready(function(){
+                jwplayer("myElement").setup({
+                        playlist:[{file:"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe",
+		    title:"Get Lucky",
+		    description:"Daft Punk"}],
+                        height: 70,
+                        width: 960,
+                        primary: "flash",
+                        skin: "/img/player_skin/freegal-custom-skin.xml",
+                            listbar: {
+
+                                    position:"right",
+                                    size:150
+                            },
+                        events: {
+                        onPlaylistItem: function(event) {
+                        var currentItem = jwplayer("myElement").getPlaylistIndex();
+                        if(currentItem != 0){
+                            
+                            var item = $('#play_item_'+currentItem).text();
+                            if(item.length){
+                                var songData = item.split(',');
+                                var prodId = songData[0];
+                                var providerType = songData[1];
+                            }
+                            var queueId = $('#hid_Plid').val();
+                            var postURL = webroot+'queuelistdetails/getPlaylistData';
+                            $.ajax({
+                                type: "POST",
+                                cache:false,
+                                url: postURL,
+                                data: {prodId : prodId,providerType : providerType, queueId : queueId}
+                            }).done(function(data){
+                                    var json = JSON.parse(data);
+                                    if(json.error){
+                                        alert(json.error[1]);
+                                        jwplayer().remove();
+                                    }else if(json.success){
+                                    }
+                            })
+                            .fail(function(){
+                                alert('Ajax Call to Validate NextPlaylistItem has been failed');
+                            });                              
+                        }
+                        },
+                        onDisplayClick:function(){
+                            if(jwplayer().getState() == 'BUFFERING'){
+                                if(jwplayer().getPlaylist().length != 1){
+                                    
+                                    var item = $('#play_item_1').text();
+                                    if(item.length){
+                                        var songData = item.split(',');
+                                        var prodId = songData[0];
+                                        var providerType = songData[1];
+                                    }
+                                    var queueId = $('#hid_Plid').val();
+                                    var postURL = webroot+'queuelistdetails/getPlaylistData';
+                                    $.ajax({
+                                        type: "POST",
+                                        cache:false,
+                                        url: postURL,
+                                        data: {prodId : prodId,providerType : providerType, queueId : queueId}
+                                    }).done(function(data){
+                                            var json = JSON.parse(data);
+                                            if(json.error){
+                                                alert(json.error[1]);
+                                                jwplayer().remove();                                                
+                                            }else if(json.success){
+                                            }
+                                    })
+                                    .fail(function(){
+                                        alert('Ajax Call to Validate replay playlist has been failed');
+                                    });                                      
+                                }else{
+                                    var postURL = webroot+'queuelistdetails/getPlaylistData';
+                                    $songDetails = $('#songDetails').val().split('-');
+                                    prodId = $songDetails[0];
+                                    providerType = $songDetails[1];
+                                    $.ajax({
+                                        type: "POST",
+                                        cache:false,
+                                        url: postURL,
+                                        data: {prodId : prodId,providerType : providerType}
+                                    }).done(function(data){
+                                            var json = JSON.parse(data);
+                                            if(json.error){
+                                                var result = json.error;
+                                                alert(result[1]);
+                                                jwplayer().remove();
+                                            }else if(json.success){
+                                                jwplayer("myElement").play(true);
+                                            }
+                                    })
+                                    .fail(function(){
+                                        alert('Ajax Call to Validate song has been failed');
+                                    });                                     
+                                }
+                              }
+                           },
+                           onPlaylistComplete:function(){
+                                var postURL = webroot+'queuelistdetails/clearNowStreamingSession';
+                                $.ajax({
+                                    type: "POST",
+                                    cache:false,
+                                    url: postURL
+                                }).done(function(data){
+
+                                })
+                                .fail(function(){
+                                    alert('Ajax Call to clear now streaming session has been failed');
+                                });                                
+                                
+                           }                          
+                        },
+                        repeat: false   
+                    });
+//                $('.play-queue-btn').click(function(){
+//                    var files = [{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get funky","description":"Daft Punk"},{"file":"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe","title":"Get Lucky1","description":"Daft Punk1"}];                
+//                    jwplayer("myElement").load(files); 
+//                });
+            });
+        </script>    
+
+<!-- Code for player end -->
 

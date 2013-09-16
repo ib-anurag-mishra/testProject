@@ -95,7 +95,50 @@ Class QueueComponent extends Object
         
         
   }
-    
+
+    function getNowstreamingSongDetails($prodId,$providerType){
+        $nowStreamingSongDetailList = ClassRegistry::init('Song');
+        $nowStreamingSongDetail = $nowStreamingSongDetailList->find('all',
+          array(
+            'fields' =>  array('Song.SongTitle','Song.ReferenceID', 'Song.FullLength_Duration', 'Song.ProdID', 'Song.provider_type', 'Song.Title as STitle', 'Song.ArtistText',  'Song.Artist', 'Albums.AlbumTitle','Albums.ProdID','Albums.provider_type', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+            'joins' => array(
+              array(
+                'type' => 'INNER',
+                'table' => 'Albums',
+                'alias' => 'Albums',
+                'foreignKey' => false,
+                'conditions' => array('Albums.ProdID = Song.ReferenceID', 'Albums.provider_type = Song.provider_type'),        
+              ),
+              array(
+                'type' => 'INNER',
+                'table' => 'PRODUCT',
+                'alias' => 'Product',
+                'foreignKey' => false,
+                'conditions' => array('Albums.ProdID = Product.ProdID', 'Albums.provider_type = Product.provider_type'),        
+              ),
+              array(
+                'type' => 'INNER',
+                'table' => 'File',
+                'alias' => 'AlbumFile',
+                'foreignKey' => false,
+                'conditions' => array('Albums.FileID = AlbumFile.FileID'),        
+              ),  
+              array(
+                'type' => 'INNER',
+                'table' => 'File',
+                'alias' => 'SongFile',
+                'foreignKey' => false,
+                'conditions' => array('Song.FullLength_FileID = SongFile.FileID'),        
+              ),           
+            ),
+            'recursive' => -1,
+            'conditions' => array('Song.ProdID = '.$prodId, 'Song.provider_type = '.'"'.$providerType.'"'),                
+          )
+        );
+        return $nowStreamingSongDetail;
+        
+        
+  }
 }
 
 
