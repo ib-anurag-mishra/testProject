@@ -1,5 +1,3 @@
-
-
 <section class="my-top-100-page">
 		
 		<div class="breadcrumbs">
@@ -173,7 +171,7 @@
 														<div class="wishlist-popover">
                                                                                                                 <?php if( $this->Session->read('library_type') == 2 ){
                                                                                                                             echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
-                                                                                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                                                                                            <a class="add-to-playlist no-ajaxy" href="#">Add To Queue</a>
                                                                                                                 <?php } ?>
                                                                                                                 <?php
                                                                                                                     $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
