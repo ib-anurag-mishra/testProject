@@ -70,8 +70,8 @@ class HomesController extends AppController
         }
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory."Page1")) === false) {
-        
+        //if (($national = Cache::read("national".$territory."Page1")) === false) {
+        if(1){
       
             $country = $territory;
             
@@ -183,14 +183,12 @@ STR;
 		}else{
                     $nationalTopDownload = Cache::read("national".$territory."Page1");                
                 }
-                echo "<pre>";
-                print_r($nationalTopDownload);echo "</pre>";
-		$this->set('nationalTopDownload',$nationalTopDownload);
+                $this->set('nationalTopDownload',$nationalTopDownload);
                 
               
 	// National Top Videos list and Downloads functionality code 
-        if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-          //      if(1) {
+        //if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+                if(1) {
                 $country = $territory;
 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -285,7 +283,7 @@ STR;
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                     $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
                     if(count($downloadsUsed) > 0){
                       $nationalTopVideoDownload[$key]['Video']['status'] = 'avail';
                     } else{
@@ -300,8 +298,6 @@ STR;
         
             $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page1");     
        }
-       echo "<pre>";
-       print_r($nationalTopVideoDownload);echo "</pre>";die;
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
         
         $ids = '';
