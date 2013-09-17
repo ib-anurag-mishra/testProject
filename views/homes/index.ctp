@@ -1,4 +1,4 @@
-<script> 
+<script>
 
 $(document).ready(function(){
     var preValue= 1;
