@@ -20,7 +20,7 @@
                                             {
 
                 ?>                                                
-                                                    <span class="download-now-button">
+                                                    <span class="download-now-button no-ajaxy">
                                                     <form method="Post" id="form<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                     <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"];?>" />
                                                     <input type="hidden" name="ProviderType" value="<?php echo $VideosData[0]["Video"]["provider_type"]; ?>" />
@@ -37,7 +37,7 @@
                                    
                             ?>
 
-                                            <a class="add-to-playlist-button" href="#"></a>
+                                            <a class="add-to-playlist-button no-ajaxy" href="#"></a>
                                             <div class="wishlist-popover">
 					
                                                 <?php
@@ -50,7 +50,7 @@
                                           <?php
                                             } else {
                                             ?>    
-                                            <span class="download-now-button"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
+                                            <span class="download-now-button no-ajaxy"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                             <?php                
                                             }
                             
@@ -123,7 +123,7 @@
                                                             {
 
                                 ?>                                                
-                                                                                <span class="download-now-button">
+                                                                                <span class="download-now-button no-ajaxy">
                                                                                 <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                                 <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
@@ -138,7 +138,7 @@
 
                                                             }
                                             ?>
-										<a class="add-to-playlist-button" href="#"></a>
+										<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 										<div class="wishlist-popover">
 											
                                                                                     <?php
@@ -152,7 +152,7 @@
                                                                 <?php
                                                   } else {
                                                       ?>
-                                                      <span class="download-now-button"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
+                                                      <span class="download-now-button no-ajaxy"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                                         <?php
                                                   }
                                                     }
@@ -239,7 +239,7 @@
                                                             {
 
                                 ?>                                                
-                                                                                <span class="download-now-button">
+                                                                                <span class="download-now-button no-ajaxy">
                                                                                 <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                                 <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
@@ -254,7 +254,7 @@
 
                                                             }
                                             ?>
-									<a class="add-to-playlist-button" href="#"></a>
+									<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 									<div class="wishlist-popover">
                                                                             <?php
 
