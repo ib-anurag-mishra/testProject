@@ -1645,13 +1645,13 @@ STR;
      
   }
 
-    /**
+  /**
    * Function Name : validateStreamRequest
-   * Desc : To validate stream request, allow legal with stream url, disallow invalid one 
+   * Desc : To validate stream request & returning mp4 url
    * @param string authenticationToken
    * @param string ProdID
    * @param string agent
-   * * @return StreamingResponse[]
+   * @return StreamingResponseType[]
    */
   
   function validateStreamRequest($authenticationToken, $ProdID, $agent){
@@ -1666,9 +1666,27 @@ STR;
     $product_detail = $this->getProductDetail($ProdID);
     $prodId = $product_detail['Product']['ProdID'];
     $provider_type = $product_detail['Product']['provider_type'];
-     
+
+    $SongData = array();
+    $SongData = $this->Song->find('first', array(
+      'fields' => array('MP4_FileID'),
+      'conditions' => array('ProdID' => $prodId, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
+      'recursive' => -1
+    ));
+    
+    if(!(empty($SongData['Song']['MP4_FileID']))) {
+      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in steaming this Song.');
+    }
       
     $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, 'App-'.$agent);
+    
+    switch($response[0]){
+      case 'success': return $this->createsStreamingResponseObject(true, $response[1], $response[2], $this->getHLSURL($SongData['Song']['MP4_FileID'])); break;
+      case 'error'  : return $this->createsStreamingResponseObject(false, $response[1], $response[2], '');  break;
+      default:  throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in steaming this Song.');
+    
+    }
+    
       
   }
 
@@ -6244,6 +6262,29 @@ STR;
   }
   
   /**
+   * return class(StreamingResponse) object with response data
+   * @param bool $success
+   * @param string $message
+   * @param string $remaningtime
+   * @param string $mp4url
+   * @return StreamingResponseType[]
+   */
+
+  private function createsStreamingResponseObject($success, $message, $remaningtime, $mp4url){
+
+    $obj = new StreamingResponseType;
+    $obj->success       = $success;
+    $obj->message       = $message;
+    $obj->remaningtime  = $remaningtime;
+    $obj->mp4url       = $mp4url;
+
+    $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'StreamingResponseType');
+    $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArrayStreamingResponseType');
+
+    return $data;
+  }
+  
+  /**
    * return class(QueueOperation) object with response data
    * @param bool $success
    * @param string $message
@@ -6689,26 +6730,16 @@ STR;
   /**
    * Function Name : getHLSURL
    * Desc : Returns HLS (mp4) URL for given Song  
-   * @param int prodID
-   * @param string provider_type
+   * @param int mp4FileID
    * @return string
    */  
-  function getHLSURL($prodID, $provider_type) {
+  function getHLSURL($mp4FileID) {
     
-    $SongData = $this->Song->find('first', array(
-      'fields' => array('MP4_FileID'),
-      'conditions' => array('ProdID' => $prodID, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
-      'recursive' => -1
-    ));
-
     $FileData = $this->File_mp4->find('first', array(
-      'conditions' => array('FileID' => $SongData['Song']['MP4_FileID'] ),
+      'conditions' => array('FileID' =>  $mp4FileID),
     ));
 
-    $url = Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['SaveAsName'].' '.$FileData['File_mp4']['CdnPath']);
-
-    echo $url; exit;
-
+    return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['SaveAsName'].' '.$FileData['File_mp4']['CdnPath']);  
   }
   
  
