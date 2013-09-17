@@ -70,8 +70,8 @@ class HomesController extends AppController
         }
 
         // National Top 100 Songs slider and Downloads functionality
-        //if (($national = Cache::read("national".$territory."Page1")) === false) {
-        if(1){
+        if (($national = Cache::read("national".$territory."Page1")) === false) {
+        
       
             $country = $territory;
             
@@ -187,8 +187,8 @@ STR;
                 
               
 	// National Top Videos list and Downloads functionality code 
-        //if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
-                if(1) {
+        if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
+          //      if(1) {
                 $country = $territory;
 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
