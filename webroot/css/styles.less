@@ -281,6 +281,11 @@ img {
 	right:    15px;
 	top:      54px;
 	
+	@media screen and (max-width:1024px) {
+		
+		right: 30px;
+	}
+	
 
 	
 	.label {
@@ -676,6 +681,11 @@ img {
 		font-size: 12px;
 		position:  relative;
 		
+		@media screen and (max-width:1024px) {
+			
+			width: 1000px;
+		}
+		
 		.footer-nav {
 		
 			position: absolute;
@@ -929,10 +939,12 @@ img {
 	
 		.search {
 			-webkit-appearance: none;
+			
 		    width: 305px;
 		    border: 1px solid #ddd;
 		    background: #fff;
-		    border-radius: 25px;		
+		    border-radius: 25px;
+
 				
 			#master-filter {
 				
@@ -942,6 +954,7 @@ img {
 				cursor: pointer;
 				border-radius: 0;
 				height: 30px;
+
 /*
 				-moz-border-radius-topleft: 20px;
 				-moz-border-radius-bottomleft: 20px;
@@ -1022,8 +1035,9 @@ img {
 				-webkit-appearance: none;
 				width:              164px;
 				border-left: 1px solid #ddd;
-/*
-				-moz-border-radius-topright: 25px;
+				/* padding-right: 30px; */
+				/*
+-moz-border-radius-topright: 25px;
 				-moz-border-radius-bottomright: 25px;
 				-webkit-border-top-right-radius: 25px;
 				-webkit-border-bottom-right-radius: 25px;
@@ -1220,6 +1234,11 @@ img {
 	background: #52c6ec;
 	height:     39px;
 	position:   relative;
+	
+	@media screen and (max-width:1024px) {
+		
+		width: 1000px;
+	}
 	
 	&:before,&:after {
 	
@@ -15404,6 +15423,7 @@ img {
 		
 		
 	}
+	
 	.tracklist-container {
 		
 		h5 {
@@ -15548,6 +15568,11 @@ img {
 					
 
 
+				}
+				
+				h5 {
+					
+					float: left;
 				}
 				h6 {
 					
@@ -16108,622 +16133,10 @@ img {
 	
 	
 	
-	.advanced-search-results-albums {
-	
-		margin-bottom: 20px; 
-		
-		h4 {
-			
-			color: rgba(0,0,0,.7);
-			font-size: 18px;
-		}
-		.advanced-albums {
-			
-			
-			header {
-				
-				color: rgba(0,0,0,.7);
-				h5 {
-					
-					float: left;
-				}
-				
-				h6 {
-					
-					float: right;
-					font-size: 13px;
-					margin-top: 4px;
-					
-					a {
-						
-						color: #000;
-						text-decoration: none;
-						
-						&:hover {
-							
-							text-decoration: underline;
-						}
-						
-					}
-				}
-			}
-			
-			.advanced-albums-shadow-container {
-				position: relative;
-				overflow-x: hidden;
-				overflow-y: hidden;
-				width: 100%;
-				height: 485px;
-				
-				&:after {
-					
-					content: "";
-					position: absolute;
-					right: 0;
-					top:0;
-					width: 11px;
-					height: 506px;
-					background: url(../img/search-results/albums-result-tapered-shadow.png);
-				}
-				
-				.advanced-albums-scrollable {
-				
-					overflow-x: hidden;
-					overflow-y: hidden;
-					height: 485px;
-					
-					&:hover {
-						
-						overflow-x: scroll;
-						overflow-y: hidden;
-					}
-			
-					ul {
-						overflow-x: scroll;
-						width: 2700px;
-						height: 485px;
-						
-						li {
-							display: block;
-							float: left;
-							margin-right: 22px;
-							
-							img {
-								
-								border: 1px solid #fff;
-								.box-shadow(0 0 3px rgba(0,0,0,.5));
-								margin-bottom: 10px;
-							}
-							
-							.album-title {
-								font-size: 12px;
-								font-weight: bold;
-								color: #000;
-								margin-bottom: 6px;
-								
-								a {
-									
-									color: #000;
-									text-decoration: none;
-									
-									&:hover {
-										
-										text-decoration: underline;
-									}
-								}
-							}
-							
-							.album-genre {
-								
-								font-size: 12px;
-								color: #666;
-								margin-bottom: 6px;
-								
-								a {
-									
-									color: #666;
-									text-decoration: none;
-									
-									&:hover {
-										
-										text-decoration: underline;
-									}
-								}
-							}
-							
-							.album-label {
-								
-								font-size: 12px;
-								color: #666;
-								margin-bottom: 10px;
-								
-								a {
-									
-									color: #666;
-									text-decoration: none;
-									
-									&:hover {
-										
-										text-decoration: underline;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		
-		
-		
-		
-	}
+
 	
 	
-	.advanced-search-results-artists {
 	
-		margin-bottom: 40px; 
-		
-		h4 {
-			
-			color: rgba(0,0,0,.7);
-			font-size: 18px;
-		}
-		.advanced-artists {
-			
-			
-			header {
-				
-				color: rgba(0,0,0,.7);
-				h5 {
-					
-					float: left;
-				}
-				
-				h6 {
-					
-					float: right;
-					font-size: 13px;
-					margin-top: 4px;
-					
-					a {
-						
-						color: #000;
-						text-decoration: none;
-						
-						&:hover {
-							
-							text-decoration: underline;
-						}
-						
-					}
-				}
-			}
-			
-			.advanced-artists-shadow-container {
-				position: relative;
-				overflow-x: hidden;
-				overflow-y: hidden;
-				
-				
-				&:after {
-					
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom:0;
-					width: 850px;
-					height: 11px;
-					background: url(../img/search-results/advanced-artist-result-tapered-shadow.png);
-				}
-				
-				.advanced-artists-scrollable {
-				
-					overflow-x: hidden;
-					overflow-y: hidden;
-					height: 216px;
-					
-					&:hover {
-						
-						overflow-x: hidden;
-						overflow-y: scroll;
-					}
-					
-					.row-wrapper {
-					
-						height: 1000px;
-						
-						.rows {
-							padding-left: 10px;
-							
-							&:nth-child(odd) {
-								
-								background: #f1f1f1;
-							}
-							
-							&:nth-child(even) {
-								background: #e9e9e9;
-								
-							}
-							.row {
-								
-								float: left;
-								width: 33.33%;
-								padding-top: 10px;
-								padding-bottom: 10px;
-								
-								a {
-									color: rgba(0,0,0,.7);
-									text-decoration: none;
-									font-size: 12px;
-									
-									&:hover {
-										text-decoration: underline;
-										
-									}
-								}
-							}
-						}
-					}
-			
-					
-				}
-			}
-		}
-		
-		
-		
-		
-	}
-	
-	.advanced-search-results-composers {
-	
-		margin-bottom: 40px; 
-		
-		h4 {
-			
-			color: rgba(0,0,0,.7);
-			font-size: 18px;
-		}
-		.advanced-composers {
-			
-			
-			header {
-				
-				color: rgba(0,0,0,.7);
-				h5 {
-					
-					float: left;
-				}
-				
-				h6 {
-					
-					float: right;
-					font-size: 13px;
-					margin-top: 4px;
-					
-					a {
-						
-						color: #000;
-						text-decoration: none;
-						
-						&:hover {
-							
-							text-decoration: underline;
-						}
-						
-					}
-				}
-			}
-			
-			.advanced-composers-shadow-container {
-				position: relative;
-				overflow-x: hidden;
-				overflow-y: hidden;
-				
-				
-				&:after {
-					
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom:0;
-					width: 850px;
-					height: 11px;
-					background: url(../img/search-results/advanced-artist-result-tapered-shadow.png);
-				}
-				
-				.advanced-composers-scrollable {
-				
-					overflow-x: hidden;
-					overflow-y: hidden;
-					height: 216px;
-					
-					&:hover {
-						
-						overflow-x: hidden;
-						overflow-y: scroll;
-					}
-					
-					.row-wrapper {
-					
-						height: 1000px;
-						
-						.rows {
-							padding-left: 10px;
-							
-							&:nth-child(odd) {
-								
-								background: #f1f1f1;
-							}
-							
-							&:nth-child(even) {
-								background: #e9e9e9;
-								
-							}
-							.row {
-								
-								float: left;
-								width: 33.33%;
-								padding-top: 10px;
-								padding-bottom: 10px;
-								
-								a {
-									color: rgba(0,0,0,.7);
-									text-decoration: none;
-									font-size: 12px;
-									
-									&:hover {
-										text-decoration: underline;
-										
-									}
-								}
-							}
-						}
-					}
-			
-					
-				}
-			}
-		}
-		
-		
-		
-		
-	}
-	
-	.advanced-search-results-genres {
-	
-		margin-bottom: 40px; 
-		
-		h4 {
-			
-			color: rgba(0,0,0,.7);
-			font-size: 18px;
-		}
-		.advanced-genres {
-			
-			
-			header {
-				
-				color: rgba(0,0,0,.7);
-				h5 {
-					
-					float: left;
-				}
-				
-				h6 {
-					
-					float: right;
-					font-size: 13px;
-					margin-top: 4px;
-					
-					a {
-						
-						color: #000;
-						text-decoration: none;
-						
-						&:hover {
-							
-							text-decoration: underline;
-						}
-						
-					}
-				}
-			}
-			
-			.advanced-genres-shadow-container {
-				position: relative;
-				overflow-x: hidden;
-				overflow-y: hidden;
-				
-				
-				&:after {
-					
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom:0;
-					width: 850px;
-					height: 11px;
-					background: url(../img/search-results/advanced-artist-result-tapered-shadow.png);
-				}
-				
-				.advanced-genres-scrollable {
-				
-					overflow-x: hidden;
-					overflow-y: hidden;
-					height: 216px;
-					
-					&:hover {
-						
-						overflow-x: hidden;
-						overflow-y: scroll;
-					}
-					
-					.row-wrapper {
-					
-						height: 1000px;
-						
-						.rows {
-							padding-left: 10px;
-							
-							&:nth-child(odd) {
-								
-								background: #f1f1f1;
-							}
-							
-							&:nth-child(even) {
-								background: #e9e9e9;
-								
-							}
-							.row {
-								
-								float: left;
-								width: 33.33%;
-								padding-top: 10px;
-								padding-bottom: 10px;
-								
-								a {
-									color: rgba(0,0,0,.7);
-									text-decoration: none;
-									font-size: 12px;
-									
-									&:hover {
-										text-decoration: underline;
-										
-									}
-								}
-							}
-						}
-					}
-			
-					
-				}
-			}
-		}
-		
-		
-		
-		
-	}
-	
-	
-	.advanced-search-results-labels {
-	
-		margin-bottom: 40px; 
-		
-		h4 {
-			
-			color: rgba(0,0,0,.7);
-			font-size: 18px;
-		}
-		.advanced-labels {
-			
-			
-			header {
-				
-				color: rgba(0,0,0,.7);
-				h5 {
-					
-					float: left;
-				}
-				
-				h6 {
-					
-					float: right;
-					font-size: 13px;
-					margin-top: 4px;
-					
-					a {
-						
-						color: #000;
-						text-decoration: none;
-						
-						&:hover {
-							
-							text-decoration: underline;
-						}
-						
-					}
-				}
-			}
-			
-			.advanced-labels-shadow-container {
-				position: relative;
-				overflow-x: hidden;
-				overflow-y: hidden;
-				
-				
-				&:after {
-					
-					content: "";
-					position: absolute;
-					left: 0;
-					bottom:0;
-					width: 850px;
-					height: 11px;
-					background: url(../img/search-results/advanced-artist-result-tapered-shadow.png);
-				}
-				
-				.advanced-labels-scrollable {
-				
-					overflow-x: hidden;
-					overflow-y: hidden;
-					height: 216px;
-					
-					&:hover {
-						
-						overflow-x: hidden;
-						overflow-y: scroll;
-					}
-					
-					.row-wrapper {
-					
-						height: 1000px;
-						
-						.rows {
-							padding-left: 10px;
-							
-							&:nth-child(odd) {
-								
-								background: #f1f1f1;
-							}
-							
-							&:nth-child(even) {
-								background: #e9e9e9;
-								
-							}
-							.row {
-								
-								float: left;
-								width: 33.33%;
-								padding-top: 10px;
-								padding-bottom: 10px;
-								
-								a {
-									color: rgba(0,0,0,.7);
-									text-decoration: none;
-									font-size: 12px;
-									
-									&:hover {
-										text-decoration: underline;
-										
-									}
-								}
-							}
-						}
-					}
-			
-					
-				}
-			}
-		}
-		
-		
-		
-		
-	}
 	
 	
 	.tracklist-header {
