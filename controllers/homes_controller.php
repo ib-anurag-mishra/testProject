@@ -183,6 +183,8 @@ STR;
 		}else{
                     $nationalTopDownload = Cache::read("national".$territory."Page1");                
                 }
+                echo "<pre>";
+                print_r($nationalTopDownload);echo "</pre>";
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
               
@@ -290,7 +292,6 @@ STR;
                       $nationalTopVideoDownload[$key]['Video']['status'] = 'not';
                     }
                 }                
-               
                 //write in the cache                                   
                 Cache::write("nationalvideos".$territory."Page1", $nationalTopVideoDownload );
                
@@ -299,6 +300,8 @@ STR;
         
             $nationalTopVideoDownload = Cache::read("nationalvideos".$territory."Page1");     
        }
+       echo "<pre>";
+       print_r($nationalTopVideoDownload);echo "</pre>";die;
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
         
         $ids = '';

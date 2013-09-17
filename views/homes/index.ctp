@@ -132,7 +132,6 @@ $("#top-100-videos-grid").scroll(function(){
                     <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){
                                 $j = 0;
                                 $k = 2000;
-                                print_r($nationalTopDownload);
                                 for($i = 0; $i < count($nationalTopDownload); $i++) { if($i==20) break;
                                   //hide song if library block the explicit content
                                   if(($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] =='T')) {
@@ -272,8 +271,8 @@ $("#top-100-videos-grid").scroll(function(){
         <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
         <ul id="nationalVideosRecord" style="width:48000px;">
 
-        <?php if(is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0){  print_r($nationalTopVideoDownload);?>
-            
+        <?php if(is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0){ ?>
+
         <?php
                 $j = 0;
                 $k = 2000;
