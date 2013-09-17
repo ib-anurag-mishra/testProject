@@ -100,13 +100,13 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-                Cache::delete("featured_u_s");
-                Cache::delete("featured_c_a");
-                Cache::delete("featured_i_t");
-                Cache::delete("featured_n_z");
-                Cache::delete("featured_a_u");
-                Cache::delete("featured_i_e");
-                Cache::delete("featured_g_b");
+                Cache::delete("featuredUS");
+                Cache::delete("featuredCA");
+                Cache::delete("featuredIT");
+                Cache::delete("featuredNZ");
+                Cache::delete("featuredAU");
+                Cache::delete("featuredIE");
+                Cache::delete("featuredGB");
 	}
 
 	/*
@@ -156,13 +156,13 @@ Class ArtistsController extends AppController
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                Cache::delete("featured_u_s");
-                                Cache::delete("featured_c_a");
-                                Cache::delete("featured_i_t");
-                                Cache::delete("featured_n_z");
-                                Cache::delete("featured_a_u");
-                                Cache::delete("featured_i_e");
-                                Cache::delete("featured_g_b");
+                                Cache::delete("featuredUS");
+                                Cache::delete("featuredCA");
+                                Cache::delete("featuredIT");
+                                Cache::delete("featuredNZ");
+                                Cache::delete("featuredAU");
+                                Cache::delete("featuredIE");
+                                Cache::delete("featuredGB");
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -226,13 +226,13 @@ Class ArtistsController extends AppController
 		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
 				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                Cache::delete("featured_u_s");
-                                Cache::delete("featured_c_a");
-                                Cache::delete("featured_i_t");
-                                Cache::delete("featured_n_z");
-                                Cache::delete("featured_a_u");
-                                Cache::delete("featured_i_e");
-                                Cache::delete("featured_g_b");
+                                Cache::delete("featuredUS");
+                                Cache::delete("featuredCA");
+                                Cache::delete("featuredIT");
+                                Cache::delete("featuredNZ");
+                                Cache::delete("featuredAU");
+                                Cache::delete("featuredIE");
+                                Cache::delete("featuredGB");
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
