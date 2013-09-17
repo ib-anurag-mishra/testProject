@@ -633,23 +633,25 @@ Class ArtistsController extends AppController
 	function view($id=null,$album=null, $provider=null)
 	{
 		
+            
+            
             if(count($this -> params['pass']) > 1) {
-                    $count = count($this -> params['pass']);
-                    $id = $this -> params['pass'][0];
-                    for($i=1;$i<$count-1;$i++) {
-                            if(!is_numeric($this -> params['pass'][$i])) {
-                                    $id .= "/".$this -> params['pass'][$i];
-                            }
-                    }
-                    if(is_numeric($this -> params['pass'][$count - 2])) {
-                            $album = $this -> params['pass'][$count - 2];
-                            $provider = base64_decode($this -> params['pass'][$count - 1]);
-                    }
-                    else {
-                            $album = "";
-                            $provider = "";
-                    }
-            }
+			$count = count($this -> params['pass']);
+			$id = $this -> params['pass'][0];
+			for($i=1;$i<$count-1;$i++) {
+				if(!is_numeric($this -> params['pass'][$i])) {
+				      $id .= "/".$this -> params['pass'][$i];
+				}
+			}
+			if(is_numeric($this -> params['pass'][$count - 2])) {
+				$album = $this -> params['pass'][$count - 2];
+				$provider = base64_decode($this -> params['pass'][$count - 1]);
+			}
+			else {
+				$album = "";
+				$provider = "";
+			}
+		}
 
 		// echo base64_decode($id) . $album;
 		// exit;
@@ -828,14 +830,14 @@ Class ArtistsController extends AppController
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
-			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-					if(count($downloadsUsed) > 0){
-						$albumSongs[$k][$key]['Song']['status'] = 'avail';
-					} else{
-						$albumSongs[$k][$key]['Song']['status'] = 'not';
-					}
-			}
+                    foreach($albumSong as $key => $value){
+                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                                $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                        } else{
+                                $albumSongs[$k][$key]['Song']['status'] = 'not';
+                        }
+                    }
 		}
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -1053,14 +1055,14 @@ Class ArtistsController extends AppController
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
-			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-					if(count($downloadsUsed) > 0){
-						$albumSongs[$k][$key]['Song']['status'] = 'avail';
-					} else{
-						$albumSongs[$k][$key]['Song']['status'] = 'not';
-					}
-			}
+                    foreach($albumSong as $key => $value){
+                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                                $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                        } else{
+                                $albumSongs[$k][$key]['Song']['status'] = 'not';
+                        }
+                    }
 		}
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -1473,20 +1475,30 @@ STR;
 
 	}
         
+ /**
+   *@getAlbums
+   *  return top 5 artist names with ajax call
+   *
+   *$name
+   *  string to be searchedin atrist name
+   *
+   *@return
+   *  
+   **/
         
         
 	function admin_getAlbums(){
             Configure::write('debug', 0);
 		$result = array();
-		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
-		$val = '';
+		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle','Album.provider_type'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
+                $val = '';
 		$this->Song->Behaviors->attach('Containable');
-        $this->Country->setTablePrefix($_REQUEST['Territory']);
+                $this->Country->setTablePrefix($_REQUEST['Territory']);
 		foreach($allAlbum as $k => $v){
 			$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-			if(count($recordCount) > 0){
+                        if(count($recordCount) > 0){
 				$val = $val.$v['Album']['ProdID'].",";
-				$result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
+				$result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
 			}
 		}
 		$data = "<option value=''>SELECT</option>";
