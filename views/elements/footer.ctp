@@ -159,7 +159,9 @@ pageTracker._trackPageview();
                                     var json = JSON.parse(data);
                                     if(json.error){
                                         alert(json.error[1]);
-                                        jwplayer().remove();
+										if(json.error[1] != 6 ){
+											jwplayer().remove();
+										}
                                     }else if(json.success){
                                     }
                             })
@@ -189,7 +191,9 @@ pageTracker._trackPageview();
                                             var json = JSON.parse(data);
                                             if(json.error){
                                                 alert(json.error[1]);
-                                                jwplayer().remove();                                                
+												if(json.error[3] != 6){
+													jwplayer().remove();
+												}
                                             }else if(json.success){
                                             }
                                     })
@@ -211,7 +215,9 @@ pageTracker._trackPageview();
                                             if(json.error){
                                                 var result = json.error;
                                                 alert(result[1]);
-                                                jwplayer().remove();
+												if(result[3]!= 6){
+													jwplayer().remove();
+												}	
                                             }else if(json.success){
                                                 jwplayer("myElement").play(true);
                                             }
