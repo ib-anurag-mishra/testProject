@@ -100,14 +100,13 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);
+                Cache::delete("featured_u_s");
+                Cache::delete("featured_c_a");
+                Cache::delete("featured_i_t");
+                Cache::delete("featured_n_z");
+                Cache::delete("featured_a_u");
+                Cache::delete("featured_i_e");
+                Cache::delete("featured_g_b");
 	}
 
 	/*
@@ -117,13 +116,22 @@ Class ArtistsController extends AppController
 	function admin_insertfeaturedartist() {
 		$errorMsg = '';
 		$artist = '';
+                $album_provider_type = '';
+                $album_prodid = 0;
+                $alb_det = explode('-',$_REQUEST[ 'album' ]);
+                if(isset($alb_det[0])){
+                    $album_prodid = $alb_det[0];
+                }
+                if(isset($alb_det[1])){
+                    $album_provider_type = $alb_det[1];
+                }
 		if(isset($_REQUEST[ 'artistName' ])){
 			$artist = $_REQUEST[ 'artistName' ];
 		} else{
 			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
 		}
 		if(isset($_REQUEST[ 'album' ])){
-			$album = $_REQUEST[ 'album' ];
+			$album = $album_prodid;
 		} else{
 			$album = $this->data[ 'Artist' ][ 'album' ];
 		}
@@ -141,10 +149,20 @@ Class ArtistsController extends AppController
 		$insertArr[ 'album' ] = $album;
 		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$insertArr[ 'language' ] = Configure::read('App.LANGUAGE');
-		$insertObj = new Featuredartist();
+                if(isset($album_provider_type)){
+                   $insertArr[ 'provider_type' ] = $album_provider_type;
+                }
+                $insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
+                                Cache::delete("featured_u_s");
+                                Cache::delete("featured_c_a");
+                                Cache::delete("featured_i_t");
+                                Cache::delete("featured_n_z");
+                                Cache::delete("featured_a_u");
+                                Cache::delete("featured_i_e");
+                                Cache::delete("featured_g_b");
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -152,14 +170,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);
+		
 	}
 
 	/*
@@ -168,8 +179,17 @@ Class ArtistsController extends AppController
         */
 	function admin_updatefeaturedartist() {
 		$errorMsg = '';
+                $album_provider_type = '';
+                $album_prodid = 0;
 		$this->Featuredartist->id = $this -> data[ 'Artist' ][ 'id' ];
-		$artistName = '';
+                $alb_det = explode('-',$_REQUEST[ 'album' ]);
+                if(isset($alb_det[0])){
+                    $album_prodid = $alb_det[0];
+                }
+                if(isset($alb_det[1])){
+                    $album_provider_type = $alb_det[1];
+                }
+                $artistName = '';
 		if(isset($_REQUEST[ 'artistName' ])){
 			$artistName = $_REQUEST[ 'artistName' ];
 		}
@@ -180,7 +200,7 @@ Class ArtistsController extends AppController
 			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
 		}
 		if(isset($_REQUEST[ 'album' ])){
-			$album = $_REQUEST[ 'album' ];
+			$album = $album_prodid;
 		} else{
 			$album = $this->data[ 'Artist' ][ 'album' ];
 		}
@@ -199,10 +219,20 @@ Class ArtistsController extends AppController
 		$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$updateArr[ 'language' ] = Configure::read('App.LANGUAGE');
 		$updateArr[ 'album' ] = $album;
+                if(isset($album_provider_type)){
+                    $updateArr[ 'provider_type' ] = $album_provider_type;
+                }
 		$updateObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
 				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
+                                Cache::delete("featured_u_s");
+                                Cache::delete("featured_c_a");
+                                Cache::delete("featured_i_t");
+                                Cache::delete("featured_n_z");
+                                Cache::delete("featured_a_u");
+                                Cache::delete("featured_i_e");
+                                Cache::delete("featured_g_b");
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -210,14 +240,8 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);
+		
+                
 	}
 
 	/*

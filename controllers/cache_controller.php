@@ -1020,7 +1020,7 @@ STR;
             $featured = array();
             $ids = '';
             $ids_provider_type = '';
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory, 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
             foreach ($featured as $k => $v) {
                 if ($v['Featuredartist']['album'] != 0) {
                     if (empty($ids)) {
@@ -1040,45 +1040,50 @@ STR;
 
             if ($ids != '') {
                 $this->Album->recursive = 2;
-                $featured = $this->Album->find('all', array('conditions' =>
-                    array('and' =>
-                        array(
-                            array("(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")", "Country.Territory" => $territory, "Album.provider_type = Country.provider_type"),
-                        ), "1 = 1 GROUP BY Album.ProdID"
-                    ),
-                    'fields' => array(
-                        'Album.ProdID',
-                        'Album.Title',
-                        'Album.ArtistText',
-                        'Album.AlbumTitle',
-                        'Album.Artist',
-                        'Album.ArtistURL',
-                        'Album.Label',
-                        'Album.Copyright',
-                        'Album.provider_type'
-                    ),
-                    'contain' => array(
-                        'Genre' => array(
-                            'fields' => array(
-                                'Genre.Genre'
+                $featured =  $this->Album->find('all',array(
+                        'joins'=> array(
+                            array(
+                              'type' => 'INNER',
+                              'table' => 'featuredartists',
+                              'alias' => 'fa',
+                              'conditions' => array('Album.ProdID = fa.album')
                             )
                         ),
-                        'Country' => array(
-                            'fields' => array(
-                                'Country.Territory'
-                            )
+                        'conditions' =>array(
+                            'and' =>array(
+                                array(
+                                    "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")"
+                                ),
+                             ), "1 = 1 GROUP BY Album.ProdID"
+                         ),
+                        'fields' => array(
+                            'Album.ProdID',
+                            'Album.Title',
+                            'Album.ArtistText',
+                            'Album.AlbumTitle',
+                            'Album.Artist',
+                            'Album.ArtistURL',
+                            'Album.Label',
+                            'Album.Copyright',
+                            'Album.provider_type'
                         ),
-                        'Files' => array(
-                            'fields' => array(
-                                'Files.CdnPath',
-                                'Files.SaveAsName',
-                                'Files.SourceURL'
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
                             ),
-                        )
-                    ), 
-                    'order' => array('Country.SalesDate' => 'desc', 'limit'=>20)
-                    )
-                );
+                            'Files' => array(
+                                'fields' => array(
+                                    'Files.CdnPath' ,
+                                    'Files.SaveAsName',
+                                    'Files.SourceURL'
+                                ),
+                            )
+                        ), 
+                        'order' => 'fa.id DESC',
+                        'limit'=>20
+                    ));
             } else {
                 $featured = array();
             }

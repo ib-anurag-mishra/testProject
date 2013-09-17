@@ -318,8 +318,7 @@ STR;
            
             
             //get all featured artist and make array
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-
+            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
             foreach($featured as $k => $v){
                     if($v['Featuredartist']['album'] != 0){
                             if(empty($ids)){
@@ -331,50 +330,53 @@ STR;
                             }	
                     }
             }
-
             //get all the details for featured albums
             if($ids != ''){
                     $this->Album->recursive = 2;
-                    $featured =  $this->Album->find('all',array('conditions' =>
-                                            array('and' =>
-                                                    array(
-                                                            array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
-                                                    ), "1 = 1 GROUP BY Album.ProdID"
-                                            ),
-
-                                            'fields' => array(
-                                                    'Album.ProdID',
-                                                    'Album.Title',
-                                                    'Album.ArtistText',
-                                                    'Album.AlbumTitle',
-                                                    'Album.Artist',
-                                                    'Album.ArtistURL',
-                                                    'Album.Label',
-                                                    'Album.Copyright',
-                                                    'Album.provider_type'
-
-                                                    ),
-                                            'contain' => array(
-                                                    'Genre' => array(
-                                                            'fields' => array(
-                                                                    'Genre.Genre'
-                                                                    )
-                                                            ),
-                                                    'Country' => array(
-                                                            'fields' => array(
-                                                                    'Country.Territory'
-                                                                    )
-                                                            ),
-                                                    'Files' => array(
-                                                            'fields' => array(
-                                                                    'Files.CdnPath' ,
-                                                                    'Files.SaveAsName',
-                                                                    'Files.SourceURL'
-                                                    ),
-                                            )
-                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
-                            )
-                    );
+                    $featured =  $this->Album->find('all',array(
+                            'joins'=> array(
+                                array(
+                                  'type' => 'INNER',
+                                  'table' => 'featuredartists',
+                                  'alias' => 'fa',
+                                  'conditions' => array('Album.ProdID = fa.album')
+                                )
+                            ),
+                            'conditions' =>array(
+                                'and' =>array(
+                                    array(
+                                        "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")"
+                                    ),
+                                 ), "1 = 1 GROUP BY Album.ProdID"
+                             ),
+                            'fields' => array(
+                                'Album.ProdID',
+                                'Album.Title',
+                                'Album.ArtistText',
+                                'Album.AlbumTitle',
+                                'Album.Artist',
+                                'Album.ArtistURL',
+                                'Album.Label',
+                                'Album.Copyright',
+                                'Album.provider_type'
+                            ),
+                            'contain' => array(
+                                'Genre' => array(
+                                    'fields' => array(
+                                        'Genre.Genre'
+                                    )
+                                ),
+                                'Files' => array(
+                                    'fields' => array(
+                                        'Files.CdnPath' ,
+                                        'Files.SaveAsName',
+                                        'Files.SourceURL'
+                                    ),
+                                )
+                            ), 
+                            'order' => 'fa.id DESC',
+                            'limit'=>20
+                    ));
                     
             } else {
                     $featured = array();
