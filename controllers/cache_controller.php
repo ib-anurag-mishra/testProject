@@ -255,6 +255,12 @@ STR;
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
+                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $featureVideo['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $featuredVideos[$key]['Video']['status'] = 'avail';
+                    } else{
+                      $featuredVideos[$key]['Video']['status'] = 'not';
+                    }
                 }         
                
                     
@@ -290,6 +296,12 @@ STR;
                      // print_r($featureVideo);
                      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                      $topDownloads[$key]['videoImage'] = $videoImage;
+                     $vdownloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $topDownload['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                     if(count($vdownloadsUsed) > 0){
+                        $topDownloads[$key]['Video']['status'] = 'avail';
+                     } else{
+                        $topDownloads[$key]['Video']['status'] = 'not';
+                     }
                 }                
                 Cache::write("top_download_videos".$territory, $topDownloads);
                 $this->log("cache written for top download   videos for $territory", "cache");
