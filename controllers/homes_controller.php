@@ -20,21 +20,6 @@ class HomesController extends AppController
     function beforeFilter() {
     
 	parent::beforeFilter();
-        // comenting this code for showing this page before login
-        //        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
-        //            $validPatron = $this->ValidatePatron->validatepatron();
-        //			if($validPatron == '0') {
-        //				//$this->Session->destroy();
-        //				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-        //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-        //			}
-        //			else if($validPatron == '2') {
-        //				//$this->Session->destroy();
-        //				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-        //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-        //			}
-        //        }           
-                
          $pat_id    =   $this->Session->read('patron');
           if(!empty($pat_id))    //  After Login
           {
@@ -84,7 +69,6 @@ class HomesController extends AppController
             $this->set('patronDownload',$patronDownload);
         }
 
-        //Cache::delete("national".$territory);
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory."Page1")) === false) {
         
@@ -116,11 +100,7 @@ class HomesController extends AppController
                     ORDER BY `countProduct` DESC 
                     LIMIT 1110";
                 }
-		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		 
-               
-                
-                  //make the provide type and prodid array for selecting records
+		  //make the provide type and prodid array for selecting records
                   $ids = '';
                   $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);               
@@ -192,6 +172,12 @@ STR;
                                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
+                                $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                if(count($downloadsUsed) > 0){
+                                  $nationalTopDownload[$key]['Song']['status'] = 'avail';
+                                } else{
+                                  $nationalTopDownload[$key]['Song']['status'] = 'not';
+                                }
                         }                        
 			Cache::write("national".$territory."Page1", $nationalTopDownload);
 		}else{
@@ -200,16 +186,9 @@ STR;
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
               
-	//get Advisory condition
-        //dvisory_status = $this->getLibraryExplicitStatus($libId);        
-
-  
-	//Cache::delete("nationalvideos".$territory);             
-        // National Top Videos list and Downloads functionality code 
+	// National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory."Page1")) === false) {
           //      if(1) {
-            
-                  
                 $country = $territory;
 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -304,6 +283,12 @@ STR;
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                     $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $nationalTopVideoDownload[$key]['Video']['status'] = 'avail';
+                    } else{
+                      $nationalTopVideoDownload[$key]['Video']['status'] = 'not';
+                    }
                 }                
                
                 //write in the cache                                   
@@ -720,7 +705,6 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-                //Cache::delete("lib".$libId);
                     if (($libDownload = Cache::read("lib".$libId)) === false)
                     //if(1)
                     {
@@ -1023,7 +1007,6 @@ STR;
             // National Top Downloads functionality
             if(!empty($territory)){  
                 
-                //Cache::delete("national_us_top10_songs".$territory);
             if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
                              
                     $country = $territory;
@@ -1232,7 +1215,7 @@ STR;
             $country = $this->Session->read('territory');
                 
                if(!empty($country)){ 
-                   //Cache::delete("national_us_top10_videos".$territory);
+                   
                if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
                //if(1) {               
                    if($maintainLatestVideoDownload){
@@ -1355,7 +1338,6 @@ STR;
                             ORDER BY `countProduct` DESC 
                             LIMIT 110";
                         }
-		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
 		  $natTopDownloaded = $this->Album->query($sql);
 		  foreach($natTopDownloaded as $natTopSong){
@@ -1424,15 +1406,6 @@ STR;
              
 
 		$nationalTopDownload = Cache::read("national".$territory);
-/*		$this->Download->recursive = -1;
-		foreach($nationalTopDownload as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$nationalTopDownload[$key]['Song']['status'] = 'avail';
-			} else{
-				$nationalTopDownload[$key]['Song']['status'] = 'not';
-			}
-		}*/
 		$this->set('nationalTopDownload',$nationalTopDownload);
 	}
 
@@ -1842,11 +1815,6 @@ STR;
 					$searchParam = "";
 					$expSearchKeys = explode(" ", $searchKey);
 					foreach ($expSearchKeys as $value) {
-						/* if ($spValue == '') {
-							$spValue = ''.addslashes($value).'|';
-						} else {
-							$spValue = $spValue.''.addslashes($value).'|';
-						} */
 						$value = str_replace("^", " ", $value);
 						$value = str_replace("$", " ", $value);
                                                 $value = str_replace("-", " ", $value);
@@ -1864,10 +1832,6 @@ STR;
 					$searchKey = '"'.addslashes($searchKey).'"';
 					$searchParam = "@".$searchtype." ".$searchKey;
 				}
-			//	echo $searchParam;exit;
-				/*$spValue = substr($spValue, 0, -1);
-				$spValue = '"'.$spValue.'"';
-				$searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue;*/
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
@@ -1895,7 +1859,6 @@ STR;
 							));
 
 				$searchResults = $this->paginate('Song');
-//				print "<pre>";print_r($searchResults);exit;
 				$this->Download->recursive = -1;
 				foreach($searchResults as $key => $value){
 						$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
@@ -2026,19 +1989,6 @@ STR;
 			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 		}
 		$downloadsDetail = array();
-/*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-
-        if($libraryDownload != '1' || $patronDownload != '1') {
-            echo "error";
-            exit;
-        }
-		$this->Download->recursive = -1;
-		$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-        if(count($downloadsUsed) > 0) {
-            echo "incld";
-            exit;
-        }*/
 
 		$provider = $_POST['ProviderType'];
         $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
@@ -2058,9 +2008,6 @@ STR;
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
 		 $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-                
-                
-              
                 
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
@@ -2219,20 +2166,6 @@ STR;
 			}
 		}
                
-/*		if($this->Download->save($insertArr)){
-			$this->Library->setDataSource('master');
-			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;
-			$this->Library->query($sql);
-			$this->Library->setDataSource('default');
-			$this->Download->recursive = -1;
-			$downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-			echo "suces|".$downloadsUsed;
-			exit;
-		}
-		else{
-            echo "error";
-            exit;
-		}*/
         } else {
         
           /**
@@ -2320,20 +2253,13 @@ STR;
 		$sql = mysql_query("SELECT id FROM `sessions` Where id='".session_id()."'");
 		$count = mysql_num_rows($sql);
 		$values = array(0 => $date, 1 => session_id());
-/*		if(($date-$modifiedTime) > 60 && $count == 0){
-			//deleting sessions and memcache key
-			$this->Session->destroy();
-			Cache::delete("login_".$libid.$patronid);
-			echo "Error";
-			exit;
-		} else {*/
-			$date = time();
-			$name = $_SERVER['SERVER_ADDR'];
-			$values = array(0 => $date, 1 => session_id());
-			//writing to memcache and writing to both the memcached servers
-			Cache::write("login_".$this->Session->read('territory')."_".$libid."_".$patronid, $values);
-			echo "success".$name;
-			exit;
+                $date = time();
+                $name = $_SERVER['SERVER_ADDR'];
+                $values = array(0 => $date, 1 => session_id());
+                //writing to memcache and writing to both the memcached servers
+                Cache::write("login_".$this->Session->read('territory')."_".$libid."_".$patronid, $values);
+                echo "success".$name;
+                exit;
 		//}
     }
 
@@ -2929,10 +2855,6 @@ STR;
 		}
         if($_POST['hid_action']==1){
             
-//            echo '<pre>';
-//            print_r($_POST);
-//            die;
-            
             $email = $_POST['email'];
             if($email == ''){
                 $errorMsg = "Please provide your email address.";
@@ -2945,10 +2867,9 @@ STR;
                 if(count($email_exists) == 0){
                     $errorMsg = "This is not a valid patron email.";
                 }
-            } //echo $errorMsg; die;
+            } 
             if($errorMsg != ''){ 
                 $this->Session->setFlash($errorMsg);
-               // $this->redirect($this->webroot.'homes/forgot_password');
             }
             else{
                 $temp_password = $this->PasswordHelper->generatePassword(8);
@@ -3150,8 +3071,6 @@ STR;
         $this->set('patronDownload',$patronDownload);
         
         $wishlistResults = Array();
-        //$wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
-        
         $wishlistQuery =<<<STR
                     SELECT 
                             wishlists.*,
@@ -3905,10 +3824,8 @@ STR;
 			// FreegalMusic Downloads functionality
 			$this->Download->recursive = -1;
 			$wk = date('W')-10;
-			// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
-			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-70, date('Y'))) . ' 00:00:00';
-		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
+                        $endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
 			$prodIds = '';
 			foreach($topDownloaded as $k => $v){
@@ -4495,9 +4412,6 @@ STR;
                     ORDER BY `countProduct` DESC 
                     LIMIT 1110";
                 }
-		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		 
-                
                 
                   //make the provide type and prodid array for selecting records
                   $ids = '';
@@ -4566,7 +4480,6 @@ STR;
 	  
 STR;
                           
-                       // echo "Variable: "."national".$territory."Page".$Page;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);
                         foreach($nationalTopDownload as $key => $value){
@@ -4737,166 +4650,7 @@ STR;
         print_r($result);
         die;
        
-        /*
-       
-        $log_name = 'song_streaming_web_log_'.date('Y_m_d');
-        $log_id = md5(time());
-        $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
         
-        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId.PHP_EOL; 
-        
-        //if ProdID and Provider type is not set then
-        if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
-            echo "error|Not able to stream this song.";
-            exit;
-        }
-        
-        //if ProdID and Provider type is not set then
-        if(($patId == '' || $patId == 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
-            echo "error|Not able to stream this song.You need to re-login again.";
-            exit;
-        }
-        
-        //if ProdID and Provider type is not set then
-        if(($libId == '' || $libId == 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
-            echo "error|Not able to stream this song.";
-            exit;
-        }
-        
-        
-        
-        //check the streaming validation
-        $validationResult = $this->Streaming->validateStreaming($prodId, $provider,$libId,$patId);
-        $validationFlag = $validationResult[0];
-        $validationMessage = $validationResult[1];
-        $validationIndex = $validationResult[2];
-        
-	//if first validation passed then	
-        if($validationFlag){
-            
-            $this->log("First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage,'streaming');             
-            $log_data .= PHP_EOL."First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage.PHP_EOL;        
-
-           
-            
-            //check the patron record is exist or not
-            $streamingInfoFlag = $this->Streaming->checkStreamingInfoExist($libId, $patId);            
-            if($streamingInfoFlag){
-                //if patron record is exist then fetch the details
-                $patronStreamingresults = $this->StreamingRecords->find('first',array('conditions' => array('id'=> $streamingInfoFlag),'fields' => 'modified_date'));        
-                if(count($patronStreamingresults) > 0) {                    
-                     $modified_date = $patronStreamingresults['StreamingRecords']['modified_date'];                     
-                     $onlyDate = date('Y-m-d',strtotime($modified_date));                     
-
-                     $log_data .= PHP_EOL."Streaming Info Exist : modified_date  : ".$modified_date;
-                     
-                     //check if the current streaming date is equal to today's date or not
-                     if(strtotime($onlyDate) != strtotime(date('Y-m-d'))){                                       
-                         $updateArr = Array();
-                         $updateArr['id'] = $streamingInfoFlag;                       
-                         $updateArr['consumed_time'] = 0;
-                         $updateArr['modified_date'] = date('Y-m-d H:i:s');
-                         
-                         $log_data .= "update Streaming_records table(todays first request) :- modified_date  : ".$modified_date.PHP_EOL;        
-                         
-                         $this->StreamingRecords->setDataSource('master');
-                         //update the date and reset the consumed time as the day start
-                         $this->StreamingRecords->save($updateArr);
-                         $this->StreamingRecords->setDataSource('default');
-                     }else{
-                        $log_data .= PHP_EOL;     
-                     }
-                }                
-            } else {
-                //insert the patron record if not exist in the streaming records table
-                $insertArr = Array();
-                $insertArr['library_id'] = $libId;
-                $insertArr['patron_id'] = $patId;
-                $insertArr['consumed_time'] = 0;
-                $insertArr['modified_date'] = date('Y-m-d H:i:s');
-                $insertArr['createdOn'] = date('Y-m-d H:i:s');    
-                $this->StreamingRecords->setDataSource('master');
-                if($this->StreamingRecords->save($insertArr)){
-                    $log_data .= PHP_EOL."Insert Streaming_records table :-  library_id: ".$libId." ;patron_id : ".$patId." ;consumed_time :0 ;modified_date : ".date('Y-m-d H:i:s').PHP_EOL;        
-                }
-                $this->StreamingRecords->setDataSource('default');
-            }
-                
-               
-            
-            $songDuration = $this->Streaming->checkSongExists($prodId, $provider);
-           
-            
-            $validateStreamingInfoResult = $this->Streaming->validateStreamingDurationInfo($libId, $patId,$songDuration);
-            $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
-            $validateStreamingInfoMessage = $validateStreamingInfoResult[1];
-            $validateStreamingInfoIndex = $validateStreamingInfoResult[2];
-            
-            if($validateStreamingInfoFlag){
-                
-                $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$this->Session->read('library')." ;user id : ".$patId,'streaming');            
-
-                //update streaming_record table table
-                $cdate = date('Y:m:d H:i:s');
-                $this->StreamingRecords->setDataSource('master');
-                $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$songDuration.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
-                if($this->StreamingRecords->query($StreamingRecordsSQL)){
-                      $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
-                }
-                $this->StreamingRecords->setDataSource('default');
-                $currentDate= date('Y-m-d H:i:s');
-                
-                //insert the patron record if not exist in the streaming records table
-                $insertArr = Array();
-                $insertArr['library_id'] = $libId;
-                $insertArr['patron_id'] = $patId;
-                $insertArr['ProdID'] = $prodId;
-                $insertArr['provider_type'] = $provider;
-                $insertArr['consumed_time'] = $songDuration;
-                $insertArr['modified_date'] = $currentDate;
-                $insertArr['createdOn'] = $currentDate;
-                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
-                $insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
-                $this->StreamingHistory->setDataSource('master');
-                if($this->StreamingHistory->save($insertArr)){
-                  $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
-                  $this->log("suces:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
-                  $log_data .= PHP_EOL."suces|".$validateStreamingInfoMessage.PHP_EOL;
-                  $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
-                  $this->createStreamingLog($log_data, $log_name);
-                }
-                $this->StreamingHistory->setDataSource('default');                
-                echo "suces|".$validateStreamingInfoMessage;
-                exit;
-                
-            }else{
-                $this->log("error|message=".$validateStreamingInfoMessage.";validatin Index :".$validateStreamingInfoIndex,'streaming');            
-                $log_data .= PHP_EOL."error|".$validateStreamingInfoMessage."|".$validateStreamingInfoIndex.PHP_EOL;
-                $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
-                $this->createStreamingLog($log_data, $log_name);          
-                echo "error|".$validateStreamingInfoMessage;
-                exit;
-            }
-
-        } else {        
-         
-          $log_data .= PHP_EOL."error|".$validationMessage."|".$validationIndex.PHP_EOL;
-          $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
-          $this->createStreamingLog($log_data, $log_name);          
-          echo "error|".$validationMessage;
-          exit;
-        
-        }
-        exit;
-        
-        */
     }
     
     

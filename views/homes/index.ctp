@@ -142,9 +142,6 @@ $("#top-100-videos-grid").scroll(function(){
                                         break;
                                 }
 
-                                //$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
-                                //$songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
                                 if($i<=9)       
                                 {
                                     $lazyClass      =   '';
@@ -285,11 +282,6 @@ $("#top-100-videos-grid").scroll(function(){
                   if(($this->Session->read('block') == 'yes') && ($nationalTopVideoDownload[$i]['Video']['Advisory'] =='T')) {
                       continue;
                   }
-
-                //$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
-                //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
-                /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
         ?>
                 <li>
                     <div class="top-100-video-detail">

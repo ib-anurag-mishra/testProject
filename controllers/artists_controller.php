@@ -8,7 +8,7 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download','Video', 'Territory' );
+	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download','Video', 'Territory','Videodownload' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language','Album', 'Song','Mvideo');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
@@ -848,14 +848,14 @@ Class ArtistsController extends AppController
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
-			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-					if(count($downloadsUsed) > 0){
-						$albumSongs[$k][$key]['Song']['status'] = 'avail';
-					} else{
-						$albumSongs[$k][$key]['Song']['status'] = 'not';
-					}
-			}
+                    foreach($albumSong as $key => $value){
+                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                                $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                        } else{
+                                $albumSongs[$k][$key]['Song']['status'] = 'not';
+                        }
+                    }
 		}
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -1073,14 +1073,14 @@ Class ArtistsController extends AppController
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
-			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-					if(count($downloadsUsed) > 0){
-						$albumSongs[$k][$key]['Song']['status'] = 'avail';
-					} else{
-						$albumSongs[$k][$key]['Song']['status'] = 'not';
-					}
-			}
+                    foreach($albumSong as $key => $value){
+                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                                $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                        } else{
+                                $albumSongs[$k][$key]['Song']['status'] = 'not';
+                        }
+                    }
 		}
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -1265,6 +1265,12 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
+                        $vdownloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($vdownloadsUsed) > 0){
+                          $artistVideoList[$key]['Video']['status'] = 'avail';
+                        } else{
+                          $artistVideoList[$key]['Video']['status'] = 'not';
+                        }
                     }               
                     Cache::write("videolist_".$decodedId, $artistVideoList);
                     }else{
