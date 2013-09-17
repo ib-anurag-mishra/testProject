@@ -100,7 +100,13 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-                Cache::delete("featuredUS");
+                if(Cache::delete("featuredUS"))
+                {
+                   $this->log("deleted featuredUS");
+                }
+                else {
+                    $this->log("could not delete featuredUS");
+                }
                 Cache::delete("featuredCA");
                 Cache::delete("featuredIT");
                 Cache::delete("featuredNZ");
@@ -156,7 +162,13 @@ Class ArtistsController extends AppController
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                Cache::delete("featuredUS");
+                                if(Cache::delete("featuredUS"))
+                                {
+                                   $this->log("deleted featuredUS");
+                                }
+                                else {
+                                    $this->log("could not delete featuredUS");
+                                }
                                 Cache::delete("featuredCA");
                                 Cache::delete("featuredIT");
                                 Cache::delete("featuredNZ");
@@ -226,7 +238,13 @@ Class ArtistsController extends AppController
 		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
 				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                Cache::delete("featuredUS");
+                                if(Cache::delete("featuredUS"))
+                                {
+                                   $this->log("deleted featuredUS");
+                                }
+                                else {
+                                    $this->log("could not delete featuredUS");
+                                }
                                 Cache::delete("featuredCA");
                                 Cache::delete("featuredIT");
                                 Cache::delete("featuredNZ");
