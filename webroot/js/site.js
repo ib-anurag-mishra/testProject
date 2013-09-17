@@ -970,7 +970,7 @@ $(function() {
 
 	/* FAQ page */
 	
-	(document).on('click',faq_container,function(e){
+	$(document).on('click',faq_container,function(e){
 		e.preventDefault();
 		if ($(this).siblings('p').hasClass('active')) {
 			$(this).siblings('p').slideUp(500).removeClass('active');
