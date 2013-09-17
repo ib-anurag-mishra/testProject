@@ -221,7 +221,7 @@ $("#top-100-videos-grid").scroll(function(){
                                         <div class="wishlist-popover">
                                         <?php if( $this->Session->read('library_type') == 2 ){
                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"],$nationalTopDownload[$i]["Albums"]["ProdID"],$nationalTopDownload[$i]["Albums"]["provider_type"]); ?>
-                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                    <a class="add-to-playlist no-ajaxy" href="#">Add To Queue</a>
                                         <?php } ?>
                                         <?php
                                             $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
@@ -351,11 +351,11 @@ $("#top-100-videos-grid").scroll(function(){
 
                                                 if($wishlistInfo == 'Added to Wishlist') {
                                                 ?> 
-                                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                                        <a class="add-to-wishlist no-ajaxy" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
                                                 <?php 
                                                 } else { 
                                                 ?>
-                                                        <span class="beforeClick" id="video_wishlist<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                        <span class="beforeClick" id="video_wishlist<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>"><a class="add-to-wishlist add-to-playlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
                                                         <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
                                                 <?php	
                                                 }
