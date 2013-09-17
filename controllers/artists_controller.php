@@ -105,7 +105,7 @@ Class ArtistsController extends AppController
                    $this->log("deleted featuredUS",'featured');
                 }
                 else {
-                    $this->log("could not delete featuredUS",'featured');
+                    $this->log(Cache::read("featuredUS"),'featured');
                 }
                 Cache::delete("featuredCA");
                 Cache::delete("featuredIT");
@@ -167,7 +167,7 @@ Class ArtistsController extends AppController
                                    $this->log("deleted featuredUS",'featured');
                                 }
                                 else {
-                                    $this->log("could not delete featuredUS",'featured');
+                                    $this->log(Cache::read("featuredUS"),'featured');
                                 }
                                 Cache::delete("featuredCA");
                                 Cache::delete("featuredIT");
@@ -243,7 +243,7 @@ Class ArtistsController extends AppController
                                    $this->log("deleted featuredUS",'featured');
                                 }
                                 else {
-                                    $this->log("could not delete featuredUS",'featured');
+                                    $this->log(Cache::read("featuredUS"),'featured');
                                 }
                                 Cache::delete("featuredCA");
                                 Cache::delete("featuredIT");
