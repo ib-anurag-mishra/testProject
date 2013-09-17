@@ -41,7 +41,7 @@
 
                         if($libraryDownload == '1' && $patronDownload == '1') {
                                 ?>
-<span class="featured-video-download-now-button">
+<span class="featured-video-download-now-button no-ajaxy">
                                 <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
 									<input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
@@ -55,14 +55,14 @@
                             <?php
                                }else{
                             ?>
-                                <a class="featured-video-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                                <a class="featured-video-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a> 
                             <?php
                                }
                             ?>
 
 
                                 <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
-                                <a class="add-to-playlist-button" href="#"></a>
+                                <a class="add-to-playlist-button no-ajaxy" href="#"></a>
                                 <div class="wishlist-popover">
                                 <?php
 
@@ -146,7 +146,7 @@ foreach($topVideoDownloads as $topDownload)
                                     {
                            ?>
                          <!--  <a class="top-video-download-now-button" href="#">Download Now</a> -->
-                           <a class="add-to-playlist-button" href="#"></a> 
+                           <a class="add-to-playlist-button no-ajaxy" href="#"></a> 
                            <?php
                                     }
                                     else
@@ -180,7 +180,7 @@ foreach($topVideoDownloads as $topDownload)
 			<?php
                                }else{
                             ?>
-                                <a class="featured-video-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                                <a class="featured-video-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a> 
                             <?php
                                }
                             ?>	
