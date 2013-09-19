@@ -950,7 +950,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             }
             $redirecting = $this->Cookie->read('redirecting');
             if(isset($redirecting) && !empty($redirecting) && '/homes/chooser' && !strpos($redirecting,'/users/login') && !strpos($redirecting,'/homes/chooser') ) {
-                $this->redirect($redirecting); 
+                $this->redirect($redirecting);
             }else{
                 $this->redirect(array('controller' => 'homes', 'action' => 'index'));
             } 
