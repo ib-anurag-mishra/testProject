@@ -43,7 +43,7 @@ Class AuthRequestComponent extends Object
                 echo "Beofre CURL Execution"; 
 		$result = curl_exec($ch);
                 $this->log($str."---".$result,"auth");
-                die;
+                
                 echo "Result: ".$result;
                 
                 if($result === false)
