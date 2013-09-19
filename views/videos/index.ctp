@@ -14,19 +14,10 @@
 
 <?php if(count($featuredVideos) > 0){ ?>                
                 <?php
-                // $featured_video_array = array('img/videos/featured-videos/featured-video-aerosmith-274x162.jpg', 'img/videos/featured-videos/featured-video-aliciakeys-274x162.jpg', 'img/videos/featured-videos/featured-video-calvinharris-274x162.jpg', 'img/videos/featured-videos/featured-video-cherlloyd-274x162.jpg', 'img/videos/featured-videos/featured-video-kingsofleon-274x162.jpg', 'img/videos/featured-videos/featured-video-pink-274x162.jpg', 'img/videos/featured-videos/featured-video-aerosmith-274x162.jpg', 'img/videos/featured-videos/featured-video-aliciakeys-274x162.jpg', 'img/videos/featured-videos/featured-video-calvinharris-274x162.jpg', 'img/videos/featured-videos/featured-video-cherlloyd-274x162.jpg', 'img/videos/featured-videos/featured-video-kingsofleon-274x162.jpg', 'img/videos/featured-videos/featured-video-pink-274x162.jpg');
+                    $total_videos = count($featuredVideos);
+                    $sr_no = 0;
                 
-                
-                
-                // for ($c = 0; $c < count($featured_video_array); $c+=2) {
-                $total_videos = count($featuredVideos);
-                $sr_no = 0;
-                
-                foreach($featuredVideos as $featureVideo){  //echo '<pre>'; print_r($featureVideo['Video']['Advisory']); 
-                    //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
-                    // print_r($featureVideo); die;
-                    //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
-                    
+                foreach($featuredVideos as $featureVideo){  
                     //hide song if library block the explicit content
                     if(($this->Session->read('block') == 'yes') && isset($featureVideo["FeaturedVideo"]['Advisory']) && ($featureVideo["FeaturedVideo"]['Advisory'] =='T')) {
                         continue;
@@ -39,65 +30,63 @@
                                 <?php
                                 if($this->Session->read('patron')) {
 
-                        if($libraryDownload == '1' && $patronDownload == '1') {
-                                ?>
-<span class="featured-video-download-now-button no-ajaxy">
-                                <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
-                                    <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
-									<input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
-                                    <span id="song_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" class="beforeClick">
-                                            <a  href='#' style="cursor:pointer;" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
-                                    </span>
-                            <span class="afterClick" id="downloading_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
-                            <span id="download_loader_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
-                                </form>
-</span>
-                            <?php
-                               }else{
-                            ?>
-                                <a class="featured-video-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a> 
-                            <?php
-                               }
-                            ?>
-
-
-                                <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
-                                <a class="add-to-playlist-button no-ajaxy" href="#"></a>
-                                <div class="wishlist-popover">
-                                <?php
-
-                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
-                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-                                    echo $this->Queue->getSocialNetworkinglinksMarkup();
-                                ?>
-                                </div>
+                                    if($libraryDownload == '1' && $patronDownload == '1') {
+                                        if(isset($featureVideo['Song']['status']) && ($featureVideo['Song']['status'] != 'avail')) {?>
+                                            <span class="featured-video-download-now-button no-ajaxy">
+                                                <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
+                                                    <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
+                                                    <input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
+                                                    <span id="song_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" class="beforeClick">
+                                                        <a  href='#' style="cursor:pointer;" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+                                                    </span>
+                                                    <span class="afterClick" id="downloading_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                                                    <span id="download_loader_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                                </form>
+                                            </span>
+                                            <?php	
+                                        } else {?>
+                                            <a class="featured-video-download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                        <?php
+                                        }
+                                    }else{ ?>
+                                        <a class="featured-video-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                                    <?php
+                                    }
+                                    ?>
+                                    <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
+                                    <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                    <div class="wishlist-popover">
+                                    <?php
+                                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
+                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                    ?>
+                                    </div>
                                 <?php
                                 } else {
                                 ?>
-                                <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                    <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
                                 <?php
                                 }
                                 ?>
                             </div>
                             <div class="video-title">
-                                
-                            <a href="javascript:void(0);">
-                            <?php
-                            if(strlen($featureVideo['Video']['VideoTitle']) >= 20){
-                                    $featureVideo['Video']['VideoTitle'] = substr($featureVideo['Video']['VideoTitle'], 0, 20). '...';
-                            }
-                            ?>
-                            <?php echo $this->getTextEncode($featureVideo['Video']['VideoTitle']);?>
-                            </a> <?php if(isset($featureVideo['Video']['Advisory']) && 'T' == $featureVideo['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                                <a href="javascript:void(0);">
+                                <?php
+                                if(strlen($featureVideo['Video']['VideoTitle']) >= 20){
+                                        $featureVideo['Video']['VideoTitle'] = substr($featureVideo['Video']['VideoTitle'], 0, 20). '...';
+                                }
+                                ?>
+                                <?php echo $this->getTextEncode($featureVideo['Video']['VideoTitle']);?>
+                                </a> <?php if(isset($featureVideo['Video']['Advisory']) && 'T' == $featureVideo['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                             </div>
                             <div class="video-name">
-                            <?php
-                            if(strlen($featureVideo['Video']['ArtistText']) >= 20){
+                                <?php
+                                if(strlen($featureVideo['Video']['ArtistText']) >= 20){
                                     $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 20). '...';
-                            }
-                            ?>
-                            <?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?>
-                            </a>
+                                }
+                                ?>
+                                <?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?>
                             </div>
                         </div>
                <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
