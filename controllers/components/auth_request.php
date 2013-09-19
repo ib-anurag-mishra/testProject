@@ -22,9 +22,9 @@ Class AuthRequestComponent extends Object
 		$post_data = array('xml'=>$str);
 		$url = $authUrl;
                 
-                echo "IN Auth Request<pre>";
-                echo "URL:".$url;
-                print_r($post_data);
+                //echo "IN Auth Request<pre>";
+                //echo "URL:".$url;
+               // print_r($post_data);
                 
 		$ch=curl_init();
 		// tell curl target url
@@ -40,18 +40,17 @@ Class AuthRequestComponent extends Object
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 		// make the connection
-                echo "Beofre CURL Execution"; 
 		$result = curl_exec($ch);
                 $this->log($str."---".$result,"auth");
                 
-                echo "Result: ".$result;
+               // echo "Result: ".$result;
                 
                 if($result === false)
                 {
                     $this->log('Curl error: ' . curl_error($ch),"auth");
                 }
 		curl_close($ch);
-                die;
+               // die;
    		$result =& new Xml($result);
 		$result = Set::reverse($result);
 		return $result;
