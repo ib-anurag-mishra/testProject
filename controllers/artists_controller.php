@@ -1530,9 +1530,8 @@ STR;
 				$result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
 			}
 		}
-                echo "<pre>";
                 print_r($result);
-                echo "</pre>";die;
+                die;
 		$data = "<option value=''>SELECT</option>";
 		foreach($result as $k=>$v){
 			$data = $data."<option value='".$k."'>".$v."</option>";
