@@ -1517,21 +1517,16 @@ STR;
             Configure::write('debug', 0);
 		$result = array();
 		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle','Album.provider_type'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
-                echo "<br>Query2: ".$this->Album->lastQuery();
-                print_r($allAlbum);
                 $val = '';
 		$this->Song->Behaviors->attach('Containable');
                 $this->Country->setTablePrefix($_REQUEST['Territory']);
 		foreach($allAlbum as $k => $v){
 			$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-                        //echo "<br>Query2: ".$this->Song->lastQuery();
-                        if($recordCount > 0){
+                        if(count($recordCount) > 0){
 				$val = $val.$v['Album']['ProdID'].",";
 				$result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
 			}
 		}
-                print_r($result);
-                die;
 		$data = "<option value=''>SELECT</option>";
 		foreach($result as $k=>$v){
 			$data = $data."<option value='".$k."'>".$v."</option>";
