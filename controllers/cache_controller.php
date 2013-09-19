@@ -217,6 +217,12 @@ STR;
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                             $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                             $data[$key]['songAlbumImage'] = $songAlbumImage;
+                            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                            if(count($downloadsUsed) > 0){
+                              $data[$key]['Song']['status'] = 'avail';
+                            } else{
+                              $data[$key]['Song']['status'] = 'not';
+                            }
                     }                    
                     Cache::write("national" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten for $territory", "cache");
@@ -249,6 +255,12 @@ STR;
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
+                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $featureVideo['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $featuredVideos[$key]['Video']['status'] = 'avail';
+                    } else{
+                      $featuredVideos[$key]['Video']['status'] = 'not';
+                    }
                 }         
                
                     
@@ -284,6 +296,12 @@ STR;
                      // print_r($featureVideo);
                      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                      $topDownloads[$key]['videoImage'] = $videoImage;
+                     $vdownloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $topDownload['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                     if(count($vdownloadsUsed) > 0){
+                        $topDownloads[$key]['Video']['status'] = 'avail';
+                     } else{
+                        $topDownloads[$key]['Video']['status'] = 'not';
+                     }
                 }                
                 Cache::write("top_download_videos".$territory, $topDownloads);
                 $this->log("cache written for top download   videos for $territory", "cache");
@@ -419,6 +437,12 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                          $data[$key]['Video']['status'] = 'avail';
+                        } else{
+                          $data[$key]['Video']['status'] = 'not';
+                        }
                     }                    
                     Cache::write("nationalvideos" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten  videos for $territory", "cache");
@@ -1069,7 +1093,7 @@ STR;
                         'conditions' =>array(
                             'and' =>array(
                                 array(
-                                    "Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"
+                                    "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")"
                                 ),
                              ), "1 = 1 GROUP BY Album.ProdID"
                          ),
@@ -1088,11 +1112,6 @@ STR;
                             'Genre' => array(
                                 'fields' => array(
                                     'Genre.Genre'
-                                )
-                            ),
-                            'Country' => array(
-                                'fields' => array(
-                                    'Country.Territory'
                                 )
                             ),
                             'Files' => array(

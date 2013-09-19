@@ -1,4 +1,4 @@
-<script> 
+<script>
 
 $(document).ready(function(){
     var preValue= 1;
@@ -126,8 +126,8 @@ $("#top-100-videos-grid").scroll(function(){
                 </li>
             </ul>
         </nav>
-        <div class="grids">
-            <div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
+        <div class="grids active">
+            <div id="top-100-songs-grid" class="top-100-grids horiz-scroll active">
                 <ul id="nationalSongsRecord" style="width:29064px;">
                     <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){
                                 $j = 0;
@@ -141,9 +141,6 @@ $("#top-100-videos-grid").scroll(function(){
                                 if($j==5){
                                         break;
                                 }
-
-                                //$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
-                                //$songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
                                 if($i<=9)       
                                 {
@@ -181,9 +178,9 @@ $("#top-100-videos-grid").scroll(function(){
                                 if($this->Session->read('patron')) {
                                     if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
-                                            $nationalTopDownload[$i]['Song']['status'] = 'avail1';
+                                            //$nationalTopDownload[$i]['Song']['status'] = 'avail1';
                                             if(isset($nationalTopDownload[$i]['Song']['status']) && ($nationalTopDownload[$i]['Song']['status'] != 'avail')) {?>
-                                                <span class="top-100-download-now-button">
+                                                <span class="top-100-download-now-button no-ajaxy">
                                                     <form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
                                                         <input type="hidden" name="ProdID" value="<?php echo $nationalTopDownload[$i]["Song"]["ProdID"];?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>" />
@@ -197,18 +194,18 @@ $("#top-100-videos-grid").scroll(function(){
                                             <?php	
                                             } else {
                                             ?>
-                                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                            <a class="top-100-download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                                             <?php
                                             }
 
                                         } else {
                                         ?>
-                                            <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                                            <a class="top-100-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a> 
                                         <?php
                 			}
                                     } else {
                                     ?>
-                                        <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+                                        <a class="top-100-download-now-button no-ajaxy" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
                                     <?php
                                     }
                                 }else{
@@ -217,11 +214,11 @@ $("#top-100-videos-grid").scroll(function(){
                                     <?php
                                 }?>
                                 <?php if($this->Session->read("patron")){ ?> 
-                                    <a class="add-to-playlist-button" href="#"></a>
+                                    <a class="add-to-playlist-button no-ajaxy" href="#"></a>
                                         <div class="wishlist-popover">
                                         <?php if( $this->Session->read('library_type') == 2 ){
                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"],$nationalTopDownload[$i]["Albums"]["ProdID"],$nationalTopDownload[$i]["Albums"]["provider_type"]); ?>
-                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                    <a class="add-to-playlist no-ajaxy" href="#">Add To Queue</a>
                                         <?php } ?>
                                         <?php
                                             $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
@@ -285,11 +282,6 @@ $("#top-100-videos-grid").scroll(function(){
                   if(($this->Session->read('block') == 'yes') && ($nationalTopVideoDownload[$i]['Video']['Advisory'] =='T')) {
                       continue;
                   }
-
-                //$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
-                //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
-                /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
         ?>
                 <li>
                     <div class="top-100-video-detail">
@@ -305,10 +297,10 @@ $("#top-100-videos-grid").scroll(function(){
                                 if($this->Session->read('patron')) {
                                     if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
-                                            $nationalTopVideoDownload[$i]['Video']['status'] = 'avail1';
+                                            //$nationalTopVideoDownload[$i]['Video']['status'] = 'avail1';
                                             if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
                                                     ?>
-                                                    <span class="top-100-download-now-button">
+                                                    <span class="top-100-download-now-button no-ajaxy">
                                                         <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                             <input type="hidden" name="ProdID" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"];?>" />
                                                             <input type="hidden" name="ProviderType" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["provider_type"]; ?>" />
@@ -322,19 +314,19 @@ $("#top-100-videos-grid").scroll(function(){
                                                     <?php	
                                             } else {
                                             ?>
-                                                    <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                    <a class="top-100-download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                                             <?php
                                             }
 
                                         } else {
                                         ?>
-                                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                                        <a class="top-100-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a>
                                         <?php
 
                                         }
                                     } else {
                                     ?>
-                                    <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopVideoDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopVideoDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+                                    <a class="top-100-download-now-button no-ajaxy" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopVideoDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopVideoDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
                                     <?php
                                     }
                                 }else{
@@ -344,18 +336,18 @@ $("#top-100-videos-grid").scroll(function(){
                                 }
                                 ?>
                                 <?php if($this->Session->read("patron")){ ?> 
-                                        <a class="add-to-playlist-button" href="#"></a>
+                                        <a class="add-to-playlist-button no-ajaxy" href="#"></a>
                                             <div class="wishlist-popover">
                                                 <?php
                                                 $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($nationalTopVideoDownload[$i]['Video']["ProdID"]);
 
                                                 if($wishlistInfo == 'Added to Wishlist') {
                                                 ?> 
-                                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                                        <a class="add-to-wishlist no-ajaxy" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
                                                 <?php 
                                                 } else { 
                                                 ?>
-                                                        <span class="beforeClick" id="video_wishlist<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                        <span class="beforeClick" id="video_wishlist<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>"><a class="add-to-wishlist add-to-playlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
                                                         <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
                                                 <?php	
                                                 }
@@ -475,7 +467,7 @@ $("#top-100-videos-grid").scroll(function(){
                 ?>
 
 
-                <div id="coming-soon-singles-grid" class="horiz-scroll">
+                <div id="coming-soon-singles-grid" class="horiz-scroll active">
                         <ul class="clearfix">
                             <?php  
                             $total_songs = count($coming_soon_rs);
@@ -515,7 +507,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                         <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle']); ?>" width="162" height="162" /></a>
 
                                                 <?php if($this->Session->read("patron")){ ?> 													
-                                                <a class="add-to-playlist-button" href="#">
+                                                <a class="add-to-playlist-button no-ajaxy" href="#">
 
                                                         </a>
                                                         <div class="wishlist-popover"> 
@@ -599,7 +591,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                 <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle']); ?>" width="275" height="162" />
                                                 </a>
                                         <?php if($this->Session->read("patron")){ ?> 
-                                                <a class="add-to-playlist-button" href="#">
+                                                <a class="add-to-playlist-button no-ajaxy" href="#">
 
                                                 </a>
                                                 <div class="wishlist-popover">	

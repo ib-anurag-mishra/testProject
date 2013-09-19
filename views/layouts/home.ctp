@@ -239,7 +239,8 @@ if ($this->Session->read('Config.language') == 'en') {
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->
 
-            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>  
+            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/respond.min.js"></script>  
             
             <!-- <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
             <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
@@ -409,7 +410,7 @@ if ($this->Session->read('Config.language') == 'en') {
 ?> 
                 </head>
                 <body class="<?php echo $body_class; ?>">
-                    <!--[if lt IE 7]>
+                    <!--[if lt IE 8]>
                     <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
                     <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
                                     <a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>

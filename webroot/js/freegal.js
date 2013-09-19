@@ -1513,9 +1513,10 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                 var json = JSON.parse(data);
                 if(json.error){
                     var result = json.error;
-                    $(".player").remove();
                     alert(result[1]);
+                    jwplayer().remove();
                 }else if(json.success){
+                    $('#songDetails').val(prodId+'-'+providerType);
                     jwplayer().load([{
                       file: songFile,
                       title: songTitle
@@ -1538,17 +1539,18 @@ $(document).ready(function (){
             var prodId = songData[0];
             var providerType = songData[1];
         }
+        var queueId = $('#hid_Plid').val();
         var postURL = webroot+'queuelistdetails/getPlaylistData';
         $.ajax({
             type: "POST",
             cache:false,
             url: postURL,
-            data: {prodId : prodId,providerType : providerType}
+            data: {prodId : prodId,providerType : providerType,queueId : queueId}
         }).done(function(data){
                 var json = JSON.parse(data);
                 if(json.error){
-                    $(".player").remove();
                     alert(json.error[1]);
+                    jwplayer().remove();
                 }else if(json.success){
                     playlist = $('#playlist_data').text();
                     playlist = JSON.parse(playlist);

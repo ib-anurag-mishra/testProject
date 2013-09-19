@@ -66,7 +66,7 @@
 		<li><?php echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' => 'us_top_10')); ?></li>
 		<li><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases')); ?></li>
 		<li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' => 'view')); ?></li>
-		<li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
+		<li class="last-child"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
 					</ul>
 					</nav>
 					<div class="languages">
@@ -94,7 +94,8 @@
                                             <div class="player">
                                                     <div class="player-container">
                                                             <div id="myElement">Loading the player...</div>
-                                                    </div>			
+                                                    </div>
+                                                <input type="hidden" name="songDetails" id="songDetails" value="" />
                                             </div>
                                         <?php } ?>
                                     <?php } ?>
@@ -147,17 +148,18 @@ pageTracker._trackPageview();
                                 var prodId = songData[0];
                                 var providerType = songData[1];
                             }
+                            var queueId = $('#hid_Plid').val();
                             var postURL = webroot+'queuelistdetails/getPlaylistData';
                             $.ajax({
                                 type: "POST",
                                 cache:false,
                                 url: postURL,
-                                data: {prodId : prodId,providerType : providerType}
+                                data: {prodId : prodId,providerType : providerType, queueId : queueId}
                             }).done(function(data){
                                     var json = JSON.parse(data);
                                     if(json.error){
-                                        $(".player").remove();
                                         alert(json.error[1]);
+                                        jwplayer().remove();
                                     }else if(json.success){
                                     }
                             })
@@ -166,31 +168,75 @@ pageTracker._trackPageview();
                             });                              
                         }
                         },
-                        onPlaylistComplete:function(){
-                            var item = $('#play_item_1').text();
-                            if(item.length){
-                                var songData = item.split(',');
-                                var prodId = songData[0];
-                                var providerType = songData[1];
-                            }
-                            var postURL = webroot+'queuelistdetails/getPlaylistData';
-                            $.ajax({
-                                type: "POST",
-                                cache:false,
-                                url: postURL,
-                                data: {prodId : prodId,providerType : providerType}
-                            }).done(function(data){
-                                    var json = JSON.parse(data);
-                                    if(json.error){
-                                        $(".player").remove();
-                                        alert(json.error[1]);
-                                    }else if(json.success){
+                        onDisplayClick:function(){
+                            if(jwplayer().getState() == 'BUFFERING'){
+                                if(jwplayer().getPlaylist().length != 1){
+                                    
+                                    var item = $('#play_item_1').text();
+                                    if(item.length){
+                                        var songData = item.split(',');
+                                        var prodId = songData[0];
+                                        var providerType = songData[1];
                                     }
-                            })
-                            .fail(function(){
-                                alert('Ajax Call to Validate Playlist has been failed');
-                            });                              
-                        }},
+                                    var queueId = $('#hid_Plid').val();
+                                    var postURL = webroot+'queuelistdetails/getPlaylistData';
+                                    $.ajax({
+                                        type: "POST",
+                                        cache:false,
+                                        url: postURL,
+                                        data: {prodId : prodId,providerType : providerType, queueId : queueId}
+                                    }).done(function(data){
+                                            var json = JSON.parse(data);
+                                            if(json.error){
+                                                alert(json.error[1]);
+                                                jwplayer().remove();                                                
+                                            }else if(json.success){
+                                            }
+                                    })
+                                    .fail(function(){
+                                        alert('Ajax Call to Validate replay playlist has been failed');
+                                    });                                      
+                                }else{
+                                    var postURL = webroot+'queuelistdetails/getPlaylistData';
+                                    $songDetails = $('#songDetails').val().split('-');
+                                    prodId = $songDetails[0];
+                                    providerType = $songDetails[1];
+                                    $.ajax({
+                                        type: "POST",
+                                        cache:false,
+                                        url: postURL,
+                                        data: {prodId : prodId,providerType : providerType}
+                                    }).done(function(data){
+                                            var json = JSON.parse(data);
+                                            if(json.error){
+                                                var result = json.error;
+                                                alert(result[1]);
+                                                jwplayer().remove();
+                                            }else if(json.success){
+                                                jwplayer("myElement").play(true);
+                                            }
+                                    })
+                                    .fail(function(){
+                                        alert('Ajax Call to Validate song has been failed');
+                                    });                                     
+                                }
+                              }
+                           },
+                           onPlaylistComplete:function(){
+                                var postURL = webroot+'queuelistdetails/clearNowStreamingSession';
+                                $.ajax({
+                                    type: "POST",
+                                    cache:false,
+                                    url: postURL
+                                }).done(function(data){
+
+                                })
+                                .fail(function(){
+                                    alert('Ajax Call to clear now streaming session has been failed');
+                                });                                
+                                
+                           }                          
+                        },
                         repeat: false   
                     });
 //                $('.play-queue-btn').click(function(){

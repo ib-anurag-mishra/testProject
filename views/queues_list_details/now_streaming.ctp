@@ -1,5 +1,7 @@
 <section class="now-streaming-page">
-           <?php if(!empty($queue_list_array)){ ?>
+           <?php if(!empty($queue_list_array) || !empty($trackDetails)){ 
+                    if(!empty($queue_list_array)){
+               ?>
 		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
 		<header class="clearfix">
 			<h2><?php echo $queue_list_array[0]['QueueList']['queue_name'];?></h2>
@@ -162,7 +164,108 @@
 				</div>
 			</div>
 		</div>
-               <?php }else{ ?>
+               <?php }elseif (!empty($trackDetails)) { ?>
+		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
+                <?php
+                echo $session->flash();
+                ?>                
+		<div class="now-playing-container">
+
+			<nav class="playlist-filter-container clearfix">
+				<div class="song-filter-button">Song</div>
+				<div class="album-filter-button">Album</div>
+				<div class="artist-filter-button">Artist</div>
+				<div class="time-filter-button">Time</div>
+				
+			</nav>
+			<div class="playlist-shadow-container">
+				<div class="playlist-scrollable">
+					<div class="row-container">
+					<?php                                                
+					 
+                                            foreach($trackDetails as $key => $value)
+                                            {
+
+					?>
+					
+					<div class="row clearfix">
+						<!-- <a class="preview" href="#"></a>  -->
+                                            <?php
+
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Song']['SongTitle'].'",'.$value['Song']['ProdID'].',"'.$value['Song']['provider_type'].'");')); 
+                                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); 
+                                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
+
+                                            ?>
+						<div class="song-title"><?php echo $value['Song']['SongTitle']?></div>
+						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
+                                                <?php
+                                                if (strlen($value['Song']['ArtistText']) >= 30 ) {
+                                                        $artistText = $this->getTextEncode(substr($value['Song']['ArtistText'], 0, 30)) . "..";
+                                                } else {
+                                                        $artistText = $this->getTextEncode($value['Song']['ArtistText']);
+                                                }
+                                                ?> 
+						<div class="album-title">
+                                                    <a href="/artists/album/<?php echo base64_encode($value['Song']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
+                                                </div>
+						<div class="artist-name">
+                                                    <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
+                                                </div>                                                
+                                                
+						<div class="time"><?php echo $value['Song']['FullLength_Duration']?></div>
+						<div class="wishlist-popover">
+                                                        <?php
+                                                                if($libraryDownload == '1' && $patronDownload == '1') {
+
+                                                          ?>
+							<!--<a class="download-now" href="#">Download Now</a> -->
+                                                        <span class="top-100-download-now-button">
+                                                        <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+                                                        <input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"];?>" />
+                                                        <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
+                                                        <span class="beforeClick" id="song_<?php echo $value["Song"]["ProdID"]; ?>">
+                                                        <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $value["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                                                        </span>
+                                                        <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                                                        <span id="download_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                                        </form>
+                                                        </span>
+                                                         <?php
+                                                                    
+                                                                 }
+                                                         ?>
+							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+
+                                                         <?php
+                                                            $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                                            echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);    
+                                                         ?>
+
+
+							<!--<a class="remove-song" href="#">Remove Song</a> -->
+                                                        <span class="top-100-download-now-button">
+                                                        <form method="Post" name="form_rename<?php echo $value["Song"]["ProdID"]; ?>" action="/queuelistdetails/index/<?php echo $queue_id; ?>" class="suggest_text1">
+                                                        <input type="hidden" name="Pdid" value="<?php echo $value["QueueDetail"]["id"];?>" />
+                                                        <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
+                                                        <input type="hidden" name="hdn_remove_song" value="1" />
+                                                        <span class="beforeClick" id="song_<?php echo $value["Song"]["ProdID"]; ?>">
+                                                        <a  href='javascript:document.form_rename<?php echo $value["Song"]["ProdID"]; ?>.submit()' ><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
+                                                        </span>
+                                                        </form>
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+						</div>
+					</div>
+					<?php 
+					}
+					?>
+					</div>
+				</div>
+			</div>
+		</div>                
+                <?php }    
+                }else{ ?>
 
                 <h2> There are no queues currently being played. </h2>
 		

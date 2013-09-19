@@ -3,7 +3,13 @@
    Email: <?php echo $Patron['User']['email']; ?>\n
    Password: <?php echo $password; ?>\n\n
    Please copy the link and paste in the address bar to login to the site.\n
-   <?php echo Configure::read('App.base_url')."users/login"; ?>\n\n
+   <?php
+ if($library_subdomain){
+     echo 'https://'.$library_subdomain.'.'.Configure::read('App.name').'/users/login';
+ }else{
+    echo 'https://www.'.Configure::read('App.name').'/users/login';
+ }
+ ?>\n\n
    
  Thanks\n
  <?php echo Configure::read('App.name'); ?>

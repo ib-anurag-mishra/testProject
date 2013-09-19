@@ -17,7 +17,7 @@ class QueueListDetailsController extends AppController{
     function beforeFilter(){
            
             parent::beforeFilter();
-            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData');
+            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession');
     }
     
     
@@ -92,22 +92,28 @@ class QueueListDetailsController extends AppController{
         $this->set('libraryDownload',$libraryDownload);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
-        
-        $songArray = array(0 => array('ProdID' => 26117435, 'providerType' => 'sony'),1 => array('ProdID' => 26117435, 'providerType' => 'sony'));
-        
-        foreach($songArray as $value){
-            $trackDetails = $this->Queue->getNowstreamingSongDetails($value['ProdID'] , $value['providerType']);
-            $queue_list_array[] = $trackDetails;
+        $queueId = $this->Session->read('queuePlaying');
+        $songPlaying = $this->Session->read('songPlaying');
+        if(!empty($queueId)){
+            $queue_list_array   =   $this->Queue->getQueueDetails($queueId);
+            foreach($queue_list_array as $k => $v)
+             {
+                 $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+                 $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
+                 $queue_list_array[$k]['streamUrl'] = $streamUrl;            
+             }        
+            $this->set('queue_list_array',$queue_list_array); 
+            $this->set('queue_id',$this->params['pass'][0]);
+        }else if(!empty($songPlaying)){
+            $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'] , $songPlaying['providerType']);
+            foreach($trackDetails as $k => $v)
+             {
+                 $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+                 $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
+                 $trackDetails[$k]['streamUrl'] = $streamUrl;            
+             } 
+            $this->set('trackDetails',$trackDetails);            
         }
-        foreach($queue_list_array as $k => $v)
-         {
-             $filePath = shell_exec('perl files/tokengen_streaming '. $v[0]['SongFile']['SCdnPath']."/".$v[0]['SongFile']['SSaveAsName']);
-             $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
-             $queue_list_array[$k][0]['streamUrl'] = $streamUrl;            
-         } 
-         print_r($queue_list_array);exit;
-        $this->set('queue_list_array',$queue_list_array); 
-        $this->set('queue_id',$this->params['pass'][0]); 
     }
     
     function queue_details()
@@ -171,6 +177,8 @@ class QueueListDetailsController extends AppController{
        $provider = $_POST['providerType'];
        $libId = $this->Session->read('library');
        $patId = $this->Session->read('patron');
+       $this->Session->delete('queuePlaying');
+       $this->Session->delete('songPlaying');
        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');
        if(!empty($validationResponse)){
            if($validationResponse[0] == 'error'){
@@ -178,13 +186,28 @@ class QueueListDetailsController extends AppController{
                echo json_encode($error_message);
                exit;
            }else if($validationResponse[0] == 'success'){
+               if(!empty($_POST['queueId'])){
+                   $this->Session->write("queuePlaying", $_POST['queueId']);
+               }else{
+                   if(!empty($prodId) && !empty($provider)){
+                        $songDetails = array('prodId' => $prodId,'providerType' => $provider);
+                        $this->Session->write("songPlaying", $songDetails);
+                   }
+               }
                $success_message = array('success' => $validationResponse);
                echo json_encode($success_message);
                exit;
            }
            
        }
-    }    
+    } 
+    
+    function clearNowStreamingSession(){
+       $this->Session->delete('queuePlaying');
+       $this->Session->delete('songPlaying');
+       echo "success";
+       exit;
+    }
     
     
     
