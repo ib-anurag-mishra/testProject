@@ -25,7 +25,7 @@ Class AuthRequestComponent extends Object
                 echo "IN Auth Request<pre>";
                 echo "URL:".$url;
                 print_r($post_data);
-                
+                die;
 		$ch=curl_init();
 		// tell curl target url
 		curl_setopt($ch, CURLOPT_URL, $url);
