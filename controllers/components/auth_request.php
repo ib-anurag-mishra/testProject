@@ -40,7 +40,7 @@ Class AuthRequestComponent extends Object
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 		// make the connection
-                echo "Beofre CURL Execution"; die;
+                echo "Beofre CURL Execution"; 
 		$result = curl_exec($ch);
                 $this->log($str."---".$result,"auth");
                 die;
