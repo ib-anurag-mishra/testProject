@@ -543,6 +543,12 @@ STR;
             $VideosData = $this->Album->query($VideosSql);
             $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
             $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
+            $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $VideosData[0]['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+            if(count($downloadsUsed) > 0){
+              $VideosData[0]['Video']['status'] = 'avail';
+            } else{
+              $VideosData[0]['Video']['status'] = 'not';
+            }
                                 //echo "<pre>"; print_r($VideosData); die;
             
             if (!empty($VideosData)) {
@@ -596,6 +602,12 @@ STR;
                         $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                         $MoreVideosData[$key]['videoImage'] = $videoImage;
+                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                          $MoreVideosData[$key]['Video']['status'] = 'avail';
+                        } else{
+                          $MoreVideosData[$key]['Video']['status'] = 'not';
+                        }
                     }
                     if (!empty($MoreVideosData)) {
                         Cache::write("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText'], $MoreVideosData);
@@ -634,6 +646,12 @@ STR;
                                 $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                 $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                                 $TopVideoGenreData[$key]['videoImage'] = $videoImage;
+                                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                if(count($downloadsUsed) > 0){
+                                  $TopVideoGenreData[$key]['Video']['status'] = 'avail';
+                                } else{
+                                  $TopVideoGenreData[$key]['Video']['status'] = 'not';
+                                }
                             }       
                             Cache::write("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre'], $TopVideoGenreData);
                     }else{

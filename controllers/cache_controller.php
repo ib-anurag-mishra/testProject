@@ -1594,7 +1594,13 @@ STR;
                 echo "<br /> Music video id $indiMusicVidID returns null<br />";
            } else {
                 $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$EachVideosData[0]['File']['CdnPath']."/".$EachVideosData[0]['File']['SourceURL']);
-                $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;               
+                $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork; 
+                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $EachVideosData[0]['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                if(count($downloadsUsed) > 0){
+                  $EachVideosData[0]['Video']['status'] = 'avail';
+                } else{
+                  $EachVideosData[0]['Video']['status'] = 'not';
+                }
                 Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);
                 $this->log("Music video id $indiMusicVidID cache set", "cache");
                 echo "<br />Music video id $indiMusicVidID cache set <br />";
@@ -1629,6 +1635,12 @@ STR;
                         $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                         $MoreVideosData[$key]['videoImage'] = $videoImage;
+                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                          $MoreVideosData[$key]['Video']['status'] = 'avail';
+                        } else{
+                          $MoreVideosData[$key]['Video']['status'] = 'not';
+                        }
                     }
                     if (!empty($MoreVideosData)) {
                         Cache::write("musicVideoMoreDetails_" .$territory.'_'.$EachVideosData[0]['Video']['ArtistText'], $MoreVideosData);
@@ -1653,6 +1665,12 @@ STR;
                         $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                         $TopVideoGenreData[$key]['videoImage'] = $videoImage;
+                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                          $TopVideoGenreData[$key]['Video']['status'] = 'avail';
+                        } else{
+                          $TopVideoGenreData[$key]['Video']['status'] = 'not';
+                        }
                     }
                     if(!empty($TopVideoGenreData)){
                         Cache::write("top_videos_genre_" . $territory.'_'.$EachVideosData[0]['Video']['Genre'], $TopVideoGenreData);

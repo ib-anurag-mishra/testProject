@@ -18,7 +18,7 @@
                                            if(strtotime($VideosData[0]['Country']['SalesDate']) < time()){
                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                             {
-
+                                                if($VideosData[0]['Video']['status'] != 'avail') {?>
                 ?>                                                
                                                     <span class="download-now-button no-ajaxy">
                                                     <form method="Post" id="form<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
@@ -32,7 +32,10 @@
                                                     </form>
                                                     </span>
                             <?php
-
+                                            } else {?>
+                                                <a class="download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                            <?php
+                                            }
                                          }
                                    
                             ?>
@@ -121,6 +124,7 @@
 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
+                                                                if($value['Video']['status'] != 'avail') {?>
 
                                 ?>                                                
                                                                                 <span class="download-now-button no-ajaxy">
@@ -135,6 +139,10 @@
                                                                                 </form>
                                                                                 </span>
                                             <?php
+                                                                } else {?>
+                                                                    <a class="download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                <?php
+                                                                }
 
                                                             }
                                             ?>
@@ -219,11 +227,6 @@
                                             if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
                                                 continue;
                                             } 
-
-                                                //  echo "<pre>"; print_r($value);
-                                                //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                                //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
-
 							?>
 							
 							<li>
@@ -237,7 +240,7 @@
                                 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
-
+                                                                if($value['Video']['status'] != 'avail') {?>
                                 ?>                                                
                                                                                 <span class="download-now-button no-ajaxy">
                                                                                 <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
@@ -251,7 +254,10 @@
                                                                                 </form>
                                                                                 </span>
                                             <?php
-
+                                                                } else {?>
+                                                                    <a class="download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                <?php
+                                                                }
                                                             }
                                             ?>
 									<a class="add-to-playlist-button no-ajaxy" href="#"></a>
