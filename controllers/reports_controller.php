@@ -5,7 +5,7 @@
  Author : m68interactive
  */
 ini_set('memory_limit', '1024M');
-Class ReportsController extends AppController
+Class ReportsController extends AppController 
 {
     var $name = 'Reports';
     var $layout = 'admin';
