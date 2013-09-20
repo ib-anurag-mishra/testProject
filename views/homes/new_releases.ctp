@@ -256,8 +256,8 @@
 
             if($libraryDownload == '1' && $patronDownload == '1') {
 
-                    $value['Video']['Video']['status'] = 'avail1';
-                    if($value['Video']['status'] != 'avail' ) {
+                    //$value['Video']['Video']['status'] = 'avail1';
+                    if(isset($value['Video']['status']) && ($value['Video']['status'] != 'avail' )) {
                             ?>
                             <span class="top-100-download-now-button no-ajaxy">
                             <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
