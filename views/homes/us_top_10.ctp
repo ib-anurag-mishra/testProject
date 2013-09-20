@@ -118,7 +118,6 @@
 
             if($libraryDownload == '1' && $patronDownload == '1') {
 
-                    $value['Song']['status'] = 'avail1';
                     if(isset($value['Song']['status']) && ($value['Song']['status'] != 'avail')) {
                             ?>
        
@@ -260,7 +259,6 @@
 
             if($libraryDownload == '1' && $patronDownload == '1') {
 
-                    $value['Video']['Video']['status'] = 'avail1';
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
