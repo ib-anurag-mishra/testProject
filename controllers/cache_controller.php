@@ -40,7 +40,7 @@ class CacheController extends AppController {
         set_time_limit(0);
         //error_reporting(1); ini_set('display_errors', 1);
         $libId = $_REQUEST['libid'];
-        $patid = $_REQUEST['patronid'];
+        $patId = $_REQUEST['patronid'];
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
