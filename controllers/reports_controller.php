@@ -924,9 +924,13 @@ Class ReportsController extends AppController
       Configure::write('debug',0); // Otherwise we cannot use this method while developing
       if(isset($this->data)) {
         $all_Ids = '';
-        $this->Report->set($this->data); echo "<pre>"; print_r($_REQUEST); print_r($this->data); print_r($_POST);
+        $this->Report->set($this->data); 
 			if(isset($_REQUEST['library_id'])){
 				$library_id = $_REQUEST['library_id'];
+			}
+                        else if(isset($_POST['hid_library_id']))
+                        {
+				$library_id = $_POST['hid_library_id'];
 			}else{
 				$library_id = $this->data['Report']['library_id'];
 			}
