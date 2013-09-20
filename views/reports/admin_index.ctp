@@ -21,7 +21,7 @@
                     <tr><td id="formError" class="formError" colspan="4"></td></tr>
                     <tr>
                         <?php 
-                            if($libraryID == "") { echo "<pre>"; print_r($_POST); print_r($this->data);
+                            if($libraryID == "") { 
                         ?>
 							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>
 							<td align="left">
@@ -38,6 +38,8 @@
                                     if($this->Session->read("Auth.User.consortium") == '') { $libraries['all'] = "All Libraries"; }
                                     echo $this->Form->input('library_id', array('options' => $this->getTextEncode($libraries), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
                         ?>
+                                                            
+                                     <input type="hidden"  name="hid_library_id" value="<?php echo $_POST['library_id']; ?>"  >
                             </div>
 							</td>
                             <td align="right"><?php echo $this->Form->label('Range');?></td>
