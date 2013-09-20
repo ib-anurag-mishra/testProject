@@ -154,6 +154,7 @@
     
     // start - Total Downloads during Reporting Period
     
+    echo "<pre>"; print_r($arr_all_library_downloads);
  
     if(empty($arr_all_library_downloads)) {
        

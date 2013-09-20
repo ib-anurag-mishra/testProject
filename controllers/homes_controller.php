@@ -4253,6 +4253,13 @@ STR;
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                 $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                echo "<br>Query2: ".$this->Videodownload->lastQuery();die;
+                if(count($downloadsUsed) > 0){
+                  $data[$key]['Video']['status'] = 'avail';
+                } else{
+                  $data[$key]['Video']['status'] = 'not';
+                }
             }
             
             if(!empty($coming_soon_videos)){
