@@ -1843,8 +1843,8 @@ STR;
                     $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $songs_img =  Configure::read('App.Music_Path').$songs_img;
                     $topDownload[$key]['songs_img'] = $songs_img;
-                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                    if(count($downloadsUsed) > 0){
+                    $du =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($du) > 0){
                       $topDownload[$key]['Song']['status'] = 'avail';
                     } else{
                       $topDownload[$key]['Song']['status'] = 'not';
