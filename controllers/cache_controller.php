@@ -1059,6 +1059,7 @@ STR;
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                         $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        echo "<br>Query2: ".$this->Videodownload->lastQuery();die;
                         if(count($downloadsUsed) > 0){
                           $data[$key]['Video']['status'] = 'avail';
                         } else{
