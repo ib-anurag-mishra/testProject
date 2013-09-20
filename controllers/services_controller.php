@@ -327,7 +327,7 @@ class ServicesController extends AppController {
 						));
 				
 				$searchResults = $this->paginate('Song');*/
-                echo $solrFinalCondition;
+                //echo $solrFinalCondition;
 				$response = SolrComponent::$solr->search($solrFinalCondition,'0','10000');
                 
                 if ($response->getHttpStatus() == 200) {
@@ -341,7 +341,8 @@ class ServicesController extends AppController {
                 } else {
                     $docs = array();
                 }
-                        
+                
+                print_r($docs); die;
                 $reference = '';
 				foreach($docs as $k=>$v){
 					$result[$k]['Song']['ProdID'] = $v->ProdID;
