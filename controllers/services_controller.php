@@ -329,7 +329,7 @@ class ServicesController extends AppController {
 				$searchResults = $this->paginate('Song');*/
 				$docs = $this->Solr->solr->search($solrFinalCondition,0,10000);
                 
-                print-r($docs); die;
+                print_r($docs); die;
                         
                 $reference = '';
 				foreach($searchResults as $k=>$v){
