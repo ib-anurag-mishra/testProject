@@ -1093,9 +1093,15 @@ STR;
 
 			$national_us_top10_record = $this->Album->query($sql_national_100);
                         foreach($national_us_top10_record as $key => $value){
-                             $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
-                             $national_us_top10_record[$key]['songs_img'] = $songs_img;
+                            $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                            $national_us_top10_record[$key]['songs_img'] = $songs_img;
+                            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                            if(count($downloadsUsed) > 0){
+                              $national_us_top10_record[$key]['Song']['status'] = 'avail';
+                            } else{
+                              $national_us_top10_record[$key]['Song']['status'] = 'not';
+                            }
                         }    
 			// Checking for download status
 			Cache::write("national_us_top10_songs".$territory, $national_us_top10_record);
@@ -1295,6 +1301,12 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $usTop10VideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                        if(count($downloadsUsed) > 0){
+                          $usTop10VideoDownload[$key]['Video']['status'] = 'avail';
+                        } else{
+                          $usTop10VideoDownload[$key]['Video']['status'] = 'not';
+                        }
                     }        
                     Cache::write("national_us_top10_videos".$territory, $usTop10VideoDownload);
                 
