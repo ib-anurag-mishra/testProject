@@ -1034,7 +1034,13 @@ Class ReportsController extends AppController
                   $date_arr = explode("/", $this->data['Report']['date']);
                   $compareDate = $date_arr[2]."-".$date_arr[0]."-".date('d',time());
 
+                  echo "<br>Lib ID: ".$library_id;
+                  echo "<br>date: ".$this->data['Report']['date'];
+                  echo "<br>territory: ".$territory;
+                  
                   $downloads = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  
+                  echo '<pre>'; print_r($downloads); 
 
                   $arr_all_library_downloads = array();
                   if($library_id == "all") {
