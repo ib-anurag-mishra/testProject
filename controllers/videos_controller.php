@@ -471,6 +471,12 @@ STR;
                                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']); //'sony_test/'.
                                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $topDownload_video[$key]['videoAlbumImage'] = $videoAlbumImage;
+                                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                if(count($downloadsUsed) > 0){
+                                  $topDownload_video[$key]['Video']['status'] = 'avail';
+                                } else{
+                                  $topDownload_video[$key]['Video']['status'] = 'not';
+                                }
                             } 			
 			} else { 
 				$topDownload_video = array();                               
