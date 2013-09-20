@@ -19,7 +19,6 @@
                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                             {
                                                 if($VideosData[0]['Video']['status'] != 'avail') {?>
-                ?>                                                
                                                     <span class="download-now-button no-ajaxy">
                                                     <form method="Post" id="form<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                     <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"];?>" />
@@ -124,9 +123,7 @@
 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
-                                                                if($value['Video']['status'] != 'avail') {?>
-
-                                ?>                                                
+                                                                if($value['Video']['status'] != 'avail') {?>                                               
                                                                                 <span class="download-now-button no-ajaxy">
                                                                                 <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
@@ -241,7 +238,6 @@
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
                                                                 if($value['Video']['status'] != 'avail') {?>
-                                ?>                                                
                                                                                 <span class="download-now-button no-ajaxy">
                                                                                 <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
