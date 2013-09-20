@@ -454,9 +454,6 @@
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
     $genre_video_header = array('', 'Genre Name', 'Total Number of Videos Downloaded');
 
-    
-    echo "<pre>"; print_r($downloads); die;
-    
     //Data loading
     foreach($downloads as $key => $download) {
 		if($download['Download']['email']!=''){

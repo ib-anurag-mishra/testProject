@@ -112,7 +112,7 @@ if(empty($arr_all_patron_downloads)) {
 
 
 
-$line = array('Library Downloads Report'); 
+$line = array('Library Downloads Report');
 $csv->addRow($line);
 
 $line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
