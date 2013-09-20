@@ -1043,7 +1043,7 @@ Class ReportsController extends AppController
                   $arr_all_library_downloads = array();
                   if($library_id == "all") { echo "<br>Lib ID: ".$library_id; echo "<br>Date: ".$this->data['Report']['date']; echo "<br>territory: ".$territory;
                     $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsMonth($library_id, $this->data['Report']['date'], $territory);
-                    print_r($arr_all_library_downloads);
+                    print_r($arr_all_library_downloads); die;
                   }
                   $arr_all_video_library_downloads = array();
                   if($library_id == "all") {
