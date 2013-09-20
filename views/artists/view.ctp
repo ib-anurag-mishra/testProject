@@ -179,8 +179,7 @@
                                                                 $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
                                                                 $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 
-                                                                    //$albumSong['Song']['status'] = 'avail1';
-                                                                    if(isset($albumSong['Song']['status']) && ($albumSong['Song']['status'] != 'avail')) {
+                                                                    if(($albumSong['Song']['status'] != 'avail')) {
 
                                                     ?>
 

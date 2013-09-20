@@ -37,7 +37,6 @@ jQuery(document).ready(function() {
 										<?php
 												if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
 													if($libraryDownload == '1' && $patronDownload == '1') {	
-														$nationalTopDownload[$i]['Song']['status'] = 'avail1';
 														if($nationalTopDownload[$i]['Song']['status'] != 'avail') {
 															?>
 															<form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">

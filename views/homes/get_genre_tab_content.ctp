@@ -34,7 +34,6 @@ jQuery(document).ready(function() {
 				<?php
 						if($genre_info[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
 							if($libraryDownload == '1' && $patronDownload == '1') {
-								$genre_info[$i]['Song']['status'] = 'avail1';
 								if($genre_info[$i]['Song']['status'] != 'avail') {
 									?>							
 									<form method="Post" id="form<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">

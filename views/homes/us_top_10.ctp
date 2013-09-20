@@ -118,7 +118,7 @@
 
             if($libraryDownload == '1' && $patronDownload == '1') {
 
-                    if(isset($value['Song']['status']) && ($value['Song']['status'] != 'avail')) {
+                    if($value['Song']['status'] != 'avail') {
                             ?>
        
                             <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
