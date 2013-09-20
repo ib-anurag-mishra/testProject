@@ -555,8 +555,8 @@
         $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[3], 6, (strlen($row[3])>40)?substr($row[3],0,40)."...":$row[3], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[4], 6, (strlen($row[4])>50)?substr($row[4],0,50)."...":$row[4], 'LR', 0, 'L', $fill, '', 3);
 	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Ln();
         $fill=!$fill;
