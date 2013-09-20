@@ -178,7 +178,6 @@ $("#top-100-videos-grid").scroll(function(){
                                 if($this->Session->read('patron')) {
                                     if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
-                                            //$nationalTopDownload[$i]['Song']['status'] = 'avail1';
                                             if(isset($nationalTopDownload[$i]['Song']['status']) && ($nationalTopDownload[$i]['Song']['status'] != 'avail')) {?>
                                                 <span class="top-100-download-now-button no-ajaxy">
                                                     <form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -297,8 +296,7 @@ $("#top-100-videos-grid").scroll(function(){
                                 if($this->Session->read('patron')) {
                                     if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
-                                            //$nationalTopVideoDownload[$i]['Video']['status'] = 'avail1';
-                                            if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
+                                            if(isset($nationalTopVideoDownload[$i]['Video']['status']) && $nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
                                                     ?>
                                                     <span class="top-100-download-now-button no-ajaxy">
                                                         <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
