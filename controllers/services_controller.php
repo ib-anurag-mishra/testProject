@@ -327,8 +327,19 @@ class ServicesController extends AppController {
 						));
 				
 				$searchResults = $this->paginate('Song');*/
-				$docs = $this->Solr->solr->search($solrFinalCondition,0,10000);
+				$response = $this->Solr->solr->search($solrFinalCondition,0,10000);
                 
+                if ($response->getHttpStatus() == 200) {
+                    if ($response->response->numFound > 0) {
+                        foreach ($response->response->docs as $doc) {
+                            $docs[] = $doc;
+                        }
+                    } else {
+                        $docs = array();
+                    }
+                } else {
+                    $docs = array();
+                }
                 print_r($docs); die;
                         
                 $reference = '';
