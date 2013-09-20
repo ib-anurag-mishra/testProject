@@ -959,9 +959,9 @@ Class ReportsController extends AppController
 			}
                         
                         echo "<br>Date Range: ".$this->data['Report']['reports_daterange'];
-                        echo "<pre<"; print_r($this->data);
+                        echo "<pre>"; print_r($this->data);
                         
-            if($this->Report->validates()) {
+            if($this->Report->validates()) { echo 123;
                 if($this->data['Report']['reports_daterange'] == 'day') {
                   $date_arr = explode("/", $this->data['Report']['date']);
                   $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
