@@ -125,7 +125,7 @@
 
             if($libraryDownload == '1' && $patronDownload == '1') {
 
-                    $value['Song']['status'] = 'avail1';
+                    //$value['Song']['status'] = 'avail1';
                     if(isset($value['Song']['status']) && ($value['Song']['status'] != 'avail')) {
                             ?>
       

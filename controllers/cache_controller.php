@@ -1840,9 +1840,15 @@ STR;
                 echo "<br /> library top 10 songs returns null for lib: $libId $country <br />";
             } else {
                 foreach($topDownload as $key => $value){
-                     $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                     $songs_img =  Configure::read('App.Music_Path').$songs_img;
-                     $topDownload[$key]['songs_img'] = $songs_img;
+                    $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                    $topDownload[$key]['songs_img'] = $songs_img;
+                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $topDownload[$key]['Song']['status'] = 'avail';
+                    } else{
+                      $topDownload[$key]['Song']['status'] = 'not';
+                    }
                 }                
                 Cache::delete("lib" . $libId);
                 Cache::write("lib" . $libId, $topDownload);
@@ -2109,6 +2115,12 @@ STR;
                     $albumArtwork = shell_exec('perl files/tokengen_artwork '.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $topDownload[$key]['Video']['status'] = 'avail';
+                    } else{
+                      $topDownload[$key]['Video']['status'] = 'not';
+                    }
                 }                
                 Cache::delete("lib_video" . $libId);
                 Cache::write("lib_video" . $libId, $topDownload);

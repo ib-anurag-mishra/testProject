@@ -814,9 +814,15 @@ STR;
                                  
 			$topDownload_songs = $this->Song->query($topDownloaded_query_songs);
                         foreach($topDownload_songs as $key => $value){
-                             $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
-                             $topDownload_songs[$key]['songs_img'] = $songs_img;
+                            $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                            $topDownload_songs[$key]['songs_img'] = $songs_img;
+                            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                            if(count($downloadsUsed) > 0){
+                              $topDownload_songs[$key]['Song']['status'] = 'avail';
+                            } else{
+                              $topDownload_songs[$key]['Song']['status'] = 'not';
+                            }
                         }     
 
 			} else { 
