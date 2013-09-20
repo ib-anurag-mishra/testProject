@@ -327,7 +327,11 @@ class ServicesController extends AppController {
 						));
 				
 				$searchResults = $this->paginate('Song');*/
-				$reference = '';
+				$docs = $this->Solr->solr->search($solrFinalCondition,0,10000);
+                
+                print-r($docs); die;
+                        
+                $reference = '';
 				foreach($searchResults as $k=>$v){
 					$result[$k]['Song']['ProdID'] = $v['Song']['ProdID'];
 					$result[$k]['Song']['ProductID'] = $v['Song']['ProductID'];
