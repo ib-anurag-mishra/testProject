@@ -304,7 +304,7 @@ class ServicesController extends AppController {
 					$solrGenreSearch = '';
 				}			
 				$solrTempCondition = $solrGenreSearch;
-				$solrFinalCondition = substr($solrTempCondition, 0, -2);
+				$solrFinalCondition = substr($solrTempCondition, 0, -6);
 				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
 				if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -2);
