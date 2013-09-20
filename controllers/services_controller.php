@@ -194,6 +194,7 @@ class ServicesController extends AppController {
 	}
 	
     function genre(){
+        set_time_limit(0);
 		if($this->params['pass'][3] == ''){
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
