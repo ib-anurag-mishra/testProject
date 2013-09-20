@@ -230,7 +230,6 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                 $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                 $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                 $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
-                    //$value['Video']['status'] = 'avail1';
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
@@ -239,10 +238,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="download_video_<?php echo $value["Video"]["ProdID"]; ?>">
                                 <![if !IE]>
-                                    <a title="<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?> href='#' onclick='return wishlistVideoDownloadOthers("<?php echo $$value["Video"]["ProdID"]; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value["Video"]["provider_type"]; ?>");'><?php __('Download');?></a>
+                                    <a title="<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?> href='#' onclick='return wishlistVideoDownloadOthers("<?php echo $$value["Video"]["ProdID"]; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value["Video"]["provider_type"]; ?>");'><?php __('Download Now');?></a>
                                 <![endif]>
                                 <!--[if IE]>
-                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $value["Video"]["ProdID"]; ?>","0","<?php echo $value["Video"]['provider_type']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
+                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $value["Video"]["ProdID"]; ?>","0","<?php echo $value["Video"]['provider_type']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download Now');?></a>
                                 <![endif]-->
                             </span>
                             <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>

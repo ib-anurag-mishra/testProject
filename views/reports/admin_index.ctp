@@ -20,8 +20,8 @@
                 <table cellspacing="10" cellpadding="0" border="0" width="100%">
                     <tr><td id="formError" class="formError" colspan="4"></td></tr>
                     <tr>
-                        <?php
-                            if($libraryID == "") {
+                        <?php 
+                            if($libraryID == "") { 
                         ?>
 							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>
 							<td align="left">
@@ -33,10 +33,13 @@
                             <td align="right"><?php echo $this->Form->label('Select Library');?></td>
                             <td align="left">
 							<div id="allLibrary">
-                        <?php
+                        <?php 
+                                    $library_id = $_POST['library_id'];
                                     if($this->Session->read("Auth.User.consortium") == '') { $libraries['all'] = "All Libraries"; }
                                     echo $this->Form->input('library_id', array('options' => $this->getTextEncode($libraries), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
                         ?>
+                                                            
+                                     <input type="hidden"  name="hid_library_id" value="<?php echo $_POST['library_id']; ?>"  >
                             </div>
 							</td>
                             <td align="right"><?php echo $this->Form->label('Range');?></td>
@@ -103,7 +106,7 @@
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <?php
-                    if(!empty($downloads) || !empty($videoDownloads)) {
+                    if(!empty($downloads) || !empty($videoDownloads)) { 
                     ?>
                     <tr>
                         <td colspan="3" align="center">

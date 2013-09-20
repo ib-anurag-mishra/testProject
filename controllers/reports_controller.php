@@ -5,7 +5,7 @@
  Author : m68interactive
  */
 ini_set('memory_limit', '1024M');
-Class ReportsController extends AppController
+Class ReportsController extends AppController 
 {
     var $name = 'Reports';
     var $layout = 'admin';
@@ -924,9 +924,13 @@ Class ReportsController extends AppController
       Configure::write('debug',0); // Otherwise we cannot use this method while developing
       if(isset($this->data)) {
         $all_Ids = '';
-        $this->Report->set($this->data); echo "<pre>"; print_r($_REQUEST); print_r($this->data);
+        $this->Report->set($this->data); 
 			if(isset($_REQUEST['library_id'])){
 				$library_id = $_REQUEST['library_id'];
+			}
+                        else if(isset($_POST['hid_library_id']))
+                        {
+				$library_id = $_POST['hid_library_id'];
 			}else{
 				$library_id = $this->data['Report']['library_id'];
 			}
@@ -1034,13 +1038,10 @@ Class ReportsController extends AppController
                   $date_arr = explode("/", $this->data['Report']['date']);
                   $compareDate = $date_arr[2]."-".$date_arr[0]."-".date('d',time());
 
-                  echo "<br>Lib ID: ".$library_id;
-                  echo "<br>date: ".$this->data['Report']['date'];
-                  echo "<br>territory: ".$territory;
                   
                   $downloads = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                   
-                  echo '<pre>'; print_r($downloads); 
+
 
                   $arr_all_library_downloads = array();
                   if($library_id == "all") {

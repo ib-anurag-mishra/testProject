@@ -31,7 +31,7 @@
                                 if($this->Session->read('patron')) {
 
                                     if($libraryDownload == '1' && $patronDownload == '1') {
-                                        if(isset($featureVideo['Video']['status']) && ($featureVideo['Video']['status'] != 'avail')) {?>
+                                        if($featureVideo['Video']['status'] != 'avail') {?>
                                             <span class="featured-video-download-now-button no-ajaxy">
                                                 <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
                                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
@@ -150,7 +150,7 @@ foreach($topVideoDownloads as $topDownload)
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
-                                        if(isset($topDownload['Video']['status']) && ($topDownload['Video']['status'] != 'avail')) {?>
+                                        if($topDownload['Video']['status'] != 'avail') {?>
                                 ?>
                                             <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
                                                 <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
