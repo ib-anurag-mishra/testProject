@@ -154,7 +154,6 @@
     
     // start - Total Downloads during Reporting Period
     
-    echo "<pre>"; print_r($arr_all_library_downloads);
  
     if(empty($arr_all_library_downloads)) {
        
@@ -455,6 +454,9 @@
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
     $genre_video_header = array('', 'Genre Name', 'Total Number of Videos Downloaded');
 
+    
+    echo "<pre>"; print_r($downloads); die;
+    
     //Data loading
     foreach($downloads as $key => $download) {
 		if($download['Download']['email']!=''){
