@@ -20,8 +20,8 @@
                 <table cellspacing="10" cellpadding="0" border="0" width="100%">
                     <tr><td id="formError" class="formError" colspan="4"></td></tr>
                     <tr>
-                        <?php
-                            if($libraryID == "") {
+                        <?php 
+                            if($libraryID == "") { echo "<pre>"; print_r($_POST); print_r($this->data);
                         ?>
 							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>
 							<td align="left">
