@@ -346,7 +346,7 @@ class ServicesController extends AppController {
                 
                 $reference = '';
 				foreach($docs as $k=>$v){
-                    // print_r($v);
+                    print_r($v); die;
 					$result[$k]['Song']['ProdID'] = $v->ProdID;
 					$result[$k]['Song']['ProductID'] = $v->ProductID;
 					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
