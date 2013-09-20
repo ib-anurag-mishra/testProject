@@ -957,11 +957,7 @@ Class ReportsController extends AppController
 					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
 			}
-                        
-                        echo "<br>Date Range: ".$this->data['Report']['reports_daterange'];
-                        echo "<pre>"; print_r($this->data);
-                        
-            if($this->Report->validates()) { echo 123;
+            if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                   $date_arr = explode("/", $this->data['Report']['date']);
                   $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
@@ -1041,9 +1037,8 @@ Class ReportsController extends AppController
                   $downloads = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
 
                   $arr_all_library_downloads = array();
-                  if($library_id == "all") { echo "<br>Lib ID: ".$library_id; echo "<br>Date: ".$this->data['Report']['date']; echo "<br>territory: ".$territory;
+                  if($library_id == "all") {
                     $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsMonth($library_id, $this->data['Report']['date'], $territory);
-                    print_r($arr_all_library_downloads); die;
                   }
                   $arr_all_video_library_downloads = array();
                   if($library_id == "all") {
