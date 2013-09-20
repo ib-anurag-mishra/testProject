@@ -366,7 +366,7 @@ class ServicesController extends AppController {
 					}
 					if($reference != $v->ReferenceID){ 
 						$albumData = $this->Album->find('all', array(
-							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
+							'conditions'=>array('Album.ProdID' => $v->ReferenceID),
 							'fields' => array(
 								'Album.ProdID',
 							),
