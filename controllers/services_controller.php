@@ -298,7 +298,7 @@ class ServicesController extends AppController {
 				$searchString = str_replace("$", " ", $searchString);
 				$sphinxCheckCondition = "AND";
 				if($genre != '') {
-					$solrGenreSearch = 'CGenre:'.strtolower(addslashes($searchString)).' '.$sphinxCheckCondition.' ';	
+					$solrGenreSearch = 'CGenre:'.strtolower(addslashes($searchString)).'* '.$sphinxCheckCondition.' ';	
 				}
 				else {
 					$solrGenreSearch = '';
