@@ -298,13 +298,13 @@ class ServicesController extends AppController {
 				$searchString = str_replace("$", " ", $searchString);
 				$sphinxCheckCondition = "AND";
 				if($genre != '') {
-					$solrGenreSearch = 'Genre:'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';	
+					$solrGenreSearch = 'CGenre:'.strtolower(addslashes($searchString)).' '.$sphinxCheckCondition.' ';	
 				}
 				else {
 					$solrGenreSearch = '';
 				}			
 				$solrTempCondition = $solrGenreSearch;
-				$solrFinalCondition = substr($solrTempCondition, 0, -6);
+				$solrFinalCondition = substr($solrTempCondition, 0, -5);
 				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
 				if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -2);
@@ -328,7 +328,7 @@ class ServicesController extends AppController {
 				
 				$searchResults = $this->paginate('Song');*/
                 echo $solrFinalCondition;
-				$response = SolrComponent::$solr->search($solrFinalCondition,0,10000);
+				$response = SolrComponent::$solr->search($solrFinalCondition,'0','100');
                 
                 if ($response->getHttpStatus() == 200) {
                     if ($response->response->numFound > 0) {
