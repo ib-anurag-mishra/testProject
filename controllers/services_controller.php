@@ -328,7 +328,7 @@ class ServicesController extends AppController {
 				
 				$searchResults = $this->paginate('Song');*/
                 echo $solrFinalCondition;
-				$response = SolrComponent::$solr->search($solrFinalCondition,0,100);
+				$response = SolrComponent::$solr->search($solrFinalCondition,'0','100');
                 
                 if ($response->getHttpStatus() == 200) {
                     if ($response->response->numFound > 0) {
