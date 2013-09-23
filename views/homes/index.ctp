@@ -1,9 +1,12 @@
 <script>
 
 $(document).ready(function(){
+
+if(alert(window.location.href));
+
 //alert(window.location.pathname);
 var pathArray = window.location.pathname.split( '/' );
-//alert(window.location.href);
+
     var preValue= 1;
     var nationalPage = 2;
     var counter_loader = 1;
