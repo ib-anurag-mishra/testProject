@@ -1,9 +1,9 @@
 <script>
 
 $(document).ready(function(){
-alert(window.location.pathname);
+//alert(window.location.pathname);
 var pathArray = window.location.pathname.split( '/' );
-alert(pathArray[0]);
+//alert(pathArray[0]);
     var preValue= 1;
     var nationalPage = 2;
     var counter_loader = 1;
