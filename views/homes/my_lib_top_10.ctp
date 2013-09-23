@@ -125,8 +125,8 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-                $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                if(count($downloadsUsed) > 0){
+                $downloadsUsed =  $this->Download->getDownloadfind($value['Song']['ProdID'],$value['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                if($downloadsUsed > 0){
                   $value[$key]['Song']['status'] = 'avail';
                 } else{
                   $value[$key]['Song']['status'] = 'not';
@@ -302,8 +302,8 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                if(count($downloadsUsed) > 0){
+                $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                if($downloadsUsed > 0){
                   $value[$key]['Video']['status'] = 'avail';
                 } else{
                   $value[$key]['Video']['status'] = 'not';

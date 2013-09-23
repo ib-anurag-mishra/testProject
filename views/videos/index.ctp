@@ -34,8 +34,8 @@ if(count($featuredVideos) > 0){ ?>
                                 if($this->Session->read('patron')) {
 
                                     if($libraryDownload == '1' && $patronDownload == '1') {
-                                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $featureVideo['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                                        if(count($downloadsUsed) > 0){
+                                        $downloadsUsed =  $this->Videodownload->getVideodownloadfind($featureVideo['Video']['ProdID'],$featureVideo['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                        if($downloadsUsed > 0){
                                           $featureVideo[$key]['Video']['status'] = 'avail';
                                         } else{
                                           $featureVideo[$key]['Video']['status'] = 'not';
@@ -156,7 +156,7 @@ foreach($topVideoDownloads as $topDownload)
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
-                                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $topDownload['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                        $downloadsUsed =  $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'],$topDownload['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                         if(count($downloadsUsed) > 0){
                                           $topDownload[$key]['Video']['status'] = 'avail';
                                         } else{
