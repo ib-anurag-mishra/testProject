@@ -183,7 +183,7 @@ $("#top-100-videos-grid").scroll(function(){
                                 if($this->Session->read('patron')) {
                                     if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
-                                            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $nationalTopDownload[$i]['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                            $downloadsUsed =  $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                             if(count($downloadsUsed) > 0){
                                               $nationalTopDownload[$i]['Song']['status'] = 'avail';
                                             } else{
@@ -260,10 +260,10 @@ $("#top-100-videos-grid").scroll(function(){
                     }
                     ?>
                     <div class="song-title">
-                        <a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
+                        <a title="<?php echo $songTitle; ?>" href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
                     </div>
                     <div class="artist-name">                                                                                                            
-                        <a href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
+                        <a title="<?php echo $artistText; ?>" href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
                     </div>
                 </div>
                 </li>
@@ -307,7 +307,7 @@ $("#top-100-videos-grid").scroll(function(){
                                 if($this->Session->read('patron')) {
                                     if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
-                                            $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $nationalTopVideoDownload[$i]['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                            $downloadsUsed =  $this->Videodownload->getVideodownloadfind($nationalTopVideoDownload[$i]['Video']['ProdID'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                             if(count($downloadsUsed) > 0){
                                               $nationalTopVideoDownload[$i]['Video']['status'] = 'avail';
                                             } else{
@@ -387,8 +387,8 @@ $("#top-100-videos-grid").scroll(function(){
                                     }
                                 ?>
                                 <div class="song-title">
-                                <!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
-                                        <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
+                                <!--	<a title="<?php echo $songTitle; ?>" href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
+                                        <a title="<?php echo $songTitle; ?>" href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
                                     <?php if('T' == $nationalTopVideoDownload[$i]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                                 </div>
                                 <div class="artist-name">
@@ -441,12 +441,12 @@ $("#top-100-videos-grid").scroll(function(){
 
                                                 </div>
                                                 <div class="album-title">
-                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
+                                                        <a title="<?php echo $title; ?>" href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
                                                 </div>
 
 
                                                 <div class="artist-name">
-                                                        <a href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                        <a title="<?php echo $ArtistText; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
                                                 </div>
                                         </div>
                                 </li>
@@ -540,7 +540,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                 <?php } ?>
                                                 </div>
                                                 <div class="song-title">
-                                                        <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a title="<?php echo $commingSoonSongTitle; ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
 
                                                             $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
@@ -563,7 +563,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                         </a>	<?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                                                 </div>
                                                 <div class="artist-name">
-                                                        <a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <a title="<?php echo $commingSoonSongArtistTitle; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                         <?php 
 
                                                                     $commingSoonSongArtistTitle = $this->getTextEncode($value['Song']['Artist']);
@@ -623,7 +623,7 @@ $("#top-100-videos-grid").scroll(function(){
                                         </div>
                                         <div class="video-title">
 
-                                                <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                <a title="<?php echo $commingSoonVideoTitle; ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                     <?php
 
                                                     $commingSoonVideoTitle= $this->getTextEncode($value['Video']['VideoTitle']);
@@ -643,7 +643,7 @@ $("#top-100-videos-grid").scroll(function(){
 
                                         </div>
                                         <div class="artist-name">
-                                            <a href="javascript:void(0)">
+                                            <a title="<?php echo $videoartist; ?>" href="javascript:void(0)">
                                             <?php 
                                                 $videoartist = $this->getTextEncode($value['Video']['Artist']);
                                                 if(strlen($videoartist)>20)
