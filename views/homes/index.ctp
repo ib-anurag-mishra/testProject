@@ -122,7 +122,7 @@ $("#top-100-videos-grid").scroll(function(){
                         <a href="#top-100-songs" class="active" data-category-type="songs">Songs</a>
                 </li>
                 <li>
-                        <a href="/#top-100-videos" data-category-type="videos">Videos</a>
+                        <a href="#top-100-videos" data-category-type="videos">Videos</a>
                 </li>
             </ul>
         </nav>
