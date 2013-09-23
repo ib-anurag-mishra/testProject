@@ -620,7 +620,7 @@ $("#top-100-videos-grid").scroll(function(){
                                         </div>
                                         <div class="video-title">
 
-                                                <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                <a title="<?php echo $commingSoonVideoTitle; ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                     <?php
 
                                                     $commingSoonVideoTitle= $this->getTextEncode($value['Video']['VideoTitle']);
@@ -640,7 +640,7 @@ $("#top-100-videos-grid").scroll(function(){
 
                                         </div>
                                         <div class="artist-name">
-                                            <a href="javascript:void(0)">
+                                            <a title="<?php echo $videoartist; ?>" href="javascript:void(0)">
                                             <?php 
                                                 $videoartist = $this->getTextEncode($value['Video']['Artist']);
                                                 if(strlen($videoartist)>20)
