@@ -3,7 +3,7 @@
 class VideosController extends AppController {
 
      var $uses = array('Album', 'Genre', 'Siteconfig','Country', 'Video', 'LatestVideodownload', 'Videodownload','Library','WishlistVideo','Download', 'Language');
-     var $helpers = array( 'WishlistVideo', 'Language');
+     var $helpers = array( 'WishlistVideo', 'Language','Videodownload');
      var $components = array('Downloadsvideos', 'Session','Downloads');
      var $layout = 'home';
    
