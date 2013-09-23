@@ -1,7 +1,7 @@
 <script>
 
 $(document).ready(function(){
-
+alert(window.location.pathname);
 var pathArray = window.location.pathname.split( '/' );
 alert(pathArray[0]);
     var preValue= 1;
