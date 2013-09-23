@@ -17,10 +17,9 @@
 				<ul style="width:2700px;">
 					<?php
                                         
-
-                                            
-
-					 $count  =   1;           
+                                $libId = $this->Session->read('library');
+                                $patId = $this->Session->read('patron');
+                                $count  =   1;           
 				if(count($ustop10Albums) > 0) {
                                         foreach($ustop10Albums as $key => $value){
                                             
@@ -104,11 +103,11 @@
 
 <?php if($this->Session->read("patron")){ ?> 
 <!-- <a href="#" class="preview"></a>  -->
-<?php                                  if($value['Country']['SalesDate'] <= date('Y-m-d')) {
+<?php                               if($value['Country']['SalesDate'] <= date('Y-m-d')) {
                                         echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Song']['ProdID'].', "'.base64_encode($value['Song']['provider_type']).'", "'.$this->webroot.'");')); 
                                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "load_audio".$key)); 
                                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
-                                  }
+                                    }
  }
   ?>
 							<?php
@@ -117,7 +116,12 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
+                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $value[$key]['Song']['status'] = 'avail';
+                    } else{
+                      $value[$key]['Song']['status'] = 'not';
+                    }
                     if($value['Song']['status'] != 'avail') {
                             ?>
        
@@ -258,7 +262,12 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
+                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $value[$key]['Video']['status'] = 'avail';
+                    } else{
+                      $value[$key]['Video']['status'] = 'not';
+                    }
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">

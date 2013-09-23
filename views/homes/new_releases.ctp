@@ -14,8 +14,9 @@
 			<div class="album-scrollable horiz-scroll">
 				<ul style="width:27000px;">
 					<?php
-                                        
-					 $count  =   1;           
+                     $libId = $this->Session->read('library');
+                     $patId = $this->Session->read('patron');
+                     $count  =   1;           
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_albums as $key => $value){
                                             
@@ -116,7 +117,12 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
+                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $value[$key]['Song']['status'] = 'avail';
+                    } else{
+                      $value[$key]['Song']['status'] = 'not';
+                    }
                     if($value['Song']['status'] != 'avail') {
                             ?>       
                             <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -254,8 +260,13 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
-                    if($value['Video']['status'] != 'avail' ) {
+                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                if(count($downloadsUsed) > 0){
+                  $value[$key]['Video']['status'] = 'avail';
+                } else{
+                  $value[$key]['Video']['status'] = 'not';
+                }
+                if($value['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button no-ajaxy">
                             <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">

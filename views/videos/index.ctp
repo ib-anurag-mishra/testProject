@@ -12,7 +12,10 @@
             <ul class="clearfix">
 
 
-<?php if(count($featuredVideos) > 0){ ?>                
+<?php 
+$libId = $this->Session->read('library');
+$patId = $this->Session->read('patron');
+if(count($featuredVideos) > 0){ ?>                
                 <?php
                     $total_videos = count($featuredVideos);
                     $sr_no = 0;
@@ -31,6 +34,12 @@
                                 if($this->Session->read('patron')) {
 
                                     if($libraryDownload == '1' && $patronDownload == '1') {
+                                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $featureVideo['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                        if(count($downloadsUsed) > 0){
+                                          $featureVideo[$key]['Video']['status'] = 'avail';
+                                        } else{
+                                          $featureVideo[$key]['Video']['status'] = 'not';
+                                        }
                                         if($featureVideo['Video']['status'] != 'avail') {?>
                                             <span class="featured-video-download-now-button no-ajaxy">
                                                 <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
@@ -119,9 +128,6 @@
   $sr_no = 0;
 foreach($topVideoDownloads as $topDownload)
 {
-     //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
-     // print_r($featureVideo);
-     //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
     ?>
 
                     
@@ -150,6 +156,12 @@ foreach($topVideoDownloads as $topDownload)
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
+                                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $topDownload['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                        if(count($downloadsUsed) > 0){
+                                          $topDownload[$key]['Video']['status'] = 'avail';
+                                        } else{
+                                          $topDownload[$key]['Video']['status'] = 'not';
+                                        }
                                         if($topDownload['Video']['status'] != 'avail') {?>
                                 ?>
                                             <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
