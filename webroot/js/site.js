@@ -309,7 +309,7 @@ $(function() {
 		category_type = $(this).attr('data-category-type');
 		
 		if(view_type === 'grid') {
-			alert(window.location.href+'abc');
+			//alert(window.location.href+'abc');
 			var target_str = target + '-grid';
 			lists.removeClass('active')
 			grids.addClass('active');
@@ -320,7 +320,7 @@ $(function() {
 		}
 		
 		if(view_type === 'list') {
-			alert(window.location.href+'');
+			//alert(window.location.href+'');
 			var target_str = target + '-list-view';
 			grids.removeClass('active');
 			lists.addClass('active');
