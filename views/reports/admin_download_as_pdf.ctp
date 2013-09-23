@@ -3,15 +3,14 @@
     $tcpdf = new XTCPDF('L', 'mm', 'LETTER', true, 'UTF-8', false);
     $textfont = 'freesans'; // looks better, finer, and more condensed than 'dejavusans'
 
-    echo "<pre>"; print_r($this->data); print_r($downloads); print_r($libraries_download); die;
-    
     
     if($this->data['Report']['library_id'] == "all") {
         $savelibraryName = "All_Libraries";
         $displaylibraryName = "All Libraries";
     }
     else {
-        $savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+        //$savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+        $savelibraryName = str_replace(" ", "_", $libraries_download[0]['Library']['library_name']);
         $displaylibraryName = "LibraryID ".$downloads[0]['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
