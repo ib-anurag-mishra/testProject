@@ -184,6 +184,7 @@ $("#top-100-videos-grid").scroll(function(){
                                     if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
                                             $downloadsUsed =  $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            print_r($downloadsUsed . "No of Downloads");
                                             if(count($downloadsUsed) > 0){
                                               $nationalTopDownload[$i]['Song']['status'] = 'avail';
                                             } else{
@@ -308,6 +309,7 @@ $("#top-100-videos-grid").scroll(function(){
                                     if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
                                         if($libraryDownload == '1' && $patronDownload == '1') {
                                             $downloadsUsed =  $this->Videodownload->getVideodownloadfind($nationalTopVideoDownload[$i]['Video']['ProdID'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            print_r($downloadsUsed . "No of Downloads");
                                             if(count($downloadsUsed) > 0){
                                               $nationalTopVideoDownload[$i]['Video']['status'] = 'avail';
                                             } else{
