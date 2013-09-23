@@ -100,14 +100,19 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);
+                if(Cache::delete("featuredUS"))
+                {
+                   $this->log("deleted featuredUS",'featured');
+                }
+                else {
+                    $this->log(Cache::read("featuredUS"),'featured');
+                }
+                Cache::delete("featuredCA");
+                Cache::delete("featuredIT");
+                Cache::delete("featuredNZ");
+                Cache::delete("featuredAU");
+                Cache::delete("featuredIE");
+                Cache::delete("featuredGB");
 	}
 
 	/*
@@ -117,13 +122,22 @@ Class ArtistsController extends AppController
 	function admin_insertfeaturedartist() {
 		$errorMsg = '';
 		$artist = '';
+                $album_provider_type = '';
+                $album_prodid = 0;
+                $alb_det = explode('-',$_REQUEST[ 'album' ]);
+                if(isset($alb_det[0])){
+                    $album_prodid = $alb_det[0];
+                }
+                if(isset($alb_det[1])){
+                    $album_provider_type = $alb_det[1];
+                }
 		if(isset($_REQUEST[ 'artistName' ])){
 			$artist = $_REQUEST[ 'artistName' ];
 		} else{
 			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
 		}
 		if(isset($_REQUEST[ 'album' ])){
-			$album = $_REQUEST[ 'album' ];
+			$album = $album_prodid;
 		} else{
 			$album = $this->data[ 'Artist' ][ 'album' ];
 		}
@@ -141,10 +155,26 @@ Class ArtistsController extends AppController
 		$insertArr[ 'album' ] = $album;
 		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$insertArr[ 'language' ] = Configure::read('App.LANGUAGE');
-		$insertObj = new Featuredartist();
+                if(isset($album_provider_type)){
+                   $insertArr[ 'provider_type' ] = $album_provider_type;
+                }
+                $insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
+                                if(Cache::delete("featuredUS"))
+                                {
+                                   $this->log("deleted featuredUS",'featured');
+                                }
+                                else {
+                                    $this->log(Cache::read("featuredUS"),'featured');
+                                }
+                                Cache::delete("featuredCA");
+                                Cache::delete("featuredIT");
+                                Cache::delete("featuredNZ");
+                                Cache::delete("featuredAU");
+                                Cache::delete("featuredIE");
+                                Cache::delete("featuredGB");
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -152,14 +182,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);
+		
 	}
 
 	/*
@@ -168,8 +191,17 @@ Class ArtistsController extends AppController
         */
 	function admin_updatefeaturedartist() {
 		$errorMsg = '';
+                $album_provider_type = '';
+                $album_prodid = 0;
 		$this->Featuredartist->id = $this -> data[ 'Artist' ][ 'id' ];
-		$artistName = '';
+                $alb_det = explode('-',$_REQUEST[ 'album' ]);
+                if(isset($alb_det[0])){
+                    $album_prodid = $alb_det[0];
+                }
+                if(isset($alb_det[1])){
+                    $album_provider_type = $alb_det[1];
+                }
+                $artistName = '';
 		if(isset($_REQUEST[ 'artistName' ])){
 			$artistName = $_REQUEST[ 'artistName' ];
 		}
@@ -180,7 +212,7 @@ Class ArtistsController extends AppController
 			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
 		}
 		if(isset($_REQUEST[ 'album' ])){
-			$album = $_REQUEST[ 'album' ];
+			$album = $album_prodid;
 		} else{
 			$album = $this->data[ 'Artist' ][ 'album' ];
 		}
@@ -199,10 +231,26 @@ Class ArtistsController extends AppController
 		$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$updateArr[ 'language' ] = Configure::read('App.LANGUAGE');
 		$updateArr[ 'album' ] = $album;
+                if(isset($album_provider_type)){
+                    $updateArr[ 'provider_type' ] = $album_provider_type;
+                }
 		$updateObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
 				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
+                                if(Cache::delete("featuredUS"))
+                                {
+                                   $this->log("deleted featuredUS",'featured');
+                                }
+                                else {
+                                    $this->log(Cache::read("featuredUS"),'featured');
+                                }
+                                Cache::delete("featuredCA");
+                                Cache::delete("featuredIT");
+                                Cache::delete("featuredNZ");
+                                Cache::delete("featuredAU");
+                                Cache::delete("featuredIE");
+                                Cache::delete("featuredGB");
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -210,14 +258,8 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);
+		
+                
 	}
 
 	/*
@@ -1449,20 +1491,30 @@ STR;
 
 	}
         
+ /**
+   *@getAlbums
+   *  return top 5 artist names with ajax call
+   *
+   *$name
+   *  string to be searchedin atrist name
+   *
+   *@return
+   *  
+   **/
         
         
 	function admin_getAlbums(){
             Configure::write('debug', 0);
 		$result = array();
-		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
-		$val = '';
+		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle','Album.provider_type'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
+                $val = '';
 		$this->Song->Behaviors->attach('Containable');
-        $this->Country->setTablePrefix($_REQUEST['Territory']);
+                $this->Country->setTablePrefix($_REQUEST['Territory']);
 		foreach($allAlbum as $k => $v){
 			$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-			if(count($recordCount) > 0){
+                        if(count($recordCount) > 0){
 				$val = $val.$v['Album']['ProdID'].",";
-				$result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
+				$result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
 			}
 		}
 		$data = "<option value=''>SELECT</option>";
