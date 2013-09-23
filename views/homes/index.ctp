@@ -1,5 +1,5 @@
 <script>
-if(alert(window.location.href));
+
 $(document).ready(function(){
 
 
