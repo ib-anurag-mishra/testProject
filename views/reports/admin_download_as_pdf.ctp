@@ -569,6 +569,8 @@
         $tcpdf->MultiCell($w[5], 12, $row[5], 'LR', 'L',  $fill, 0);
         
         $tcpdf->Ln();
+        $tcpdf->Ln();
+        $tcpdf->Ln();
         $fill=!$fill;
     }
      // add a page
