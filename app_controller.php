@@ -56,7 +56,17 @@ class AppController extends Controller
                         $this->Session->write("library_type", $libraryData['Library']['library_type']);
                         $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1')?'yes':'no'));
                     }
-                }               
+                }
+                if ((Cache::read('maintainLatestDownload')) === false) {
+                    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                    $siteConfigData = $this->Album->query($siteConfigSQL);
+                    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+                    $this->Session->write('maintainLatestDownload', $maintainLatestDownload);
+                    Cache::write("maintainLatestDownload", $maintainLatestDownload);
+                }else{
+                    $maintainLatestDownload = Cache::read('maintainLatestDownload');
+                    $this->Session->write('maintainLatestDownload', $maintainLatestDownload);
+                }
 		$this->Auth->authorize = 'actions';
 		$this->Auth->fields = array(  'username' => 'email',  'password' => 'password' );
 		$this->Auth->loginRedirect = array( 'controller' => 'users', 'action' => 'index' );

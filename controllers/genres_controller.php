@@ -9,7 +9,7 @@ ini_set('memory_limit', '2048M');
 Class GenresController extends AppController
 {
 	var $uses = array('Category','Files','Album','Song','Download');
-	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
+	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','Common');
 	var $helpers = array('Cache','Library','Page','Wishlist', 'Language');
 
 	/*
@@ -600,5 +600,14 @@ Class GenresController extends AppController
 		$this->set('selectedGenres', $selArray);
 		$this->layout = 'admin';
 	}
+        
+        /*
+         * Function Name : callToAllFunctions
+         * Function Description : This function is used to call all functions
+         */
+
+        function callToAllFunctions(){
+
+        }        
 }
 ?>
