@@ -39,8 +39,6 @@ class CacheController extends AppController {
     function cacheGenre() {
         set_time_limit(0);
         //error_reporting(1); ini_set('display_errors', 1);
-        $libId = $_REQUEST['libid'];
-        $patId = $_REQUEST['patronid'];
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
@@ -218,12 +216,6 @@ STR;
                             $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                             $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                             $data[$key]['songAlbumImage'] = $songAlbumImage;
-                            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                            if(count($downloadsUsed) > 0){
-                              $data[$key]['Song']['status'] = 'avail';
-                            } else{
-                              $data[$key]['Song']['status'] = 'not';
-                            }
                     }                    
                     Cache::write("national" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten for $territory", "cache");
@@ -256,12 +248,6 @@ STR;
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
-                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $featureVideo['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                    if(count($downloadsUsed) > 0){
-                      $featuredVideos[$key]['Video']['status'] = 'avail';
-                    } else{
-                      $featuredVideos[$key]['Video']['status'] = 'not';
-                    }
                 }         
                
                     
@@ -297,12 +283,6 @@ STR;
                      // print_r($featureVideo);
                      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                      $topDownloads[$key]['videoImage'] = $videoImage;
-                     $vdownloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $topDownload['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                     if(count($vdownloadsUsed) > 0){
-                        $topDownloads[$key]['Video']['status'] = 'avail';
-                     } else{
-                        $topDownloads[$key]['Video']['status'] = 'not';
-                     }
                 }                
                 Cache::write("top_download_videos".$territory, $topDownloads);
                 $this->log("cache written for top download   videos for $territory", "cache");
@@ -438,12 +418,6 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
-                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                          $data[$key]['Video']['status'] = 'avail';
-                        } else{
-                          $data[$key]['Video']['status'] = 'not';
-                        }
                     }                    
                     Cache::write("nationalvideos" . $country ."Page".$counter, $data);
                     $this->log("cache written for national top ten  videos for $territory", "cache");
@@ -686,12 +660,6 @@ STR;
                         $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songs_img =  Configure::read('App.Music_Path').$songs_img;
                         $data[$key]['songs_img'] = $songs_img;
-                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                          $data[$key]['Song']['status'] = 'avail';
-                        } else{
-                          $data[$key]['Song']['status'] = 'not';
-                        }
                     }                    
                     Cache::delete("national_us_top10_songs" . $country);
                     Cache::write("national_us_top10_songs" . $country, $data);
@@ -805,12 +773,6 @@ STR;
                         $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $album_img =  Configure::read('App.Music_Path').$album_img;
                         $data[$key]['album_img'] = $album_img;
-                        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                          $data[$key]['Song']['status'] = 'avail';
-                        } else{
-                          $data[$key]['Song']['status'] = 'not';
-                        }
                     }                     
                     Cache::delete("national_us_top10_albums" . $country);
                     Cache::write("national_us_top10_albums" . $country, $data);
@@ -917,12 +879,6 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
-                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                          $data[$key]['Video']['status'] = 'avail';
-                        } else{
-                          $data[$key]['Video']['status'] = 'not';
-                        }
                     }                     
                     Cache::delete("national_us_top10_videos" . $country);
                     Cache::write("national_us_top10_videos" . $country, $data);
@@ -1058,13 +1014,6 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
-                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                          $data[$key]['Video']['status'] = 'avail';
-                        } else{
-                          $data[$key]['Video']['status'] = 'not';
-                        }
-                          
                     }                    
                     Cache::delete("new_releases_videos" . $country);
                     Cache::write("new_releases_videos" . $country, $data);
@@ -1595,12 +1544,6 @@ STR;
            } else {
                 $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$EachVideosData[0]['File']['CdnPath']."/".$EachVideosData[0]['File']['SourceURL']);
                 $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork; 
-                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $EachVideosData[0]['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                if(count($downloadsUsed) > 0){
-                  $EachVideosData[0]['Video']['status'] = 'avail';
-                } else{
-                  $EachVideosData[0]['Video']['status'] = 'not';
-                }
                 Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);
                 $this->log("Music video id $indiMusicVidID cache set", "cache");
                 echo "<br />Music video id $indiMusicVidID cache set <br />";
@@ -1635,12 +1578,6 @@ STR;
                         $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                         $MoreVideosData[$key]['videoImage'] = $videoImage;
-                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                          $MoreVideosData[$key]['Video']['status'] = 'avail';
-                        } else{
-                          $MoreVideosData[$key]['Video']['status'] = 'not';
-                        }
                     }
                     if (!empty($MoreVideosData)) {
                         Cache::write("musicVideoMoreDetails_" .$territory.'_'.$EachVideosData[0]['Video']['ArtistText'], $MoreVideosData);
@@ -1665,12 +1602,6 @@ STR;
                         $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                         $TopVideoGenreData[$key]['videoImage'] = $videoImage;
-                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                        if(count($downloadsUsed) > 0){
-                          $TopVideoGenreData[$key]['Video']['status'] = 'avail';
-                        } else{
-                          $TopVideoGenreData[$key]['Video']['status'] = 'not';
-                        }
                     }
                     if(!empty($TopVideoGenreData)){
                         Cache::write("top_videos_genre_" . $territory.'_'.$EachVideosData[0]['Video']['Genre'], $TopVideoGenreData);
@@ -1861,12 +1792,6 @@ STR;
                     $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $songs_img =  Configure::read('App.Music_Path').$songs_img;
                     $topDownload[$key]['songs_img'] = $songs_img;
-                    $du =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                    if(count($du) > 0){
-                      $topDownload[$key]['Song']['status'] = 'avail';
-                    } else{
-                      $topDownload[$key]['Song']['status'] = 'not';
-                    }
                 }                
                 Cache::delete("lib" . $libId);
                 Cache::write("lib" . $libId, $topDownload);
@@ -2133,12 +2058,6 @@ STR;
                     $albumArtwork = shell_exec('perl files/tokengen_artwork '.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                    if(count($downloadsUsed) > 0){
-                      $topDownload[$key]['Video']['status'] = 'avail';
-                    } else{
-                      $topDownload[$key]['Video']['status'] = 'not';
-                    }
                 }                
                 Cache::delete("lib_video" . $libId);
                 Cache::write("lib_video" . $libId, $topDownload);
