@@ -232,8 +232,8 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                 $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                 $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                 $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
-                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                if(count($downloadsUsed) > 0){
+                $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value["Video"]["provider_type"],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                if($downloadsUsed > 0){
                   $value[$key]['Video']['status'] = 'avail';
                 } else{
                   $value[$key]['Video']['status'] = 'not';

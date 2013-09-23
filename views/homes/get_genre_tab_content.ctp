@@ -36,8 +36,8 @@ jQuery(document).ready(function() {
 				<?php
 						if($genre_info[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
 							if($libraryDownload == '1' && $patronDownload == '1') {
-                                $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $genre_info[$i]['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                                if(count($downloadsUsed) > 0){
+                                $downloadsUsed =  $this->Download->getDownloadfind($genre_info[$i]['Song']['ProdID'],$genre_info[$i]['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                if($downloadsUsed > 0){
 	                                $genre_info[$i]['Song']['status'] = 'avail';
                                 } else{
                                 	$genre_info[$i]['Song']['status'] = 'not';
