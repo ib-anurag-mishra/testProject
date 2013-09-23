@@ -2,7 +2,8 @@
 		
 		<div class="breadcrumbs">
                     <?php
-                         
+                            $libId = $this->Session->read('library');
+                            $patId = $this->Session->read('patron');
                             $html->addCrumb(__('My Library Top 10', true), '/homes/my_lib_top_10');
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
@@ -124,7 +125,12 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
+                $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                if(count($downloadsUsed) > 0){
+                  $value[$key]['Song']['status'] = 'avail';
+                } else{
+                  $value[$key]['Song']['status'] = 'not';
+                }
                     if(($value['Song']['status'] != 'avail')) {
                             ?>
       
@@ -296,7 +302,12 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
+                $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $value['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                if(count($downloadsUsed) > 0){
+                  $value[$key]['Video']['status'] = 'avail';
+                } else{
+                  $value[$key]['Video']['status'] = 'not';
+                }
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">

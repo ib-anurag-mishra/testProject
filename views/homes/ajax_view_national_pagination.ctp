@@ -227,6 +227,8 @@ $('.video-cover-container').on('mouseleave',function(){
       
 
 <?php
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
 
         $slNo = ($startLimit + 1);
         
@@ -297,6 +299,12 @@ $('.video-cover-container').on('mouseleave',function(){
         if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
+                $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $nationalTopDownload[$i]['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                if(count($downloadsUsed) > 0){
+                  $nationalTopDownload[$i]['Song']['status'] = 'avail';
+                } else{
+                  $nationalTopDownload[$i]['Song']['status'] = 'not';
+                }
 
                     if(($nationalTopDownload[$i]['Song']['status'] != 'avail')) {
                             ?>
@@ -451,7 +459,12 @@ $('.video-cover-container').on('mouseleave',function(){
         if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
+                    $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $nationalTopVideoDownload[$i]['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                      $nationalTopVideoDownload[$i]['Video']['status'] = 'avail';
+                    } else{
+                      $nationalTopVideoDownload[$i]['Video']['status'] = 'not';
+                    }
                     if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
