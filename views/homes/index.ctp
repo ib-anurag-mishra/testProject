@@ -1,8 +1,8 @@
 <script>
-
+if(alert(window.location.href));
 $(document).ready(function(){
 
-if(alert(window.location.href));
+
 
 //alert(window.location.pathname);
 var pathArray = window.location.pathname.split( '/' );
