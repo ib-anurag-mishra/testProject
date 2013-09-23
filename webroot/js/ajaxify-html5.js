@@ -82,7 +82,7 @@
 					$this = $(this),
 					url = $this.attr('href'),
 					title = $this.attr('title')||null;
-				alert(123);
+				
 				// Continue as normal for cmd clicks etc
 				if ( event.which == 2 || event.metaKey ) { return true; }
 				
