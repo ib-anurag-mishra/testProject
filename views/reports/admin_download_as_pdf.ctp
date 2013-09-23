@@ -3,7 +3,7 @@
     $tcpdf = new XTCPDF('L', 'mm', 'LETTER', true, 'UTF-8', false);
     $textfont = 'freesans'; // looks better, finer, and more condensed than 'dejavusans'
 
-    echo "<pre>"; print_r($this->data); print_r($downloads); die;
+    echo "<pre>"; print_r($this->data); print_r($downloads); print_r($libraries_download); die;
     
     
     if($this->data['Report']['library_id'] == "all") {
