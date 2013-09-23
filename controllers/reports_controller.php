@@ -490,9 +490,14 @@ Class ReportsController extends AppController
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
 				$library_id = $_REQUEST['library_id'];
+			}
+                        else if(isset($_POST['hid_library_id']))
+                        {
+				$library_id = $_POST['hid_library_id'];
 			}else{
 				$library_id = $this->data['Report']['library_id'];
 			}
+                       
 			$this->set('library_id', $library_id);
 			if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
 				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
