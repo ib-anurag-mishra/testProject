@@ -529,7 +529,7 @@
     // Data
     $fill = 0;
     foreach($data as $k=>$row) {
-        if($k%13 == 0 && $k != 0) {
+        if($k%14 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
