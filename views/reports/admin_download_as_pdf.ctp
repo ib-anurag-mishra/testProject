@@ -556,8 +556,8 @@
         $tcpdf->Cell($w[1], 12, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 12, $row[2], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[3], 12, (strlen($row[3])>40)?substr($row[3],0,40)."...":$row[3], 'LR', 0, 'L', $fill, '', 3);
-       //$tcpdf->Cell($w[4], 12, (strlen($row[4])>50)?substr($row[4],0,50)."...":$row[4], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->MultiCell($w[4], 12, $row[4], 'LR', 'L',  $fill, 1, '', '', true);        
+       $tcpdf->Cell($w[4], 12, $row[4], 'LR', 0, 'L', $fill, '', 3, true, 'T', 'T');
+        //$tcpdf->MultiCell($w[4], 12, $row[4], 'LR', 'L',  $fill, 1, '', '', true);        
 	$tcpdf->Cell($w[5], 12, $row[5], 'LR', 0, 'L', $fill, '', 3);
         
         
