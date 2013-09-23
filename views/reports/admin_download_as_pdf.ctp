@@ -552,13 +552,13 @@
         $tcpdf->SetTextColor(0);
         $tcpdf->SetFont('');
 
-        $tcpdf->Cell($w[0], 12, number_format($row[0]), 'LR', 0, 'L', $fill, '1', 3);
-        $tcpdf->Cell($w[1], 12, $row[1], 'LR', 0, 'L', $fill, '1', 3);
-        $tcpdf->Cell($w[2], 12, $row[2], 'LR', 0, 'L', $fill, '1', 3);
-        $tcpdf->Cell($w[3], 12, $row[3], 'LR', 0, 'L', $fill, '1', 3);
-        $tcpdf->Cell($w[4], 12, $row[4], 'LR', 0, 'L', $fill, '1', 3);
+        $tcpdf->Cell($w[0], 12, number_format($row[0]), 'LR', 0, 'L', $fill, '3', 3);
+        $tcpdf->Cell($w[1], 12, $row[1], 'LR', 0, 'L', $fill, '3', 3);
+        $tcpdf->Cell($w[2], 12, $row[2], 'LR', 0, 'L', $fill, '3', 3);
+        $tcpdf->Cell($w[3], 12, $row[3], 'LR', 0, 'L', $fill, '3', 3);
+        $tcpdf->Cell($w[4], 12, $row[4], 'LR', 0, 'L', $fill, '3', 3);
         //$tcpdf->MultiCell($w[4], 6, $row[4], 'LR', 'L',  0, 1, '', '', false);
-	$tcpdf->Cell($w[5], 12, $row[5], 'LR', 0, 'L', $fill, '1', 3);
+	$tcpdf->Cell($w[5], 12, $row[5], 'LR', 0, 'L', $fill, '3', 3);
         $tcpdf->Ln();
         $fill=!$fill;
     }
