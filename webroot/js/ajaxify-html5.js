@@ -76,13 +76,13 @@
 			
 			// Ajaxify- nagesh
 			//$this.find('a:internal:not(.no-ajaxy)')
-                        $this.find('a:internal:not(.no-ajaxy,[href^="#"])').live('click',function(event){
+                        $this.find('a:internal:not(.no-ajaxy,[href^="#"])').on('click',function(event){
 				// Prepare
 				var
 					$this = $(this),
 					url = $this.attr('href'),
 					title = $this.attr('title')||null;
-				
+				alert(123);
 				// Continue as normal for cmd clicks etc
 				if ( event.which == 2 || event.metaKey ) { return true; }
 				
