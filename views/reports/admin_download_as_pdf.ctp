@@ -561,12 +561,12 @@
 	$tcpdf->Cell($w[5], 12, $row[5], 'LR', 0, 'L', $fill, '', 3);*/
         
         
-        $tcpdf->MultiCell($w[0], 6, number_format($row[0]), 'LR', 'L',  $fill, 1);
-        $tcpdf->MultiCell($w[1], 6, $row[1], 'LR', 'L',  $fill, 1);
-        $tcpdf->MultiCell($w[2], 6, $row[2], 'LR', 'L',  $fill, 1);
-        $tcpdf->MultiCell($w[3], 6, $row[3], 'LR', 'L',  $fill, 1);
-        $tcpdf->MultiCell($w[4], 6, $row[4], 'LR', 'L',  $fill, 1);
-        $tcpdf->MultiCell($w[5], 6, $row[5], 'LR', 'L',  $fill, 1);
+        $tcpdf->MultiCell($w[0], 6, number_format($row[0]), 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[1], 6, $row[1], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[2], 6, $row[2], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[3], 6, $row[3], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[4], 6, $row[4], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[5], 6, $row[5], 'LR', 'L',  $fill, 0);
         
         $tcpdf->Ln();
         $fill=!$fill;
