@@ -3,7 +3,7 @@
 $(document).ready(function(){
 //alert(window.location.pathname);
 var pathArray = window.location.pathname.split( '/' );
-//alert(pathArray[0]);
+alert(window.location.href);
     var preValue= 1;
     var nationalPage = 2;
     var counter_loader = 1;
