@@ -3,6 +3,9 @@
     $tcpdf = new XTCPDF('L', 'mm', 'LETTER', true, 'UTF-8', false);
     $textfont = 'freesans'; // looks better, finer, and more condensed than 'dejavusans'
 
+    echo "<pre>"; print_r($this->data); print_r($downloads); die;
+    
+    
     if($this->data['Report']['library_id'] == "all") {
         $savelibraryName = "All_Libraries";
         $displaylibraryName = "All Libraries";
