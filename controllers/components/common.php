@@ -2083,9 +2083,9 @@ STR;
       $musicVideoRecs = $videoInstance->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
       $territoryNames = $this->getTerritories();
       for($i=0;$i<count($territoryNames);$i++){
-        $musicVideoRec['Video']['ProdID'] = $territoryNames[$i];
+        $territory = $territoryNames[$i];
         foreach($musicVideoRecs as $musicVideoRec){
-            $this->getVideoDetails($musicVideoRec['Video']['ProdID'],$musicVideoRec['Video']['ProdID']);
+            $this->getVideoDetails($territory,$musicVideoRec['Video']['ProdID']);
         }
       }
     }
