@@ -13,10 +13,10 @@
 										</li>
 										-->
 										<li>
-											<a href="#top-100-songs" class="active" data-category-type="songs" onclick="showHideGrid('songs')">Songs</a>
+											<a href="#top-100-songs" id="songsIDVal" class="active" data-category-type="songs" onclick="showHideGrid('songs')">Songs</a>
 										</li>
 										<li>
-											<a href="#top-100-videos" data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
+											<a href="#top-100-videos" id="videosIDVal"data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
 										</li>
 									</ul>
 									
@@ -741,12 +741,28 @@
 
 <script language="javascript">
     function showHideGrid(varType){
+        
+         var top_100_grids = $('.top-100-grids');
+         var top_100_songs_grid = $('#top-100-songs-grid');
+	 var top_100_videos_grid = $('#top-100-videos-grid');
+         
+         var songsIDVal = $('#songsIDVal');
+	 var videosIDVal = $('#videosIDVal');
+         
+         
+         var grids = $('.grids');
+	 var lists = $('.lists');
+        
         if(varType == 'songs'){
-            alert(1);
-            alert(varType);
+            videosIDVal.removeClass('active');
+            songsIDVal.addClass('active');
+            top_100_videos_grid.removeClass('active');
+            top_100_songs_grid.addClass('active');
         }else{
-            alert(2);
-            alert(varType);
+            songsIDVal.removeClass('active');
+            videosIDVal.addClass('active');
+            top_100_songs_grid.removeClass('active');
+            top_100_videos_grid.addClass('active');                        
         }
     }
 </script>

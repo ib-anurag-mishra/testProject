@@ -296,43 +296,43 @@ $(function() {
 	
 	*/
 	
-	top_100_nav.on('click',function(e){
-		e.preventDefault();
-		top_100_nav.removeClass('active');
-		$(this).addClass('active');
-		
-		top_100_grids.removeClass('active');
-		var target = $(this).attr('href');
-		
-		category_type = $(this).attr('data-category-type');
-		
-		if(view_type === 'grid') {
-			
-			var target_str = target + '-grid';
-			lists.removeClass('active')
-			grids.addClass('active');
-			top_100_albums_grid.removeClass('active');
-			top_100_songs_grid.removeClass('active');
-			top_100_videos_grid.removeClass('active');
-			
-		}
-		
-		if(view_type === 'list') {
-			
-			var target_str = target + '-list-view';
-			grids.removeClass('active');
-			lists.addClass('active');
-			top_100_albums_list_view.removeClass('active');
-			top_100_songs_list_view.removeClass('active');
-			top_100_videos_list_view.removeClass('active');
-		}
-		
-		$(target_str).addClass('active');
-		
-		
-		
-		
-	});
+//	top_100_nav.on('click',function(e){
+//		e.preventDefault();
+//		top_100_nav.removeClass('active');
+//		$(this).addClass('active');
+//		
+//		top_100_grids.removeClass('active');
+//		var target = $(this).attr('href');
+//		
+//		category_type = $(this).attr('data-category-type');
+//		
+//		if(view_type === 'grid') {
+//			
+//			var target_str = target + '-grid';
+//			lists.removeClass('active')
+//			grids.addClass('active');
+//			top_100_albums_grid.removeClass('active');
+//			top_100_songs_grid.removeClass('active');
+//			top_100_videos_grid.removeClass('active');
+//			
+//		}
+//		
+//		if(view_type === 'list') {
+//			
+//			var target_str = target + '-list-view';
+//			grids.removeClass('active');
+//			lists.addClass('active');
+//			top_100_albums_list_view.removeClass('active');
+//			top_100_songs_list_view.removeClass('active');
+//			top_100_videos_list_view.removeClass('active');
+//		}
+//		
+//		$(target_str).addClass('active');
+//		
+//		
+//		
+//		
+//	});
 	
 	wishlist_popover.children('a').on('hover',function(e){
 		
