@@ -7,6 +7,7 @@ class ServicesController extends AppController {
 	var $helpers = array('Xml'); // helpers used	
 	
     function search() {
+        set_time_limit(0);
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
 												array('consortium_key' => $this->params['pass'][0])
@@ -29,12 +30,13 @@ class ServicesController extends AppController {
 			else{			
 				$country = $existingLibraries['0']['Library']['library_territory'];
 				if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-					$condSphinx = "@Advisory F & @Territory '".addslashes($country)."'";
+					$condSolr = "Advisory:F AND Territory:".addslashes($country);
 				}
 				else {
-					$condSphinx = "@Territory '".addslashes($country)."'";
+					$condSolr = "Territory:".addslashes($country);
 				}
-				$artist =  $this->params['named']['artist'];
+				
+                $artist =  $this->params['named']['artist'];
 				$composer = $this->params['named']['composer'];
 				$song =  $this->params['named']['song'];
 				$album =  $this->params['named']['album'];
@@ -51,92 +53,103 @@ class ServicesController extends AppController {
 				$song = str_replace("$", " ", $song);
 				$album = str_replace("$", " ", $album);
 				$genre = str_replace("$", " ", $genre);
-				if($this->params['named']['condition'] == 'or'){
-					$sphinxCheckCondition = "|";
+				
+                if($this->params['named']['condition'] == 'or'){
+					$solrCheckCondition = "OR";
 				} 
 				else {
-					$sphinxCheckCondition = "&";
+					$solrCheckCondition = "AND";
 				}
 
 				if($artist != '') {
 					$artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');
-					$sphinxArtistSearch = '@ArtistText "'.addslashes($artist).'" '.$sphinxCheckCondition.' ';
+					$solrArtistSearch = 'CArtistText:'.strtolower(addslashes($artist)).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$artistSearch = '';
-					$sphinxArtistSearch = '';
+					$solrArtistSearch = '';
 				}
-				if($composer != '') {
+				
+                if($composer != '') {
 					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode)');    
 					$this->set('composer', $composer);
 					$preCondition4 = array('Participant.Role' => 'Composer'); 
-					$sphinxComposerSearch = '@Composer "'.addslashes($composer).'" '.$sphinxCheckCondition.' ';
+					$solrComposerSearch = 'CComposer:'.strtolower(addslashes($composer)).' '.$solrCheckCondition.' ';
 					$role = '2';
 				}
 				else {
 					$composerSearch = '';
 					$preCondition4 = "";
-					$sphinxComposerSearch = '';
+					$solrComposerSearch = '';
 					$role = '';
 				}
-				if($song != '') {
+				
+                if($song != '') {
 					$songSearch = array('match(Song.SongTitle) against ("+'.$song.'*" in boolean mode)');
-					$sphinxSongSearch = '@SongTitle "'.addslashes($song).'" '.$sphinxCheckCondition.' ';
+					$solrSongSearch = 'CSongTitle:'.strtolower(addslashes($song)).'" '.$solrCheckCondition.' ';
 				}
 				else {
 					$songSearch = '';
-					$sphinxSongSearch = '';
+					$solrSongSearch = '';
 				}
-				if($album != '') {
+				
+                if($album != '') {
 					$albumSearch = array('match(Song.Title) against ("+'.$album.'*" in boolean mode)');
-					$sphinxAlbumSearch = '@Title "'.addslashes($album).'" '.$sphinxCheckCondition.' ';
+					$solrAlbumSearch = 'CTitle:'.strtolower(addslashes($album)).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$albumSearch = '';
-					$sphinxAlbumSearch = '';
+					$solrAlbumSearch = '';
 				}
-				if($genre != '') {
+				
+                if($genre != '') {
 					$genreSearch = array('match(Song.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';	
+					$solrGenreSearch = 'CGenre:'.strtolower(addslashes($genre)).' '.$solrCheckCondition.' ';	
 				}
 				else {
 					$genreSearch = '';
-					$sphinxGenreSearch = '';
+					$solrGenreSearch = '';
 				}
-				/* if($country != '') {
+				
+                /* if($country != '') {
 					$operator = '&';
 					$territorySearch = array('match(Song.Territory) against ("+'.$country.'*" in boolean mode)'); 
-					$sphinxTerritorySearch = '@Territory "'.addslashes($country).'" '.$operator.' ';
+					$solrTerritorySearch = 'Territory:'.addslashes($country).' '.$operator.' ';
 				}
 				else {
 					$territorySearch = '';
-					$sphinxTerritorySearch = '';
+					$solrTerritorySearch = '';
 				}*/				
-				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch.'';
-				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-				$sphinxFinalCondition = $sphinxFinalCondition.' & @DownloadStatus 1 & '.$condSphinx;
-				//print $sphinxFinalCondition;exit;
-				if ($condSphinx == "") {
-					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
+				
+                $solrTempCondition = $solrArtistSearch.''.$solrComposerSearch.''.$solrSongSearch.''.$solrAlbumSearch.''.$solrGenreSearch.'';
+				$solrFinalCondition = substr($solrTempCondition, 0, -2);
+				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
+				//print $solrFinalCondition;exit;
+				
+                if ($condSolr == "") {
+					$solrFinalCondition = substr($solrFinalCondition, 0, -2);
 				}
 
-				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				if (isset($this->passedArgs['sort'])){
-					$sphinxSort = $this->passedArgs['sort'];
+				// App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
+				
+                if (isset($this->passedArgs['sort'])){
+					$solrSort = $this->passedArgs['sort'];
 				} else {
-					$sphinxSort = "";
+					$solrSort = "";
 				}
+                
 				if (isset($this->passedArgs['direction'])){
-					$sphinxDirection = $this->passedArgs['direction'];
+					$solrDirection = $this->passedArgs['direction'];
 				} else {
-					$sphinxDirection = "";
+					$solrDirection = "";
 				}
 
-				$this->paginate = array('Song' => array(
+				/*$this->paginate = array('Song' => array(
 							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
 						));
 				
-				$searchResults = $this->paginate('Song');
+				$searchResults = $this->paginate('Song');*/
+                
 				$reference = '';
 
 				foreach($searchResults as $k=>$v){
@@ -151,12 +164,14 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					if(isset($this->params['pass'][3])){
+					
+                    if(isset($this->params['pass'][3])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);
 					}
 					else{
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);					
 					}
+                    
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -177,12 +192,14 @@ class ServicesController extends AppController {
 					}
 					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
 				}
-				if(count($result) > 0){
+				
+                if(count($result) > 0){
 					$result = $result;
 				}
 				else{
 					$result = array('message' => 'No Records');
-				}		
+				}
+                
 				$this->set('result', $result);
 			}
 		}
@@ -297,7 +314,7 @@ class ServicesController extends AppController {
 				$searchString =  base64_decode($genre);	
 				$searchString = str_replace("^", " ", $searchString);					
 				$searchString = str_replace("$", " ", $searchString);
-				$sphinxCheckCondition = "AND";
+				$solrCheckCondition = "AND";
 				if($genre != '') {
 					$solrGenreSearch = 'CGenre:'.strtolower(addslashes($searchString)).'* '.$sphinxCheckCondition.' ';	
 				}
@@ -404,197 +421,6 @@ class ServicesController extends AppController {
 	}
 	}
     
-	function genre_old(){
-		if($this->params['pass'][3] == ''){
-		$consortium = $this->Consortium->find('all',array(
-                                                'conditions' => 
-												array('consortium_key' => $this->params['pass'][0])
-												)
-                                            );
-		if(count($consortium) > 0){
-			$this->Library->recursive = -1;
-			$existingLibraries = $this->Library->find('all',array(
-													'conditions' => 
-													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
-														  'id' => $this->params['pass'][1],
-														  'library_status' => 'active')
-													)
-												);
-			if(count($existingLibraries) == 0){
-				$result = array('status' => 0 , 'message' => 'Access Denied');
-				$this->set('result', $result);
-				return;
-			}
-			else{				
-				$country = $existingLibraries['0']['Library']['library_territory'];
-				$this->Genre->Behaviors->attach('Containable');
-				$this->Genre->recursive = 2;
-				if (($genre = Cache::read("genre".$country)) === false) {
-						$genreAll = $this->Genre->find('all',array(
-								'conditions' =>
-									array('and' =>
-										array(
-											array('Country.Territory' => $country)
-										)
-									),
-								'fields' => array(
-										'Genre.Genre'
-										),
-								'contain' => array(
-									'Country' => array(
-											'fields' => array(
-													'Country.Territory'								
-												)
-											),
-								),'group' => 'Genre.Genre'
-						));
-					Cache::write("genre".$country, $genreAll);
-				}
-				$genreAll = Cache::read("genre".$country);
-				foreach($genreAll as $k=>$v){
-					$result[$k]['Genre'] = $v['Genre']['Genre'];
-				}
-				if(count($result) > 0){
-					$result = $result;
-				}
-				else{
-					$result = array('message' => 'No Records');
-				}		
-				$this->set('result', $result);
-			}
-		}
-		else{
-			$result = array('status' => 0 , 'message' => 'Access Denied');
-			$this->set('result', $result);
-			return;		
-		}
-	}
-	else
-	{
-		$consortium = $this->Consortium->find('all',array(
-                                                'conditions' => 
-												array('consortium_key' => $this->params['pass'][0])
-												)
-                                            );
-		if(count($consortium) > 0){
-			$this->Library->recursive = -1;
-			$existingLibraries = $this->Library->find('all',array(
-													'conditions' => 
-													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
-														  'id' => $this->params['pass'][1],
-														  'library_status' => 'active')
-													)
-												);
-			if(count($existingLibraries) == 0){
-				$result = array('status' => 0 , 'message' => 'Access Denied');
-				$this->set('result', $result);
-				return;
-			}
-			else{			
-				$country = $existingLibraries['0']['Library']['library_territory'];
-				if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-					$condSphinx = "@Advisory F & @Territory '".addslashes($country)."'";
-				}
-				else {
-					$condSphinx = "@Territory '".addslashes($country)."'";
-				}
-				if($this->params['pass'][4] != ''){
-					$genre = $this->params['pass'][4];
-				}else{
-					$genre = $this->params['pass'][3];
-				}
-	//			print $genre;exit;
-				$searchString =  base64_decode($genre);	
-				$searchString = str_replace("^", " ", $searchString);					
-				$searchString = str_replace("$", " ", $searchString);
-				$sphinxCheckCondition = "&";
-				if($genre != '') {
-					$sphinxGenreSearch = '@Genre "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';	
-				}
-				else {
-					$sphinxGenreSearch = '';
-				}			
-				$sphinxTempCondition = $sphinxGenreSearch;
-				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-				$sphinxFinalCondition = $sphinxFinalCondition.' & @DownloadStatus 1 & '.$condSphinx;
-				if ($condSphinx == "") {
-					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
-				}
-			
-				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				if (isset($this->passedArgs['sort'])){
-					$sphinxSort = $this->passedArgs['sort'];
-				} else {
-					$sphinxSort = "";
-				}
-				if (isset($this->passedArgs['direction'])){
-					$sphinxDirection = $this->passedArgs['direction'];
-				} else {
-					$sphinxDirection = "";
-				}
-				
-				$this->paginate = array('Song' => array(
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
-						));
-				
-				$searchResults = $this->paginate('Song');
-				$reference = '';
-				foreach($searchResults as $k=>$v){
-					$result[$k]['Song']['ProdID'] = $v['Song']['ProdID'];
-					$result[$k]['Song']['ProductID'] = $v['Song']['ProductID'];
-					$result[$k]['Song']['ReferenceID'] = $v['Song']['ReferenceID'];
-					$result[$k]['Song']['Title'] = $v['Song']['Title'];
-					$result[$k]['Song']['SongTitle'] = $v['Song']['SongTitle'];
-					$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
-					$result[$k]['Song']['provider_type'] = $v['Song']['provider_type'];
-					$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
-					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
-					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
-					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					if(isset($this->params['pass'][4])){
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);
-					}
-					else{
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);					
-					}
-					if($reference != $v['Song']['ReferenceID']){ 
-						$albumData = $this->Album->find('all', array(
-							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
-							'fields' => array(
-								'Album.ProdID',
-							),
-							'contain' => array(										
-								'Files' => array(
-									'fields' => array(
-										'Files.CdnPath',
-										'Files.SaveAsName',
-										'Files.SourceURL',
-										),                             
-								)
-						)));
-						$reference = $v['Song']['ReferenceID'];
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
-					//	print_r($result);exit;
-					}
-					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
-				}
-				if(count($result) > 0){
-					$result = $result;
-				}
-				else{
-					$result = array('message' => 'No Records');
-				}
-				$this->set('result', $result);
-			}
-		}
-		else{
-			$result = array('status' => 0 , 'message' => 'Access Denied');
-			$this->set('result', $result);
-			return;		
-		}	
-	}
-	}
-	
 	function genreSong(){
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
@@ -618,45 +444,46 @@ class ServicesController extends AppController {
 			else{			
 				$country = $existingLibraries['0']['Library']['library_territory'];
 				if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-					$condSphinx = "@Advisory F & @Territory '".addslashes($country)."'";
+					$condSolr = "Advisory:F AND Territory:".addslashes($country);
 				}
 				else {
-					$condSphinx = "@Territory '".addslashes($country)."'";
+					$condSolr = "Territory:".addslashes($country);
 				}
 				$searchString =  base64_decode($this->params['pass'][3]);	
 				$searchString = str_replace("^", " ", $searchString);					
 				$searchString = str_replace("$", " ", $searchString);
-				$sphinxCheckCondition = "&";
+				$solrCheckCondition = "AND";
 				if($this->params['pass'][3] != '') {
-					$sphinxGenreSearch = '@Genre "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';	
+					$solrGenreSearch = 'Genre:'.addslashes($searchString).' '.$sphinxCheckCondition.' ';	
 				}
 				else {
-					$sphinxGenreSearch = '';
+					$solrGenreSearch = '';
 				}			
-				$sphinxTempCondition = $sphinxGenreSearch;
-				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-				$sphinxFinalCondition = $sphinxFinalCondition.' & @DownloadStatus 1 & '.$condSphinx;
-				if ($condSphinx == "") {
-					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
+				$solrTempCondition = $solrGenreSearch;
+				$solrFinalCondition = substr($solrTempCondition, 0, -2);
+				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSphinx;
+				if ($condSolr == "") {
+					$solrFinalCondition = substr($solrFinalCondition, 0, -2);
 				}
 			
-				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				if (isset($this->passedArgs['sort'])){
-					$sphinxSort = $this->passedArgs['sort'];
+				// App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
+				
+                if (isset($this->passedArgs['sort'])){
+					$solrSort = $this->passedArgs['sort'];
 				} else {
-					$sphinxSort = "";
+					$solrSort = "";
 				}
 				if (isset($this->passedArgs['direction'])){
-					$sphinxDirection = $this->passedArgs['direction'];
+					$solrDirection = $this->passedArgs['direction'];
 				} else {
-					$sphinxDirection = "";
+					$solrDirection = "";
 				}
 				
-				$this->paginate = array('Song' => array(
+				/*$this->paginate = array('Song' => array(
 							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
 						));
 				
-				$searchResults = $this->paginate('Song');
+				$searchResults = $this->paginate('Song');*/
 				$reference = '';
 				foreach($searchResults as $k=>$v){
 					$result[$k]['Song']['ProdID'] = $v['Song']['ProdID'];
@@ -712,6 +539,7 @@ class ServicesController extends AppController {
 			return;		
 		}			
 	}
+    
 	function login(){
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
@@ -966,6 +794,7 @@ class ServicesController extends AppController {
 			return;		
 		}			
 	}
+    
 	function downloadCount(){
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
