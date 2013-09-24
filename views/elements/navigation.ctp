@@ -3,8 +3,9 @@
 function submit_registeration_details(){ alert("HI");
 	
         //$('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');        
-        var data = "ajax_genre_name="+genre_name;
+        var data = '';
         var link = webroot+'homes/ajax_submit_register_concert';
+        alert(link);
         jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
@@ -475,7 +476,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 <h4><?php __('Announcements'); ?></h4>
                                                                 <div class="poll1" style="display:block;height:300px;">                                                                                                                           
                                             
-                                                                <form onsubmit="submit_registeration_details();" id="FormRegisterConcert" action="/homes/ajax_submit_register_concert" method="post">
+                                                                <form onsubmit="submit_registeration_details(); return false;" id="FormRegisterConcert" action="/homes/ajax_submit_register_concert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
                                                                     <label for="UserEmail">Last Name :</label>
