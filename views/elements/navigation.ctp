@@ -31,9 +31,12 @@ $(document).ready(function() {
             type: "post",
             url: webroot+'homes/ajax_submit_register_concert',
             data: frm.serialize(),
-            success: function (response) { alert(response);
+            success: function (response) { 
                 //alert('ok');
-                $('#ReturnMessage').html(response);
+                //$('#ReturnMessage').html(response);
+                
+                $('#FormRegisterConcert').hide();                          
+                $('#ReturnMessage').append(response);  
             },
             error: function(jqXHR, textStatus, errorThrown){
             // log the error to the console
@@ -518,8 +521,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <input type="submit" class="save" value="Submit"></input>
                                                                 
                                                                 </form>
-                                                                    <span id="ReturnMessage">
-                                                                        
+                                                                    <span id="ReturnMessage">                                                                        
                                                                     </span>
                                                                 
                                                                  </div>
