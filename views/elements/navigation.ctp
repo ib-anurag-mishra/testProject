@@ -453,7 +453,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             
                                                                 <form action="/queues/createQueue" method="post">
                                                                     <label for="UserEmail">First Name :</label>
-                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>
+                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
                                                                     <label for="UserEmail">Last Name :</label>
                                                                     <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px; float:right;') ); ?> <br><br><br>                                                                  
                                                                     <label for="UserEmail">Library Card :</label>
