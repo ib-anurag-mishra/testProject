@@ -113,12 +113,15 @@ var pageTracker = _gat._getTracker("UA-16162084-1");
 pageTracker._trackPageview();
 } catch(err) {}</script>
 
+
 <!-- Code for player -->
 <!-- History.js -->
 	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 	
 	<!-- Ajaxify -->
 	<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
+        
+        <?php if ($this->Session->read('patron') && $this->Session->read('library_type') == 2){ ?>
 	
 	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
@@ -251,6 +254,6 @@ pageTracker._trackPageview();
 //                });
             });
         </script>    
-
+<?php } ?>
 <!-- Code for player end -->
 
