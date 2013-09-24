@@ -234,9 +234,9 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                 $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                 $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value["Video"]["provider_type"],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                 if($downloadsUsed > 0){
-                  $value[$key]['Video']['status'] = 'avail';
+                  $value['Video']['status'] = 'avail';
                 } else{
-                  $value[$key]['Video']['status'] = 'not';
+                  $value['Video']['status'] = 'not';
                 }
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
