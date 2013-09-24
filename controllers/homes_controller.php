@@ -4678,5 +4678,16 @@ STR;
     
     
     
+     /*
+     Function Name : aboutus
+     Desc : actions used for User end checking for cookie and javascript enable
+    */
+    function great_fall_concert() 
+    {		
+		$this->layout = 'home';
+    }
+    
+    
+    
 }
 ?>

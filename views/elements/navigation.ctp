@@ -506,11 +506,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         ?>    
                                                              <div class="announcements">
                                                                 <h4><?php __('Announcements'); ?></h4>
-                                                                <div class="poll1" style="display:block;height:300px;">                                                                                                                           
-                                            
+                                                                <div class="poll1" style="display:block;height:400px;">                                                                                                                                                                       
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
-                                                                 More Info<br><br>   
+                                                                 <?php echo $html->link(__('More Info', true), array('controller' => 'homes','action'=>'great_fall_concert'));?><br><br>   
                                                                     
                                                                 <form  id="FormRegisterConcert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
@@ -518,12 +517,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <label for="UserEmail">Last Name :</label>
                                                                     <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px; float:right;') ); ?> <br><br><br><br>                                                                  
                                                                     <label for="UserEmail">Library Card :</label>
-                                                                    <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>                                                                    
+                                                                    <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>                                                                    
                                                                     <label for="UserEmail">Phone :</label>                                                                    
                                                                     <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>    
                                                                     <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input><br>
-                                                                    <input type="submit" class="save" value="Submit"></input>
-                                                                
+                                                                    <input type="submit" class="save" value="Submit"></input>                                                                
                                                                 </form>
                                                                     <span id="ReturnMessage">                                                                        
                                                                     </span>

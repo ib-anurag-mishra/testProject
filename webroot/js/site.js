@@ -2336,6 +2336,11 @@ $(function() {
 	$('.most-popular-sub-nav').css('left',most_popular_position.left);
 	$('.most-popular-sub-nav').css('width',most_popular_width);
 	
+	
+	$('#Library_details1ChooserForm').on('click',function(e){
+	
+		console.log('clicked');
+	});
 	 
 });
 
