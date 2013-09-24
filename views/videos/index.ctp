@@ -157,7 +157,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
                                         $downloadsUsed =  $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'],$topDownload['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                        if(count($downloadsUsed) > 0){
+                                        if($downloadsUsed > 0){
                                           $topDownload['Video']['status'] = 'avail';
                                         } else{
                                           $topDownload['Video']['status'] = 'not';
