@@ -25,7 +25,7 @@ function submit_registeration_details(){ alert("HI");
 
 <script type="text/javascript">
 $(document).ready(function() {
-     $("form").submit(function() {
+     
      var frm = $('#FormRegisterConcert');
         $.ajax({
             type: "post",
@@ -49,7 +49,7 @@ $(document).ready(function() {
         });
  
         return false;
-    });
+   
 });
 </script>
 
