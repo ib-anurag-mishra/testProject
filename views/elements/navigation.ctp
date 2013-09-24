@@ -449,7 +449,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         ?>    
                                                              <div class="announcements">
                                                                 <h4><?php __('Announcements'); ?></h4>
-                                                                <div class="poll1" style="<?php echo $announcment_class; ?>">                                                                                                                           
+                                                                <div class="poll1" style="display:block;">                                                                                                                           
                                             
                                                                 <form action="/queues/createQueue" method="post">
 
