@@ -448,8 +448,8 @@
 									<nav class="category-filter">
 										<ul class="clearfix">
 											<!-- <li><a href="#coming-soon-album-grid">Albums</a></li> -->
-											<li><a href="#coming-soon-singles-grid" class="active" >Singles</a></li>
-											<li><a href="#coming-soon-videos-grid">Videos</a></li>
+											<li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active" onclick="showHideGridCommingSoon('songs')">Singles</a></li>
+											<li><a href="#coming-soon-videos-grid" id="videosIDValComming" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
 										</ul>
 										
 									</nav>
@@ -461,7 +461,7 @@
                                                                 ?>
 								
 								
-								<div id="coming-soon-singles-grid" class="horiz-scroll">
+								<div id="coming-soon-singles-grid" class="horiz-scroll active">
 									<ul class="clearfix">
                                                                             <?php  
                                                                             $total_songs = count($coming_soon_rs);
@@ -748,10 +748,6 @@
          
          var songsIDVal = $('#songsIDVal');
 	 var videosIDVal = $('#videosIDVal');
-         
-         
-         var grids = $('.grids');
-	 var lists = $('.lists');
         
         if(varType == 'songs'){
             videosIDVal.removeClass('active');
@@ -764,5 +760,32 @@
             top_100_songs_grid.removeClass('active');
             top_100_videos_grid.addClass('active');                        
         }
+    }
+    
+    function showHideGridCommingSoon(varType){
+        
+        var top_100_grids = $('.top-100-grids');
+        var coming_soon_singles_grid = $('#coming-soon-singles-grid');
+        var coming_soon_videos_grid = $('#coming-soon-videos-grid');
+
+        var songsIDValComming = $('#songsIDValComming');
+        var videosIDValComming = $('#videosIDValComming');
+
+
+        
+        if(varType == 'songs'){
+            videosIDValComming.removeClass('active');
+            songsIDValComming.addClass('active');
+            
+            coming_soon_videos_grid.removeClass('active');
+            coming_soon_singles_grid.addClass('active');
+        }else{
+            songsIDValComming.removeClass('active');
+            videosIDValComming.addClass('active');
+            
+            coming_soon_singles_grid.removeClass('active');
+            coming_soon_videos_grid.addClass('active');                        
+        }
+        
     }
 </script>
