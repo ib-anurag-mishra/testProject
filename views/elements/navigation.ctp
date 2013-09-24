@@ -506,8 +506,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         ?>    
                                                              <div class="announcements">
                                                                 <h4><?php __('Announcements'); ?></h4>
-                                                                <div class="poll1" style="display:block;height:300px;">                                                                                                                           
-                                            
+                                                                <div class="poll1" style="display:block;height:400px;">                                                                                                                                                                       
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
                                                                  <a href="#">More Info</a><br><br>   
