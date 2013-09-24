@@ -23,9 +23,9 @@
 									
 									
 								</nav>
-								<div class="grids">
+								<div class="grids active">
 									
-									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
+									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll active">
 										<ul style="width:27064px;">
 
                                                                                <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
