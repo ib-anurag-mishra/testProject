@@ -4,6 +4,7 @@ function submit_registeration_details(){ alert("HI");
 	
         $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');        
         var data = "ajax_genre_name="+genre_name;
+        var link = webroot+'homes/ajax_submit_register_concert';
         jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
@@ -487,6 +488,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <input type="submit" class="save" value="Submit"></input>
                                                                 
                                                                 </form>
+                                                                    <span id="ReturnMessage">
+                                                                        
+                                                                    </span>
                                                                 
                                                                  </div>
                                                             </div>

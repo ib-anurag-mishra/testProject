@@ -4653,7 +4653,7 @@ STR;
     {        
         $this -> layout = 'ajax';
        
-        
+        echo "HI";
     }
     
     
