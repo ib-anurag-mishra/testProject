@@ -608,7 +608,7 @@ Class GenresController extends AppController
 
         function callToAllFunctions(){
             $this->autoRender = false;
-            $this->Common->getNationalTop100();
+            $this->Common->getNationalTop100('US');
         }        
 }
 ?>
