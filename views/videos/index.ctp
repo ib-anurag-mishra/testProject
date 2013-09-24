@@ -41,7 +41,7 @@ if(count($featuredVideos) > 0){ ?>
                                           $featureVideo['Video']['status'] = 'not';
                                         }
                                         if($featureVideo['Video']['status'] != 'avail') {?>
-                                            <span class="featured-video-download-now-button no-ajaxy">
+                                            <span class="featured-video-download-now-button ">
                                                 <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
                                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
                                                     <input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
@@ -54,16 +54,16 @@ if(count($featuredVideos) > 0){ ?>
                                             </span>
                                             <?php	
                                         } else {?>
-                                            <a class="featured-video-download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                            <a class="featured-video-download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                                         <?php
                                         }
                                     }else{ ?>
-                                        <a class="featured-video-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                                        <a class="featured-video-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a> 
                                     <?php
                                     }
                                     ?>
                                     <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
-                                    <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                    <a class="add-to-playlist-button " href="#"></a>
                                     <div class="wishlist-popover">
                                     <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
@@ -141,7 +141,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                                     {
                            ?>
                          <!--  <a class="top-video-download-now-button" href="#">Download Now</a> -->
-                           <a class="add-to-playlist-button no-ajaxy" href="#"></a> 
+                           <a class="add-to-playlist-button " href="#"></a> 
                            <?php
                                     }
                                     else
@@ -177,12 +177,12 @@ foreach($topVideoDownloads as $key => $topDownload)
                                             </form>	
                                         <?php	
                                         } else {?>
-                                            <a class="featured-video-download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                            <a class="featured-video-download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                                         <?php
                                         }
                                     }else{
                             ?>
-                                <a class="featured-video-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                                <a class="featured-video-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a> 
                             <?php
                                }
                             ?>	

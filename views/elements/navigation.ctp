@@ -1,3 +1,27 @@
+<script language="javascript" type="text/javascript">
+    
+function submit_registeration_details(){ alert("HI");
+	
+        $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');        
+        var data = "ajax_genre_name="+genre_name;
+        var link = webroot+'homes/ajax_submit_register_concert';
+        jQuery.ajax({
+            type: "post",  // Request method: post, get
+            url: link, // URL to request
+            data: data,  // post data
+            success: function(response) {               
+                $('#ajax_artistlist_content1').html(response);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) { 
+               // alert('No artist available for this Genre.');
+            }
+        });
+}
+
+
+</script>
+
+
 <?php
 /**
 	File Name : navigation.php
@@ -200,7 +224,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="label">
 						<p>My Account</p>
 					</div>
-                                        <a class="select-arrow no-ajaxy" href="#"></a>
+                                        <a class="select-arrow" href="#"></a>
 					<div class="small-divider"></div>
 					<div class="tooltip">
 						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
@@ -415,7 +439,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor no-ajaxy"><?php __('Freegal Queues'); ?></a>
+                                                            <a href="#" class="sidebar-anchor"><?php __('Freegal Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
                                                                     <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
@@ -424,7 +448,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                                     <?php } ?>
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor saved-queue no-ajaxy"><?php __('My Queues'); ?></a>
+                                                            <a href="#" class="sidebar-anchor saved-queue"><?php __('My Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                     <li><a href="/queuelistdetails/now_streaming"><?php __('Now Streaming'); ?></a></li>
                                                                     <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Saved Queues'); ?></a></li>
@@ -449,22 +473,24 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         ?>    
                                                              <div class="announcements">
                                                                 <h4><?php __('Announcements'); ?></h4>
-                                                                <div class="poll1" style="display:block;">                                                                                                                           
+                                                                <div class="poll1" style="display:block;height:300px;">                                                                                                                           
                                             
-                                                                <form action="/queues/createQueue" method="post">
-
-                                                                    <label for="name">First Name :</label>
-                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false) ); ?>
-                                                                    <label for="name">Last Name :</label>
-                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false) ); ?>
-                                                                    <label for="name">Library Card :</label>
-                                                                    <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false) ); ?>
-                                                                    <label for="name">Phone :</label>
-                                                                    <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false) ); ?>
-                                                                    <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input>
+                                                                <form onsubmit="submit_registeration_details();" id="FormRegisterConcert" action="/homes/ajax_submit_register_concert" method="post">
+                                                                    <label for="UserEmail">First Name :</label>
+                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
+                                                                    <label for="UserEmail">Last Name :</label>
+                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px; float:right;') ); ?> <br><br><br><br>                                                                  
+                                                                    <label for="UserEmail">Library Card :</label>
+                                                                    <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>                                                                    
+                                                                    <label for="UserEmail">Phone :</label>                                                                    
+                                                                    <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>    
+                                                                    <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input><br>
                                                                     <input type="submit" class="save" value="Submit"></input>
                                                                 
                                                                 </form>
+                                                                    <span id="ReturnMessage">
+                                                                        
+                                                                    </span>
                                                                 
                                                                  </div>
                                                             </div>
@@ -475,6 +501,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     else    // For other Libraries
                                                     {
                                                         $temp_text  =   strip_tags($announcment_value);
+                                                        
                                                         if($temp_text!="")
                                                         {
                                                             $announcment_class  =   "display:block;overflow-y:scroll;";
