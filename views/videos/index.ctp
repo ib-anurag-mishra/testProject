@@ -20,7 +20,7 @@ if(count($featuredVideos) > 0){ ?>
                     $total_videos = count($featuredVideos);
                     $sr_no = 0;
                 
-                foreach($featuredVideos as $featureVideo){  
+                foreach($featuredVideos as $key => $featureVideo){  
                     //hide song if library block the explicit content
                     if(($this->Session->read('block') == 'yes') && isset($featureVideo["FeaturedVideo"]['Advisory']) && ($featureVideo["FeaturedVideo"]['Advisory'] =='T')) {
                         continue;
@@ -126,7 +126,7 @@ if(count($featuredVideos) > 0){ ?>
 //print_r($topVideoDownloads); die;
   $total_videos = count($topVideoDownloads);
   $sr_no = 0;
-foreach($topVideoDownloads as $topDownload)
+foreach($topVideoDownloads as $key => $topDownload)
 {
     ?>
 
