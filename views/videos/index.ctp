@@ -95,7 +95,7 @@ if(count($featuredVideos) > 0){ ?>
                                     $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 20). '...';
                                 }
                                 ?>
-                                <span title="<?php echo $featureVideo['Video']['ArtistText']; ?>"><?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?></span>
+                                <a title="<?php echo $featureVideo['Video']['ArtistText']; ?>"><?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?></a>
                             </div>
                         </div>
                <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
