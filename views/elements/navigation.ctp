@@ -454,13 +454,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 <form action="/queues/createQueue" method="post">
 
                                                                     <label for="name">First Name :</label>
-                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false) ); ?>
+                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>
                                                                     <label for="name">Last Name :</label>
-                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false) ); ?>
+                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>                                                                    
                                                                     <label for="name">Library Card :</label>
-                                                                    <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false) ); ?>
-                                                                    <label for="name">Phone :</label>
-                                                                    <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false) ); ?>
+                                                                    <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>                                                                    
+                                                                    <label for="name">Phone :</label>                                                                    
+                                                                    <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>    
                                                                     <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input>
                                                                     <input type="submit" class="save" value="Submit"></input>
                                                                 
