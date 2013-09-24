@@ -159,6 +159,7 @@ class ServicesController extends AppController {
                 if ($response->getHttpStatus() == 200) {
                     echo "here";
                     //print_r($response);
+                    print_r($response->response);
                     echo $response->response->numFound;
                      die;
                     if ($response->response->numFound > 0) {
