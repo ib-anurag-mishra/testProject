@@ -114,7 +114,7 @@ pageTracker._trackPageview();
 } catch(err) {}</script>
 
 <!-- Code for player -->
-<!-- History.js -->
+<!-- History.js 
 	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 	
 	<!-- Ajaxify 
