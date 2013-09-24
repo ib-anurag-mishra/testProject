@@ -215,7 +215,7 @@ class ServicesController extends AppController {
 				else{
 					$result = array('message' => 'No Records');
 				}
-                
+                print_r($result); die;
 				$this->set('result', $result);
 			}
 		}
