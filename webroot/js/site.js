@@ -328,8 +328,7 @@ $(function() {
 //		}
 //		
 //		$(target_str).addClass('active');
-//		
-//		
+//		//		
 //		
 //		
 //	});
@@ -410,19 +409,19 @@ $(function() {
 
 	
 	
-	category_filter_a.on('click',function(e){
-		
-		e.preventDefault();
-		category_filter_a.removeClass('active');
-		coming_soon_album_grid.removeClass('active');
-		coming_soon_singles_grid.removeClass('active');
-		coming_soon_videos_grid.removeClass('active');
-		var target = $(this).attr('href');
-		$(this).addClass('active');
-		$(target).addClass('active');
-		
-		
-	});
+//	category_filter_a.on('click',function(e){
+//		
+//		e.preventDefault();
+//		category_filter_a.removeClass('active');
+//		coming_soon_album_grid.removeClass('active');
+//		coming_soon_singles_grid.removeClass('active');
+//		coming_soon_videos_grid.removeClass('active');
+//		var target = $(this).attr('href');
+//		$(this).addClass('active');
+//		$(target).addClass('active');
+//		
+//		
+//	});
 
 	
 
