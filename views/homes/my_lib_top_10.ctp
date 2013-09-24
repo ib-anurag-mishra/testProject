@@ -127,9 +127,9 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
                 $downloadsUsed =  $this->Download->getDownloadfind($value['Song']['ProdID'],$value['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                 if($downloadsUsed > 0){
-                  $value[$key]['Song']['status'] = 'avail';
+                  $value['Song']['status'] = 'avail';
                 } else{
-                  $value[$key]['Song']['status'] = 'not';
+                  $value['Song']['status'] = 'not';
                 }
                     if(($value['Song']['status'] != 'avail')) {
                             ?>
@@ -273,15 +273,7 @@
                                         if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
                                             continue;
                                         } 
-                                            
-                                            // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             //$video_img =  Configure::read('App.Music_Path').$video_img;
-                                             
-                                             // $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                              //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
-                                            
-					?>
+                                        ?>
 					<li>
 						
 						<div class="video-container">
@@ -304,9 +296,9 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
                 $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                 if($downloadsUsed > 0){
-                  $value[$key]['Video']['status'] = 'avail';
+                  $value['Video']['status'] = 'avail';
                 } else{
-                  $value[$key]['Video']['status'] = 'not';
+                  $value['Video']['status'] = 'not';
                 }
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
