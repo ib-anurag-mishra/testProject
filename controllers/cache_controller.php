@@ -261,7 +261,7 @@ STR;
  
           
             // Added caching functionality for top video downloads
-            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory,File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
+            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory,File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `Country`.`SalesDate` <= NOW() AND Video.DownloadStatus = '1' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
            
             $this->log("Top video downloads $territory", "cachequery");
             $this->log($topDownloadSQL, "cachequery");
@@ -1020,7 +1020,7 @@ STR;
             $featured = array();
             $ids = '';
             $ids_provider_type = '';
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory, 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
             foreach ($featured as $k => $v) {
                 if ($v['Featuredartist']['album'] != 0) {
                     if (empty($ids)) {
@@ -1040,45 +1040,50 @@ STR;
 
             if ($ids != '') {
                 $this->Album->recursive = 2;
-                $featured = $this->Album->find('all', array('conditions' =>
-                    array('and' =>
-                        array(
-                            array("(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")", "Country.Territory" => $territory, "Album.provider_type = Country.provider_type"),
-                        ), "1 = 1 GROUP BY Album.ProdID"
-                    ),
-                    'fields' => array(
-                        'Album.ProdID',
-                        'Album.Title',
-                        'Album.ArtistText',
-                        'Album.AlbumTitle',
-                        'Album.Artist',
-                        'Album.ArtistURL',
-                        'Album.Label',
-                        'Album.Copyright',
-                        'Album.provider_type'
-                    ),
-                    'contain' => array(
-                        'Genre' => array(
-                            'fields' => array(
-                                'Genre.Genre'
+                $featured =  $this->Album->find('all',array(
+                        'joins'=> array(
+                            array(
+                              'type' => 'INNER',
+                              'table' => 'featuredartists',
+                              'alias' => 'fa',
+                              'conditions' => array('Album.ProdID = fa.album')
                             )
                         ),
-                        'Country' => array(
-                            'fields' => array(
-                                'Country.Territory'
-                            )
+                        'conditions' =>array(
+                            'and' =>array(
+                                array(
+                                    "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")"
+                                ),
+                             ), "1 = 1 GROUP BY Album.ProdID"
+                         ),
+                        'fields' => array(
+                            'Album.ProdID',
+                            'Album.Title',
+                            'Album.ArtistText',
+                            'Album.AlbumTitle',
+                            'Album.Artist',
+                            'Album.ArtistURL',
+                            'Album.Label',
+                            'Album.Copyright',
+                            'Album.provider_type'
                         ),
-                        'Files' => array(
-                            'fields' => array(
-                                'Files.CdnPath',
-                                'Files.SaveAsName',
-                                'Files.SourceURL'
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
                             ),
-                        )
-                    ), 
-                    'order' => array('Country.SalesDate' => 'desc', 'limit'=>20)
-                    )
-                );
+                            'Files' => array(
+                                'fields' => array(
+                                    'Files.CdnPath' ,
+                                    'Files.SaveAsName',
+                                    'Files.SourceURL'
+                                ),
+                            )
+                        ), 
+                        'order' => 'fa.id DESC',
+                        'limit'=>20
+                    ));
             } else {
                 $featured = array();
             }
