@@ -80,7 +80,7 @@ if(count($featuredVideos) > 0){ ?>
                                 ?>
                             </div>
                             <div class="video-title">
-                                <a href="javascript:void(0);">
+                                <a title="<?php echo $featureVideo['Video']['VideoTitle']; ?>" href="javascript:void(0);">
                                 <?php
                                 if(strlen($featureVideo['Video']['VideoTitle']) >= 20){
                                         $featureVideo['Video']['VideoTitle'] = substr($featureVideo['Video']['VideoTitle'], 0, 20). '...';
@@ -198,7 +198,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                                  </div>
                         </div>
                         <div class="video-title">
-                            <a href="javascript:void(0);">
+                            <a title="<?php echo $topDownload['Video']['VideoTitle']; ?>" href="javascript:void(0);">
 
                             <?php
                             if(strlen($topDownload['Video']['VideoTitle']) >= 20){
