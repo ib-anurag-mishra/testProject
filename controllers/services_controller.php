@@ -158,8 +158,9 @@ class ServicesController extends AppController {
                 
                 if ($response->getHttpStatus() == 200) {
                     echo "here";
-                    die;
+                    // die;
                     if ($response->response->numFound > 0) {
+                        echo "here2"; die;
                         print_r($response); die;
                         foreach ($response->response->docs as $doc) {
                             $docs[] = $doc;
