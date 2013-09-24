@@ -510,7 +510,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
-                                                                 More Info<br><br>   
+                                                                 <a href="#">More Info</a><br><br>   
                                                                     
                                                                 <form  id="FormRegisterConcert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
