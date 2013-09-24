@@ -95,7 +95,7 @@ if(count($featuredVideos) > 0){ ?>
                                     $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 20). '...';
                                 }
                                 ?>
-                                <?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?>
+                                <span title="<?php echo $featureVideo['Video']['ArtistText']; ?>"><?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?></span>
                             </div>
                         </div>
                <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
@@ -209,7 +209,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                             </a> <?php if(isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                         </div>
                         <div class="video-name">
-                            <a href="javascript:void(0);">
+                            <a title="<?php echo $topDownload['Video']['ArtistText']; ?>" href="javascript:void(0);">
                             <?php 
                             if(strlen($topDownload['Video']['ArtistText']) >= 20){
                                     $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 20). '...';
