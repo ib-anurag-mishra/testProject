@@ -2,15 +2,15 @@
     
 function submit_registeration_details(){ alert("HI");
 	
-        $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');        
+        //$('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');        
         var data = "ajax_genre_name="+genre_name;
         var link = webroot+'homes/ajax_submit_register_concert';
         jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
             data: data,  // post data
-            success: function(response) {               
-                $('#ajax_artistlist_content1').html(response);
+            success: function(response) {  alert(response);              
+                $('#ReturnMessage').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { 
                // alert('No artist available for this Genre.');
