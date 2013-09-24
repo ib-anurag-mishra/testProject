@@ -147,13 +147,13 @@
 										}
 									?></a></div>
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
-					<a class="add-to-playlist-button no-ajaxy" href="/popup"></a>
+					<a class="add-to-playlist-button " href="/popup"></a>
 					
                                            <?php
                                              if($this->Session->read('patron')) { ?>
                                             <div class="wishlist-popover" style="top:-58px;">
                                                <?php if( $this->Session->read('library_type') == 2 ){ ?> 
-                                                            <div class="playlist-options no-ajaxy" style="margin-top:-30px;">
+                                                            <div class="playlist-options " style="margin-top:-30px;">
                                                                 <ul>
                                                                         <li><a href="#">Create New Playlist</a></li>
                                                                         <li><a href="#">Playlist 1</a></li>
@@ -168,7 +168,7 @@
                                                                         <li><a href="#">Playlist 10</a></li>
                                                                 </ul>
                                                             </div>
-                                                            <a class="add-to-playlist no-ajaxy" href="javascript:void(0);">Add To Queue</a>
+                                                            <a class="add-to-playlist " href="javascript:void(0);">Add To Queue</a>
                                                <?php  }     
                                                     if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
                                                     {
@@ -189,10 +189,10 @@
 
                                                                             <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
                                                                                 <![if !IE]>
-                                                                                        <a href='#' class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthers("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download Now');?></a>
+                                                                                        <a href='#' class="" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthers("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download Now');?></a>
                                                                                 <![endif]>
                                                                                 <!--[if IE]>
-                                                                                        <a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download Now');?></a>
+                                                                                        <a class="" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download Now');?></a>
                                                                                 <![endif]-->
                                                                             </span>
 
@@ -208,12 +208,12 @@
                                                             }					
                                                             else{
                                                                     ?>
-                                                                    <a class="add-to-wishlist no-ajaxy" href="javascript:void(0)"><?php __("Limit Met");?></a>        
+                                                                    <a class="add-to-wishlist " href="javascript:void(0)"><?php __("Limit Met");?></a>        
                                                                     <?php
                                                             }
                                                     }else{
                                             ?>
-                                                            <a class="add-to-wishlist no-ajaxy" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
+                                                            <a class="add-to-wishlist " href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
                                                                     date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'><?php __('Coming Soon'); ?></span></a>
                                                     <?php
                                                     } 
@@ -226,7 +226,7 @@
 
                                                 if($this->Session->read('patron')) {
                                                 ?> 
-                                                    <!--a class="add-to-playlist no-ajaxy" href="#">Add To Queue</a-->
+                                                    <!--a class="add-to-playlist " href="#">Add To Queue</a-->
                                                     <?php
                                                     $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
                                                     echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    

@@ -8,7 +8,7 @@
                 </div>
 		<header class="clearfix">
 			<h2>Saved Queues</h2>
-			<div class="create-new-queue-btn no-ajaxy"></div>
+			<div class="create-new-queue-btn "></div>
 			<div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
 		</header>
                 <?php

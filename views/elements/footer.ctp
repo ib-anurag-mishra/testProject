@@ -117,8 +117,8 @@ pageTracker._trackPageview();
 <!-- History.js -->
 	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 	
-	<!-- Ajaxify -->
-	<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
+	<!-- Ajaxify 
+	<script src="<? //echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>-->
 	
 	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
