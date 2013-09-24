@@ -443,7 +443,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>
                                             <?php
                                             
-                                                    if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)
+                                                    //if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)
+                                                     if($this->Session->read("lId")==50)
                                                     {                                                         
                                                         ?>                                                        
                                                                 <form action="/queues/createQueue" method="post">
@@ -457,12 +458,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <label for="description">Phone :</label>
                                                                     <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
                                                                     <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input>
-
-                                                                </div>
-                                                                <div class="buttons-container clearfix">
-                                                                        <div class="text-close">Close</div>
-                                                                        <input type="submit" class="save" value="Create New Queue"></input>
-                                                                </div>
+                                                                    <input type="submit" class="save" value="Create New Queue"></input>
+                                                                
                                                                 </form>
                                             
                                             
