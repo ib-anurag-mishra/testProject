@@ -20,7 +20,7 @@ if(count($featuredVideos) > 0){ ?>
                     $total_videos = count($featuredVideos);
                     $sr_no = 0;
                 
-                foreach($featuredVideos as $featureVideo){  
+                foreach($featuredVideos as $key => $featureVideo){  
                     //hide song if library block the explicit content
                     if(($this->Session->read('block') == 'yes') && isset($featureVideo["FeaturedVideo"]['Advisory']) && ($featureVideo["FeaturedVideo"]['Advisory'] =='T')) {
                         continue;
@@ -34,8 +34,8 @@ if(count($featuredVideos) > 0){ ?>
                                 if($this->Session->read('patron')) {
 
                                     if($libraryDownload == '1' && $patronDownload == '1') {
-                                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $featureVideo['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                                        if(count($downloadsUsed) > 0){
+                                        $downloadsUsed =  $this->Videodownload->getVideodownloadfind($featureVideo['Video']['ProdID'],$featureVideo['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                        if($downloadsUsed > 0){
                                           $featureVideo[$key]['Video']['status'] = 'avail';
                                         } else{
                                           $featureVideo[$key]['Video']['status'] = 'not';
@@ -126,7 +126,7 @@ if(count($featuredVideos) > 0){ ?>
 //print_r($topVideoDownloads); die;
   $total_videos = count($topVideoDownloads);
   $sr_no = 0;
-foreach($topVideoDownloads as $topDownload)
+foreach($topVideoDownloads as $key => $topDownload)
 {
     ?>
 
@@ -156,7 +156,7 @@ foreach($topVideoDownloads as $topDownload)
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
-                                        $downloadsUsed =  $this->Videodownload->find('all',array('conditions' => array('ProdID' => $topDownload['Video']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                                        $downloadsUsed =  $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'],$topDownload['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                         if(count($downloadsUsed) > 0){
                                           $topDownload[$key]['Video']['status'] = 'avail';
                                         } else{

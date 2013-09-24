@@ -442,15 +442,42 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php /* } */ ?>     
                                             </ul>
                                             <?php
-                                                    $temp_text  =   strip_tags($announcment_value);
-                                                    if($temp_text!="")
-                                                    {
-                                                        $announcment_class  =   "display:block;overflow-y:scroll;";
+                                            
+                                                    //if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)
+                                                     if($this->Session->read("lId")==50)
+                                                    {                                                         
+                                                        ?>                                                        
+                                                                <form action="/queues/createQueue" method="post">
+
+                                                                    <label for="name">First Name :</label>
+                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                                                                    <label for="description">Last Name :</label>
+                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                                                                    <label for="description">Library Card :</label>
+                                                                    <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                                                                    <label for="description">Phone :</label>
+                                                                    <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                                                                    <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input>
+                                                                    <input type="submit" class="save" value="Create New Queue"></input>
+                                                                
+                                                                </form>
+                                            
+                                            
+                                                        <?php
                                                     }
-                                                    else
+                                                    else    // For other Libraries
                                                     {
-                                                        $announcment_class  =   "";
+                                                        $temp_text  =   strip_tags($announcment_value);
+                                                        if($temp_text!="")
+                                                        {
+                                                            $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                        }
+                                                        else
+                                                        {
+                                                            $announcment_class  =   "";
+                                                        }
                                                     }
+                                                    
                                             ?>
                                             <div class="announcements">
                                                     <h4><?php __('Announcements'); ?></h4>
