@@ -54,6 +54,7 @@ class ServicesController extends AppController {
 				$album = str_replace("$", " ", $album);
 				$genre = str_replace("$", " ", $genre);
 				
+                echo $artist; die;
                 if($this->params['named']['condition'] == 'or'){
 					$solrCheckCondition = "OR";
 				} 
