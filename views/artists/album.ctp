@@ -75,7 +75,7 @@
 <br class="clr">
 <header class="clearfix">
         <?php if(isset($artisttitle)){ ?>
-            <h2><?php echo $artisttitle; ?></h2>
+            <h2><?php echo $this->getTextEncode($artisttitle); ?></h2>
         <?php } ?>
         <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
 </header>
