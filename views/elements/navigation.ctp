@@ -452,11 +452,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 <div class="poll1" style="display:block;height:300px;">                                                                                                                           
                                             
                                                                 <form action="/queues/createQueue" method="post">
-
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>
                                                                     <label for="UserEmail">Last Name :</label>
-                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px; float:right;') ); ?> <br>                                                                    
+                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px; float:right;') ); ?> <br><br><br>                                                                  
                                                                     <label for="UserEmail">Library Card :</label>
                                                                     <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br>                                                                    
                                                                     <label for="UserEmail">Phone :</label>                                                                    
