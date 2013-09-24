@@ -4652,9 +4652,9 @@ STR;
     function ajax_submit_register_concert() 
     {        
        $this -> layout = 'ajax';
-       Configure::write('debug', 2);
+       //Configure::write('debug', 2);
        
-        echo "HI";
+        $this->set('Message', "HI");
     }
     
     
