@@ -168,6 +168,8 @@ class ServicesController extends AppController {
                     $docs = array();
                 }
                 
+                print_r($docs); die;
+                
 				foreach($docs as $k=>$v){
 					$result[$k]['Song']['ProdID'] = $v->ProdID;
 					$result[$k]['Song']['ProductID'] = $v->ProductID;
@@ -215,7 +217,7 @@ class ServicesController extends AppController {
 				else{
 					$result = array('message' => 'No Records');
 				}
-                print_r($result); die;
+                
 				$this->set('result', $result);
 			}
 		}
