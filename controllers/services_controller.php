@@ -157,6 +157,8 @@ class ServicesController extends AppController {
                 $response = SolrComponent::$solr->search($solrFinalCondition,'0','10000');
                 
                 if ($response->getHttpStatus() == 200) {
+                    echo "here";
+                    die;
                     if ($response->response->numFound > 0) {
                         print_r($response); die;
                         foreach ($response->response->docs as $doc) {
