@@ -4652,17 +4652,16 @@ STR;
     function ajax_submit_register_concert() 
     {        
        $this -> layout = 'ajax';
-       //Configure::write('debug', 2);
-       
-            echo "<pre>";      print_r($_POST); 
-            echo "<pre>Data:"; print_r($this->data);
-       
+       Configure::write('debug', 2);
+              
             $this->data['registerconcert']['first_name']    = $this->data['first_name'];
             $this->data['registerconcert']['last_name']     = $this->data['last_name'];
             $this->data['registerconcert']['library_card']  = $this->data['library_card'];
             $this->data['registerconcert']['phone_no']      = $this->data['phone_no'];
             $this->data['registerconcert']['library_id']    = $_POST['library_id'];
             $this->data['registerconcert']['created']       = $this->data['created'];
+            
+            echo "<pre>"; print_r($this->data);
             
             $this->registerconcert->setDataSource('master');
             if($this->registerconcert->save($this->data['registerconcert'])){
