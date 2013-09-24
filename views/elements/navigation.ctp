@@ -1,3 +1,26 @@
+<script language="javascript" type="text/javascript">
+    
+function submit_registeration_details(){ alert("HI");
+	
+        $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');        
+        var data = "ajax_genre_name="+genre_name;
+        jQuery.ajax({
+            type: "post",  // Request method: post, get
+            url: link, // URL to request
+            data: data,  // post data
+            success: function(response) {               
+                $('#ajax_artistlist_content1').html(response);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) { 
+               // alert('No artist available for this Genre.');
+            }
+        });
+}
+
+
+</script>
+
+
 <?php
 /**
 	File Name : navigation.php
@@ -451,7 +474,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 <h4><?php __('Announcements'); ?></h4>
                                                                 <div class="poll1" style="display:block;height:300px;">                                                                                                                           
                                             
-                                                                <form action="/queues/createQueue" method="post">
+                                                                <form onsubmit="submit_registeration_details();" id="FormRegisterConcert" action="/homes/ajax_submit_register_concert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
                                                                     <label for="UserEmail">Last Name :</label>
@@ -474,6 +497,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     else    // For other Libraries
                                                     {
                                                         $temp_text  =   strip_tags($announcment_value);
+                                                        
                                                         if($temp_text!="")
                                                         {
                                                             $announcment_class  =   "display:block;overflow-y:scroll;";
