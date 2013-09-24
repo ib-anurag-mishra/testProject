@@ -2054,7 +2054,7 @@ STR;
 
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
         set_time_limit(0);
-        $libraryInstance = ClassRegistry::init('Video');
+        $libraryInstance = ClassRegistry::init('Library');
         $libraryDetails = $libraryInstance->find('all', array(
             'fields' => array('id', 'library_territory'),
             'conditions' => array('library_status' => 'active'),
