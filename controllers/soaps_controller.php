@@ -2094,7 +2094,7 @@ STR;
     $data['referral'] = '';
 
     $library_data = $this->Library->find('first', array(
-      'fields' => array('library_authentication_num'),
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
       'conditions' => array('id' => $library_id),
       'recursive' => -1
 
@@ -2106,7 +2106,7 @@ STR;
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
