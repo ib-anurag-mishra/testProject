@@ -4654,6 +4654,8 @@ STR;
        $this -> layout = 'ajax';
        //Configure::write('debug', 2);
        
+       echo "<pre>"; print_r($_POST);
+       
         $this->set('Message', "HI");
     }
     
