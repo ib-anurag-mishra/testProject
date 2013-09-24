@@ -118,9 +118,9 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
                     $downloadsUsed =  $this->Download->getDownloadfind($value['Song']['ProdID'],$value['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                     if($downloadsUsed > 0){
-                      $value[$key]['Song']['status'] = 'avail';
+                      $value['Song']['status'] = 'avail';
                     } else{
-                      $value[$key]['Song']['status'] = 'not';
+                      $value['Song']['status'] = 'not';
                     }
                     if($value['Song']['status'] != 'avail') {
                             ?>
@@ -264,9 +264,9 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
                     $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                     if($downloadsUsed > 0){
-                      $value[$key]['Video']['status'] = 'avail';
+                      $value['Video']['status'] = 'avail';
                     } else{
-                      $value[$key]['Video']['status'] = 'not';
+                      $value['Video']['status'] = 'not';
                     }
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
