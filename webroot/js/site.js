@@ -2337,10 +2337,6 @@ $(function() {
 	$('.most-popular-sub-nav').css('width',most_popular_width);
 	
 	
-	$('#Library_details1ChooserForm input[type=submit]').on('click',function(e){
-	
-		console.log('clicked');
-	});
 	 
 });
 
