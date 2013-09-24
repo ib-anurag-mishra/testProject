@@ -4652,12 +4652,28 @@ STR;
     function ajax_submit_register_concert() 
     {        
        $this -> layout = 'ajax';
-       //Configure::write('debug', 2);
+       Configure::write('debug', 2);
+              
+            $this->data['RegisterConcert']['first_name']    = $this->data['first_name'];
+            $this->data['RegisterConcert']['last_name']     = $this->data['last_name'];
+            $this->data['RegisterConcert']['library_card']  = $this->data['library_card'];
+            $this->data['RegisterConcert']['phone_no']      = $this->data['phone_no'];
+            $this->data['RegisterConcert']['library_id']    = $_POST['library_id'];
+            $this->data['RegisterConcert']['created']       = date('Y-m-d H:i:s');;
+            
+            echo "<pre>"; print_r($this->data);
+            
+            $this->RegisterConcert->setDataSource('master');
+            if($this->RegisterConcert->save($this->data['RegisterConcert'])){
+              $this->set('Message', "Success");      						
+            }
+            else{
+                    $this->set('Message', "Failure");				
+            }
+            $this->RegisterConcert->setDataSource('default');
        
-       echo "<pre>"; print_r($_POST); 
-       echo "<pre>Data:"; print_r($this->data);
        
-        $this->set('Message', "HI");
+       
     }
     
     
