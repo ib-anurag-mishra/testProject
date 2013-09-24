@@ -145,8 +145,8 @@
 
 
                                                                                                     <?php if($this->Session->read("patron")){ ?> 
-														<a class="add-to-playlist-button" href="#"></a>
-														<div class="wishlist-popover">
+														<a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+														<div class="wishlist-popover ">
                                                                                                 <?php if( $this->Session->read('library_type') == 2 ){
                                                                                                             echo $this->Queue->getQueuesList($this->Session->read('patron'),$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"],$nationalTopDownload[$i]["Albums"]["ProdID"],$nationalTopDownload[$i]["Albums"]["provider_type"]); ?>
                                                                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
@@ -302,7 +302,7 @@
 
                                                                                                 <?php if($this->Session->read("patron")){ ?> 
 														
-														<a class="add-to-playlist-button" href="#"></a>
+														<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 														
 														<div class="wishlist-popover">
 															<!--
@@ -504,7 +504,7 @@
                                                                                                         <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle']); ?>" width="162" height="162" /></a>
                                                                                                          
                                                                                                 <?php if($this->Session->read("patron")){ ?> 													
-                                                                                                <a class="add-to-playlist-button" href="#">
+                                                                                                <a class="add-to-playlist-button no-ajaxy" href="#">
 														
 													</a>
 													<div class="wishlist-popover"> 
@@ -591,7 +591,7 @@
                                                                                                         <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle']); ?>" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
-                                                                                                        <a class="add-to-playlist-button" href="#">
+                                                                                                        <a class="add-to-playlist-button no-ajaxy" href="#">
 														
 													</a>
 													<div class="wishlist-popover">	

@@ -858,7 +858,7 @@ if ($type != 'all') {
                         }
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText) )); ?></div>
-                            <a class="add-to-playlist-button" href="#"></a>
+                            <a class="add-to-playlist-button no-ajaxy" href="#"></a>
                             <div class="composer"><span title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></span></div>
 
 
@@ -1044,7 +1044,7 @@ if (isset($type)) {
                         ?>
                         <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
 
-						<a class="add-to-playlist-button" href="#"></a>
+						<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 						
 						<div class="wishlist-popover">	
                             <?php
