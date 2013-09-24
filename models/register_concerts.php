@@ -5,11 +5,11 @@
  Author : m68interactive
  */
 
-class QueueDetail extends AppModel
+class RegisterConcert extends AppModel
 {
-	var $name = 'QueueDetail';
-	var $useTable = 'queue_details';
-    var $primaryKey = 'Pdid';
+	var $name = 'RegisterConcert';
+	var $useTable = 'register_concerts';
+        var $primaryKey = 'id';
 
 //	var $belongsTo = array(
 //		'User' => array(
