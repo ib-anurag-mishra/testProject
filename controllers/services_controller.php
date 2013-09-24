@@ -54,7 +54,6 @@ class ServicesController extends AppController {
 				$album = str_replace("$", " ", $album);
 				$genre = str_replace("$", " ", $genre);
 				
-                echo $artist; die;
                 if($this->params['named']['condition'] == 'or'){
 					$solrCheckCondition = "OR";
 				} 
@@ -153,18 +152,32 @@ class ServicesController extends AppController {
                 
 				$reference = '';
 
-				foreach($searchResults as $k=>$v){
-					$result[$k]['Song']['ProdID'] = $v['Song']['ProdID'];
-					$result[$k]['Song']['ProductID'] = $v['Song']['ProductID'];
-					$result[$k]['Song']['ReferenceID'] = $v['Song']['ReferenceID'];
-					$result[$k]['Song']['Title'] = $v['Song']['Title'];
-					$result[$k]['Song']['SongTitle'] = $v['Song']['SongTitle'];
-					$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
-					$result[$k]['Song']['provider_type'] = $v['Song']['provider_type'];
-					$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
-					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
-					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
-					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
+                $response = SolrComponent::$solr->search($solrFinalCondition,'0','10000');
+                
+                if ($response->getHttpStatus() == 200) {
+                    if ($response->response->numFound > 0) {
+                        foreach ($response->response->docs as $doc) {
+                            $docs[] = $doc;
+                        }
+                    } else {
+                        $docs = array();
+                    }
+                } else {
+                    $docs = array();
+                }
+                
+				foreach($docs as $k=>$v){
+					$result[$k]['Song']['ProdID'] = $v->ProdID;
+					$result[$k]['Song']['ProductID'] = $v->ProductID;
+					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
+					$result[$k]['Song']['Title'] = $v->Title;
+					$result[$k]['Song']['SongTitle'] = $v->SongTitle;
+					$result[$k]['Song']['ArtistText'] = $v->ArtistText;
+					$result[$k]['Song']['provider_type'] = $v->provider_type;
+					$result[$k]['Song']['Artist'] = $v->Artist;
+					$result[$k]['Song']['Advisory'] = $v->Advisory;
+					$result[$k]['Song']['Composer'] = str_replace('"','',$v->Composer);
+					$result[$k]['Song']['Genre'] = str_replace('"','',$v->Genre);
 					
                     if(isset($this->params['pass'][3])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);
