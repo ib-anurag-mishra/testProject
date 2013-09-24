@@ -11,7 +11,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo','Download','Videodownload');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Streaming');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode','StreamingRecords','StreamingHistory');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode','StreamingRecords','StreamingHistory', 'RegisterConcert');
 
     /*
      Function Name : beforeFilter
@@ -4661,14 +4661,14 @@ STR;
             $this->data['RegisterConcert']['library_id']    = $_POST['library_id'];
             $this->data['RegisterConcert']['created']       = date('Y-m-d H:i:s');;
             
-            echo "<pre>"; print_r($this->data);
+           // echo "<pre>"; print_r($this->data);
             
             $this->RegisterConcert->setDataSource('master');
             if($this->RegisterConcert->save($this->data['RegisterConcert'])){
-              $this->set('Message', "Success");      						
+              $this->set('Message', "Thanks for entering the Concert Ticket Giveway.<br><br>Contest closes October 11, 2013.");      						
             }
             else{
-                    $this->set('Message', "Failure");				
+                    $this->set('Message', "There has been error while storing the details.");				
             }
             $this->RegisterConcert->setDataSource('default');
        
