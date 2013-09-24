@@ -4651,7 +4651,7 @@ STR;
     
     function ajax_submit_register_concert() 
     {        
-       $this->layout = false;
+       $this -> layout = 'ajax';
        Configure::write('debug', 2);
        
         echo "HI";
