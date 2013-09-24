@@ -156,9 +156,6 @@ class ServicesController extends AppController {
                 
                 $response = SolrComponent::$solr->search($solrFinalCondition,'0','10000');
                 
-                print_r($response);
-                die;
-                
                 if ($response->getHttpStatus() == 200) {
                     if ($response->response->numFound > 0) {
                         foreach ($response->response->docs as $doc) {
@@ -171,7 +168,9 @@ class ServicesController extends AppController {
                     $docs = array();
                 }
                 
-                print_r($docs); die;
+                print_r($docs); 
+                
+                die;
                 
 				foreach($docs as $k=>$v){
 					$result[$k]['Song']['ProdID'] = $v->ProdID;
