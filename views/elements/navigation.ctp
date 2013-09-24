@@ -446,21 +446,28 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     //if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)
                                                      if($this->Session->read("lId")==50)
                                                     {                                                         
-                                                        ?>                                                        
+                                                        ?>    
+                                                             <div class="announcements">
+                                                                <h4><?php __('Announcements'); ?></h4>
+                                                                <div class="poll1" style="<?php echo $announcment_class; ?>">                                                                                                                           
+                                            
                                                                 <form action="/queues/createQueue" method="post">
 
                                                                     <label for="name">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-                                                                    <label for="description">Last Name :</label>
+                                                                    <label for="name">Last Name :</label>
                                                                     <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-                                                                    <label for="description">Library Card :</label>
+                                                                    <label for="name">Library Card :</label>
                                                                     <?php echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-                                                                    <label for="description">Phone :</label>
+                                                                    <label for="name">Phone :</label>
                                                                     <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
                                                                     <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input>
                                                                     <input type="submit" class="save" value="Create New Queue"></input>
                                                                 
                                                                 </form>
+                                                                
+                                                                 </div>
+                                                            </div>
                                             
                                             
                                                         <?php
@@ -476,15 +483,20 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         {
                                                             $announcment_class  =   "";
                                                         }
+                                                        
+                                                        ?>
+                                                                <div class="announcements">
+                                                                <h4><?php __('Announcements'); ?></h4>
+                                                                <div class="poll1" style="<?php echo $announcment_class; ?>">
+                                                                    <?php echo $announcment_value; ?>
+                                                                </div>
+                                                                </div>
+                                            
+                                                        <?php
                                                     }
                                                     
                                             ?>
-                                            <div class="announcements">
-                                                    <h4><?php __('Announcements'); ?></h4>
-                                                    <div class="poll1" style="<?php echo $announcment_class; ?>">
-                                                        <?php echo $announcment_value; ?>
-                                                    </div>
-                                            </div>
+                                            
                                             <?php } ?>
 					</section>					
 					<div class="content" style="<?php echo $section_class; ?>">
