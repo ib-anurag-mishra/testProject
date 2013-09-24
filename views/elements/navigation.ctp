@@ -508,6 +508,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 <h4><?php __('Announcements'); ?></h4>
                                                                 <div class="poll1" style="display:block;height:300px;">                                                                                                                           
                                             
+                                                                 Register for Concert Tickets Giveway<br><br>
+                                                                 One entry only<br><br>
+                                                                 More Info<br><br>   
+                                                                    
                                                                 <form  id="FormRegisterConcert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
