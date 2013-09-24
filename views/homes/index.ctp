@@ -13,10 +13,10 @@
 										</li>
 										-->
 										<li>
-											<a href="#top-100-songs" class="active" data-category-type="songs">Songs</a>
+											<a href="#top-100-songs" class="active" data-category-type="songs" onclick="showHideGrid('songs')">Songs</a>
 										</li>
 										<li>
-											<a href="#top-100-videos" data-category-type="videos">Videos</a>
+											<a href="#top-100-videos" data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
 										</li>
 									</ul>
 									
@@ -739,3 +739,14 @@
 							
 						</section> <!-- end .news -->	
 
+<script language="javascript">
+    function showHideGrid(varType){
+        if(varType == 'songs'){
+            alert(1);
+            alert(varType);
+        }else{
+            alert(2);
+            alert(varType);
+        }
+    }
+</script>
