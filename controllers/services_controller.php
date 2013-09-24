@@ -153,8 +153,11 @@ class ServicesController extends AppController {
 				$reference = '';
                 
                 // echo $solrFinalCondition; die;
-
+                
                 $response = SolrComponent::$solr->search($solrFinalCondition,'0','10000');
+                
+                print_r($response);
+                die;
                 
                 if ($response->getHttpStatus() == 200) {
                     if ($response->response->numFound > 0) {
