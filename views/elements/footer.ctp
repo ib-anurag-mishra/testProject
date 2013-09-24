@@ -42,14 +42,14 @@
 <?php //} }?>
 <style>
 .player {
-	
+/*	
 	position: fixed;
 	bottom: 0;
 	width: 100%;
 	height: 100px;
 	overflow: hidden;
 
-	
+*/	
 }
 </style>		
 		</div>			
@@ -89,7 +89,7 @@
 				</div>
 			</footer>
                 <div class="filler" style="height:100px"></div>
-	<?php if($this->Session->read("patron")){ ?>
+	<?php /*if($this->Session->read("patron")){ ?>
                                         <?php if($this->Session->read('library_type') == '2') { ?>
                                             <div class="player">
                                                     <div class="player-container">
@@ -98,7 +98,7 @@
                                                 <input type="hidden" name="songDetails" id="songDetails" value="" />
                                             </div>
                                         <?php } ?>
-                                    <?php } ?>
+                                    <?php }*/?>
 	
     <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
     <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
