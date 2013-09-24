@@ -30,9 +30,9 @@ $(document).ready(function() {
         $.ajax({
             type: "post",
             url: webroot+'homes/ajax_submit_register_concert',
-            data: '',
+            data: frm.serialize(),
             success: function (response) { alert(response);
-                alert('ok');
+                //alert('ok');
                 $('#ReturnMessage').html(response);
             },
             error: function(jqXHR, textStatus, errorThrown){
