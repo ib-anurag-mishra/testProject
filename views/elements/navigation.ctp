@@ -502,7 +502,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?> <br><br>
                                                                     <label for="UserEmail">Last Name :</label>
-                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px; float:right;') ); ?> <br><br><br><br>                                                                  
+                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 2px 2px 0px; float:right;') ); ?> <br><br><br><br>                                                                  
                                                                     <!-- <label for="UserEmail">Library Card :</label> -->
                                                                     <?php //echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?>                                                                     
                                                                     <label for="UserEmail">Phone :</label>                                                                    
@@ -511,10 +511,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <input type="submit" class="save" value="Submit"></input>                                                                
                                                                 </form>
                                                                         <?php 
-
+                                                                                $reutrn_message='';
                                                                           }
-                                                                    $reutrn_message=''; 
-
+                                                                          else
+                                                                          {
+                                                                                $reutrn_message='<br><font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.'; 
+                                                                          }
                                                                           ?>
                                                                     <span id="ReturnMessage" ><?php echo $reutrn_message; ?></span>
                                                                 
