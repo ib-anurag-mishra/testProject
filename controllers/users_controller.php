@@ -55,7 +55,7 @@ Class UsersController extends AppController
 	}
 	function redirection_manager($library = null)
 	{
-                $this->Cookie->write('redirecting', $_SERVER[HTTP_REFERER]);
+                $this->Cookie->write('redirecting', $_SERVER[HTTP_REFERER],False);
                 if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));                      
@@ -535,6 +535,7 @@ Class UsersController extends AppController
 	function logout() {
 		$patronId = $this->Session->read('patron');
 		$libraryId = $this->Session->read('library');
+                $this->Cookie->delete('redirecting');
 		$patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
 		if(count($patronDetails) > 0){
 			$updateTime = date( "Y-m-d H:i:s", time()-60 );
