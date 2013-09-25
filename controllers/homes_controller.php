@@ -158,12 +158,58 @@ class HomesController extends AppController
         $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
-        if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false){
-            $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
+                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)               {
+                    $this->Song->recursive = 2;
+                    $countryPrefix = $this->Session->read('multiple_countries');
+                
+                $sql_cs_videos =<<<STR
+	SELECT 
+        Video.ProdID,
+        Video.ReferenceID,
+        Video.Title,
+        Video.ArtistText,
+        Video.DownloadStatus,
+        Video.VideoTitle,
+        Video.Artist,
+        Video.Advisory,
+        Video.Sample_Duration,
+        Video.FullLength_Duration,
+        Video.provider_type,
+        Genre.Genre,
+        Country.Territory,
+        Country.SalesDate,
+        Image_Files.FileID,
+        Image_Files.CdnPath,
+        Image_Files.SourceURL
+    FROM
+        video AS Video
+    LEFT JOIN
+        Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
+    LEFT JOIN
+        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
+    LEFT JOIN
+        File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+    WHERE
+        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
+    ORDER BY Country.SalesDate ASC
+    LIMIT 20
+STR;
+           
+            $coming_soon_videos = $this->Video->query($sql_cs_videos);
+            
+            if(!empty($coming_soon_videos)){
+                foreach($coming_soon_videos as $key => $value)
+                {
+                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                    $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
+                Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
+            }                   
         }
         else    //  Show From Cache
         {                  
-            $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
+           $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);

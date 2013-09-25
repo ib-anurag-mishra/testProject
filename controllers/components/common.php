@@ -500,7 +500,6 @@ STR;
         if (!empty($coming_soon_rv)) {
             foreach($coming_soon_videos as $key => $value)
             {                                                                                     
-
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                 $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
