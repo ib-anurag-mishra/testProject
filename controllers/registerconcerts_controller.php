@@ -57,7 +57,7 @@ class RegisterConcertsController extends AppController{
                     }
                     else
                     {
-                            $this->set('Message', "There has been error while storing the details.");				
+                            $this->set('Message', "There was error while storing the details.");				
                     }
                     
                     $this->RegisterConcert->setDataSource('default');
