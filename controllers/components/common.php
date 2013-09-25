@@ -1278,6 +1278,20 @@ STR;
         
         
     } 
+    /*
+     * @func getDifferentGenreData
+     * @desc This is used to get top 10 for different genres
+     */
+    function getDifferentGenreData($territory){
+        
+        $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
+            "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
+
+        foreach ($genres as $genre) {
+            $this->getGenreData($territory,$genre);
+        }
+        $this->log("cache written for top 10 for different genres for $territory", 'debug');
+    }
     
     /*
      * Function Name : getArtistText
