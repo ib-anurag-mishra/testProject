@@ -2061,6 +2061,59 @@ STR;
     }
     
     /**
+     * @function getDefaultQueues
+     * @desc     This function is used to get default queues.
+     */
+    
+    function getDefaultQueues(){
+        
+        //--------------------------------Default Freegal Queues Start----------------------------------------------------               
+        $cond = array('queue_type' => 1, 'status' => '1');
+        //Unbinded User model
+        $this->QueueList->unbindModel(
+            array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
+        );
+        //fetched the default list
+        $queueData = $this->QueueList->find('all', array(
+        'conditions' => $cond,
+        'fields' => array('queue_id','queue_name'),
+        'order' => 'QueueList.created DESC',
+        'limit' => 100
+        ));        
+        
+        //freegal Query Cache set
+        if ((count($queueData) < 1) || ($queueData === false)) {            
+            Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
+            $this->log("Freegal Defaut Queues returns null ", "cache");
+            echo "<br /> Freegal Defaut Queues returns null<br />";
+        } else {           
+            Cache::delete("defaultqueuelist");
+            Cache::write("defaultqueuelist", $queueData);
+            
+            //library top 10 cache set
+            $this->log("Freegal Defaut Queues cache set", "cache");
+            echo "<br />Freegal Defaut Queues cache set <br />";
+        }  
+        
+        //set the variable for each freegal default queue 
+        foreach($queueData as $value){
+           $defaultQueueId = $value['QueueList']['queue_id'];
+           $defaultQueueName = $value['QueueList']['queue_name'];      
+           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId);
+           
+           if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
+                $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
+                echo "<br /> Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null<br />";
+           } else {                 
+                Cache::write("defaultqueuelistdetails".$defaultQueueId, $eachQueueDetails);       
+                $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set", "cache");
+                echo "<br />Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";              
+           }            
+        }     
+        //--------------------------------Default Freegal Queues End--------------------------------------------------------------
+    }
+    
+    /**
       * @function setLibraryTopTenCache
       * @desc sets Cache for LibraryTopTen
       */    

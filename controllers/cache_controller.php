@@ -5,7 +5,7 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
-    //var $components = array('Queue');
+    var $components = array('Queue','Common');
     
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -2060,6 +2060,35 @@ STR;
     }
     
     
+    /*
+     * @func runCache
+     * @desc This function is used to call all functions for setting cache variables
+     */
+    
+    function runCache(){
+        $territoriesList = $this->Common->getTerritories();
+        
+        foreach($territoriesList as $territory){
+            $this->Common->getGenres($territory);
+            $this->Common->getNationalTop100($territory);
+            $this->Common->getFeaturedVideos($territory);
+            $this->Common->getTopVideoDownloads($territory);
+            $this->Common->getNationalTop100Videos($territory);
+            $this->Common->getComingSoonSongs($territory);
+            $this->Common->getComingSoonVideos($territory);
+            $this->Common->getUsTop10Songs($territory);
+            $this->Common->getUsTop10Albums($territory);
+            $this->Common->getUsTop10Videos($territory);
+            $this->Common->getNewReleaseAlbums($territory);
+            $this->Common->getNewReleaseVideos($territory);
+            $this->Common->getFeaturedArtists($territory);
+            $this->Common->getDifferentGenreData($territory);
+            $this->Common->getArtistText($territory);
+            $this->Common->getDefaultQueues($territory);
+        }
+        $this->Common->setLibraryTopTenCache();
+        $this->Common->setVideoCacheVar();        
+    }
     
     
     
