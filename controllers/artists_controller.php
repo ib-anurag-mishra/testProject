@@ -100,6 +100,8 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
+                $memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
                 if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"))
                 {
                    $this->log("deleted featuredUS",'featured');
@@ -107,8 +109,6 @@ Class ArtistsController extends AppController
                 else {
                     $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"),'featured');
                 }
-                $memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIT");
