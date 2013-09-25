@@ -35,7 +35,7 @@ $(document).ready(function() {
 
                 if(response=='Failure')
                 {
-                  $('#ReturnMessage').append("Please fill information in all fields.");   
+                  $('#FailureMessage').append("Please fill information in all fields.");   
                 }
                 else
                 {
@@ -514,7 +514,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
                                                                  <?php echo $html->link(__('More Info', true), array('controller' => 'homes','action'=>'great_fall_concert'));?><br><br>   
-                                                                 <span id="ReturnMessage"></span> <br><br>  
+                                                                 <span id="FailureMessage"></span> <br> 
                                                                 <form  id="FormRegisterConcert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
