@@ -40,7 +40,7 @@ $(document).ready(function() {
                 else
                 {
                     $('#FormRegisterConcert').hide();   
-                    $('#FailureMessage').html("");
+                    $('#FailureMessage').hide();
                     $('#ReturnMessage').append(response); 
                        
                 }
