@@ -542,7 +542,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                           else      // If user has already registered for Concert
                                                                           {
                                                                             
-                                                                                $reutrn_message = 'Contest closes October 11, 2013.';
+                                                                                $reutrn_message = '<br>Contest closes October 11, 2013.';
                                                                             
                                                                           }
                                                                           ?>
