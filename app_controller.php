@@ -87,6 +87,10 @@ class AppController extends Controller
                     $concert_rs = $this->Album->query($concert_query);
                     $this -> set ( 'register_concert_id' ,  $concert_rs[0]['register_concerts']['id']);
                 }
+                else
+               {
+                    $this -> set ( 'register_concert_id' ,  '');
+               }
 	}
 	
 	function checkOnlinePatron()
