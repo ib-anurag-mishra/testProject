@@ -10,7 +10,7 @@ class RegisterConcertsController extends AppController{
     
     var $name = 'RegisterConcerts';
     var $layout = 'home';
-    var $helpers = array( 'Html', 'Form', 'Session');
+    var $helpers = array( 'Html', 'Form', 'Session', 'Page');
     var $components = array('Session', 'Auth', 'Acl');
     var $uses = array( 'RegisterConcert', 'User', 'Page');
     
