@@ -104,84 +104,11 @@ class HomesController extends AppController
         
         //if(1){
         if (($artists = Cache::read("featured".$country)) === false) {
-           
-            
-            //get all featured artist and make array
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-
-            foreach($featured as $k => $v){
-                    if($v['Featuredartist']['album'] != 0){
-                            if(empty($ids)){
-                                    $ids .= $v['Featuredartist']['album'];
-                                    $ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
-                            } else {
-                                    $ids .= ','.$v['Featuredartist']['album'];
-                                    $ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
-                            }	
-                    }
-            }
-
-            //get all the details for featured albums
-            if($ids != ''){
-                    $this->Album->recursive = 2;
-                    $featured =  $this->Album->find('all',array('conditions' =>
-                                            array('and' =>
-                                                    array(
-                                                            array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
-                                                    ), "1 = 1 GROUP BY Album.ProdID"
-                                            ),
-
-                                            'fields' => array(
-                                                    'Album.ProdID',
-                                                    'Album.Title',
-                                                    'Album.ArtistText',
-                                                    'Album.AlbumTitle',
-                                                    'Album.Artist',
-                                                    'Album.ArtistURL',
-                                                    'Album.Label',
-                                                    'Album.Copyright',
-                                                    'Album.provider_type'
-
-                                                    ),
-                                            'contain' => array(
-                                                    'Genre' => array(
-                                                            'fields' => array(
-                                                                    'Genre.Genre'
-                                                                    )
-                                                            ),
-                                                    'Country' => array(
-                                                            'fields' => array(
-                                                                    'Country.Territory'
-                                                                    )
-                                                            ),
-                                                    'Files' => array(
-                                                            'fields' => array(
-                                                                    'Files.CdnPath' ,
-                                                                    'Files.SaveAsName',
-                                                                    'Files.SourceURL'
-                                                    ),
-                                            )
-                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
-                            )
-                    );
-                    
-            } else {
-                    $featured = array();
-            }
-            
-            foreach($featured as $k => $v){
-
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
-                    $image =  Configure::read('App.Music_Path').$albumArtwork;
-                    $featured[$k]['featuredImage'] = $image;
-            }        
-            
-            //write the information in to the cache
-            Cache::write("featured".$territory, $featured);
+            $featured = $this->Common->getFeaturedArtists($territory);
+        }else{
+            //fetched all the information from the cache
+            $featured = Cache::read("featured".$country);
         }
-        
-        //fetched all the information from the cache
-        $featured = Cache::read("featured".$country);
         $this->set('featuredArtists', $featured);
         
         /*

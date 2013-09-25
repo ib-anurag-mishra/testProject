@@ -1097,9 +1097,9 @@ STR;
             Cache::delete("featured" . $territory);
             Cache::write("featured" . $territory, $featured);
         }
-
         $this->log("cache written for featured artists for $territory", 'debug');
         $this->log("cache written for featured artists for: $territory", "cache");
+        return $featured;
     }
     
     
