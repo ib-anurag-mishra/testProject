@@ -95,7 +95,7 @@
                                                 <?php
                                                                     if($this->Session->read('patron')) {?>
                                                                         
-                                                                                <a class="add-to-playlist-button" href="javascript:void(0);"></a>
+                                                                                <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0);"></a>
                                                                                 <div class="wishlist-popover">                                                                        
 										<?php if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{

@@ -300,7 +300,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 								
 								<?php if($this->Session->read("patron")){ ?> 
 														
-														<a class="add-to-playlist-button" href="#"></a>
+														<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 														
 														<div class="wishlist-popover">
 															<!--
