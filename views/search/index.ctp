@@ -1074,7 +1074,7 @@ if (isset($type)) {
                         ?>
                         <div class="song">
                             <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
-                            <a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
+                            <a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){

@@ -55,7 +55,7 @@ Class UsersController extends AppController
 	}
 	function redirection_manager($library = null)
 	{
-                $this->Cookie->write('redirecting', $_SERVER[HTTP_REFERER]);
+                $this->Cookie->write('redirecting', $_SERVER[HTTP_REFERER],False);
                 if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));                      
@@ -430,42 +430,7 @@ Class UsersController extends AppController
 				$values = array(0 => $date, 1 => session_id());
 				Cache::write("login_".$libraryArr['Library']['library_territory']."_".$libraryId."_".$patronId, $values);
 				//writing to memcache and writing to both the memcached servers
-			/*	if (($currentPatron = Cache::read("login_".$libraryId.$patronId)) === false) {
-					$date = time();
-					$values = array(0 => $date, 1 => session_id());
-					Cache::write("login_".$libraryId.$patronId, $values);
-				} else {
-					$userCache = Cache::read("login_".$libraryId.$patronId);
-					$date = time();
-					$modifiedTime = $userCache[0];
-					if(!($this->Session->read('patron'))){
-						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());
-							Cache::write("login_".$libraryId.$patronId, $values);
-						}
-						else{
-							$this->Session->destroy('user');
-							//$this -> Session -> setFlash("This account is already active.");
-							$this->Cookie->write('msg','This account is already active.');
-							//$this->autoRender = false;
-							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-						}
-					} else {
-						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());
-							Cache::write("login_".$libraryId.$patronId, $values);
-						}
-						else{
-							$this->Session->destroy('user');
-							//$this -> Session -> setFlash("This account is already active.");
-							$this->Cookie->write('msg','This account is already active.');
-							//$this->autoRender = false;
-							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-						}
-					}
-
-				}*/
-
+			
 				$this->Session->write("library", $libraryId);
                                 $this->Session->write("loginchk", 'Yes');
                                 
@@ -535,6 +500,7 @@ Class UsersController extends AppController
 	function logout() {
 		$patronId = $this->Session->read('patron');
 		$libraryId = $this->Session->read('library');
+                $this->Cookie->delete('redirecting');
 		$patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
 		if(count($patronDetails) > 0){
 			$updateTime = date( "Y-m-d H:i:s", time()-60 );
