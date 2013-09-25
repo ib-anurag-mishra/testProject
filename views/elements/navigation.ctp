@@ -504,8 +504,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
                                             </ul>
-                                            <?php
-                                                     echo "register_concert_id: ".$register_concert_id;                                           
+                                            <?php                                                                                             
 
                                                     if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)                                                     
                                                     {                                                         
@@ -516,7 +515,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
                                                                  <?php echo $html->link(__('More Info', true), array('controller' => 'homes','action'=>'great_fall_concert'));?><br><br>   
-                                                                 <span id="FailureMessage"></span> <br> 
+                                                                 
+                                                                 <?php                                                                    
+                                                                        if($register_concert_id=='') // If User has  not registered for concert
+                                                                        {
+                                                                  ?>
+                                                                <span id="FailureMessage"></span> <br> 
                                                                 <form  id="FormRegisterConcert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
@@ -529,7 +533,19 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input><br>
                                                                     <input type="submit" class="save" value="Submit"></input>                                                                
                                                                 </form>
-                                                                    <span id="ReturnMessage"></span>
+                                                                        <?php 
+
+                                                                                $reutrn_message='';
+
+                                                                          }
+                                                                          else      // If user has already registered for Concert
+                                                                          {
+                                                                            ?>
+                                                                                $reutrn_message='Thanks for entering the Concert Ticket Giveway.<br><br>Contest closes October 11, 2013.';
+                                                                            <?php
+                                                                          }
+                                                                          ?>
+                                                                    <span id="ReturnMessage" style="color:green;"><?php echo $reutrn_message; ?></span>
                                                                 
                                                                  </div>
                                                             </div>
