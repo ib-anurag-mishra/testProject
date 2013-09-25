@@ -39,9 +39,10 @@ $(document).ready(function() {
                 }
                 else
                 {
-                    $('#FormRegisterConcert').hide();                          
+                    $('#FormRegisterConcert').hide();   
+                    $('#FailureMessage').html("");
                     $('#ReturnMessage').append(response); 
-                    $('#FailureMessage').html("");   
+                       
                 }
             },
             error: function(jqXHR, textStatus, errorThrown){
