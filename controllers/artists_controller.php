@@ -1506,13 +1506,11 @@ STR;
 		$this->Song->Behaviors->attach('Containable');
                 $this->Country->setTablePrefix($_REQUEST['Territory']);
 		foreach($allAlbum as $k => $v){
-                        $recordCount = $this->Song->find('count', array('fields' => array('Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-                        echo "<br>Query2: ".$this->Song->lastQuery();
-                        print_r("<br> Count for above Query: -");
+                        $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
                         print_r($recordCount);
-                        print_r("<br><br>");
+                        echo "<br>Query2: ".$this->Song->lastQuery();
                         if(!empty($recordCount)){
-                            if($recordCount > 0){
+                            if(count($recordCount) > 0){
                                 $val = $val.$v['Album']['ProdID'].",";
                                 $result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
                             }
