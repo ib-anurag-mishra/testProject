@@ -32,11 +32,16 @@ $(document).ready(function() {
             url: webroot+'homes/ajax_submit_register_concert',
             data: frm.serialize(),
             success: function (response) { 
-                //alert('ok');
-                //$('#ReturnMessage').html(response);
-                
-                $('#FormRegisterConcert').hide();                          
-                $('#ReturnMessage').append(response);  
+
+                if(response=='Failure')
+                {
+                  $('#ReturnMessage').append("Please fill information in all fields.");   
+                }
+                else
+                {
+                    $('#FormRegisterConcert').hide();                          
+                    $('#ReturnMessage').append(response); 
+                }
             },
             error: function(jqXHR, textStatus, errorThrown){
             // log the error to the console
@@ -509,7 +514,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
                                                                  <?php echo $html->link(__('More Info', true), array('controller' => 'homes','action'=>'great_fall_concert'));?><br><br>   
-                                                                    
+                                                                 <span id="ReturnMessage"></span> <br><br>  
                                                                 <form  id="FormRegisterConcert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
                                                                     <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:7px 6px 2px 0px;') ); ?> <br><br>
@@ -522,8 +527,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input><br>
                                                                     <input type="submit" class="save" value="Submit"></input>                                                                
                                                                 </form>
-                                                                    <span id="ReturnMessage">                                                                        
-                                                                    </span>
+                                                                    <span id="ReturnMessage"></span>
                                                                 
                                                                  </div>
                                                             </div>
