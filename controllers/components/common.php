@@ -375,6 +375,7 @@ STR;
         }
         $this->log("cache written for national top ten  videos for $territory", 'debug');
         // End Caching functionality for national top 10 videos
+        return $data;
              
     } 
     
