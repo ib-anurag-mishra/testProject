@@ -933,12 +933,14 @@ STR;
                 Cache::write("new_releases_albums" . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
             } else {
+                $data = Cache::read("new_releases_albums" . $country);
                 Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
         }
         $this->log("cache written for new releases albums for $territory", 'debug');
         //End Caching functionality for new releases albums
+        return $data;
         
     } 
     
@@ -1004,12 +1006,14 @@ STR;
                 Cache::write("new_releases_videos" . $country, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
             } else {
+                $data = Cache::read("new_releases_videos" . $country);
                 Cache::write("new_releases_videos" . $country, Cache::read("new_releases_videos" . $country));
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
         }
         $this->log("cache written for new releases albums for $territory", 'debug');
-        //End Caching functionality for new releases videos         
+        //End Caching functionality for new releases videos  
+        return $data;
         
     } 
     
