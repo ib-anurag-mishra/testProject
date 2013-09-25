@@ -1,35 +1,10 @@
-<script language="javascript" type="text/javascript">
-/*    
-function submit_registeration_details(){ alert("HI");
-	
-        //$('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');        
-        var data = '';
-        var link = webroot+'homes/ajax_submit_register_concert';
-        alert(link);
-        jQuery.ajax({
-            type: "post",  // Request method: post, get
-            url: link, // URL to request
-            data: data,  // post data
-            success: function(response) {  alert(response);              
-                $('#ReturnMessage').html(response);
-            },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { 
-               // alert('No artist available for this Genre.');
-            }
-        });
-}
-*/
-
-</script>
-
-
 <script type="text/javascript">
 $(document).ready(function() {
      $("#FormRegisterConcert").submit(function() {
      var frm = $('#FormRegisterConcert');
         $.ajax({
             type: "post",
-            url: webroot+'homes/ajax_submit_register_concert',
+            url: webroot+'register_concerts/ajax_submit_register_concert',
             data: frm.serialize(),
             success: function (response) { 
                 //alert("["+response+"]");
