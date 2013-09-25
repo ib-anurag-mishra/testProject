@@ -505,8 +505,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php /* } */ ?>     
                                             </ul>
                                             <?php
-                                            
-                                                    echo "patron: ".$this->Session->read('patron');
+                                                                                                
 
                                                     if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)                                                     
                                                     {                                                         
