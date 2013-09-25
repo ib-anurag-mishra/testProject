@@ -632,13 +632,14 @@ STR;
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("cache written for US top ten for $territory", "cache");
             } else {
-
+                $data = Cache::read("national_us_top10_songs" . $country);
                 Cache::write("national_us_top10_songs" . $country, Cache::read("national_us_top10_songs" . $country));
                 $this->log("Unable to update US top ten for " . $territory, "cache");
             }
         }
         $this->log("cache written for US top ten for $territory", 'debug');
-         //End Caching functionality for US TOP 10 Songs        
+         //End Caching functionality for US TOP 10 Songs
+        return $data;
     }    
     
     
@@ -750,13 +751,14 @@ STR;
                Cache::write("national_us_top10_albums" . $country, $data);
                $this->log("cache written for US top ten Album for $territory", "cache");
            } else {
+               $data = Cache::read("national_us_top10_albums" . $country);
                Cache::write("national_us_top10_albums" . $country, Cache::read("national_us_top10_albums" . $country));
                $this->log("Unable to update US top ten Album for " . $territory, "cache");
            }
        }
        $this->log("cache written for US top ten Album for $territory", 'debug');
        //End Caching functionality for US TOP 10 Albums
-
+       return $data;
     }
     
     
@@ -859,12 +861,14 @@ STR;
                  Cache::write("national_us_top10_videos" . $country, $data);
                  $this->log("cache written for US top ten video for $territory", "cache");
              } else {
+                 $data = Cache::read("national_us_top10_videos" . $country);
                  Cache::write("national_us_top10_videos" . $country, Cache::read("national_us_top10_videos" . $country));
                  $this->log("Unable to update US top ten video for " . $territory, "cache");
              }
          }
          $this->log("cache written for US top ten video for $territory", 'debug');
          //End Caching functionality for US TOP 10 Videos
+         return $data;
         
     }    
 
