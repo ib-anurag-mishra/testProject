@@ -423,30 +423,31 @@ STR;
 STR;
 
 
-            $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
-            //print_r($coming_soon_rs);
-            
-            $this->log("coming soon songs $territory", "cachequery");
-            $this->log($sql_coming_soon_s, "cachequery");
-            
-          
-            if (!empty($coming_soon_rs)) {
-                foreach($coming_soon_rs as $key => $value)
-                {     
-                    $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                    $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-                    $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                }
-                Cache::delete("coming_soon_songs" . $territory);
-                Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
-                $this->log("cache written for coming soon songs for $territory", "cache");
-            }else{
-                 Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
-                 $this->log("Unable to update coming soon songs for " . $territory, "cache");
+        $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
+        //print_r($coming_soon_rs);
+
+        $this->log("coming soon songs $territory", "cachequery");
+        $this->log($sql_coming_soon_s, "cachequery");
+
+
+        if (!empty($coming_soon_rs)) {
+            foreach($coming_soon_rs as $key => $value)
+            {     
+                $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
             }
-            
-            $this->log("cache written for coming soon for $territory", 'debug');
-            // End Caching functionality for coming soon songs
+            Cache::delete("coming_soon_songs" . $territory);
+            Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
+            $this->log("cache written for coming soon songs for $territory", "cache");
+        }else{
+             Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
+             $this->log("Unable to update coming soon songs for " . $territory, "cache");
+        }
+
+        $this->log("cache written for coming soon for $territory", 'debug');
+        // End Caching functionality for coming soon songs
+        return $coming_soon_rs;
     }    
     
     /*
@@ -513,6 +514,7 @@ STR;
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
         //End Caching functionality for coming soon songs
+        return $coming_soon_rv;
     }    
 
     

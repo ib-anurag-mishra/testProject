@@ -147,116 +147,23 @@ class HomesController extends AppController
         */ 
         $territory = $this->Session->read('territory');
 
-        if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {  
-        //if(1) {
-          // Show from DB          
-          $this->Song->recursive = 2;
-          $countryPrefix = $this->Session->read('multiple_countries');                                
-          $sql_coming_soon =<<<STR
-            SELECT 
-              Song.ProdID,
-              Song.ReferenceID,
-              Song.Title,
-              Song.ArtistText,
-              Song.DownloadStatus,
-              Song.SongTitle,
-              Song.Artist,
-              Song.Advisory,
-              Song.Sample_Duration,
-              Song.FullLength_Duration,
-              Song.provider_type,
-              Genre.Genre,
-              Country.Territory,
-              Country.SalesDate,
-              File.CdnPath,
-              File.SourceURL,
-              File.SaveAsName
-            FROM
-            Songs AS Song
-              LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-              LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID)
-              INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-              INNER JOIN File ON (Albums.FileID = File.FileID) 
-            WHERE
-            ( (Song.DownloadStatus = '1')  ) AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
-            GROUP BY Song.ReferenceID
-            ORDER BY Country.SalesDate ASC
-            LIMIT 20
-STR;
-
-                    $coming_soon_rs = $this->Album->query($sql_coming_soon);
-                    if(!empty($coming_soon_rs)){
-                        foreach($coming_soon_rs as $key => $value)
-                        {     
-                            $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-                            $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                        }                            
-                        Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
-                    }                    
-                }
-                else    //  Show From Cache
-                {                  
-                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);                    
-                }
-                
-                $this->set('coming_soon_rs', $coming_soon_rs); 
-                
-                // Videos
-                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
-                //if(1)
-                {
-                    $this->Song->recursive = 2;
-                    $countryPrefix = $this->Session->read('multiple_countries');
-                
-                $sql_cs_videos =<<<STR
-	SELECT 
-        Video.ProdID,
-        Video.ReferenceID,
-        Video.Title,
-        Video.ArtistText,
-        Video.DownloadStatus,
-        Video.VideoTitle,
-        Video.Artist,
-        Video.Advisory,
-        Video.Sample_Duration,
-        Video.FullLength_Duration,
-        Video.provider_type,
-        Genre.Genre,
-        Country.Territory,
-        Country.SalesDate,
-        Image_Files.FileID,
-        Image_Files.CdnPath,
-        Image_Files.SourceURL
-    FROM
-        video AS Video
-    LEFT JOIN
-        Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
-    LEFT JOIN
-        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-    LEFT JOIN
-        File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-    WHERE
-        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
-    ORDER BY Country.SalesDate ASC
-    LIMIT 20
-STR;
-           
-            $coming_soon_videos = $this->Video->query($sql_cs_videos);
-            
-            if(!empty($coming_soon_videos)){
-                foreach($coming_soon_videos as $key => $value)
-                {
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                    $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
-                }                
-                Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
-            }                   
+        if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {
+                    
+           $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
         else    //  Show From Cache
         {                  
-           $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
+           $coming_soon_rs = Cache::read("coming_soon_songs".$territory);                    
+        }
+        $this->set('coming_soon_rs', $coming_soon_rs); 
+                
+                // Videos
+        if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false){
+            $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
+        }
+        else    //  Show From Cache
+        {                  
+            $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);
