@@ -511,10 +511,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <input type="submit" class="save" value="Submit"></input>                                                                
                                                                 </form>
                                                                         <?php 
-
+                                                                                $reutrn_message='';
                                                                           }
-                                                                    $reutrn_message=''; 
-
+                                                                          else
+                                                                          {
+                                                                                $reutrn_message='<font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.'; 
+                                                                          }
                                                                           ?>
                                                                     <span id="ReturnMessage" ><?php echo $reutrn_message; ?></span>
                                                                 
