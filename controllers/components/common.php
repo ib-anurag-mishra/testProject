@@ -158,7 +158,6 @@ STR;
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
-
             if (!empty($data)) {
                 Cache::delete("national" . $country);
                 foreach($data as $key => $value){
@@ -167,16 +166,14 @@ STR;
                         $data[$key]['songAlbumImage'] = $songAlbumImage;
                 }                    
                 Cache::write("national" . $country, $data);
-                $this->log("cache written for national top ten for $territory", "cache");
+                $this->log("cache written for national top 100 songs for $territory", "cache");
             } else {
-
                 Cache::write("national" . $country, Cache::read("national" . $country));
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
         }
-        $this->log("cache written for national top 100 for $territory", 'debug');        
-        
-        
+        $this->log("cache written for national top 100 for $territory", 'debug');
+        return $data;
     }
     
     
