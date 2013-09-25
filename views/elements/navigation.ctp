@@ -32,10 +32,10 @@ $(document).ready(function() {
             url: webroot+'homes/ajax_submit_register_concert',
             data: frm.serialize(),
             success: function (response) { 
-                alert("["+response+"]");
+                //alert("["+response+"]");
                 if(response=='Failure')
                 {
-                  $('#FailureMessage').append("<br><span style='color:red;'>Please fill information in all fields.</span>");   
+                  $('#FailureMessage').append("<span style='color:red;'>Please fill information in all fields.</span><br>");   
                 }
                 else
                 {
