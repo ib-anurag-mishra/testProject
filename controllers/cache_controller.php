@@ -2066,8 +2066,8 @@ STR;
      */
     
     function runCache(){
+        set_time_limit(0);
         $territoriesList = $this->Common->getTerritories();
-        
         foreach($territoriesList as $territory){
             $this->Common->getGenres($territory);
             $this->Common->getNationalTop100($territory);

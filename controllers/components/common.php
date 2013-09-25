@@ -46,14 +46,11 @@ Class CommonComponent extends Object
             Cache::delete("genre".$territory);
             Cache::write("genre".$territory, $genreAll);
             $this->log( "cache written for genre for $territory", "cache");
-            echo "cache written for genre for $territory";
           }
           else
           {                                  
-
             Cache::write("genre".$territory, Cache::read("genre".$territory) );
             $this->log( "no data available for genre".$territory, "cache");
-            echo "no data available for genre".$territory;
           }        
     }
     
@@ -104,7 +101,6 @@ Class CommonComponent extends Object
 
             if ((count($natTopDownloaded) < 1) || ($natTopDownloaded === false)) {
                 $this->log("download data not recevied for " . $territory, "cache");
-                echo "download data not recevied for " . $territory;
             }
             $data = array();
 
@@ -161,7 +157,6 @@ STR;
             $this->log($sql_national_100, "cachequery");
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
-                echo "ids_provider_type is set blank for " . $territory;
             }
 
             if (!empty($data)) {
@@ -173,13 +168,10 @@ STR;
                 }                    
                 Cache::write("national" . $country, $data);
                 $this->log("cache written for national top ten for $territory", "cache");
-                echo "cache written for national top ten for $territory";
             } else {
 
                 Cache::write("national" . $country, Cache::read("national" . $country));
-                echo "Unable to update key";
                 $this->log("Unable to update national 100 for " . $territory, "cache");
-                echo "Unable to update national 100 for " . $territory;
             }
         }
         $this->log("cache written for national top 100 for $territory", 'debug');        
@@ -213,12 +205,9 @@ STR;
             }         
             Cache::write("featured_videos" . $territory, $featuredVideos);
             $this->log("cache written for featured videos for $territory", "cache");
-            echo "cache written for featured videos for $territory";
         }else{
             Cache::write("featured_videos" . $territory, Cache::read("featured_videos" . $territory));
-            echo "Unable to update key for featured videos";
             $this->log("Unable to update featured videos cache for " . $territory, "cache");
-            echo "Unable to update update featured videos for " . $territory;
         }
 
         // End Caching functionality for featured videos            
@@ -251,13 +240,10 @@ STR;
             }                
             Cache::write("top_download_videos".$territory, $topDownloads);
             $this->log("cache written for top download   videos for $territory", "cache");
-            echo "cache written for top download  videos for $territory";
 
         }else{
             Cache::write("top_download_videos" . $territory, Cache::read("top_download_videos" . $territory));
-            echo "Unable to update key for top download  videos";
             $this->log("Unable to update top download  videos cache for " . $territory, "cache");
-            echo "Unable to update update top download  videos for " . $territory;
         }
         // End Caching functionality for top video downloads             
     } 
@@ -318,7 +304,6 @@ STR;
 
             if ((count($natTopDownloaded) < 1) || ($natTopDownloaded === false)) {
                 $this->log("download data not recevied for " . $territory, "cache");
-                echo "download data not recevied for " . $territory;
             }
 
 
@@ -375,7 +360,6 @@ STR;
 
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
-                echo "ids_provider_type is set blank for " . $territory;
             }
 
             if (!empty($data)) {
@@ -387,13 +371,9 @@ STR;
                 }                    
                 Cache::write("nationalvideos" . $country, $data);
                 $this->log("cache written for national top ten  videos for $territory", "cache");
-                echo "cache written for national top ten  videos for $territory";
             } else {
-
                 Cache::write("nationalvideos" . $country, Cache::read("nationalvideos" . $country));
-                echo "Unable to update key";
                 $this->log("Unable to update national 100  videos for " . $territory, "cache");
-                echo "Unable to update national 100 videos for " . $territory;
             }
         }
         $this->log("cache written for national top ten  videos for $territory", 'debug');
@@ -461,14 +441,10 @@ STR;
                 }
                 Cache::delete("coming_soon_songs" . $territory);
                 Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
-                
                 $this->log("cache written for coming soon songs for $territory", "cache");
-                echo "cache written for coming soon songs for $territory";         
-                
             }else{
                  Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
                  $this->log("Unable to update coming soon songs for " . $territory, "cache");
-                 echo "Unable to update coming soon songs for " . $territory;
             }
             
             $this->log("cache written for coming soon for $territory", 'debug');
@@ -532,11 +508,9 @@ STR;
             }                
             Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
             $this->log("cache written for coming soon videos for $territory", "cache");
-            echo "cache written for coming soon videos for $territory";  
         }else{
             Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));                   
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
-            echo "Unable to update coming soon videos for " . $territory;
         }
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
@@ -592,7 +566,6 @@ STR;
 
             if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
                 $this->log("download data not recevied for " . $territory, "cache");
-                echo "download data not recevied for " . $territory;
             }
             $data = array();
 
@@ -640,7 +613,6 @@ STR;
             $this->log($sql_US_TOP_10, "cachequery");
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
-                echo "ids_provider_type is set blank for " . $territory;
             }
 
             if (!empty($data)) {
@@ -652,13 +624,10 @@ STR;
                 Cache::delete("national_us_top10_songs" . $country);
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("cache written for US top ten for $territory", "cache");
-                echo "cache written for US top ten for $territory";
             } else {
 
                 Cache::write("national_us_top10_songs" . $country, Cache::read("national_us_top10_songs" . $country));
-                echo "Unable to update key";
                 $this->log("Unable to update US top ten for " . $territory, "cache");
-                echo "Unable to update US top ten for " . $territory;
             }
         }
         $this->log("cache written for US top ten for $territory", 'debug');
@@ -713,7 +682,6 @@ STR;
 
            if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
                $this->log("download data not recevied for " . $territory, "cache");
-               echo "download data not recevied for " . $territory;
            }
            $data = array();
 
@@ -762,7 +730,6 @@ STR;
            $this->log($album_sql_US_TOP_10, "cachequery");
            if ($ids_provider_type == "") {
                $this->log("ids_provider_type is set blank for " . $territory, "cache");
-               echo "ids_provider_type is set blank for " . $territory;
            }
 
            if (!empty($data)) {
@@ -775,13 +742,9 @@ STR;
                Cache::delete("national_us_top10_albums" . $country);
                Cache::write("national_us_top10_albums" . $country, $data);
                $this->log("cache written for US top ten Album for $territory", "cache");
-               echo "cache written for US top ten Album for $territory";
            } else {
-
                Cache::write("national_us_top10_albums" . $country, Cache::read("national_us_top10_albums" . $country));
-               echo "Unable to update key";
                $this->log("Unable to update US top ten Album for " . $territory, "cache");
-               echo "Unable to update US top ten Album for " . $territory;
            }
        }
        $this->log("cache written for US top ten Album for $territory", 'debug');
@@ -838,7 +801,6 @@ STR;
 
              if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
                  $this->log("download data not recevied for " . $territory, "cache");
-                 echo "download data not recevied for " . $territory;
              }
              $data = array();
 
@@ -879,7 +841,6 @@ STR;
              $this->log($video_sql_US_TOP_10, "cachequery");
              if ($ids_provider_type == "") {
                  $this->log("ids_provider_type is set blank for " . $territory, "cache");
-                 echo "ids_provider_type is set blank for " . $territory;
              }
              if (!empty($data)) {
                  foreach($data as $key => $value){
@@ -890,13 +851,9 @@ STR;
                  Cache::delete("national_us_top10_videos" . $country);
                  Cache::write("national_us_top10_videos" . $country, $data);
                  $this->log("cache written for US top ten video for $territory", "cache");
-                 echo "cache written for US top ten video for $territory";
              } else {
-
                  Cache::write("national_us_top10_videos" . $country, Cache::read("national_us_top10_videos" . $country));
-                 echo "Unable to update key";
                  $this->log("Unable to update US top ten video for " . $territory, "cache");
-                 echo "Unable to update US top ten video for " . $territory;
              }
          }
          $this->log("cache written for US top ten video for $territory", 'debug');
@@ -968,12 +925,9 @@ STR;
                 Cache::delete("new_releases_albums" . $country);
                 Cache::write("new_releases_albums" . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
-                echo "cache written for new releases albums for $territory";
             } else {
                 Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
-                echo "Unable to update key";
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
-                echo "Unable to update new releases albums for " . $territory;
             }
         }
         $this->log("cache written for new releases albums for $territory", 'debug');
@@ -1042,12 +996,9 @@ STR;
                 Cache::delete("new_releases_videos" . $country);
                 Cache::write("new_releases_videos" . $country, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
-                echo "cache written for new releases videos for $territory";
             } else {
                 Cache::write("new_releases_videos" . $country, Cache::read("new_releases_videos" . $country));
-                echo "Unable to update key";
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
-                echo "Unable to update new releases videos for " . $territory;
             }
         }
         $this->log("cache written for new releases albums for $territory", 'debug');
@@ -1084,7 +1035,6 @@ STR;
 
         if ((count($featured) < 1) || ($featured === false)) {
             $this->log("featured artist data is not available for" . $territory, "cache");
-            echo "featured artist data is not available for" . $territory;
         }
 
         if ($ids != '') {
@@ -1152,8 +1102,6 @@ STR;
 
         $this->log("cache written for featured artists for $territory", 'debug');
         $this->log("cache written for featured artists for: $territory", "cache");
-        echo "cache written for featured artists for: $territory";        
-        
     }
     
     
@@ -1267,13 +1215,9 @@ STR;
                   Cache::delete($genre . $territory);
                   Cache::write($genre . $territory, $data);
                   $this->log("cache written for: $genre $territory", "cache");
-                  echo "cache written for: $genre $territory";
               } else {
-
                   Cache::write($genre . $territory, Cache::read($genre . $territory));
-                  echo "Unable to update key";
                   $this->log("Unable to update key for: $genre $territory", "cache");
-                  echo "Unable to update key for: $genre $territory";
               }
         
         
@@ -1623,7 +1567,6 @@ STR;
         if ((count($topDownload) < 1) || ($topDownload === false)) {
             Cache::write("lib" . $libId, Cache::read("lib" . $libId));
             $this->log("topDownloaded_query songs  returns null for lib: $libId $country", "cache");
-            echo "<br /> library top 10 songs returns null for lib: $libId $country <br />";
         } else {
             foreach($topDownload as $key => $value){
                  $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
@@ -1634,7 +1577,6 @@ STR;
             Cache::write("lib" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
-            echo "<br />library top 10 songs cache set for lib: $libId $country <br />";
         }
 
         //library top 10 cache set for songs end
@@ -1770,7 +1712,6 @@ STR;
         if ((count($topDownload) < 1) || ($topDownload === false)) {
             Cache::write("lib_album" . $libId, Cache::read("lib_album" . $libId));
             $this->log("topDownloaded_query albums returns null for lib: $libId $country", "cache");
-            echo "<br /> library top 10 albums returns null for lib: $libId $country <br />";
         } else {
             foreach($topDownload as $key => $value){
                  $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
@@ -1781,7 +1722,6 @@ STR;
             Cache::write("lib_album" . $libId, $topDownload);
             //library top 10 cache set
             $this->log("library top 10 albums cache set for lib: $libId $country", "cache");
-            echo "<br />library top 10 albums cache set for lib: $libId $country <br />";
         }
 
        //library top 10 cache set for albums end
@@ -1915,7 +1855,6 @@ STR;
          if ((count($topDownload) < 1) || ($topDownload === false)) {
              Cache::write("lib_video" . $libId, Cache::read("lib_video" . $libId));
              $this->log("topDownloaded_query videos returns null for lib: $libId $country", "cache");
-             echo "<br /> library top 10 videos returns null for lib: $libId $country <br />";
          } else {
              foreach($topDownload as $key => $value){
                  $albumArtwork = shell_exec('perl files/tokengen_artwork '.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
@@ -1926,7 +1865,6 @@ STR;
              Cache::write("lib_video" . $libId, $topDownload);
              //library top 10 cache set
              $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
-             echo "<br />library top 10 videos cache set for lib: $libId $country <br />";
          }
 
         //library top 10 cache set for videos end         
@@ -1985,13 +1923,11 @@ STR;
         $EachVideosData = $videoInstance->query($individualVideoSQL);
         if ((count($EachVideosData) < 1) || ($EachVideosData === false)) {
              $this->log("Music video id $indiMusicVidID returns null ", "cache");
-             echo "<br /> Music video id $indiMusicVidID returns null<br />";
         } else {
              $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$EachVideosData[0]['File']['CdnPath']."/".$EachVideosData[0]['File']['SourceURL']);
              $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;               
              Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);
              $this->log("Music video id $indiMusicVidID cache set", "cache");
-             echo "<br />Music video id $indiMusicVidID cache set <br />";
         }    
          if(count($EachVideosData)>0)
          {    
@@ -2027,10 +1963,8 @@ STR;
              if (!empty($MoreVideosData)) {
                  Cache::write("musicVideoMoreDetails_" .$territory.'_'.$EachVideosData[0]['Video']['ArtistText'], $MoreVideosData);
                  $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] cache set", "cache");
-                 echo "<br />Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] cache set <br />";                        
              }else{
                  $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] returns null ", "cache");
-                 echo "<br />Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] returns null<br />";
              }
          }
          if(count($EachVideosData)>0)
@@ -2051,10 +1985,8 @@ STR;
                  if(!empty($TopVideoGenreData)){
                      Cache::write("top_videos_genre_" . $territory.'_'.$EachVideosData[0]['Video']['Genre'], $TopVideoGenreData);
                      $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory cache set", "cache");
-                     echo "<br />Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory cache set <br />";                        
                  }else{
                      $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null ", "cache");
-                     echo "<br />Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null<br />";                        
                  }
                  //echo "<pre>"; print_r($TopVideoGenreData); die;
          }        
@@ -2085,14 +2017,12 @@ STR;
         if ((count($queueData) < 1) || ($queueData === false)) {            
             Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
             $this->log("Freegal Defaut Queues returns null ", "cache");
-            echo "<br /> Freegal Defaut Queues returns null<br />";
         } else {           
             Cache::delete("defaultqueuelist");
             Cache::write("defaultqueuelist", $queueData);
             
             //library top 10 cache set
             $this->log("Freegal Defaut Queues cache set", "cache");
-            echo "<br />Freegal Defaut Queues cache set <br />";
         }  
         
         //set the variable for each freegal default queue 
@@ -2103,11 +2033,9 @@ STR;
            
            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
-                echo "<br /> Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null<br />";
            } else {                 
                 Cache::write("defaultqueuelistdetails".$defaultQueueId, $eachQueueDetails);       
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set", "cache");
-                echo "<br />Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";              
            }            
         }     
         //--------------------------------Default Freegal Queues End--------------------------------------------------------------
