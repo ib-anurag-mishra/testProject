@@ -1512,6 +1512,7 @@ STR;
                         $val = $val.$v['Album']['ProdID'].",";
                         $result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
                     }
+                    echo "<br>Query2: ".$this->Song->lastQuery();
 		}
                 $data = "<option value=''>SELECT</option>";
 		foreach($result as $k=>$v){
