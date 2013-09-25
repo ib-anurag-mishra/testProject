@@ -12,7 +12,7 @@ class RegisterConcertsController extends AppController{
     var $layout = 'home';
     var $helpers = array( 'Html', 'Form', 'Session');
     var $components = array('Session', 'Auth', 'Acl');
-    var $uses = array( 'RegisterConcert', 'User');
+    var $uses = array( 'RegisterConcert', 'User', 'Page');
     
     function beforeFilter(){
        
