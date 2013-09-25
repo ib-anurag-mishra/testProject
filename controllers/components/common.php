@@ -1545,6 +1545,7 @@ STR;
         }
 
        //library top 10 cache set for albums end
+       return $topDownload;
     }
     
     /* @function getLibraryTop10Videos
