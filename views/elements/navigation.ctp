@@ -4,7 +4,7 @@ $(document).ready(function() {
      var frm = $('#FormRegisterConcert');
         $.ajax({
             type: "post",
-            url: webroot+'homes/ajax_submit_register_concert',
+            url: webroot+'registerconcerts/ajax_submit_register_concert',
             data: frm.serialize(),
             success: function (response) { 
                 //alert("["+response+"]");
