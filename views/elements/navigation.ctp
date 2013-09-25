@@ -511,7 +511,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         ?>    
                                                              <div class="announcements">
                                                                 <h4><?php __('Announcements'); ?></h4>
-                                                                <div class="poll1" style="display:block;height:400px;">                                                                                                                                                                       
+                                                                <div class="poll1" style="display:block;height:350px;">                                                                                                                                                                       
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
                                                                  <?php echo $html->link(__('More Info', true), array('controller' => 'homes','action'=>'great_fall_concert'));?><br> 
