@@ -2083,11 +2083,199 @@ STR;
             $this->Common->getNewReleaseVideos($territory);
             $this->Common->getFeaturedArtists($territory);
             $this->Common->getDifferentGenreData($territory);
-            $this->Common->getArtistText($territory);
+            $this->getArtistText($territory);
             $this->Common->getDefaultQueues($territory);
         }
         $this->Common->setLibraryTopTenCache();
         $this->Common->setVideoCacheVar();        
+    }
+    
+    /*
+     * Function Name : getArtistText
+     * Function Description : This function is used to getArtistText.
+     */
+    function getArtistText($territory){
+        //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
+        try {
+
+
+            $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
+
+            $country = $territory;
+            $condition = "";
+            $this->Song->unbindModel(array('hasOne' => array('Participant')));
+            $this->Song->unbindModel(array('hasOne' => array('Country')));
+            $this->Song->unbindModel(array('hasOne' => array('Genre')));
+            $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+            $this->Song->Behaviors->attach('Containable');
+            $this->Song->recursive = 0;
+            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+
+            $this->paginate = array(
+                'conditions' => $gcondition,
+                'fields' => array('DISTINCT Song.ArtistText'),
+                'extra' => array('chk' => 1),
+                'order' => 'TRIM(Song.ArtistText) ASC',
+                'limit' => '60',
+                'cache' => 'yes',
+                'check' => 2,
+                'all_query'=> true,
+                'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
+                'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+            );
+            $allArtists = $this->paginate('Song');
+
+
+
+            for($j = 65;$j < 93;$j++){
+
+                $alphabet = chr($j);
+                if($alphabet == '[') {
+                $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
+                }
+                elseif($j == 92) {
+                $condition = "";
+                }
+                elseif($alphabet != '') {
+                $condition = array('Song.ArtistText LIKE' => $alphabet.'%');
+                }
+                else {
+                $condition = "";
+                }
+                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                $this->Song->unbindModel(array('hasOne' => array('Country')));
+                $this->Song->unbindModel(array('hasOne' => array('Genre')));
+                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+                $this->Song->Behaviors->attach('Containable');
+                $this->Song->recursive = 0;
+                $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+
+                $this->paginate = array(
+                'conditions' => $gcondition,
+                'fields' => array('DISTINCT Song.ArtistText'),
+                'extra' => array('chk' => 1),
+                'order' => 'TRIM(Song.ArtistText) ASC',
+                'limit' => '60',
+                'cache' => 'yes',
+                'check' => 2,
+                'all_query'=> true,
+                'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
+                'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+                );
+                $allArtists = $this->paginate('Song');
+                $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
+                $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
+            }
+
+
+            $this->Song->bindmodel(array('hasOne'=>array(
+                    'Genre' => array(
+                    'className' => 'Genre',
+                    'foreignKey' => 'ProdID'
+                    ),
+                    'Country' => array(
+                        'className' => 'Country',
+                        'foreignKey' => 'ProdID'
+                    )
+                )
+                )
+            );
+
+            foreach($genreAll as $genreRow){
+                $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
+                $condition = "";
+                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                $this->Song->unbindModel(array('hasOne' => array('Country')));
+                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+                $this->Song->Behaviors->attach('Containable');
+                $this->Song->recursive = 0;
+                $this->paginate = array(
+                    'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
+                    'fields' => array('DISTINCT Song.ArtistText'),
+                    'contain' => array(
+                    'Genre' => array(
+                        'fields' => array(
+                        'Genre.Genre'
+                        )
+                    ),
+                    ),
+                    'extra' => array('chk' => 1),
+                    'order' => 'TRIM(Song.ArtistText) ASC',
+                    'limit' => '60', 'cache' => 'no','check' => 2
+                );
+                $allArtists = $this->paginate('Song');
+                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
+                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
+                for($k = 65;$k < 93;$k++){
+                $alphabet = chr($k);
+                if($alphabet == '[') {
+                    $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
+                }
+                elseif($k == 92) {
+                    $condition = "";
+                }
+                elseif($alphabet != '') {
+                    $condition = array('Song.ArtistText LIKE' => $alphabet.'%');
+                }
+                else {
+                    $condition = "";
+                }
+                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                $this->Song->unbindModel(array('hasOne' => array('Country')));
+                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+                $this->Song->Behaviors->attach('Containable');
+                $this->Song->recursive = 0;
+                $this->paginate = array(
+                    'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
+                    'fields' => array('DISTINCT Song.ArtistText'),
+                    'contain' => array(
+                    'Genre' => array(
+                        'fields' => array(
+                        'Genre.Genre'
+                        )
+                    ),
+                    ),
+                    'extra' => array('chk' => 1),
+                    'order' => 'TRIM(Song.ArtistText) ASC',
+                    'limit' => '60', 'cache' => 'yes','check' => 2
+                );
+                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                $allArtists = $this->paginate('Song');
+                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
+                $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
+                }
+            }
+            $this->Song->bindmodel(array('hasOne'=>array(
+                    'Genre' => array(
+                    'className' => 'Genre',
+                    'foreignKey' => 'ProdID'
+                    ),
+                    'Country' => array(
+                        'className' => 'Country',
+                        'foreignKey' => 'ProdID'
+                    )
+                ), 'belongsTo'=>array('Sample_Files' => array(
+                    'className' => 'Files',
+                    'foreignKey' => 'Sample_FileID'
+                    ),
+                    'Full_Files' => array(
+                    'className' => 'Files',
+                    'foreignKey' => 'FullLength_FileID'
+                    )
+                )
+                )
+            );
+
+            } catch(Exception $e) {
+
+            $this->log("Artist Pagenation Mesg : ".$e->getMessage(), "cache");
+            $this->log("Artist Pagenation      :   $country $alphabet $genre", "cache");
+            $this->log("Artist Pagenation Query: ".$this->Song->lastQuery(), "cache");
+
+            }
+        //-------------------------------------------ArtistText Pagenation End----------------------------------------
+        
+        
     }
     
     
