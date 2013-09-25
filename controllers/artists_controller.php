@@ -102,12 +102,12 @@ Class ArtistsController extends AppController
 		}
                 $memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"))
+                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s"))
                 {
                    $this->log("deleted featuredUS",'featured');
                 }
                 else {
-                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"),'featured');
+                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s"),'featured');
                 }
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
