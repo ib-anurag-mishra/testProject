@@ -35,7 +35,7 @@ $(document).ready(function() {
                 alert("["+response+"]");
                 if(response=='Failure')
                 {
-                  $('#FailureMessage').append("Please fill information in all fields.");   
+                  $('#FailureMessage').append("<br><span style="color:red;">Please fill information in all fields.</span>");   
                 }
                 else
                 {
