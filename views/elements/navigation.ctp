@@ -514,7 +514,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 <div class="poll1" style="display:block;height:400px;">                                                                                                                                                                       
                                                                  Register for Concert Tickets Giveway<br><br>
                                                                  One entry only<br><br>
-                                                                 <?php echo $html->link(__('More Info', true), array('controller' => 'homes','action'=>'great_fall_concert'));?><br><br>   
+                                                                 <?php echo $html->link(__('More Info', true), array('controller' => 'homes','action'=>'great_fall_concert'));?><br> 
                                                                  
                                                                  <?php                                                                    
                                                                         if($register_concert_id=='') // If User has  not registered for concert
