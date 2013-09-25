@@ -515,7 +515,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                           }
                                                                           else
                                                                           {
-                                                                                $reutrn_message='<font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.'; 
+                                                                                $reutrn_message='<br><font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.'; 
                                                                           }
                                                                           ?>
                                                                     <span id="ReturnMessage" ><?php echo $reutrn_message; ?></span>
