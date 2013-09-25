@@ -2352,16 +2352,10 @@ STR;
     function admin_aboutusform() { 
     
       // allwoes only admin
-    if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
         $this->redirect(array('controller' => 'users', 'action' => 'login'));
-    }
-    if(Cache::read("featuredUS"))
-    {
-       $this->log(Cache::read("featuredUS"),'test_cacheread');
-    }
-    else {
-        $this->log('Can not Read the Variable featured artist from US','test_cacheread');
-    }
+      } 
+    
 	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
 	    $language = $this->data['Home']['language'];
 	    $this -> set( 'formAction', 'admin_aboutusform');
