@@ -4673,7 +4673,7 @@ STR;
                     $this->RegisterConcert->setDataSource('master');
                     if($this->RegisterConcert->save($this->data['RegisterConcert']))
                     {
-                      $this->set('Message', "Thanks for entering the Concert Ticket Giveway.<br><br>Contest closes October 11, 2013.");      						
+                      $this->set('Message', '<font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.');      						
                     }
                     else
                     {

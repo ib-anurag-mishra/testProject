@@ -520,6 +520,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                         if($register_concert_id=='') // If User has  not registered for concert
                                                                         {
                                                                   ?>
+
                                                                 <span id="FailureMessage"></span> <br> 
                                                                 <form  id="FormRegisterConcert" method="post">
                                                                     <label for="UserEmail">First Name :</label>
@@ -541,7 +542,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                           else      // If user has already registered for Concert
                                                                           {
                                                                             
-                                                                                $reutrn_message='<font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font<br><br>Contest closes October 11, 2013.';
+                                                                                $reutrn_message='<font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.';
                                                                             
                                                                           }
                                                                           ?>
