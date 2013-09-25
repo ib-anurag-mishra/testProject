@@ -1399,6 +1399,7 @@ STR;
         }
 
         //library top 10 cache set for songs end
+        return $topDownload;
     }
     
     /* @function getLibraryTop10Albums
