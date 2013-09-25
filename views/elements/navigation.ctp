@@ -505,7 +505,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php /* } */ ?>     
                                             </ul>
                                             <?php
-                                                                                                
+                                                     echo "register_concert_id: ".$register_concert_id;                                           
 
                                                     if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)                                                     
                                                     {                                                         
