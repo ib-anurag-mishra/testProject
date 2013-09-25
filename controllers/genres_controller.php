@@ -600,15 +600,5 @@ Class GenresController extends AppController
 		$this->set('selectedGenres', $selArray);
 		$this->layout = 'admin';
 	}
-        
-        /*
-         * Function Name : callToAllFunctions
-         * Function Description : This function is used to call all functions
-         */
-
-        function callToAllFunctions(){
-            $this->autoRender = false;
-            $this->Common->getNationalTop100('US');
-        }        
 }
 ?>
