@@ -22,7 +22,7 @@ class RegisterConcertsController extends AppController{
 
     
     /*
-     Function Name : userStreaming
+     Function Name : ajax_submit_register_concert
      Desc : Ajax function used for submitting registeration concert details
      * 
      * 
@@ -70,7 +70,7 @@ class RegisterConcertsController extends AppController{
     
      /*
      Function Name : aboutus
-     Desc : actions used for User end checking for cookie and javascript enable
+     Desc : CMS Page for Great Fall Concert
     */
     function great_fall_concert() 
     {		
