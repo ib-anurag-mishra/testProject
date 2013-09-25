@@ -307,73 +307,68 @@ class HomesController extends AppController
         
 	function my_lib_top_10()
 	{ 
-		
-                        
-                $this->layout = 'home';           
-                $patId = $this->Session->read('patron');
-		$country = $this->Session->read('territory');
-		$url = $_SERVER['SERVER_NAME'];
-                $host = explode('.', $url);
-                $subdomains = array_slice($host, 0, count($host) - 2 );									
-                $subdomains = $subdomains[0] ;
-                $libId = $this->Session->read('library');
-                
-                if($subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic'){
-                    if(!$this->Session->read("patron")){
-                        $this->redirect(array('controller' => 'homes', 'action' => 'index'));
-                    }
-                }
-                
-                
-                /////////////////////////////////////Songs///////////////////////////////////////////////
-                
-		$ids = '';
-                $ids_provider_type = '';
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);                
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
-                if (($libDownload = Cache::read("lib".$libId)) === false){
-                    $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
-                } 
-                else
-                {
-                    $topDownload_songs = Cache::read("lib".$libId);
-                }
-		
-		$this->set('top_10_songs',$topDownload_songs);
-                
-                
-                ////////////////////////////////////////////////Albums///////////////////////////////////////////////////
-                                
-                
-                $ids_provider_type_album = '';
-		
-                    //if(1)
-                if (($libDownload = Cache::read("lib_album".$libId)) === false)
-                {
-                        
-                    $topDownload_albums = $this->Common->getLibraryTop10Albums($country,$libId);
-		}
-                else
-                { 
-                    $topDownload_albums = Cache::read("lib_album".$libId);
-                }
-		$this->set('topDownload_albums',$topDownload_albums); 
-                
-                ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
+            $this->layout = 'home';           
+            $patId = $this->Session->read('patron');
+            $country = $this->Session->read('territory');
+            $url = $_SERVER['SERVER_NAME'];
+            $host = explode('.', $url);
+            $subdomains = array_slice($host, 0, count($host) - 2 );									
+            $subdomains = $subdomains[0] ;
+            $libId = $this->Session->read('library');
 
-                $topDownload_videos_data = $this->requestAction(
-                array('controller' => 'videos', 'action' => 'my_lib_top_10_videos'), array(
-                             'data'=>array(
-                                       'model'=>array(
-                                        'field'=>'val'
-                                            )
-                                        )
-                                    )
-                                );
+            if($subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic'){
+                if(!$this->Session->read("patron")){
+                    $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+                }
+            }
 
-               $this->set('topDownload_videos_data',$topDownload_videos_data);                   
+
+            /////////////////////////////////////Songs///////////////////////////////////////////////
+
+            $ids = '';
+            $ids_provider_type = '';
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);                
+            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
+            if (($libDownload = Cache::read("lib".$libId)) === false){
+                $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
+            } 
+            else
+            {
+                $topDownload_songs = Cache::read("lib".$libId);
+            }
+
+            $this->set('top_10_songs',$topDownload_songs);
+
+
+            ////////////////////////////////////////////////Albums///////////////////////////////////////////////////
+
+
+            $ids_provider_type_album = '';
+
+                //if(1)
+            if (($libDownload = Cache::read("lib_album".$libId)) === false)
+            {
+
+                $topDownload_albums = $this->Common->getLibraryTop10Albums($country,$libId);
+            }
+            else
+            { 
+                $topDownload_albums = Cache::read("lib_album".$libId);
+            }
+            $this->set('topDownload_albums',$topDownload_albums); 
+
+            ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
+            if (($libDownload = Cache::read("lib_video".$libId)) === false)
+            {
+                $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country,$libId);
+            }
+            else
+            { 
+                $topDownload_videos_data = Cache::read("lib_video".$libId);
+            }
+            $this->set('topDownload_videos_data',$topDownload_videos_data);                   
 	}
         
         function us_top_10()

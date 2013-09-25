@@ -1688,7 +1688,8 @@ STR;
              $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
          }
 
-        //library top 10 cache set for videos end         
+        //library top 10 cache set for videos end
+        return $topDownload; 
         
     }
     
