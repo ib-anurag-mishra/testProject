@@ -540,9 +540,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                           }
                                                                           else      // If user has already registered for Concert
                                                                           {
-                                                                            ?>
+                                                                            
                                                                                 $reutrn_message='Thanks for entering the Concert Ticket Giveway.<br><br>Contest closes October 11, 2013.';
-                                                                            <?php
+                                                                            
                                                                           }
                                                                           ?>
                                                                     <span id="ReturnMessage" style="color:green;"><?php echo $reutrn_message; ?></span>
