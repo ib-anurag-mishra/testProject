@@ -32,7 +32,7 @@ $(document).ready(function() {
             url: webroot+'homes/ajax_submit_register_concert',
             data: frm.serialize(),
             success: function (response) { 
-                alert(response);
+                alert("["+response+"]");
                 if(response=='Failure')
                 {
                   $('#FailureMessage').append("Please fill information in all fields.");   
