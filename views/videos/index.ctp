@@ -62,7 +62,7 @@
 
 
                                 <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
-                                <a class="add-to-playlist-button" href="#"></a>
+                                <a class="add-to-playlist-button no-ajaxy" href="#"></a>
                                 <div class="wishlist-popover">
                                 <?php
 
@@ -146,7 +146,7 @@ foreach($topVideoDownloads as $topDownload)
                                     {
                            ?>
                          <!--  <a class="top-video-download-now-button" href="#">Download Now</a> -->
-                           <a class="add-to-playlist-button" href="#"></a> 
+                           <a class="add-to-playlist-button no-ajaxy" href="#"></a> 
                            <?php
                                     }
                                     else

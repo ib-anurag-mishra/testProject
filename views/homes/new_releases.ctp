@@ -159,7 +159,7 @@
     }
       ?>
                                         <?php if($this->Session->read("patron")){ ?> 
-                                                <a class="add-to-playlist-button" href="#"></a>
+                                                <a class="add-to-playlist-button no-ajaxy" href="#"></a>
 
                                                 <div class="wishlist-popover">
                                                 <?php if( $this->Session->read('library_type') == 2 ){
@@ -303,7 +303,7 @@
 
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
                                                         <?php if($this->Session->read("patron")){ ?> 
-							<a class="add-to-playlist-button" href="#"></a>
+							<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 							<div class="wishlist-popover">
                                                             <?php
                                                                 $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);

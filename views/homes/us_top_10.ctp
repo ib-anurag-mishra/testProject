@@ -167,7 +167,7 @@
 
 
                                                                                     <?php if($this->Session->read("patron")){ ?> 
-														<a class="add-to-playlist-button" href="#"></a>
+														<a class="add-to-playlist-button no-ajaxy" href="#"></a>
                                                                                                
 														<div class="wishlist-popover">
                                                                                                                 <?php if( $this->Session->read('library_type') == 2 ){
@@ -307,7 +307,7 @@
 								
 								<?php if($this->Session->read("patron")){ ?> 
 														
-														<a class="add-to-playlist-button" href="#"></a>
+														<a class="add-to-playlist-button no-ajaxy" href="#"></a>
 														
 														<div class="wishlist-popover">
                                                                                                                     <?php
