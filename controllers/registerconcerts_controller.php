@@ -17,7 +17,7 @@ class RegisterConcertsController extends AppController{
     function beforeFilter(){
        
             parent::beforeFilter();
-          //  $this->Auth->allow('index');
+            $this->Auth->allow('ajax_submit_register_concert', 'great_fall_concert');
     }
 
     
