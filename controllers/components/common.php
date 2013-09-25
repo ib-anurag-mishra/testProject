@@ -168,6 +168,7 @@ STR;
                 Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             } else {
+                $data = Cache::read("national" . $country);
                 Cache::write("national" . $country, Cache::read("national" . $country));
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
@@ -203,11 +204,13 @@ STR;
             Cache::write("featured_videos" . $territory, $featuredVideos);
             $this->log("cache written for featured videos for $territory", "cache");
         }else{
+            $featuredVideos = Cache::read("featured_videos" . $territory);
             Cache::write("featured_videos" . $territory, Cache::read("featured_videos" . $territory));
             $this->log("Unable to update featured videos cache for " . $territory, "cache");
         }
 
-        // End Caching functionality for featured videos            
+        // End Caching functionality for featured videos
+        return $featuredVideos;
     }    
     
     
@@ -239,10 +242,12 @@ STR;
             $this->log("cache written for top download   videos for $territory", "cache");
 
         }else{
+            $topDownloads = Cache::read("top_download_videos" . $territory);
             Cache::write("top_download_videos" . $territory, Cache::read("top_download_videos" . $territory));
             $this->log("Unable to update top download  videos cache for " . $territory, "cache");
         }
-        // End Caching functionality for top video downloads             
+        // End Caching functionality for top video downloads
+        return $topDownloads;
     } 
     
     
@@ -369,6 +374,7 @@ STR;
                 Cache::write("nationalvideos" . $country, $data);
                 $this->log("cache written for national top ten  videos for $territory", "cache");
             } else {
+                $data = Cache::read("nationalvideos" . $country);
                 Cache::write("nationalvideos" . $country, Cache::read("nationalvideos" . $country));
                 $this->log("Unable to update national 100  videos for " . $territory, "cache");
             }
@@ -441,6 +447,7 @@ STR;
             Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
             $this->log("cache written for coming soon songs for $territory", "cache");
         }else{
+             $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
              Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
              $this->log("Unable to update coming soon songs for " . $territory, "cache");
         }
@@ -507,6 +514,7 @@ STR;
             Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
             $this->log("cache written for coming soon videos for $territory", "cache");
         }else{
+            $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
             Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));                   
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
         }
