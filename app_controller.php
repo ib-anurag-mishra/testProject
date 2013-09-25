@@ -81,7 +81,7 @@ class AppController extends Controller
                 $this -> set ( 'announcment_value' ,  $announcment_rs[0]['pages']['page_content']);
                 //$announcment_rs[0]['pages']['page_content'];
                 
-                if(!empty($this->Session->read("patron")) && !empty($this->Session->read("lId")))
+                if(($this->Session->read("patron")!='') && ($this->Session->read("lId")!=''))
                 {                
                     $concert_query = "SELECT * from register_concerts WHERE library_card = ".$this->Session->read("patron"). " and library_id=".$this->Session->read("lId");
                     $concert_rs = $this->Album->query($concert_query);
