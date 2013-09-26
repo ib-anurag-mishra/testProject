@@ -202,7 +202,7 @@ $(function() {
 		});
 	});
 	
-	$('#step5').click(function(){
+	$('#step5').click(function(){ alert("in Step 5");
 		$(".error_message").remove();
 		$(".success_message").remove();
 		$(".error-message").remove();
