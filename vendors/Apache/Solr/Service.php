@@ -476,7 +476,7 @@ class Apache_Solr_Service
 			//check the stream meta data to see if we timed out during the operation
 			$metaData = stream_get_meta_data($fp);
 
-			if ($metaData['timeout'])
+			if (isset($metaData['timeout']) && !empty($metaData['timeout']))
 			{
 				fclose($fp);
 				return false;
