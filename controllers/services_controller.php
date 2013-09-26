@@ -225,7 +225,7 @@ class ServicesController extends AppController {
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);					
 					}
                     
-					if($reference != $v['Song']['ReferenceID']){ 
+					if($reference != $v->ReferenceID){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v->ReferenceID),
 							'fields' => array(
