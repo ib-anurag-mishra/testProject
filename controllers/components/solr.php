@@ -41,7 +41,7 @@ class SolrComponent extends Object {
         App::import("Vendor", "solr", array('file' => "Apache" . DS . "Solr" . DS . "Service.php"));
         self::$solr = new Apache_Solr_Service($settings['server'], $settings['port'], $settings['solrpath']);
         //var_dump($solr);
-        if (!self::$solr->ping()) {
+        if (!self::$solr->ping(60)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
@@ -49,7 +49,7 @@ class SolrComponent extends Object {
 
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
 
-        if (!self::$solr2->ping()) {
+        if (!self::$solr2->ping(60)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
