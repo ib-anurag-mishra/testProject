@@ -298,7 +298,7 @@ $(function() {
 		
 		if(currentStep == '5') { alert("in step 5");
 			$.ajaxFileUpload
-			(
+			( 
 				
 				{   
 					url:postURL,
@@ -345,6 +345,7 @@ $(function() {
 					},
 					error: function (data, status, e)
 					{
+                                            alert("Error");
 					    onError(e, 'file_field');
 					}
 				}
