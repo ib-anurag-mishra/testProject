@@ -8,6 +8,7 @@ class ServicesController extends AppController {
 	
     function search() {
         set_time_limit(0);
+        ini_set('memory_limit','512M');
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
 												array('consortium_key' => $this->params['pass'][0])
