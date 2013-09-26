@@ -1508,17 +1508,11 @@ STR;
                 $this->Country->setTablePrefix($countryPrefix);
 		foreach($allAlbum as $k => $v){
                     $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-                    echo "<br>Query2: ".$this->Song->lastQuery();
-                    echo "Count For the above Query : -";
-                    print_r($recordCount);
-                    echo "<br>";
                     if(count($recordCount) > 0){
                         $val = $val.$v['Album']['ProdID'].",";
                         $result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
                     }
                 }
-                echo "<br>";
-                print_r($result);
                 $data = "<option value=''>SELECT</option>";
 		foreach($result as $k=>$v){
 			$data = $data."<option value='".$k."'>".$v."</option>";
