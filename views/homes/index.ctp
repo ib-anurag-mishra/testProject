@@ -199,10 +199,10 @@
 
 
 													<div class="song-title">
-														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
+                        <a title="<?php echo $songTitle; ?>" href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
 													</div>
 													<div class="artist-name">                                                                                                            
-														<a href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
+                        <a title="<?php echo $artistText; ?>" href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
 													</div>
 												</div>
 											</li>
@@ -365,8 +365,8 @@
                                                                                                     }
                                                                                                 ?>
 			<div class="song-title">
-			<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
-                                <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
+                                <!--	<a title="<?php echo $songTitle; ?>" href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
+                                        <a title="<?php echo $songTitle; ?>" href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
 	<?php if('T' == $nationalTopVideoDownload[$i]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 			</div>
 													<div class="artist-name">
@@ -420,12 +420,12 @@
 
 												</div>
 												<div class="album-title">
-													<a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
+                                                        <a title="<?php echo $title; ?>" href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
 												</div>
 
 
 												<div class="artist-name">
-													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                        <a title="<?php echo $ArtistText; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
 												</div>
 											</div>
 										</li>
@@ -522,7 +522,7 @@
                                                                                                 <?php } ?>
 												</div>
 												<div class="song-title">
-													<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a title="<?php echo $value['Song']['SongTitle']; ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     
                                                                                                             $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
@@ -545,7 +545,7 @@
                                                                                                         </a>	<?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 												</div>
 												<div class="artist-name">
-													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <a title="<?php echo $value['Song']['ArtistText']; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     
                                                                                                         $commingSoonSongArtistTitle = $this->getTextEncode($value['Song']['Artist']);
@@ -608,7 +608,7 @@
 												</div>
 												<div class="video-title">
 
-                                                                                                        <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                <a title="<?php echo $value['Video']['VideoTitle']; ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                             <?php
                                                                                                                                                                                                                                 
                                                                                                             $commingSoonVideoTitle= $this->getTextEncode($value['Video']['VideoTitle']);
@@ -630,7 +630,7 @@
 												<div class="artist-name">
 
 
-                                                                                                            <a href="javascript:void(0)">
+                                                                                                            <a title="<?php echo $value['Video']['Artist']; ?>" href="javascript:void(0)">
                                                                                                          <?php 
                                                                                                                     if(strlen($value['Video']['Artist'])>20)
                                                                                                                     echo substr($value['Video']['Artist'],0,20)."..."; 
