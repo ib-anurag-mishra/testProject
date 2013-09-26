@@ -35,7 +35,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist'); 
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4'); 
   var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr'); 
 
   
@@ -513,7 +513,6 @@ class SoapsController extends AppController {
         }
       }
 
-      //get all the details for featured albums
       $featured = array();
       if($ids != ''){     
         $this->Album->recursive = 2;
@@ -574,8 +573,7 @@ class SoapsController extends AppController {
     if(empty($featured)){
       throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
     }
-    
-    
+ 
     foreach($featured as $key => $val) {
       
       $obj = new FreegalFeaturedAlbumFreegal4Type;
@@ -1673,17 +1671,28 @@ STR;
       'conditions' => array('ProdID' => $prodId, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
       'recursive' => -1
     ));
-    
-    if(!(empty($SongData['Song']['MP4_FileID']))) {
-      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in steaming this Song.');
+ 
+    if(empty($SongData['Song']['MP4_FileID'])) {
+      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
     }
+   
+    $mp4url = null;
+    $mp4url = $this->getHLSURL($SongData['Song']['MP4_FileID']);
       
+    if(empty($mp4url)) {
+      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
+    }
+
     $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, 'App-'.$agent);
     
     switch($response[0]){
-      case 'success': return $this->createsStreamingResponseObject(true, $response[1], $response[2], $this->getHLSURL($SongData['Song']['MP4_FileID'])); break;
-      case 'error'  : return $this->createsStreamingResponseObject(false, $response[1], $response[2], '');  break;
-      default:  throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in steaming this Song.');
+      case 'success': 
+	return $this->createsStreamingResponseObject(true, $response[1], $response[2], $mp4url); 
+      break;
+      case 'error'  : 
+	return $this->createsStreamingResponseObject(false, $response[1], $response[2], '');  
+      break;
+      default:  throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
     
     }
     
@@ -1846,6 +1855,68 @@ STR;
     
 
   }
+  
+  
+  /**
+   * Function Name : getStreamSongsList
+   * Desc : Returns list of streamed songs list for given patron
+   * @param string authenticationToken
+   * @return SongDataType[]
+   */
+  function getStreamSongsList($authenticationToken) {
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $patronID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libraryID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+    
+    $song_data = array();
+    $song_data = $this->Song->find('all', array(
+      'fields' => array('ProdID', 'ReferenceID', 'Title', 'SongTitle', 'ArtistText', 'Artist', 'FullLength_Duration', 'provider_type', 'Advisory'),
+      'joins' =>  array(
+        array(
+          'table' => 'streaming_histories',
+          'alias' => 'sh',
+          'type' => 'INNER',
+          'foreignKey' => false,
+          'conditions'=> array('Song.ProdID = sh.ProdID', 'Song.provider_type = sh.provider_type')
+        )
+      ),
+      'conditions' => array(
+        'sh.patron_id' => $patronID, 'sh.library_id' => $libraryID, 'DATE(sh.createdOn) = CURDATE()' 
+      ),
+      'recursive' => -1,
+      'order' => 'sh.createdOn DESC'
+    ));
+				
+    if(empty($song_data)) {
+      throw new SOAPFault('Soap:client', 'You do not have any song for this page.');
+    }
+    
+    
+    foreach($song_data as $key => $val) {
+      
+      $sobj = new SongDataType;
+      
+      $sobj->ProdID               =    $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
+      $sobj->ReferenceID          =    $this->getProductAutoID($val['Song']['ReferenceID'], $val['Song']['provider_type']);
+      $sobj->Title                =    $val['Song']['Title'];
+      $sobj->SongTitle            =    $val['Song']['SongTitle'];
+      $sobj->ArtistText           =    $val['Song']['ArtistText'];
+      $sobj->Artist               =    $val['Song']['Artist'];
+      $sobj->FullLength_Duration  =    $val['Song']['FullLength_Duration'];
+
+      $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
+    
+    }
+    
+    return new SoapVar($song_list,SOAP_ENC_OBJECT,null,null,'ArraySongDataType');
+    
+    
+  }
+  
   
 
   /**
@@ -6733,13 +6804,19 @@ STR;
    * @param int mp4FileID
    * @return string
    */  
-  function getHLSURL($mp4FileID) {
-    
+  private function getHLSURL($mp4FileID) {
+
+    $FileData = array();
     $FileData = $this->File_mp4->find('first', array(
       'conditions' => array('FileID' =>  $mp4FileID),
     ));
+    
+    if(empty($FileData)) {
+      return null;
+    }
 
-    return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['SaveAsName'].' '.$FileData['File_mp4']['CdnPath']);  
+// return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['SaveAsName'].' '.$FileData['File_mp4']['CdnPath']);  
+  return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['CdnPath'].' '.$FileData['File_mp4']['SaveAsName']);
   }
   
  

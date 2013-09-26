@@ -5,11 +5,12 @@ jQuery.extend({
 	var frameId = 'jUploadFrame' + id;
 	
 	if(window.ActiveXObject) {
-	   // var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');
+	   // var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />'); // not working on ie9
             
             var io = document.createElement("iframe");
-            iframe.setAttribute("id", frameId);
-            iframe.setAttribute("name", frameId);
+            io.setAttribute("id", frameId);
+            io.setAttribute("name", frameId);
+            
 	    if(typeof uri== 'boolean'){
 		io.src = 'javascript:false';
 	    }
