@@ -37,6 +37,8 @@
           echo $javascript->link('recent-downloads');
           echo $javascript->link('search-results');
            echo $javascript->link('jquery.colorbox');
+           echo $javascript->link('qtip');
+           echo $javascript->link('qtip_add');
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
