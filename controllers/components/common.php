@@ -505,11 +505,11 @@ STR;
         $this->log($sql_coming_soon_v, "cachequery");
 
         if (!empty($coming_soon_rv)) {
-            foreach($coming_soon_videos as $key => $value)
+            foreach($coming_soon_rv as $key => $value)
             {                                                                                     
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                $coming_soon_rv[$key]['videoAlbumImage'] = $videoAlbumImage;
             }                
             Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
             $this->log("cache written for coming soon videos for $territory", "cache");
