@@ -79,8 +79,12 @@ class ServicesController extends AppController {
 				$album = str_replace("$", " ", $album);
 				$genre = str_replace("$", " ", $genre);
 				
-                if(isset($this->params['named']['condition']) && $this->params['named']['condition'] == 'or'){
+                if(isset($this->params['named']['condition'])){
+                   if($this->params['named']['condition'] == 'or'){
 					$solrCheckCondition = "OR";
+                   } else{
+                      $solrCheckCondition = "AND"; 
+                   }
 				} 
 				else {
 					$solrCheckCondition = "AND";
