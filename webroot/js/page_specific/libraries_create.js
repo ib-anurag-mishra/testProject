@@ -77,10 +77,10 @@ $(function() {
 		$('#next_btn5').attr('disabled', 'disabled');
 		_loadingDiv.show();
 		$("#LibraryLibraryStepNum").val('5');
-		if($("#LibraryId").val() != "") {
+		if($("#LibraryId").val() != "") { alert("1");
 			var postURL = webroot+'admin/libraries/ajax_validate/id:'+$("#LibraryId").val();
 		}
-		else {
+		else { alert("2");
 			var postURL = webroot+'admin/libraries/ajax_validate';
 		}
 		$.post( postURL,
@@ -296,11 +296,11 @@ $(function() {
 			var postURL = webroot+'admin/libraries/doajaxfileupload';
 		}
 		
-		if(currentStep == '5') {
+		if(currentStep == '5') { alert("in step 5");
 			$.ajaxFileUpload
-			(
+			( 
 				
-				{
+				{   
 					url:postURL,
 					secureuri:false,
 					fileElementId:'fileToUpload',
@@ -308,14 +308,14 @@ $(function() {
 					LibraryId:libraryID,
 					dataType: 'json',
 					success: function (data, status)
-					{
+					{ alert("in success");
 						if(typeof(data.error) != 'undefined')
 						{
 							if(data.error != '') {
 								onError(data.error, 'file_field');
 							}
 							else {
-								if(currentStep == '5') {
+								if(currentStep == '5') { alert("current step");
 									if(libraryID == "") {
 										flashMessage('The library has been added successfully! You will be redirected shortly...', 'success');
 									}
@@ -326,7 +326,7 @@ $(function() {
 										window.location = webroot+'admin/libraries/managelibrary';
 									}, 1000);
 								}
-								else {
+								else { alert("current step2");
 									flashMessage('You will be redirected to the next step shortly...', 'success');
 									window.setTimeout(function() {
 										var nextStep = parseInt(currentStep)+1;
@@ -345,6 +345,7 @@ $(function() {
 					},
 					error: function (data, status, e)
 					{
+                                            alert("Error");
 					    onError(e, 'file_field');
 					}
 				}
