@@ -77,10 +77,10 @@ $(function() {
 		$('#next_btn5').attr('disabled', 'disabled');
 		_loadingDiv.show();
 		$("#LibraryLibraryStepNum").val('5');
-		if($("#LibraryId").val() != "") {
+		if($("#LibraryId").val() != "") { alert("1");
 			var postURL = webroot+'admin/libraries/ajax_validate/id:'+$("#LibraryId").val();
 		}
-		else {
+		else { alert("2");
 			var postURL = webroot+'admin/libraries/ajax_validate';
 		}
 		$.post( postURL,
