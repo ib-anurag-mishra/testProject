@@ -8,8 +8,9 @@ jQuery.extend({
 	   // var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');
             
             var io = document.createElement("iframe");
-            iframe.setAttribute("id", frameId);
-            iframe.setAttribute("name", frameId);
+            io.setAttribute("id", frameId);
+            io.setAttribute("name", frameId);
+            
 	    if(typeof uri== 'boolean'){
 		io.src = 'javascript:false';
 	    }
