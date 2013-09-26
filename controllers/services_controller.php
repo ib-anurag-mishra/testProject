@@ -39,18 +39,28 @@ class ServicesController extends AppController {
 				
                 if(isset($this->params['named']['artist'])){
                     $artist =  $this->params['named']['artist'];
+                } else {
+                    $artist = null;
                 }
                 if(isset($this->params['named']['composer'])){
                     $composer = $this->params['named']['composer'];
+                } else {
+                    $composer = null;
                 }
                 if(isset($this->params['named']['song'])){
                     $song =  $this->params['named']['song'];
+                } else {
+                    $song = null;
                 }
                 if(isset($this->params['named']['album'])){
                     $album =  $this->params['named']['album'];
+                } else {
+                    $album = null;
                 }
                 if(isset($this->params['named']['genre'])){
                     $genre =  $this->params['named']['genre'];
+                } else {
+                    $genre = null;
                 }
 				// $composer = $this->params['named']['composer'];
 				// $song =  $this->params['named']['song'];
@@ -169,7 +179,7 @@ class ServicesController extends AppController {
                 
                 // echo $solrFinalCondition; die;
                 
-                $response = SolrComponent::$solr->search($solrFinalCondition,'0','10000');
+                $response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
                 if ($response->getHttpStatus() == 200) {
                     echo "here";
