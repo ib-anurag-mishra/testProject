@@ -38,7 +38,8 @@ class ServicesController extends AppController {
 				}
 				
                 if(isset($this->params['named']['artist'])){
-                    $artist =  $this->params['named']['artist']; //str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['artist']);
+                    echo "here";
+                    $artist =  str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['artist']);
                 } else {
                     $artist = null;
                 }
@@ -79,6 +80,8 @@ class ServicesController extends AppController {
 				$album = str_replace("$", " ", $album);
 				$genre = str_replace("$", " ", $genre);
 				
+                echo $artist; die;
+                
                 if(isset($this->params['named']['condition'])){
                    if($this->params['named']['condition'] == 'or'){
 					$solrCheckCondition = "OR";
