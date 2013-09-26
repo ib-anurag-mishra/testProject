@@ -38,27 +38,27 @@ class ServicesController extends AppController {
 				}
 				
                 if(isset($this->params['named']['artist'])){
-                    $artist =  $this->params['named']['artist'];
+                    $artist =  str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['artist']);
                 } else {
                     $artist = null;
                 }
                 if(isset($this->params['named']['composer'])){
-                    $composer = $this->params['named']['composer'];
+                    $composer = str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['composer']);
                 } else {
                     $composer = null;
                 }
                 if(isset($this->params['named']['song'])){
-                    $song =  $this->params['named']['song'];
+                    $song =  str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['song']);
                 } else {
                     $song = null;
                 }
                 if(isset($this->params['named']['album'])){
-                    $album =  $this->params['named']['album'];
+                    $album = str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['album']);
                 } else {
                     $album = null;
                 }
                 if(isset($this->params['named']['genre'])){
-                    $genre =  $this->params['named']['genre'];
+                    $genre = str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['genre']);
                 } else {
                     $genre = null;
                 }
