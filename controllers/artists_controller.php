@@ -1504,7 +1504,8 @@ STR;
 		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle','Album.provider_type'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
                 $val = '';
 		$this->Song->Behaviors->attach('Containable');
-                $this->Country->setTablePrefix($_REQUEST['Territory']);
+                $countryPrefix = strtolower($_REQUEST['Territory'])."_";
+                $this->Country->setTablePrefix($countryPrefix);
 		foreach($allAlbum as $k => $v){
                     $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
                     echo "<br>Query2: ".$this->Song->lastQuery();
