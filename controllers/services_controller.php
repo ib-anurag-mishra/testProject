@@ -36,11 +36,25 @@ class ServicesController extends AppController {
 					$condSolr = "Territory:".addslashes($country);
 				}
 				
-                $artist =  $this->params['named']['artist'];
-				$composer = $this->params['named']['composer'];
-				$song =  $this->params['named']['song'];
-				$album =  $this->params['named']['album'];
-				$genre =  $this->params['named']['genre'];
+                if(isset($this->params['named']['artist'])){
+                    $artist =  $this->params['named']['artist'];
+                }
+                if(isset($this->params['named']['composer'])){
+                    $composer = $this->params['named']['composer'];
+                }
+                if(isset($this->params['named']['song'])){
+                    $song =  $this->params['named']['song'];
+                }
+                if(isset($this->params['named']['album'])){
+                    $album =  $this->params['named']['album'];
+                }
+                if(isset($this->params['named']['genre'])){
+                    $genre =  $this->params['named']['genre'];
+                }
+				// $composer = $this->params['named']['composer'];
+				// $song =  $this->params['named']['song'];
+				// $album =  $this->params['named']['album'];
+				// $genre =  $this->params['named']['genre'];
 
 				$artist = str_replace("^", " ", $artist);
 				$composer = str_replace("^", " ", $composer);
@@ -159,7 +173,7 @@ class ServicesController extends AppController {
                 if ($response->getHttpStatus() == 200) {
                     echo "here";
                     //print_r($response);
-                    print_r($response);
+                    //print_r($response);
                     echo $response->response->numFound;
                      die;
                     if ($response->response->numFound > 0) {
