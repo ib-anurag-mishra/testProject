@@ -1888,9 +1888,9 @@ STR;
         'sh.patron_id' => $patronID, 'sh.library_id' => $libraryID, 'DATE(sh.createdOn) = CURDATE()' 
       ),
       'recursive' => -1,
-      'order' => 'createdOn DESC'
+      'order' => 'sh.createdOn DESC'
     ));
-    
+				
     if(empty($song_data)) {
       throw new SOAPFault('Soap:client', 'You do not have any song for this page.');
     }
@@ -1900,13 +1900,13 @@ STR;
       
       $sobj = new SongDataType;
       
-      $sobj->ProdID               =    $this->getProductAutoID($val['ProdID'], $val['provider_type']);
-      $sobj->ReferenceID          =    $this->getProductAutoID($val['ReferenceID'], $val['provider_type']);
-      $sobj->Title                =    $val['Title'];
-      $sobj->SongTitle            =    $val['SongTitle'];
-      $sobj->ArtistText           =    $val['ArtistText'];
-      $sobj->Artist               =    $val['Artist'];
-      $sobj->FullLength_Duration  =    $val['FullLength_Duration'];
+      $sobj->ProdID               =    $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
+      $sobj->ReferenceID          =    $this->getProductAutoID($val['Song']['ReferenceID'], $val['Song']['provider_type']);
+      $sobj->Title                =    $val['Song']['Title'];
+      $sobj->SongTitle            =    $val['Song']['SongTitle'];
+      $sobj->ArtistText           =    $val['Song']['ArtistText'];
+      $sobj->Artist               =    $val['Song']['Artist'];
+      $sobj->FullLength_Duration  =    $val['Song']['FullLength_Duration'];
 
       $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
     
