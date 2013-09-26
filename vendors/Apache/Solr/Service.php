@@ -239,6 +239,7 @@ class Apache_Solr_Service
 	{
         //echo $url;
 		//$http_response_header is set by file_get_contents
+        $http_response_header = null;
 		$response = new Apache_Solr_Response($this->curl_file_get_contents($url), $http_response_header);
     /*print_r($response); die;
 		if ($response->getHttpStatus() != 200)
