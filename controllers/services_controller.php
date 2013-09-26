@@ -38,7 +38,6 @@ class ServicesController extends AppController {
 				}
 				
                 if(isset($this->params['named']['artist'])){
-                    echo "here";
                     $artist =  str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $this->params['named']['artist']);
                 } else {
                     $artist = null;
@@ -80,7 +79,6 @@ class ServicesController extends AppController {
 				$album = str_replace("$", " ", $album);
 				$genre = str_replace("$", " ", $genre);
 				
-                echo $artist; die;
                 
                 if(isset($this->params['named']['condition'])){
                    if($this->params['named']['condition'] == 'or'){
@@ -95,7 +93,7 @@ class ServicesController extends AppController {
 
 				if($artist != '') {
 					$artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');
-					$solrArtistSearch = 'CArtistText:'.strtolower(addslashes($artist)).' '.$solrCheckCondition.' ';
+					$solrArtistSearch = 'CArtistText:'.strtolower($artist).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$artistSearch = '';
@@ -106,7 +104,7 @@ class ServicesController extends AppController {
 					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode)');    
 					$this->set('composer', $composer);
 					$preCondition4 = array('Participant.Role' => 'Composer'); 
-					$solrComposerSearch = 'CComposer:'.strtolower(addslashes($composer)).' '.$solrCheckCondition.' ';
+					$solrComposerSearch = 'CComposer:'.strtolower($composer).' '.$solrCheckCondition.' ';
 					$role = '2';
 				}
 				else {
@@ -118,7 +116,7 @@ class ServicesController extends AppController {
 				
                 if($song != '') {
 					$songSearch = array('match(Song.SongTitle) against ("+'.$song.'*" in boolean mode)');
-					$solrSongSearch = 'CSongTitle:'.strtolower(addslashes($song)).'" '.$solrCheckCondition.' ';
+					$solrSongSearch = 'CSongTitle:'.strtolower($song).'" '.$solrCheckCondition.' ';
 				}
 				else {
 					$songSearch = '';
@@ -127,7 +125,7 @@ class ServicesController extends AppController {
 				
                 if($album != '') {
 					$albumSearch = array('match(Song.Title) against ("+'.$album.'*" in boolean mode)');
-					$solrAlbumSearch = 'CTitle:'.strtolower(addslashes($album)).' '.$solrCheckCondition.' ';
+					$solrAlbumSearch = 'CTitle:'.strtolower($album).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$albumSearch = '';
@@ -136,7 +134,7 @@ class ServicesController extends AppController {
 				
                 if($genre != '') {
 					$genreSearch = array('match(Song.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$solrGenreSearch = 'CGenre:'.strtolower(addslashes($genre)).' '.$solrCheckCondition.' ';	
+					$solrGenreSearch = 'CGenre:'.strtolower($genre).' '.$solrCheckCondition.' ';	
 				}
 				else {
 					$genreSearch = '';
