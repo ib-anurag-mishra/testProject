@@ -365,12 +365,13 @@ class ServicesController extends AppController {
 					$genre = $this->params['pass'][3];
 				}
 	//			print $genre;exit;
-				$searchString =  base64_decode($genre);	
+				$searchString =  base64_decode($genre);
+                $searchString =  str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $searchString);
 				$searchString = str_replace("^", " ", $searchString);					
 				$searchString = str_replace("$", " ", $searchString);
 				$solrCheckCondition = "AND";
 				if($genre != '') {
-					$solrGenreSearch = 'CGenre:'.strtolower(addslashes($searchString)).'* '.$sphinxCheckCondition.' ';	
+					$solrGenreSearch = 'CGenre:'.strtolower($searchString).'* '.$sphinxCheckCondition.' ';	
 				}
 				else {
 					$solrGenreSearch = '';
@@ -399,7 +400,7 @@ class ServicesController extends AppController {
 						));
 				
 				$searchResults = $this->paginate('Song');*/
-               echo $solrFinalCondition; die;
+                // echo $solrFinalCondition; die;
 				$response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
                 if ($response->getHttpStatus() == 200) {
@@ -503,12 +504,13 @@ class ServicesController extends AppController {
 				else {
 					$condSolr = "Territory:".addslashes($country);
 				}
-				$searchString =  base64_decode($this->params['pass'][3]);	
+				$searchString =  base64_decode($this->params['pass'][3]);
+                $searchString =  str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $searchString);
 				$searchString = str_replace("^", " ", $searchString);					
 				$searchString = str_replace("$", " ", $searchString);
 				$solrCheckCondition = "AND";
 				if($this->params['pass'][3] != '') {
-					$solrGenreSearch = 'Genre:'.addslashes($searchString).' '.$sphinxCheckCondition.' ';	
+					$solrGenreSearch = 'CGenre:'.strtolower($searchString).' '.$sphinxCheckCondition.' ';	
 				}
 				else {
 					$solrGenreSearch = '';
