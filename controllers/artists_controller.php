@@ -768,10 +768,6 @@ Class ArtistsController extends AppController
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 
-                
-                echo "<pre>";
-                print_r($albumData);
-                
 		$albumSongs = array();
 		if(!empty($albumData))
 		{
@@ -834,14 +830,11 @@ Class ArtistsController extends AppController
 
 						),'group' => 'Song.ProdID, Song.provider_type','order' => array('Song.sequence_number','Song.ProdID')
 						  ));
-                                
-                                echo "Query: ".$this->Song->lastQuery();
-                                
 			}
 		}
 
-		 echo "<pre>Songs:";
-		 print_r($albumSongs);
+		// echo "<pre>";
+		// print_r($albumSongs);
 		// exit;
 
 		$this->Download->recursive = -1;

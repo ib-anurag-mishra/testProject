@@ -1,6 +1,6 @@
 <?php
 
-Configure::write('debug', 0);
+Configure::write('debug', 2);
 
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
@@ -1876,7 +1876,7 @@ STR;
     
     $song_data = array();
     $song_data = $this->Song->find('all', array(
-      'fields' => array('ProdID', 'ReferenceID', 'Title', 'SongTitle', 'ArtistText', 'Artist', 'FullLength_Duration', 'provider_type', 'Advisory'),
+      'fields' => array('DISTINCT(CONCAT(Song.ProdID, "-", Song.provider_type))', 'Song.ProdID', 'Song.ReferenceID', 'Song.Title', 'Song.SongTitle', 'Song.ArtistText', 'Song.Artist', 'Song.FullLength_Duration', 'Song.provider_type', 'Song.Advisory'),
       'joins' =>  array(
         array(
           'table' => 'streaming_histories',
@@ -1889,7 +1889,7 @@ STR;
       'conditions' => array(
         'sh.patron_id' => $patronID, 'sh.library_id' => $libraryID, 'DATE(sh.createdOn) = CURDATE()' 
       ),
-      'limit' => $startFrom . ', ' . $recordCount 
+      'limit' => $startFrom . ', ' . $recordCount,
       'recursive' => -1,
       'order' => 'sh.createdOn DESC'
     ));
