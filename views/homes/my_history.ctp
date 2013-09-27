@@ -123,7 +123,7 @@ $ieVersion =  ieversion();
                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
                         ?>
 					</div>
-					<div class="song-title">
+					<div class="song-title"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="#">
                     <?php 
 						if (strlen($downloadResult['Download']['track_title']) >= 19) {
 							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</span>';							
@@ -131,7 +131,7 @@ $ieVersion =  ieversion();
 							echo $downloadResult['Download']['track_title']; 
 					 	}
 					?>
-                    <?php if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
+                    <?php if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></a></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title']); ?>" href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
                                              <?php 
@@ -225,7 +225,7 @@ $ieVersion =  ieversion();
                         <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
 						<!-- <a class="preview" href="#"></a> -->
 					</div>
-					<div class="song-title">
+					<div class="song-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="#">
                     <?php 
 						if (strlen($videoDownloadResult['Videodownload']['track_title']) >= 22) {
 							echo '<span title="'.htmlentities($videoDownloadResult['Videodownload']['track_title']).'">' .substr($videoDownloadResult['Videodownload']['track_title'], 0, 22) . '...</span>';							
@@ -233,9 +233,9 @@ $ieVersion =  ieversion();
 							echo $videoDownloadResult['Videodownload']['track_title']; 
 					 	}
 					?><?php if('T' == $videoDownloadResult['Video']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
-                                        </div>
+                                        </a></div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a title="<?php echo $this->getTextEncode($downloadResult['Video']['Title']); ?>" href="#">
+					<div class="album-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Video']['Title']); ?>" href="#">
                                              <?php 
 						if (strlen($videoDownloadResult['Video']['Title']) >= 22) {
 							echo '<a title="'.htmlentities($videoDownloadResult['Video']['Title']).'">' .substr($videoDownloadResult['Video']['Title'], 0, 22) . '...</a>';
