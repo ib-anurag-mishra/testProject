@@ -510,14 +510,14 @@ class ServicesController extends AppController {
 				$searchString = str_replace("$", " ", $searchString);
 				$solrCheckCondition = "AND";
 				if($this->params['pass'][3] != '') {
-					$solrGenreSearch = 'CGenre:'.strtolower($searchString).' '.$sphinxCheckCondition.' ';	
+					$solrGenreSearch = 'CGenre:'.strtolower($searchString).'* '.$solrCheckCondition.' ';	
 				}
 				else {
 					$solrGenreSearch = '';
 				}			
 				$solrTempCondition = $solrGenreSearch;
 				$solrFinalCondition = substr($solrTempCondition, 0, -2);
-				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSphinx;
+				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
 				if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -2);
 				}
