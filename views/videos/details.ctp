@@ -79,7 +79,7 @@
                                     
 				</h2><?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 				<h3 class="artist-name">
-					<a href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
+					<a title="<?php echo $this->getTextEncode($VideosData[0]['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
 				<?php
                                         $duration       =    $VideosData[0]['Video']['FullLength_Duration']; 
@@ -178,7 +178,7 @@
 										
 									</div>
 									<div class="song-title">
-										<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+										<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                 <?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 20 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 20)) . "..";
@@ -190,7 +190,7 @@
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 									</div>
 									<div class="artist-name">										
-                                                                                <a href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+                                                                                <a title="<?php echo $this->getTextEncode($value['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                                 <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
@@ -291,7 +291,7 @@
 									
 								</div>
 								<div class="song-title">
-									<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><?php 
+									<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 20 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 20)) . "..";
                                                                                                     } else {
@@ -302,7 +302,7 @@
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 								</div>
 								<div class="artist-name">
-									<a href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+									<a title="<?php echo $this->getTextEncode($value['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                              <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";

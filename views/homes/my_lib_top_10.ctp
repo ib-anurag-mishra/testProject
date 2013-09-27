@@ -52,13 +52,13 @@
                                                     </a><?php if('T' == $value['Albums']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">							
-                                                        <a title="<?php echo $this->getTextEncode($value['Albums']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
-                                                                                                        <?php 
-                                                                                                                    if(strlen($value['Song']['Artist'])>32)
-                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
-                                                                                                                    else echo $value['Song']['Artist'];
-                                                                                                             ?>
-                                                       </a>
+                                                    <a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                    <?php 
+                                                        if(strlen($value['Song']['Artist'])>32)
+                                                        echo substr($value['Song']['Artist'],0,32)."..."; 
+                                                        else echo $value['Song']['Artist'];
+                                                     ?>
+                                                   </a>
 						</div>
 					</li>
 					<?php
@@ -188,43 +188,31 @@
       ?>
 
 
-                                                                                    <?php if($this->Session->read("patron")){ ?> 
-														<a class="add-to-playlist-button " href="#"></a>
-                                                                                               
-														<div class="wishlist-popover">
-                                                                                                                <?php if( $this->Session->read('library_type') == 2 ){
-                                                                                                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
-                                                                                                                            <a class="add-to-playlist " href="#">Add To Queue</a>
-                                                                                                                <?php } ?>
-															
-                                                                                                                        
-                                                                                                                        
-                                                                                                            <?php
+        <?php if($this->Session->read("patron")){ ?> 
+            <a class="add-to-playlist-button " href="#"></a>
 
-                                                                                                                $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-
-                                                                                                                echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
-                                                                                                                echo $this->Queue->getSocialNetworkinglinksMarkup();
-
-                                                                                                            ?>
-														</div>
-                                                                                                    <?php } ?>
+            <div class="wishlist-popover">
+            <?php if( $this->Session->read('library_type') == 2 ){
+                        echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
+                        <a class="add-to-playlist " href="#">Add To Queue</a>
+            <?php } ?>
 
 
 
+        <?php
 
+            $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
+            echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
+            echo $this->Queue->getSocialNetworkinglinksMarkup();
 
+        ?>
+            </div>
+        <?php } ?>
 
-
-
-
-
-
-							
-						</div>
+    </div>
 						<div class="album-title">
-							<a title="<?php echo $this->getTextEncode($value['Albums']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+							<a title="<?php echo $this->getTextEncode($value['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>20)
                                                                 echo substr($value['Song']['SongTitle'],0,20)."..."; 
@@ -233,12 +221,12 @@
                                                     </a><?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
-							<a title="<?php echo $this->getTextEncode($value['Albums']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
-                                                                                                        <?php 
-                                                                                                                    if(strlen($value['Song']['Artist'])>32)
-                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
-                                                                                                                    else echo $value['Song']['Artist'];
-                                                                                                             ?>
+							<a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <?php 
+                                                            if(strlen($value['Song']['Artist'])>32)
+                                                            echo substr($value['Song']['Artist'],0,32)."..."; 
+                                                            else echo $value['Song']['Artist'];
+                                                       ?>
                                                        </a>
 						</div>
 					</li>

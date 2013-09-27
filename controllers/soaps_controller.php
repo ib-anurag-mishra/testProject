@@ -1861,9 +1861,11 @@ STR;
    * Function Name : getStreamSongsList
    * Desc : Returns list of streamed songs list for given patron
    * @param string authenticationToken
+   * @param string startFrom
+   * @param string recordCount
    * @return SongDataType[]
    */
-  function getStreamSongsList($authenticationToken) {
+  function getStreamSongsList($authenticationToken, $startFrom, $recordCount) {
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -1887,6 +1889,7 @@ STR;
       'conditions' => array(
         'sh.patron_id' => $patronID, 'sh.library_id' => $libraryID, 'DATE(sh.createdOn) = CURDATE()' 
       ),
+      'limit' => $startFrom . ', ' . $recordCount 
       'recursive' => -1,
       'order' => 'sh.createdOn DESC'
     ));
