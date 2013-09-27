@@ -134,33 +134,30 @@ function showAllAlbumsList(albumListURL){
                 $('.album-list-span').html(response);
                 $('a[title]').qtip({
                     position: {
-                            corner: {
-                                    target: 'topLeft',
-                                    tooltip: 'bottomRight'
-                            }
-                    },
-                    style: { 
-                                color:'#444',
-                                fontSize:12,
-                                border: {
-
-                                        color: '#444'
-                                },
-
-                                width: {
-                                        max:350,
-                                        min:0
-                                },
-
-                                tip:{
-                                        corner:'bottomRight',
-                                        size: {
-                                                x:5,
-                                                y:5
-                                        }
-                                }
+                        corner: {
+                            target: 'topLeft',
+                            tooltip: 'bottomRight'
                         }
-                    });
+                    },
+                    style: {
+                        color:'#444',
+                        fontSize:12,
+                        border: {
+                            color: '#444'
+                        },
+                        width: {
+                            max:350,
+                            min:0
+                        },
+                        tip:{
+                            corner:'bottomRight',
+                            size: {
+                                x:5,
+                                y:5
+                            }
+                        }
+                    }
+                });
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { 
                // alert('No album available for this artist.');
@@ -180,6 +177,32 @@ function showAlbumDetails(albumDetailURL){
             data: data,  // post data
             success: function(response) {
                 $('#album_details_container').html(response);
+                $('a[title]').qtip({
+                    position: {
+                        corner: {
+                            target: 'topLeft',
+                            tooltip: 'bottomRight'
+                        }
+                    },
+                    style: {
+                        color:'#444',
+                        fontSize:12,
+                        border: {
+                            color: '#444'
+                        },
+                        width: {
+                            max:350,
+                            min:0
+                        },
+                        tip:{
+                            corner:'bottomRight',
+                            size: {
+                                x:5,
+                                y:5
+                            }
+                        }
+                    }
+                });
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { 
                // alert('Album detail not available.');
