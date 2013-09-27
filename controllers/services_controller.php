@@ -480,6 +480,8 @@ class ServicesController extends AppController {
 	}
     
 	function genreSong(){
+        set_time_limit(0);
+        ini_set('memory_limit','512M');
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
 												array('consortium_key' => $this->params['pass'][0])
@@ -544,6 +546,8 @@ class ServicesController extends AppController {
 				
 				$searchResults = $this->paginate('Song');*/
 				$reference = '';
+                
+                echo $solrFinalCondition; die;
                 
                 $response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
