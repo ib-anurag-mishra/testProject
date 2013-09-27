@@ -116,7 +116,7 @@ class ServicesController extends AppController {
 				
 				if($song != '') {
 					$songSearch = array('match(Song.SongTitle) against ("+'.$song.'*" in boolean mode)');
-					$solrSongSearch = 'CSongTitle:'.strtolower($song).'" '.$solrCheckCondition.' ';
+					$solrSongSearch = 'CSongTitle:'.strtolower($song).' '.$solrCheckCondition.' ';
 				}
 				else {
 					$songSearch = '';
@@ -151,10 +151,19 @@ class ServicesController extends AppController {
 					$solrTerritorySearch = '';
 				}*/				
 				
-                $solrTempCondition = $solrArtistSearch.''.$solrComposerSearch.''.$solrSongSearch.''.$solrAlbumSearch.''.$solrGenreSearch.'';
+                $solrTempCondition = "(".$solrArtistSearch.''.$solrComposerSearch.''.$solrSongSearch.''.$solrAlbumSearch.''.$solrGenreSearch.'';
+				
+                if($solrCheckCondition == "OR"){
+                    $solrFinalCondition = substr($solrTempCondition, 0, -4);
+                } else {
 				$solrFinalCondition = substr($solrTempCondition, 0, -5);
+                }
+                
+                $solrFinalCondition = $solrFinalCondition.")";
+				
 				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
-				//print $solrFinalCondition;exit;
+				
+                // print $solrFinalCondition;exit;
 				
                 if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -5);
