@@ -250,6 +250,7 @@ class ServicesController extends AppController {
 										),                             
 								)
 						)));
+                        /*
                         $data = array(
 							'conditions'=>array('Album.ProdID' => $v->ReferenceID, 'Album.provider_type' => $v->provider_type),
 							'fields' => array(
@@ -264,7 +265,8 @@ class ServicesController extends AppController {
 										),                             
 								)
 						));
-                        print_r($data); die;
+                        print_r($data); die; 
+                        */
 						$reference = $v->ReferenceID;
                         echo $this->Album->lastQuery();
                         print_r($albumData); die;
