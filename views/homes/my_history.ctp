@@ -228,7 +228,7 @@ $ieVersion =  ieversion();
 					<div class="song-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="#">
                     <?php 
 						if (strlen($videoDownloadResult['Videodownload']['track_title']) >= 22) {
-							echo '<span title="'.htmlentities($videoDownloadResult['Videodownload']['track_title']).'">' .substr($videoDownloadResult['Videodownload']['track_title'], 0, 22) . '...</span>';							
+							echo '<a title="'.htmlentities($videoDownloadResult['Videodownload']['track_title']).'">' .substr($videoDownloadResult['Videodownload']['track_title'], 0, 22) . '...</a>';
 						} else {
 							echo $videoDownloadResult['Videodownload']['track_title']; 
 					 	}
@@ -244,7 +244,7 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                                             </a></div>
-					<div class="artist-name"><a href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>">
+					<div class="artist-name"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['artist']); ?>" href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19) {
 							echo '<a title="'.htmlentities($videoDownloadResult['Videodownload']['artist']).'">' .substr($videoDownloadResult['Videodownload']['artist'], 0, 19) . '...</a>';
