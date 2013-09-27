@@ -250,6 +250,21 @@ class ServicesController extends AppController {
 										),                             
 								)
 						)));
+                        $data = array(
+							'conditions'=>array('Album.ProdID' => $v->ReferenceID, 'Album.provider_type' => $v->provider_type),
+							'fields' => array(
+								'Album.ProdID',
+							),
+							'contain' => array(										
+								'Files' => array(
+									'fields' => array(
+										'Files.CdnPath',
+										'Files.SaveAsName',
+										'Files.SourceURL',
+										),                             
+								)
+						));
+                        print_r($data); die;
 						$reference = $v->ReferenceID;
                         echo $this->Album->lastQuery();
                         print_r($albumData); die;
