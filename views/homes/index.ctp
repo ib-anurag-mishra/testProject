@@ -199,7 +199,7 @@
 
 
 													<div class="song-title">
-                        <a title="<?php echo $songTitle; ?>" href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
+                        <a title="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?> " href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
 													</div>
 													<div class="artist-name">                                                                                                            
                         <a title="<?php echo $artistText; ?>" href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
@@ -522,7 +522,7 @@
                                                                                                 <?php } ?>
 												</div>
 												<div class="song-title">
-                                                        <a title="<?php echo $value['Song']['SongTitle']; ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     
                                                                                                             $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
