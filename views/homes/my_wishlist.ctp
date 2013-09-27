@@ -560,8 +560,8 @@ $ieVersion =  ieversion();
 					?>
                                         </a></div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
-					<div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResults[$i]['WishlistVideo']['artist'])) ;?>" href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
+					<div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['Video']['Title'])) ;?>" href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
+					<div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['WishlistVideo']['artist'])) ;?>" href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 15) {
 							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .substr($wishlistResultsVideo['WishlistVideo']['artist'], 0, 15) . '...</a>';							
