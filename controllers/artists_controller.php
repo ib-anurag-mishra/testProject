@@ -837,8 +837,8 @@ Class ArtistsController extends AppController
 			}
 		}
 
-		// echo "<pre>";
-		// print_r($albumSongs);
+		 echo "<pre>Songs:";
+		 print_r($albumSongs);
 		// exit;
 
 		$this->Download->recursive = -1;
