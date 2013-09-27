@@ -237,7 +237,7 @@ class ServicesController extends AppController {
                     
 					if($reference != $v->ReferenceID){ 
 						$albumData = $this->Album->find('all', array(
-							'conditions'=>array('Album.ProdID' => $v->ReferenceID),
+							'conditions'=>array('Album.ProdID' => $v->ReferenceID, 'Album.provider_type' => $v->provider_type),
 							'fields' => array(
 								'Album.ProdID',
 							),
@@ -251,6 +251,7 @@ class ServicesController extends AppController {
 								)
 						)));
 						$reference = $v->ReferenceID;
+                        print_r($albumData); die;
 						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
 					}
 					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
@@ -452,7 +453,7 @@ class ServicesController extends AppController {
 					
                     if($reference != $v->ReferenceID){ 
 						$albumData = $this->Album->find('all', array(
-							'conditions'=>array('Album.ProdID' => $v->ReferenceID),
+							'conditions'=>array('Album.ProdID' => $v->ReferenceID, 'Album.provider_type' => $v->provider_type),
 							'fields' => array(
 								'Album.ProdID',
 							),
