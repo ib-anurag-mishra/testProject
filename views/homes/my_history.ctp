@@ -126,7 +126,7 @@ $ieVersion =  ieversion();
 					<div class="song-title"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="#">
                     <?php 
 						if (strlen($downloadResult['Download']['track_title']) >= 19) {
-							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</span>';							
+							echo '<a title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</a>';
 						} else {
 							echo $downloadResult['Download']['track_title']; 
 					 	}
