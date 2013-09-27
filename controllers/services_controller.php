@@ -521,10 +521,10 @@ class ServicesController extends AppController {
 					$solrGenreSearch = '';
 				}			
 				$solrTempCondition = $solrGenreSearch;
-				$solrFinalCondition = substr($solrTempCondition, 0, -2);
+				$solrFinalCondition = substr($solrTempCondition, 0, -5);
 				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
 				if ($condSolr == "") {
-					$solrFinalCondition = substr($solrFinalCondition, 0, -2);
+					$solrFinalCondition = substr($solrFinalCondition, 0, -5);
 				}
 			
 				// App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
@@ -547,7 +547,7 @@ class ServicesController extends AppController {
 				$searchResults = $this->paginate('Song');*/
 				$reference = '';
                 
-                echo $solrFinalCondition; die;
+                // echo $solrFinalCondition; die;
                 
                 $response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
