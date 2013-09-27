@@ -779,7 +779,7 @@ Class ArtistsController extends AppController
 									array('Song.ReferenceID' => $album['Album']['ProdID']),
 									//array('Song.provider_type = Genre.provider_type'),
 									array('Song.provider_type = Country.provider_type'),
-									array('Song.DownloadStatus' => 0),
+									array('Song.DownloadStatus' => 1),
 								//	array('Song.TrackBundleCount' => 0),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
