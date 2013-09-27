@@ -238,6 +238,7 @@ class Apache_Solr_Service
 	private function _sendRawGet($url)
 	{
 		//$http_response_header is set by file_get_contents
+        $http_response_header = null;
 		$response = new Apache_Solr_Response($this->curl_file_get_contents($url), $http_response_header);
     /*print_r($response); die;
 		if ($response->getHttpStatus() != 200)
@@ -445,7 +446,7 @@ class Apache_Solr_Service
 			//check the stream meta data to see if we timed out during the operation
 			$metaData = stream_get_meta_data($fp);
 
-			if ($metaData['timeout'])
+			if (isset($metaData['timeout']) && !empty($metaData['timeout']))
 			{
 				fclose($fp);
 				return false;
@@ -475,7 +476,7 @@ class Apache_Solr_Service
 			//check the stream meta data to see if we timed out during the operation
 			$metaData = stream_get_meta_data($fp);
 
-			if ($metaData['timeout'])
+			if (isset($metaData['timeout']) && !empty($metaData['timeout']))
 			{
 				fclose($fp);
 				return false;
