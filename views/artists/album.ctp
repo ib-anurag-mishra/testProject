@@ -158,7 +158,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                         </a>   
                     </div>
                     <div class="album-title">
-                        <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
+                        <a title="<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>" href="/artists/view/<?php echo str_replace('/','@',base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 
                                 <b>
                                 <?php
@@ -172,13 +172,11 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                         </a>
                     </div>
                     <div class="genre">
-                        <?php echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
-						if ($album['Album']['ArtistURL'] != '') {
-							echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank','style' => 'word-wrap:break-word;word-break:break-word;width:160px;'));
-							
-                                                       
-                                                        echo '<br />';
-						}
+                        <?php echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre'])), array("title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
+                                if ($album['Album']['ArtistURL'] != '') {
+                                        echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank','style' => 'word-wrap:break-word;word-break:break-word;width:160px;'));
+                                        echo '<br />';
+                                }
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<font class="explicit"> (Explicit)</font>';
                             echo '<br />';
