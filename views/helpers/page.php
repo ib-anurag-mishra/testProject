@@ -17,7 +17,8 @@ class PageHelper extends AppHelper {
 		}
         $pageInstance = ClassRegistry::init('Page');
         $pageInstance = ClassRegistry::init('Page');
-		if (($pageData = Cache::read("page".$page.$type)) === false) {
+		//if (($pageData = Cache::read("page".$page.$type)) === false) {
+                if(1){
 			$pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $page)));
 			Cache::write("page".$page.$type, $pageDetails);
 		}
