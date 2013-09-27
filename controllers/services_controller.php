@@ -266,6 +266,7 @@ class ServicesController extends AppController {
 	
     function genre(){
         set_time_limit(0);
+         ini_set('memory_limit','512M');
 		if($this->params['pass'][3] == ''){
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
@@ -402,7 +403,7 @@ class ServicesController extends AppController {
 				$searchResults = $this->paginate('Song');*/
                 // echo $solrFinalCondition; die;
 				$response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
-                
+                print_r($response);
                 if ($response->getHttpStatus() == 200) {
                     if ($response->response->numFound > 0) {
                         foreach ($response->response->docs as $doc) {
