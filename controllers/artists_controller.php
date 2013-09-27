@@ -834,6 +834,9 @@ Class ArtistsController extends AppController
 
 						),'group' => 'Song.ProdID, Song.provider_type','order' => array('Song.sequence_number','Song.ProdID')
 						  ));
+                                
+                                echo "Query: ".$this->Song->lastQuery();
+                                
 			}
 		}
 
