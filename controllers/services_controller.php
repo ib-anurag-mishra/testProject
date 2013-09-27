@@ -400,7 +400,7 @@ class ServicesController extends AppController {
 						));
 				
 				$searchResults = $this->paginate('Song');*/
-                echo $solrFinalCondition; die;
+                // echo $solrFinalCondition; die;
 				$response = SolrComponent::$solr->search($solrFinalCondition,0,1000);
                 
                 if ($response->getHttpStatus() == 200) {
@@ -415,7 +415,7 @@ class ServicesController extends AppController {
                     $docs = array();
                 }
                 
-                //print_r($docs); die;
+                print_r($docs); die;
                 
                 $reference = '';
 				foreach($docs as $k=>$v){
