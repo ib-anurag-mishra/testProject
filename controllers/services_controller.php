@@ -152,8 +152,14 @@ class ServicesController extends AppController {
 				}*/				
 				
                 $solrTempCondition = $solrArtistSearch.''.$solrComposerSearch.''.$solrSongSearch.''.$solrAlbumSearch.''.$solrGenreSearch.'';
-				$solrFinalCondition = substr($solrTempCondition, 0, -5);
-				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
+				
+                if($solrCheckCondition == "OR"){
+                    $solrFinalCondition = substr($solrTempCondition, 0, -4);
+                } else {
+                    $solrFinalCondition = substr($solrTempCondition, 0, -5);
+                }
+				
+                $solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
 				//print $solrFinalCondition;exit;
 				
                 if ($condSolr == "") {
