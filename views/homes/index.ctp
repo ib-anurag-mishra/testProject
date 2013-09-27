@@ -371,7 +371,7 @@
 			</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                                                                                                <a href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                                                                                <a title="<?php echo $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
 													</div>
 												</div>
 											</li>
@@ -522,7 +522,7 @@
                                                                                                 <?php } ?>
 												</div>
 												<div class="song-title">
-                                                        <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a title="<?php echo $this->getTextEncode($value['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     
                                                                                                             $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
