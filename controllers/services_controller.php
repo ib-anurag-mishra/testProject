@@ -266,7 +266,7 @@ class ServicesController extends AppController {
 	
     function genre(){
         set_time_limit(0);
-         ini_set('memory_limit','512M');
+        ini_set('memory_limit','512M');
 		if($this->params['pass'][3] == ''){
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
