@@ -70,7 +70,7 @@
                         
                         
 			
-			<div class="album-genre"><?php echo __('Genre').": ";?><span><?php echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) ;
+			<div class="album-genre"><?php echo __('Genre').": ";?><span><?php echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre'])), array("title" => $this->getTextEncode($album['Genre']['Genre']))) ;
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<br />'; echo '<font class="explicit"> (Explicit)</font>';
                             
@@ -90,11 +90,12 @@
 					?>
 					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?></div>
 			<div class="artist-name"><?php
+                        $artistNames = $artistName;
 	if(strlen($artistName) >= 30){
 		$artistName = substr($artistName, 0, 30). '...';
 	}
 	?>
-	<a href="/artists/album/<?php echo base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']); ?>"><?php echo $this->getTextEncode($artistName); ?></a></div>
+	<a title="<?php echo $this->getTextEncode($artistNames); ?>" href="/artists/album/<?php echo base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']); ?>"><?php echo $this->getTextEncode($artistName); ?></a></div>
 			<div class="tracklist-header"><span class="song">Song</span><span class="artist">Artist</span><span class="time">Time</span></div>
 			
                             <?php
