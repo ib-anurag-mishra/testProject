@@ -28,7 +28,7 @@
                                {?>
                                        <h3><?php echo $questiontitleText; ?></h3>
                                <?}?>			
-                                       <li><a href="#"><?php echo strip_tags($questionquText); ?></a>
+                                       <li><a href="#" class="no-ajaxy"><?php echo strip_tags($questionquText); ?></a>
                                            <p><?php echo str_replace(array("<li>","</li>","<ul>","</ul>"), array("<p>","</p>","",""), $questionansText); ?></p></li>
                                <?php $Title = $question['Section']['title']; ?>
                         <?php endforeach; ?>
