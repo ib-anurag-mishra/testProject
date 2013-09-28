@@ -678,7 +678,9 @@ class SoapsController extends AppController {
           }
           
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
-
+          
+          if('T' == $data['Song']['Advisory']) $obj->SongTitle = $obj->SongTitle.' (Explicit)';
+          
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'NationalTopTenType');
 
       }
@@ -827,6 +829,8 @@ STR;
 
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
 
+          if('T' == $data['Song']['Advisory']) $obj->SongTitle = $obj->SongTitle.' (Explicit)';    
+          
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'LibraryTopTenType');
 
       }
@@ -994,7 +998,7 @@ STR;
 
 
 
-      foreach($data['Song'] AS $val){
+      foreach($data['Song'] AS $val){  
         if(1 == $val['DownloadStatus']) {
           if($this->IsTerrotiry($val['ProdID'], $val['provider_type'], $libraryId)) {
 
@@ -1026,12 +1030,11 @@ STR;
             }else{
               $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
             }
-            
-            
+                     
             $sobj->FullLength_FIleID     = (int)$val['FullLength_FIleID'];
             $sobj->CreatedOn             = (string)$val['CreatedOn'];
             $sobj->UpdateOn              = (string)$val['UpdateOn'];
-
+            if('T' == $val['Advisory']) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
             $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
 
           }
@@ -2099,7 +2102,7 @@ STR;
       'recursive' => -1
 
     ));
-          
+    
           
     if($card == ''){
 
@@ -4483,12 +4486,12 @@ STR;
             $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
           }
           
-          
-
           $sobj->FullLength_FIleID     = (int)    '';
           $sobj->CreatedOn             = (string) '';
           $sobj->UpdateOn              = (string) '';
 
+          if('T' == $arrTemp[$cnt]['Song']['Advisory']) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+          
           $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
         }
       }
@@ -4649,13 +4652,12 @@ STR;
           $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
         }
           
-          
-        
-
         $sobj->FullLength_FIleID     = (int)    '';
         $sobj->CreatedOn             = (string) '';
         $sobj->UpdateOn              = (string) '';
-
+        
+        if('T' == $val['Song']['Advisory']) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+        
         $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
 
       }
@@ -4934,6 +4936,8 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+      
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
@@ -5013,8 +5017,9 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
-      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
       
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
               
     }
 
@@ -5090,9 +5095,10 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+      
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
-      
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
@@ -5165,6 +5171,8 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+      
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
@@ -5511,5 +5519,6 @@ STR;
     return $downloadCount + $videoDownloadCount;
     
   }
+    
 
 }

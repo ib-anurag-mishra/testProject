@@ -4,7 +4,7 @@ class VideosController extends AppController {
 
      var $uses = array('Album', 'Genre', 'Siteconfig','Country', 'Video', 'LatestVideodownload', 'Videodownload','Library','WishlistVideo','Download', 'Language');
      var $helpers = array( 'WishlistVideo', 'Language');
-     var $components = array('Downloadsvideos', 'Session','Downloads');
+     var $components = array('Downloadsvideos', 'Session','Downloads','Common');
      var $layout = 'home';
    
    
@@ -49,43 +49,19 @@ class VideosController extends AppController {
 
        // Cache::delete("featured_videos".$territory);
 	if ($featuredVideos = Cache::read("featured_videos" . $territory) === false) {
-   		$featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, Video.Advisory, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW() ";
-		
-            $featuredVideos = $this->Album->query($featuredVideosSql);
-            if (!empty($featuredVideos)) {
-                foreach($featuredVideos as $key => $featureVideo){
-                    $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);//"sony_test/".
-                    // print_r($featureVideo); die;
-                    $videoImage = Configure::read('App.Music_Path').$videoArtwork;
-                    $featuredVideos[$key]['videoImage'] = $videoImage;
-                } 
-                Cache::write("featured_videos" . $territory, $featuredVideos);
-            }
+            $featuredVideos = $this->Common->getFeaturedVideos($territory);
+        }else{
+            $featuredVideos = Cache::read("featured_videos" . $territory);
         }
 
         
  //	Cache::delete("top_download_videos".$territory);
 	if ($topDownloads = Cache::read("top_download_videos" . $territory) === false) {
-            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `Country`.`SalesDate` <= NOW()  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
-            $topDownloads = $this->Album->query($topDownloadSQL);
-            if (!empty($topDownloads)) {
-                foreach($topDownloads as $key => $topDownload)
-                {
-                     $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);//"sony_test/".
-                     // print_r($featureVideo);
-                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
-                     $topDownloads[$key]['videoImage'] = $videoImage;
-                }     
-                Cache::write("top_download_videos" . $territory, $topDownloads);
-            }
+            $topDownloads = $this->Common->getTopVideoDownloads($territory);
+        }else{
+            $topDownloads = Cache::read("top_download_videos" . $territory);            
         }
-
-        $featuredVideos = Cache::read("featured_videos" . $territory);
-
-        $topDownloads = Cache::read("top_download_videos" . $territory);
-
         $this->set('featuredVideos', $featuredVideos);
-
         $this->set('topVideoDownloads', $topDownloads);
     }
 

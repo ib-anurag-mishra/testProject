@@ -100,19 +100,23 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-                if(Cache::delete("featuredUS"))
+                $memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s"))
                 {
                    $this->log("deleted featuredUS",'featured');
                 }
                 else {
-                    $this->log(Cache::read("featuredUS"),'featured');
+                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s"),'featured');
                 }
-                Cache::delete("featuredCA");
-                Cache::delete("featuredIT");
-                Cache::delete("featuredNZ");
-                Cache::delete("featuredAU");
-                Cache::delete("featuredIE");
-                Cache::delete("featuredGB");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIT");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredNZ");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredAU");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIE");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredGB");
+		memcache_close($memcache);
 	}
 
 	/*
@@ -162,19 +166,23 @@ Class ArtistsController extends AppController
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                if(Cache::delete("featuredUS"))
+                                $memcache = new Memcache;
+                                $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+                                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"))
                                 {
                                    $this->log("deleted featuredUS",'featured');
                                 }
                                 else {
-                                    $this->log(Cache::read("featuredUS"),'featured');
+                                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"),'featured');
                                 }
-                                Cache::delete("featuredCA");
-                                Cache::delete("featuredIT");
-                                Cache::delete("featuredNZ");
-                                Cache::delete("featuredAU");
-                                Cache::delete("featuredIE");
-                                Cache::delete("featuredGB");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIT");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredNZ");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredAU");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIE");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredGB");
+                                memcache_close($memcache);
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -238,19 +246,23 @@ Class ArtistsController extends AppController
 		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
 				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                if(Cache::delete("featuredUS"))
+                                $memcache = new Memcache;
+                                $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+                                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"))
                                 {
                                    $this->log("deleted featuredUS",'featured');
                                 }
                                 else {
-                                    $this->log(Cache::read("featuredUS"),'featured');
+                                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"),'featured');
                                 }
-                                Cache::delete("featuredCA");
-                                Cache::delete("featuredIT");
-                                Cache::delete("featuredNZ");
-                                Cache::delete("featuredAU");
-                                Cache::delete("featuredIE");
-                                Cache::delete("featuredGB");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIT");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredNZ");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredAU");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIE");
+                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredGB");
+                                memcache_close($memcache);
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}

@@ -158,7 +158,6 @@ STR;
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
-
             if (!empty($data)) {
                 Cache::delete("national" . $country);
                 foreach($data as $key => $value){
@@ -167,16 +166,15 @@ STR;
                         $data[$key]['songAlbumImage'] = $songAlbumImage;
                 }                    
                 Cache::write("national" . $country, $data);
-                $this->log("cache written for national top ten for $territory", "cache");
+                $this->log("cache written for national top 100 songs for $territory", "cache");
             } else {
-
+                $data = Cache::read("national" . $country);
                 Cache::write("national" . $country, Cache::read("national" . $country));
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
         }
-        $this->log("cache written for national top 100 for $territory", 'debug');        
-        
-        
+        $this->log("cache written for national top 100 for $territory", 'debug');
+        return $data;
     }
     
     
@@ -206,11 +204,13 @@ STR;
             Cache::write("featured_videos" . $territory, $featuredVideos);
             $this->log("cache written for featured videos for $territory", "cache");
         }else{
+            $featuredVideos = Cache::read("featured_videos" . $territory);
             Cache::write("featured_videos" . $territory, Cache::read("featured_videos" . $territory));
             $this->log("Unable to update featured videos cache for " . $territory, "cache");
         }
 
-        // End Caching functionality for featured videos            
+        // End Caching functionality for featured videos
+        return $featuredVideos;
     }    
     
     
@@ -242,10 +242,12 @@ STR;
             $this->log("cache written for top download   videos for $territory", "cache");
 
         }else{
+            $topDownloads = Cache::read("top_download_videos" . $territory);
             Cache::write("top_download_videos" . $territory, Cache::read("top_download_videos" . $territory));
             $this->log("Unable to update top download  videos cache for " . $territory, "cache");
         }
-        // End Caching functionality for top video downloads             
+        // End Caching functionality for top video downloads
+        return $topDownloads;
     } 
     
     
@@ -372,12 +374,14 @@ STR;
                 Cache::write("nationalvideos" . $country, $data);
                 $this->log("cache written for national top ten  videos for $territory", "cache");
             } else {
+                $data = Cache::read("nationalvideos" . $country);
                 Cache::write("nationalvideos" . $country, Cache::read("nationalvideos" . $country));
                 $this->log("Unable to update national 100  videos for " . $territory, "cache");
             }
         }
         $this->log("cache written for national top ten  videos for $territory", 'debug');
         // End Caching functionality for national top 10 videos
+        return $data;
              
     } 
     
@@ -425,30 +429,32 @@ STR;
 STR;
 
 
-            $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
-            //print_r($coming_soon_rs);
-            
-            $this->log("coming soon songs $territory", "cachequery");
-            $this->log($sql_coming_soon_s, "cachequery");
-            
-          
-            if (!empty($coming_soon_rs)) {
-                foreach($coming_soon_rs as $key => $value)
-                {     
-                    $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                    $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-                    $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                }
-                Cache::delete("coming_soon_songs" . $territory);
-                Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
-                $this->log("cache written for coming soon songs for $territory", "cache");
-            }else{
-                 Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
-                 $this->log("Unable to update coming soon songs for " . $territory, "cache");
+        $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
+        //print_r($coming_soon_rs);
+
+        $this->log("coming soon songs $territory", "cachequery");
+        $this->log($sql_coming_soon_s, "cachequery");
+
+
+        if (!empty($coming_soon_rs)) {
+            foreach($coming_soon_rs as $key => $value)
+            {     
+                $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
             }
-            
-            $this->log("cache written for coming soon for $territory", 'debug');
-            // End Caching functionality for coming soon songs
+            Cache::delete("coming_soon_songs" . $territory);
+            Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
+            $this->log("cache written for coming soon songs for $territory", "cache");
+        }else{
+             $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
+             Cache::write("coming_soon_songs" . $territory, Cache::read("coming_soon_songs" . $territory));                   
+             $this->log("Unable to update coming soon songs for " . $territory, "cache");
+        }
+
+        $this->log("cache written for coming soon for $territory", 'debug');
+        // End Caching functionality for coming soon songs
+        return $coming_soon_rs;
     }    
     
     /*
@@ -459,7 +465,7 @@ STR;
     function getComingSoonVideos($territory){
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
-        $albumInstance = ClassRegistry::init('Album');
+        $albumInstance = ClassRegistry::init('Video');
         // Added caching functionality for coming soon videos
         $sql_coming_soon_v = <<<STR
 	SELECT 
@@ -499,22 +505,23 @@ STR;
         $this->log($sql_coming_soon_v, "cachequery");
 
         if (!empty($coming_soon_rv)) {
-            foreach($coming_soon_videos as $key => $value)
+            foreach($coming_soon_rv as $key => $value)
             {                                                                                     
-
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                $coming_soon_rv[$key]['videoAlbumImage'] = $videoAlbumImage;
             }                
             Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
             $this->log("cache written for coming soon videos for $territory", "cache");
         }else{
+            $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
             Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));                   
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
         }
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
         //End Caching functionality for coming soon songs
+        return $coming_soon_rv;
     }    
 
     
@@ -625,13 +632,14 @@ STR;
                 Cache::write("national_us_top10_songs" . $country, $data);
                 $this->log("cache written for US top ten for $territory", "cache");
             } else {
-
+                $data = Cache::read("national_us_top10_songs" . $country);
                 Cache::write("national_us_top10_songs" . $country, Cache::read("national_us_top10_songs" . $country));
                 $this->log("Unable to update US top ten for " . $territory, "cache");
             }
         }
         $this->log("cache written for US top ten for $territory", 'debug');
-         //End Caching functionality for US TOP 10 Songs        
+         //End Caching functionality for US TOP 10 Songs
+        return $data;
     }    
     
     
@@ -743,13 +751,14 @@ STR;
                Cache::write("national_us_top10_albums" . $country, $data);
                $this->log("cache written for US top ten Album for $territory", "cache");
            } else {
+               $data = Cache::read("national_us_top10_albums" . $country);
                Cache::write("national_us_top10_albums" . $country, Cache::read("national_us_top10_albums" . $country));
                $this->log("Unable to update US top ten Album for " . $territory, "cache");
            }
        }
        $this->log("cache written for US top ten Album for $territory", 'debug');
        //End Caching functionality for US TOP 10 Albums
-
+       return $data;
     }
     
     
@@ -852,12 +861,14 @@ STR;
                  Cache::write("national_us_top10_videos" . $country, $data);
                  $this->log("cache written for US top ten video for $territory", "cache");
              } else {
+                 $data = Cache::read("national_us_top10_videos" . $country);
                  Cache::write("national_us_top10_videos" . $country, Cache::read("national_us_top10_videos" . $country));
                  $this->log("Unable to update US top ten video for " . $territory, "cache");
              }
          }
          $this->log("cache written for US top ten video for $territory", 'debug');
          //End Caching functionality for US TOP 10 Videos
+         return $data;
         
     }    
 
@@ -926,12 +937,14 @@ STR;
                 Cache::write("new_releases_albums" . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
             } else {
+                $data = Cache::read("new_releases_albums" . $country);
                 Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
         }
         $this->log("cache written for new releases albums for $territory", 'debug');
         //End Caching functionality for new releases albums
+        return $data;
         
     } 
     
@@ -997,12 +1010,14 @@ STR;
                 Cache::write("new_releases_videos" . $country, $data);
                 $this->log("cache written for new releases videos for $territory", "cache");
             } else {
+                $data = Cache::read("new_releases_videos" . $country);
                 Cache::write("new_releases_videos" . $country, Cache::read("new_releases_videos" . $country));
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
         }
         $this->log("cache written for new releases albums for $territory", 'debug');
-        //End Caching functionality for new releases videos         
+        //End Caching functionality for new releases videos  
+        return $data;
         
     } 
     
@@ -1099,9 +1114,9 @@ STR;
             Cache::delete("featured" . $territory);
             Cache::write("featured" . $territory, $featured);
         }
-
         $this->log("cache written for featured artists for $territory", 'debug');
         $this->log("cache written for featured artists for: $territory", "cache");
+        return $featured;
     }
     
     
@@ -1392,6 +1407,7 @@ STR;
         }
 
         //library top 10 cache set for songs end
+        return $topDownload;
     }
     
     /* @function getLibraryTop10Albums
@@ -1537,6 +1553,7 @@ STR;
         }
 
        //library top 10 cache set for albums end
+       return $topDownload;
     }
     
     /* @function getLibraryTop10Videos
@@ -1679,7 +1696,8 @@ STR;
              $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
          }
 
-        //library top 10 cache set for videos end         
+        //library top 10 cache set for videos end
+        return $topDownload; 
         
     }
     

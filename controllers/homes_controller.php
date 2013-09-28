@@ -10,7 +10,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Common');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
 
     /*
@@ -85,226 +85,15 @@ class HomesController extends AppController
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
-      
-            $country = $territory;
-            
-            //check the config value which show, which table should use
-            $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-            $siteConfigData = $this->Album->query($siteConfigSQL);
-            $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-
-            //according to the config variable setting fetch all related prod ids.
-            if($maintainLatestDownload){
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                    FROM `latest_downloads` AS `Download` 
-                    LEFT JOIN libraries ON libraries.id=Download.library_id
-                    WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
-                    GROUP BY Download.ProdID 
-                    ORDER BY `countProduct` DESC 
-                    LIMIT 1110";
-                } else {
-                     $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                    FROM `downloads` AS `Download` 
-                    LEFT JOIN libraries ON libraries.id=Download.library_id
-                    WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
-                    GROUP BY Download.ProdID 
-                    ORDER BY `countProduct` DESC 
-                    LIMIT 1110";
-                }
-		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		 
-               
-                
-                  //make the provide type and prodid array for selecting records
-                  $ids = '';
-                  $ids_provider_type = '';
-		  $natTopDownloaded = $this->Album->query($sql);               
-		  foreach($natTopDownloaded as $natTopSong){
-			if(empty($ids)){
-			  $ids .= $natTopSong['Download']['ProdID'];
-			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			} else {
-			  $ids .= ','.$natTopSong['Download']['ProdID'];
-			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			}
-		  }
-		  $data = array();
-                  //fetch the multiple countires prefix
-                  $countryPrefix = $this->Session->read('multiple_countries');
-                  $sql_national_100 =<<<STR
- SELECT 
-                            Song.ProdID,
-                            Song.ReferenceID,
-                            Song.Title,
-                            Song.ArtistText,
-                            Song.DownloadStatus,
-                            Song.SongTitle,
-                            Song.Artist,
-                            Song.Advisory,
-                            Song.Sample_Duration,
-                            Song.FullLength_Duration,
-                            Song.provider_type,
-                            Genre.Genre,
-                            Albums.ProdID,
-                            Albums.provider_type,
-                            Country.Territory,
-                            Country.SalesDate,
-                            Sample_Files.CdnPath,
-                            Sample_Files.SaveAsName,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            File.CdnPath,
-                            File.SourceURL,
-                            File.SaveAsName,
-                            Sample_Files.FileID,
-                            PRODUCT.pid
-                    FROM
-                            Songs AS Song
-                                    LEFT JOIN
-                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                    LEFT JOIN
-                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                    LEFT JOIN
-                            Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-                                    LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
-                                    LEFT JOIN
-                            PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
-                                    INNER JOIN 
-                            Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                    INNER JOIN 
-                            File ON (Albums.FileID = File.FileID) 
-                    WHERE
-                            ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
-                    GROUP BY Song.ProdID
-                    ORDER BY FIELD(Song.ProdID,$ids) ASC
-                    LIMIT 100
-	  
-STR;
-                        //execute the query
-			$nationalTopDownload = $this->Album->query($sql_national_100);
-                        foreach($nationalTopDownload as $key => $value){
-                                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                                $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
-                        }                        
-			Cache::write("national".$territory, $nationalTopDownload);
-		}else{
-                    $nationalTopDownload = Cache::read("national".$territory);                
-                }
-		$this->set('nationalTopDownload',$nationalTopDownload);
-                
-              
-          
-             
+            $nationalTopDownload = $this->Common->getNationalTop100($territory);
+        }else{
+            $nationalTopDownload = Cache::read("national".$territory);                
+        }
+        $this->set('nationalTopDownload',$nationalTopDownload);
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
-            
-                  
-                $country = $territory;
-                
-                $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-                $siteConfigData = $this->Album->query($siteConfigSQL);
-                $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-                $maintainLatestVideoDownload = 0;           
-               if(!empty($country)){ 
-                                                 
-                   if($maintainLatestVideoDownload){                       
-
-                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                        FROM `latest_videodownloads` AS `Download` 
-                        LEFT JOIN libraries ON libraries.id=Download.library_id
-                        WHERE libraries.library_territory = '".$country."' 
-                        AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
-                        GROUP BY Download.ProdID 
-                        ORDER BY `countProduct` DESC 
-                        LIMIT 110";
-                   } else {
-
-                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                        FROM `videodownloads` AS `Download` 
-                        LEFT JOIN libraries ON libraries.id=Download.library_id
-                        WHERE libraries.library_territory = '".$country."' 
-                        AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
-                        GROUP BY Download.ProdID 
-                        ORDER BY `countProduct` DESC 
-                        LIMIT 110";
-                   }                   
-                
-                $ids = '';
-                $ids_provider_type = '';
-                $natTopDownloaded = $this->Album->query($sql); 
-                foreach($natTopDownloaded as $natTopSong){
-                    if(empty($ids)){
-                        $ids .= $natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-                    } else {
-                        $ids .= ','.$natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-                    }
-                }                
-
-                $nationalTopVideoDownload = array();
-                 $countryPrefix = $this->Session->read('multiple_countries');                 
-                  $sql_national_100_v =<<<STR
-                SELECT 
-                                Video.ProdID,
-                                Video.ReferenceID,
-                                Video.Title,
-                                Video.ArtistText,
-                                Video.DownloadStatus,
-                                Video.VideoTitle,
-                                Video.Artist,
-                                Video.Advisory,
-                                Video.Sample_Duration,
-                                Video.FullLength_Duration,
-                                Video.provider_type,
-                                Genre.Genre,
-                                Country.Territory,
-                                Country.SalesDate,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
-                                PRODUCT.pid
-                FROM
-                                video AS Video
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
-                                Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
-                                                LEFT JOIN
-                {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type) AND Country.SalesDate != '' AND Country.SalesDate < NOW()
-                                                LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
-                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
-                GROUP BY Video.ProdID
-                ORDER BY FIELD(Video.ProdID, $ids) ASC
-                LIMIT 100 
-                  
-STR;
-                //execute the query          
-                $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
-                
-                foreach($nationalTopVideoDownload as $key => $value){
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
-                    $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
-                }                
-               
-                //write in the cache                                   
-                Cache::write("nationalvideos".$country, $nationalTopVideoDownload );
-               
-               }               
-       }else{
-        
+            $nationalTopVideoDownload = $this->Common->getNationalTop100Videos($territory);
+        }else{
             $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
        }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
@@ -315,84 +104,11 @@ STR;
         
         //if(1){
         if (($artists = Cache::read("featured".$country)) === false) {
-           
-            
-            //get all featured artist and make array
-            $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-
-            foreach($featured as $k => $v){
-                    if($v['Featuredartist']['album'] != 0){
-                            if(empty($ids)){
-                                    $ids .= $v['Featuredartist']['album'];
-                                    $ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
-                            } else {
-                                    $ids .= ','.$v['Featuredartist']['album'];
-                                    $ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
-                            }	
-                    }
-            }
-
-            //get all the details for featured albums
-            if($ids != ''){
-                    $this->Album->recursive = 2;
-                    $featured =  $this->Album->find('all',array('conditions' =>
-                                            array('and' =>
-                                                    array(
-                                                            array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
-                                                    ), "1 = 1 GROUP BY Album.ProdID"
-                                            ),
-
-                                            'fields' => array(
-                                                    'Album.ProdID',
-                                                    'Album.Title',
-                                                    'Album.ArtistText',
-                                                    'Album.AlbumTitle',
-                                                    'Album.Artist',
-                                                    'Album.ArtistURL',
-                                                    'Album.Label',
-                                                    'Album.Copyright',
-                                                    'Album.provider_type'
-
-                                                    ),
-                                            'contain' => array(
-                                                    'Genre' => array(
-                                                            'fields' => array(
-                                                                    'Genre.Genre'
-                                                                    )
-                                                            ),
-                                                    'Country' => array(
-                                                            'fields' => array(
-                                                                    'Country.Territory'
-                                                                    )
-                                                            ),
-                                                    'Files' => array(
-                                                            'fields' => array(
-                                                                    'Files.CdnPath' ,
-                                                                    'Files.SaveAsName',
-                                                                    'Files.SourceURL'
-                                                    ),
-                                            )
-                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
-                            )
-                    );
-                    
-            } else {
-                    $featured = array();
-            }
-            
-            foreach($featured as $k => $v){
-
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
-                    $image =  Configure::read('App.Music_Path').$albumArtwork;
-                    $featured[$k]['featuredImage'] = $image;
-            }        
-            
-            //write the information in to the cache
-            Cache::write("featured".$territory, $featured);
+            $featured = $this->Common->getFeaturedArtists($territory);
+        }else{
+            //fetched all the information from the cache
+            $featured = Cache::read("featured".$country);
         }
-        
-        //fetched all the information from the cache
-        $featured = Cache::read("featured".$country);
         $this->set('featuredArtists', $featured);
         
         /*
@@ -431,116 +147,23 @@ STR;
         */ 
         $territory = $this->Session->read('territory');
 
-        if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {  
-        //if(1) {
-          // Show from DB          
-          $this->Song->recursive = 2;
-          $countryPrefix = $this->Session->read('multiple_countries');                                
-          $sql_coming_soon =<<<STR
-            SELECT 
-              Song.ProdID,
-              Song.ReferenceID,
-              Song.Title,
-              Song.ArtistText,
-              Song.DownloadStatus,
-              Song.SongTitle,
-              Song.Artist,
-              Song.Advisory,
-              Song.Sample_Duration,
-              Song.FullLength_Duration,
-              Song.provider_type,
-              Genre.Genre,
-              Country.Territory,
-              Country.SalesDate,
-              File.CdnPath,
-              File.SourceURL,
-              File.SaveAsName
-            FROM
-            Songs AS Song
-              LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-              LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID)
-              INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-              INNER JOIN File ON (Albums.FileID = File.FileID) 
-            WHERE
-            ( (Song.DownloadStatus = '1')  ) AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
-            GROUP BY Song.ReferenceID
-            ORDER BY Country.SalesDate ASC
-            LIMIT 20
-STR;
-
-                    $coming_soon_rs = $this->Album->query($sql_coming_soon);
-                    if(!empty($coming_soon_rs)){
-                        foreach($coming_soon_rs as $key => $value)
-                        {     
-                            $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-                            $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                        }                            
-                        Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
-                    }                    
-                }
-                else    //  Show From Cache
-                {                  
-                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);                    
-                }
-                
-                $this->set('coming_soon_rs', $coming_soon_rs); 
-                
-                // Videos
-                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
-                //if(1)
-                {
-                    $this->Song->recursive = 2;
-                    $countryPrefix = $this->Session->read('multiple_countries');
-                
-                $sql_cs_videos =<<<STR
-	SELECT 
-        Video.ProdID,
-        Video.ReferenceID,
-        Video.Title,
-        Video.ArtistText,
-        Video.DownloadStatus,
-        Video.VideoTitle,
-        Video.Artist,
-        Video.Advisory,
-        Video.Sample_Duration,
-        Video.FullLength_Duration,
-        Video.provider_type,
-        Genre.Genre,
-        Country.Territory,
-        Country.SalesDate,
-        Image_Files.FileID,
-        Image_Files.CdnPath,
-        Image_Files.SourceURL
-    FROM
-        video AS Video
-    LEFT JOIN
-        Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
-    LEFT JOIN
-        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-    LEFT JOIN
-        File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-    WHERE
-        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
-    ORDER BY Country.SalesDate ASC
-    LIMIT 20
-STR;
-           
-            $coming_soon_videos = $this->Video->query($sql_cs_videos);
-            
-            if(!empty($coming_soon_videos)){
-                foreach($coming_soon_videos as $key => $value)
-                {
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                    $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
-                }                
-                Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
-            }                   
+        if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {
+                    
+           $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
         else    //  Show From Cache
         {                  
-           $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
+           $coming_soon_rs = Cache::read("coming_soon_songs".$territory);                    
+        }
+        $this->set('coming_soon_rs', $coming_soon_rs); 
+                
+                // Videos
+        if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false){
+            $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
+        }
+        else    //  Show From Cache
+        {                  
+            $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);
@@ -684,310 +307,68 @@ STR;
         
 	function my_lib_top_10()
 	{ 
-		
-                        
-                $this->layout = 'home';           
-                $patId = $this->Session->read('patron');
-		$country = $this->Session->read('territory');
-		$url = $_SERVER['SERVER_NAME'];
-                $host = explode('.', $url);
-                $subdomains = array_slice($host, 0, count($host) - 2 );									
-                $subdomains = $subdomains[0] ;
-                $libId = $this->Session->read('library');
-                
-                if($subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic'){
-                    if(!$this->Session->read("patron")){
-                        $this->redirect(array('controller' => 'homes', 'action' => 'index'));
-                    }
+            $this->layout = 'home';           
+            $patId = $this->Session->read('patron');
+            $country = $this->Session->read('territory');
+            $url = $_SERVER['SERVER_NAME'];
+            $host = explode('.', $url);
+            $subdomains = array_slice($host, 0, count($host) - 2 );									
+            $subdomains = $subdomains[0] ;
+            $libId = $this->Session->read('library');
+
+            if($subdomains == '' || $subdomains == 'www' || $subdomains == 'freegalmusic'){
+                if(!$this->Session->read("patron")){
+                    $this->redirect(array('controller' => 'homes', 'action' => 'index'));
                 }
-                
-                
-                /////////////////////////////////////Songs///////////////////////////////////////////////
-                
-		$ids = '';
-                $ids_provider_type = '';
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);                
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
-                    if (($libDownload = Cache::read("lib".$libId)) === false)
-                    //if(1)
-                    {
-			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
-                        
-                        if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
-                            $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
-                        } else {
-                            $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-                        }          
-                        
-			$ids = '';
-			$ioda_ids = array();
-			$sony_ids = array();
-			$sony_ids_str = '';
-			$ioda_ids_str = '';  
+            }
 
-			foreach($topDownloaded as $k => $v){
-			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
-			   	if(empty($ids)){
-				  $ids .= $v['LatestDownload']['ProdID'];
-				  $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
-				} else {
-				  $ids .= ','.$v['LatestDownload']['ProdID'];
-				  $ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
-				}
-				if($v['LatestDownload']['provider_type'] == 'sony'){
-				  $sony_ids[] = $v['LatestDownload']['ProdID'];
-				} else {
-				  $ioda_ids[] = $v['LatestDownload']['ProdID'];
-				}
-			} else {
-				if(empty($ids)){
-				  $ids .= $v['Download']['ProdID'];
-				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				} else {
-				  $ids .= ','.$v['Download']['ProdID'];
-				   $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}
-				if($v['Download']['provider_type'] == 'sony'){
-				  $sony_ids[] = $v['Download']['ProdID'];
-				} else {
-				  $ioda_ids[] = $v['Download']['ProdID'];
-				}
-			  }				
-			}
-                        
-			if($ids != ''){ 
-				if(!empty($sony_ids)){
-					$sony_ids_str = implode(',',$sony_ids);
-				}
-				if(!empty($ioda_ids)){
-					$ioda_ids_str = implode(',',$ioda_ids);
-				}
-				if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
-					$top_ten_condition_songs = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda'))";                                       
-				} else if(!empty($sony_ids_str)){
-					$top_ten_condition_songs = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";                                        
-                                        
-                                } else if(!empty($ioda_ids_str)){
-					$top_ten_condition_songs = "(Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda')";                                        
-				}
-				
-				
-				$this->Song->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');
-                                
-                                //  Songs                             
-                                
-				$topDownloaded_query_songs =<<<STR
-				SELECT 
-					Song.ProdID,
-					Song.ReferenceID,
-					Song.Title,
-					Song.ArtistText,
-					Song.DownloadStatus,
-					Song.SongTitle,
-					Song.Artist,
-					Song.Advisory,
-					Song.Sample_Duration,
-					Song.FullLength_Duration,
-					Song.provider_type,
-                                        Albums.ProdID,
-                                        Albums.provider_type,                                          
-					Genre.Genre,
-					Country.Territory,
-					Country.SalesDate,
-					Sample_Files.CdnPath,
-					Sample_Files.SaveAsName,
-					Full_Files.CdnPath,
-                                        Full_Files.SaveAsName,
-                                        File.CdnPath,
-                                        File.SourceURL,
-                                        File.SaveAsName,
-                                        Sample_Files.FileID
-				FROM Songs AS Song 
-                                LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
-                                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                                LEFT JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                INNER JOIN File ON (Albums.FileID = File.FileID)
-				WHERE ((Song.DownloadStatus = '1') AND (($top_ten_condition_songs))  AND 1 = 1 AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()))
-				GROUP BY Song.ProdID
-				ORDER BY FIELD(Song.ProdID,$ids) ASC
-				LIMIT 10
-STR;
-                                 
-			$topDownload_songs = $this->Song->query($topDownloaded_query_songs);
-                        foreach($topDownload_songs as $key => $value){
-                             $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
-                             $topDownload_songs[$key]['songs_img'] = $songs_img;
-                        }     
 
-			} else { 
-				$topDownload_songs = array();                               
-			}
+            /////////////////////////////////////Songs///////////////////////////////////////////////
 
-			Cache::write("lib".$libId, $topDownload_songs);
-		} 
-                else
-               {
-                        $topDownload_songs = Cache::read("lib".$libId);
-                }
-		
-		$this->set('top_10_songs',$topDownload_songs);
-                
-                
-                ////////////////////////////////////////////////Albums///////////////////////////////////////////////////
-                                
-                
-                $ids_provider_type_album = '';
-		
-                    //if(1)
-                    if (($libDownload = Cache::read("lib_album".$libId)) === false)
-                    {
-			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
-                        
-                        if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
-                            $topDownloaded_albums = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
-                        } else {
-                            $topDownloaded_albums = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-                        }
-                        
-                                               
-			$ids = '';
-                        $ids_provider_type = '';
-			$ioda_ids = array();
-			$sony_ids = array();
-			$sony_ids_str = '';
-			$ioda_ids_str = ''; 
-                                                
-			foreach($topDownloaded_albums as $k => $v){
-			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
-			   	if(empty($ids)){
-				  $ids .= $v['LatestDownload']['ProdID'];
-				  $ids_provider_type_album .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
-				} else {
-				  $ids .= ','.$v['LatestDownload']['ProdID'];
-				  $ids_provider_type_album .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
-				}
-				if($v['LatestDownload']['provider_type'] == 'sony'){
-				  $sony_ids[] = $v['LatestDownload']['ProdID'];
-				} else {
-				  $ioda_ids[] = $v['LatestDownload']['ProdID'];
-				}
-			} else {
-				if(empty($ids)){
-				  $ids .= $v['Download']['ProdID'];
-				  $ids_provider_type_album .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				} else {
-				  $ids .= ','.$v['Download']['ProdID'];
-				   $ids_provider_type_album .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}
-				if($v['Download']['provider_type'] == 'sony'){
-				  $sony_ids[] = $v['Download']['ProdID'];
-				} else {
-				  $ioda_ids[] = $v['Download']['ProdID'];
-				}
-			  }				
-			}                   
-                        
-			if($ids != ''){ 
-				if(!empty($sony_ids)){
-					$sony_ids_str = implode(',',$sony_ids);
-				}
-				if(!empty($ioda_ids)){
-					$ioda_ids_str = implode(',',$ioda_ids);
-				}
-				if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
-					$top_ten_condition_albums = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda'))";                                       
-				} else if(!empty($sony_ids_str)){
-					$top_ten_condition_albums = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";                                        
-                                        
-                                } else if(!empty($ioda_ids_str)){
-					$top_ten_condition_albums = "(Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda')";                                        
-				}
-				
-				
-				$this->Album->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');
-                                
-                                //  Albums                             
-                                
-				$topDownloaded_query_albums =<<<STR
-				SELECT 
-					Song.ProdID,
-					Song.ReferenceID,
-					Song.Title,
-					Song.ArtistText,
-					Song.DownloadStatus,
-					Song.SongTitle,
-					Song.Artist,
-					Song.Advisory,
-					Song.Sample_Duration,
-					Song.FullLength_Duration,
-					Song.provider_type,
-                                        Albums.ProdID,
-                                        Albums.provider_type, 
-                                        Albums.AlbumTitle,
-					Genre.Genre,
-					Country.Territory,
-					Country.SalesDate,
-					Sample_Files.CdnPath,
-					Sample_Files.SaveAsName,
-					Full_Files.CdnPath,
-                                        Full_Files.SaveAsName,
-                                        File.CdnPath,
-                                        File.SourceURL,
-                                        File.SaveAsName,
-                                        Sample_Files.FileID
-				FROM Songs AS Song
-				LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-				LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-				LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-				LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-				INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                INNER JOIN File ON (Albums.FileID = File.FileID)
-				WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-				GROUP BY Song.ReferenceID
-				ORDER BY count(Song.ProdID) DESC
-				LIMIT 10
-STR;
-                                 
-                            $topDownload_albums = $this->Album->query($topDownloaded_query_albums);
-                            if(!empty($topDownload_albums)){
-                                foreach($topDownload_albums as $key => $value){
-                                     $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                     $album_img =  Configure::read('App.Music_Path').$album_img;
-                                     $topDownload_albums[$key]['album_img'] = $album_img;
-                                }
-                            }
-			} else { 
-				$topDownload_albums = array();                               
-			}
+            $ids = '';
+            $ids_provider_type = '';
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);                
+            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
+            if (($libDownload = Cache::read("lib".$libId)) === false){
+                $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
+            } 
+            else
+            {
+                $topDownload_songs = Cache::read("lib".$libId);
+            }
 
-			Cache::write("lib_album".$libId, $topDownload_albums);
-		}
-                else
-                { 
-                    $topDownload_albums = Cache::read("lib_album".$libId);
-                }
-		$this->set('topDownload_albums',$topDownload_albums); 
-                
-                ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
+            $this->set('top_10_songs',$topDownload_songs);
 
-                $topDownload_videos_data = $this->requestAction(
-                array('controller' => 'videos', 'action' => 'my_lib_top_10_videos'), array(
-                             'data'=>array(
-                                       'model'=>array(
-                                        'field'=>'val'
-                                            )
-                                        )
-                                    )
-                                );
 
-               $this->set('topDownload_videos_data',$topDownload_videos_data);                   
+            ////////////////////////////////////////////////Albums///////////////////////////////////////////////////
+
+
+            $ids_provider_type_album = '';
+
+                //if(1)
+            if (($libDownload = Cache::read("lib_album".$libId)) === false)
+            {
+
+                $topDownload_albums = $this->Common->getLibraryTop10Albums($country,$libId);
+            }
+            else
+            { 
+                $topDownload_albums = Cache::read("lib_album".$libId);
+            }
+            $this->set('topDownload_albums',$topDownload_albums); 
+
+            ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
+            if (($libDownload = Cache::read("lib_video".$libId)) === false)
+            {
+                $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country,$libId);
+            }
+            else
+            { 
+                $topDownload_videos_data = Cache::read("lib_video".$libId);
+            }
+            $this->set('topDownload_videos_data',$topDownload_videos_data);                   
 	}
         
         function us_top_10()
@@ -1010,100 +391,15 @@ STR;
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-            if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-            //if(1) {                   
-                    $country = $territory;
-                    if($maintainLatestDownload){
-                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                            FROM `latest_downloads` AS `Download` 
-                            LEFT JOIN libraries ON libraries.id=Download.library_id
-                            WHERE libraries.library_territory = '".$country."' 
-                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                            GROUP BY Download.ProdID 
-                            ORDER BY `countProduct` DESC 
-                            LIMIT 110";
-                        } else {
-                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                            FROM `downloads` AS `Download` 
-                            LEFT JOIN libraries ON libraries.id=Download.library_id
-                            WHERE libraries.library_territory = '".$country."' 
-                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                            GROUP BY Download.ProdID 
-                            ORDER BY `countProduct` DESC 
-                            LIMIT 110";
-                        }
-		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		  $ids = '';
-                  $ids_provider_type = '';
-		  $natTopDownloaded = $this->Album->query($sql);
-                  
-		  foreach($natTopDownloaded as $natTopSong){
-			if(empty($ids)){
-			  $ids .= $natTopSong['Download']['ProdID'];
-			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			} else {
-			  $ids .= ','.$natTopSong['Download']['ProdID'];
-			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			}
-		  }
-		  $data = array();
-
-                  $countryPrefix = $this->Session->read('multiple_countries');
-	 
-                  $sql_national_100 =<<<STR
-                  SELECT 
-                        Song.ProdID,
-                        Song.ReferenceID,
-                        Song.Title,
-                        Song.ArtistText,
-                        Song.DownloadStatus,
-                        Song.SongTitle,
-                        Song.Artist,
-                        Song.Advisory,
-                        Song.Sample_Duration,
-                        Song.FullLength_Duration,
-                        Song.provider_type,
-                        Albums.ProdID,
-                        Albums.provider_type,                                       
-                        Genre.Genre,
-                        Country.Territory,
-                        Country.SalesDate,
-                        Sample_Files.CdnPath,
-                        Sample_Files.SaveAsName,
-                        Full_Files.CdnPath,
-                        Full_Files.SaveAsName,
-                        File.CdnPath,
-                        File.SourceURL,
-                        File.SaveAsName,
-                        Sample_Files.FileID
-                FROM Songs AS Song
-                LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
-                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-                INNER JOIN File ON (Albums.FileID = File.FileID) 
-                WHERE ((Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-                GROUP BY Song.ProdID
-                ORDER BY FIELD(Song.ProdID,$ids) ASC
-                LIMIT 10 
-STR;
-
-			$national_us_top10_record = $this->Album->query($sql_national_100);
-                        foreach($national_us_top10_record as $key => $value){
-                             $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
-                             $national_us_top10_record[$key]['songs_img'] = $songs_img;
-                        }    
-			// Checking for download status
-			Cache::write("national_us_top10_songs".$territory, $national_us_top10_record);
-		}
+                if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+                    $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
+                }
                 else
                 {
-                   $national_us_top10_record = Cache::read("national_us_top10_songs".$territory); 
+                    $national_us_top10_record = Cache::read("national_us_top10_songs".$territory); 
                 }
             }               
-		$this->set('nationalTopDownload',$national_us_top10_record);
+            $this->set('nationalTopDownload',$national_us_top10_record);
                 
                 
                 //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
@@ -1112,97 +408,9 @@ STR;
             $country = $this->Session->read('territory');
             
             if(!empty($country)){  
-              if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
-              //if(1){
-                    $country = $territory;
-
-                    if($maintainLatestDownload){
-                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                            FROM `latest_downloads` AS `Download` 
-                            LEFT JOIN libraries ON libraries.id=Download.library_id
-                            WHERE libraries.library_territory = '".$country."' 
-                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                            GROUP BY Download.ProdID 
-                            ORDER BY `countProduct` DESC 
-                            LIMIT 110";
-                        } else {
-                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                            FROM `downloads` AS `Download` 
-                            LEFT JOIN libraries ON libraries.id=Download.library_id
-                            WHERE libraries.library_territory = '".$country."' 
-                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                            GROUP BY Download.ProdID 
-                            ORDER BY `countProduct` DESC 
-                            LIMIT 110";
-                        }
-		  
-		  $ids = '';
-                  $ids_provider_type = '';
-		  $natTopDownloaded = $this->Album->query($sql);
-                  
-		  foreach($natTopDownloaded as $natTopSong){
-                    if(empty($ids)){
-                        $ids .= $natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-                    } else {
-                        $ids .= ','.$natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-                    }
+                if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+                    $ustop10Albums = $this->Common->getUsTop10Albums($territory);
                 }
-		 $data = array();
-                 $countryPrefix = $this->Session->read('multiple_countries');
-                  // $countryPrefix = 'us_';
-	 
-                   $sql_us_albums =<<<STR
-                   SELECT 
-                        Song.ProdID,
-                        Song.ReferenceID,
-                        Song.Title,
-                        Song.ArtistText,
-                        Song.DownloadStatus,
-                        Song.SongTitle,
-                        Song.Artist,
-                        Song.Advisory,
-                        Song.Sample_Duration,
-                        Song.FullLength_Duration,
-                        Song.provider_type,
-                        Albums.ProdID,
-                        Albums.provider_type,  
-                        Albums.AlbumTitle, 
-                        Genre.Genre,
-                        Country.Territory,
-                        Country.SalesDate,
-                        Sample_Files.CdnPath,
-                        Sample_Files.SaveAsName,
-                        Full_Files.CdnPath,
-                        Full_Files.SaveAsName,
-                        File.CdnPath,
-                        File.SourceURL,
-                        File.SaveAsName,
-                        Sample_Files.FileID
-                FROM Songs AS Song
-                LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-                INNER JOIN File ON (Albums.FileID = File.FileID) 
-                WHERE ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) )  AND (Country.Territory = '$country')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-                GROUP BY  Song.ReferenceID
-                ORDER BY count(Song.ProdID) DESC
-                LIMIT 10 
-STR;
-                    $ustop10Albums = $this->Album->query($sql_us_albums);
-                    // Checking for download status
-                    foreach($ustop10Albums as $key => $value){
-
-                         $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                         $album_img =  Configure::read('App.Music_Path').$album_img;
-                         $ustop10Albums[$key]['album_img'] = $album_img;
-                    }     
-
-                    Cache::write("national_us_top10_albums".$territory, $ustop10Albums);                        
-		}
                 else
                 {
                    $ustop10Albums = Cache::read("national_us_top10_albums".$territory); 
@@ -1214,84 +422,9 @@ STR;
                
                $country = $this->Session->read('territory');
                 
-               if(!empty($country)){ 
-               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
-               //if(1) {               
-                   if($maintainLatestVideoDownload){
-                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                        FROM `latest_videodownloads` AS `Download` 
-                        LEFT JOIN libraries ON libraries.id=Download.library_id
-                        WHERE libraries.library_territory = '".$country."' 
-                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                        GROUP BY Download.ProdID 
-                        ORDER BY `countProduct` DESC 
-                        LIMIT 110";
-                   } else {
-                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                        FROM `videodownloads` AS `Download` 
-                        LEFT JOIN libraries ON libraries.id=Download.library_id
-                        WHERE libraries.library_territory = '".$country."' 
-                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                        GROUP BY Download.ProdID 
-                        ORDER BY `countProduct` DESC 
-                        LIMIT 110";
-                    }
-
-                $ids = '';
-                $ids_provider_type = '';
-                $natTopDownloaded = $this->Album->query($sql); 
-                foreach($natTopDownloaded as $natTopSong){
-                    if(empty($ids)){
-                        $ids .= $natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-                    } else {
-                        $ids .= ','.$natTopSong['Download']['ProdID'];
-                        $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-                    }
-                }
-
-                 $nationalTopVideoDownload = array();
-                 $countryPrefix = $this->Session->read('multiple_countries');                 
-                 $sql_us_10_v =<<<STR
-                 SELECT 
-                        Video.ProdID,
-                        Video.ReferenceID,
-                        Video.Title,
-                        Video.ArtistText,
-                        Video.DownloadStatus,
-                        Video.VideoTitle,
-                        Video.Artist,
-                        Video.Advisory,
-                        Video.Sample_Duration,
-                        Video.FullLength_Duration,
-                        Video.provider_type,
-                        Genre.Genre,
-                        Country.Territory,
-                        Country.SalesDate,
-                        Full_Files.CdnPath,
-                        Full_Files.SaveAsName,
-                        Full_Files.FileID,
-                        Image_Files.FileID,
-                        Image_Files.CdnPath,
-                        Image_Files.SourceURL
-                FROM video AS Video
-                LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
-                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-                LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
-                GROUP BY Video.ProdID
-                ORDER BY FIELD(Video.ProdID, $ids) ASC
-                LIMIT 10                   
-STR;
-                    $usTop10VideoDownload = $this->Video->query($sql_us_10_v);
-                    foreach($usTop10VideoDownload as $key => $value){
-                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                        $usTop10VideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    }        
-                    Cache::write("national_us_top10_videos".$territory, $usTop10VideoDownload);
-                
+            if(!empty($country)){ 
+               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
+                   $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
                 }
                 else
                 {
@@ -4274,133 +3407,27 @@ STR;
             $advisory_status = $this->getLibraryExplicitStatus($libraryId);
             //////////////////////////////////Videos/////////////////////////////////////////////////////////            
              
-            if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
-            //if(1)
-            {               
-                $this->Song->recursive = 2;
-                $countryPrefix = $this->Session->read('multiple_countries');                                
-
-                $sql_cs_videos =<<<STR
-SELECT 
-        Video.ProdID,
-        Video.ReferenceID,
-        Video.Title,
-        Video.ArtistText,
-        Video.DownloadStatus,
-        Video.VideoTitle,
-        Video.Artist,
-        Video.Advisory,
-        Video.Sample_Duration,
-        Video.FullLength_Duration,
-        Video.provider_type,
-        Genre.Genre,
-        Country.Territory,
-        Country.SalesDate,
-        Full_Files.CdnPath,
-        Full_Files.SaveAsName,
-        Full_Files.FileID,
-        Image_Files.FileID,
-        Image_Files.CdnPath,
-        Image_Files.SourceURL
-FROM video AS Video
-LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
-LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
-GROUP BY Video.ProdID 
-ORDER BY Country.SalesDate DESC 
-LIMIT 100 
-STR;
-
-            $coming_soon_videos = $this->Video->query($sql_cs_videos);    
-            foreach($coming_soon_videos as $key => $value){
-                $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+            if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false){
+                $coming_soon_videos = $this->Common->getNewReleaseVideos($territory);
             }
-            
-            if(!empty($coming_soon_videos)){
-                Cache::write("new_releases_videos".$territory, $coming_soon_videos);
-            }                    
-        }
-        else
-        {
-            $coming_soon_videos = Cache::read("new_releases_videos".$territory);
-        }
+            else
+            {
+                $coming_soon_videos = Cache::read("new_releases_videos".$territory);
+            }
 
-        $this->set('new_releases_videos', $coming_soon_videos);           
+            $this->set('new_releases_videos', $coming_soon_videos);           
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
                
-        if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
-        //if(1)
-        {            
-           $this->Song->recursive = 2;
-           $countryPrefix = $this->Session->read('multiple_countries');     
-                
-           $new_releases_albums_query =<<<STR
-                SELECT 
-                  Song.ProdID,
-                  Song.ReferenceID,
-                  Song.Title,
-                  Song.ArtistText,
-                  Song.DownloadStatus,
-                  Song.SongTitle,
-                  Song.Artist,
-                  Song.Advisory,
-                  Song.Sample_Duration,
-                  Song.FullLength_Duration,
-                  Song.provider_type,
-                  Albums.AlbumTitle,
-                  Genre.Genre,
-                  Country.Territory,
-                  Country.SalesDate,
-                  File.CdnPath,
-                  File.SourceURL,
-                  File.SaveAsName,
-                  Full_Files.CdnPath,
-                  Full_Files.SaveAsName,
-                  Full_Files.FileID
-                FROM Songs AS Song
-                LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-                INNER JOIN File ON (Albums.FileID = File.FileID) 
-                WHERE ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
-                group by Song.ReferenceID
-                ORDER BY Country.SalesDate DESC
-                LIMIT 100
-STR;
-
-            //GROUP BY  Song.ReferenceID
-            $new_releases_albums_rs = $this->Album->query($new_releases_albums_query); 
-            foreach($new_releases_albums_rs as $key => $value){
-                /*if($value['Song']['provider_type'] == 'ioda')
-                {
-                    //$album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."".$value['File']['SourceURL']);
-                }
-                else
-                {
-                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                }*/
-                    
-                $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                $album_img =  Configure::read('App.Music_Path').$album_img;
-                $new_releases_albums_rs[$key]['albumImage'] = $album_img;                             
+            if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false){
+                $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+            }
+            else    //  Show From Cache
+            {  
+               $new_releases_albums_rs = Cache::read("new_releases_albums".$territory);
             }
 
-           if(!empty($new_releases_albums_rs)){
-             Cache::write("new_releases_albums".$territory, $new_releases_albums_rs);
-           }
-        }
-        else    //  Show From Cache
-        {  
-           $new_releases_albums_rs = Cache::read("new_releases_albums".$territory);
-        }
-
-        $this->set('new_releases_albums', $new_releases_albums_rs); 
-    }
+            $this->set('new_releases_albums', $new_releases_albums_rs); 
+       }
 }
 ?>
