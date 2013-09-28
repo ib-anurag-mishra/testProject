@@ -116,14 +116,12 @@ pageTracker._trackPageview();
 
 <!-- Code for player -->
 <!-- History.js -->
-	
-        
-        <?php if ($this->Session->read('patron') && $this->Session->read('library_type') == 12){ ?>
-
-<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
+	<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 	
 	<!-- Ajaxify -->
 	<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
+        
+        <?php if ($this->Session->read('patron') && $this->Session->read('library_type') == 12){ ?>
 	
 	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
 	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
