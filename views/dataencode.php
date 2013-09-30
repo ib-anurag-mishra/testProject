@@ -95,8 +95,9 @@ class dataencodeView extends View {
 
   function getTextEncode($text) {
 
-    $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
-    return @iconv(mb_detect_encoding($this->decode_utf8($text)), "UTF-8//IGNORE", $text);
+  //  $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+    //return @iconv(mb_detect_encoding($this->decode_utf8($text)), "UTF-8//IGNORE", $text);
+      return $this->decode_utf8($text);
   }
 
 
