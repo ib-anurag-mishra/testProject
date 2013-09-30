@@ -439,8 +439,8 @@ Class StreamingComponent extends Object
     
     
     /*
-     Function Name : checkPatronExist
-     Desc : function used for checking library and patron details are stored in the streaming records table or not
+     Function Name : getPatronUsedStreamingTime
+     Desc : function used to get the patron remaing streaming time
      * 
      * @param $libId Int  'library uniqe id'
      * @param $patId Int  'patron uniqe id'
@@ -452,9 +452,9 @@ Class StreamingComponent extends Object
         $streamingRecordsInstance->recursive = -1;
         $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId,'date(modified_date)=date(now())'),'fields' => 'consumed_time'));
         if(!empty($results)) {
-            return $results['StreamingRecords']['consumed_time'];
+            return (Configure::read('App.streaming_time')- $results['StreamingRecords']['consumed_time']);
         } else {
-            return 0;
+            return Configure::read('App.streaming_time');
         }
     }
     
