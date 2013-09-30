@@ -273,8 +273,8 @@ class ServicesController extends AppController {
                         print_r($data); die; 
                         */
 						$reference = $v->ReferenceID;
-                        echo $this->Album->lastQuery();
-                        print_r($albumData); die;
+                        // echo $this->Album->lastQuery();
+                        // print_r($albumData); die;
 						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
 					}
 					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
