@@ -353,8 +353,7 @@ if ($this->Session->read('Config.language') == 'en') {
             newsRelease07.removeClass('active');
             genre07.removeClass('active');
             faq07.removeClass('active');
-            home07.addClass('active');
-            
+            home07.addClass('active');            
         }else if(pageName == 'musicVideo07'){
             home07.removeClass('active');
             newsRelease07.removeClass('active');
