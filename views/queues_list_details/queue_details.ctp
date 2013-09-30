@@ -23,7 +23,7 @@
 				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="#">FAQ section</a>.</div>
 				<div class="button-container">
 					<div class="play-queue-btn"></div>
-					<div class="gear-icon no-ajaxy"></div>
+					<div class="gear-icon "></div>
 				</div>
 				<div class="queue-options">
 					<a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
@@ -78,7 +78,7 @@
                                                         $artistText = $this->getTextEncode($value['Songs']['ArtistText']);
                                                 }
                                                 ?>                                                
-						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
+						<a class="add-to-wishlist-button " href="#"></a>
 						<div class="album-title">
                                                     <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>

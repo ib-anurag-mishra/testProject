@@ -24,7 +24,7 @@
                                           $VideosData[0][$key]['Video']['status'] = 'not';
                                         }
                                         if($VideosData[0]['Video']['status'] != 'avail') {?>
-                                            <span class="download-now-button no-ajaxy">
+                                            <span class="download-now-button ">
                                             <form method="Post" id="form<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                             <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"];?>" />
                                             <input type="hidden" name="ProviderType" value="<?php echo $VideosData[0]["Video"]["provider_type"]; ?>" />
@@ -37,12 +37,12 @@
                                             </span>
                                     <?php
                                         } else {?>
-                                            <a class="download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                            <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                                         <?php
                                         }
                                     }
                                     ?>
-                                            <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                            <a class="add-to-playlist-button " href="#"></a>
                                             <div class="wishlist-popover">
 					
                                                 <?php
@@ -55,7 +55,7 @@
                                           <?php
                                             } else {
                                             ?>    
-                                            <span class="download-now-button no-ajaxy"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
+                                            <span class="download-now-button "><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                             <?php                
                                             }
                             
@@ -79,7 +79,7 @@
                                     
 				</h2><?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 				<h3 class="artist-name">
-					<a href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
+					<a title="<?php echo $this->getTextEncode($VideosData[0]['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
 				<?php
                                         $duration       =    $VideosData[0]['Video']['FullLength_Duration']; 
@@ -129,7 +129,7 @@
                                                                   $value[$key]['Video']['status'] = 'not';
                                                                 }
                                                                 if($value['Video']['status'] != 'avail') {?>                                               
-                                                                    <span class="download-now-button no-ajaxy">
+                                                                    <span class="download-now-button ">
                                                                     <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                                     <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                     <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
@@ -142,13 +142,13 @@
                                                                     </span>
                                             <?php
                                                                 } else {?>
-                                                                    <a class="download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                                                                 <?php
                                                                 }
 
                                                             }
                                             ?>
-										<a class="add-to-playlist-button no-ajaxy" href="#"></a>
+										<a class="add-to-playlist-button " href="#"></a>
 										<div class="wishlist-popover">
 											
                                                                                     <?php
@@ -162,7 +162,7 @@
                                                                 <?php
                                                   } else {
                                                       ?>
-                                                      <span class="download-now-button no-ajaxy"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
+                                                      <span class="download-now-button "><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                                         <?php
                                                   }
                                                     }
@@ -178,7 +178,7 @@
 										
 									</div>
 									<div class="song-title">
-										<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+										<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                 <?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 20 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 20)) . "..";
@@ -190,7 +190,7 @@
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 									</div>
 									<div class="artist-name">										
-                                                                                <a href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+                                                                                <a title="<?php echo $this->getTextEncode($value['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                                 <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
@@ -249,7 +249,7 @@
                                                                   $value[$key]['Video']['status'] = 'not';
                                                                 }
                                                                 if($value['Video']['status'] != 'avail') {?>
-                                                                                <span class="download-now-button no-ajaxy">
+                                                                                <span class="download-now-button ">
                                                                                 <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                                 <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
@@ -262,12 +262,12 @@
                                                                                 </span>
                                             <?php
                                                                 } else {?>
-                                                                    <a class="download-now-button no-ajaxy" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                                                                 <?php
                                                                 }
                                                             }
                                             ?>
-									<a class="add-to-playlist-button no-ajaxy" href="#"></a>
+									<a class="add-to-playlist-button " href="#"></a>
 									<div class="wishlist-popover">
                                                                             <?php
 
@@ -291,7 +291,7 @@
 									
 								</div>
 								<div class="song-title">
-									<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><?php 
+									<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 20 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 20)) . "..";
                                                                                                     } else {
@@ -302,7 +302,7 @@
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 								</div>
 								<div class="artist-name">
-									<a href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+									<a title="<?php echo $this->getTextEncode($value['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                              <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";

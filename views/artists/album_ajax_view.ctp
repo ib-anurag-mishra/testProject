@@ -73,15 +73,15 @@
                                 
                                         <div class="song" style="width:200px;"><?php
                                                             if (strlen($albumSong['Song']['SongTitle']) >= 20) {
-                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</span>';
+                                                                    echo '<a title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</a>';
                                                             } else {
-                                                                    echo '<p style="float:left;">' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</p>';
+                                                                    echo '<p style="float:left;"><a title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</a></p>';
                                                             }
                                                             if ($albumSong['Song']['Advisory'] == 'T') {
                                                                     echo '<span class="explicit"> (Explicit)</span>';
                                                             }
                                                     ?></div>
-					<div class="artist"><a href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"><?php
+					<div class="artist"><a title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>"href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"><?php
 										if (strlen($albumSong['Song']['Artist']) >= 11) {
 											if(strlen($albumSong['Song']['Artist']) >= 30){
 												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 30). '...';

@@ -41,7 +41,7 @@
 							
 						</div>
 						<div class="album-title">							
-                                                        <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a title="<?php echo $this->getTextEncode($value['Albums']['AlbumTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Albums']['AlbumTitle'])>20)
                                                                 echo substr($this->getTextEncode($value['Albums']['AlbumTitle']),0,20)."..."; 
@@ -50,7 +50,7 @@
                                                     </a><?php if('T' == $value['Albums']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">							
-                                                        <a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>32)
                                                                                                                     echo substr($this->getTextEncode($value['Song']['Artist']),0,32)."..."; 
@@ -119,9 +119,9 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
                     $downloadsUsed =  $this->Download->getDownloadfind($value['Song']['ProdID'],$value['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                     if($downloadsUsed > 0){
-                      $value[$key]['Song']['status'] = 'avail';
+                      $value['Song']['status'] = 'avail';
                     } else{
-                      $value[$key]['Song']['status'] = 'not';
+                      $value['Song']['status'] = 'not';
                     }
                     if($value['Song']['status'] != 'avail') {
                             ?>       
@@ -129,7 +129,7 @@
                             <input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $value["Song"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' class="top-10-download-now-button no-ajaxy" onclick='userDownloadAll("<?php echo $value["Song"]["ProdID"]; ?>");' style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></a>
+                            <a  href='javascript:void(0);' class="top-10-download-now-button " onclick='userDownloadAll("<?php echo $value["Song"]["ProdID"]; ?>");' style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></a>
                             </span>
                             <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="top-10-download-now-button"><?php __('Please Wait...');?>
                             <span id="download_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif', array('border' => '0')); ?></span></a></span>
@@ -145,13 +145,13 @@
 
               ?>
                             
-              <a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a>   
+              <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>   
               
               <?php
             }
         } else {
         ?>
-            <a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+            <a class="top-10-download-now-button " href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
         <?php
         }
 }else{
@@ -164,12 +164,12 @@
     }
       ?>
                                         <?php if($this->Session->read("patron")){ ?> 
-                                                <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                                <a class="add-to-playlist-button " href="#"></a>
 
                                                 <div class="wishlist-popover">
                                                 <?php if( $this->Session->read('library_type') == 2 ){
                                                             echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
-                                                            <a class="add-to-playlist no-ajaxy" href="#">Add To Queue</a>
+                                                            <a class="add-to-playlist " href="#">Add To Queue</a>
                                                 <?php } ?>
 
 
@@ -186,7 +186,7 @@
                                             <?php } ?>
 						</div>
 						<div class="album-title">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+							<a title="<?php echo $this->getTextEncode($value['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>20)
                                                                 echo substr($this->getTextEncode($value['Song']['SongTitle']),0,20)."..."; 
@@ -195,7 +195,7 @@
                                                     </a><?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
-							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+							<a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>32)
                                                                                                                     echo substr($this->getTextEncode($value['Song']['Artist']),0,32)."..."; 
@@ -262,18 +262,18 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
                 $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                 if($downloadsUsed > 0){
-                  $value[$key]['Video']['status'] = 'avail';
+                  $value['Video']['status'] = 'avail';
                 } else{
-                  $value[$key]['Video']['status'] = 'not';
+                  $value['Video']['status'] = 'not';
                 }
                 if($value['Video']['status'] != 'avail' ) {
                             ?>
-                            <span class="top-100-download-now-button no-ajaxy">
+                            <span class="top-100-download-now-button ">
                             <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                             <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' class="top-10-download-now-button no-ajaxy" style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><?php __('Download Now');?></a>
+                            <a  href='javascript:void(0);' class="top-10-download-now-button " style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><?php __('Download Now');?></a>
                             </span>
                             <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><a class="top-10-download-now-button" ><?php __('Please Wait...');?>
                             <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif', array('border' => '0')); ?></span></a></span>
@@ -289,12 +289,12 @@
             } else {
 
      ?>
-         <a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);"><?php __("Limit Met");?></a>                    
+         <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>                    
        <?php
             }
         } else {
         ?>
-            <a class="top-10-download-now-button no-ajaxy" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+            <a class="top-10-download-now-button " href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
         <?php
         }
 }else{
@@ -312,7 +312,7 @@
 
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
                                                         <?php if($this->Session->read("patron")){ ?> 
-							<a class="add-to-playlist-button no-ajaxy" href="#"></a>
+							<a class="add-to-playlist-button " href="#"></a>
 							<div class="wishlist-popover">
                                                             <?php
                                                                 $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
@@ -324,7 +324,7 @@
 							
 						</div>
 						<div class="album-title">
-							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+							<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Video']['VideoTitle'])>20)
                                                                 echo substr($this->getTextEncode($value['Video']['VideoTitle']),0,20)."..."; 
@@ -333,7 +333,7 @@
                                                     </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
-							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
+							<a title="<?php echo $this->getTextEncode($value['Video']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Video']['Artist'])>32)
                                                                                                                     echo substr($this->getTextEncode($value['Video']['Artist']),0,32)."..."; 

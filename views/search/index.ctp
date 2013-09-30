@@ -858,7 +858,7 @@ if ($type != 'all') {
                         }
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText) )); ?></div>
-                            <a class="add-to-playlist-button no-ajaxy" href="/popup"></a>
+                            <a class="add-to-playlist-button " href="/popup"></a>
                             <div class="composer"><span title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></span></div>
 
 
@@ -1074,7 +1074,7 @@ if (isset($type)) {
                         ?>
                         <div class="song">
                             <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
-                            <a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
+                            <a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
