@@ -9,8 +9,8 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        //$savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
-        $savelibraryName = str_replace(" ", "_", $libraries_download[0]['Library']['library_name']);
+        //$savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];        
+        $savelibraryName =  $libraries_download[0]['Library']['library_name'];
         $displaylibraryName = "LibraryID ".$downloads[0]['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
@@ -57,7 +57,7 @@
     // set default header data
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
-    $tcpdf->xheadertext = 'Libraries/Patrons Download Report for '.$displaylibraryName.$displaydateRange;
+    $tcpdf->xheadertext = 'Libraries/Patrons Download Report for '.$savelibraryName.$displaydateRange;
     $tcpdf->xfootertext = 'Copyright � %d FreegalMusic.com. All rights reserved.';
 
     //set margins
@@ -870,5 +870,5 @@
     
     $tcpdf->Cell(array_sum($w), 0, '', 'T');
 
-    echo $tcpdf->Output('DownloadsReport_'.$savelibraryName.$savedateRange.'.pdf', 'D');
+    echo $tcpdf->Output('DownloadsReport_'.str_replace(" ", "_", $savelibraryName).$savedateRange.'.pdf', 'D');
 ?>
