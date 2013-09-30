@@ -41,7 +41,7 @@ echo $paginator->counter(array(
           {
             ?>
             <tr>
-                <td class="left"><?php echo $this->getTextEncode($library['Library']['library_name']);?></td>
+                <td class="left"><?php echo $this->getAdminTextEncode($library['Library']['library_name']);?></td>
                 <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
 		
 		<?php
