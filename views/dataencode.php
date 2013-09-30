@@ -1,6 +1,14 @@
 <?php
 class dataencodeView extends View {
     
+    
+    function getTextEncode($text) {                                                             // Function used only in Front End
+
+    $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+    return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+  }
+    
+    
   /**
      *
      * @Utf8_decode
@@ -93,10 +101,8 @@ class dataencodeView extends View {
     
     
 
-  function getTextEncode($text) {
-
-  //  $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
-    //return @iconv(mb_detect_encoding($this->decode_utf8($text)), "UTF-8//IGNORE", $text);
+  function getAdminTextEncode($text)                    // Function used only in Admin
+  {
       return $this->decode_utf8($text);
   }
 
