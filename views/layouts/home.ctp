@@ -274,9 +274,10 @@ if ($this->Session->read('Config.language') == 'en') {
                     document.getElementById('dqPlid').value         =   document.getElementById('hid_Plid').value;
                    
                 }
-       
-       
-       
+                
+                
+            
+            
         </script>     
             
 
@@ -336,7 +337,54 @@ if ($this->Session->read('Config.language') == 'en') {
         return re.test(email);
     }    
                 </script>
-            <?php   
+
+<script language="javascript">
+    
+    function setUpperNavigation(pageName){
+        
+         var home07 = $('#home07');
+         var musicVideo07 = $('#musicVideo07');
+         var newsRelease07 = $('#newsRelease07');
+         var genre07 = $('#genre07');
+         var faq07 = $('#faq07');        
+        
+        if(pageName == 'home07'){
+            musicVideo07.removeClass('active');
+            newsRelease07.removeClass('active');
+            genre07.removeClass('active');
+            faq07.removeClass('active');
+            home07.addClass('active');
+            
+        }else if(pageName == 'musicVideo07'){
+            home07.removeClass('active');
+            newsRelease07.removeClass('active');
+            genre07.removeClass('active');
+            faq07.removeClass('active');
+            musicVideo07.addClass('active');                        
+        }else if(pageName == 'newsRelease07'){
+            musicVideo07.removeClass('active');
+            home07.removeClass('active');
+            genre07.removeClass('active');
+            faq07.removeClass('active');
+            newsRelease07.addClass('active');                        
+        }else if(pageName == 'genre07'){
+            musicVideo07.removeClass('active');
+            newsRelease07.removeClass('active');
+            home07.removeClass('active');
+            faq07.removeClass('active');
+            genre07.addClass('active');                        
+        }else if(pageName == 'faq07'){
+            musicVideo07.removeClass('active');
+            newsRelease07.removeClass('active');
+            home07.removeClass('active');
+            genre07.removeClass('active');
+            faq07.addClass('active');                        
+        }
+    }
+    
+    
+ </script>
+        <?php   
         //echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); die;
           
         if($_SERVER['REQUEST_URI']=='/index' || $_SERVER['REQUEST_URI']=='')
