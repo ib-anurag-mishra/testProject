@@ -342,6 +342,7 @@ if ($this->Session->read('Config.language') == 'en') {
     
     function setUpperNavigation(pageName){
         
+         alert(pageName);
          var home07 = $('#home07');
          var musicVideo07 = $('#musicVideo07');
          var newsRelease07 = $('#newsRelease07');
