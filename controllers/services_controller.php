@@ -6,6 +6,11 @@ class ServicesController extends AppController {
 	var $components = array('Solr', 'RequestHandler');
 	var $helpers = array('Xml'); // helpers used	
 	
+    function textEncode($text){
+        $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+        return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+    }
+    
     function search() {
         set_time_limit(0);
         ini_set('memory_limit','512M');
@@ -219,14 +224,14 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['ProdID'] = $v->ProdID;
 					$result[$k]['Song']['ProductID'] = $v->ProductID;
 					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
-					$result[$k]['Song']['Title'] = $v->Title;
-					$result[$k]['Song']['SongTitle'] = $v->SongTitle;
-					$result[$k]['Song']['ArtistText'] = $v->ArtistText;
+					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
+					$result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
 					$result[$k]['Song']['provider_type'] = $v->provider_type;
-					$result[$k]['Song']['Artist'] = $v->Artist;
+					$result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
 					$result[$k]['Song']['Advisory'] = $v->Advisory;
-					$result[$k]['Song']['Composer'] = str_replace('"','',$v->Composer);
-					$result[$k]['Song']['Genre'] = str_replace('"','',$v->Genre);
+					$result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
+					$result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
 					
                     if(isset($this->params['pass'][3])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);
@@ -453,14 +458,14 @@ class ServicesController extends AppController {
                     $result[$k]['Song']['ProdID'] = $v->ProdID;
 					$result[$k]['Song']['ProductID'] = $v->ProductID;
 					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
-					$result[$k]['Song']['Title'] = $v->Title;
-					$result[$k]['Song']['SongTitle'] = $v->SongTitle;
-					$result[$k]['Song']['ArtistText'] = $v->ArtistText;
-					$result[$k]['Song']['provider_type'] = $v->provider_type;
-					$result[$k]['Song']['Artist'] = $v->Artist;
+					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
+					$result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
+					$result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
+					$result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
 					$result[$k]['Song']['Advisory'] = $v->Advisory;
-					$result[$k]['Song']['Composer'] = str_replace('"','',$v->Composer);
-					$result[$k]['Song']['Genre'] = str_replace('"','',$v->Genre);
+					$result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
+					$result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
 					
                     if(isset($this->params['pass'][4])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);
@@ -597,14 +602,14 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['ProdID'] = $v->ProdID;
 					$result[$k]['Song']['ProductID'] = $v->ProductID;
 					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
-					$result[$k]['Song']['Title'] = $v->Title;
-					$result[$k]['Song']['SongTitle'] = $v->SongTitle;
-					$result[$k]['Song']['ArtistText'] = $v->ArtistText;
+					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
+					$result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
 					$result[$k]['Song']['provider_type'] = $v->provider_type;
 					$result[$k]['Song']['Artist'] = $v->Artist;
 					$result[$k]['Song']['Advisory'] = $v->Advisory;
-					$result[$k]['Song']['Composer'] = str_replace('"','',$v->Composer);
-					$result[$k]['Song']['Genre'] = str_replace('"','',$v->Genre);
+					$result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
+					$result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
 					if(isset($this->params['pass'][3])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);
 					}
