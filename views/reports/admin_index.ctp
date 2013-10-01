@@ -12,7 +12,7 @@
     }
 ?>
 <fieldset>
-<legend>Generate Library Downloads Report <?php if($libraryID != "") { echo "for \"".$this->getAdminTextEncode($libraryname)."\""; }?></legend>
+<legend>Generate Library Downloads Report <?php if($libraryID != "") { echo "for \"".$this->getTextEncode($libraryname)."\""; }?></legend>
     <div class="formFieldsContainer">
         <div class="formFieldsbox">
             <div id="form_step" class="form_steps">
@@ -133,7 +133,7 @@
                                 ?>
                                     <tr>
 										<td><?php echo $i; ?></td>
-                                        <td><?php echo $this->getAdminTextEncode($libraryid['Library']['library_name']); ?></td>
+                                        <td><?php echo $this->getTextEncode($libraryid['Library']['library_name']); ?></td>
 											<?php
 											if($libraryid['Library']['library_unlimited'] == 1){
 												$text = "Unlimited";
@@ -266,7 +266,7 @@
                                 ?>
                                     <tr>
 										<td><?php echo $i; ?></td>
-                                        <td><?php echo $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
+                                        <td><?php echo $this->getTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
                                         <td><?php
 											if($download['Download']['email']!=''){
 												echo $download['Download']['email'];
@@ -274,8 +274,8 @@
 												echo $download['Download']['patron_id'];
 											}?>
 										</td>
-                                        <td><?php echo $this->getAdminTextEncode($download['Download']['artist']); ?></td>
-                                        <td><?php echo $this->getAdminTextEncode($download['Download']['track_title']); ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
                                     </tr>
                                 <?php
@@ -306,7 +306,7 @@
                                 ?>
                                     <tr>
 										<td><?php echo $i; ?></td>
-                                        <td><?php echo $this->getAdminTextEncode($library->getLibraryName($download['Videodownload']['library_id'])); ?></td>
+                                        <td><?php echo $this->getTextEncode($library->getLibraryName($download['Videodownload']['library_id'])); ?></td>
                                         <td><?php
 											if($download['Videodownload']['email']!=''){
 												echo $download['Videodownload']['email'];
@@ -314,8 +314,8 @@
 												echo $download['Videodownload']['patron_id'];
 											}?>
 										</td>
-                                        <td><?php echo $this->getAdminTextEncode($download['Videodownload']['artist']); ?></td>
-                                        <td><?php echo $this->getAdminTextEncode($download['Videodownload']['track_title']); ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Videodownload']['artist']); ?></td>
+                                        <td><?php echo $this->getTextEncode($download['Videodownload']['track_title']); ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Videodownload']['created'])); ?></td>
                                     </tr>
                                 <?php
@@ -349,7 +349,7 @@
 											echo $patronDownload['Downloadpatron']['patron_id'];
 										}?>
 										</td>
-                                        <td><?php echo $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
+                                        <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
@@ -383,7 +383,7 @@
 											echo $patronDownload['DownloadVideoPatron']['patron_id'];
 										}?>
 										</td>
-                                        <td><?php echo $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>
+                                        <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
@@ -409,7 +409,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php echo $this->getAdminTextEncode($genreDownload['Downloadgenre']['genre_name']); ?></td>
+                                        <td><?php echo $this->getTextEncode($genreDownload['Downloadgenre']['genre_name']); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
@@ -435,7 +435,7 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php echo $this->getAdminTextEncode($genreDownload['DownloadVideoGenre']['genre_name']); ?></td>
+                                        <td><?php echo $this->getTextEncode($genreDownload['DownloadVideoGenre']['genre_name']); ?></td>
                                         <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
