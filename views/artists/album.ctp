@@ -134,7 +134,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             
             
 ?>
-            <li>
+           
+                    
+                    
+                    <li>
                     <div class="album-container">
                         <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
                             <?php
@@ -302,29 +305,29 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
     }
     ?>
 								
-								<?php if($this->Session->read("patron")){ ?> 
-														
-														<a class="add-to-playlist-button " href="#"></a>
-														
-														<div class="wishlist-popover">
-															<?php
+                    <?php if($this->Session->read("patron")){ ?> 
 
-                                                                                                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+                                <a class="add-to-playlist-button " href="#"></a>
 
-                                                                                                                        if($wishlistInfo == 'Added to Wishlist') {
-                                                                                                                        ?> 
-                                                                                                                                <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                                                                                        <?php 
-                                                                                                                        } else { 
-                                                                                                                        ?>
-                                                                                                                                <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist " href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                                                                                        <?php	
-                                                                                                                        }
+                                <div class="wishlist-popover">
+                                        <?php
 
-                                                                                                                        ?>														
-														</div>
-                                                                                                  <?php } ?>
+                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                        if($wishlistInfo == 'Added to Wishlist') {
+                                        ?> 
+                                                <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                        <?php 
+                                        } else { 
+                                        ?>
+                                                <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist " href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                        <?php	
+                                        }
+
+                                        ?>														
+                                </div>
+                    <?php } ?>
 								
 							
 							
@@ -355,17 +358,5 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                          </div>
                     </div>
                             <?php } ?>
-<?php  /*$pages = $this->Paginator->counter(array('format' => '%pages%')); 
-if($pages > 1) {
-?>
-
-<div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-</div>
-    
- <?php } */?>
- 
-<br class="clr">
+            <br class="clr">
 </section>
