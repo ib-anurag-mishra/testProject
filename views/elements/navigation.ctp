@@ -434,7 +434,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>
                                             <?php                                                                                             
 
-                                                    if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)                                                     
+                                                    if($this->Session->read("lId")==602 || $this->Session->read("lId")==85)                                                     
                                                     {                                                         
                                                         ?>    
                                                              <div class="announcements">
