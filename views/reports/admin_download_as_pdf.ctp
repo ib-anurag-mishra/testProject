@@ -8,7 +8,8 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        $savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+        //$savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];        
+        $savelibraryName =  $libraries_download[0]['Library']['library_name'];
         $displaylibraryName = "LibraryID ".$downloads[0]['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
@@ -55,7 +56,7 @@
     // set default header data
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
-    $tcpdf->xheadertext = 'Libraries/Patrons Download Report for '.$displaylibraryName.$displaydateRange;
+    $tcpdf->xheadertext = 'Libraries/Patrons Download Report for '.$savelibraryName.$displaydateRange;
     $tcpdf->xfootertext = 'Copyright � %d FreegalMusic.com. All rights reserved.';
 
     //set margins
@@ -112,7 +113,7 @@
 		} else {
 			$text = $DownloadCount['Library']['library_available_downloads'];
 		}
-        $libraries_downloads[] = array($key, $DownloadCount['Library']['library_name'], $text);
+        $libraries_downloads[] = array($key, $this->getAdminTextEncode($DownloadCount['Library']['library_name']), $text);
 		$key++;
     }
     foreach($libraries_downloads as $k=>$row) {
@@ -401,7 +402,7 @@
     $key = 1;
     foreach($arr_all_patron_downloads as $LibraryName => $DownloadCount) {
       
-      $arr_all_patron_downloads_data[] = array($key, $LibraryName, $DownloadCount);
+      $arr_all_patron_downloads_data[] = array($key, $this->getAdminTextEncode($LibraryName), $DownloadCount);
       $key++;
     }
     
@@ -462,8 +463,8 @@
 		else{
 			$patron = $download['Download']['patron_id'];
 		}
-        $libraryName = $library->getLibraryName($download['Download']['library_id']);
-        $data[] = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+        $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
+        $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
     }
     foreach($videoDownloads as $key => $download) {
 		if($download['Videodownload']['email']!=''){
@@ -473,7 +474,7 @@
 			$patron = $download['Videodownload']['patron_id'];
 		}
         $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
-        $video_data[] = array($key+1, $libraryName, $patron, $download['Videodownload']['artist'], $download['Videodownload']['track_title'], date('Y-m-d', strtotime($download['Videodownload']['created'])));
+        $video_data[] = array($key+1, $this->getAdminTextEncode($libraryName), $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
     }
 
     foreach($patronDownloads as $key => $patronDownload) {
@@ -483,7 +484,7 @@
 		else{
 			$patron_id = $patronDownload['Downloadpatron']['patron_id'];
 		}
-        $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Downloadpatron']['library_id']), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
     }
     
     foreach($patronVideoDownloads as $key => $patronDownload) {
@@ -493,15 +494,15 @@
 		else{
 			$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
 		}
-        $patron_video_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id']), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
     }    
 
     foreach($genreDownloads as $key => $genreDownload) {
-        $genre_data[] = array($key+1, $genreDownload['Downloadgenre']['genre_name'], (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
+        $genre_data[] = array($key+1, $this->getAdminTextEncode($genreDownload['Downloadgenre']['genre_name']), (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
     }
     
     foreach($genreVideoDownloads as $key => $genreDownload) {
-        $genre_video_data[] = array($key+1, $genreDownload['DownloadVideoGenre']['genre_name'], (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
+        $genre_video_data[] = array($key+1, $this->getAdminTextEncode($genreDownload['DownloadVideoGenre']['genre_name']), (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
     }    
 
     // print colored table
@@ -529,7 +530,7 @@
     // Data
     $fill = 0;
     foreach($data as $k=>$row) {
-        if($k%27 == 0 && $k != 0) {
+        if($k%13 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
@@ -552,12 +553,22 @@
         $tcpdf->SetTextColor(0);
         $tcpdf->SetFont('');
 
-        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill, '', 3);
-	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
+        /*$tcpdf->Cell($w[0], 12, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 12, $row[1], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[2], 12, $row[2], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[3], 12, (strlen($row[3])>40)?substr($row[3],0,40)."...":$row[3], 'LR', 0, 'L', $fill, '', 3);        
+        $tcpdf->Cell($w[4], 12, $row[4], 'LR', 0, 'L', $fill, '', 3, true, 'T', 'T');       
+        //$tcpdf->MultiCell($w[4], 12, $row[4], 'LR', 'L',  $fill, 1, '', '', true);        
+	$tcpdf->Cell($w[5], 12, $row[5], 'LR', 0, 'L', $fill, '', 3);*/
+        
+        
+        $tcpdf->MultiCell($w[0], 12.5, number_format($row[0]), 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[1], 12.5, $row[1], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[2], 12.5, $row[2], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
+        
         $tcpdf->Ln();
         $fill=!$fill;
     }
@@ -611,12 +622,21 @@
         $tcpdf->SetTextColor(0);
         $tcpdf->SetFont('');
 
-        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        /*$tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill, '', 3);
-	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
+	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);*/
+        
+        
+        $tcpdf->MultiCell($w[0], 12.5, number_format($row[0]), 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[1], 12.5, $row[1], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[2], 12.5, $row[2], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
+        $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
+        
         $tcpdf->Ln();
         $fill=!$fill;
     }
@@ -849,5 +869,5 @@
     
     $tcpdf->Cell(array_sum($w), 0, '', 'T');
 
-    echo $tcpdf->Output('DownloadsReport_'.$savelibraryName.$savedateRange.'.pdf', 'D');
+    echo $tcpdf->Output('DownloadsReport_'.str_replace(" ", "_", $savelibraryName).$savedateRange.'.pdf', 'D');
 ?>
