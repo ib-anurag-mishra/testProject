@@ -1,3 +1,39 @@
+<script type="text/javascript">
+$(document).ready(function() {
+     $("#FormRegisterConcert").submit(function() {
+     var frm = $('#FormRegisterConcert');
+        $.ajax({
+            type: "post",
+            url: webroot+'registerconcerts/ajax_submit_register_concert',
+            data: frm.serialize(),
+            success: function (response) { 
+                //alert("["+response+"]");
+                if(response=='Failure')
+                {
+                  $('#FailureMessage').html("<br><span style='color:red;'>Please fill information in all fields.</span><br>");   
+                }
+                else
+                {
+                    $('#FormRegisterConcert').hide();   
+                    $('#FailureMessage').hide();
+                    $('#ReturnMessage').append(response); 
+                       
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            // log the error to the console
+            console.log(
+                "The following error occured: "+
+                textStatus, errorThrown
+            );
+            }
+ 
+        });
+ 
+        return false;
+    });
+});
+</script>
 <?php
 /**
 	File Name : navigation.php
