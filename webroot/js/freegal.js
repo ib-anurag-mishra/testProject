@@ -847,7 +847,7 @@ function wishlistDownloadIE(prodId,id,provider)
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
-            }
+                        }
 			else
 			{
 				alert("You have been logged out from the system. Please login again.");
