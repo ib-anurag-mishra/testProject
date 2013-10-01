@@ -600,7 +600,7 @@
     // Data
     $fill = 0;
     foreach($video_data as $k=>$row) {
-        if($k%27 == 0 && $k != 0) {
+        if($k%13 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');

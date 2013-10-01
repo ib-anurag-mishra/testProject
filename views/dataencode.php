@@ -103,7 +103,8 @@ class dataencodeView extends View {
 
   function getAdminTextEncode($text)                    // Function used only in Admin
   {
-      return $this->decode_utf8($text);
+      //return $this->decode_utf8($this->getTextEncode($text));
+      return $this->decode_utf8($this->getTextEncode($text));
   }
 
 
