@@ -697,6 +697,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                 </div>
                                                 <div id="detailsNews" class="post-excerpt">
                                                <?php /*echo  wordwrap($newsText, 65, "<br />\n", TRUE);*/ ?>
+                                               <?php echo $newsText; ?>
                                                </div>
                                         </div>
                                 </li>
