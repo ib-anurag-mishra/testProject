@@ -696,7 +696,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                         <?php echo $value['News']['place']?> : <?php echo date( "F d, Y", strtotime($value['News']['created'])) ?>
                                                 </div>
                                                 <div id="detailsNews" class="post-excerpt">
-                                               <?php echo  wordwrap($newsText, 65, "<br />\n", TRUE); ?>
+                                               <?php /*echo  wordwrap($newsText, 65, "<br />\n", TRUE);*/ ?>
                                                </div>
                                         </div>
                                 </li>
