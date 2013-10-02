@@ -737,7 +737,7 @@
 									
 								</div>
 							
-							
+							</div>
 							
 						</section> <!-- end .news -->	
 
