@@ -80,7 +80,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Save Changes"></input>
+                            <input type="submit" class="save" value="Save Changes" />
                     </div>
                     </form>
             </div>
@@ -99,7 +99,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Create New Queue"></input>
+                            <input type="submit" class="save" value="Create New Queue" />
                     </div>
                     </form>
             </div>
@@ -117,7 +117,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <div class="text-close">Close</div>
                     <input type="hidden" name="hid_action" value="delete_queue" />
                     <input type="hidden" id="dqPlid" name="dqPlid" value="" />
-                    <input type="submit" class="save" value="Delete Queue"></input>
+                    <input type="submit" class="save" value="Delete Queue" />
                     </div>
                     </form>
             </div>
