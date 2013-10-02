@@ -16,7 +16,7 @@
 		convert_urls : false,
 		theme : "advanced",
 		plugins : "pagebreak, style, layer, table, save, advhr, advimage, advlink, emotions, iespell, insertdatetime, preview, media, searchreplace, print, contextmenu, paste, directionality, fullscreen, noneditable, visualchars, nonbreaking, xhtmlxtras, template, inlinepopups, autosave",
-
+		remove_linebreaks: true,
                                     
 		// Theme options
 		theme_advanced_buttons1 : "save, bold, italic, underline, strikethrough, justifyleft, justifycenter, justifyright, justifyfull, formatselect, fontselect, fontsizeselect",
