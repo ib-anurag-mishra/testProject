@@ -277,7 +277,7 @@ $("#top-100-videos-grid").scroll(function(){
                 }
                  ?>	
                 <li id="songs_loader_li1" style="display:none;" >                                                                                     
-                   <span id="natSongs_loader1" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                   <span id="natSongs_loader1" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" style="border:0;" alt="Ajax Loader" /></span>                                                                                       
                 </li>
            </ul>
         </div>
@@ -406,7 +406,7 @@ $("#top-100-videos-grid").scroll(function(){
                     }
                      ?>	
                         <li id="videos_loader_li1" style="display:none;" >                                                                                    
-                            <span id="natVideos_loader1" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                            <span id="natVideos_loader1" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" style="border:0;" alt="Ajax Loader" /></span>                                                                                       
                         </li>
                     </ul>
                 </div>
