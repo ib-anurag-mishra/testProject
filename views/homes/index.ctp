@@ -687,7 +687,7 @@ $("#top-100-videos-grid").scroll(function(){
                                 <li>
                                         <div class="post">
                                                 <div class="post-header-image">
-                                                        <a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" /></a>
+                                                        <a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" alt="<?php echo $value['News']['subject'] ?>" /></a>
                                                 </div>
                                                 <div class="post-title">
                                                         <a href="javascript:void(0);"><?php echo $value['News']['subject'] ?></a>
