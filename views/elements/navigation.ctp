@@ -377,7 +377,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<div class="content-wrapper clearfix">	
                             
 					<section class="left-sidebar">
-                                            <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
+											<h3><?php __('Browse'); ?></h3>
+                                            <ul class="browse sidebar-nav">
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
@@ -402,7 +403,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php if($this->Session->read('library_type') == '2') {
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
-                                            <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
+                                            <h3>Streaming</h3>
+                                            <ul class="streaming sidebar-nav">								
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
@@ -426,7 +428,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                             </ul>
                                             <?php } ?>
-                                            <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
+                                            <h3><?php __('My Downloads'); ?></h3>
+                                            <ul class="my-downloads sidebar-nav">
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
