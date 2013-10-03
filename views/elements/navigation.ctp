@@ -1,3 +1,39 @@
+<script type="text/javascript">
+$(document).ready(function() {
+     $("#FormRegisterConcert").submit(function() {
+     var frm = $('#FormRegisterConcert');
+        $.ajax({
+            type: "post",
+            url: webroot+'registerconcerts/ajax_submit_register_concert',
+            data: frm.serialize(),
+            success: function (response) { 
+                //alert("["+response+"]");
+                if(response=='Failure')
+                {
+                  $('#FailureMessage').html("<br><span style='color:red;'>Please fill information in all fields.</span><br>");   
+                }
+                else
+                {
+                    $('#FormRegisterConcert').hide();   
+                    $('#FailureMessage').hide();
+                    $('#ReturnMessage').append(response); 
+                       
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            // log the error to the console
+            console.log(
+                "The following error occured: "+
+                textStatus, errorThrown
+            );
+            }
+ 
+        });
+ 
+        return false;
+    });
+});
+</script>
 <?php
 /**
 	File Name : navigation.php
@@ -41,7 +77,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Save Changes"></input>
+                            <input type="submit" class="save" value="Save Changes" />
                     </div>
                     </form>
             </div>
@@ -60,7 +96,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Create New Queue"></input>
+                            <input type="submit" class="save" value="Create New Queue" />
                     </div>
                     </form>
                     </div>
@@ -78,7 +114,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <div class="text-close">Close</div>
                     <input type="hidden" name="hid_action" value="delete_queue" />
                     <input type="hidden" id="dqPlid" name="dqPlid" value="" />
-                    <input type="submit" class="save" value="Delete Queue"></input>
+                    <input type="submit" class="save" value="Delete Queue" />
                     </div>
                     </form>
             </div>
@@ -145,55 +181,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="13" height="13"></button>
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
 					</div>
-					<div class="master-music-search-results">
-						<ul>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/adele.jpg" alt="adele">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">21</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Adele</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/pitbull.jpg" alt="pitbull">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Mr. Worldwide</a></span></p>
-									<p class="artist"><a href="#">Pitbull</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/carrie-underwood.jpg" alt="carrie-underwood">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Before He Cheats</a></span></p>
-									<p class="artist"><a href="#">Carrie Underwood</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/kelly-clarkson.jpg" alt="kelly-clarkson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">All I Ever Wanted</a></span></p>
-									<p class="artist"><a href="#">Kelly Clarkson</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/michael-jackson.jpg" alt="michael-jackson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">Thriller</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Michael Jackson</a></p>
-								</div>
-							</li>
-						</ul>
-					</div>
+					
 					
 				<?php if($this->Session->read("patron")){ ?>
 				<div class="weekly-downloads-container clearfix">
@@ -386,7 +374,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<div class="content-wrapper clearfix">	
                             
 					<section class="left-sidebar">
-                                            <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
+											<h3 class="browse"><?php __('Browse'); ?></h3>
+                                            <ul class="sidebar-nav">
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
@@ -411,7 +400,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php if($this->Session->read('library_type') == '2') {
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
-                                            <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
+                                            <h3 class="streaming">Streaming</h3>
+                                            <ul class="sidebar-nav">								
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
@@ -435,29 +425,84 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                             </ul>
                                             <?php } ?>
-                                            <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
+                                            <h3 class="my-downloads"><?php __('My Downloads'); ?></h3>
+                                            <ul class="sidebar-nav">
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
                                             </ul>
-                                            <?php
-                                                    $temp_text  =   strip_tags($announcment_value);
-                                                    if($temp_text!="")
-                                                    {
-                                                        $announcment_class  =   "display:block;";
+                                           <?php                                                                                             
+
+                                                    if($this->Session->read("lId")==602 || $this->Session->read("lId")==85)  // removed Library: The District of Columbia Public Library (id 486)                                                   
+                                                    {                                                         
+                                                        ?>    
+                                                             <div class="announcements">
+                                                                <h4><?php __('Announcements'); ?></h4>
+                                                                <div class="poll1" style="display:block;height:350px;">                                                                                                                                                                       
+                                                                 Register for Concert Tickets Giveway<br><br>
+                                                                 One entry only<br><br>
+                                                                 <?php echo $html->link(__('More Info', true), array('controller' => 'registerconcerts','action'=>'great_fall_concert'));?><br> 
+                                                                 
+                                                                 <?php                                                                    
+                                                                        if($register_concert_id=='') // If User has  not registered for concert
+                                                                        {
+                                                                  ?>
+
+                                                                <span id="FailureMessage"></span> <br> 
+                                                                <form  id="FormRegisterConcert" method="post">
+                                                                    <label for="UserEmail">First Name :</label>
+                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?> <br><br>
+                                                                    <label for="UserEmail">Last Name :</label>
+                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 2px 2px 0px; float:right;') ); ?> <br><br><br><br>                                                                  
+                                                                    <!-- <label for="UserEmail">Library Card :</label> -->
+                                                                    <?php //echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?>                                                                     
+                                                                    <label for="UserEmail">Phone :</label>                                                                    
+                                                                    <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?> <br>    
+                                                                    <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input><br>
+                                                                    <input type="submit" class="save" value="Submit"></input>                                                                
+                                                                </form>
+                                                                        <?php 
+                                                                                $reutrn_message='';
+                                                                          }
+                                                                          else
+                                                                          {
+                                                                                $reutrn_message='<br><font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.'; 
+                                                                          }
+                                                                          ?>
+                                                                    <span id="ReturnMessage" ><?php echo $reutrn_message; ?></span>
+                                                                
+                                                                 </div>
+                                                            </div>
+                                            
+                                            
+                                                        <?php
                                                     }
-                                                    else
+                                                    else    // For other Libraries
                                                     {
-                                                        $announcment_class  =   "";
+                                                        $temp_text  =   strip_tags($announcment_value);
+                                                        
+                                                        if($temp_text!="")
+                                                        {
+                                                            $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                        }
+                                                        else
+                                                        {
+                                                            $announcment_class  =   "";
+                                                        }
+                                                        
+                                                        ?>
+                                                                <div class="announcements">
+                                                                <h4><?php __('Announcements'); ?></h4>
+                                                                <div class="poll1" style="<?php echo $announcment_class; ?>">
+                                                                    <?php echo $announcment_value; ?>
+                                                                </div>
+                                                                </div>
+                                            
+                                                        <?php
                                                     }
-                                            ?>
-                                            <div class="announcements">
-                                                    <h4><?php __('Announcements'); ?></h4>
-                                                    <div class="poll1" style="<?php echo $announcment_class; ?>">
-                                                        <?php echo $announcment_value; ?>
-                                                    </div>
-                                            </div>
+                                                    
+                                            ?>                                            
                                             <?php } ?>
 					</section>					
 					<div class="content" style="<?php echo $section_class; ?>">

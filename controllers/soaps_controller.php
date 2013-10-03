@@ -678,7 +678,9 @@ class SoapsController extends AppController {
           }
           
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
-
+          
+          if('T' == $data['Song']['Advisory']) $obj->SongTitle = $obj->SongTitle.' (Explicit)';
+          
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'NationalTopTenType');
 
       }
@@ -827,6 +829,8 @@ STR;
 
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
 
+          if('T' == $data['Song']['Advisory']) $obj->SongTitle = $obj->SongTitle.' (Explicit)';    
+          
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'LibraryTopTenType');
 
       }
@@ -994,7 +998,7 @@ STR;
 
 
 
-      foreach($data['Song'] AS $val){
+      foreach($data['Song'] AS $val){  
         if(1 == $val['DownloadStatus']) {
           if($this->IsTerrotiry($val['ProdID'], $val['provider_type'], $libraryId)) {
 
@@ -1026,12 +1030,11 @@ STR;
             }else{
               $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
             }
-            
-            
+                     
             $sobj->FullLength_FIleID     = (int)$val['FullLength_FIleID'];
             $sobj->CreatedOn             = (string)$val['CreatedOn'];
             $sobj->UpdateOn              = (string)$val['UpdateOn'];
-
+            if('T' == $val['Advisory']) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
             $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
 
           }
@@ -1743,14 +1746,18 @@ STR;
     $data['referral'] = '';
 
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+    ));
+    
     if($card == ''){
-
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-    elseif(strlen($card) < 5){
-
+    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
@@ -1758,18 +1765,11 @@ STR;
     }
     elseif($pin == ''){
 
-
       $response_msg = 'Pin not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
 
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -1863,26 +1863,23 @@ STR;
 
     $data['wrongReferral'] = '';
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+    ));
 
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-    elseif(strlen($card) < 5){
-
+    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -1981,14 +1978,19 @@ STR;
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+    ));
+                      
 
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-		elseif(strlen($card) < 5){
-
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
@@ -1996,18 +1998,10 @@ STR;
 		}
     elseif($pin == ''){
 
-
       $response_msg = 'Pin not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2102,13 +2096,20 @@ STR;
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
-    if($card == ''){
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
 
+    ));
+    
+          
+    if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
@@ -2121,13 +2122,6 @@ STR;
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2220,13 +2214,21 @@ STR;
 
     $data['wrongReferral'] = '';
     $data['referral'] = '';
+ 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
 
+    ));
+
+    
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
@@ -2239,13 +2241,6 @@ STR;
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
 		else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2345,12 +2340,19 @@ STR;
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+    ));
+    
+    
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
@@ -2363,13 +2365,6 @@ STR;
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
 		else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2469,13 +2464,20 @@ STR;
 
     $data['wrongReferral'] = '';
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
 
+    ));
+     
+    
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
@@ -2488,13 +2490,6 @@ STR;
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2580,16 +2575,20 @@ STR;
 		$patronId = $card;
 		$data['patronId'] = $patronId;
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+
+    ));
 
 
     if($card == ''){
 
-
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
-		elseif(strlen($card) < 3){
-
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
@@ -2602,12 +2601,7 @@ STR;
     }
 		else{
 
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
 
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2701,13 +2695,21 @@ STR;
 
     $data['wrongReferral'] = '';
     $data['referral'] = '';
+ 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
 
+    ));
+                      
+                      
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
@@ -2721,12 +2723,6 @@ STR;
     }
 		else{
 
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2810,25 +2806,25 @@ STR;
 
     $data['wrongReferral'] = '';
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+
+    ));
+    
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-    elseif(strlen($card) < 5){
+    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -2923,25 +2919,24 @@ STR;
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+    ));
+    
+    
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-    elseif(strlen($card) < 5){
-
+    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -3032,25 +3027,24 @@ STR;
     $data['card'] = $card;
     $data['wrongReferral'] = '';
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+
+    ));
+                      
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-    elseif(strlen($card) < 5){
-
+    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -3138,25 +3132,23 @@ STR;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+    ));
 
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-    elseif(strlen($card) < 5){
+    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -3332,26 +3324,25 @@ STR;
     $patronId = $card;
     $data['patronId'] = $patronId;
 
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'mobile_auth', 'library_authentication_method', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
 
+    ));
+    
+   
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
-    elseif(strlen($card) < 5){
+    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
       $response_msg = 'Invalid Card number';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num', 'mobile_auth', 'library_authentication_method'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim($library_data['Library']['mobile_auth'])) ) {
 
@@ -3504,13 +3495,20 @@ STR;
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
+    
+    $library_data = $this->Library->find('first', array(
+      'fields' => array('library_authentication_num', 'minimum_card_length'),
+      'conditions' => array('id' => $library_id),
+      'recursive' => -1
+    ));
+                      
+                            
     if($card == ''){
-
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 
 
       $response_msg = 'Invalid Card number';
@@ -3523,13 +3521,6 @@ STR;
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-
-      $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num'),
-                        'conditions' => array('id' => $library_id),
-                        'recursive' => -1
-
-                      ));
 
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
@@ -4495,12 +4486,12 @@ STR;
             $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
           }
           
-          
-
           $sobj->FullLength_FIleID     = (int)    '';
           $sobj->CreatedOn             = (string) '';
           $sobj->UpdateOn              = (string) '';
 
+          if('T' == $arrTemp[$cnt]['Song']['Advisory']) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+          
           $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
         }
       }
@@ -4661,13 +4652,12 @@ STR;
           $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
         }
           
-          
-        
-
         $sobj->FullLength_FIleID     = (int)    '';
         $sobj->CreatedOn             = (string) '';
         $sobj->UpdateOn              = (string) '';
-
+        
+        if('T' == $val['Song']['Advisory']) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+        
         $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
 
       }
@@ -4885,6 +4875,30 @@ STR;
 
   }
 
+  
+  /**
+   * @function getSearchLibraryExplicitStatus
+   * @desc returns Advisory condition for library
+   * @param $libID : ID of Library
+   * @return integer 
+  */
+  
+  private function getSearchLibraryExplicitStatus($libID){
+    
+    $libraryData = $this->Library->find('first', array(
+      'fields' => array('library_block_explicit_content'),
+      'conditions' => array(
+        'id' => $libID
+      ),
+     'recursive' => -1
+
+    ));
+    
+    return $libraryData['Library']['library_block_explicit_content'];
+    
+  }
+  
+  
   /**
    * Function Name : getSearchAllList
    * Desc : To get the libraries searched
@@ -4908,7 +4922,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $AllData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $AllData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -4946,6 +4962,8 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+      
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
@@ -4984,7 +5002,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -5025,8 +5045,9 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
-      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
       
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
               
     }
 
@@ -5064,7 +5085,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $Albumlist = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $Albumlist = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -5102,9 +5125,10 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+      
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
-      
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
@@ -5139,7 +5163,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $SongData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $SongData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -5177,6 +5203,8 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
+      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+      
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
@@ -5523,5 +5551,6 @@ STR;
     return $downloadCount + $videoDownloadCount;
     
   }
+    
 
 }

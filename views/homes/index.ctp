@@ -371,7 +371,7 @@
 			</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                                                                                                <a title="<?php echo $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                                                                                <a title="<?php echo $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>" href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
 													</div>
 												</div>
 											</li>
@@ -682,7 +682,7 @@
 										<li>
 											<div class="post">
 												<div class="post-header-image">
-													<a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" /></a>
+													<a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" alt="<?php echo $value['News']['subject'] ?>" /></a>
 												</div>
 												<div class="post-title">
 													<a href="javascript:void(0);"><?php echo $value['News']['subject'] ?></a>
@@ -712,8 +712,10 @@
 												</div> -->
                                                                                                           
                                                                                                   
-                                                                                                <div id="detailsNews" class="post-excerpt">
-                                                                                               <?php echo  wordwrap($newsText, 65, "<br />\n", TRUE); ?>
+                                                                                                <?php /*<div id="detailsNews" class="post-excerpt"> */ ?>
+                                                                                                <div class="post-excerpt">
+                                                                                               <?php /*echo  wordwrap($newsText, 65, "<br />\n", TRUE);*/ ?>
+                                                                                               <?php echo $newsText; ?>
                                                                                                <!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
                                                                                                </div>
 
@@ -735,7 +737,7 @@
 									
 								</div>
 							
-							
+							</div>
 							
 						</section> <!-- end .news -->	
 
