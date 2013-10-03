@@ -56,17 +56,24 @@ class SolrComponent extends Object {
         }
     }
 
-    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false) {
+    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false, $mobileExplicitStatus=0) {
         $query = '';
         $docs = array();
         $cond = " AND DownloadStatus:1";
 
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
+        if(1 == $mobileExplicitStatus){
+          $cond .= " AND Advisory:F";
+        }else{
+        
+            if ($this->Session->read('block') == 'yes') {
+              $cond .= " AND Advisory:F";
+              if($type != 'video'){
                 $cond .= " AND AAdvisory:F";
+              }
             }
+
         }
+        
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {

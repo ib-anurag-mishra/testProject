@@ -4875,6 +4875,30 @@ STR;
 
   }
 
+  
+  /**
+   * @function getSearchLibraryExplicitStatus
+   * @desc returns Advisory condition for library
+   * @param $libID : ID of Library
+   * @return integer 
+  */
+  
+  private function getSearchLibraryExplicitStatus($libID){
+    
+    $libraryData = $this->Library->find('first', array(
+      'fields' => array('library_block_explicit_content'),
+      'conditions' => array(
+        'id' => $libID
+      ),
+     'recursive' => -1
+
+    ));
+    
+    return $libraryData['Library']['library_block_explicit_content'];
+    
+  }
+  
+  
   /**
    * Function Name : getSearchAllList
    * Desc : To get the libraries searched
@@ -4898,7 +4922,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $AllData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $AllData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -4976,7 +5002,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -5057,7 +5085,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $Albumlist = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $Albumlist = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
@@ -5133,7 +5163,9 @@ STR;
     
     $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
-    $SongData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
+    
+    $SongData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
