@@ -241,7 +241,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                             <input type="hidden" name="ProviderType" value="<?php echo $value['Video']['provider_type']; ?>" />
                             <span class="beforeClick" id="download_video_<?php echo $value['Video']['ProdID']; ?>">
                                 <![if !IE]>
-                                    <a title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.');?>" href="#" onclick='return wishlistVideoDownloadOthers("<?php echo $value['Video']['ProdID']; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value['Video']['provider_type']; ?>");'><?php __('Download Now');?></a>
+                                    <a title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.');?>" href="#" onclick='return wishlistVideoDownloadOthers("<?php echo $value['Video']['ProdID']; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value['Video']['provider_type']; ?>");'><label class="top-100-download-now-button"><?php __('Download Now');?></label></a>
                                 <![endif]>
                                 <!--[if IE]>
                                     <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $value['Video']['ProdID']; ?>","0","<?php echo $value['Video']['provider_type']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download Now');?></a>
@@ -254,7 +254,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                             <?php	
                     } else {
                     ?>
-                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="top-100-download-now-button" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                     <?php
                     }
 
