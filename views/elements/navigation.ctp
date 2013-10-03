@@ -181,55 +181,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="13" height="13"></button>
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
 					</div>
-					<div class="master-music-search-results">
-						<ul>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/adele.jpg" alt="adele">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">21</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Adele</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/pitbull.jpg" alt="pitbull">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Mr. Worldwide</a></span></p>
-									<p class="artist"><a href="#">Pitbull</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/carrie-underwood.jpg" alt="carrie-underwood">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Before He Cheats</a></span></p>
-									<p class="artist"><a href="#">Carrie Underwood</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/kelly-clarkson.jpg" alt="kelly-clarkson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">All I Ever Wanted</a></span></p>
-									<p class="artist"><a href="#">Kelly Clarkson</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/michael-jackson.jpg" alt="michael-jackson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">Thriller</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Michael Jackson</a></p>
-								</div>
-							</li>
-						</ul>
-					</div>
+					
 					
 				<?php if($this->Session->read("patron")){ ?>
 				<div class="weekly-downloads-container clearfix">
