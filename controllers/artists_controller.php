@@ -1132,7 +1132,7 @@ Class ArtistsController extends AppController
             $id = str_replace('@','/',$id);
             $this->Song->Behaviors->attach('Containable');
             $songs = $this->Song->find('all', array(
-                    'fields' => array('DISTINCT Song.ReferenceID1', 'Song.provider_type'),
+                    'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
                     'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'order'=>array('Song.provider_type DESC')));
 
             $val = '';
@@ -1171,7 +1171,7 @@ Class ArtistsController extends AppController
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
                                     'fields' => array(
-                                            'Album.ProdID',
+                                            'Album.ProdID1',
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
@@ -1200,7 +1200,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
