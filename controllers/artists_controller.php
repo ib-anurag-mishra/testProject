@@ -1166,7 +1166,7 @@ Class ArtistsController extends AppController
                                             array(
                                                 //array('Album.ArtistText' => base64_decode($id)),
                                                     //array('Album.provider_type = Genre.provider_type'),
-                                                    array('Album.provider_type = Country.provider_type'),
+                                                    //array('Album.provider_type = Country.provider_type'),
                                                 $condition
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
@@ -1187,12 +1187,7 @@ Class ArtistsController extends AppController
                                                     'fields' => array(
                                                             'Genre.Genre'
                                                             )
-                                                    ),
-                                            'Country' => array(
-                                                    'fields' => array(
-                                                            'Country.Territory'
-                                                            )
-                                                    ),
+                                                    ),                                            
                                             'Files' => array(
                                                     'fields' => array(
                                                             'Files.CdnPath' ,
@@ -1200,7 +1195,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
