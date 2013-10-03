@@ -69,6 +69,7 @@ function userDownloadIE(prodId)
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
 	var data = "prodId="+prodId;
 	id = prodId;
 	jQuery.ajax({
@@ -158,6 +159,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	$('.afterClick').show();
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
@@ -230,6 +232,7 @@ function userDownloadIE_top(prodId)
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
 	var data = "prodId="+prodId;
 	id = prodId;
 	jQuery.ajax({
@@ -298,6 +301,7 @@ function userDownloadAll(prodId)
 	$('.afterClick').show();
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
 	document.getElementById('download_loader_'+prodId).style.display = 'block';	
 	$('#form'+prodId).submit();
 	setTimeout("location.reload(true)", 7000);
@@ -309,6 +313,7 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	$('.afterClick').show();
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
@@ -520,6 +525,7 @@ function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 	$('.afterClick').show();
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
@@ -823,6 +829,7 @@ function wishlistDownloadIE(prodId,id,provider)
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
+	document.getElementById('download_video_'+prodId).style.display = 'none';
 	var data = "prodId="+prodId+"&id="+id+"&provider="+provider;
 	id = prodId;
 	jQuery.ajax({
