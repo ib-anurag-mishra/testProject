@@ -84,7 +84,7 @@ class AppController extends Controller
                 
                 if(($this->Session->read("patron")!='') && ($this->Session->read("lId")!=''))
                 {                
-                    $concert_query = "SELECT * from register_concerts WHERE library_card = ".$this->Session->read("patron"). " and library_id=".$this->Session->read("lId");
+                    $concert_query = "SELECT * from register_concerts WHERE library_card = '".$this->Session->read("patron"). "' and library_id=".$this->Session->read("lId");
                     $concert_rs = $this->Album->query($concert_query);
                     $this -> set ( 'register_concert_id' ,  empty($concert_rs[0]['register_concerts']['id'])?'':$concert_rs[0]['register_concerts']['id']);
                 }
