@@ -1171,7 +1171,7 @@ Class ArtistsController extends AppController
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
                                     'fields' => array(
-                                            'Album.ProdID1',
+                                            'Album.ProdID',
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
@@ -1200,7 +1200,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
