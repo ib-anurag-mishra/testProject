@@ -2340,7 +2340,7 @@ $(function() {
 	
 	var artist_video_li = 0;
 	$('.artist-page .videos-shadow-container .videos-scrollable ul li').each(function(){
-		artist_video_li = artist_video_li + $(this).outerWidth();
+		artist_video_li = artist_video_li + $(this).outerWidth(true);
 		
 		
 	})
