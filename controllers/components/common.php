@@ -597,6 +597,9 @@ STR;
                     Genre.Genre,
                     Country.Territory,
                     Country.SalesDate,
+                    Country.StreamingSalesDate,
+                    Country.StreamingStatus,
+                    Country.DownloadStatus,                    
                     Sample_Files.CdnPath,
                     Sample_Files.SaveAsName,
                     Full_Files.CdnPath,
@@ -612,7 +615,7 @@ STR;
             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
             INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
             INNER JOIN File ON (Albums.FileID = File.FileID) 
-            WHERE (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+            WHERE ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
             GROUP BY Song.ProdID
             ORDER BY FIELD(Song.ProdID,$ids) ASC
             LIMIT 10
