@@ -28,8 +28,8 @@ class Streaming {
   
   //db1 database setting
   var $STAGE_DB_HOST = '10.181.56.177';
-  var $STAGE_DB_USER = 'sony_ingest';
-  var $STAGE_DB_PASS = 'T@u>8t89Rm0D';
+  var $STAGE_DB_USER = 'narendran';
+  var $STAGE_DB_PASS = 'NMx{h7b<366g';
   var $STAGE_SONY_DB   = 'sony2';
   var $STAGE_FREEGAL_DB   = 'freegal_test2';
   var $STAGE_ORCHARD_DB   = 'theorchard';
