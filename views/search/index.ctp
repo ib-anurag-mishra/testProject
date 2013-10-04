@@ -1044,8 +1044,10 @@ if (isset($type)) {
                         <?php
                         if($this->Session->read("patron")) {
                             $style = '';
+                            $styleSong = '';
                         } else {
                             $style = 'style="left:10px"';
+                            $styleSong = "style='left:570px'";
                         }
                         ?>
                         <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
@@ -1082,7 +1084,7 @@ if (isset($type)) {
                             //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                             //$image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
-                        <div class="song">
+                        <div class="song" <?php echo $styleSong; ?>>
                             <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
                             <a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
