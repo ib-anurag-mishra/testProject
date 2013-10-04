@@ -208,14 +208,6 @@
                                                     <a class="top-100-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
                                                     <?php
                                                 }
-
-                                                if($this->Session->read('patron')) {
-                                                ?> 
-                                                    <!--a class="add-to-playlist" href="#">Add To Queue</a-->
-                                                    <?php
-                                                    $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
-                                                    echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
-                                                }
                                                 ?>      
                                                 <?php if($this->Session->read("patron")){ ?> 
                                                             <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
