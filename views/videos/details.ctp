@@ -8,45 +8,43 @@
                 </div>
 		<div class="hero-container clearfix">
 			<div class="hero-image-container">
-                                <?php
-                                       // $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
-                                       // $videoImage = Configure::read('App.Music_Path').$videoArtwork;
-
-
-                                        
-
-                                ?>
+                                
 				<img src="<?php echo $VideosData[0]['videoImage'];?>" alt="<?php echo $VideosData[0]['Video']['VideoTitle']; ?>" width="555" height="323" />
-<!--				<a class="download-now-button" href="#">Download Now</a>-->
+
                 <?php
-                            
-                                   if($this->Session->read('patron'))
-                                    {
-                                           if(strtotime($VideosData[0]['Country']['SalesDate']) < time()){
-                                            if($libraryDownload == '1' && $patronDownload == '1') 
-                                            {
-
-                ?>                                                
-                                                                <span class="download-now-button">
-                                                                <form method="Post" id="form<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
-                                                                <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"];?>" />
-                                                                <input type="hidden" name="ProviderType" value="<?php echo $VideosData[0]["Video"]["provider_type"]; ?>" />
-                                                                <span class="beforeClick" id="song_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>">
-                                                                <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $VideosData[0]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
-                                                                </span>
-                                                                <span class="afterClick" id="downloading_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
-                                                                <span id="download_loader_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
-                                                                </form>
-                                                                </span>
-                            <?php
-
-                                         }
-                                   
-                            ?>
-
-                                            <a class="add-to-playlist-button" href="#"></a>
+                            $libId = $this->Session->read('library');
+                            $patId = $this->Session->read('patron');
+                            if($this->Session->read('patron')){
+                                if(strtotime($VideosData[0]['Country']['SalesDate']) < time()){
+                                    if($libraryDownload == '1' && $patronDownload == '1'){
+                                        $downloadsUsed =  $this->Videodownload->getVideodownloadfind($VideosData[0]['Video']['ProdID'],$VideosData[0]['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                        if($downloadsUsed > 0){
+                                          $VideosData[0][$key]['Video']['status'] = 'avail';
+                                        } else{
+                                          $VideosData[0][$key]['Video']['status'] = 'not';
+                                        }
+                                        if($VideosData[0]['Video']['status'] != 'avail') {?>
+                                            <span class="download-now-button ">
+                                            <form method="Post" id="form<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
+                                            <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"];?>" />
+                                            <input type="hidden" name="ProviderType" value="<?php echo $VideosData[0]["Video"]["provider_type"]; ?>" />
+                                            <span class="beforeClick" id="song_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>">
+                                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $VideosData[0]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                                            </span>
+                                            <span class="afterClick" id="downloading_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                                            <span id="download_loader_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                            </form>
+                                            </span>
+                                    <?php
+                                        } else {?>
+                                            <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                        <?php
+                                        }
+                                    }
+                                    ?>
+                                            <a class="add-to-playlist-button " href="#"></a>
                                             <div class="wishlist-popover">
-					<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a>  -->
+					
                                                 <?php
 
                                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
@@ -57,7 +55,7 @@
                                           <?php
                                             } else {
                                             ?>    
-                                            <span class="download-now-button"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
+                                            <span class="download-now-button "><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                             <?php                
                                             }
                             
@@ -111,12 +109,8 @@
                                                     if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
                                                         continue;
                                                     } 
-                                                    
 
-                                                    //echo "<pre>"; print_r($value);
-                                                    //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                                    //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
-								?>								
+						?>								
 								<li>
 									<div class="video-thumb-container">
                                                                             <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" data-original="" width="274" height="162" /></a>
@@ -128,24 +122,33 @@
 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
-
-                                ?>                                                
-                                                                                <span class="download-now-button">
-                                                                                <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
-                                                                                <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
-                                                                                <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
-                                                                                <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                                                                                <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
-                                                                                </span>
-                                                                                <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
-                                                                                <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
-                                                                                </form>
-                                                                                </span>
+                                                                $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                                if($downloadsUsed > 0){
+                                                                  $value[$key]['Video']['status'] = 'avail';
+                                                                } else{
+                                                                  $value[$key]['Video']['status'] = 'not';
+                                                                }
+                                                                if($value['Video']['status'] != 'avail') {?>                                               
+                                                                    <span class="download-now-button ">
+                                                                    <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
+                                                                    <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
+                                                                    <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
+                                                                    <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
+                                                                    <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                                                                    </span>
+                                                                    <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                                                                    <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                                                    </form>
+                                                                    </span>
                                             <?php
+                                                                } else {?>
+                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                <?php
+                                                                }
 
                                                             }
                                             ?>
-										<a class="add-to-playlist-button" href="#"></a>
+										<a class="add-to-playlist-button " href="#"></a>
 										<div class="wishlist-popover">
 											
                                                                                     <?php
@@ -159,7 +162,7 @@
                                                                 <?php
                                                   } else {
                                                       ?>
-                                                      <span class="download-now-button"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
+                                                      <span class="download-now-button "><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                                         <?php
                                                   }
                                                     }
@@ -226,11 +229,6 @@
                                             if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
                                                 continue;
                                             } 
-
-                                              //  echo "<pre>"; print_r($value);
-                                                //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                                //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
-
 							?>
 							
 							<li>
@@ -244,9 +242,14 @@
                                 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
-
-                                ?>                                                
-                                                                                <span class="download-now-button">
+                                                                $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                                if($downloadsUsed > 0){
+                                                                  $value[$key]['Video']['status'] = 'avail';
+                                                                } else{
+                                                                  $value[$key]['Video']['status'] = 'not';
+                                                                }
+                                                                if($value['Video']['status'] != 'avail') {?>
+                                                                                <span class="download-now-button ">
                                                                                 <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                                 <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
@@ -258,10 +261,13 @@
                                                                                 </form>
                                                                                 </span>
                                             <?php
-
+                                                                } else {?>
+                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                <?php
+                                                                }
                                                             }
                                             ?>
-									<a class="add-to-playlist-button" href="#"></a>
+									<a class="add-to-playlist-button " href="#"></a>
 									<div class="wishlist-popover">
                                                                             <?php
 

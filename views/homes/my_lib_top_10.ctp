@@ -1,10 +1,9 @@
-
-
 <section class="my-top-100-page">
 		
 		<div class="breadcrumbs">
                     <?php
-                         
+                            $libId = $this->Session->read('library');
+                            $patId = $this->Session->read('patron');
                             $html->addCrumb(__('My Library Top 10', true), '/homes/my_lib_top_10');
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
@@ -126,25 +125,29 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
-                    $value['Song']['status'] = 'avail1';
-                    if(isset($value['Song']['status']) && ($value['Song']['status'] != 'avail')) {
+                $downloadsUsed =  $this->Download->getDownloadfind($value['Song']['ProdID'],$value['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                if($downloadsUsed > 0){
+                  $value['Song']['status'] = 'avail';
+                } else{
+                  $value['Song']['status'] = 'not';
+                }
+                    if(($value['Song']['status'] != 'avail')) {
                             ?>
       
                             <form method="Post" id="form<?php echo $value["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
                             <input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $value["Song"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $value["Song"]["ProdID"]; ?>");' class="top-10-download-now-button" style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></a>
+                            <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $value["Song"]["ProdID"]; ?>");' class="top-10-download-now-button " style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></a>
                             </span>
-                            <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a href="javascript:void(0);" class="top-10-download-now-button"><?php __('Please Wait...');?>
+                            <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a href="javascript:void(0);" class="top-10-download-now-button "><?php __('Please Wait...');?>
                             <span id="download_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif',array("border" => "0")); ?></span></a></span>
                             </form>
        
                             <?php	
                     } else {
                     ?>
-                            <a class="top-10-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                            <a class="top-10-download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                     <?php
                     }
 
@@ -155,7 +158,7 @@
                         $wishlistCount = $wishlist->getWishlistCount();
                         if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
                         ?> 
-                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                                <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>
                         <?php
                         } else {
                                     $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
@@ -165,19 +168,19 @@
 
                 } else { 
                 ?>
-                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>
                 <?php	
                 }												
             }
         } else {
         ?>
-            <a class="top-10-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+            <a class="top-10-download-now-button " href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
         <?php
         }
 }else{
 
 ?>
-     <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+     <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
     <?php
@@ -185,41 +188,29 @@
       ?>
 
 
-                                                                                    <?php if($this->Session->read("patron")){ ?> 
-														<a class="add-to-playlist-button" href="#"></a>
-                                                                                               
-														<div class="wishlist-popover">
-                                                                                                                <?php if( $this->Session->read('library_type') == 2 ){
-                                                                                                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
-                                                                                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
-                                                                                                                <?php } ?>
-															
-                                                                                                                        
-                                                                                                                        
-                                                                                                            <?php
+        <?php if($this->Session->read("patron")){ ?> 
+            <a class="add-to-playlist-button " href="#"></a>
 
-                                                                                                                $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-
-                                                                                                                echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
-                                                                                                                echo $this->Queue->getSocialNetworkinglinksMarkup();
-
-                                                                                                            ?>
-														</div>
-                                                                                                    <?php } ?>
+            <div class="wishlist-popover">
+            <?php if( $this->Session->read('library_type') == 2 ){
+                        echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
+                        <a class="add-to-playlist " href="#">Add To Queue</a>
+            <?php } ?>
 
 
 
+        <?php
 
+            $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
+            echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
+            echo $this->Queue->getSocialNetworkinglinksMarkup();
 
+        ?>
+            </div>
+        <?php } ?>
 
-
-
-
-
-
-							
-						</div>
+    </div>
 						<div class="album-title">
 							<a title="<?php echo $this->getTextEncode($value['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
@@ -291,8 +282,12 @@
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
-                    $value['Video']['Video']['status'] = 'avail1';
+                $downloadsUsed =  $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'],$value['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                if($downloadsUsed > 0){
+                  $value['Video']['status'] = 'avail';
+                } else{
+                  $value['Video']['status'] = 'not';
+                }
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
@@ -300,16 +295,16 @@
                             <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");' class="top-10-download-now-button" style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><label><?php __('Download Now');?></label></a>
+                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");' class="top-10-download-now-button " style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><label><?php __('Download Now');?></label></a>
                             </span>
-                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><a class="top-10-download-now-button"><?php __('Please Wait...');?>
+                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><a class="top-10-download-now-button "><?php __('Please Wait...');?>
                             <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif', array('border' => '0')); ?></span></a></span>
                             </form>
                             </span>
                             <?php	
                     } else {
                     ?>
-                            <a class="top-10-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                            <a class="top-10-download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                     <?php
                     }
 
@@ -320,7 +315,7 @@
                         $wishlistCount = $wishlist->getWishlistCount();
                         if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
                         ?> 
-                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                                <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>
                         <?php
                         } else {
                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
@@ -329,19 +324,19 @@
 
                 } else { 
                 ?>
-                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>
                 <?php	
                 }												
             }
         } else {
         ?>
-            <a class="top-10-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+            <a class="top-10-download-now-button " href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
         <?php
         }
 }else{
 
 ?>
-     <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+     <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
     <?php
@@ -351,7 +346,7 @@
 
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
                                                        <?php if($this->Session->read('patron')) { ?>
-							<a class="add-to-playlist-button" href="#"></a>
+							<a class="add-to-playlist-button " href="#"></a>
 							<div class="wishlist-popover">
 								
                                                         <?php
