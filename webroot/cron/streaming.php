@@ -39,8 +39,8 @@ class Streaming {
   var $PODUCTION_DB_HOST = '192.168.100.1142';
   var $PODUCTION_DB_USER = 'freegal_prod';
   var $PODUCTION_DB_PASS = '}e47^B1EO9hD';
-  var $PODUCTION_SONY_DB   = 'sony';
-  var $PODUCTION_FREEGAL_DB   = 'freegal';
+  var $PODUCTION_SONY_DB   = 'sony2';
+  var $PODUCTION_FREEGAL_DB   = 'freegal_test2';
   var $PODUCTION_ORCHARD_DB   = 'theorchard';
   
   
