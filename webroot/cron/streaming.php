@@ -28,8 +28,8 @@ class Streaming {
   
   //db1 database setting
   var $STAGE_DB_HOST = '10.181.56.177';
-  var $STAGE_DB_USER = 'freegal_test';
-  var $STAGE_DB_PASS = 'c45X^E1X7:TQ';
+  var $STAGE_DB_USER = 'sony_ingest';
+  var $STAGE_DB_PASS = 'T@u>8t89Rm0D';
   var $STAGE_SONY_DB   = 'sony2';
   var $STAGE_FREEGAL_DB   = 'freegal_test2';
   var $STAGE_ORCHARD_DB   = 'theorchard';
@@ -79,8 +79,7 @@ class Streaming {
      //set the database connection
      if( $this->LIVE == '1' ){
          
-          // connect to  Production
-          
+          // connect to  Production          
           //connect to sony database
           $this->sonyDBConnectionObj = mysql_connect($this->PODUCTION_DB_HOST, $this->PODUCTION_DB_USER, $this->PODUCTION_DB_PASS)
             or die('Could not connect to mysql server for sony db of live.' );
@@ -97,13 +96,11 @@ class Streaming {
           $this->orchardDBConnectionObj = mysql_connect($this->PODUCTION_DB_HOST, $this->PODUCTION_DB_USER, $this->PODUCTION_DB_PASS, true)
             or die('Could not connect to mysql server for freegal db of live.' );
           mysql_select_db($this->PODUCTION_ORCHARD_DB, $this->orchardDBConnectionObj) 
-            or die('Could not select database.');  
-          
+            or die('Could not select database.');          
     
      } else {         
          
-          // connect to  stage 
-         
+          // connect to  stage         
           //connect to sony database
            $this->sonyDBConnectionObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS)
             or die('Could not connect to mysql server for sony db of stage.' );
@@ -121,8 +118,7 @@ class Streaming {
           $this->orchardDBConnectionObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS, true)
             or die('Could not connect to mysql server for freegal db of live.' );
           mysql_select_db($this->STAGE_ORCHARD_DB, $this->orchardDBConnectionObj) 
-            or die('Could not select orchard database.');  
-         
+            or die('Could not select orchard database.');         
      }
           
   }
