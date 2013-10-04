@@ -322,6 +322,7 @@ class SoapsController extends AppController {
 						'Album.ArtistURL',
 						'Album.Label',
 						'Album.Copyright',
+            'Album.Advisory',
 						'Album.provider_type'
 						),
 					'contain' => array(
@@ -367,6 +368,8 @@ class SoapsController extends AppController {
         $fileURL = Configure::read('App.Music_Path').$fileURL;
         $obj->FileURL = $fileURL;
 
+        if('T' == $val['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
+        
         $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'AlbumDataByArtistType');
     }
     
@@ -977,11 +980,12 @@ STR;
       $song_list = Array();
       $data['Album'] = $albumData['Album'];
       $data['Song'] = $arr_album_songs;
-
+       
+      
       $obj = new AlbumDataType;
       $obj->ProdID                    = (int)$this->getProductAutoID($data['Album']['ProdID'], $data['Album']['provider_type']);
       $obj->ProductID                 = (string)$data['Album']['ProductID'];
-      $obj->AlbumTitle                = $this->getTextUTF((string)$data['Album']['AlbumTitle']);
+      $obj->AlbumTitle                = $this->getTextUTF($data['Album']['AlbumTitle']);
       $obj->Title                     = $this->getTextUTF((string)$data['Album']['Title']);
       $obj->ArtistText                = $this->getTextUTF((string)$data['Album']['ArtistText']);
       $obj->Artist                    = $this->getTextUTF((string)$data['Album']['Artist']);
@@ -996,7 +1000,7 @@ STR;
       $obj->DownloadStatus            = (int)$data['Album']['DownloadStatus'];
       $obj->TrackBundleCount          = (int)$data['Album']['TrackBundleCount'];
 
-
+      if('T' == $data['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
 
       foreach($data['Song'] AS $val){  
         if(1 == $val['DownloadStatus']) {
