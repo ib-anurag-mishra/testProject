@@ -89,16 +89,28 @@
 				</div>
 			</footer>
                 <div class="filler" style="height:100px"></div>
-	<?php if($this->Session->read("patron")){ ?>
-                                        <?php if($this->Session->read('library_type') == '2') { ?>
-                                            <div class="player">
+	<?php //if($this->Session->read("patron")){ ?>
+                                        <?php //if($this->Session->read('library_type') == '2') { ?>
+                                            <!-- <div class="player">
                                                     <div class="player-container">
                                                             <div id="myElement">Loading the player...</div>
                                                     </div>
                                                 <input type="hidden" name="songDetails" id="songDetails" value="" />
+                                            </div> -->
+                                            <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
+                                            <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/streaming.js"></script>
+                                            <div class="wrapper">
+                                              <div class="fmp_container">
+                                                <object width="960" height="100" type="application/x-shockwave-flash" id="fmp_player" data="/app/webroot/swf/fmp.swf"></object>
+                                              </div>
+
+                                              <input type="button" id="playlist1" value="Push Playlist 1" style="display:block" onclick="pushSongs(popMostPopular);" />
+                                              <input type="button" id="playlist2" value="Push Playlist 2" style="display:block" onclick="pushSongs(MechanicalBull);" />
+                                              <input type="button" id="pushNewSong" value="Push New Song" style="display:block"  />
+                                              <input type="button" id="clearQueue" value="Clear Queue" style="display:block" onclick="clearQueue();" />
                                             </div>
-                                        <?php } ?>
-                                    <?php } ?>
+                                        <?php //} ?>
+                                    <?php //} ?>
 	
     <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
     <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
@@ -120,12 +132,13 @@ pageTracker._trackPageview();
 	
 	<!-- Ajaxify -->
 	<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
-        
-        <?php if ($this->Session->read('patron') && $this->Session->read('library_type') == 2){ ?>
+
+        <?php //if ($this->Session->read('patron') && $this->Session->read('library_type') == 2){ ?>
 	
-	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script>
-	<script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
-	<script type="text/javascript">
+  
+	<!-- <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script> -->
+	<!-- <script type="text/javascript">jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script> -->
+	<!-- <script type="text/javascript">
             $(document).ready(function(){
                 jwplayer("myElement").setup({
                         playlist:[{file:"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902132618&nva=20130902142618&token=5219efa7418cbf18c81fe",
@@ -253,7 +266,7 @@ pageTracker._trackPageview();
 //                    jwplayer("myElement").load(files); 
 //                });
             });
-        </script>    
-<?php } ?>
+        </script>    -->
+<?php //} ?>
 <!-- Code for player end -->
 
