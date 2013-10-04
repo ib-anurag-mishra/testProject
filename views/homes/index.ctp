@@ -690,7 +690,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                         <a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" alt="<?php echo $value['News']['subject'] ?>" /></a>
                                                 </div>
                                                 <div class="post-title">
-                                                        <a href="javascript:void(0);"><?php echo $value['News']['subject'] ?></a>
+                                                        <a href="javascript:void(0);"><?php echo $this->getValidText($value['News']['subject']); ?></a>
                                                 </div>
                                                 <div class="post-date">
                                                         <?php echo $value['News']['place']?> : <?php echo date( "F d, Y", strtotime($value['News']['created'])) ?>
