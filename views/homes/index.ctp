@@ -147,7 +147,7 @@
                                                                                                     <?php if($this->Session->read("patron")){ ?> 
 														<a class="add-to-playlist-button no-ajaxy" href="#" ></a>
 														<div class="wishlist-popover ">
-                                                                                                <?php if( $this->Session->read('library_type') == 2 ){
+                                                                                                <?php if( $this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1){
                                                                                                             echo $this->Queue->getQueuesList($this->Session->read('patron'),$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"],$nationalTopDownload[$i]["Albums"]["ProdID"],$nationalTopDownload[$i]["Albums"]["provider_type"]); ?>
                                                                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                                                                                 <?php } ?>
