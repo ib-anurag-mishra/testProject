@@ -106,6 +106,13 @@ class dataencodeView extends View {
       //return $this->decode_utf8($this->getTextEncode($text));
       return $this->decode_utf8($this->getTextEncode($text));
   }
+  
+  
+  function getValidText($text)                    // Replace Single and Double Quotes in Text
+  {
+    $search = array("\"", "'");  
+    return str_replace($search, "", $text) ; 
+  }
 
 
 

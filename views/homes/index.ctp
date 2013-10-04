@@ -166,7 +166,7 @@ $("#top-100-videos-grid").scroll(function(){
                     <li>
                     <div class="top-100-songs-detail">
                         <div class="song-cover-container">
-                            <a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
+                            <a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle'])); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
                             <div class="top-100-ranking"><?php
                                 $slNo = ($i + 1);
                                 echo $slNo;?>
@@ -299,7 +299,7 @@ $("#top-100-videos-grid").scroll(function(){
                 <li>
                     <div class="top-100-video-detail">
                         <div class="video-cover-container">
-                            <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
+                            <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $this->getValidText($nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']); ?>" width="423" height="250" /></a>
                                 <div class="top-100-ranking"><?php
                                     $slNo = ($i + 1);
                                     echo $slNo;?>
@@ -396,7 +396,7 @@ $("#top-100-videos-grid").scroll(function(){
                                 </div>
                                 <div class="artist-name">
                                         <!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                        <a title="<?php echo $this->getTextEncode($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                        <a title="<?php echo $this->getTextEncode($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
                                 </div>
                             </div>
                         </li>
@@ -522,7 +522,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                 <div class="single-cover-container">
 
                                                         <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle']); ?>" width="162" height="162" /></a>
+                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle'])); ?>" width="162" height="162" /></a>
 
                                                 <?php if($this->Session->read("patron")){ ?> 													
                                                 <a class="add-to-playlist-button " href="#">
@@ -606,7 +606,7 @@ $("#top-100-videos-grid").scroll(function(){
                                     <div class="video-detail">
                                         <div class="video-cover-container">
                                                 <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle']); ?>" width="275" height="162" />
+                                                <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle'])); ?>" width="275" height="162" />
                                                 </a>
                                         <?php if($this->Session->read("patron")){ ?> 
                                                 <a class="add-to-playlist-button " href="#">
