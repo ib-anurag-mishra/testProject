@@ -114,11 +114,14 @@ class Streaming {
           mysql_select_db($this->STAGE_FREEGAL_DB, $this->freegalDBConnectionObj) 
             or die('Could not select freegal database.');
           
+          /*
            //connect to orchard database
           $this->orchardDBConnectionObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS, true)
             or die('Could not connect to mysql server for freegal db of live.' );
           mysql_select_db($this->STAGE_ORCHARD_DB, $this->orchardDBConnectionObj) 
-            or die('Could not select orchard database.');         
+            or die('Could not select orchard database.');  
+           * 
+           */       
      }
           
   }
