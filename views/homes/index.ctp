@@ -220,7 +220,7 @@
 										</ul>
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-										<ul style="width:47000px;">
+										<ul>
 
                                                     <?php if(is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0){ ?>
 
