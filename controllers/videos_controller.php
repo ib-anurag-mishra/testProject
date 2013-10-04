@@ -311,7 +311,7 @@ class VideosController extends AppController {
 
             $this->Library->setDataSource('default');
             if (is_numeric($return)) {
-                header("Content-Type: " . $contenttype);
+                header("Content-Type: application/force-download");
                 header("Content-Disposition: attachment; filename=\"" . basename($trackDetails['0']['Full_Files']['SaveAsName']) . "\";");
                 header("Location: " . $finalVideoUrl);
                 exit;
