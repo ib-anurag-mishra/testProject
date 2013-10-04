@@ -317,7 +317,7 @@ if ($this->Session->read('Config.language') == 'en') {
                 <noscript>
                     <?php
                     if ($this->params['action'] != 'aboutus') {
-                        echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err"), false);
+                        echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err;"), false);
                     }
                     ?>
                 </noscript>
