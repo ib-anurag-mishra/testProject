@@ -162,7 +162,7 @@ class Streaming {
       $songQuery ='SELECT Songs.ProdID, Songs.provider_type, Songs.DownloadStatus, Songs.ProductID, Songs.ISRC FROM Songs where provider_type="ioda" and ProdID="1009240" ORDER BY Songs.ProdID ASC 
                     LIMIT '.$index.', '.$limit;
       */
-     $songQuery ='SELECT Songs.ProdID, Songs.provider_type, Songs.DownloadStatus, Songs.ProductID, Songs.ISRC FROM Songs where provider_type="sony" ORDER BY Songs.ProdID ASC LIMIT '.$index.', '.$limit;
+     $songQuery ='SELECT Songs.ProdID, Songs.provider_type, Songs.DownloadStatus, Songs.ProductID, Songs.ISRC FROM Songs where Songs.provider_type="sony" ORDER BY Songs.ProdID ASC LIMIT '.$index.', '.$limit;
      $bigQurylog =  $songQuery ;
      
    
@@ -275,14 +275,12 @@ class Streaming {
       $this->LogsString  .= PHP_EOL.date('Y-m-d h:i:s')." getRecordInSonyDB-Query: ".$sql.PHP_EOL;
                 
       if(mysql_num_rows($obj_resultset) > 0){
-            while($sony_arr_row = mysql_fetch_assoc($obj_resultset)){
-                
-                 print_r($sony_arr_row);
-      die;
-                
+            while($sony_arr_row = mysql_fetch_assoc($obj_resultset)){               
                 $this->ShortLogsString .=   " SonyDb: Yes";
                 $this->insertStreamingRecs($sony_arr_row,$provider_type);           
             }  
+      }else{
+          $this->ShortLogsString .=   " SonyDb: No";
       }      
   }   
     

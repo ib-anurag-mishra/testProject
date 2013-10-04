@@ -14,15 +14,15 @@ $Streaming = new Streaming();
 //Instance
 $Streaming->Instance   = 1;
 //LIMIT of SELECT query (Songs,Files)
-$Streaming->ChunkSize  = 5;
+$Streaming->ChunkSize  = 1000;
 //1st value in LIMIT in SELECT query (Songs,Files) : Start point - ProdID
 $Streaming->LimitIndex = 0;
 //2nd value in LIMIT in SELECT query (Songs,Files) : Totals rows count
-$Streaming->LimitCount = 20;
+$Streaming->LimitCount = 100000;
 //if script will run in live or test environment
 $Streaming->LIVE       = 0;
 
-$Streaming->EnableBigLogs  = 0;  //This one logs all queries
+$Streaming->EnableBigLogs  = 1;  //This one logs all queries
 $Streaming->EnableShortLogs  = 1; //This one logs only true false value
 
 
