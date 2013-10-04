@@ -341,7 +341,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                                          </a>						
                                                 </div>
 						<div class="genre">
-							<?php echo __('Genre').": ".$html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array("title" => $this->getTextEncode($value['Genre']['Genre']))) . '<br />';
+							<?php echo __('Genre').": ".$html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre']))) . '<br />'; ?>
 						</div>
                                                 <?php if(!empty($value['Video']['video_label'])){ ?>
 						<div class="label">
