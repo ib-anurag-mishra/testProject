@@ -381,7 +381,7 @@
 			</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
 													</div>
 												</div>
 											</li>
