@@ -271,7 +271,8 @@ class Streaming {
       
       $obj_resultset = mysql_query($sql, $this->sonyDBConnectionObj);
       
-      
+      print_r($obj_resultset);
+      die;
       $this->LogsString  .= PHP_EOL.date('Y-m-d h:i:s')." getRecordInSonyDB-Query: ".$sql.PHP_EOL;
                 
       if(mysql_num_rows($obj_resultset) > 0){
