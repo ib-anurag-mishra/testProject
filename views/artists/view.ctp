@@ -217,12 +217,20 @@
                                                     echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
                                                 }
                                                 ?>      
-						<!--div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div-->						
+                                                <?php if($this->Session->read("patron")){ ?> 
+                                                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                            <div class="wishlist-popover ">
+                                            <?php if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1){
+                                                        echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$albumSong["Albums"]["ProdID"],$albumSong["Albums"]["provider_type"]); ?>
+                                                        <a class="add-to-playlist" href="#">Add To Queue</a>
+                                            <?php } ?>
+                                            <?php
+                                                $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
+                                                echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
+                                            ?>
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 					</div>
+                                        <?php } ?>                                                                                                                
 				</div>					
 			<?php                      
                             endforeach;
