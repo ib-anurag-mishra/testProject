@@ -1049,9 +1049,13 @@ if (isset($type)) {
                         }
                         ?>
                         <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
-
+                        <?php 
+                        if($this->Session->read("patron")) {
+                        ?>
 						<a class="add-to-playlist-button" href="#"></a>
-						
+						<?php
+                        }
+                        ?>
 						<div class="wishlist-popover">	
                             <?php
                                 if($this->Session->read("patron")){
