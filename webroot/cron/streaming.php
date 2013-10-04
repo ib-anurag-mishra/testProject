@@ -160,10 +160,10 @@ class Streaming {
       $songQuery ='SELECT Songs.ProdID, Songs.provider_type, Songs.DownloadStatus, Songs.ProductID, Songs.ISRC FROM Songs where provider_type="ioda" and ProdID="1009240" ORDER BY Songs.ProdID ASC 
                     LIMIT '.$index.', '.$limit;
       */
-    echo $songQuery ='SELECT Songs.ProdID, Songs.provider_type, Songs.DownloadStatus, Songs.ProductID, Songs.ISRC FROM Songs where provider_type="sony" ORDER BY Songs.ProdID ASC LIMIT '.$index.', '.$limit;
+     $songQuery ='SELECT Songs.ProdID, Songs.provider_type, Songs.DownloadStatus, Songs.ProductID, Songs.ISRC FROM Songs where provider_type="sony" ORDER BY Songs.ProdID ASC LIMIT '.$index.', '.$limit;
      $bigQurylog =  $songQuery ;
      
-      die;
+   
       $obj_resultset = mysql_query( $songQuery, $this->freegalDBConnectionObj);
       if(mysql_num_rows($obj_resultset) > 0){
             while($arr_row = mysql_fetch_assoc($obj_resultset)){
