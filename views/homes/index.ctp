@@ -166,7 +166,7 @@ $("#top-100-videos-grid").scroll(function(){
                     <li>
                     <div class="top-100-songs-detail">
                         <div class="song-cover-container">
-                            <a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
+                            <a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle'])); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
                             <div class="top-100-ranking"><?php
                                 $slNo = ($i + 1);
                                 echo $slNo;?>
@@ -263,10 +263,10 @@ $("#top-100-videos-grid").scroll(function(){
                     }
                     ?>
                     <div class="song-title">
-                        <a title="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
+                        <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle'])); ?>" href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
                     </div>
                     <div class="artist-name">                                                                                                            
-                        <a title="<?php echo $artistText; ?>" href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
+                        <a title="<?php echo $this->getValidText($this->getTextEncode($artistText)); ?>" href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
                     </div>
                 </div>
                 </li>
@@ -277,7 +277,7 @@ $("#top-100-videos-grid").scroll(function(){
                 }
                  ?>	
                 <li id="songs_loader_li1" style="display:none;" >                                                                                     
-                   <span id="natSongs_loader1" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                   <span id="natSongs_loader1" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" style="border:0;" alt="Ajax Loader" /></span>                                                                                       
                 </li>
            </ul>
         </div>
@@ -299,7 +299,7 @@ $("#top-100-videos-grid").scroll(function(){
                 <li>
                     <div class="top-100-video-detail">
                         <div class="video-cover-container">
-                            <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
+                            <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $this->getValidText($nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']); ?>" width="423" height="250" /></a>
                                 <div class="top-100-ranking"><?php
                                     $slNo = ($i + 1);
                                     echo $slNo;?>
@@ -391,12 +391,12 @@ $("#top-100-videos-grid").scroll(function(){
                                 ?>
                                 <div class="song-title">
                                 <!--	<a title="<?php echo $songTitle; ?>" href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
-                                        <a title="<?php echo $songTitle; ?>" href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
+                                        <a title="<?php echo $this->getValidText($this->getTextEncode($songTitle)); ?>" href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
                                     <?php if('T' == $nationalTopVideoDownload[$i]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                                 </div>
                                 <div class="artist-name">
                                         <!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                        <a title="<?php echo $this->getTextEncode($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                        <a title="<?php echo $this->getTextEncode($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
                                 </div>
                             </div>
                         </li>
@@ -406,7 +406,7 @@ $("#top-100-videos-grid").scroll(function(){
                     }
                      ?>	
                         <li id="videos_loader_li1" style="display:none;" >                                                                                    
-                            <span id="natVideos_loader1" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" border="0" /></span>                                                                                       
+                            <span id="natVideos_loader1" style="display:none;" ><img width="250" src="<? echo $this->webroot; ?>app/webroot/img/auto_scroll_ajax-loader.gif" style="border:0;" alt="Ajax Loader" /></span>                                                                                       
                         </li>
                     </ul>
                 </div>
@@ -444,12 +444,12 @@ $("#top-100-videos-grid").scroll(function(){
 
                                                 </div>
                                                 <div class="album-title">
-                                                        <a title="<?php echo $title; ?>" href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($title)); ?>" href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
                                                 </div>
 
 
                                                 <div class="artist-name">
-                                                        <a title="<?php echo $ArtistText; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($ArtistText)); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
                                                 </div>
                                         </div>
                                 </li>
@@ -522,7 +522,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                 <div class="single-cover-container">
 
                                                         <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle']); ?>" width="162" height="162" /></a>
+                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle'])); ?>" width="162" height="162" /></a>
 
                                                 <?php if($this->Session->read("patron")){ ?> 													
                                                 <a class="add-to-playlist-button " href="#">
@@ -543,7 +543,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                 <?php } ?>
                                                 </div>
                                                 <div class="song-title">
-                                                        <a title="<?php echo $value['Song']['SongTitle']; ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['SongTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
 
                                                             $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
@@ -566,7 +566,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                         </a>	<?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                                                 </div>
                                                 <div class="artist-name">
-                                                        <a title="<?php echo $value['Song']['ArtistText']; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['ArtistText'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                         <?php 
 
                                                                     $commingSoonSongArtistTitle = $this->getTextEncode($value['Song']['Artist']);
@@ -606,7 +606,7 @@ $("#top-100-videos-grid").scroll(function(){
                                     <div class="video-detail">
                                         <div class="video-cover-container">
                                                 <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle']); ?>" width="275" height="162" />
+                                                <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle'])); ?>" width="275" height="162" />
                                                 </a>
                                         <?php if($this->Session->read("patron")){ ?> 
                                                 <a class="add-to-playlist-button " href="#">
@@ -626,7 +626,7 @@ $("#top-100-videos-grid").scroll(function(){
                                         </div>
                                         <div class="video-title">
 
-                                                <a title="<?php echo $value['Video']['VideoTitle']; ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                     <?php
 
                                                     $commingSoonVideoTitle = $this->getTextEncode($value['Video']['VideoTitle']);
@@ -646,7 +646,7 @@ $("#top-100-videos-grid").scroll(function(){
 
                                         </div>
                                         <div class="artist-name">
-                                            <a title="<?php echo $value['Video']['Artist']; ?>" href="javascript:void(0)">
+                                            <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist'])); ?>" href="javascript:void(0)">
                                             <?php 
                                                 $videoartist = $this->getTextEncode($value['Video']['Artist']);
                                                 if(strlen($videoartist)>20)
@@ -687,7 +687,7 @@ $("#top-100-videos-grid").scroll(function(){
                                 <li>
                                         <div class="post">
                                                 <div class="post-header-image">
-                                                        <a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" /></a>
+                                                        <a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" alt="<?php echo $value['News']['subject'] ?>" /></a>
                                                 </div>
                                                 <div class="post-title">
                                                         <a href="javascript:void(0);"><?php echo $value['News']['subject'] ?></a>
@@ -695,8 +695,10 @@ $("#top-100-videos-grid").scroll(function(){
                                                 <div class="post-date">
                                                         <?php echo $value['News']['place']?> : <?php echo date( "F d, Y", strtotime($value['News']['created'])) ?>
                                                 </div>
-                                                <div id="detailsNews" class="post-excerpt">
-                                               <?php echo  wordwrap($newsText, 65, "<br />\n", TRUE); ?>
+                                                <?php /*<div id="detailsNews" class="post-excerpt">*/ ?>
+                                               <div class="post-excerpt">
+                                               <?php /*echo  wordwrap($newsText, 65, "<br />\n", TRUE);*/ ?>
+                                               <?php echo $newsText; ?>
                                                </div>
                                         </div>
                                 </li>

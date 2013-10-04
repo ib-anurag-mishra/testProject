@@ -86,11 +86,13 @@ $('#whats-happening-grid .lazy').lazyload({
 	container:$('#whats-happening-grid')
 });
 
+/*
 $('#detailsNews .lazy').lazyload({
 	
 	effect:'fadeIn',
 	container:$('#detailsNews')
 });
+*/
 
 
 $('.more-videos-scrollable .video-thumb-container .lazy').lazyload({
@@ -2335,6 +2337,14 @@ $(function() {
 	
 	$('.most-popular-sub-nav').css('left',most_popular_position.left);
 	$('.most-popular-sub-nav').css('width',most_popular_width);
+	
+	var artist_video_li = 0;
+	$('.artist-page .videos-shadow-container .videos-scrollable ul li').each(function(){
+		artist_video_li = artist_video_li + $(this).outerWidth();
+		
+		
+	})
+	$('.artist-page .videos-shadow-container .videos-scrollable ul').css('width',artist_video_li);
 	
 	
 	 

@@ -80,7 +80,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Save Changes"></input>
+                            <input type="submit" class="save" value="Save Changes" />
                     </div>
                     </form>
             </div>
@@ -99,7 +99,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Create New Queue"></input>
+                            <input type="submit" class="save" value="Create New Queue" />
                     </div>
                     </form>
             </div>
@@ -117,7 +117,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <div class="text-close">Close</div>
                     <input type="hidden" name="hid_action" value="delete_queue" />
                     <input type="hidden" id="dqPlid" name="dqPlid" value="" />
-                    <input type="submit" class="save" value="Delete Queue"></input>
+                    <input type="submit" class="save" value="Delete Queue" />
                     </div>
                     </form>
             </div>
@@ -184,55 +184,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="13" height="13"></button>
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
 					</div>
-					<div class="master-music-search-results">
-						<ul>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/adele.jpg" alt="adele">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">21</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Adele</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/pitbull.jpg" alt="pitbull">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Mr. Worldwide</a></span></p>
-									<p class="artist"><a href="#">Pitbull</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/carrie-underwood.jpg" alt="carrie-underwood">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Before He Cheats</a></span></p>
-									<p class="artist"><a href="#">Carrie Underwood</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/kelly-clarkson.jpg" alt="kelly-clarkson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">All I Ever Wanted</a></span></p>
-									<p class="artist"><a href="#">Kelly Clarkson</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/michael-jackson.jpg" alt="michael-jackson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">Thriller</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Michael Jackson</a></p>
-								</div>
-							</li>
-						</ul>
-					</div>
+					
 					
 				<?php if($this->Session->read("patron")){ ?>
 				<div class="weekly-downloads-container clearfix">
@@ -425,7 +377,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<div class="content-wrapper clearfix">	
                             
 					<section class="left-sidebar">
-                                            <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
+											<h3 class="browse"><?php __('Browse'); ?></h3>
+                                            <ul class="sidebar-nav">
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
@@ -450,7 +403,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php if($this->Session->read('library_type') == '2') {
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
-                                            <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
+                                            <h3 class="streaming">Streaming</h3>
+                                            <ul class="sidebar-nav">								
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
@@ -474,7 +428,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                             </ul>
                                             <?php } ?>
-                                            <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
+                                            <h3 class="my-downloads"><?php __('My Downloads'); ?></h3>
+                                            <ul class="sidebar-nav">
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
@@ -482,7 +437,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>
                                             <?php                                                                                             
 
-                                                    if($this->Session->read("lId")==486 || $this->Session->read("lId")==602 || $this->Session->read("lId")==85)                                                     
+                                                    if($this->Session->read("lId")==602 || $this->Session->read("lId")==85)                                                     
                                                     {                                                         
                                                         ?>    
                                                              <div class="announcements">
