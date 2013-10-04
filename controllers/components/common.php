@@ -1356,6 +1356,9 @@ STR;
                                     Genre.Genre,
                                     Country.Territory,
                                     Country.SalesDate,
+                                    Country.StreamingSalesDate,
+                                    Country.StreamingStatus,
+                                    Country.DownloadStatus,                                    
                                     Sample_Files.CdnPath,
                                     Sample_Files.SaveAsName,
                                     Full_Files.CdnPath,
@@ -1374,7 +1377,7 @@ STR;
                                             LEFT JOIN
                                     Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
                                             LEFT JOIN
-                             {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+                             {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
                                             LEFT JOIN
                                     PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type) 
                                             INNER JOIN 
@@ -1382,7 +1385,7 @@ STR;
                                             INNER JOIN 
                                     File ON (Albums.FileID = File.FileID)
                             WHERE
-                                    ((Song.DownloadStatus = '1') AND (($top_ten_condition_songs) )  AND 1 = 1)
+                                    (($top_ten_condition_songs) AND 1 = 1)
                             GROUP BY Song.ProdID
                             ORDER BY FIELD(Song.ProdID,
                                             $ids) ASC
