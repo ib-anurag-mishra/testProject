@@ -31,7 +31,7 @@ class Streaming {
   var $STAGE_DB_USER = 'freegal_test';
   var $STAGE_DB_PASS = 'c45X^E1X7:TQ';
   var $STAGE_SONY_DB   = 'sony2';
-  var $STAGE_FREEGAL_DB   = 'freegal_test2';
+  var $STAGE_FREEGAL_DB   = 'freegal';
   var $STAGE_ORCHARD_DB   = 'theorchard';
   
   
