@@ -108,10 +108,9 @@ class dataencodeView extends View {
   }
 
 
-  function getValidText($text)                    // Replace Single and Double Quotes in Text
+  function getValidText($text)                    // Replace Single, Double Quotes, & with HTML entities in Text
   {
-        $search = array("\"", "'");  
-        return str_replace($search, "", $text) ; 
+       return htmlentities($this->getAdminTextEncode($text));
   }  
 
 }
