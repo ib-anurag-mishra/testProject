@@ -163,7 +163,6 @@ foreach($topVideoDownloads as $key => $topDownload)
                                           $topDownload['Video']['status'] = 'not';
                                         }
                                         if($topDownload['Video']['status'] != 'avail') {?>
-                                ?>
                                             <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
                                                 <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
                                                 <input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
