@@ -12,7 +12,7 @@ require_once('streaming.php');
 $Streaming = new Streaming();
 
 //Instance
-$Streaming->Instance   = 1;
+$Streaming->Instance   = 2;
 //LIMIT of SELECT query (Songs,Files)
 $Streaming->ChunkSize  = 1000;
 //1st value in LIMIT in SELECT query (Songs,Files) : Start point - ProdID
