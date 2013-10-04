@@ -269,8 +269,7 @@ class Streaming {
       $provider_type = $arr_row['provider_type']; 
       $sql = "select Distinct SALES_TERRITORY.TERRITORY_CODE,PRODUCT_OFFER.ProdID,Availability.AvailabilityType, Availability.AvailabilityStatus,SALES_TERRITORY.SALES_START_DATE FROM Availability INNER JOIN PRODUCT_OFFER ON Availability.ProdID = PRODUCT_OFFER.ProdID INNER JOIN SALES_TERRITORY ON SALES_TERRITORY.PRODUCT_OFFER_ID = PRODUCT_OFFER.PRODUCT_OFFER_ID  WHERE Availability.AvailabilityType = 'SUBSCRIPTION' AND SALES_TERRITORY.PRICE_CATEGORY = 'SUBSCRIPTION' AND Availability.AvailabilityStatus = 'I' AND PRODUCT_OFFER.ProdID ='".$ProdID."'";
       
-      $obj_resultset = mysql_query($sql, $this->sonyDBConnectionObj);
-      
+      $obj_resultset = mysql_query($sql, $this->sonyDBConnectionObj);     
      
       $this->LogsString  .= PHP_EOL.date('Y-m-d h:i:s')." getRecordInSonyDB-Query: ".$sql.PHP_EOL;
                 
