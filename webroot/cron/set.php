@@ -27,7 +27,9 @@ $Streaming->EnableShortLogs  = 1; //This one logs only true false value
 
 
 //get start
+$Streaming->openLogsFiles();
 $Streaming->getAllSongsData();
+$Streaming->closeLogsFiles();
 
 
 exit('Completed.');
