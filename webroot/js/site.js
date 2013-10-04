@@ -2351,7 +2351,7 @@ $(function() {
 		
 		artist_album_li = artist_album_li + $(this).outerWidth(true);
 	});
-	$('.artist-page .album-shadow-container .album-scrollable ul').css('width',artist_video_li);
+	$('.artist-page .album-shadow-container .album-scrollable ul').css('width',artist_video_li + 6);
 	 
 });
 
