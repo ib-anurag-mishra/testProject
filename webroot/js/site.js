@@ -2347,11 +2347,11 @@ $(function() {
 	$('.artist-page .videos-shadow-container .videos-scrollable ul').css('width',artist_video_li);
 	
 	var artist_album_li = 0;
-	$('.artist-page .albums-shadow-container .album-scrollable ul li').each(function(){
+	$('.artist-page .album-shadow-container .album-scrollable ul li').each(function(){
 		
 		artist_album_li = artist_album_li + $(this).outerWidth(true);
 	});
-	$('.artist-page .albums-shadow-container .album-scrollable ul').css('width',artist_video_li);
+	$('.artist-page .album-shadow-container .album-scrollable ul').css('width',artist_video_li);
 	 
 });
 
