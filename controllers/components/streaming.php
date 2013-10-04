@@ -395,7 +395,7 @@ Class StreamingComponent extends Object
     
     
     /*
-     Function Name : checkPatronExist
+     Function Name : checkStreamingInfoExist
      Desc : function used for checking library and patron details are stored in the streaming records table or not
      * 
      * @param $libId Int  'library uniqe id'

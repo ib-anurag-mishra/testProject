@@ -67,7 +67,9 @@ class Streaming {
   var $LimitIndex = 0;         //default set 0
   var $LimitCount = 100000;    //default set 100000
   
-  var $territoryArray = array('US','CA','AU','IT','NZ','GB','IE');
+  //array('US','CA','AU','IT','NZ','GB','IE');
+  
+  var $territoryArray = array('US','CA','AU','IT','NZ');
 
  
   /**
