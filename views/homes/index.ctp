@@ -31,6 +31,8 @@
                                                                                <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
 
 										<?php
+											$libId = $this->Session->read('library');
+                                							$patId = $this->Session->read('patron');
 											$j = 0;
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopDownload); $i++) {                                                                                            
@@ -71,7 +73,7 @@
 											<li>
 												<div class="top-100-songs-detail">
 													<div class="song-cover-container">
-														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
+														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']). ' - '.$this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle'])); ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -98,10 +100,13 @@
         if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
-                    $nationalTopDownload[$i]['Song']['status'] = 'avail1';
-                    if(isset($nationalTopDownload[$i]['Song']['status']) && ($nationalTopDownload[$i]['Song']['status'] != 'avail')) {
-                            ?>
+		$downloadsUsed =  $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'],$nationalTopDownload[$i]['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                if($downloadsUsed > 0){
+                	$nationalTopDownload[$i]['Song']['status'] = 'avail';
+                } else{
+                	$nationalTopDownload[$i]['Song']['status'] = 'not';
+                }
+                if($nationalTopDownload[$i]['Song']['status'] != 'avail') {?>
         <span class="top-100-download-now-button">
                             <form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
                             <input type="hidden" name="ProdID" value="<?php echo $nationalTopDownload[$i]["Song"]["ProdID"];?>" />
@@ -199,10 +204,10 @@
 
 
 													<div class="song-title">
-                        <a title="<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?> " href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
+                        <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle'])); ?> " href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle); ?></a>
 													</div>
 													<div class="artist-name">                                                                                                            
-                        <a title="<?php echo $artistText; ?>" href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
+                        <a title="<?php echo $this->getValidText($artistText); ?>" href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $this->getTextEncode($artistText); ?></a>
 													</div>
 												</div>
 											</li>
@@ -237,7 +242,7 @@
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
+														<a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $this->getValidText($nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']); ?>" width="423" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -256,9 +261,14 @@
         if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
 
             if($libraryDownload == '1' && $patronDownload == '1') {
-
-                    $nationalTopVideoDownload[$i]['Video']['status'] = 'avail1';
+		$downloadsUsed =  $this->Videodownload->getVideodownloadfind($nationalTopVideoDownload[$i]['Video']['ProdID'],$nationalTopVideoDownload[$i]['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                    if($downloadsUsed > 0){
+                      $nationalTopVideoDownload[$i]['Video']['status'] = 'avail';
+                    } else{
+                      $nationalTopVideoDownload[$i]['Video']['status'] = 'not';
+                    }
                     if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
+
                             ?>
                             <span class="top-100-download-now-button">
                             <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
@@ -366,12 +376,12 @@
                                                                                                 ?>
 			<div class="song-title">
                                 <!--	<a title="<?php echo $songTitle; ?>" href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $this->getTextEncode($songTitle);?></a> -->
-                                        <a title="<?php echo $songTitle; ?>" href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
+                                        <a title="<?php echo $this->getValidText($songTitle); ?>" href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle);?></a>
 	<?php if('T' == $nationalTopVideoDownload[$i]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 			</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                                                                                                <a title="<?php echo $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>" href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="javascript:void(0);"><?php echo $this->getTextEncode($ArtistText); ?></a>
 													</div>
 												</div>
 											</li>
@@ -420,12 +430,12 @@
 
 												</div>
 												<div class="album-title">
-                                                        <a title="<?php echo $title; ?>" href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($title)); ?>" href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $this->getTextEncode($title); ?></a>
 												</div>
 
 
 												<div class="artist-name">
-                                                        <a title="<?php echo $ArtistText; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($ArtistText)); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
 												</div>
 											</div>
 										</li>
@@ -501,7 +511,7 @@
 												<div class="single-cover-container">
 																										
                                                                                                         <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle']); ?>" width="162" height="162" /></a>
+                                                                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist']).' - '.$this->getTextEncode($value['Song']['SongTitle'])); ?>" width="162" height="162" /></a>
                                                                                                          
                                                                                                 <?php if($this->Session->read("patron")){ ?> 													
                                                                                                 <a class="add-to-playlist-button" href="#">
@@ -522,7 +532,7 @@
                                                                                                 <?php } ?>
 												</div>
 												<div class="song-title">
-                                                        <a title="<?php echo $this->getTextEncode($value['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['SongTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     
                                                                                                             $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
@@ -545,7 +555,7 @@
                                                                                                         </a>	<?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 												</div>
 												<div class="artist-name">
-                                                        <a title="<?php echo $value['Song']['ArtistText']; ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['ArtistText'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     
                                                                                                         $commingSoonSongArtistTitle = $this->getTextEncode($value['Song']['Artist']);
@@ -588,7 +598,7 @@
 											<div class="video-detail">
 												<div class="video-cover-container">
 													<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                                                                        <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle']); ?>" width="275" height="162" />
+                                                                                                        <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist']).' - '.$this->getTextEncode($value['Video']['VideoTitle'])); ?>" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
                                                                                                         <a class="add-to-playlist-button" href="#">
@@ -608,7 +618,7 @@
 												</div>
 												<div class="video-title">
 
-                                                <a title="<?php echo $value['Video']['VideoTitle']; ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                <a title="<?php echo $this->getValidText($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                             <?php
                                                                                                                                                                                                                                 
                                                                                                             $commingSoonVideoTitle= $this->getTextEncode($value['Video']['VideoTitle']);
@@ -682,7 +692,7 @@
 										<li>
 											<div class="post">
 												<div class="post-header-image">
-													<a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" alt="<?php echo $value['News']['subject'] ?>" /></a>
+													<a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" alt="<?php echo $this->getValidText($value['News']['subject']); ?>" /></a>
 												</div>
 												<div class="post-title">
 													<a href="javascript:void(0);"><?php echo $value['News']['subject'] ?></a>
