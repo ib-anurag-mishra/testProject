@@ -271,12 +271,15 @@ class Streaming {
       
       $obj_resultset = mysql_query($sql, $this->sonyDBConnectionObj);
       
-      print_r($obj_resultset);
-      die;
+     
       $this->LogsString  .= PHP_EOL.date('Y-m-d h:i:s')." getRecordInSonyDB-Query: ".$sql.PHP_EOL;
                 
       if(mysql_num_rows($obj_resultset) > 0){
             while($sony_arr_row = mysql_fetch_assoc($obj_resultset)){
+                
+                 print_r($sony_arr_row);
+      die;
+                
                 $this->ShortLogsString .=   " SonyDb: Yes";
                 $this->insertStreamingRecs($sony_arr_row,$provider_type);           
             }  
