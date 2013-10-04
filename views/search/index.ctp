@@ -853,8 +853,10 @@ if ($type != 'all') {
                         }
                         if($this->Session->read("patron")) {
                             $style = '';
+                            $styleSong = '';
                         } else {
                             $style = 'style="left:10px"';
+                            $styleSong = "style='left:570px'";
                         }
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText) )); ?></div>
@@ -912,7 +914,7 @@ if ($type != 'all') {
                                 <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php //echo $psong->ReferenceID; ?>/<?php //echo base64_encode($psong->provider_type); ?>"><img src="<?php //echo $image; ?>" width="27" height="27" /></a> <?php /*alt="<?php echo $psong->SongTitle; ?>"*/ ?>
                             </div-->
                             <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 15, $this)); ?></a></div>
-                            <div class="song">
+                            <div class="song" <?php echo $styleSong; ?>>
                                 <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
                                 <span title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
         <?php
