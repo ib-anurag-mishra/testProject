@@ -1049,7 +1049,7 @@ if (isset($type)) {
                             $styleSong = '';
                         } else {
                             $style = 'style="left:10px"';
-                            $styleSong = "style='left:570px'";
+                            $styleSong = "style='left:440px'";
                         }
                         ?>
                         <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
