@@ -887,7 +887,7 @@ function wishlistVideoDownloadIE(prodId,id,provider)
 				$('.beforeClick').show();			
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-				document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button" style="width:120px;cursor:pointer;"><?php __('Downloaded'); ?></label></a>';
+				document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
 				document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
 				document.getElementById('vdownloading_'+prodId).style.display = 'none';
 				document.getElementById('download_video_'+prodId).style.display = 'block';
