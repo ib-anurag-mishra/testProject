@@ -276,7 +276,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                 } else { 
                                 ?>
                                         <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>","<?php echo $value["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-                                        <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+                                        <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></span>
                                 <?php	
                                 }
                         }
