@@ -247,7 +247,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                     <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $value['Video']['ProdID']; ?>","0","<?php echo $value['Video']['provider_type']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
                                 <![endif]-->
                             </span>
-                            <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                            <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp');?></label></span>
                             <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                             </form>
                             </span>
@@ -320,7 +320,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                                                                                                         } else { 
                                                                                                                         ?>
                                                                                                                                 <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist " href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                                                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></a></span>
                                                                                                                         <?php	
                                                                                                                         }
 
