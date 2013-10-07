@@ -53,7 +53,9 @@
 					 //hide song if library block the explicit content
                                             if(($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] =='T')) {
                                                 continue;
-                                            } 
+                                            }
+                                            
+                                            print_r($albumSong);
                                          ?>	
 				
 				<div class="tracklist">
