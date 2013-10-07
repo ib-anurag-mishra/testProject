@@ -868,7 +868,7 @@ Class ArtistsController extends AppController
 						'conditions' =>
 							array('and' =>
 								array(
-									array('Song.ReferenceID' => $album['Album']['ProdID']),
+									array('Song.ReferenceID1' => $album['Album']['ProdID']),
 									//array('Song.provider_type = Genre.provider_type'),
 									array('Song.provider_type = Country.provider_type'),
 									array('Country.DownloadStatus' => 1),
@@ -877,7 +877,8 @@ Class ArtistsController extends AppController
 									array("Song.FullLength_FIleID != ''"),
 									array("Song.provider_type" => $provider),
 									array('Country.Territory' => $country),$cond
-								)
+								),
+                                                            'or' => array('Country.DownloadStatus' => 1)
 							),
 						'fields' => array(
 								'Song.ProdID',
