@@ -29,7 +29,7 @@ if(count($featuredVideos) > 0){ ?>
 	<?php if($sr_no%2==0) {?><li> <?php }?>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
-                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" /></a>
+                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img alt="" src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" /></a>
                                 <?php
                                 if($this->Session->read('patron')) {
 
