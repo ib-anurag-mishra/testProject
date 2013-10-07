@@ -133,7 +133,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                     
                     <?php if($sr_no%2==0) {?><li> <?php }?>
                         <div class="video-cover-container">
-                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
+                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img src="<?php echo $topDownload['videoImage']; ?>" alt="" data-original="" width="163" height="97" /></a>
                             
                             
                            <?php
