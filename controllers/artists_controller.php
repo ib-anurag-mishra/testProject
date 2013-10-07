@@ -878,7 +878,7 @@ Class ArtistsController extends AppController
 									array("Song.provider_type" => $provider),
 									array('Country.Territory' => $country),$cond
 								),
-                                                            'or' => array('Country.DownloadStatus' => 1)
+                                                            'or' => array('Country.StreamingStatus' => 1)
 							),
 						'fields' => array(
 								'Song.ProdID',
