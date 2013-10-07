@@ -871,14 +871,13 @@ Class ArtistsController extends AppController
 									array('Song.ReferenceID' => $album['Album']['ProdID']),
 									//array('Song.provider_type = Genre.provider_type'),
 									array('Song.provider_type = Country.provider_type'),
-									array('Song.DownloadStatus' => 1),
+									array('Country.DownloadStatus' => 1),
 								//	array('Song.TrackBundleCount' => 0),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
 									array("Song.provider_type" => $provider),
 									array('Country.Territory' => $country),$cond
-								),
-                                                            'or' => array('Country.DownloadStatus' => 1)
+								)
 							),
 						'fields' => array(
 								'Song.ProdID',
@@ -1103,13 +1102,13 @@ Class ArtistsController extends AppController
 									array('Song.ReferenceID' => $album['Album']['ProdID']),
 									//array('Song.provider_type = Genre.provider_type'),
 									array('Song.provider_type = Country.provider_type'),									
-								//	array('Song.TrackBundleCount' => 0),
+									array('Country.DownloadStatus' => 1),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
 									array("Song.provider_type" => $provider),
 									array('Country.Territory' => $country),$cond
 								)
-                                                            ,"OR" => array('Country.DownloadStatus' => 1,'Country.StreamingStatus' => 1)
+                                                            ,"OR" => array('Country.StreamingStatus' => 1)
 							),
 						'fields' => array(
 								'Song.ProdID',
