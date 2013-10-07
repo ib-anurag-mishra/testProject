@@ -1221,8 +1221,7 @@ Class ArtistsController extends AppController
             $decodedId = trim(base64_decode($id));
                  $country = $this->Session->read('territory');
                  if(!empty($country)){
-                 //if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
-                     if(1){
+                 if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
                  $countryPrefix = $this->Session->read('multiple_countries');                 
                  $sql_us_10_v =<<<STR
                 SELECT 
