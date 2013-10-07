@@ -113,7 +113,7 @@
 						?>								
 								<li>
 									<div class="video-thumb-container">
-                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" data-original="" width="274" height="162" /></a>
+                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" data-original="" width="274" height="162" alt="" /></a>
 										<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
                                               if($this->Session->read('patron'))
@@ -233,7 +233,7 @@
 							
 							<li>
 								<div class="video-thumb-container">
-                                                                    <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" width="274" height="162" /></a>
+                                                                    <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" width="274" height="162" alt="" /></a>
 									<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
 
