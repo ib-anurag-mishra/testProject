@@ -150,8 +150,9 @@
 										} 
                                                                          ?>
                                                                         <?php if( $streamingFlag == 1  ){
+                                                                            
                                                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>
-                                                                                    <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
+                                                                                    <a class="add-to-playlist" href="javascript:void(0);">Add To Queue123</a>
                                                                         <?php } ?>
                                                                         <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
                                                                          <?php
