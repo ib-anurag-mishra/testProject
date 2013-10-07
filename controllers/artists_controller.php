@@ -868,7 +868,7 @@ Class ArtistsController extends AppController
 						'conditions' =>
 							array('and' =>
 								array(
-									array('Song.ReferenceID1' => $album['Album']['ProdID']),
+									array('Song.ReferenceID' => $album['Album']['ProdID']),
 									//array('Song.provider_type = Genre.provider_type'),
 									array('Song.provider_type = Country.provider_type'),
 									array('Country.DownloadStatus' => 1),
