@@ -105,7 +105,7 @@
                                                                         
                                                                                 <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0);"></a>
                                                                                 <div class="wishlist-popover">                                                                        
-										<?php if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
+										<?php if( ($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1) )
 										{
                                                                                         $productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'],$albumSong["Song"]['provider_type']);
                                                                                         if($libraryDownload == '1' && $patronDownload == '1')

@@ -1014,7 +1014,7 @@ Class ArtistsController extends AppController
                     $this->Song->Behaviors->attach('Containable');
                     $songs = $this->Song->find('all', array(
                             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                            'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+                            'conditions' => array('Song.ArtistText' => base64_decode($id) ,"OR" => array('Country.DownloadStatus' => 1,'Country.StreamingStatus' => 1),"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
                     $val = '';
 
@@ -1102,14 +1102,14 @@ Class ArtistsController extends AppController
 								array(
 									array('Song.ReferenceID' => $album['Album']['ProdID']),
 									//array('Song.provider_type = Genre.provider_type'),
-									array('Song.provider_type = Country.provider_type'),
-									array('Song.DownloadStatus' => 1),
+									array('Song.provider_type = Country.provider_type'),									
 								//	array('Song.TrackBundleCount' => 0),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
 									array("Song.provider_type" => $provider),
 									array('Country.Territory' => $country),$cond
 								)
+                                                            ,"OR" => array('Country.DownloadStatus' => 1,'Country.StreamingStatus' => 1)
 							),
 						'fields' => array(
 								'Song.ProdID',
@@ -1127,7 +1127,6 @@ Class ArtistsController extends AppController
                                                                 'Country.StreamingSalesDate',
                                                                 'Country.StreamingStatus',
                 						'Song.sequence_number'
-
 								),
 						'contain' => array(
 							'Genre' => array(
@@ -1143,14 +1142,14 @@ Class ArtistsController extends AppController
 									),
 							'Sample_Files' => array(
 									'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'
+                                                                                        'Sample_Files.CdnPath' ,
+                                                                                        'Sample_Files.SaveAsName'
 										)
 									),
 							'Full_Files' => array(
 									'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'
+                                                                                        'Full_Files.CdnPath' ,
+                                                                                        'Full_Files.SaveAsName'
 										)
 									),
 
@@ -1159,21 +1158,21 @@ Class ArtistsController extends AppController
 			}
 		}
 
-		// echo "<pre>";
-		// print_r($albumSongs);
-		// exit;
+            // echo "<pre>";
+            // print_r($albumSongs);
+            // exit;
 
-		$this->Download->recursive = -1;
-		foreach($albumSongs as $k => $albumSong){
-			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-					if(count($downloadsUsed) > 0){
-						$albumSongs[$k][$key]['Song']['status'] = 'avail';
-					} else{
-						$albumSongs[$k][$key]['Song']['status'] = 'not';
-					}
-			}
-		}
+            $this->Download->recursive = -1;
+            foreach($albumSongs as $k => $albumSong){
+                foreach($albumSong as $key => $value){
+                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+                    if(count($downloadsUsed) > 0){
+                            $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                    } else{
+                            $albumSongs[$k][$key]['Song']['status'] = 'not';
+                    }
+                }
+            }
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
