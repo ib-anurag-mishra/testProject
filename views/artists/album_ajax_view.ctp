@@ -59,14 +59,22 @@
 				<div class="tracklist">
                                     
                                 <?php
-                                          if($this->Session->read("patron")){ 
-                                              
-                                            if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
-                                                    echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", '.$albumSong["Song"]["ProdID"].', "'.base64_encode($albumSong["Song"]["provider_type"]).'", "'.$this->webroot.'");'));
-                                                    echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
-                                                    echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
-                                                }
-                                            }
+                                       
+                                //check the song streaming status
+                                $streamingFlag = 0;
+                                if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1){
+                                    $streamingFlag = 1;                                                                       
+                                }                                                           
+                                
+                                
+                                if($this->Session->read("patron") && ($streamingFlag == 0 )){ 
+
+                                    if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
+                                        echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", '.$albumSong["Song"]["ProdID"].', "'.base64_encode($albumSong["Song"]["provider_type"]).'", "'.$this->webroot.'");'));
+                                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
+                                        echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
+                                    }
+                                }
 				?>
 					
                                 
@@ -141,7 +149,7 @@
 									<?php
 										} 
                                                                          ?>
-                                                                        <?php if( $this->Session->read('library_type') == 2 ){
+                                                                        <?php if( $streamingFlag == 1  ){
                                                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>
                                                                                     <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
                                                                         <?php } ?>
