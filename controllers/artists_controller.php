@@ -692,7 +692,7 @@ Class ArtistsController extends AppController
 			$cond = "";
 		}
 		if($album != '') {
-			echo $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
+			$condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
 		}
 		else{
 			// $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
@@ -713,11 +713,11 @@ Class ArtistsController extends AppController
                                     'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
                         }else{
                             $songs = $this->Song->find('all', array(
-                                    'fields' => array('DISTINCT Song.ReferenceID1', 'Song.provider_type'),
-                                    'conditions' => array('Song.ArtistText' => base64_decode($id) ,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country,					
+                                    'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
+                                    'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country,'Country.DownloadStatus' => 1,					
                                         array('or' =>
 						array(
-						  array('Country.StreamingStatus' => 1),array('Country.DownloadStatus' => 1)
+						  array('Country.StreamingStatus' => 1)
                                                     
 					)), $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
                                                    
@@ -1158,21 +1158,21 @@ Class ArtistsController extends AppController
 			}
 		}
 
-            // echo "<pre>";
-            // print_r($albumSongs);
-            // exit;
+		// echo "<pre>";
+		// print_r($albumSongs);
+		// exit;
 
-            $this->Download->recursive = -1;
-            foreach($albumSongs as $k => $albumSong){
-                foreach($albumSong as $key => $value){
-                    $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-                    if(count($downloadsUsed) > 0){
-                            $albumSongs[$k][$key]['Song']['status'] = 'avail';
-                    } else{
-                            $albumSongs[$k][$key]['Song']['status'] = 'not';
-                    }
-                }
-            }
+		$this->Download->recursive = -1;
+		foreach($albumSongs as $k => $albumSong){
+			foreach($albumSong as $key => $value){
+					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+					if(count($downloadsUsed) > 0){
+						$albumSongs[$k][$key]['Song']['status'] = 'avail';
+					} else{
+						$albumSongs[$k][$key]['Song']['status'] = 'not';
+					}
+			}
+		}
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);

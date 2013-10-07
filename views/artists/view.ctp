@@ -104,7 +104,9 @@
 				<div class="tracklist">
                                     
                                    <!-- <a href="#" class="preview"></a> -->
-                                   <?php
+                                <?php
+                                
+                                                              
                                           if($this->Session->read("patron")){ 
                                               
                                             if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
