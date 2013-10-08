@@ -244,7 +244,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                 	<a title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.');?>" href="#" onclick='return wishlistVideoDownloadOthers("<?php echo $value['Video']['ProdID']; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
                                 <![endif]>
                                 <!--[if IE]>
-					<a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>');" href="<?php echo trim($finalVideoUrl);?>"><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
+					<a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE(<?php echo $value['Video']['ProdID']; ?>,0,<?php echo $value['Video']['provider_type']; ?>);" href="<?php echo trim($finalVideoUrl);?>"><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
 				<![endif]-->
                             </span>
                             <span class="afterClick" id="vdownloading_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp');?></label></span>
@@ -275,7 +275,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                 <?php 
                                 } else { 
                                 ?>
-                                        <span class="beforeClick" id="wishlist<?php echo $value['Video']['ProdID']; ?>"><a class="top-100-download-now-button" href="JavaScript:void(0);" onclick="addToWishlist('<?php echo $value['Video']['ProdID']; ?>','<?php echo $value['Video']['provider_type']; ?>');"><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                                        <span class="beforeClick" id="wishlist<?php echo $value['Video']['ProdID']; ?>"><a class="top-100-download-now-button" href="JavaScript:void(0);" onclick="addToWishlist(<?php echo $value['Video']['ProdID']; ?>,<?php echo $value['Video']['provider_type']; ?>);"><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
                                         <span class="afterClick" id="downloading_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></span>
                                 <?php	
                                 }
@@ -306,27 +306,27 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 								
 								<?php if($this->Session->read("patron")){ ?> 
 														
-														<a class="add-to-playlist-button " href="#"></a>
-														
-														<div class="wishlist-popover">
-															<?php
+										<a class="add-to-playlist-button " href="#"></a>
+									
+										<div class="wishlist-popover">
+											<?php
 
-                                                                                                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+		                                                                        $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
 
-                                                                                                                        if($wishlistInfo == 'Added to Wishlist') {
-                                                                                                                        ?> 
-                                                                                                                                <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                                                                                        <?php 
-                                                                                                                        } else { 
-                                                                                                                        ?>
-                                                                                                                                <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist " href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></a></span>
-                                                                                                                        <?php	
-                                                                                                                        }
+		                                                                        if($wishlistInfo == 'Added to Wishlist') {
+		                                                                        ?> 
+		                                                                                <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+		                                                                        <?php 
+		                                                                        } else { 
+		                                                                        ?>
+		                                                                                <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="add-to-wishlist " href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>","<?php echo $value["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+		                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></a></span>
+		                                                                        <?php	
+		                                                                        }
 
-                                                                                                                        ?>														
-														</div>
-                                                                                                  <?php } ?>
+		                                                                        ?>														
+										</div>
+		                                                  <?php } ?>
 								
 							
 							
