@@ -912,7 +912,7 @@ SELECT
     Song.DownloadStatus,
     Song.SongTitle,
     Song.Artist,
-    Song.Advisory,
+    Albums.Advisory,
     Song.Sample_Duration,
     Song.FullLength_Duration,
     Song.provider_type,

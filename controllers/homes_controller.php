@@ -4257,8 +4257,8 @@ STR;
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
          // Cache::delete("new_releases_albums".$territory);     
-        if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
-        //if(1)
+        //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+        if(1)
         {            
            $this->Song->recursive = 2;
            $countryPrefix = $this->Session->read('multiple_countries');     
@@ -4272,7 +4272,7 @@ STR;
                   Song.DownloadStatus,
                   Song.SongTitle,
                   Song.Artist,
-                  Song.Advisory,
+                  Albums.Advisory,
                   Song.Sample_Duration,
                   Song.FullLength_Duration,
                   Song.provider_type,
