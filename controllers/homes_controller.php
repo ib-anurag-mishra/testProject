@@ -692,8 +692,8 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-                    if (($libDownload = Cache::read("lib".$libId)) === false)
-                    //if(1)
+                    //if (($libDownload = Cache::read("lib".$libId)) === false)
+                    if(1)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -994,7 +994,8 @@ STR;
             // National Top Downloads functionality
             if(!empty($territory)){  
                 
-            if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+            //if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+                if(1){
                              
                     $country = $territory;
                     if($maintainLatestDownload){
