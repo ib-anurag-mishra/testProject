@@ -692,8 +692,8 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-                    //if (($libDownload = Cache::read("lib".$libId)) === false)
-                    if(1)
+                    if (($libDownload = Cache::read("lib".$libId)) === false)
+                    //if(1)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -770,7 +770,7 @@ STR;
 					Song.DownloadStatus,
 					Song.SongTitle,
 					Song.Artist,
-					Albums.Advisory,
+					Song.Advisory,
 					Song.Sample_Duration,
 					Song.FullLength_Duration,
 					Song.provider_type,
@@ -907,7 +907,7 @@ STR;
 					Song.DownloadStatus,
 					Song.SongTitle,
 					Song.Artist,
-					Song.Advisory,
+					Albums.Advisory,
 					Song.Sample_Duration,
 					Song.FullLength_Duration,
 					Song.provider_type,
@@ -994,8 +994,7 @@ STR;
             // National Top Downloads functionality
             if(!empty($territory)){  
                 
-            //if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-                if(1){
+            if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
                              
                     $country = $territory;
                     if($maintainLatestDownload){
@@ -1044,7 +1043,7 @@ STR;
                         Song.DownloadStatus,
                         Song.SongTitle,
                         Song.Artist,
-                        Albums.Advisory,
+                        Song.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
                         Song.provider_type,
@@ -1148,7 +1147,7 @@ STR;
                         Song.DownloadStatus,
                         Song.SongTitle,
                         Song.Artist,
-                        Song.Advisory,
+                        Albums.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
                         Song.provider_type,
