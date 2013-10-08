@@ -221,17 +221,39 @@ class ServicesController extends AppController {
                 // die;
                 
 				foreach($docs as $k=>$v){
-					$result[$k]['Song']['ProdID'] = $v->ProdID;
-					$result[$k]['Song']['ProductID'] = $v->ProductID;
-					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
-					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
-					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
-					$result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
-					$result[$k]['Song']['provider_type'] = $v->provider_type;
-					$result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
-					$result[$k]['Song']['Advisory'] = $v->Advisory;
-					$result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
-					$result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
+                    if(!empty($v->ProdID)){
+                        $result[$k]['Song']['ProdID'] = $v->ProdID;
+                    }
+                    if(!empty($v->ProductID)){
+                        $result[$k]['Song']['ProductID'] = $v->ProductID;
+                    }
+                    if(!empty($v->ReferenceID)){
+                        $result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
+                    }
+                    if(!empty($v->Title)){
+                        $result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+                    }
+                    if(!empty($v->SongTitle)){
+                        $result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
+                    }
+                    if(!empty($v->ArtistText)){
+                        $result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
+                    }
+                    if(!empty($v->provider_type)){
+                        $result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
+                    }
+                    if(!empty($v->Artist)){
+                        $result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
+                    }
+                    if(!empty($v->Advisory)){
+                        $result[$k]['Song']['Advisory'] = $v->Advisory;
+                    }
+                    if(!empty($v->Composer)){
+                        $result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
+                    }
+                    if(!empty($v->Genre)){
+                        $result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
+                    }
 					
                     if(isset($this->params['pass'][3])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);
@@ -275,9 +297,16 @@ class ServicesController extends AppController {
 						$reference = $v->ReferenceID;
                         // echo $this->Album->lastQuery();
                         // print_r($albumData); die;
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+                        if(!empty($albumData)){
+                            $albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+                        } else {
+                            $albumArtWork = null;
+                        }
 					}
-					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
+                    
+                    if(!empty($albumArtWork)){
+                        $result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
+                    }
 				}
 				
                 if(count($result) > 0){
@@ -455,17 +484,39 @@ class ServicesController extends AppController {
                 
                 $reference = '';
 				foreach($docs as $k=>$v){
-                    $result[$k]['Song']['ProdID'] = $v->ProdID;
-					$result[$k]['Song']['ProductID'] = $v->ProductID;
-					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
-					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
-					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
-					$result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
-					$result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
-					$result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
-					$result[$k]['Song']['Advisory'] = $v->Advisory;
-					$result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
-					$result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
+                    if(!empty($v->ProdID)){
+                        $result[$k]['Song']['ProdID'] = $v->ProdID;
+                    }
+                    if(!empty($v->ProductID)){
+                        $result[$k]['Song']['ProductID'] = $v->ProductID;
+                    }
+                    if(!empty($v->ReferenceID)){
+                        $result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
+                    }
+                    if(!empty($v->Title)){
+                        $result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+                    }
+                    if(!empty($v->SongTitle)){
+                        $result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
+                    }
+                    if(!empty($v->ArtistText)){
+                        $result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
+                    }
+                    if(!empty($v->provider_type)){
+                        $result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
+                    }
+                    if(!empty($v->Artist)){
+                        $result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
+                    }
+                    if(!empty($v->Advisory)){
+                        $result[$k]['Song']['Advisory'] = $v->Advisory;
+                    }
+                    if(!empty($v->Composer)){
+                        $result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
+                    }
+                    if(!empty($v->Genre)){
+                        $result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
+                    }
 					
                     if(isset($this->params['pass'][4])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);
@@ -490,12 +541,21 @@ class ServicesController extends AppController {
 								)
 						)));
 						$reference = $v->ReferenceID;
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
-					//	print_r($result);exit;
+                        if(!empty($albumData)){
+                            $albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+                            //	print_r($result);exit;
+                        } else {
+                            $albumArtWork = null;
+                        }
+                        
 					}
-					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
+                    
+                    if(!empty($albumArtWork)){
+                        $result[$k]['Song']['Album_Artwork'] = $albumArtWork;
+                    }
 				}
-				if(count($result) > 0){
+				
+                if(count($result) > 0){
 					$result = $result;
 				}
 				else{
@@ -599,23 +659,47 @@ class ServicesController extends AppController {
                 }
                 
 				foreach($docs as $k=>$v){
-					$result[$k]['Song']['ProdID'] = $v->ProdID;
-					$result[$k]['Song']['ProductID'] = $v->ProductID;
-					$result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
-					$result[$k]['Song']['Title'] = $this->textEncode($v->Title);
-					$result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
-					$result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
-					$result[$k]['Song']['provider_type'] = $v->provider_type;
-					$result[$k]['Song']['Artist'] = $v->Artist;
-					$result[$k]['Song']['Advisory'] = $v->Advisory;
-					$result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
-					$result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
+                    if(!empty($v->ProdID)){
+                        $result[$k]['Song']['ProdID'] = $v->ProdID;
+                    }
+                    if(!empty($v->ProductID)){
+                        $result[$k]['Song']['ProductID'] = $v->ProductID;
+                    }
+                    if(!empty($v->ReferenceID)){
+                        $result[$k]['Song']['ReferenceID'] = $v->ReferenceID;
+                    }
+                    if(!empty($v->Title)){
+                        $result[$k]['Song']['Title'] = $this->textEncode($v->Title);
+                    }
+                    if(!empty($v->SongTitle)){
+                        $result[$k]['Song']['SongTitle'] = $this->textEncode($v->SongTitle);
+                    }
+                    if(!empty($v->ArtistText)){
+                        $result[$k]['Song']['ArtistText'] = $this->textEncode($v->ArtistText);
+                    }
+                    if(!empty($v->provider_type)){
+                        $result[$k]['Song']['provider_type'] = $this->textEncode($v->provider_type);
+                    }
+                    if(!empty($v->Artist)){
+                        $result[$k]['Song']['Artist'] = $this->textEncode($v->Artist);
+                    }
+                    if(!empty($v->Advisory)){
+                        $result[$k]['Song']['Advisory'] = $v->Advisory;
+                    }
+                    if(!empty($v->Composer)){
+                        $result[$k]['Song']['Composer'] = $this->textEncode(str_replace('"','',$v->Composer));
+                    }
+                    if(!empty($v->Genre)){
+                        $result[$k]['Song']['Genre'] = $this->textEncode(str_replace('"','',$v->Genre));
+                    }
+                    
 					if(isset($this->params['pass'][3])){
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);
 					}
 					else{
 						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v->ReferenceID."/".base64_encode($v->ArtistText)."/".base64_encode($v->provider_type);					
 					}
+                    
 					if($reference != $v->ReferenceID){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v->ReferenceID),
@@ -632,10 +716,17 @@ class ServicesController extends AppController {
 								)
 						)));
 						$reference = $v->ReferenceID;
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
-					//	print_r($result);exit;
+                        
+                        if(!empty($albumData)){
+                            $albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+                        } else {
+                            //	print_r($result);exit;
+                            $albumArtWork = null;
+                        }
 					}
-					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
+                    if(!empty($albumArtWork)){
+                        $result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
+                    }
 				}
 				if(count($result) > 0){
 					$result = $result;
