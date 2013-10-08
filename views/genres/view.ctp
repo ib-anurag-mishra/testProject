@@ -6,55 +6,8 @@
  */
 ?>    
 
-<style>
 
-.genre_list_item{
-	cursor: pointer;
-	display:block;
-}
-.genre_list_item_all{
-  cursor: pointer;
-	display:block;
-}
-#mydiv {
-    height: 250px;
-    width: 250px;
-    position: relative;
-    background-color: gray; /* for demonstration */
-}
-.ajax-loader {
-    display: block;
-    left: 50%;
-    margin-left: 147px;
-    margin-top: 85px;
-    position: absolute;
-    top: 50%;
-}   
-
-.ajax-loader1 {
-    display: block;
-    left: 50%;
-    margin-left: 115px;
-    margin-top: 85px;
-    position: absolute;
-    top: 50%;
-}
-
-
-
-.ajax-loader2 {
-    display: block;
-    left: 50%;
-    margin-left: 398px;
-    margin-top: 3px;
-    position: absolute;
-    top: 50%;
-}
-
-
-    
-</style>
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
     
  $(document).on('click','.artist-list a',function(){    
     var artist = $(this).data('artist');
@@ -327,7 +280,7 @@ $totalRows = count($genresAll);
                             }
                             else{
                                     ?>
-                                <li> <a  class="genre_list_item_all " href="javascript:void(0);" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all " href="javascript:void(0);" data-genre="<?php echo addslashes($this->getValidText($this->getTextEncode($genre_name)));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
                         }
