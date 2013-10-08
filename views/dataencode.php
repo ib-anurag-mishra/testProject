@@ -2,10 +2,14 @@
 class dataencodeView extends View {
     
     
-    function getTextEncode($text) {                                                             // Function used only in Front End
-
+    function getTextEncode($text) {                                                             // Function used only in Front End where Album, Song, Video titles etc are displayed.
+     $search  = array("&", "'", "\"");
+     $replace = array("&amp;","&apos;" , "&quot;");
+    
+    $text   =    str_replace($search, $replace, $text);
     $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
-    return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+    $text = @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+    return $text;
   }
     
     
@@ -108,7 +112,7 @@ class dataencodeView extends View {
   }
   
   
-  function getValidText($text)                    // Replace Single and Double Quotes in Text
+  function getValidText($text)                    // Replace Single and Double Quotes in Text used mainly in alt, Title attributes
   {
          return htmlentities($this->getAdminTextEncode($text));
   }
