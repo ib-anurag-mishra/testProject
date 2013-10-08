@@ -829,6 +829,7 @@ STR;
                     
                // Cache::delete("lib_album".$libId);
                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    //if(1)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -907,7 +908,7 @@ STR;
 					Song.DownloadStatus,
 					Song.SongTitle,
 					Song.Artist,
-					Song.Advisory,
+					Albums.Advisory,
 					Song.Sample_Duration,
 					Song.FullLength_Duration,
 					Song.provider_type,
@@ -1147,7 +1148,7 @@ STR;
                         Song.DownloadStatus,
                         Song.SongTitle,
                         Song.Artist,
-                        Song.Advisory,
+                        Albums.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
                         Song.provider_type,
@@ -4271,7 +4272,7 @@ STR;
                   Song.DownloadStatus,
                   Song.SongTitle,
                   Song.Artist,
-                  Song.Advisory,
+                  Albums.Advisory,
                   Song.Sample_Duration,
                   Song.FullLength_Duration,
                   Song.provider_type,
