@@ -187,12 +187,11 @@
                                                                                         <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>                
                                                                                         <?php
 											}
-										}else{
+										}
 									?>
-											<a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
-												date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span></a>
+											
 									<?php
-										} 
+										
                                                                          ?>
                                                                         <?php if( $streamingFlag == 1  ){
                                                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>

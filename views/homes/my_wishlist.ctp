@@ -496,7 +496,7 @@ $ieVersion =  ieversion();
                                     ?>
 							<p>
 								<span class="beforeClick" id="wishlist_song_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>">
-                                                                    <?php if($wishlistResults[$i]['Country']['SalesDate'] <= date('Y-m-d')) {?>
+                                                                    <?php if($wishlistResults[$i]['Country']['SalesDate'] <= date('Y-m-d') && ($wishlistResults[$i]['Country']['DownloadStatus'] == 1)) {?>
                                                                                 <![if !IE]>
                                                                                         <a href='#' title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthers("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>");'><?php __('Download');?></a>
                                                                                 <![endif]>

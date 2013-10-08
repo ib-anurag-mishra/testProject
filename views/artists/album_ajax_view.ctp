@@ -61,11 +61,14 @@
                                 <?php
                                        
                                 //check the song streaming status
-                                $streamingFlag = 0;
+                                $streamingFlag = 0;                                
                                 if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1){
                                     $streamingFlag = 1;                                                                       
-                                }                                                           
-                                
+                                }
+                                $downloadFlag = 0;
+                                if( $this->Session->read('library_type') == 2 && $albumSong['Country']['SalesDate'] <= date('Y-m-d') && $albumSong['Country']['DownloadStatus'] == 1){
+                                    $downloadFlag = 1;                                                                       
+                                }
                                 
                                 if($this->Session->read("patron")){ 
 
@@ -101,7 +104,8 @@
 									?></a></div>
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
                                                 <?php
-                                                                    if($this->Session->read('patron')) {?>
+                                                                    
+                                                                if( $this->Session->read('patron') ) {?>
                                                                         
                                                                                 <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0);"></a>
                                                                                 <div class="wishlist-popover">                                                                        
@@ -142,12 +146,11 @@
                                                                                         <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>                
                                                                                         <?php
 											}
-										}else{
+										}
 									?>
-											<a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
-												date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span></a>
+											
 									<?php
-										} 
+										 
                                                                          ?>
                                                                         <?php if( $streamingFlag == 1  ){
                                                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>

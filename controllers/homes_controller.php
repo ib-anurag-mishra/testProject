@@ -2282,6 +2282,7 @@ STR;
                             Country.SalesDate,
                             Country.StreamingSalesDate,
                             Country.StreamingStatus,
+                            Country.DownloadStatus,
                             File.SaveAsName 
                             
                             
