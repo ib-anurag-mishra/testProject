@@ -19,7 +19,7 @@
 					<?php
                                         
 					 $count  =   1;           
-				if(count($topDownload_albums) > 0) { echo '<pre>'; print_r($topDownload_albums);
+				if(count($topDownload_albums) > 0) {
                                         foreach($topDownload_albums as $key => $value){
                                             
                                            //hide song if library block the explicit content

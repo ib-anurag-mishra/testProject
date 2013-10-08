@@ -20,7 +20,7 @@
                                 $libId = $this->Session->read('library');
                                 $patId = $this->Session->read('patron');
                                 $count  =   1;           
-				if(count($ustop10Albums) > 0) {
+				if(count($ustop10Albums) > 0) { echo "<pre>"; print_r($ustop10Albums);
                                         foreach($ustop10Albums as $key => $value){
                                             
                                              //hide song if library block the explicit content
