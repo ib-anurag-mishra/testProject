@@ -99,7 +99,7 @@
                                             </div> -->
                                             <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
                                             <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/streaming.js"></script>
-                                            <div class="wrapper">
+                                            <div class="player-wrapper">
                                               <div class="fmp_container">
                                                 <object width="960" height="100" type="application/x-shockwave-flash" id="fmp_player" data="/app/webroot/swf/fmp.swf"></object>
                                               </div>
