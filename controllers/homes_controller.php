@@ -828,8 +828,8 @@ STR;
 		
                     
                // Cache::delete("lib_album".$libId);
-                    //if (($libDownload = Cache::read("lib_album".$libId)) === false)
-                    if(1)
+                    if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    //if(1)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1098,8 +1098,8 @@ STR;
             
             if(!empty($country)){
                 //Cache::delete("national_us_top10_albums".$territory);
-             // if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
-              if(1){
+              if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+              //if(1){
                     $country = $territory;
 
                     if($maintainLatestDownload){
