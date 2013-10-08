@@ -846,8 +846,8 @@ STR;
                 
                 $ids_provider_type_album = '';
 		
-                    //if(1)
-                    if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    if(1)
+                   //if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1114,8 +1114,8 @@ STR;
             $country = $this->Session->read('territory');
             
             if(!empty($country)){  
-              if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
-              //if(1){
+             // if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+              if(1){
                     $country = $territory;
 
                     if($maintainLatestDownload){
@@ -4335,8 +4335,8 @@ STR;
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
                
-        if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
-        //if(1)
+        //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+        if(1)
         {            
            $this->Song->recursive = 2;
            $countryPrefix = $this->Session->read('multiple_countries');     
