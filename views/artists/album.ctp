@@ -241,11 +241,11 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                             <input type="hidden" name="ProviderType" value="<?php echo $value['Video']['provider_type']; ?>" />
                             <span class="beforeClick" id="download_video_<?php echo $value['Video']['ProdID']; ?>">
                                 <![if !IE]>
-                                    <a title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.');?>" href="#" onclick='return wishlistVideoDownloadOthers("<?php echo $value['Video']['ProdID']; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
+                                	<a title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.');?>" href="#" onclick='return wishlistVideoDownloadOthers("<?php echo $value['Video']['ProdID']; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
                                 <![endif]>
                                 <!--[if IE]>
-									<a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $value['Video']['ProdID']; ?>","0","<?php echo $value['Video']['provider_type']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
-								<![endif]-->
+					<a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE("<?php echo $value['Video']['ProdID']; ?>","0","<?php echo $value['Video']['provider_type']; ?>");" href="<?php echo trim($finalVideoUrl);?>"><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
+				<![endif]-->
                             </span>
                             <span class="afterClick" id="vdownloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp');?></label></span>
                             <span id="vdownload_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -275,7 +275,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                 <?php 
                                 } else { 
                                 ?>
-                                        <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>","<?php echo $value["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                                        <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick="addToWishlist("<?php echo $value['Video']['ProdID']; ?>","<?php echo $value['Video']['provider_type']; ?>");"><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
                                         <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></span>
                                 <?php	
                                 }
