@@ -448,6 +448,8 @@ div.paging span a, div.paging a {
 
 .fmp_container {
     background: url("../img/player-bkg.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 100px;
+    text-align: center;    
 }
 
 .player-wrapper{
