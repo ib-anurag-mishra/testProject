@@ -320,7 +320,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 		                                                                        } else { 
 		                                                                        ?>
 		                                                                                <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="add-to-wishlist " href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>","<?php echo $value["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-		                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></a></span>
+		                                                                                <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button"><?php __("Please Wait...");?></label></a></span>
 		                                                                        <?php	
 		                                                                        }
 
