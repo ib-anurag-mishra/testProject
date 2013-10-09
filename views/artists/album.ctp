@@ -236,9 +236,6 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                     if($value['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
-                            <form method="Post" id="form<?php echo $value['Video']['ProdID']; ?>" action="/videos/download" class="suggest_text1">
-                            <input type="hidden" name="ProdID" value="<?php echo $value['Video']['ProdID'];?>" />
-                            <input type="hidden" name="ProviderType" value="<?php echo $value['Video']['provider_type']; ?>" />
                             <span class="beforeClick" id="download_video_<?php echo $value['Video']['ProdID']; ?>">
                                 <![if !IE]>
                                 	<a title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.');?>" href="#" onclick='return wishlistVideoDownloadOthers("<?php echo $value['Video']['ProdID']; ?>","0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>", "<?php echo $value['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now');?></label></a>
@@ -249,7 +246,6 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                             </span>
                             <span class="afterClick" id="vdownloading_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp');?></label></span>
                             <span id="vdownload_loader_<?php echo $value['Video']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
-                            </form>
                             </span>
                             <?php	
                     } else {
