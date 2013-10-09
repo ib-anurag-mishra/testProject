@@ -99,8 +99,11 @@ class QueueListDetailsController extends AppController{
             foreach($queue_list_array as $k => $v)
              {
                  $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
-                 $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
-                 $queue_list_array[$k]['streamUrl'] = $streamUrl;            
+                 if(!empty($filePath)){
+                    $songPath = explode(':',$filePath);
+                    $streamUrl =  trim($songPath[1]);
+                    $queue_list_array[$k]['streamUrl'] = $streamUrl;
+                 }                 
              }        
             $this->set('queue_list_array',$queue_list_array); 
             $this->set('queue_id',$this->params['pass'][0]);
@@ -109,8 +112,11 @@ class QueueListDetailsController extends AppController{
             foreach($trackDetails as $k => $v)
              {
                  $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
-                 $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
-                 $trackDetails[$k]['streamUrl'] = $streamUrl;            
+                 if(!empty($filePath)){
+                    $songPath = explode(':',$filePath);
+                    $streamUrl =  trim($songPath[1]);
+                    $trackDetails[$k]['streamUrl'] = $streamUrl;
+                 }
              } 
             $this->set('trackDetails',$trackDetails);            
         }
