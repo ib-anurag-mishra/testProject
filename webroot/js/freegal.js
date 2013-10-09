@@ -1524,8 +1524,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                             {
                             "label":songTitle,
                             "songTitle":songTitle,
-                            "artistName":songDetails,
-                            "songLength":247,
+                            "artistName":artistName,
                             "data":songFile
                             }
                     ];                    
