@@ -1515,7 +1515,8 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                     var result = json.error;
                     alert(result[1]);
 					if(result[3] != 6){
-						$('.player-wrapper').remove();
+                                            var flash = document.getElementById("fmp_player");
+                                            flash.clearQueueFromJS();
 					}
                 }else if(json.success){
                     $('#songDetails').val(prodId+'-'+providerType);
@@ -1558,7 +1559,8 @@ $(document).ready(function (){
                 if(json.error){
                     alert(json.error[1]);
 					if(json.error[3] != 6){
-						$('.player-wrapper').remove();
+                                            var flash = document.getElementById("fmp_player");
+                                            flash.clearQueueFromJS();
 					}
                 }else if(json.success){
                     playlist = $('#playlist_data').text();
