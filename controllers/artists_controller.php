@@ -100,7 +100,8 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-                $memcache = new Memcache;
+/*                
+		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
                 memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
@@ -110,6 +111,16 @@ Class ArtistsController extends AppController
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_e");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_g_b");
 		memcache_close($memcache);
+*/
+		Configure::write('Cache.disable',false);
+		Cache::delete(Configure::read('App.memcache_key')."_featuredUS");
+		Cache::delete(Configure::read('App.memcache_key')."_featuredCA");
+		Cache::delete(Configure::read('App.memcache_key')."_featuredIT");
+		Cache::delete(Configure::read('App.memcache_key')."_featuredNZ");
+		Cache::delete(Configure::read('App.memcache_key')."_featuredAU");
+		Cache::delete(Configure::read('App.memcache_key')."_featuredIE");
+		Cache::delete(Configure::read('App.memcache_key')."_featuredGB");
+		Configure::write('Cache.disable',true);
 	}
 
 	/*
@@ -171,16 +182,16 @@ Class ArtistsController extends AppController
                             memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_g_b");
                             memcache_close($memcache);
 */
-                            Configure::write('Cache.disable',false);
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_u_s");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_c_a");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_i_t");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_n_z");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_a_u");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_i_e");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_g_b");
-                            Configure::write('Cache.disable',true);
-                            $this -> redirect( 'managefeaturedartist' );
+				Configure::write('Cache.disable',false);
+		                Cache::delete(Configure::read('App.memcache_key')."_featuredUS");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredCA");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredIT");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredNZ");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredAU");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredIE");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredGB");
+				Configure::write('Cache.disable',true);
+				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
 		else {
@@ -256,16 +267,16 @@ Class ArtistsController extends AppController
                             memcache_close($memcache);
  * 
  */
-                            Configure::write('Cache.disable',false);    
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_u_s");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_c_a");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_i_t");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_n_z");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_a_u");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_i_e");
-                            Cache::delete(Configure::read('App.memcache_key')."_featured_g_b");
-                            Configure::write('Cache.disable',true);                                
-			    $this -> redirect( 'managefeaturedartist' );
+				Configure::write('Cache.disable',false);
+		                Cache::delete(Configure::read('App.memcache_key')."_featuredUS");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredCA");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredIT");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredNZ");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredAU");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredIE");
+				Cache::delete(Configure::read('App.memcache_key')."_featuredGB");
+				Configure::write('Cache.disable',true);
+				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
 		else {
