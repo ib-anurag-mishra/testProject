@@ -1559,9 +1559,8 @@ $(document).ready(function (){
                     playlist = $('#playlist_data').text();
                     playlist = JSON.parse(playlist);
                     if(playlist.length){
-                        jwplayer("myElement").load(playlist);
+                        pushSongs(playlist);
                     }
-                    jwplayer("myElement").play(true);
                 }
         })
         .fail(function(){

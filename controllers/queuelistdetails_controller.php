@@ -157,8 +157,11 @@ class QueueListDetailsController extends AppController{
             $seconds        =   $temp_arr[1];
             $total_seconds +=   $minutes*60+$seconds;
             $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
-            $streamUrl =  Configure::read('App.Streaming_Server_Path').trim($filePath);
-            $queue_list_array[$k]['streamUrl'] = $streamUrl;            
+            if(!empty($filePath)){
+                $songPath = $explode(':',$filePath);
+                $streamUrl =  trim($songPath[1]);
+                $queue_list_array[$k]['streamUrl'] = $streamUrl;
+            }
         }
 
         $total_duration     =    $total_seconds/60;
