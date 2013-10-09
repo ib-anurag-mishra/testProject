@@ -89,19 +89,13 @@
 				</div>
 			</footer>
                 <div class="filler" style="height:100px"></div>
-	<?php //if($this->Session->read("patron")){ ?>
-                                        <?php //if($this->Session->read('library_type') == '2') { ?>
-                                            <!-- <div class="player">
-                                                    <div class="player-container">
-                                                            <div id="myElement">Loading the player...</div>
-                                                    </div>
-                                                <input type="hidden" name="songDetails" id="songDetails" value="" />
-                                            </div> -->
+	<?php if($this->Session->read("patron")){ ?>
+                                        <?php if($this->Session->read('library_type') == '2') { ?>
                                             <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
                                             <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/streaming.js"></script>
                                             <div class="player-wrapper">
                                               <div class="fmp_container">
-                                                <object width="960" height="100" type="application/x-shockwave-flash" id="fmp_player" data="/app/webroot/swf/fmp.swf"></object>
+                                                <div id="alt"></div>
                                               </div>
 
                                               <input type="button" id="playlist1" value="Push Playlist 1" style="display:block" onclick="pushSongs(popMostPopular);" />
@@ -109,8 +103,8 @@
                                               <input type="button" id="pushNewSong" value="Push New Song" style="display:block"  />
                                               <input type="button" id="clearQueue" value="Clear Queue" style="display:block" onclick="clearQueue();" />
                                             </div>
-                                        <?php //} ?>
-                                    <?php //} ?>
+                                        <?php } ?>
+                                    <?php } ?>
 	
     <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
     <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
