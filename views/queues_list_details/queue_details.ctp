@@ -62,7 +62,7 @@
 						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
 
-                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Songs']['SongTitle'].'",'.$value['Songs']['ProdID'].',"'.$value['Songs']['provider_type'].'");')); 
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Songs']['SongTitle'].'","'.$value['Songs']['ArtistText'].'","'.$value['Songs']['ProdID'].',"'.$value['Songs']['provider_type'].'");')); 
                                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); 
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
 
@@ -133,7 +133,7 @@
 					</div>
 					<?php
                                             if(!empty($value['streamUrl']) || !empty($value['Songs']['SongTitle'])){
-                                                $playItem = array('label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => base64_encode($value['Songs']['ArtistText']),'data' => $value['streamUrl']);
+                                                $playItem = array('label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => $value['Songs']['ArtistText'],'data' => $value['streamUrl']);
                                                 $jsonPlayItem = json_encode($playItem);
                                                 $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
                                                 $playListData[] =$jsonPlayItem;

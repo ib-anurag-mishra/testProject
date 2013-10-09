@@ -1501,7 +1501,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 	return false; 
 }
 
-    function loadSong(songFile,songTitle,prodId,providerType) { 
+    function loadSong(songFile,songTitle,artistName,prodId,providerType) { 
         
         var postURL = webroot+'queuelistdetails/getPlaylistData';
         $.ajax({
@@ -1515,15 +1515,20 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                     var result = json.error;
                     alert(result[1]);
 					if(result[3] != 6){
-						jwplayer().remove();
+						$('.player-wrapper').remove();
 					}
                 }else if(json.success){
                     $('#songDetails').val(prodId+'-'+providerType);
-                    jwplayer().load([{
-                      file: songFile,
-                      title: songTitle
-                    }]);
-                    jwplayer("myElement").play(true);
+                    var newSong = [
+                            {
+                            "label":songTitle,
+                            "songTitle":songTitle,
+                            "artistName":songDetails,
+                            "songLength":247,
+                            "data":songFile
+                            }
+                    ];                    
+                    pushSongs(newSong);
                 }
         })
         .fail(function(){
@@ -1553,7 +1558,7 @@ $(document).ready(function (){
                 if(json.error){
                     alert(json.error[1]);
 					if(json.error[3] != 6){
-						jwplayer().remove();
+						$('.player-wrapper').remove();
 					}
                 }else if(json.success){
                     playlist = $('#playlist_data').text();
