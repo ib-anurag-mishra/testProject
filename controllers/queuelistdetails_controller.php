@@ -158,7 +158,7 @@ class QueueListDetailsController extends AppController{
             $total_seconds +=   $minutes*60+$seconds;
             $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
             if(!empty($filePath)){
-                $songPath = $explode(':',$filePath);
+                $songPath = explode(':',$filePath);
                 $streamUrl =  trim($songPath[1]);
                 $queue_list_array[$k]['streamUrl'] = $streamUrl;
             }
