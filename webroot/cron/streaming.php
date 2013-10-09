@@ -79,7 +79,7 @@ class Streaming {
   function __construct(){
       
      //set the database connection
-     if( $this->LIVE == '1' ){
+     if( $this->LIVE == '1' ) {
          
           // connect to  Production          
           //connect to sony database
@@ -116,12 +116,13 @@ class Streaming {
           mysql_select_db($this->STAGE_FREEGAL_DB, $this->freegalDBConnectionObj) 
             or die('Could not select freegal database.');
           
-          
+          /*
            //connect to orchard database
           $this->orchardDBConnectionObj = mysql_connect($this->STAGE_DB_HOST, $this->STAGE_DB_USER, $this->STAGE_DB_PASS, true)
             or die('Could not connect to mysql server for freegal db of live.' );
           mysql_select_db($this->STAGE_ORCHARD_DB, $this->orchardDBConnectionObj) 
             or die('Could not select orchard database.');  
+           */
                  
      }
           
@@ -183,7 +184,7 @@ class Streaming {
                 if($arr_row['provider_type'] == 'sony'){                    
                     $this->getRecordInSonyDB($arr_row);  
                 }else if($arr_row['provider_type'] == 'ioda'){
-                   
+                   die;
                     $this->updateIODARecords($arr_row); 
                 }else{
                     $this->LogsString  .= PHP_EOL.'provider type not availble. provider type='.$arr_row['provider_type'].' ProdID='.$arr_row['ProdID'].PHP_EOL;
