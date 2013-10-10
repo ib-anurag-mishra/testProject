@@ -541,7 +541,7 @@ class SolrComponent extends Object {
                     break;
                 case 'artist':
                     //$query = $keyword . ' OR (CArtistText:(' . $searchkeyword . '))';
-                    $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+                    $queryFields = "CArtistText^1000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist
                     $query = $searchkeyword;
                     $field = 'ArtistText';
                     break;
