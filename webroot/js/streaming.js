@@ -1,3 +1,15 @@
+var WeCantStop = [
+	{
+		label:'We Can\'t Stop',
+		songTitle:'We Can\'t Stop',
+		artistName:'Miley Cyrus',
+		songLength:400,
+		data:'000/000/000/000/279/534/69/MileyCyrus_WeCantStop_G010002990907b_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130930151614&nva=20130930161614&token=508bd813fc901421d6032'
+		/* data:'000/000/000/000/279/534/69/MileyCyrus_WeCantStop_G010002990907b_1_1-256K_44S_2C_cbr1x.mp3' */
+		
+	}
+];
+
 var MechanicalBull = [
 	{
 		label:'Supersoaker',
@@ -5,10 +17,9 @@ var MechanicalBull = [
 		artistName:'Kings Of Leon',
 		songLength:400,
 		data:'000/000/000/000/282/868/54/KingsOfLeon_Supersoaker_G010003006169j_1_1-256K_44S_2C_cbr1x.mp3?token=5a809d308b03ea40363a2'
-		//data:'Boston_MoreThanAFeeling_G0100006706006_1_1-256K_44S_2C_cbr1x.mp3'
 		
 	},
-  {
+	{
 		label:'Rock City',
 		songTitle:'Rock City',
 		artistName:'Kings Of Leon',
@@ -16,7 +27,7 @@ var MechanicalBull = [
 		data:'000/000/000/000/282/868/55/KingsOfLeon_RockCity_G010003006169j_1_2-256K_44S_2C_cbr1x.mp3?token=5ecd3d549fcf7a5144635'
 		
 	},
- {
+	{
 		label:'Don\'t Matter',
 		songTitle:'Don\'t Matter',
 		artistName:'Kings Of Leon',
@@ -24,7 +35,7 @@ var MechanicalBull = [
 		data:'000/000/000/000/282/868/56/KingsOfLeon_DontMatter_G010003006169j_1_3-256K_44S_2C_cbr1x.mp3?token=590ae4c1be0f83b5e8e9b'
 		
 	},
-  {
+	{
 		label:'Beautiful War',
 		songTitle:'Beautiful War',
 		artistName:'Kings Of Leon',
@@ -32,7 +43,7 @@ var MechanicalBull = [
 		data:'000/000/000/000/282/868/57/KingsOfLeon_BeautifulWar_G010003006169j_1_4-256K_44S_2C_cbr1x.mp3?token=5f3e40ee41975ded7a0a0'
 		
 	},
-  {
+	{
 		label:'Temple',
 		songTitle:'Temple',
 		artistName:'Kings Of Leon',
@@ -107,9 +118,9 @@ var flashvars = {};
 var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
-swfobject.embedSWF("/swf/fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes, swfCallback);
+swfobject.embedSWF("fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes/* , swfCallback */);
 
-
+/*
 function swfCallback (e) {
 	
 	if (e.success) {
@@ -129,7 +140,7 @@ function swfCallback (e) {
 	                    //Clear timer
 	                    clearInterval(loadCheckInterval);
 	                }
-	            }, 200);
+	            }, 500);
 	        }
 	    }, 200);
 		
@@ -142,7 +153,7 @@ function swfCallback (e) {
 	
 	
 }
-
+*/
 
 function pushSongs (newSongArray) {
 
@@ -160,6 +171,37 @@ function clearQueue () {
 }
 
 
+
+function reportTotalDuration(totalDuration) {
+	$('.total_time').html("<br />Total time played in seconds: " + totalDuration + "<br /><br />");
+	
+}
+
+
+function reportSongInfo(songObj) {
+	
+	$('.song_played').html("Current song being played: <br />" + "Label: " + songObj.label + "<br />" + "Artist Name: " + songObj.artistName + "<br />" + "Song Title: " + songObj.songTitle + "<br />" + "Song Length: " + songObj.songLength + "<br />" + "Song Data: " + songObj.data); 
+}
+
+function playPressed() {
+	exit;
+	$('.current_action').html('<br />Current action:<br />play pressed');
+}
+
+function pausePressed() {
+	
+	$('.current_action').html('<br />Current action:<br />pause pressed');
+}
+
+function prevPressed() {
+	$('.current_action').html('<br />Current action:<br />prev pressed');
+	
+}
+
+function nextPressed() {
+	
+	$('.current_action').html('<br />Current action:<br />next pressed');
+}
 
 
 
@@ -185,5 +227,7 @@ $(document).ready(function(){
 		
 		pushSongs(newSong);
 	});
+	
+	
 
 });
