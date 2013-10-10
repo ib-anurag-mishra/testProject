@@ -22,9 +22,9 @@ Class AuthRequestComponent extends Object
 		$post_data = array('xml'=>$str);
 		$url = $authUrl;
                 
-                //echo "IN Auth Request<pre>";
+               // echo "IN Auth Request<pre>";
                 //echo "URL:".$url;
-               // print_r($post_data);
+                //print_r($post_data);
                 
 		$ch=curl_init();
 		// tell curl target url
