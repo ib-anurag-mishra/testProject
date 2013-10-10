@@ -184,7 +184,7 @@ function reportSongInfo(songObj) {
 }
 
 function playPressed() {
-	exit;
+
 	$('.current_action').html('<br />Current action:<br />play pressed');
 }
 
