@@ -118,7 +118,7 @@ var flashvars = {};
 var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
-swfobject.embedSWF("fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes/* , swfCallback */);
+swfobject.embedSWF("swf/fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes/* , swfCallback */);
 
 /*
 function swfCallback (e) {
