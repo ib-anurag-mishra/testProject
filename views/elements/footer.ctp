@@ -98,10 +98,11 @@
                                                 <div id="alt"></div>
                                               </div>
 
-                                              <input type="button" id="playlist1" value="Push Playlist 1" style="display:block" onclick="pushSongs(popMostPopular);" />
-                                              <input type="button" id="playlist2" value="Push Playlist 2" style="display:block" onclick="pushSongs(MechanicalBull);" />
-                                              <input type="button" id="pushNewSong" value="Push New Song" style="display:block"  />
-                                              <input type="button" id="clearQueue" value="Clear Queue" style="display:block" onclick="clearQueue();" />
+                                                <input type="button" id="playlist1" value="Push Playlist 1" style="display:block" onclick="pushSongs(popMostPopular);" />
+                                                <input type="button" id="playlist2" value="Push Playlist 2" style="display:block" onclick="pushSongs(MechanicalBull);" />
+                                                <input type="button" id="playlist3" value="Push We Can't Stop" style="display:block" onclick="pushSongs(WeCantStop);" />
+                                                <input type="button" id="pushNewSong" value="Push New Song" style="display:block"  />
+                                              <!--<input type="button" id="clearQueue" value="Clear Queue" style="display:block" onclick="clearQueue();" />-->
                                             </div>
                                         <?php } ?>
                                     <?php } ?>
