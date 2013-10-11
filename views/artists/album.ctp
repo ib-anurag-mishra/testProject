@@ -331,8 +331,11 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 							
 							
 						</div>
+						<?php
+							$title_song_replace = str_replace('"','',$this->getTextEncode($value['Video']['VideoTitle']));
+						?>
 						<div class="song-title">
-							<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="javascript:void(0);">
+							<a title="<?php echo $title_song_replace; ?>" href="javascript:void(0);">
                                                         <?php 
                                                                 if(strlen($value['Video']['VideoTitle'])>25)
                                                                 echo substr($value['Video']['VideoTitle'],0,25)."..."; 
