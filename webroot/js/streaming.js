@@ -243,11 +243,6 @@ function validateSong(songObj) {
 	
 	*/
 	var isValid = true;
-	
-	alert('in');
-
-	//var isValid = false;
-	
 	return isValid;
 	
 
