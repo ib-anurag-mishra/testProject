@@ -193,7 +193,7 @@
 					<div class="row clearfix">
 						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
-                                                $duration = explode(':',$value['Songs']['FullLength_Duration']);
+                                                $duration = explode(':',$value['Song']['FullLength_Duration']);
                                                 $duration_in_secs = $duration[0]*60;
                                                 $total_duration = $duration_in_secs+$duration[1];                                                
                                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Song']['SongTitle'].'","'.$value['Song']['ArtistText'].'","'.$total_duration.'","'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
@@ -217,7 +217,7 @@
                                                     <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
                                                 </div>                                                
                                                 
-						<div class="time"><?php echo $value['Song']['FullLength_Duration']?></div>
+						<div class="time"><?php echo $value['Song']['FullLength_Duration'];?></div>
 						<div class="wishlist-popover">
                                                         <?php
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {
