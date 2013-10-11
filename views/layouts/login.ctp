@@ -294,7 +294,8 @@
                                                                     if ($this->Session->read('library') && $this->Session->read('library') != '') {
                                                                         echo $this->element('navigation');
                                                                     }?>
-                                                                    <section class="site-login"> <?php  echo $this->Session->flash('inactivelib_message'); ?>
+                                                                    <section class="site-login"> 
+                                                                    <?php  echo $this->Session->flash('inactivelib_message'); ?>
 								    <?php echo $this->getTextEncode($page->getPageContent('login')); ?>
                                                                     <?php echo $content_for_layout; ?>
                                                                     </section>
