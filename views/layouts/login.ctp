@@ -295,7 +295,7 @@
                                                                         echo $this->element('navigation');
                                                                     }?>
                                                                     <section class="site-login"> 
-                                                                    <?php  //echo $this->Session->flash('inactivelib_message'); ?>
+                                                                    <?php  echo $this->Session->flash('inactivelib_message'); ?>
 								    <?php echo $this->getTextEncode($page->getPageContent('login')); ?>
                                                                     <?php echo $content_for_layout; ?>
                                                                     </section>
