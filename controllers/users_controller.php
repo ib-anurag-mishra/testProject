@@ -172,9 +172,9 @@ Class UsersController extends AppController
     Desc : actions for set message whenever a inative app call
    */
         function libinactive(){
-            $this->layout = 'login';
+            $this->layout = 'home';            
+            $this -> Session -> setFlash("Library is not registered with .");
             $this->set('show_inactivelib',1); 
-            $this -> Session -> setFlash("This page is no longer available.");
         }
    
    /*
