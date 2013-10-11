@@ -1,6 +1,6 @@
 <?php
 
-Configure::write('debug', 2);
+Configure::write('debug', 0);
 
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
@@ -1663,34 +1663,20 @@ STR;
     
     $product_detail = $this->getProductDetail($ProdID);
     $prodId = $product_detail['Product']['ProdID'];
-    $provider_type = $product_detail['Product']['provider_type'];
-
-    $SongData = array();
-    $SongData = $this->Song->find('first', array(
-      'fields' => array('MP4_FileID'),
-      'conditions' => array('ProdID' => $prodId, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
-      'recursive' => -1
-    ));
- 
-    if(empty($SongData['Song']['MP4_FileID'])) {
-      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
-    }
-   
-    $mp4url = null;
-    $mp4url = $this->getHLSURL($SongData['Song']['MP4_FileID']);
+    $provider_type = $product_detail['Product']['provider_type'];    
       
-    if(empty($mp4url)) {
-      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
-    }
-
     $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, 'App-'.$agent);
-    
+    echo '<pre>'; print_r($response); exit;
     switch($response[0]){
       case 'success': 
-	return $this->createsStreamingResponseObject(true, $response[1], $response[2], $mp4url); 
+      
+        $streaming_url = null;
+        $streaming_url = $this->getStreamngURL($prodId, $provider_type);    
+        return $this->createsStreamingResponseObject(true, $response[1], $response[2], $streaming_url); 
       break;
       case 'error'  : 
-	return $this->createsStreamingResponseObject(false, $response[1], $response[2], '');  
+      
+        return $this->createsStreamingResponseObject(false, $response[1], $response[2], '');  
       break;
       default:  throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
     
@@ -6802,17 +6788,33 @@ STR;
   }
  
   /**
-   * Function Name : getHLSURL
-   * Desc : Returns HLS (mp4) URL for given Song  
-   * @param int mp4FileID
+   * Function Name : getStreamngURL
+   * Desc : Returns m3ui8 or mp3 URL for given Song  
+   * @param int ProdID
+   * @param string provider_type
    * @return string
    */  
-  private function getHLSURL($mp4FileID) {
-
+  private function getStreamngURL($ProdID, $provider_type) {
+  
     $FileData = array();
-    $FileData = $this->File_mp4->find('first', array(
-      'conditions' => array('FileID' =>  $mp4FileID),
+    $FileData = $this->Song->find('first', array(
+      'fields' => array('f4.FileiD', 'f4.SaveAsName', 'f4.CdnPath'),
+      'joins' =>  array(
+        array(
+          'table' => 'File_mp4',
+          'alias' => 'f4',
+          'type' => 'INNER',
+          'foreignKey' => false,
+          'conditions'=> array('Song.MP4_FileID = f4.FileiD')
+        )
+      ),
+      'conditions' => array('ProdID' => $ProdID, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
+      'recursive' => -1
     ));
+    
+    echo '<pre>';
+    print_r($FileData);
+    exit;
     
     if(empty($FileData)) {
       return null;
