@@ -1666,7 +1666,7 @@ STR;
     $provider_type = $product_detail['Product']['provider_type'];    
       
     $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, 'App-'.$agent);
-    echo '<pre>'; print_r($response); exit;
+    
     switch($response[0]){
       case 'success': 
       
@@ -6812,16 +6812,34 @@ STR;
       'recursive' => -1
     ));
     
-    echo '<pre>';
-    print_r($FileData);
-    exit;
     
     if(empty($FileData)) {
-      return null;
+      //send mp3
+      $data = $this->Song->find('first', array(
+        'fields' => array('f.FileiD', 'f.SaveAsName', 'f.CdnPath'),  
+        'joins' => array(
+          array(
+            'table' => 'File',
+            'alias' => 'f',
+            'type' => 'inner',
+            'foreignKey' => false,
+            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID' => $ProdID, 'Song.provider_type' => $provider_type, 'StreamingStatus' => '1')
+          )
+        ),
+        'recursive' => -1,
+      ));
+	
+      $CdnPath = $data['f']['CdnPath'];
+      $SaveAsName = $data['f']['SaveAsName'];
+
+      return Configure::read('App.Music_Path'). shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
+
+    }else{
+      //send mp4
+      //return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
+	return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
     }
 
-// return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['SaveAsName'].' '.$FileData['File_mp4']['CdnPath']);  
-  return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['CdnPath'].' '.$FileData['File_mp4']['SaveAsName']);
   }
   
  
