@@ -1501,7 +1501,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 	return false; 
 }
 
-    function loadSong(songFile,songTitle,artistName,prodId,providerType) { 
+    function loadSong(songFile,songTitle,artistName,songLength,prodId,providerType) { 
         
         var postURL = webroot+'queuelistdetails/getPlaylistData';
         $.ajax({
@@ -1525,6 +1525,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                             "label":songTitle,
                             "songTitle":songTitle,
                             "artistName":artistName,
+                            "songLength":songLength,
                             "data":songFile
                             }
                     ];                    
