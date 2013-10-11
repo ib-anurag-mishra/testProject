@@ -12,6 +12,8 @@ var WeCantStop = [
 
 var MechanicalBull = [
 	{
+		playlistId: 1,
+		songId: 7,
 		label:'Supersoaker',
 		songTitle:'Supersoaker',
 		artistName:'Kings Of Leon',
@@ -20,6 +22,8 @@ var MechanicalBull = [
 		
 	},
 	{
+		playlistId: 1,
+		songId: 8,
 		label:'Rock City',
 		songTitle:'Rock City',
 		artistName:'Kings Of Leon',
@@ -28,6 +32,8 @@ var MechanicalBull = [
 		
 	},
 	{
+		playlistId: 1,
+		songId: 9,
 		label:'Don\'t Matter',
 		songTitle:'Don\'t Matter',
 		artistName:'Kings Of Leon',
@@ -36,6 +42,8 @@ var MechanicalBull = [
 		
 	},
 	{
+		playlistId: 1,
+		songId: 10,
 		label:'Beautiful War',
 		songTitle:'Beautiful War',
 		artistName:'Kings Of Leon',
@@ -44,6 +52,8 @@ var MechanicalBull = [
 		
 	},
 	{
+		playlistId: 1,
+		songId: 11,
 		label:'Temple',
 		songTitle:'Temple',
 		artistName:'Kings Of Leon',
@@ -59,6 +69,8 @@ var MechanicalBull = [
 
 var popMostPopular = [
 	{
+		playlistId: 0,
+		songId: 1,
 		label:'Hot N Cold',
 		songTitle:'Hot N Cold',
 		artistName:'Katy Perry',
@@ -67,6 +79,8 @@ var popMostPopular = [
 		
 	},
 	{
+		playlistId: 0,
+		songId: 2,
 		label:'Get Lucky',
 		songTitle:'Get Lucky',
 		artistName:'Daft Punk',
@@ -75,6 +89,8 @@ var popMostPopular = [
 		
 	},
 	{
+		playlistId: 0,
+		songId: 3,
 		label:'3 x 5',
 		songTitle:'3 x 5',
 		artistName:'John Mayer',
@@ -83,6 +99,8 @@ var popMostPopular = [
 		
 	},
 	{
+		playlistId: 0,
+		songId: 4,
 		label:'Give Me A Reason',
 		songTitle:'Give Me A Reason',
 		artistName:'P!nk',
@@ -91,6 +109,8 @@ var popMostPopular = [
 		
 	},
 	{
+		playlistId: 0,
+		songId: 5,
 		label:'Paper Doll',
 		songTitle:'Paper Doll',
 		artistName:'John Mayer',
@@ -99,6 +119,8 @@ var popMostPopular = [
 		
 	},
 	{
+		playlistId: 0,
+		songId: 6,
 		label:'Sex On Fire',
 		songTitle:'Sex On Fire',
 		artistName:'Kings Of Leon',
@@ -180,11 +202,11 @@ function reportTotalDuration(totalDuration) {
 
 function reportSongInfo(songObj) {
 	
-	$('.song_played').html("Current song being played: <br />" + "Label: " + songObj.label + "<br />" + "Artist Name: " + songObj.artistName + "<br />" + "Song Title: " + songObj.songTitle + "<br />" + "Song Length: " + songObj.songLength + "<br />" + "Song Data: " + songObj.data); 
+	$('.song_played').html("Current song being played: <br />" + "Playlist ID: " + songObj.playlistId + "<br />" + "Song ID: " + songObj.songId + "<br />" + "Label: " + songObj.label + "<br />" + "Artist Name: " + songObj.artistName + "<br />" + "Song Title: " + songObj.songTitle + "<br />" + "Song Length: " + songObj.songLength + "<br />" + "Song Data: " + songObj.data); 
 }
 
 function playPressed() {
-
+	
 	$('.current_action').html('<br />Current action:<br />play pressed');
 }
 
@@ -203,6 +225,40 @@ function nextPressed() {
 	$('.current_action').html('<br />Current action:<br />next pressed');
 }
 
+
+/* this is called before the song is played */ 
+function validateSong(songObj) {
+
+	
+	/* properties sent from flash
+	
+	songObj.playlistId
+	songObj.songId
+	songObj.label
+	songObj.artistName
+	songObj.songTitle
+	songObj.songLength
+	songObj.data
+	
+	
+	*/
+	var isValid = true;
+	
+	alert('in');
+
+	//var isValid = false;
+	
+	return isValid;
+	
+
+}
+
+
+
+function flashConsole(msg) {
+	
+	//console.log(msg);
+}
 
 
 $(document).ready(function(){
