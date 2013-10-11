@@ -55,10 +55,7 @@ Class UsersController extends AppController
 	}
 	function redirection_manager($library = null)
 	{
-                //$this->Cookie->write('redirecting', $_SERVER[HTTP_REFERER],False);
-		$redirect_url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-                $this->Cookie->write('redirecting', $redirect_url ,false);
-
+                $this->Cookie->write('redirecting', $_SERVER[HTTP_REFERER],False);
                 if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));                      
