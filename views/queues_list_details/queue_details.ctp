@@ -133,7 +133,7 @@
 					</div>
 					<?php
                                             if(!empty($value['streamUrl']) || !empty($value['Songs']['SongTitle'])){
-                                                 $playItem = array('label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => $value['Songs']['ArtistText'],'songLength' => $value['Songs']['FullLength_Duration'],'data' => $value['streamUrl']);
+                                                 $playItem = array('label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => $value['Songs']['ArtistText'],'songLength' => $value['Songs']['FullLength_Duration']*60,'data' => $value['streamUrl']);
                                                 $jsonPlayItem = json_encode($playItem);
                                                 $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
                                                 $playListData[] =$jsonPlayItem;
