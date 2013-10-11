@@ -242,7 +242,6 @@ function validateSong(songObj) {
 	
 	
 	*/
-       alert(songObj.data);
 	var isValid = true;
 	return isValid;
 	
