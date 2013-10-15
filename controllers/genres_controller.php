@@ -611,21 +611,21 @@ Class GenresController extends AppController
         */
 	function admin_managegenre() {
 		if($this->data) {
-			$this->Category->deleteAll(array('Language' => Configure::read('App.LANGUAGE')), false);
-			$selectedGenres = Array();
-			$i = 0;
-			foreach ($this->data['Genre']['Genre'] as $k => $v) {
-				if($i < '8') {
-				      if($v != '0') {
-					    $selectedGenres['Genre'] = $v;
-					    $selectedGenres['Language'] = Configure::read('App.LANGUAGE');
-					    $this->Category->save($selectedGenres);
-					    $this->Category->id = false ;
-					    $i++;
-				      }
-				}
-			}
-			$this->Session -> setFlash( 'Your selection saved successfully!!', 'modal', array( 'class' => 'modal success' ) );
+                    $this->Category->deleteAll(array('Language' => Configure::read('App.LANGUAGE')), false);
+                    $selectedGenres = Array();
+                    $i = 0;
+                    foreach ($this->data['Genre']['Genre'] as $k => $v) {
+                            if($i < '8') {
+                                    if($v != '0') {
+                                        $selectedGenres['Genre'] = $v;
+                                        $selectedGenres['Language'] = Configure::read('App.LANGUAGE');
+                                        $this->Category->save($selectedGenres);
+                                        $this->Category->id = false ;
+                                        $i++;
+                                    }
+                            }
+                    }
+                    $this->Session -> setFlash( 'Your selection saved successfully!!', 'modal', array( 'class' => 'modal success' ) );
 		}
 		$this->Genre->recursive = -1;
 		$allGenres = $this->Genre->find('all', array(
