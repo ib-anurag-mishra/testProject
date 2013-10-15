@@ -282,6 +282,7 @@ $totalRows = count($genresAll);
                    }
                 $genre_count++;
                 endforeach;
+                die;
             ?>            
                     	</ul>
 				</div>
