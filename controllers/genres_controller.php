@@ -75,7 +75,7 @@ Class GenresController extends AppController
 			Cache::write("genre".$country, $genreAll);
 		}
 		$genreAll = Cache::read("genre".$country);
-                //print_r($genreAll);
+                
 		$this->set('genresAll', $genreAll);
 		$category_ids = $this->Category->find('list', array('conditions' => array('Language' => Configure::read('App.LANGUAGE')),'fields' => 'id'));
 		$rand_keys = array_rand($category_ids, 4);
