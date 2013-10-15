@@ -371,7 +371,10 @@ Class GenresController extends AppController
         
         function ajax_view($Genre = null,$Artist = null) {
 		
-                if($Genre == ''){
+               
+           // Configure::write('debug', 2);
+            
+            if($Genre == ''){
                     $Genre = "QWxs";
                 }
                 
@@ -417,7 +420,7 @@ Class GenresController extends AppController
                     $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
                     $this->paginate = array(
                                     'conditions' => $gcondition,
-                                    'fields' => array('DISTINCT Song.ArtistText1'),
+                                    'fields' => array('DISTINCT Song.ArtistText'),
                                         'contain' => array(
                                                 'Genre' => array(
                                                         'fields' => array(
