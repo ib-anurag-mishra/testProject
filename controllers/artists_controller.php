@@ -1141,14 +1141,11 @@ Class ArtistsController extends AppController
             $this->paginate =  array('conditions' =>
                                     array('and' =>
                                             array(
-                                                //array('Album.ArtistText' => base64_decode($id)),
-                                                    //array('Album.provider_type = Genre.provider_type'),
-                                                    //array('Album.provider_type = Country.provider_type'),
                                                 $condition
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
                                     'fields' => array(
-                                            'Album.ProdID',
+                                            'Album.ProdI',
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
@@ -1172,9 +1169,9 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'no', 'chk' => 2
                             );
-            if($this->Session->read('block') == 'yes') {
+	    if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
             }else{
                     $cond = "";
