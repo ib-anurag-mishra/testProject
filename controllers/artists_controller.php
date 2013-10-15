@@ -1207,7 +1207,6 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            echo "<br>Query2: ".$this->Album->lastQuery();
             //$this->set('count_albums',count($albumData));        
             $albumSongs = array();
             $this->set('albumData', $albumData);
@@ -1219,6 +1218,7 @@ Class ArtistsController extends AppController
             }else {
                 $this->set('artistUrl', "N/A");
             }
+            echo "<br>Query2: ".$this->Album->lastQuery();
             $decodedId = trim(base64_decode($id));
                  $country = $this->Session->read('territory');
                  if(!empty($country)){
