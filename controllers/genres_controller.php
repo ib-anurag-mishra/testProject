@@ -324,7 +324,7 @@ Class GenresController extends AppController
                     
                     $this->paginate = array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText1'),
+                        'fields' => array('DISTINCT Song.ArtistText'),
                         'extra' => array('chk' => 1),                        
                         'limit' => '60',  
                         'cache' => 'yes',
@@ -360,7 +360,7 @@ Class GenresController extends AppController
                     $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
                 }
               
-                print_r($allArtists);
+                
                 
                 $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
 		$this->set('genres', $allArtists);
@@ -419,7 +419,7 @@ Class GenresController extends AppController
                     $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
                     $this->paginate = array(
                                     'conditions' => $gcondition,
-                                    'fields' => array('DISTINCT Song.ArtistText1'),
+                                    'fields' => array('DISTINCT Song.ArtistText'),
                                         'contain' => array(
                                                 'Genre' => array(
                                                         'fields' => array(
@@ -427,7 +427,7 @@ Class GenresController extends AppController
                                                                 )),
                                         ),
                                         'extra' => array('chk' => 1),                                    
-                                    'limit' => '60', 'cache' => 'no','check' => 2
+                                    'limit' => '60', 'cache' => 'yes','check' => 2
                                     );
                 } else {
                    
