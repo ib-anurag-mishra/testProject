@@ -1138,18 +1138,19 @@ Class ArtistsController extends AppController
             else{
                     $cond = "";
             }
-            $this->paginate =  array('conditions' =>
+            $albumData = $this->Album->find('all',
+			array('conditions' =>
                                     array('and' =>
                                             array(
                                                 $condition
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
                                     'fields' => array(
-                                            'Album.ProdI',
+                                            'Album.ProdID',
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                    'Album.Advisory',
+                    			    'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1169,17 +1170,14 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'no', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2
                             );
-	    if($this->Session->read('block') == 'yes') {
+            if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
             }else{
                     $cond = "";
             }
             $this->Album->recursive = 2;
-            $albumData = array();
-            $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //$this->set('count_albums',count($albumData));        
             $albumSongs = array();
             $this->set('albumData', $albumData);
             if(isset($albumData[0]['Album']['Artist'])) {
@@ -1190,7 +1188,6 @@ Class ArtistsController extends AppController
             }else {
                 $this->set('artistUrl', "N/A");
             }
-            echo "<br>Query2: ".$this->Album->lastQuery();
             $decodedId = trim(base64_decode($id));
                  $country = $this->Session->read('territory');
                  if(!empty($country)){
