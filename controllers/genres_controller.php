@@ -530,8 +530,7 @@ Class GenresController extends AppController
 
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
-                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-                $this->Song->unbindModel(array('hasOne' => array('Genre')));
+                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));                
                 $this->Song->Behaviors->attach('Containable');
                 $this->Song->recursive = 0;
                 $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
