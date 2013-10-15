@@ -1174,12 +1174,10 @@ Class ArtistsController extends AppController
             else{
                     $cond = "";
             }
-            $this->paginate =  array('conditions' =>
+            $albumData = $this->Album->find('all',
+			array('conditions' =>
                                     array('and' =>
                                             array(
-                                                //array('Album.ArtistText' => base64_decode($id)),
-                                                    //array('Album.provider_type = Genre.provider_type'),
-                                                    //array('Album.provider_type = Country.provider_type'),
                                                 $condition
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
@@ -1209,16 +1207,13 @@ Class ArtistsController extends AppController
                                                     ),                                                
                                             )
                                     ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2
-                            );
+                            ));
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
             }else{
                     $cond = "";
             }
             $this->Album->recursive = 2;
-            $albumData = array();
-            $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //$this->set('count_albums',count($albumData));        
             $albumSongs = array();
             $this->set('albumData', $albumData);
             if(isset($albumData[0]['Album']['Artist'])) {
