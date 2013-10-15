@@ -424,7 +424,7 @@ Class GenresController extends AppController
                                                                 )),
                                         ),
                                         'extra' => array('chk' => 1),                                    
-                                    'limit' => '60', 'cache' => 'yes','check' => 2
+                                    'limit' => '60', 'cache' => 'no','check' => 2
                                     );
                 } else {
                    
