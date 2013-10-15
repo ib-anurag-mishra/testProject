@@ -286,19 +286,14 @@ Class GenresController extends AppController
 		$this->Song->recursive = 0;
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);
-                
-                
-               
-                
-                if($genre != 'All'){     
-                    $this->Song->unbindModel(array('hasOne' => array('Participant')));
-                    $this->Song->unbindModel(array('hasOne' => array('Country')));
-                    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));                   
-                    $this->Song->Behaviors->attach('Containable');
-                  
-                   
-                    $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
-                    $this->paginate = array(
+                if($genre != 'All'){
+                    
+                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                $this->Song->unbindModel(array('hasOne' => array('Country')));
+                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+                $this->Song->Behaviors->attach('Containable');
+                $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+                $this->paginate = array(
                                 'conditions' => $gcondition,
                                 'fields' => array('DISTINCT Song.ArtistText'),
                                     'contain' => array(
@@ -307,29 +302,28 @@ Class GenresController extends AppController
                                                                     'Genre.Genre'
                                                             )),
                                     ),
-                                'extra' => array('chk' => 1),                                
-                                'limit' => '60','cache' => 'yes','check' => 2
+                                    'extra' => array('chk' => 1),                               
+                                'limit' => '60', 'cache' => 'yes','check' => 2
                                 );
                 } else {
                     
-                   
-                   $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                    $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('hasOne' => array('Genre')));
                     $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                     $this->Song->Behaviors->attach('Containable');
                     $this->Song->recursive = 0;
-                    $gcondition = array('Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 ');
+                    $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 GROUP BY Song.ArtistText');
                  
-                    
                     $this->paginate = array(
                         'conditions' => $gcondition,
                         'fields' => array('DISTINCT Song.ArtistText'),
                         'extra' => array('chk' => 1),                        
-                        'limit' => '60',  
+                        'limit' => '60',
                         'cache' => 'yes',
                         'check' => 2,
-                        'all_query'=> true,                        
+                        'all_query'=> true,
+                        'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
                         'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
                     );
                 }
@@ -413,10 +407,9 @@ Class GenresController extends AppController
                    
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
-                    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));                  
+                    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                     $this->Song->Behaviors->attach('Containable');
-                             
-                    $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
+                    $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
                     $this->paginate = array(
                                     'conditions' => $gcondition,
                                     'fields' => array('DISTINCT Song.ArtistText'),
@@ -437,7 +430,7 @@ Class GenresController extends AppController
                     $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                     $this->Song->Behaviors->attach('Containable');
                     $this->Song->recursive = 0;                   
-                    $gcondition = array('Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 ');
+                    $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 ');
 
                     $this->paginate = array(
                             'conditions' => $gcondition,
@@ -529,10 +522,9 @@ Class GenresController extends AppController
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-                $this->Song->unbindModel(array('hasOne' => array('Genre')));
                 $this->Song->Behaviors->attach('Containable');
                 $this->Song->recursive = 0;
-                $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
+                $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
                 $this->paginate = array(
                             'conditions' => $gcondition,
                             'fields' => array('DISTINCT Song.ArtistText'),
@@ -554,7 +546,7 @@ Class GenresController extends AppController
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                 $this->Song->Behaviors->attach('Containable');
-                $gcondition = array('Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 ');
+                $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 ');
                
                         $this->paginate = array(
                             'conditions' => $gcondition,
@@ -563,7 +555,8 @@ Class GenresController extends AppController
                             'limit' => '60',
                             'cache' => 'yes',
                             'check' => 2,
-                            'all_query'=> true,                            
+                            'all_query'=> true,
+                            'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
                             'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
                         );
             }
