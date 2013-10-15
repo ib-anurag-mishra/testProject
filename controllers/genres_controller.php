@@ -295,6 +295,8 @@ Class GenresController extends AppController
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                     $this->Song->Behaviors->attach('Containable');
+                  
+                   
                     $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
                     $this->paginate = array(
                                 'conditions' => $gcondition,
@@ -322,7 +324,7 @@ Class GenresController extends AppController
                     
                     $this->paginate = array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText'),
+                        'fields' => array('DISTINCT Song.ArtistText1'),
                         'extra' => array('chk' => 1),                        
                         'limit' => '60',  
                         'cache' => 'yes',
@@ -333,8 +335,9 @@ Class GenresController extends AppController
                 }
                
                 
+                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                $allArtists = $this->paginate('Song');
                 
-                $allArtists = $this->paginate('Song');                 
                 $allArtistsNew = $allArtists;
               
                 for($i=0;$i<count($allArtistsNew);$i++)
@@ -357,7 +360,7 @@ Class GenresController extends AppController
                     $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
                 }
               
-                
+                print_r($allArtists);
                 
                 $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
 		$this->set('genres', $allArtists);
@@ -412,6 +415,7 @@ Class GenresController extends AppController
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                     $this->Song->Behaviors->attach('Containable');
+                             
                     $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 ');
                     $this->paginate = array(
                                     'conditions' => $gcondition,
@@ -423,7 +427,7 @@ Class GenresController extends AppController
                                                                 )),
                                         ),
                                         'extra' => array('chk' => 1),                                    
-                                    'limit' => '60', 'cache' => 'yes','check' => 2
+                                    'limit' => '60', 'cache' => 'no','check' => 2
                                     );
                 } else {
                    
