@@ -9,7 +9,7 @@
 		<div class="hero-container clearfix">
 			<div class="hero-image-container">
                                 
-				<img src="<?php echo $VideosData[0]['videoImage'];?>" alt="<?php echo $VideosData[0]['Video']['VideoTitle']; ?>" width="555" height="323" />
+				<img src="<?php echo $VideosData[0]['videoImage'];?>" alt="<?php echo $this->getValidText($VideosData[0]['Video']['VideoTitle']); ?>" width="555" height="323" />
 
                 <?php
                             $libId = $this->Session->read('library');
@@ -29,7 +29,7 @@
                                             <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"];?>" />
                                             <input type="hidden" name="ProviderType" value="<?php echo $VideosData[0]["Video"]["provider_type"]; ?>" />
                                             <span class="beforeClick" id="song_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>">
-                                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $VideosData[0]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $VideosData[0]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>'><?php __('Download Now');?></label></a>
                                             </span>
                                             <span class="afterClick" id="downloading_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                                             <span id="download_loader_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -79,7 +79,7 @@
                                     
 				</h2><?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 				<h3 class="artist-name">
-					<a title="<?php echo $this->getTextEncode($VideosData[0]['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
+					<a title="<?php echo $this->getValidText($this->getTextEncode($VideosData[0]['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
 				<?php
                                         $duration       =    $VideosData[0]['Video']['FullLength_Duration']; 
@@ -113,7 +113,7 @@
 						?>								
 								<li>
 									<div class="video-thumb-container">
-                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" data-original="" width="274" height="162" /></a>
+                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img alt="" class="lazy" src="<?php echo $value['videoImage']; ?>" data-original="" width="274" height="162" /></a>
 										<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
                                               if($this->Session->read('patron'))
@@ -134,7 +134,7 @@
                                                                     <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                     <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                                                                     <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                                                                    <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                                                                    <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>'><?php __('Download Now');?></label></a>
                                                                     </span>
                                                                     <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                                                                     <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -178,7 +178,7 @@
 										
 									</div>
 									<div class="song-title">
-										<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+										<a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                 <?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 20 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 20)) . "..";
@@ -190,7 +190,7 @@
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 									</div>
 									<div class="artist-name">										
-                                                                                <a title="<?php echo $this->getTextEncode($value['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                                 <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
@@ -233,7 +233,7 @@
 							
 							<li>
 								<div class="video-thumb-container">
-                                                                    <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" width="274" height="162" /></a>
+                                                                    <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img alt="" class="lazy" src="<?php echo $value['videoImage']; ?>" width="274" height="162" /></a>
 									<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
 
@@ -254,7 +254,7 @@
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                                 <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                                                                                 <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                                                                                <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                                                                                <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>'><?php __('Download Now');?></label></a>
                                                                                 </span>
                                                                                 <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                                                                                 <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -302,7 +302,7 @@
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 								</div>
 								<div class="artist-name">
-									<a title="<?php echo $this->getTextEncode($value['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+									<a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                              <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";

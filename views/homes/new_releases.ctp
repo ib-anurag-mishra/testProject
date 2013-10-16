@@ -50,7 +50,7 @@
                                                     </a><?php if('T' == $value['Albums']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">							
-                                                        <a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>32)
                                                                                                                     echo substr($this->getTextEncode($value['Song']['Artist']),0,32)."..."; 
@@ -93,7 +93,7 @@
 						
 						<div class="song-container">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                        <img class="lazy"  src="<?php echo $songs_img; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />                                                        
+                                                        <img class="lazy"  src="<?php echo $songs_img; ?>" alt="<?php echo $this->getValidText($value['Song']['Artist'].' - '.$value['Song']['SongTitle']); ?>" width="250" height="250" />                                                        
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 
@@ -186,7 +186,7 @@
                                             <?php } ?>
 						</div>
 						<div class="album-title">
-							<a title="<?php echo $this->getTextEncode($value['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+							<a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['SongTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>20)
                                                                 echo substr($this->getTextEncode($value['Song']['SongTitle']),0,20)."..."; 
@@ -195,7 +195,7 @@
                                                     </a><?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
-							<a title="<?php echo $this->getTextEncode($value['Song']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+							<a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>32)
                                                                                                                     echo substr($this->getTextEncode($value['Song']['Artist']),0,32)."..."; 
@@ -244,7 +244,7 @@
 						
 						<div class="video-container">
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                        <img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
+                                                        <img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $this->getValidText($value['Video']['Artist'].' - '.$value['Video']['VideoTitle']); ?>" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 
@@ -273,7 +273,7 @@
                             <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' class="top-10-download-now-button " style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><?php __('Download Now');?></a>
+                            <a  href='javascript:void(0);' class="top-10-download-now-button " style="cursor:pointer;" title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><?php __('Download Now');?></a>
                             </span>
                             <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><a class="top-10-download-now-button" ><?php __('Please Wait...');?>
                             <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif', array('border' => '0')); ?></span></a></span>
@@ -324,7 +324,7 @@
 							
 						</div>
 						<div class="album-title">
-							<a title="<?php echo $this->getTextEncode($value['Video']['VideoTitle']); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+							<a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Video']['VideoTitle'])>20)
                                                                 echo substr($this->getTextEncode($value['Video']['VideoTitle']),0,20)."..."; 
@@ -333,7 +333,7 @@
                                                     </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 						</div>
 						<div class="artist-name">
-							<a title="<?php echo $this->getTextEncode($value['Video']['Artist']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
+							<a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Video']['Artist'])>32)
                                                                                                                     echo substr($this->getTextEncode($value['Video']['Artist']),0,32)."..."; 

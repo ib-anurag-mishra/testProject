@@ -108,6 +108,10 @@ class dataencodeView extends View {
   }
 
 
+  function getValidText($text)                    // Replace Single, Double Quotes, & with HTML entities in Text
+  {
+       return htmlentities($this->getAdminTextEncode($text));
+  }  
 
 }
 

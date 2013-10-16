@@ -422,7 +422,7 @@ if ($type != 'all') {
                     $count = $composer->numFound;
                     $name = $this->getTextEncode($name);
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
@@ -656,7 +656,7 @@ if ($type != 'all') {
                 foreach ($artists as $artist) {
                     $tilte = urlencode($artist->ArtistText);
                     $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
-                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))));
+                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))),array('title' => $this->getTextEncode($artist->ArtistText)));
                     if(!empty($artist_name_text)) {
                     ?>
                                 <div><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></div>
@@ -694,7 +694,7 @@ if ($type != 'all') {
             $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
             if(!empty($composer_name)){
             ?>
-                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title='<?php echo $this->getTextEncode($composer->Composer) ?>'><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
+                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
         <?php } }
     } else {
         ?>
@@ -859,7 +859,7 @@ if ($type != 'all') {
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText) )); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
-                            <div class="composer"><span title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></span></div>
+                            <div class="composer"><a style="text-decoration:none;" title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
 
 
                             <div class="wishlist-popover">	
@@ -908,13 +908,13 @@ if ($type != 'all') {
                             <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 15, $this)); ?></a></div>
                             <div class="song">
                                 <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                <span title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
+                                <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
         <?php
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
         }
         ?>
-                                </span>
+                                </a>
                             </div>
                             <div class="download">
                                     <?php

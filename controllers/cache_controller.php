@@ -226,7 +226,7 @@ STR;
  
           
             // Added caching functionality for featured videos
-            $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`,`Video`.`Advisory`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID  and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
+            $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`,`Video`.`Advisory`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID  and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             
             $this->log("featured videos $territory", "cachequery");
             $this->log($featured_videos_sql, "cachequery");
@@ -712,7 +712,7 @@ STR;
                         Song.DownloadStatus,
                         Song.SongTitle,
                         Song.Artist,
-                        Song.Advisory,
+                        Albums.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
                         Song.provider_type,
@@ -896,7 +896,7 @@ SELECT
     Song.DownloadStatus,
     Song.SongTitle,
     Song.Artist,
-    Song.Advisory,
+    Albums.Advisory,
     Song.Sample_Duration,
     Song.FullLength_Duration,
     Song.provider_type,
@@ -1862,7 +1862,7 @@ STR;
                         Song.DownloadStatus,
                         Song.SongTitle,
                         Song.Artist,
-                        Song.Advisory,
+                        Albums.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
                         Song.provider_type,

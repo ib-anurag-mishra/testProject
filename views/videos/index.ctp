@@ -29,7 +29,7 @@ if(count($featuredVideos) > 0){ ?>
 	<?php if($sr_no%2==0) {?><li> <?php }?>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
-                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" /></a>
+                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" alt="" /></a>
                                 <?php
                                 if($this->Session->read('patron')) {
 
@@ -46,7 +46,7 @@ if(count($featuredVideos) > 0){ ?>
                                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
                                                     <input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
                                                     <span id="song_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" class="beforeClick">
-                                                        <a  href='#' style="cursor:pointer;" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+                                                        <a  href='#' style="cursor:pointer;" title="<?php __($this->getValidText("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."));?>" onclick='videoDownloadAll(<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
                                                     </span>
                                                     <span class="afterClick" id="downloading_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                                                     <span id="download_loader_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -80,7 +80,7 @@ if(count($featuredVideos) > 0){ ?>
                                 ?>
                             </div>
                             <div class="video-title">
-                                <a title="<?php echo $featureVideo['Video']['VideoTitle']; ?>" href="javascript:void(0);">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($featureVideo['Video']['VideoTitle'])); ?>" href="javascript:void(0);">
                                 <?php
                                 if(strlen($featureVideo['Video']['VideoTitle']) >= 20){
                                         $featureVideo['Video']['VideoTitle'] = substr($featureVideo['Video']['VideoTitle'], 0, 20). '...';
@@ -95,7 +95,7 @@ if(count($featuredVideos) > 0){ ?>
                                     $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 20). '...';
                                 }
                                 ?>
-                                <a title="<?php echo $featureVideo['Video']['ArtistText']; ?>"><?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?></a>
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($featureVideo['Video']['ArtistText'])); ?>"><?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?></a>
                             </div>
                         </div>
                <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
@@ -133,7 +133,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                     
                     <?php if($sr_no%2==0) {?><li> <?php }?>
                         <div class="video-cover-container">
-                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
+                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img alt="" src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" /></a>
                             
                             
                            <?php
@@ -163,12 +163,11 @@ foreach($topVideoDownloads as $key => $topDownload)
                                           $topDownload['Video']['status'] = 'not';
                                         }
                                         if($topDownload['Video']['status'] != 'avail') {?>
-                                ?>
                                             <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
                                                 <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
                                                 <input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
                                                 <span class="beforeClick" style="cursor:pointer;" id="song_<?php echo $topDownload["Video"]["ProdID"]; ?>">
-                                                    <a href='javascript:void(0);'  class="download-now" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $topDownload["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+                                                    <a href='javascript:void(0);'  class="download-now" title="<?php __($this->getValidText("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."));?>" onclick='videoDownloadAll(<?php echo $topDownload["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
                                                 </span>
                                                 <span class="afterClick"  id="downloading_<?php echo $topDownload["Video"]["ProdID"]; ?>" style="display:none;"><a href="class="download-now"><?php __('Please Wait...');?>
                                                 <span id="download_loader_<?php echo $topDownload["Video"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif'); ?>
@@ -198,7 +197,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                                  </div>
                         </div>
                         <div class="video-title">
-                            <a title="<?php echo $topDownload['Video']['VideoTitle']; ?>" href="javascript:void(0);">
+                            <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['VideoTitle'])); ?>" href="javascript:void(0);">
 
                             <?php
                             if(strlen($topDownload['Video']['VideoTitle']) >= 20){
@@ -209,7 +208,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                             </a> <?php if(isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                         </div>
                         <div class="video-name">
-                            <a title="<?php echo $topDownload['Video']['ArtistText']; ?>" href="javascript:void(0);">
+                            <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['ArtistText'])); ?>" href="javascript:void(0);">
                             <?php 
                             if(strlen($topDownload['Video']['ArtistText']) >= 20){
                                     $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 20). '...';
