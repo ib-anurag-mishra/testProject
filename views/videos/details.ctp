@@ -37,7 +37,7 @@
                                             </span>
                                     <?php
                                         } else {?>
-                                            <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText("You have already downloaded this song. Get it from your recent downloads"));?>'><?php __('Downloaded'); ?></label></a>
+                                            <a class="download-now-button " href='/homes/my_history' title='<?php __($this->getValidText("You have already downloaded this song. Get it from your recent downloads"));?>'><?php __('Downloaded'); ?></a>
                                         <?php
                                         }
                                     }
@@ -142,7 +142,7 @@
                                                                     </span>
                                             <?php
                                                                 } else {?>
-                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText("You have already downloaded this song. Get it from your recent downloads"));?>'><?php __('Downloaded'); ?></label></a>
+                                                                    <a class="download-now-button " href='/homes/my_history' title='<?php __($this->getValidText("You have already downloaded this song. Get it from your recent downloads"));?>'><?php __('Downloaded'); ?></a>
                                                                 <?php
                                                                 }
 
@@ -262,7 +262,7 @@
                                                                                 </span>
                                             <?php
                                                                 } else {?>
-                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText("You have already downloaded this song. Get it from your recent downloads"));?>'><?php __('Downloaded'); ?></label></a>
+                                                                    <a class="download-now-button " href='/homes/my_history' title='<?php __($this->getValidText("You have already downloaded this song. Get it from your recent downloads"));?>'><?php __('Downloaded'); ?></a>
                                                                 <?php
                                                                 }
                                                             }
