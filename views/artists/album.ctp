@@ -215,7 +215,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 						
 						<div class="video-container">
 							<a href="/videos/details/<?php echo $value["Video"]["ProdID"]; ?>">                                                        
-                                                        <img src="<?php echo trim($value['videoAlbumImage']); ?>" alt="jlo" width="272" height="162" alt="" />
+                                                        <img src="<?php echo trim($value['videoAlbumImage']); ?>" alt="jlo" width="272" height="162"  />
                                                         </a>                                                  
 <?php
 
