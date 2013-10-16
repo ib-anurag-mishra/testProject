@@ -180,7 +180,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                         echo '<br />';
                                 }
                         if($album['Album']['Advisory'] == 'T'){
-                        	echo '<font class="explicit"> (Explicit)</font>';
+                        	echo '<span class="explicit"> (Explicit)</span>';
                             echo '<br />';
                         } ?>
                     </div>
@@ -215,7 +215,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 						
 						<div class="video-container">
 							<a href="/videos/details/<?php echo $value["Video"]["ProdID"]; ?>">                                                        
-                                                        <img src="<?php echo trim($value['videoAlbumImage']); ?>" alt="jlo" width="272" height="162" />
+                                                        <img src="<?php echo trim($value['videoAlbumImage']); ?>" alt="jlo" width="272" height="162" alt="" />
                                                         </a>                                                  
 <?php
 
