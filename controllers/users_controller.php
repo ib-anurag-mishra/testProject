@@ -174,7 +174,7 @@ Class UsersController extends AppController
         function libinactive(){
             $this->layout = 'login';            
             //$this -> Session -> setFlash("This Library is not registered with us.");
-            $this->Session->setFlash('This Library is not registered with us.', 'default', array(), 'inactivelib_message');
+            $this->Session->setFlash('The library you are trying to access is no longer registered with us. Please contact your local library for more information.', 'default', array(), 'inactivelib_message');
             $this->set('show_inactivelib',1); 
         }
    

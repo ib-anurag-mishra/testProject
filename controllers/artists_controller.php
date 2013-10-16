@@ -69,8 +69,7 @@ Class ArtistsController extends AppController
 				$condition = 'edit';
 				$artistName = $getData[ 'Featuredartist' ][ 'artist_name' ];
 				$country = $getData[ 'Featuredartist' ][ 'territory' ];
-				//$getArtistDataObj = new Song();
-				//$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
+
 				
                                 $getArtistData = array();
                                 $this->set( 'getArtistData', $getArtistData );
@@ -685,8 +684,6 @@ Class ArtistsController extends AppController
 			}
 		}
 
-		// echo base64_decode($id) . $album;
-		// exit;
 		$country = $this->Session->read('territory');
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');
@@ -698,17 +695,6 @@ Class ArtistsController extends AppController
 			$condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
 		}
 		else{
-			// $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
-			// $val = '';
-			// $this->Song->Behaviors->attach('Containable');
-			// foreach($allAlbum as $k => $v){
-				// $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-				// if(count($recordCount) > 0){
-					// $val = $val.$v['Album']['ProdID'].",";
-				// }
-			// }
-			// $condition = array("Album.ProdID IN (".rtrim($val,",").")");
-
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
@@ -925,17 +911,6 @@ Class ArtistsController extends AppController
 			$condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
 		}
 		else{
-			// $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
-			// $val = '';
-			// $this->Song->Behaviors->attach('Containable');
-			// foreach($allAlbum as $k => $v){
-				// $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-				// if(count($recordCount) > 0){
-					// $val = $val.$v['Album']['ProdID'].",";
-				// }
-			// }
-			// $condition = array("Album.ProdID IN (".rtrim($val,",").")");
-
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
@@ -1177,7 +1152,7 @@ Class ArtistsController extends AppController
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                    'Album.Advisory',
+                                            'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1197,7 +1172,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2, 'webservice' => 1
                             );
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
