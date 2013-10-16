@@ -124,7 +124,7 @@
                                                 }
                                             }
 				?>
-					</a>	
+					
                                 
                                 
                                         <div class="song"><?php
