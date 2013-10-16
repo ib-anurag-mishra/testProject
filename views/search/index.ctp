@@ -867,7 +867,7 @@ if ($type != 'all') {
                             <?php
                             }
                             ?>
-                            <div class="composer"><span title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></span></div>
+                            <div class="composer"><a style="text-decoration:none;" title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
 
 
                             <div class="wishlist-popover">	
@@ -916,13 +916,13 @@ if ($type != 'all') {
                             <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
                             <div class="song" <?php echo $styleSong; ?>>
                                 <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                <span title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
+                                <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
         <?php
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
         }
         ?>
-                                </span>
+                                </a>
                             </div>
                             <div class="download">
                                     <?php
