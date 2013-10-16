@@ -16,8 +16,9 @@
 			<h2><?php __('FAQs');?></h2>
 		</header>
 		<div class="faq-container">
-                    <ul>
+                    
                         <?php $Title = "";
+                        
                             foreach ($questions as $question): 
                                 
                                 $questiontitleText = $this->getTextEncode($question['Section']['title']);
@@ -26,12 +27,27 @@
                                 
                                if($Title != $question['Section']['title']) 
                                {?>
-                                       <h3><?php echo $questiontitleText; ?></h3>
-                               <?}?>			
-                                       <li><a href="#"><?php echo strip_tags($questionquText); ?></a>
+                                       
+                                       
+                               <?
+                                       if($Title=='')   
+                                       {
+                                           echo '<h3>'.$questiontitleText.'</h3><ul>';
+                                       }
+                                       else
+                                       {
+                                           echo '</ul><h3>'.$questiontitleText.'</h3><ul>';
+                                       }
+                               }
+                               ?>			
+                                       <li><a href="#" class=""><?php echo strip_tags($questionquText); ?></a>
                                            <p><?php echo str_replace(array("<li>","</li>","<ul>","</ul>"), array("<p>","</p>","",""), $questionansText); ?></li>
                                <?php $Title = $question['Section']['title']; ?>
                         <?php endforeach; ?>
-                    </ul>
+                                       <?php 
+                                                if($Title!='') 
+                                                    echo '</ul>';
+                                                    
+                                       ?>
                 </div>
 	</section>
