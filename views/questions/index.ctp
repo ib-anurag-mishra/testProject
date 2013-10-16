@@ -32,11 +32,11 @@
                                <?
                                        if($Title=='')   
                                        {
-                                           echo '<ul><h3>'.$questiontitleText.'</h3>';
+                                           echo '<h3>'.$questiontitleText.'</h3><ul>';
                                        }
                                        else
                                        {
-                                           echo '</ul><ul><h3>'.$questiontitleText.'</h3>';
+                                           echo '</ul><h3>'.$questiontitleText.'</h3><ul>';
                                        }
                                }
                                ?>			
