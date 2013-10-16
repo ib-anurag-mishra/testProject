@@ -502,6 +502,7 @@ class SolrComponent extends Object {
     }
 
     function groupSearch($keyword, $type='song', $page=1, $limit = 5) {
+        set_time_limit(0);
         $query = '';
         $country = $this->Session->read('territory');
         $cond = " AND DownloadStatus:1";
