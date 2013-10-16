@@ -221,11 +221,7 @@ Class GenresController extends AppController
         */
 	function view($Genre = null,$Artist = null) {
            
-		         
-                  
-            
-            
-            
+	   
             if($Genre == ''){
 			$Genre = "QWxs";
 		}
