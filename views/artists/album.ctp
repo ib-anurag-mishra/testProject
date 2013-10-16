@@ -159,7 +159,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                             //mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                     }
                             ?>
-                            <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162">
+                            <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162" alt="">
                         </a>   
                     </div>
                     <div class="album-title">
@@ -183,7 +183,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                         echo '<br />';
                                 }
                         if($album['Album']['Advisory'] == 'T'){
-                        	echo '<font class="explicit"> (Explicit)</font>';
+                        	echo '<span class="explicit"> (Explicit)</span>';
                             echo '<br />';
                         } ?>
                     </div>
