@@ -16,8 +16,9 @@
 			<h2><?php __('FAQs');?></h2>
 		</header>
 		<div class="faq-container">
-                    <ul>
+                    
                         <?php $Title = "";
+                        echo '<pre>'; print_r($questions);
                             foreach ($questions as $question): 
                                 
                                 $questiontitleText = $this->getTextEncode($question['Section']['title']);
@@ -26,7 +27,8 @@
                                 
                                if($Title != $question['Section']['title']) 
                                {?>
-                                       <span><?php echo $questiontitleText; ?></span>
+                                       <h3><?php echo $questiontitleText; ?></h3>
+                                       <ul>
                                <?}?>			
                                        <li><a href="#" class=""><?php echo strip_tags($questionquText); ?></a>
                                            <p><?php echo str_replace(array("<li>","</li>","<ul>","</ul>"), array("<p>","</p>","",""), $questionansText); ?></li>
