@@ -294,7 +294,7 @@ $totalRows = count($genresAll);
                 <div id="ajax_artistlist_content">
                     	<div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); ?></h3>
-				<div class="alphabetical-filter">
+				<div class="alphabetical-filter"> 
                                    
                                     <ul>
                                     <li><a   href="javascript:void(0);" data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>All' ,'' , '')">ALL</a></li>                                            
