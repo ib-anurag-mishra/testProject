@@ -853,13 +853,21 @@ if ($type != 'all') {
                         }
                         if($this->Session->read("patron")) {
                             $style = '';
+                            $styleSong = '';
                         } else {
                             $style = 'style="left:10px"';
+                            $styleSong = "style='left:570px'";
                         }
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText) )); ?></div>
-                            <a class="add-to-playlist-button" href="#"></a>
-                            <div class="composer"><a style="text-decoration:none;" title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
+                            <?php
+                            if($this->Session->read("patron")) {
+                                ?>
+                            <a class="add-to-playlist-button " href="#"></a>
+                            <?php
+                            }
+                            ?>
+                            <div class="composer"><a style="text-decoration:none;" title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></span></div>
 
 
                             <div class="wishlist-popover">	
@@ -905,8 +913,8 @@ if ($type != 'all') {
                                 ?>
                                 <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php //echo $psong->ReferenceID; ?>/<?php //echo base64_encode($psong->provider_type); ?>"><img src="<?php //echo $image; ?>" width="27" height="27" /></a> <?php /*alt="<?php echo $psong->SongTitle; ?>"*/ ?>
                             </div-->
-                            <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 15, $this)); ?></a></div>
-                            <div class="song">
+                            <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
+                            <div class="song" <?php echo $styleSong; ?>>
                                 <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
                                 <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
         <?php
@@ -1038,14 +1046,20 @@ if (isset($type)) {
                         <?php
                         if($this->Session->read("patron")) {
                             $style = '';
+                            $styleSong = '';
                         } else {
                             $style = 'style="left:10px"';
+                            $styleSong = "style='left:440px'";
                         }
                         ?>
                         <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
-
+                        <?php 
+                        if($this->Session->read("patron")) {
+                        ?>
 						<a class="add-to-playlist-button" href="#"></a>
-						
+						<?php
+                        }
+                        ?>
 						<div class="wishlist-popover">	
                             <?php
                                 if($this->Session->read("patron")){
@@ -1072,7 +1086,7 @@ if (isset($type)) {
                             //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                             //$image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
-                        <div class="song">
+                        <div class="song" <?php echo $styleSong; ?>>
                             <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
                             <a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
