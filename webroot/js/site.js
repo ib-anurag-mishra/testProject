@@ -178,7 +178,7 @@ $(function() {
 	
 	var video_thumbnail_container = $('.video-thumbnail-container');
         
-        var top_music_video_cover_container = $('.top-music-video-cover-container');
+        var video_cover_container = $('.video-cover-container');
 	
 	var wishlist_popover = $('.wishlist-popover');
 	
@@ -646,14 +646,14 @@ $(function() {
 		$(this).find('.preview').css({opacity:0});
 	});
         
-        top_music_video_cover_container.on('mouseenter',function(){
+        video_cover_container.on('mouseenter',function(){
 		
 		$(this).find('.add-to-playlist-button').css({opacity:1});
 		$(this).find('.top-video-login-button').css({opacity:1});
 		$(this).find('.preview').css({opacity:1});
 	});
 	
-	top_music_video_cover_container.on('mouseleave',function(){
+	video_cover_container.on('mouseleave',function(){
 		
 		$(this).find('.add-to-playlist-button').css({opacity:0});
 		$(this).find('.top-video-login-button').css({opacity:0});
