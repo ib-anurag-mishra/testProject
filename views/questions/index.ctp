@@ -18,6 +18,9 @@
 		<div class="faq-container">
                     <ul>
                         <?php $Title = "";
+                            echo "<pre>";
+                            print_r($questions);
+                            die;
                             foreach ($questions as $question): 
                                 
                                 $questiontitleText = $this->getTextEncode($question['Section']['title']);
