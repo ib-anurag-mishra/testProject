@@ -27,16 +27,16 @@
                                 
                                if($Title != $question['Section']['title']) 
                                {?>
-                                       <h3><?php echo $questiontitleText; ?></h3>
+                                       
                                        
                                <?
                                        if($Title=='')   
                                        {
-                                           echo '<ul>';
+                                           echo '<ul><h3>'.$questiontitleText.'</h3>';
                                        }
                                        else
                                        {
-                                           echo '</ul><ul>';
+                                           echo '</ul><ul><h3>'.$questiontitleText.'</h3>';
                                        }
                                }
                                ?>			
