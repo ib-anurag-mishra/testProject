@@ -358,7 +358,7 @@ if ($type != 'all') {
                     $artist_name_text = truncate_text($artist_name, 30, $this);
                     $tilte = urlencode($artist->ArtistText);
                     $count = $artist->numFound;
-                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)) . " (" . $count . ")", array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))));
+                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)) . " (" . $count . ")", array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))),array('title'=> str_replace('"', '', $artist->ArtistText)));
                     ?>
                                                 <div class="row"><?php echo $link; ?></div>
                                                 <?php
@@ -1052,7 +1052,7 @@ if (isset($type)) {
                             $styleSong = "style='left:440px'";
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
+                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
                         <?php 
                         if($this->Session->read("patron")) {
                         ?>
@@ -1081,14 +1081,14 @@ if (isset($type)) {
 							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
 						</div>
 						-->
-                        <div class="album"><a href="#"><?php echo truncate_text($this->getTextEncode($psong->Title),25,$this); ?></a></div>
+                        <div class="album"><a href="#" title="<?php echo $this->getTextEncode($psong->Title); ?>" ><?php echo truncate_text($this->getTextEncode($psong->Title),25,$this); ?></a></div>
 						<?php
                             //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                             //$image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
                         <div class="song" <?php echo $styleSong; ?>>
                             <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
-                            <a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
+                            <a href="/videos/details/<?php echo $psong->ProdID; ?>" title="<?php echo $this->getTextEncode($psong->Title);?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
