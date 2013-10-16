@@ -6,55 +6,7 @@
  */
 ?>    
 
-<style>
-
-.genre_list_item{
-	cursor: pointer;
-	display:block;
-}
-.genre_list_item_all{
-  cursor: pointer;
-	display:block;
-}
-#mydiv {
-    height: 250px;
-    width: 250px;
-    position: relative;
-    background-color: gray; /* for demonstration */
-}
-.ajax-loader {
-    display: block;
-    left: 50%;
-    margin-left: 147px;
-    margin-top: 85px;
-    position: absolute;
-    top: 50%;
-}   
-
-.ajax-loader1 {
-    display: block;
-    left: 50%;
-    margin-left: 115px;
-    margin-top: 85px;
-    position: absolute;
-    top: 50%;
-}
-
-
-
-.ajax-loader2 {
-    display: block;
-    left: 50%;
-    margin-left: 398px;
-    margin-top: 3px;
-    position: absolute;
-    top: 50%;
-}
-
-
-    
-</style>
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
     
  $(document).on('click','.artist-list a',function(){    
     var artist = $(this).data('artist');
@@ -103,7 +55,7 @@ function load_artist(link , id_serial , genre_name){
 	
         $('.album-list-span').html('');
         $('#album_details_container').html('');
-        $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
+        $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
         // var data = "ajax_genre_name="+genre_name;
         var data = "ajax_genre_name="+genre_name;
         jQuery.ajax({
@@ -123,7 +75,7 @@ function load_artist(link , id_serial , genre_name){
 function showAllAlbumsList(albumListURL){
 
        $('#album_details_container').html('');
-       $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader1"/></span>');
+       $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
 
         var data = "";
         jQuery.ajax({
@@ -168,7 +120,7 @@ function showAllAlbumsList(albumListURL){
 //load the albums details via ajax
 function showAlbumDetails(albumDetailURL){
    
-        $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
+        $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
 
         var data = "";
         jQuery.ajax({
@@ -309,7 +261,7 @@ $totalRows = count($genresAll);
 					
 					<ul>
 						
-						<li><a class="genre_list_item_all <?php if($genre=='All') { ?>selected <?php } ?>" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/All' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
+						<li><a style="cursor: pointer;display:block;" class="genre_list_item_all  <?php if($genre=='All') { ?>selected <?php } ?>" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/All' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
                                                 
             <?php
                 $genre_count = 1;
@@ -322,12 +274,12 @@ $totalRows = count($genresAll);
                         if($genre_name != 'Porn Groove'){                            
                             if($genre_name == $genre){
                                     ?>
-                                <li> <a  class="genre_list_item_all selected" href="javascript:void(0);" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/All' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a style="cursor: pointer;display:block;"  class="genre_list_item_all selected" href="javascript:void(0);" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/All' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getValidText($this->getTextEncode($genre_name)));  ?>')" ><?php echo $this->getValidText($this->getTextEncode($genre_name)); ?></a></li>
                                     <?php
                             }
                             else{
                                     ?>
-                                <li> <a  class="genre_list_item_all " href="javascript:void(0);" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a style="cursor: pointer;display:block;"  class="genre_list_item_all " href="javascript:void(0);" data-genre="<?php echo addslashes($this->getValidText($this->getTextEncode($genre_name)));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getValidText($this->getTextEncode($genre_name)));  ?>' )" ><?php echo $this->getValidText($this->getTextEncode($genre_name)); ?></a></li>
                                     <?php
                             }
                         }
@@ -388,8 +340,8 @@ $totalRows = count($genresAll);
                                                         echo " <li>";
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."' >";
-                                                        echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
+                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$this->getValidText(str_replace("'", '', ($ArtistName)))."' >";
+                                                        echo wordwrap($this->getValidText($ArtistName), 35, "<br />\n", TRUE);
                                                         echo '</a>';
                                                         echo '</li>';                                                                    
                                                 }
@@ -401,7 +353,7 @@ $totalRows = count($genresAll);
                                           <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
 				
 					</ul>
-                                    <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" style="padding-left:115px;padding-buttom:25px;"/></span>
+                                    <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
 				</div>
 			</div>
                    </div>                  
