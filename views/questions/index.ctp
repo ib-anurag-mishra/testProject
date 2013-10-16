@@ -28,12 +28,26 @@
                                if($Title != $question['Section']['title']) 
                                {?>
                                        <h3><?php echo $questiontitleText; ?></h3>
-                                       <ul>
-                               <?}?>			
+                                       
+                               <?
+                                       if($Title=='')   
+                                       {
+                                           echo '<ul>';
+                                       }
+                                       else
+                                       {
+                                           echo '</ul><ul>';
+                                       }
+                               }
+                               ?>			
                                        <li><a href="#" class=""><?php echo strip_tags($questionquText); ?></a>
                                            <p><?php echo str_replace(array("<li>","</li>","<ul>","</ul>"), array("<p>","</p>","",""), $questionansText); ?></li>
                                <?php $Title = $question['Section']['title']; ?>
                         <?php endforeach; ?>
-                    </ul>
+                                       <?php 
+                                                if($Title!='') 
+                                                    echo '</ul>';
+                                                    
+                                       ?>
                 </div>
 	</section>
