@@ -640,6 +640,13 @@ $(function() {
 		$(this).find('.featured-video-download-now-button').css({opacity:1});
 		$(this).find('.preview').css({opacity:1});
 	});
+        
+        video-cover-container.on('mouseenter',function(){
+		
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.top-video-login-button').css({opacity:1});
+		$(this).find('.preview').css({opacity:1});
+	});
 	
 	video_thumbnail_container.on('mouseleave',function(){
 		
