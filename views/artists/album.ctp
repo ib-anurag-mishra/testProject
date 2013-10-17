@@ -341,7 +341,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                                                 echo substr($value['Video']['VideoTitle'],0,25)."..."; 
                                                                 else echo $value['Video']['VideoTitle'];
                                                          ?>
-                                                         </a>						
+                                                         </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
                                                 </div>
 						<div class="genre">
 							<?php echo __('Genre').": ".$html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])),array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
