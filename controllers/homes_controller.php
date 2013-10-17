@@ -45,7 +45,7 @@ class HomesController extends AppController
                  $pat_id    =   $this->Session->read('patron');
         }
         
-          $pat_id    =   $this->Session->read('patron');
+         
           
           if(!empty($pat_id))    //  After Login
           {
