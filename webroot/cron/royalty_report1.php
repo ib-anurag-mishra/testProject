@@ -19,7 +19,10 @@ $arr_dates = array();
 $arr_dates['month']['from_date'] = '2012-10-01 00:00:00';
 $arr_dates['month']['to_date'] =  '2012-10-31 23:59:59';
 
-$libraryType = array('ALC'=>'0','Unlimited'=>'1');
+//$libraryType = array('ALC'=>'0','Unlimited'=>'1');
+
+$libraryType = array('ALC'=>'0');
+
 $unit_sales_rate = null;
 foreach($arr_dates AS $key => $value) {
     foreach($libraryType as $libTypeKey=>$libTypeValue){
@@ -28,7 +31,9 @@ foreach($arr_dates AS $key => $value) {
 		} else {
 			$unit_sales_rate = 0;
 		}
-        $country_curency = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR', 'NZ' => 'NZD');
+        // $country_curency = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR', 'NZ' => 'NZD');
+		$country_curency = array('US' => 'USD');
+		
 		$query_country = "Select distinct libraries.library_territory from libraries";
         $result_country = mysql_query($query_country, $freegal);
         
