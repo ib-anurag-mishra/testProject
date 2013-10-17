@@ -117,7 +117,7 @@ foreach($arr_dates AS $key => $value) {
             $file_name = "Freegal_r_" . strtolower($row_country['library_territory'])."_" . date('Ym' , strtotime($value['from_date'])).'_'. $libTypeKey . "_v$version".".txt";
             while(1)
             {
-                if(file_exists($reportsFolder.."/" . $file_name))
+                if(file_exists($reportsFolder."/" . $file_name))
                 {
                         $version++;
                         $file_name = "Freegal_r_" . strtolower($row_country['library_territory'])."_" . date('Ym' , strtotime($value['from_date'])).'_'. $libTypeKey ."_v$version".".txt";
