@@ -34,8 +34,19 @@ class HomesController extends AppController
         //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
         //			}
         //        }           
-                
-         $pat_id    =   $this->Session->read('patron');
+             
+        
+        if ($this->params['action'] == 'convertString' && ($this->Session->read('Auth.User.type_id') == 1)) // For super Admin while accesing convertString action
+        {
+                $pat_id = $this->Session->read('Auth.User.id');
+        }
+        else        //  For Front End
+        {
+                 $pat_id    =   $this->Session->read('patron');
+        }
+        
+         
+          
           if(!empty($pat_id))    //  After Login
           {
                 $this->Auth->allow('*'); 

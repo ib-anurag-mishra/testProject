@@ -128,7 +128,7 @@
                                                                     echo '<span class="explicit"> (Explicit)</span>';
                                                             }
                                                     ?></div>
-					<div class="artist"><a href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>" title="<?php echo $albumSong['Song']['Artist']; ?>"><?php
+					<div class="artist"><a href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>" title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>"><?php
 										if (strlen($albumSong['Song']['Artist']) >= 11) {
 											if(strlen($albumSong['Song']['Artist']) >= 60){
 												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60). '...';
