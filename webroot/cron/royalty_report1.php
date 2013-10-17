@@ -27,6 +27,7 @@ $unit_sales_rate = null;
 foreach($arr_dates AS $key => $value) {
     foreach($libraryType as $libTypeKey=>$libTypeValue){
 		if($libraryType == 'ALC'){
+			echo "here";
 			$unit_sales_rate = 0.25;
 		} else {
 			$unit_sales_rate = 0;
