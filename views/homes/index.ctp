@@ -543,7 +543,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                 <?php } ?>
                                                 </div>
                                                 <div class="song-title">
-                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['SongTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a title="<?php echo $this->getTextEncode($value['Song']['SongTitle']); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
 
                                                             $commingSoonSongTitle = $this->getTextEncode($value['Song']['SongTitle']);
@@ -566,7 +566,7 @@ $("#top-100-videos-grid").scroll(function(){
                                                         </a>	<?php if('T' == $value['Song']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                                                 </div>
                                                 <div class="artist-name">
-                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['ArtistText'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                        <a title="<?php echo $this->getTextEncode($value['Song']['ArtistText']); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                         <?php 
 
                                                                     $commingSoonSongArtistTitle = $this->getTextEncode($value['Song']['Artist']);
