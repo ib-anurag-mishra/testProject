@@ -140,7 +140,7 @@ var flashvars = {};
 var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
-swfobject.embedSWF("/swf/fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes/* , swfCallback */);
+swfobject.embedSWF("fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes/* , swfCallback */);
 
 /*
 function swfCallback (e) {
@@ -227,7 +227,7 @@ function nextPressed() {
 
 
 /* this is called before the song is played */ 
-function validateSong(songObj) {
+function validateSong(songObj, playerEventCode) {
 
 	
 	/* properties sent from flash
@@ -242,10 +242,66 @@ function validateSong(songObj) {
 	
 	
 	*/
+	
+	// playerEventCode: 1 = Play, 2 = Pause, 3 = Prev, 4 = Next, 5 = Song Ended, 6 = Switch Stream
+	
+	var playerEventCodeString;
+	
+	switch(playerEventCode) {
+		
+		case 1:
+			playerEventCodeString = "Play"
+			break;
+			
+		case 2:
+			playerEventCodeString = "Pause"
+			break;
+			
+		case 3:
+			playerEventCodeString = "Prev"
+			break;
+			
+			
+		case 4:
+			playerEventCodeString = "Next"
+			break;
+			
+		case 5:
+			playerEventCodeString = "Song Ended"
+			break;
+			
+		case 6:
+			playerEventCodeString = "User choose another song in the queue"
+			break;
+			
+	    case 7:
+			playerEventCodeString = "Queue loaded"
+			break;	    	
+			
+		
+	}
+	
+	
+	
+	$('.playerEventCode').html("Player event code is: " + playerEventCodeString); 
 	var isValid = true;
+
+	
+	
 	return isValid;
 	
 
+}
+
+function pingTimeJS() {
+	
+	var flash = document.getElementById("fmp_player");
+	flash.pingTime();	
+}
+
+function reportTime(amt) {
+	
+	$('.report_time').html("Current time is " + amt + " seconds.");
 }
 
 
