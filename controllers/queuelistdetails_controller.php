@@ -246,9 +246,17 @@ class QueueListDetailsController extends AppController{
                     'order' => 'QueueList.created DESC'                    
                   ));
                 
-                echo "Query: ".$this->QueueList->lastQuery();
-                                
-                echo "<pre>count: "; print_r($queueData); die;
+                
+                if(count($queueData)==0)
+                {
+                    echo 'Insertion Allowed'; 
+                }
+                else
+                {
+                    echo 'Queue Name you entered is already present. Please try different name.'; 
+                }
+                
+                die;
                 
             }
        
