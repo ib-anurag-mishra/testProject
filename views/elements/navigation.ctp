@@ -15,7 +15,7 @@ $(document).ready(function() {
                 }
                 else
                 {
-                       $('#RenameQueueMessage').html("<br><span style='color:red;'>"+response+"</span><br>");                                               
+                       $('#RenameQueueMessage').html("<span style='color:red;'>"+response+"</span><br>");                                               
                 }
             },
             error: function(jqXHR, textStatus, errorThrown){
