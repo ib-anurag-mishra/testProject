@@ -227,9 +227,9 @@ class QueueListDetailsController extends AppController{
             print_r($this->data);
             print_r($_POST);
             echo "patron: ".$this->Session->read('patron');
-            die;
+            //die;
              
-            if($this->data['patron_id'] == '')
+            if($_POST['data']['patron_id'] == '')
             {
                     echo 'Patron Not Login'; die;
             }
