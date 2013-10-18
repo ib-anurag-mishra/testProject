@@ -221,7 +221,7 @@ class QueueListDetailsController extends AppController{
     function ajaxQueueValidation() 
     {        
             $this -> layout = 'ajax';
-            //Configure::write('debug', 2);
+            Configure::write('debug', 2);
             
 //            echo "<pre>";
 //            print_r($this->data);
