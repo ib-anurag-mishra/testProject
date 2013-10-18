@@ -238,7 +238,17 @@ class QueueListDetailsController extends AppController{
             }   
             else
             {    
-                $cond = array('queue_type' => 0, 'status' => '1', 'patron_id' => array($this->Session->read('patron')), 'queue_name' => $this->data['QueueList']['queue_name']);
+                if($this->Session->read("Auth.User.type_id") == 1)
+                {
+                    $queue_type  = 1;
+                }
+                else
+                {
+                    $queue_type  = 0;
+                }
+                
+                
+                $cond = array('queue_type' => $queue_type, 'status' => '1', 'patron_id' => array($this->Session->read('patron')), 'queue_name' => $this->data['QueueList']['queue_name']);
                 
                 $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
