@@ -223,38 +223,32 @@ class QueueListDetailsController extends AppController{
             $this -> layout = 'ajax';
             //Configure::write('debug', 2);
             
-            echo "<pre>";
-            print_r($this->data);
-            echo "patron: ".$this->Session->read('patron');
-            die;
+//            echo "<pre>";
+//            print_r($this->data);
+//            echo "patron: ".$this->Session->read('patron');
+//            die;
              
-            if(empty($this->data['first_name']) || empty($this->data['last_name']) || empty($this->data['phone_no']))
+            if(empty($this->Session->read('patron')))
+            {
+                    echo 'Patron Not Login'; die;
+            }
+            else if(empty($this->data['QueueList']['queue_name']))
             {                
-                    $this->set('Message', "Failure");	
+                    echo 'Queue Name is empty'; die;
 
             }   
             else
-            {
-                    $this->data['RegisterConcert']['first_name']    = $this->data['first_name'];
-                    $this->data['RegisterConcert']['last_name']     = $this->data['last_name'];
-                    $this->data['RegisterConcert']['library_card']  = $this->Session->read('patron');
-                    $this->data['RegisterConcert']['phone_no']      = $this->data['phone_no'];
-                    $this->data['RegisterConcert']['library_id']    = $_POST['library_id'];
-                    $this->data['RegisterConcert']['created']       = date('Y-m-d H:i:s');                
+            {    
+                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => $this->Session->read('patron'));
                 
-                     // echo "<pre>"; print_r($this->data);
-            
-                    $this->RegisterConcert->setDataSource('master');
-                    if($this->RegisterConcert->save($this->data['RegisterConcert']))
-                    {
-                      $this->set('Message', '<font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.');      						
-                    }
-                    else
-                    {
-                            $this->set('Message', "There was error while storing the details.");				
-                    }
-                    
-                    $this->RegisterConcert->setDataSource('default');
+                $queueData = $this->QueueList->find('all', array(
+                    'conditions' => $cond,
+                    'fields' => array('queue_id'),
+                    'order' => 'QueueList.created DESC'                    
+                  ));
+                
+                
+                echo "<pre>count: "; print_r($queueData); 
                 
             }
        
