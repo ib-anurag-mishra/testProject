@@ -969,21 +969,6 @@ $(function() {
 
     });
 
-
-    $(document).on('click', '.faq-container', function()
-    {
-        if ($(this).siblings('p').hasClass('active')) {
-            $(this).siblings('p').slideUp(500).removeClass('active');
-        } 
-        else 
-        {
-            $('.faq-container p').slideUp(500).removeClass('active');
-            $(this).siblings('p').slideDown(500).addClass('active');
-        }
-    });
-
-
-
     $('.site-nav .most-popular a').on('mouseenter', function(e) {
         e.preventDefault();
 
