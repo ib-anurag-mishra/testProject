@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
-     $("#FormRename").submit(function() {
+     $("#FormRename", "#FormDelete").submit(function() {
      var frm = $('#FormRename');
         $.ajax({
             type: "post",
@@ -84,7 +84,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="create-queue-dialog-box">
                     <div class="close"></div>
                     <header>Create Queue</header>
-                    <form action="/queues/createQueue" method="post">
+                    <form id="FormDelete" action="/queues/createQueue" method="post">
                     <div class="rename-form-container">
 
                         <label for="name">Name:</label>
