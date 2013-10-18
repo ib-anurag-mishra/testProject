@@ -1503,77 +1503,94 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 
     function loadSong(songFile,songTitle,artistName,songLength,prodId,providerType) { 
         
-        var postURL = webroot+'queuelistdetails/getPlaylistData';
-        $.ajax({
-            type: "POST",
-            cache:false,
-            url: postURL,
-            data: {prodId : prodId,providerType : providerType}
-        }).done(function(data){
-                var json = JSON.parse(data);
-                if(json.error){
-                    var result = json.error;
-                    alert(result[1]);
-					if(result[3] != 6){
-                                            var flash = document.getElementById("fmp_player");
-                                            flash.clearQueueFromJS();
-					}
-                }else if(json.success){
-                    $('#songDetails').val(prodId+'-'+providerType);
-                    var newSong = [
-                            {
-                            "label":songTitle,
-                            "songTitle":songTitle,
-                            "artistName":artistName,
-                            "songLength":songLength,
-                            "data":songFile
-                            }
-                    ];                    
-                    pushSongs(newSong);
+//        var postURL = webroot+'queuelistdetails/getPlaylistData';
+//        $.ajax({
+//            type: "POST",
+//            cache:false,
+//            url: postURL,
+//            data: {prodId : prodId,providerType : providerType}
+//        }).done(function(data){
+//                var json = JSON.parse(data);
+//                if(json.error){
+//                    var result = json.error;
+//                    alert(result[1]);
+//					if(result[3] != 6){
+//                                            var flash = document.getElementById("fmp_player");
+//                                            flash.clearQueueFromJS();
+//					}
+//                }else if(json.success){
+//                    $('#songDetails').val(prodId+'-'+providerType);
+//                    var newSong = [
+//                            {
+//                            "label":songTitle,
+//                            "songTitle":songTitle,
+//                            "artistName":artistName,
+//                            "songLength":songLength,
+//                            "data":songFile
+//                            }
+//                    ];                    
+//                    pushSongs(newSong);
+//                }
+//        })
+//        .fail(function(){
+//            alert('Ajax Call to Validate song has been failed');
+//        }); 
+
+        var newSong = [
+                {
+                "songId":prodId,
+                "songProviderType":providerType,
+                "label":songTitle,
+                "songTitle":songTitle,
+                "artistName":artistName,
+                "songLength":songLength,
+                "data":songFile
                 }
-        })
-        .fail(function(){
-            alert('Ajax Call to Validate song has been failed');
-        });         
+        ];                    
+        pushSongs(newSong);
 
     } 
 
 $(document).ready(function (){
 
     $('.play-queue-btn').click(function (){
-        var item = $('#play_item_1').text();
-        if(item.length){
-            var songData = item.split(',');
-            var prodId = songData[0];
-            var providerType = songData[1];
+//        var item = $('#play_item_1').text();
+//        if(item.length){
+//            var songData = item.split(',');
+//            var prodId = songData[0];
+//            var providerType = songData[1];
+//        }
+//        var queueId = $('#hid_Plid').val();
+//        var postURL = webroot+'queuelistdetails/getPlaylistData';
+//        $.ajax({
+//            type: "POST",
+//            cache:false,
+//            url: postURL,
+//            data: {prodId : prodId,providerType : providerType,queueId : queueId}
+//        }).done(function(data){
+//                var json = JSON.parse(data);
+//                if(json.error){
+//                    alert(json.error[1]);
+//					if(json.error[3] != 6){
+//                                            var flash = document.getElementById("fmp_player");
+//                                            flash.clearQueueFromJS();
+//					}
+//                }else if(json.success){
+//                    playlist = $('#playlist_data').text();
+//                    playlist = JSON.parse(playlist);
+//                    if(playlist.length){
+//                        pushSongs(playlist);
+//                    }
+//                }
+//        })
+//        .fail(function(){
+//            alert('Ajax Call to Validate Playlist has been failed');
+//        });  
+
+        playlist = $('#playlist_data').text();
+        playlist = JSON.parse(playlist);
+        if(playlist.length){
+            pushSongs(playlist);
         }
-        var queueId = $('#hid_Plid').val();
-        var postURL = webroot+'queuelistdetails/getPlaylistData';
-        $.ajax({
-            type: "POST",
-            cache:false,
-            url: postURL,
-            data: {prodId : prodId,providerType : providerType,queueId : queueId}
-        }).done(function(data){
-                var json = JSON.parse(data);
-                if(json.error){
-                    alert(json.error[1]);
-					if(json.error[3] != 6){
-                                            var flash = document.getElementById("fmp_player");
-                                            flash.clearQueueFromJS();
-					}
-                }else if(json.success){
-                    playlist = $('#playlist_data').text();
-                    playlist = JSON.parse(playlist);
-                    if(playlist.length){
-                        pushSongs(playlist);
-                    }
-                }
-        })
-        .fail(function(){
-            alert('Ajax Call to Validate Playlist has been failed');
-        });         
-  
-              
     });
 });
