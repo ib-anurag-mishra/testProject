@@ -221,12 +221,13 @@ class QueueListDetailsController extends AppController{
     function ajaxQueueValidation() 
     {        
             $this -> layout = 'ajax';
-            Configure::write('debug', 2);
+            //Configure::write('debug', 2);
             
-//            echo "<pre>";
-//            print_r($this->data);
-//            echo "patron: ".$this->Session->read('patron');
-//            die;
+            echo "<pre>";
+            print_r($this->data);
+            print_r($_POST);
+            echo "patron: ".$this->Session->read('patron');
+            die;
              
             if($this->data['patron_id'] == '')
             {
