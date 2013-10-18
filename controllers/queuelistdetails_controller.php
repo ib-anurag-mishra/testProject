@@ -228,11 +228,11 @@ class QueueListDetailsController extends AppController{
 //            echo "patron: ".$this->Session->read('patron');
 //            die;
              
-            if(!isset($this->Session->read('patron')))
+            if(($this->Session->read('patron'))=='')
             {
                     echo 'Patron Not Login'; die;
             }
-            else if(!isset($this->data['QueueList']['queue_name']))
+            else if(($this->data['QueueList']['queue_name'])=='')
             {                
                     echo 'Queue Name is empty'; die;
 
