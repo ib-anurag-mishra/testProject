@@ -218,7 +218,7 @@ class QueueListDetailsController extends AppController{
        exit;
     }
     
-    function ajaxQueueValidation()
+    function ajaxQueueValidation() 
     {        
             $this -> layout = 'ajax';
             //Configure::write('debug', 2);
@@ -228,11 +228,11 @@ class QueueListDetailsController extends AppController{
 //            echo "patron: ".$this->Session->read('patron');
 //            die;
              
-            if(($this->Session->read('patron'))=='')
+            if($this->Session->read('patron')=='')
             {
                     echo 'Patron Not Login'; die;
             }
-            else if(($this->data['QueueList']['queue_name'])=='')
+            elseif($this->data['QueueList']['queue_name']=='')
             {                
                     echo 'Queue Name is empty'; die;
 
