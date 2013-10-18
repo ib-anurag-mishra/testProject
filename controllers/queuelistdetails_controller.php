@@ -238,7 +238,7 @@ class QueueListDetailsController extends AppController{
             }   
             else
             {    
-                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => $this->Session->read('patron'));
+                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => array($this->Session->read('patron'),'1'), 'queue_name' => $this->data['QueueList']['queue_name']);
                 
                 $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
