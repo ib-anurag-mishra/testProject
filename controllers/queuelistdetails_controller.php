@@ -232,7 +232,7 @@ class QueueListDetailsController extends AppController{
             {
                     echo 'Patron Not Login'; die;
             }
-            else if($this->data['QueueList']['queue_name']=='')
+            /*else if($this->data['QueueList']['queue_name']=='')
             {                
                     echo 'Queue Name is empty'; die;
             }   
@@ -249,7 +249,7 @@ class QueueListDetailsController extends AppController{
                 
                 echo "<pre>count: "; print_r($queueData); 
                 
-            }
+            }*/
        
         
     }
