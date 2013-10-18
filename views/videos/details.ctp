@@ -29,7 +29,7 @@
                                             <input type="hidden" name="ProdID" value="<?php echo $VideosData[0]["Video"]["ProdID"];?>" />
                                             <input type="hidden" name="ProviderType" value="<?php echo $VideosData[0]["Video"]["provider_type"]; ?>" />
                                             <span class="beforeClick" id="song_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>">
-                                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $VideosData[0]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>'><?php __('Download Now');?></label></a>
+                                            <a title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>' href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $VideosData[0]["Video"]["ProdID"]; ?>");'><?php __('Download Now');?></a>
                                             </span>
                                             <span class="afterClick" id="downloading_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                                             <span id="download_loader_<?php echo $VideosData[0]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -37,7 +37,7 @@
                                             </span>
                                     <?php
                                         } else {?>
-                                            <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                            <a class="download-now-button " href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></a>
                                         <?php
                                         }
                                     }
@@ -134,7 +134,7 @@
                                                                     <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                     <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                                                                     <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                                                                    <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>'><?php __('Download Now');?></label></a>
+                                                                    <a title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>' href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><?php __('Download Now');?></a>
                                                                     </span>
                                                                     <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                                                                     <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -142,7 +142,7 @@
                                                                     </span>
                                             <?php
                                                                 } else {?>
-                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                    <a class="download-now-button " href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></a>
                                                                 <?php
                                                                 }
 
@@ -254,7 +254,7 @@
                                                                                 <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                                                                                 <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                                                                                 <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                                                                                <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>'><?php __('Download Now');?></label></a>
+                                                                                <a title='<?php __($this->getValidText('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'));?>' href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><?php __('Download Now');?></a>
                                                                                 </span>
                                                                                 <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                                                                                 <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -262,7 +262,7 @@
                                                                                 </span>
                                             <?php
                                                                 } else {?>
-                                                                    <a class="download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                                                                    <a class="download-now-button " href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></a>
                                                                 <?php
                                                                 }
                                                             }
