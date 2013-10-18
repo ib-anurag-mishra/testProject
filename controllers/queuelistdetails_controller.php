@@ -225,6 +225,7 @@ class QueueListDetailsController extends AppController{
             
             echo "<pre>";
             print_r($this->data);
+            echo "patron: ".$this->Session->read('patron');
             die;
              
             if(empty($this->data['first_name']) || empty($this->data['last_name']) || empty($this->data['phone_no']))
