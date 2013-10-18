@@ -1,3 +1,40 @@
+<script type="text/javascript">
+$(document).ready(function() {
+     $("#FormRename").submit(function() {
+     var frm = $('#FormRename');
+        $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/ajaxQueueValidation',
+            data: frm.serialize(),
+            success: function (response) { 
+                //alert("["+response+"]");
+                if(response=='Failure')
+                {
+                  $('#RenameQueueMessage').html("<br><span style='color:red;'>Please fill information in all fields.</span><br>");   
+                }
+                else
+                {
+                    $('#FormRegisterConcert').hide();   
+                    $('#FailureMessage').hide();
+                    $('#ReturnMessage').append(response); 
+                       
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            // log the error to the console
+            console.log(
+                "The following error occured: "+
+                textStatus, errorThrown
+            );
+            }
+ 
+        });
+ 
+        return false;
+    });
+});
+</script>
+
 <?php
 /**
 	File Name : navigation.php
@@ -30,8 +67,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="rename-queue-dialog-box">
                     <div class="close"></div>
                     <header>Rename '<span>Queue Name</span>'</header>
-                    <form action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
+                    <form id="FormRename" action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post" onsubmit="return false;">
                     <div class="rename-form-container">
+                                    <label id="RenameQueueMessage"></label> 
                                     <label for="name">Name:</label>
                                     <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
                                     <label for="description">Description:</label>
