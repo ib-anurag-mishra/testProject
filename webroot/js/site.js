@@ -970,6 +970,17 @@ $(function() {
     });
 
 
+    $(document).on('click', '.', function()
+    {
+        if ($(this).siblings('p').hasClass('active')) {
+            $(this).siblings('p').slideUp(500).removeClass('active');
+        } 
+        else 
+        {
+            $('.faq-container p').slideUp(500).removeClass('active');
+            $(this).siblings('p').slideDown(500).addClass('active');
+        }
+    });
 
 
 
@@ -1462,15 +1473,15 @@ $(function() {
         $(this).find('.preview').css({opacity: 0});
 
     });
-    
-      $(document).on('mouseenter', '.songs-scrollable .song-container', function() {
-       $(this).find('.add-to-playlist-button').css({opacity: 1});
+
+    $(document).on('mouseenter', '.songs-scrollable .song-container', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
 
     });
-    
-      $(document).on('mouseleave', '.songs-scrollable .song-container', function() {
+
+    $(document).on('mouseleave', '.songs-scrollable .song-container', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
