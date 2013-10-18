@@ -223,12 +223,12 @@ class QueueListDetailsController extends AppController{
             $this -> layout = 'ajax';
             //Configure::write('debug', 2);
             
-            echo "<pre>";
-            print_r($this->data);
-            echo "patron: ".$this->Session->read('patron');
-            die;
+//            echo "<pre>";
+//            print_r($this->data);
+//            echo "patron: ".$this->Session->read('patron');
+//            die;
              
-            if($this->Session->read('patron')=='')
+            if($this->data['patron_id'] == '')
             {
                     echo 'Patron Not Login'; die;
             }
