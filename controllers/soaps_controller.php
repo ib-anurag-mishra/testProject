@@ -1649,10 +1649,13 @@ STR;
    * @param string authenticationToken
    * @param string ProdID
    * @param string agent
+   * @param int actionID
+   * @param int consumedTime
+   * @param string songDuration
    * @return StreamingResponseType[]
    */
   
-  function validateStreamRequest($authenticationToken, $ProdID, $agent){
+  function validateStreamRequest($authenticationToken, $ProdID, $agent, $actionID, $consumedTime, $songDuration){
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -1665,18 +1668,28 @@ STR;
     $prodId = $product_detail['Product']['ProdID'];
     $provider_type = $product_detail['Product']['provider_type'];    
       
-    $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, 'App-'.$agent);
+    if( (1 == $actionID) || (2 == $actionID) ){
+      $consumedTime = 0;
+    }    
+    
+    $song_duration = $this->Streaming->getSeconds($songDuration);
+    
+    // Library ID | Patron Id | ProdID | Provider Type | Streaming time used by user | Action Type | Agent | Song Duration
+    $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, $consumedTime, $actionID, 'App-'.$agent, $song_duration);
+    // 0/1 | message | Remaining time | 3 message identification number for mobile | timerCallTime | timerCallDuration
+    
     
     switch($response[0]){
-      case 'success': 
+      case '1': 
       
         $streaming_url = null;
         $streaming_url = $this->getStreamngURL($prodId, $provider_type);    
-        return $this->createsStreamingResponseObject(true, $response[1], $response[2], $streaming_url); 
+        return $this->createsStreamingResponseObject(true, $response[1], $response[2], $streaming_url, $response[4], $response[5]); 
+        // success | message | remaningtime | mp4url | timerCallTime | timerCallDuration
       break;
-      case 'error'  : 
+      case '0'  : 
       
-        return $this->createsStreamingResponseObject(false, $response[1], $response[2], '');  
+        return $this->createsStreamingResponseObject(false, $response[1], $response[2], '', $response[4], $response[5]);  
       break;
       default:  throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
     
@@ -6327,16 +6340,20 @@ STR;
    * @param string $message
    * @param string $remaningtime
    * @param string $mp4url
+   * @param string $timerCallTime
+   * @param string $timerCallDuration
    * @return StreamingResponseType[]
    */
 
-  private function createsStreamingResponseObject($success, $message, $remaningtime, $mp4url){
-
+  private function createsStreamingResponseObject($success, $message, $remaningtime, $mp4url, $timerCallTime, $timerCallDuration){
+    //// success | message | remaningtime | mp4url | timerCallTime | timerCallDuration
     $obj = new StreamingResponseType;
-    $obj->success       = $success;
-    $obj->message       = $message;
-    $obj->remaningtime  = $remaningtime;
-    $obj->mp4url       = $mp4url;
+    $obj->success             = $success;
+    $obj->message             = $message;
+    $obj->remaningtime        = $remaningtime;
+    $obj->mp4url              = $mp4url;
+    $obj->timerCallTime       = $timerCallTime;
+    $obj->timerCallDuration   = $timerCallDuration;
 
     $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'StreamingResponseType');
     $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArrayStreamingResponseType');
