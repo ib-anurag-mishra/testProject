@@ -35,8 +35,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-08-01';
-$currentDate = date( "Y-m-d", time());
+$currentDate = '2013-10-14';
+//$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -368,7 +368,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    /*$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -379,10 +379,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     {
                         sendalert("Query failed: ".$sql);
                         die(" Query failed: ". $sql. " Error: " .mysql_error());
-                    }
+                    }*/
 
                     //  FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly"))
+                    /*if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "weekly")) {
@@ -399,7 +399,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             die(" Query failed: ". $sql. " Error: " .mysql_error());
                         }
                         // }
-                    }
+                    }*/
                 }
             }
 
@@ -733,7 +733,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    /*$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -744,10 +744,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     {
                         sendalert("Query failed: ".$sql);
                         die("Query failed: ". $sql. " Error: " .mysql_error());
-                    }
+                    }*/
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
+                    /*if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
@@ -763,7 +763,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             sendalert("Query failed: ".$sql);
                             die("Query failed: ". $sql. " Error: " .mysql_error());
                         }
-                    }
+                    }*/
                 }   
             }
         }

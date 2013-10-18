@@ -369,7 +369,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fclose($file);
 /*
                     $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
-                    $result6 = mysql_query($sql);*/
+                    $result6 = mysql_query($sql);
                     
                     if($result6)
                     {
@@ -379,7 +379,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     {
                         sendalert("Query failed: ".$sql);
                         die(" Query failed: ". $sql. " Error: " .mysql_error());
-                    }
+                    }*/
 
                     //  FOR SENDING REPORT TO SONY SERVER USING SFTP
                     /*if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt", $logFileWrite, "weekly"))
@@ -734,7 +734,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fclose($file);
 
                     /*$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
-                    $result6 = mysql_query($sql);*/
+                    $result6 = mysql_query($sql);
                     
                     if($result6)
                     {
@@ -744,7 +744,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     {
                         sendalert("Query failed: ".$sql);
                         die("Query failed: ". $sql. " Error: " .mysql_error());
-                    }
+                    }*/
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
                     /*if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt", $logFileWrite, "monthly"))
