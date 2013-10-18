@@ -247,6 +247,11 @@ class QueueListDetailsController extends AppController{
                   ));
                 
                 
+                echo "<br>query: ".$this->QueueList->lastQuery();
+                echo "<pre>";
+                print_r($queueData);
+                die;
+                
                 if(count($queueData)==0)
                 {
                     echo 'Insertion Allowed'; 
