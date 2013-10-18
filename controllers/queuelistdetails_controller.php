@@ -238,7 +238,7 @@ class QueueListDetailsController extends AppController{
             }   
             else
             {    
-                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => array($this->Session->read('patron')), 'queue_name' => $this->data['QueueList']['queue_name']);
+                $cond = array('queue_type' => 0, 'status' => '1', 'patron_id' => array($this->Session->read('patron')), 'queue_name' => $this->data['QueueList']['queue_name']);
                 
                 $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
@@ -247,10 +247,6 @@ class QueueListDetailsController extends AppController{
                   ));
                 
                 
-                echo "<br>query: ".$this->QueueList->lastQuery();
-                echo "<pre>";
-                print_r($queueData);
-                die;
                 
                 if(count($queueData)==0)
                 {
