@@ -248,14 +248,8 @@
 												echo $slNo;
 											?></div>
 <?php if($this->Session->read("patron")){ ?> 														
-<a href="#" class="preview"></a>
-<?php } ?>
-
-
-														
-
-
-<?php
+<!--<a href="#" class="preview"></a>-->
+<?php } 
 
     if($this->Session->read('patron')) {
         if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
