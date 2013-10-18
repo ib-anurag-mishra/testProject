@@ -14,9 +14,9 @@ $(document).ready(function() {
                 }
                 else
                 {
-                    $('#FormRegisterConcert').hide();   
-                    $('#FailureMessage').hide();
-                    $('#ReturnMessage').append(response); 
+//                    $('#FormRegisterConcert').hide();   
+//                    $('#FailureMessage').hide();
+//                    $('#ReturnMessage').append(response); 
                        
                 }
             },
