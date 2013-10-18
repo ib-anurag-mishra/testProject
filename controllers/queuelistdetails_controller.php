@@ -17,7 +17,7 @@ class QueueListDetailsController extends AppController{
     function beforeFilter(){
            
             parent::beforeFilter();
-            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession');
+            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');            
     }
     
     
@@ -216,6 +216,57 @@ class QueueListDetailsController extends AppController{
        $this->Session->delete('songPlaying');
        echo "success";
        exit;
+    }
+    
+    function ajaxQueueValidation() 
+    {        
+            $this -> layout = 'ajax';
+
+             
+            if($this->Session->read('patron')=='')
+            {
+                    echo 'Patron Not Login'; die;
+            }
+            elseif($this->data['QueueList']['queue_name']=='')
+            {                
+                    echo 'Queue Name is empty'; die;
+            }   
+            else
+            {    
+                if($this->Session->read("Auth.User.type_id") == 1)
+                {
+                    $queue_type  = 1;
+                }
+                else
+                {
+                    $queue_type  = 0;
+                }
+                
+                
+                $cond = array('queue_type' => $queue_type, 'status' => '1', 'patron_id' => array($this->Session->read('patron')), 'queue_name' => $this->data['QueueList']['queue_name']);
+                
+                $queueData = $this->QueueList->find('all', array(
+                    'conditions' => $cond,
+                    'fields' => array('queue_id'),
+                    'order' => 'QueueList.created DESC'                    
+                  ));
+                
+                
+                
+                if(count($queueData)==0)
+                {
+                    echo 'Insertion Allowed'; 
+                }
+                else
+                {
+                    echo 'Queue Name you entered is already present. Please try different name.'; 
+                }
+                
+                die;
+                
+            }
+       
+            die;
     }
     
     

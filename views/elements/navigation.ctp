@@ -1,3 +1,74 @@
+<script type="text/javascript">
+$(document).ready(function() {
+     $("#FormRename").submit(function() {
+     var frm = $('#FormRename');
+        $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/ajaxQueueValidation',
+            data: frm.serialize(),
+            success: function (response) { 
+                //alert("["+response+"]");
+                if(response=='Insertion Allowed')
+                {                   
+                       //$( "#FormRename" ).submit();
+                       document.getElementById("FormRename").submit();
+                }
+                else
+                {
+                       $('#RenameQueueMessage').html("<span style='color:red;'>"+response+"</span><br>");                                               
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            // log the error to the console
+            console.log(
+                "The following error occured: "+
+                textStatus, errorThrown
+            );
+            }
+ 
+        });
+ 
+        return false;
+    });
+});
+
+
+$(document).ready(function() {
+     $("#FormDelete").submit(function() {
+     var frm = $('#FormDelete');
+        $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/ajaxQueueValidation',
+            data: frm.serialize(),
+            success: function (response) { 
+                //alert("["+response+"]");
+                if(response=='Insertion Allowed')
+                {                   
+                       //$( "#FormRename" ).submit();
+                       document.getElementById("FormDelete").submit();
+                }
+                else
+                {
+                       $('#CreateQueueMessage').html("<span style='color:red;'>"+response+"</span><br>");                                               
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            // log the error to the console
+            console.log(
+                "The following error occured: "+
+                textStatus, errorThrown
+            );
+            }
+ 
+        });
+ 
+        return false;
+    });
+});
+
+
+</script>
+
 <?php
 /**
 	File Name : navigation.php
@@ -30,12 +101,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="rename-queue-dialog-box">
                     <div class="close"></div>
                     <header>Rename '<span>Queue Name</span>'</header>
-                    <form action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
+                    <form id="FormRename" action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
                     <div class="rename-form-container">
+                                    <label id="RenameQueueMessage"></label> 
                                     <label for="name">Name:</label>
                                     <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
                                     <label for="description">Description:</label>
-                                    <?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
+                                    <?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>                                                                        
                                     <input type="hidden" id="rqPlid" name="rqPlid" value="" />
                                     <input type="hidden" name="hid_action" value="rename_queue" />
                     </div>
@@ -48,9 +120,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="create-queue-dialog-box">
                     <div class="close"></div>
                     <header>Create Queue</header>
-                    <form action="/queues/createQueue" method="post">
+                    <form id="FormDelete" action="/queues/createQueue" method="post">
                     <div class="rename-form-container">
-
+                        <label id="CreateQueueMessage"></label> 
                         <label for="name">Name:</label>
                         <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
                         <label for="description">Description:</label>
