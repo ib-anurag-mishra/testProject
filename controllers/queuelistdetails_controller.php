@@ -223,23 +223,22 @@ class QueueListDetailsController extends AppController{
             $this -> layout = 'ajax';
             //Configure::write('debug', 2);
             
-            echo "<pre>";
-            print_r($this->data);
-            print_r($_POST);
-            echo "patron: ".$this->Session->read('patron');
-            //die;
+//            echo "<pre>";
+//            print_r($this->data);
+//            echo "patron: ".$this->Session->read('patron');
+//            die;
              
-            if($_POST['data']['patron_id'] == '')
+            if($this->Session->read('patron')=='')
             {
                     echo 'Patron Not Login'; die;
             }
-            else if($this->data['QueueList']['queue_name']=='')
+            elseif($this->data['QueueList']['queue_name']=='')
             {                
                     echo 'Queue Name is empty'; die;
             }   
             else
             {    
-                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => $this->data['patron_id']);
+                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => $this->Session->read('patron'));
                 
                 $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
@@ -247,13 +246,13 @@ class QueueListDetailsController extends AppController{
                     'order' => 'QueueList.created DESC'                    
                   ));
                 
-                
+                echo "Query: ".$this->QueueList->lastQuery();
+                                
                 echo "<pre>count: "; print_r($queueData); die;
                 
             }
-            die;
        
-        
+            die;
     }
     
     
