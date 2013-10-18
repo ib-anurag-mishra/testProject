@@ -9,9 +9,9 @@ $(document).ready(function() {
             success: function (response) { 
                 //alert("["+response+"]");
                 if(response=='Insertion Allowed')
-                {
-                   
-                  $( "#FormRename" ).submit();
+                {                   
+                       //$( "#FormRename" ).submit();
+                       document.getElementById("FormRename").submit();
                 }
                 else
                 {
