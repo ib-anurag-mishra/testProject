@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
-     $("#FormRename", "#FormDelete").submit(function() {
+     $("#FormRename").submit(function() {
      var frm = $('#FormRename');
         $.ajax({
             type: "post",
@@ -31,6 +31,42 @@ $(document).ready(function() {
         return false;
     });
 });
+
+
+$(document).ready(function() {
+     $("#FormDelete").submit(function() {
+     var frm = $('#FormDelete');
+        $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/ajaxQueueValidation',
+            data: frm.serialize(),
+            success: function (response) { 
+                //alert("["+response+"]");
+                if(response=='Insertion Allowed')
+                {                   
+                       //$( "#FormRename" ).submit();
+                       document.getElementById("FormDelete").submit();
+                }
+                else
+                {
+                       $('#CreateQueueMessage').html("<span style='color:red;'>"+response+"</span><br>");                                               
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+            // log the error to the console
+            console.log(
+                "The following error occured: "+
+                textStatus, errorThrown
+            );
+            }
+ 
+        });
+ 
+        return false;
+    });
+});
+
+
 </script>
 
 <?php
@@ -86,7 +122,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <header>Create Queue</header>
                     <form id="FormDelete" action="/queues/createQueue" method="post">
                     <div class="rename-form-container">
-
+                        <label id="CreateQueueMessage"></label> 
                         <label for="name">Name:</label>
                         <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
                         <label for="description">Description:</label>
