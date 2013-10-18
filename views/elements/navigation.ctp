@@ -66,7 +66,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="rename-queue-dialog-box">
                     <div class="close"></div>
                     <header>Rename '<span>Queue Name</span>'</header>
-                    <form id="FormRename" action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post" onsubmit="return false;">
+                    <form id="FormRename" action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
                     <div class="rename-form-container">
                                     <label id="RenameQueueMessage"></label> 
                                     <label for="name">Name:</label>
