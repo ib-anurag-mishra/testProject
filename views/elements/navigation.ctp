@@ -74,7 +74,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
                                     <label for="description">Description:</label>
                                     <?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
-                                    <?php echo $form->hidden('queue_list_id', array('value' => $this->params['pass'][0]));?>
+                                    <?php echo $this->Form->hidden('queue_list_id', array('value' => $this->params['pass'][0]));?>
                                     <input type="hidden" id="rqPlid" name="rqPlid" value="" />
                                     <input type="hidden" name="hid_action" value="rename_queue" />
                     </div>

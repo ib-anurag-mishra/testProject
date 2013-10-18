@@ -235,7 +235,6 @@ class QueueListDetailsController extends AppController{
             elseif($this->data['QueueList']['queue_name']=='')
             {                
                     echo 'Queue Name is empty'; die;
-
             }   
             else
             {    
