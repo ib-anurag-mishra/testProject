@@ -8,15 +8,14 @@ $(document).ready(function() {
             data: frm.serialize(),
             success: function (response) { 
                 //alert("["+response+"]");
-                if(response=='Failure')
+                if(response=='Insertion Allowed')
                 {
-                  $('#RenameQueueMessage').html("<br><span style='color:red;'>Please fill information in all fields.</span><br>");   
+                   
+                  $( "#FormRename" ).submit();
                 }
                 else
                 {
-//                    $('#FormRegisterConcert').hide();   
-//                    $('#FailureMessage').hide();
-//                    $('#ReturnMessage').append(response); 
+                       $('#RenameQueueMessage').html(response); 
                        
                 }
             },
