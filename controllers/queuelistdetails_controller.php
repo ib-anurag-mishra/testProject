@@ -232,13 +232,13 @@ class QueueListDetailsController extends AppController{
             {
                     echo 'Patron Not Login'; die;
             }
-            elseif($this->data['QueueList']['queue_name']=='')
+            else if($this->data['QueueList']['queue_name']=='')
             {                
                     echo 'Queue Name is empty'; die;
             }   
             else
             {    
-                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => $this->Session->read('patron'));
+                $cond = array('queue_type' => 1, 'status' => '1', 'patron_id' => $this->data['patron_id']);
                 
                 $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
