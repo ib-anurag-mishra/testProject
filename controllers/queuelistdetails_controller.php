@@ -17,8 +17,7 @@ class QueueListDetailsController extends AppController{
     function beforeFilter(){
            
             parent::beforeFilter();
-            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');
-            echo 123;
+            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');            
     }
     
     
@@ -224,10 +223,10 @@ class QueueListDetailsController extends AppController{
             $this -> layout = 'ajax';
             //Configure::write('debug', 2);
             
-//            echo "<pre>";
-//            print_r($this->data);
-//            echo "patron: ".$this->Session->read('patron');
-//            die;
+            echo "<pre>";
+            print_r($this->data);
+            echo "patron: ".$this->Session->read('patron');
+            die;
              
             if($this->Session->read('patron')=='')
             {
