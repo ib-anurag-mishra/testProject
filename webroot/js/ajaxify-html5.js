@@ -101,7 +101,7 @@
         $body.ajaxify();
 
         // Hook into State Changes
-        $window.bind('statechange', function() {
+        $window.bind('statechange', function(event) {
 
             // Prepare Variables
             var
@@ -122,6 +122,31 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
+
+                    // Below method for removal of '#' & '#.' is used in IE8 
+                    
+                    // checking for #. in url 
+                    var indexOfHash = window.location.href.indexOf('#.');
+                    if (indexOfHash > 0)
+                    {
+                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
+                        var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
+                        window.location.href = current_nav;
+                        return true;
+                    }
+
+                    // chekcing for # in url
+                    var indexOfHash = window.location.href.indexOf('#');
+                    if (indexOfHash > 0)
+                    {
+                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
+                        var current_nav = base_url + window.location.href.slice(indexOfHash + 1 , window.location.href.length);
+                        window.location.href = current_nav;
+                        return true;
+                    }
+                    
+                    // After removal of '#' & '#.' the below statements are exceuted
+                    
                     // Prepare
                     var
                             $data = $(documentHtml(data)),
@@ -133,21 +158,6 @@
                     $scripts = $dataContent.find('.document-script');
                     if ($scripts.length) {
                         $scripts.detach();
-                    }
-
-                    // chekcing for #. in url 
-                    var indexOfHash = window.location.href.indexOf('#.');
-                    if (indexOfHash > 0)
-                    {
-                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
-
-                        var url = current_nav;
-
-                        // Ajaxify this link
-                        History.pushState(null, $this.attr('title'), url);
-                        event.preventDefault();
-                        return false;
                     }
 
                     // Fetch the content

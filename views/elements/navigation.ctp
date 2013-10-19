@@ -463,7 +463,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
                                                     <li>
-                                                            <a class="sidebar-anchor" style="cursor:pointer"><?php __('Most Popular'); ?></a>
+                                                            <?php echo $html->link(__('Music Popular', true), array('controller' => 'homes', 'action' => 'my_lib_top_10'),array('class'=>'sidebar-anchor' , 'class'=>"sidebar-anchor") ); ?>
+                                                           
                                                             <ul class="<?php echo $ul_class; ?>">
                                                                 <?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
                                                                         <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>

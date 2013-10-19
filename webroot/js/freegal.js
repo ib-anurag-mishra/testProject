@@ -1466,16 +1466,25 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                         }
 			if(msg == 'error')
 			{
-                            document.getElementById('flash-message').innerHTML = '';
-                            document.getElementById("flash-message").setAttribute("class", "");
+                            if(document.getElementById('flash-message'))
+                            {
+                                document.getElementById('flash-message').innerHTML = '';
+                                document.getElementById("flash-message").setAttribute("class", "");
+                            }
+                            
                             document.getElementById("ajaxflashMessage44").style.display="block";
                             document.getElementById("ajaxflashMessage44").style.background="red";
                             document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding song to Queuelist.';
                            
                             return false;
 			}else if(msg == 'error1'){
-                            document.getElementById('flash-message').innerHTML = '';
-                            document.getElementById("flash-message").setAttribute("class", "");
+                            
+                             if(document.getElementById('flash-message'))
+                            {
+                                document.getElementById('flash-message').innerHTML = '';
+                                document.getElementById("flash-message").setAttribute("class", "");
+                            }
+                            
                             document.getElementById("ajaxflashMessage44").style.display="block";
                             document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Queue';
                         }
@@ -1484,14 +1493,23 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 				var msg = response.substring(0,7);
 				if(msg == 'Success')
 				{
-                                    document.getElementById('flash-message').innerHTML = '';
-                                    document.getElementById("flash-message").setAttribute("class", "");
+                                    if(document.getElementById('flash-message'))
+                                    {
+                                        document.getElementById('flash-message').innerHTML = '';
+                                        document.getElementById("flash-message").setAttribute("class", "");
+                                    }
                                     document.getElementById("ajaxflashMessage44").style.display="block";
                                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to Queue';
 
 				}
 				else
 				{
+                                        if(document.getElementById('flash-message'))
+                                        {
+                                            document.getElementById('flash-message').innerHTML = '';
+                                            document.getElementById("flash-message").setAttribute("class", "");
+                                        }
+                                        
                                         document.getElementById('flash-message').innerHTML = '';
                                         document.getElementById("flash-message").setAttribute("class", "");
                                         document.getElementById("ajaxflashMessage44").style.display="block";
@@ -1502,8 +1520,11 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
-                    document.getElementById('flash-message').innerHTML = '';
-                    document.getElementById("flash-message").setAttribute("class", "");
+                    if(document.getElementById('flash-message'))
+                    {
+                        document.getElementById('flash-message').innerHTML = '';
+                        document.getElementById("flash-message").setAttribute("class", "");
+                    }
                     document.getElementById("ajaxflashMessage44").style.display="block";
                     document.getElementById("ajaxflashMessage44").style.background="red";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to queue is unsuccessfull';

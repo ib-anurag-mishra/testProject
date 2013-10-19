@@ -188,15 +188,18 @@ class QueueListDetailsController extends AppController{
        Configure::write('debug', 0);
        $prodId = $_POST['prodId'];
        $provider = $_POST['providerType'];
+       $eventType = $_POST['eventFired'];
+       $userStreamedTime = $_POST['userStreamedTime'];
+       $songDuration = $_POST['songLength'];
        $libId = $this->Session->read('library');
        $patId = $this->Session->read('patron');
        $this->Session->delete('queuePlaying');
        $this->Session->delete('songPlaying');
-       $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,'');
+       $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,$userStreamedTime,$eventType,'',$songDuration);
        if(!empty($validationResponse)){
            if($validationResponse[0] == 'error'){
-               $error_message = array('error' => $validationResponse);
-               echo json_encode($error_message);
+               //$error_message = array('error' => $validationResponse);
+               echo json_encode($validationResponse);
                exit;
            }else if($validationResponse[0] == 'success'){
                if(!empty($_POST['queueId'])){
@@ -207,8 +210,8 @@ class QueueListDetailsController extends AppController{
                         $this->Session->write("songPlaying", $songDetails);
                    }
                }
-               $success_message = array('success' => $validationResponse);
-               echo json_encode($success_message);
+               //$success_message = array('success' => $validationResponse);
+               echo json_encode($validationResponse);
                exit;
            }
            

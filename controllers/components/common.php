@@ -7,7 +7,7 @@
  
 Class CommonComponent extends Object
 {
-    var $components = array('Session');
+    var $components = array('Session', 'Streaming');
     
     /*
      * Function Name : getGenres
@@ -131,7 +131,9 @@ Class CommonComponent extends Object
                         File.SourceURL,
                         File.SaveAsName,
                         Sample_Files.FileID,
-                        PRODUCT.pid
+                        PRODUCT.pid,
+                        Albums.ProdID,
+                        Albums.provider_type
                 FROM
                         Songs AS Song
                                 LEFT JOIN
@@ -167,6 +169,19 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $data[$key]['songAlbumImage'] = $songAlbumImage;
+                        
+                        if($this->Session->read('library_type')==2)
+                        {
+                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            
+                            if(!empty($filePath))
+                             {
+                                $songPath = explode(':',$filePath);
+                                $streamUrl =  trim($songPath[1]);
+                                $data[$key]['streamUrl'] = $streamUrl;
+                                $data[$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
+                             } 
+                        }
                 }                    
                 Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");
