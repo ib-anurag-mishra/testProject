@@ -169,6 +169,16 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $data[$key]['songAlbumImage'] = $songAlbumImage;
+                        
+                        if($this->Session->read('library_type')==2)
+                        {
+                            if(!empty($albumArtwork))
+                             {
+                                $songPath = explode(':',$albumArtwork);
+                                $streamUrl =  trim($songPath[1]);
+                                $data[$key]['streamUrl'] = $streamUrl;
+                             } 
+                        }
                 }                    
                 Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");
