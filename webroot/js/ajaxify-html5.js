@@ -116,7 +116,7 @@
             {
                 var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                 var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
-                
+
                 var url = current_nav,
                         relativeUrl = url.replace(rootUrl, '');
             }
@@ -175,17 +175,19 @@
                     }
 
                     // Add the scripts
-                    $scripts.each(function() {
-                        var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-                        if ($script.attr('src')) {
-                            if (!$script[0].async) {
-                                scriptNode.async = false;
+                    if ($scripts.length) {
+                        $scripts.each(function() {
+                            var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
+                            if ($script.attr('src')) {
+                                if (!$script[0].async) {
+                                    scriptNode.async = false;
+                                }
+                                scriptNode.src = $script.attr('src');
                             }
-                            scriptNode.src = $script.attr('src');
-                        }
-                        scriptNode.appendChild(document.createTextNode(scriptText));
-                        contentNode.appendChild(scriptNode);
-                    });
+                            scriptNode.appendChild(document.createTextNode(scriptText));
+                            contentNode.appendChild(scriptNode);
+                        });
+                    }
 
                     // Complete the change
                     if ($body.ScrollTo || false) {
