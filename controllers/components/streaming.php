@@ -178,6 +178,8 @@ Class StreamingComponent extends Object
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $userStreamedTime;
+                $insertArr['action_type'] = $actionType;                
+                
                 $insertArr['modified_date'] = $currentDate;
                 $insertArr['createdOn'] = $currentDate;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
@@ -241,6 +243,7 @@ Class StreamingComponent extends Object
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $userStreamedTime;
                 $insertArr['modified_date'] = $currentDate;
+                $insertArr['action_type'] = $actionType; 
                 $insertArr['createdOn'] = $currentDate;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 if($agent == null){
@@ -589,7 +592,7 @@ Class StreamingComponent extends Object
     function createStreamingLog($log_data,$log_name){
         
         //check log create condition on or off
-        $streamingLogFlag = Configure::read('App.streaming_log');
+        $streamingLogFlag = $this->streamingLog;
         if($streamingLogFlag == 'on'){
             $this->log($log_data, $log_name);
         }
