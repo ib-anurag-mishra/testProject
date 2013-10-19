@@ -26,8 +26,16 @@
 					<div class="gear-icon no-ajaxy"></div>
 				</div>
 				<div class="queue-options">
-					<a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
-					<a class="delete-queue" href="#" onclick="queueModifications();">Delete Queue</a>
+                                    <?php
+                                                if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $ShowQueueOptions=='Default') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
+                                                {
+                                                    ?>
+                                                        <a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
+                					<a class="delete-queue" href="#" onclick="queueModifications();">Delete Queue</a>
+                                                    <?php
+                                                }
+                                                
+                                    ?>
 					<div class="share clearfix">
 						<p>Share via</p>
 						<a class="facebook" href="#"></a>
