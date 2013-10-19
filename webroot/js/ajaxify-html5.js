@@ -110,18 +110,6 @@
                     relativeUrl = url.replace(rootUrl, '');
 
 
-            // chekcing for #. in url 
-            var indexOfHash = window.location.href.indexOf('#.');
-            if (indexOfHash > 0)
-            {
-                var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
-
-                var url = current_nav,
-                        relativeUrl = url.replace(rootUrl, '');
-            }
-
-
             // Set Loading
             $body.addClass('loading');
 
@@ -145,6 +133,17 @@
                     $scripts = $dataContent.find('.document-script');
                     if ($scripts.length) {
                         $scripts.detach();
+                    }
+
+                    // chekcing for #. in url 
+                    var indexOfHash = window.location.href.indexOf('#.');
+                    if (indexOfHash > 0)
+                    {
+                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
+                        var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
+
+                        var url = current_nav,
+                                relativeUrl = url.replace(rootUrl, '');
                     }
 
                     // Fetch the content
@@ -175,7 +174,7 @@
                     }
 
                     // Add the scripts
-                    if ($scripts.length>1) {
+                    if ($scripts.length > 1) {
                         $scripts.each(function() {
                             var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
                             if ($script.attr('src')) {
@@ -206,6 +205,7 @@
                         reinvigorate.ajax_track(url);
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
+
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
