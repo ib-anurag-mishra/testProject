@@ -253,44 +253,42 @@ function validateSong(songObj, playerEventCode) {
 		
 		case 1:
 			playerEventCodeString = "Play";
-                        callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;
 			
 		case 2:
 			playerEventCodeString = "Pause"
-                        callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
 			break;
 			
 		case 3:
 			playerEventCodeString = "Prev"
-                        callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next"
-                        callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
 			break;
 			
 		case 5:
 			playerEventCodeString = "Song Ended"
-                        callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue"
-                        callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
 			break;
 			
 	    case 7:
 			playerEventCodeString = "Queue loaded"
-                        callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
 			break;	    	
 			
 		
 	}
-	
-	
 	
 	$('.playerEventCode').html("Player event code is: " + playerEventCodeString); 
 	var isValid = true;
