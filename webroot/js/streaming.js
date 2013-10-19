@@ -300,18 +300,25 @@ function validateSong(songObj, playerEventCode) {
 
 function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
     
-        var postURL = webroot+'queuelistdetails/getPlaylistData';
-        $.ajax({
-            type: "POST",
-            cache:false,
-            url: postURL,
-            data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
-        }).done(function(data){
-            return data;
-        })
-        .fail(function(){
-            alert('Ajax Call to Validate Playlist has been failed');
-        });    
+    var postURL = webroot+'queuelistdetails/getPlaylistData';
+    $.ajax({
+        type: "POST",
+        cache:false,
+        url: postURL,
+        data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
+    }).done(function(data){
+        var responseData = data;
+    })
+    .fail(function(){
+        var errorFlag = 1;
+        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
+    });
+
+    if(errorFlag == 1){
+        return errorData;
+    }else{
+        return responseData;
+    }
 }
 
 function pingTimeJS() {
