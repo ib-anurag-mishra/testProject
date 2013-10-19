@@ -459,13 +459,3 @@ div.paging span a, div.paging a {
     width: 100%;    
 }
 
-.loading {
-    cursor: wait;
-    background:#ffffff url('../img/AjaxLoader.gif') no-repeat center center;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
-    filter: alpha(opacity=75);
-    opacity: 0.75;
-    position: absolute;
-    z-index: 10000;
-    display: none;
-}
