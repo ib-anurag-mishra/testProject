@@ -179,7 +179,7 @@ STR;
                                 $songPath = explode(':',$filePath);
                                 $streamUrl =  trim($songPath[1]);
                                 $data[$key]['streamUrl'] = $streamUrl;
-                                $data[$key]['totalseconds']  = $this->Streaming->getSeconds($value['FullLength_Duration']); 
+                                $data[$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
                              } 
                         }
                 }                    
