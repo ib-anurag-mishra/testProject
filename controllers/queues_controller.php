@@ -66,6 +66,19 @@ class QueuesController extends AppController{
     
     function addToQueue(){
         Configure::write('debug', 0);
+        
+        echo "<br>library: ".$this->Session->read('library');
+        echo "<br>patron: ".$this->Session->read('patron');
+        echo "<br>songProdId: ".$_REQUEST['songProdId'];
+        echo "<br>songProviderType: ".$_REQUEST['songProviderType'];
+        echo "<br>albumProdId: ".$_REQUEST['albumProdId'];
+        echo "<br>albumProviderType: ".$_REQUEST['albumProviderType'];
+        echo "<br>queueId: ".$_REQUEST['queueId'];
+        echo '<pre>';
+        print_r($_REQUEST);
+        print_r($_POST);
+        die;
+        
         if( $this->Session->read('library') && $this->Session->read('patron') && !empty($_REQUEST['songProdId']) && !empty($_REQUEST['songProviderType'])&& !empty($_REQUEST['albumProdId'])&& !empty($_REQUEST['albumProviderType'])&& !empty($_REQUEST['queueId']) ){
             $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
             if(!$queuesongsCount){
