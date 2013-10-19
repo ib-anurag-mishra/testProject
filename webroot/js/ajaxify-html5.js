@@ -133,6 +133,17 @@
                         window.location.href = current_nav;
                     }
 
+                    // chekcing for # in url
+                    var indexOfHash = window.location.href.indexOf('#');
+                    if (indexOfHash > 0)
+                    {
+                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
+                        var current_nav = base_url + window.location.href.slice(indexOfHash + 1, window.location.href.length);
+
+                        alert(current_nav);
+//                        /window.location.href = current_nav;
+                    }
+                    
                     // Prepare
                     var
                             $data = $(documentHtml(data)),
