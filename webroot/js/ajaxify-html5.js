@@ -103,22 +103,21 @@
         // Hook into State Changes
         $window.bind('statechange', function() {
 
-            // chekcing for #. in url 
-            var indexOfHash = window.location.href.indexOf('#.');
-            if (indexOfHash > 0)
-            {
-                var base_url = window.location.hostname;
-                var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
-                alert(current_nav);
-            }
-
-
-
             // Prepare Variables
             var
                     State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
+
+
+            // chekcing for #. in url 
+            var indexOfHash = window.location.href.indexOf('#.');
+            if (indexOfHash > 0)
+            {
+                var url = State.url,
+                        relativeUrl = url.replace(rootUrl, '');
+            }
+
 
             // Set Loading
             $body.addClass('loading');
