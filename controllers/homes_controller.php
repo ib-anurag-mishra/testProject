@@ -87,6 +87,8 @@ class HomesController extends AppController
         //if (($national = Cache::read("national".$territory)) === false) {
         if(1){
             $nationalTopDownload = $this->Common->getNationalTop100($territory);
+            
+            echo "<pre>"; print_r($nationalTopDownload);
         }else{
             $nationalTopDownload = Cache::read("national".$territory);                
         }
