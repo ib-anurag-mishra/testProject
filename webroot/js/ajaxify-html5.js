@@ -101,7 +101,7 @@
         $body.ajaxify();
 
         // Hook into State Changes
-        $window.bind('statechange', function() {
+        $window.bind('statechange', function(event) {
 
             // Prepare Variables
             var
@@ -145,8 +145,8 @@
                         var url = current_nav;
 
                         // Ajaxify this link
-                        History.pushState(null,  $(this).attr('title'), url);                      
-                        return false;
+                        History.pushState(null,  $(this).attr('title'), url);   
+                        event.preventDefault();
                     }
 
                     // Fetch the content
