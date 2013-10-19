@@ -114,7 +114,10 @@
             var indexOfHash = window.location.href.indexOf('#.');
             if (indexOfHash > 0)
             {
-                var url = State.url,
+                var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
+                var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
+                
+                var url = current_nav,
                         relativeUrl = url.replace(rootUrl, '');
             }
 
