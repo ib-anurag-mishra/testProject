@@ -1683,13 +1683,15 @@ STR;
       case '1': 
       
         $streaming_url = null;
-        $streaming_url = $this->getStreamngURL($prodId, $provider_type);    
+        if( (1 == $actionID) || (2 == $actionID) ) {
+          $streaming_url = $this->getStreamngURL($prodId, $provider_type);    
+        }
         return $this->createsStreamingResponseObject(true, $response[1], $response[2], $streaming_url, $response[4], $response[5]); 
         // success | message | remaningtime | mp4url | timerCallTime | timerCallDuration
       break;
       case '0'  : 
       
-        return $this->createsStreamingResponseObject(false, $response[1], $response[2], '', $response[4], $response[5]);  
+        return $this->createsStreamingResponseObject(false, $response[1], $response[2], null, $response[4], $response[5]);  
       break;
       default:  throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
     
