@@ -131,9 +131,7 @@ Class CommonComponent extends Object
                         File.SourceURL,
                         File.SaveAsName,
                         Sample_Files.FileID,
-                        PRODUCT.pid,
-                        Albums.ProdID,
-                        Albums.provider_type
+                        PRODUCT.pid
                 FROM
                         Songs AS Song
                                 LEFT JOIN
