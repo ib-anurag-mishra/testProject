@@ -307,18 +307,7 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
             url: postURL,
             data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
         }).done(function(data){
-//                var json = JSON.parse(data);
-//                alert(json);exit;
-//                if(json.error){
-//                    alert(json.error[1]);
-//					if(json.error[3] != 6){
-//                                            var flash = document.getElementById("fmp_player");
-//                                            flash.clearQueueFromJS();
-//					}
-//                }else if(json.success){
-//                    
-//                }
-            
+            return data;
         })
         .fail(function(){
             alert('Ajax Call to Validate Playlist has been failed');
