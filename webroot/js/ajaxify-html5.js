@@ -123,13 +123,14 @@
                 url: url,
                 success: function(data, textStatus, jqXHR) {
 
-                    // chekcing for #. in url 
+                    // Below method for removal of '#' & '#.' is used in IE8 
+                    
+                    // checking for #. in url 
                     var indexOfHash = window.location.href.indexOf('#.');
                     if (indexOfHash > 0)
                     {
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                         var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
-
                         window.location.href = current_nav;
                     }
 
@@ -138,11 +139,11 @@
                     if (indexOfHash > 0)
                     {
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 1, window.location.href.length);
-
-                        alert(current_nav);
-//                        /window.location.href = current_nav;
+                        var current_nav = base_url + window.location.href.slice(indexOfHash , window.location.href.length);
+                        window.location.href = current_nav;
                     }
+                    
+                    // After removal of '#' & '#.' the below statements are exceuted
                     
                     // Prepare
                     var
