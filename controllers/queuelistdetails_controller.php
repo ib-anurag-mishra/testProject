@@ -134,7 +134,9 @@ class QueueListDetailsController extends AppController{
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
         
-        if($this->params['pass'][0]=='1')   //  Default Queue
+        //echo '<pre>'; print_r($this->params); die;
+        
+        if($this->params['pass'][1]=='1')   //  Default Queue
         {        
                 if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === false) {
                 $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
@@ -144,10 +146,12 @@ class QueueListDetailsController extends AppController{
                 }
                 
                 $queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]);
+                $this->set('queueType', 'Default'); 
         }
         else        // Custom Queue
         {
             $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+            $this->set('queueType', 'Custom'); 
         }
         
         

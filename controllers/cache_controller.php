@@ -171,7 +171,9 @@ class CacheController extends AppController {
                             File.SourceURL,
                             File.SaveAsName,
                             Sample_Files.FileID,
-                            PRODUCT.pid
+                            PRODUCT.pid,
+                            Albums.ProdID,
+                            Albums.provider_type
                     FROM
                             Songs AS Song
                                     LEFT JOIN
