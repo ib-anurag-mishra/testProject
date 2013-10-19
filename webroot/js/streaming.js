@@ -230,18 +230,20 @@ function nextPressed() {
 function validateSong(songObj, playerEventCode) {
 
 	
-	/* properties sent from flash
+	// properties sent from flash
+	songObj.songProviderType = 'sony';
+        songObj.songDuration = 60;
+	plaulistId = songObj.playlistId;
+	songId = songObj.songId;
+        songProviderType = songObj.songProviderType;
+	label = songObj.label; 
+	artistName =  songObj.artistName;
+	songTitle  = songObj.songTitle;
+	songLength = songObj.songLength;
+	data = songObj.data;
+	songDuration = songObj.songDuration;
 	
-	songObj.playlistId
-	songObj.songId
-	songObj.label
-	songObj.artistName
-	songObj.songTitle
-	songObj.songLength
-	songObj.data
 	
-	
-	*/
 	
 	// playerEventCode: 1 = Play, 2 = Pause, 3 = Prev, 4 = Next, 5 = Song Ended, 6 = Switch Stream
 	
@@ -250,32 +252,39 @@ function validateSong(songObj, playerEventCode) {
 	switch(playerEventCode) {
 		
 		case 1:
-			playerEventCodeString = "Play"
+			playerEventCodeString = "Play";
+                        callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;
 			
 		case 2:
 			playerEventCodeString = "Pause"
+                        callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
 			break;
 			
 		case 3:
 			playerEventCodeString = "Prev"
+                        callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next"
+                        callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
 			break;
 			
 		case 5:
 			playerEventCodeString = "Song Ended"
+                        callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue"
+                        callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
 			break;
 			
 	    case 7:
 			playerEventCodeString = "Queue loaded"
+                        callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
 			break;	    	
 			
 		
@@ -285,12 +294,35 @@ function validateSong(songObj, playerEventCode) {
 	
 	$('.playerEventCode').html("Player event code is: " + playerEventCodeString); 
 	var isValid = true;
-
-	
-	
 	return isValid;
-	
+}
 
+
+function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,songDuration,userStreamedTime){
+    
+        var postURL = webroot+'queuelistdetails/getPlaylistData';
+        $.ajax({
+            type: "POST",
+            cache:false,
+            url: postURL,
+            data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
+        }).done(function(data){
+//                var json = JSON.parse(data);
+//                alert(json);exit;
+//                if(json.error){
+//                    alert(json.error[1]);
+//					if(json.error[3] != 6){
+//                                            var flash = document.getElementById("fmp_player");
+//                                            flash.clearQueueFromJS();
+//					}
+//                }else if(json.success){
+//                    
+//                }
+            
+        })
+        .fail(function(){
+            alert('Ajax Call to Validate Playlist has been failed');
+        });    
 }
 
 function pingTimeJS() {

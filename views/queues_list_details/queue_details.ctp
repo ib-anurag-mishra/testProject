@@ -144,7 +144,7 @@
 					</div>
 					<?php
                                             if(!empty($value['streamUrl']) || !empty($value['Songs']['SongTitle'])){
-                                                 $playItem = array('playlistId' => 0, 'songId' => $value["Songs"]["ProdID"],'songProviderType' => $value["Songs"]["provider_type"],  'label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => $value['Songs']['ArtistText'],'songLength' => $total_duration,'data' => $value['streamUrl']);
+                                                 $playItem = array('playlistId' => $queue_id, 'songId' => $value["Songs"]["ProdID"],'songProviderType' => $value["Songs"]["provider_type"],  'label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => $value['Songs']['ArtistText'],'songLength' => $total_duration,'data' => $value['streamUrl']);
                                                 $jsonPlayItem = json_encode($playItem);
                                                 $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
                                                 $playListData[] =$jsonPlayItem;
