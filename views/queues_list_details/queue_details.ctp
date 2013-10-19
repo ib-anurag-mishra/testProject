@@ -28,8 +28,8 @@
 				<div class="queue-options">
                                     <?php
                                     
-                                                echo "<br>Type ID: ".$this->Session->read("Auth.User.type_id");
-                                                echo "<br>queueType: ".$queueType;
+//                                                echo "<br>Type ID: ".$this->Session->read("Auth.User.type_id");
+//                                                echo "<br>queueType: ".$queueType;
                                     
                                                 if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Default') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
                                                 {
