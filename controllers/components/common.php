@@ -172,9 +172,11 @@ STR;
                         
                         if($this->Session->read('library_type')==2)
                         {
-                            if(!empty($albumArtwork))
+                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            
+                            if(!empty($filePath))
                              {
-                                $songPath = explode(':',$albumArtwork);
+                                $songPath = explode(':',$filePath);
                                 $streamUrl =  trim($songPath[1]);
                                 $data[$key]['streamUrl'] = $streamUrl;
                              } 
