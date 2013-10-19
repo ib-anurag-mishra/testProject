@@ -132,7 +132,7 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                         var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
                         window.location.href = current_nav;
-                        return false;
+                        return true;
                     }
 
                     // chekcing for # in url
@@ -142,7 +142,7 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                         var current_nav = base_url + window.location.href.slice(indexOfHash+1 , window.location.href.length);
                         window.location.href = current_nav;
-                        return false;
+                        return true;
                     }
                     
                     // After removal of '#' & '#.' the below statements are exceuted
