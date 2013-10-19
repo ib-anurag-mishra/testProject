@@ -87,8 +87,7 @@ class HomesController extends AppController
         if (($national = Cache::read("national".$territory)) === false) {
             $nationalTopDownload = $this->Common->getNationalTop100($territory);
         }else{
-            $nationalTopDownload = Cache::read("national".$territory);       
-            echo '<pre>'; print_r($nationalTopDownload);die;
+            $nationalTopDownload = Cache::read("national".$territory);                
         }
         $this->set('nationalTopDownload',$nationalTopDownload);
         // National Top Videos list and Downloads functionality code 
