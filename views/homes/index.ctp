@@ -37,7 +37,7 @@
                         $j = 0;
                         $k = 2000;
                         for ($i = 0; $i < count($nationalTopDownload); $i++)
-                        {
+                        { echo '<pre>'; print_r($nationalTopDownload[$i]);
                             //hide song if library block the explicit content
                             if (($this->Session->read('block') == 'yes') && ($nationalTopDownload[$i]['Song']['Advisory'] == 'T'))
                             {
