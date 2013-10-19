@@ -85,3 +85,10 @@
   <?php
   } */
 ?>
+<script>
+   var indexOfHash = window.location.href.indexOf('#.') ;
+   if( indexOfHash > 0)
+       {
+           alert(indexOfHash);
+       }
+</script>
