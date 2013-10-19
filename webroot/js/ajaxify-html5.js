@@ -105,6 +105,8 @@
 				State = History.getState(),
 				url = State.url,
 				relativeUrl = url.replace(rootUrl,'');
+                                
+                                alert('url:'+url +'  relativeurl:'+relativeUrl);
 
 			// Set Loading
 			$body.addClass('loading');

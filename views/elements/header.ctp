@@ -85,12 +85,3 @@
   <?php
   } */
 ?>
-<script>
-   var indexOfHash = window.location.href.indexOf('#.') ;
-   if( indexOfHash > 0)
-       {
-           var base_url = window.location.hostname; 
-           var current_nav =  base_url + window.location.href.slice(indexOfHash+2,window.location.href.length); 
-           alert(current_nav);
-       }
-</script>
