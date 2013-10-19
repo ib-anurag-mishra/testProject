@@ -139,8 +139,8 @@
                     var indexOfHash = window.location.href.indexOf('#');
                     if (indexOfHash > 0)
                     {
-                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash+1 , window.location.href.length);
+                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
+                        var current_nav = base_url + window.location.href.slice(indexOfHash , window.location.href.length);
                         window.location.href = current_nav;
                         return true;
                     }
