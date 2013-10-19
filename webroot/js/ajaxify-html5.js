@@ -122,6 +122,17 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
+
+                    // chekcing for #. in url 
+                    var indexOfHash = window.location.href.indexOf('#.');
+                    if (indexOfHash > 0)
+                    {
+                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
+                        var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
+
+                        window.location.href = current_nav;
+                    }
+
                     // Prepare
                     var
                             $data = $(documentHtml(data)),
@@ -133,20 +144,6 @@
                     $scripts = $dataContent.find('.document-script');
                     if ($scripts.length) {
                         $scripts.detach();
-                    }
-
-                    // chekcing for #. in url 
-                    var indexOfHash = window.location.href.indexOf('#.');
-                    if (indexOfHash > 0)
-                    {
-                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
-
-                        var url = current_nav;
-
-                        // Ajaxify this link
-                        History.pushState(null,  $(this).attr('title'), url);   
-                        event.preventDefault();
                     }
 
                     // Fetch the content
