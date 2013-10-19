@@ -145,8 +145,7 @@
                         var url = current_nav;
 
                         // Ajaxify this link
-                        History.pushState(null,  $(this).attr('title'), url);
-                        event.preventDefault();
+                        History.pushState(null,  $(this).attr('title'), url);                      
                         return false;
                     }
 
