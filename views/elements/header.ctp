@@ -85,15 +85,3 @@
   <?php
   } */
 ?>
-<script>
-    var current_location = window.location.href;
-    var url_length = current_location.length;
-    if (current_location.charAt(url_length) === '#')
-    {
-        window.location = current_location.replceAt(url_length, "");
-    }
-    else
-    {
-        window.location = current_location;
-    }
-</script>
