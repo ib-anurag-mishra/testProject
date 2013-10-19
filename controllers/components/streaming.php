@@ -342,10 +342,10 @@ Class StreamingComponent extends Object
            
             //check patron time limit            
             if($this->checkPatronStreamingLimitForDay($consumedTime,$updatedDate)){                
-                return array(true,'successfully able to streaming this song.', 1);
+                return array(1,'successfully able to streaming this song.', 1);
             }else{
                 $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";songDureation:".$userStreamedTime.";consumedTime:".$consumedTime.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
-                return array(false,'You have not enough streaming time left to play this song.', 2);
+                return array(0,'You have not enough streaming time left to play this song.', 2);
             }                
             
         } else {
