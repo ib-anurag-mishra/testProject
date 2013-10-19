@@ -7,7 +7,7 @@
  
 Class CommonComponent extends Object
 {
-    var $components = array('Session');
+    var $components = array('Session', 'Streaming');
     
     /*
      * Function Name : getGenres
@@ -179,7 +179,7 @@ STR;
                                 $songPath = explode(':',$filePath);
                                 $streamUrl =  trim($songPath[1]);
                                 $data[$key]['streamUrl'] = $streamUrl;
-                                $data[$key]['FullLenghtDuration']  = $this->Streaming->getSeconds($value['FullLength_Duration']); 
+                                $data[$key]['totalseconds']  = $this->Streaming->getSeconds($value['FullLength_Duration']); 
                              } 
                         }
                 }                    
