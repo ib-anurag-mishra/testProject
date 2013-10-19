@@ -142,8 +142,12 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                         var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
 
-                        var url = current_nav,
-                                relativeUrl = url.replace(rootUrl, '');
+                        var url = current_nav;
+
+                        // Ajaxify this link
+                        History.pushState(null, $this.attr('title'), url);
+                        event.preventDefault();
+                        return false;
                     }
 
                     // Fetch the content
