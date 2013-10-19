@@ -175,7 +175,7 @@
                     }
 
                     // Add the scripts
-                    if ($scripts.length) {
+                    if ($scripts.length>1) {
                         $scripts.each(function() {
                             var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
                             if ($script.attr('src')) {
