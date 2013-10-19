@@ -27,7 +27,7 @@
 				</div>
 				<div class="queue-options">
                                     <?php
-                                                if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $ShowQueueOptions=='Default') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
+                                                if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Default') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
                                                 {
                                                     ?>
                                                         <a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
