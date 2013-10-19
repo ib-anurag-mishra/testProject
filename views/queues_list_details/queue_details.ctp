@@ -31,7 +31,7 @@
 //                                                echo "<br>Type ID: ".$this->Session->read("Auth.User.type_id");
 //                                                echo "<br>queueType: ".$queueType;
                                     
-                                                if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Default') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
+                                                if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Custom') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
                                                 {
                                                     ?>
                                                         <a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
