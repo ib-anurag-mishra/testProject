@@ -298,7 +298,7 @@ function validateSong(songObj, playerEventCode) {
 }
 
 
-function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,songDuration,userStreamedTime){
+function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
     
         var postURL = webroot+'queuelistdetails/getPlaylistData';
         $.ajax({
