@@ -111,10 +111,8 @@
 
 
             // Set Loading
-            $(".content-wrapper").find('.content').html("<div class='loader'></div>");
             
-            
-            //$body.addClass('loading');
+            $body.addClass('loading');
 
             // Start Fade Out
             // Animating to opacity to 0 still keeps the element's height intact
