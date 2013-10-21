@@ -181,7 +181,6 @@ function pushSongs (newSongArray) {
 
 	
 	var flash =	document.getElementById("fmp_player");
-        alert(flash);
 	console.log(flash);
 	flash.pushNewSongsFromJS(newSongArray);
 	
@@ -230,7 +229,7 @@ function nextPressed() {
 /* this is called before the song is played */ 
 function validateSong(songObj, playerEventCode) {
 
-	
+	alert("validateSong");
 	// properties sent from flash
 	songObj.songProviderType = 'sony';
         songObj.songDuration = 60;
@@ -244,7 +243,7 @@ function validateSong(songObj, playerEventCode) {
 	data = songObj.data;
 	songDuration = songObj.songDuration;
 	
-	
+	alert("playerEventCode");
 	
 	// playerEventCode: 1 = Play, 2 = Pause, 3 = Prev, 4 = Next, 5 = Song Ended, 6 = Switch Stream
 	
