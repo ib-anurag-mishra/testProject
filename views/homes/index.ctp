@@ -87,7 +87,7 @@
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
                                                 
-                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("ioda/113999/TheRiplets_Randy_113999-01-007_mp3_256k.mp3?nvb=20131021090639&nva=20131021100639&token=569a2c56b382b8ab68e9a", "Randy","The Riplets","197","1174059","ioda");'));
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$nationalTopDownload[$i]['streamUrl'].'", "'.$nationalTopDownload[$i]['Song']['SongTitle'].'","'.$nationalTopDownload[$i]['Song']['ArtistText'].'","'.$nationalTopDownload[$i]['totalseconds'].'","'.$nationalTopDownload[$i]['Song']['ProdID'].'","'.$nationalTopDownload[$i]['Song']['provider_type'].'");'));
                                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                                             }
