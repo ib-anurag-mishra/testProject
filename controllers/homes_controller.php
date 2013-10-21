@@ -10,7 +10,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Common');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Common','Streaming');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
 
     /*
@@ -42,7 +42,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases', 'language',  'checkPatron', 'approvePatron','my_lib_top_10','checkStreamingComponent');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -73,6 +73,21 @@ class HomesController extends AppController
         $territory = $this->Session->read('territory');
        
       
+        
+       
+//testing for streaming component       
+//        $prodId='23366336';
+//        $provider='sony';
+//        $userStreamedTime ='500';
+//        $actionType='1';
+//        $songDuration = 300;
+//        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
+//        print_r($validationResponse);
+//        die;
+        
+        
+        
+        
         $nationalTopDownload = array();
         if(!empty($patId)){
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -178,8 +193,7 @@ class HomesController extends AppController
 
 		$this -> layout = 'ajax';
 		$libId = $this->Session->read('library');
-		$patId = $this->Session->read('patron');
-		$territory = $this->Session->read('territory');
+		$patId = $this->Session->read('patron');	
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -3435,4 +3449,7 @@ STR;
             $this->set('new_releases_albums', $new_releases_albums_rs); 
        }
 }
+
+
+
 ?>
