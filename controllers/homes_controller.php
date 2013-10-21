@@ -331,7 +331,8 @@ class HomesController extends AppController
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
-            if (($libDownload = Cache::read("lib".$libId)) === false){
+           // if (($libDownload = Cache::read("lib".$libId)) === false){
+            if(1){
                 $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
             } 
             else
