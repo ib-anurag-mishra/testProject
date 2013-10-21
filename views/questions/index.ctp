@@ -45,3 +45,18 @@
         </ul>
     </div>
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('.faq-container li a').on('click', function(e) {
+            e.preventDefault();
+            if ($(this).siblings('p').hasClass('active')) {
+                $(this).siblings('p').slideUp(500).removeClass('active');
+            } else {
+                $('.faq-container p').slideUp(500).removeClass('active');
+                $(this).siblings('p').slideDown(500).addClass('active');
+            }
+
+        });
+    });
+</script>
