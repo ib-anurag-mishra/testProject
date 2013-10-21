@@ -111,7 +111,7 @@
 
 
             // Set Loading
-            $body.append("<div class='loader'></div>");
+            $('.content-wrapper').append("<div class='loader'></div>");
             //$body.addClass('loader');
 
             // Start Fade Out
@@ -230,7 +230,7 @@
                 complete: function() {
                     //$body.removeClass('loader');
                     $('.loader').fadeOut(2000);
-                    $body.remove(".loader");
+                    $('.content-wrapper').remove(".loader");
                 }
             }); // end ajax
 
