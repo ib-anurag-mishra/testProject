@@ -111,7 +111,10 @@
 
 
             // Set Loading
-            $body.addClass('loading');
+            $(".content-wrapper").html("<div id='spinner'></div>");
+            
+            
+            //$body.addClass('loading');
 
             // Start Fade Out
             // Animating to opacity to 0 still keeps the element's height intact
@@ -123,7 +126,9 @@
                 url: url,
                 success: function(data, textStatus, jqXHR) {
 
-                    // Below method for removal of '#' & '#.' is used in IE8 
+                    
+                    // Below method for removal of '#' & '#.' in between URL
+                    // this is used in IE8 
                     
                     // checking for #. in url 
                     var indexOfHash = window.location.href.indexOf('#.');
