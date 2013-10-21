@@ -284,7 +284,8 @@ function validateSong(songObj, playerEventCode) {
 			
 	    case 7:
 			playerEventCodeString = "Queue loaded"
-                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+                        
 			break;	    	
 			
 		
@@ -322,7 +323,8 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
 function pingTimeJS() {
 	
 	var flash = document.getElementById("fmp_player");
-	flash.pingTime();	
+	flash.pingTime();
+	
 }
 
 function reportTime(amt) {
