@@ -87,7 +87,7 @@
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
                                                 
-                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$nationalTopDownload[$i]['streamUrl'].'", "'.$nationalTopDownload[$i]['Song']['SongTitle'].'","'.$nationalTopDownload[$i]['Song']['ArtistText'].'","'.$nationalTopDownload[$i]['totalseconds'].'","'.$nationalTopDownload[$i]['Song']['ProdID'].'","'.$nationalTopDownload[$i]['Song']['provider_type'].'");'));
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("000/000/000/000/233/791/19/00000000000023379119-250x250_72dpi_RGB_100Q.jpg?nvb=20131021064100&nva=20131021074100&token=569392de0dbe0a647d0a2", "London Calling","The Clash","193","23379120","sony");'));
                                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                                             }
