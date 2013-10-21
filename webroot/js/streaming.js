@@ -306,11 +306,12 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         url: postURL,
         data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
     }).done(function(data){
-        var responseData = data;
+        var json = JSON.parse(data);
+        var responseData = json;
     })
     .fail(function(){
         var errorFlag = 1;
-        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
+        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];alert(errorData[0]);
     });
 
     if(errorFlag == 1){
