@@ -12,7 +12,7 @@ Class GenresController extends AppController
 {
 
     var $uses = array('Category', 'Files', 'Album', 'Song', 'Download');
-    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common');
+    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming');
     var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language');
 
     /*
