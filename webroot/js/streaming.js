@@ -181,6 +181,7 @@ function pushSongs (newSongArray) {
 
 	
 	var flash =	document.getElementById("fmp_player");
+        alert(flash);
 	console.log(flash);
 	flash.pushNewSongsFromJS(newSongArray);
 	
