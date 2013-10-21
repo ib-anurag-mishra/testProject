@@ -840,14 +840,30 @@ if ($type != 'all') {
     if (!empty($songs)) {
         $i = 1;
         $country = $this->Session->read('territory');
-        foreach ($songs as $psong) { echo "<pre>"; print_r($psong);
+        foreach ($songs as $psong) { 
             ?>
                         <div class="tracklist">
                             <!--<a href="#" class="preview"></a>-->
                         
+                            <?php
+                                        if($this->Session->read('library_type')==2)
+                                        {
+                                            $filePath = shell_exec('perl files/tokengen_streaming '. $psong->CdnPath."/".$psong->SaveAsName);
+
+                                            if(!empty($filePath))
+                                             {
+                                                $songPath = explode(':',$filePath);
+                                                $streamUrl =  trim($songPath[1]);
+                                                $psong->streamUrl = $streamUrl;
+                                                $psong->totalseconds  = $this->Queue->getSeconds($psong->FullLength_Duration); 
+                                             } 
+                                        }
+                           ?>
+                            
+                            
                         <?php
                         if($this->Session->read("patron")){
-                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $psong->ProdID . ', "' . base64_encode($psong->provider_type) . '", "' . $this->webroot . '");'));
+                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.$psong->SongTitle.'","'.$psong->ArtistText.'","'.$psong->totalseconds.'","'.$psong->ProdID.'","'.$psong->provider_type.'");'));
                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                         }
