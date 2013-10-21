@@ -123,11 +123,9 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
-
-                    
                     // Below method for removal of '#' & '#.' in between URL
                     // this is used in IE8 
-                    
+
                     // checking for #. in url 
                     var indexOfHash = window.location.href.indexOf('#.');
                     if (indexOfHash > 0)
@@ -143,13 +141,13 @@
                     if (indexOfHash > 0)
                     {
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 1 , window.location.href.length);
+                        var current_nav = base_url + window.location.href.slice(indexOfHash + 1, window.location.href.length);
                         window.location.href = current_nav;
                         return true;
                     }
-                    
+
                     // After removal of '#' & '#.' the below statements are exceuted
-                    
+
                     // Prepare
                     var
                             $data = $(documentHtml(data)),
@@ -209,10 +207,7 @@
                     if ($body.ScrollTo || false) {
                         $body.ScrollTo(scrollOptions);
                     } /* http://balupton.com/projects/jquery-scrollto */
-                    
-                    //$body.removeClass('loader');
-                    $('.loader').fadeOut(2000);
-                     $body.remove(".loader");
+
                     $window.trigger(completedEventName);
 
                     // Inform Google Analytics of the change
@@ -226,10 +221,16 @@
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
 
+
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
                     return false;
+                },
+                complete: function() {
+                    //$body.removeClass('loader');
+                    $('.loader').fadeOut(2000);
+                    $body.remove(".loader");
                 }
             }); // end ajax
 
