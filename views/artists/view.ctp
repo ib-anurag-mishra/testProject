@@ -113,12 +113,13 @@
                                                     echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
                                                     echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
                                                 }
+					$class = 'logged_in';
                                             }
 				?>
 						
                                 
                                 
-                                        <div class="song"><?php
+                                        <div class="song <?php echo $class; ?>"><?php
                                                             if (strlen($albumSong['Song']['SongTitle']) >= 30) {
                                                                     echo '<a style="text-decoration:none;" title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
                                                             } else {
