@@ -253,38 +253,38 @@ function validateSong(songObj, playerEventCode) {
 		
 		case 1:
 			playerEventCodeString = "Play";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;
 			
 		case 2:
 			playerEventCodeString = "Pause"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
+                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
 			break;
 			
 		case 3:
 			playerEventCodeString = "Prev"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
+                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
+                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
 			break;
 			
 		case 5:
 			playerEventCodeString = "Song Ended"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
+                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
 			break;
 			
 	    case 7:
 			playerEventCodeString = "Queue loaded"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
+                        //streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
 			break;	    	
 			
 		
