@@ -416,10 +416,13 @@ $totalRows = count($genresAll);
             </div>
         </div>
 
+        <div class="border"></div>
 
+        <span class="album-list-span"></span>
+        
     </section>
 
-
+    <section class="album-detail-container clearfix" id='album_details_container'></section>
 
 
 </section>
