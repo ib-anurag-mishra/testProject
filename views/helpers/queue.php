@@ -46,7 +46,29 @@ EOD;
 //                        <a class="twitter" href="#"></a>
 //                </div>';
         return "";
-    }    
+    }  
+    
+    
+     /*
+     Function Name : getSeconds
+     Desc : function used convert minut:second value in to seconds values
+     * 
+     * @param $durationString varChar  'library uniqe id'     
+     *          
+     * @return Boolean or second value
+    */
+    function getSeconds($durationString){        
+        
+       if(isset($durationString) && $durationString!=0){
+           sscanf($durationString, "%d:%d", $minutes, $seconds);
+           $time_seconds = $minutes * 60 + $seconds;          
+           return $time_seconds;
+       } else {
+           return 0;
+       }        
+    }
+    
+    
 }
 
 ?>
