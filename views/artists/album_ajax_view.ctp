@@ -67,7 +67,7 @@
                                                         $songPath = explode(':',$filePath);
                                                         $streamUrl =  trim($songPath[1]);
                                                         $albumSong['streamUrl'] = $streamUrl;
-                                                        $albumSong['totalseconds']  = $this->Streaming->getSeconds($albumSong['Song']['FullLength_Duration']); 
+                                                        $albumSong['totalseconds']  = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']); 
                                                      } 
                                                 }
                                         ?>
