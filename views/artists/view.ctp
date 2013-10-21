@@ -205,8 +205,7 @@
                                                             }
                                                     }else{
                                             ?>
-                                                            <a class="add-to-wishlist " href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
-                                                                    date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'><?php __('Coming Soon'); ?></span></a>
+                                                            <a class="add-to-wishlist" title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )' href="javascript:void(0)"><?php __('Coming Soon'); ?></a>
                                                     <?php
                                                     } 
                                                 } else {
