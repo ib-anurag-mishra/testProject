@@ -17,7 +17,7 @@ class QueueListDetailsController extends AppController{
     function beforeFilter(){
            
             parent::beforeFilter();
-            $this->Auth->allow('now_streaming', 'queue_details', 'index','clearNowStreamingSession', 'ajaxQueueValidation');            
+            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');            
     }
     
     
