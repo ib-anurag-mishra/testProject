@@ -648,6 +648,21 @@ STR;
                      $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                      $songs_img =  Configure::read('App.Music_Path').$songs_img;
                      $data[$key]['songs_img'] = $songs_img;
+                     
+                     if($this->Session->read('library_type')==2)
+                    {
+                        $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+
+                        if(!empty($filePath))
+                         {
+                            $songPath = explode(':',$filePath);
+                            $streamUrl =  trim($songPath[1]);
+                            $data[$key]['streamUrl'] = $streamUrl;
+                            $data[$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
+                         } 
+                    }
+                     
+                     
                 }                    
                 Cache::delete("national_us_top10_songs" . $country);
                 Cache::write("national_us_top10_songs" . $country, $data);
