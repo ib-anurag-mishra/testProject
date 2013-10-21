@@ -48,6 +48,7 @@
                             <?php
                             
 					$i = 1;
+                                        echo "Count: ".count($albumSongs);
 					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):			
 						
 					 //hide song if library block the explicit content
