@@ -406,8 +406,7 @@ class HomesController extends AppController
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-               // if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-                if(1){
+                if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
                     $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
                 }
                 else
