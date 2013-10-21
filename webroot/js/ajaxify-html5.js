@@ -111,7 +111,7 @@
 
 
             // Set Loading
-            $(".content-wrapper").html("<div id='spinner'></div>");
+            $(".content-wrapper").find('.content').html("<div class='loader'></div>");
             
             
             //$body.addClass('loading');
