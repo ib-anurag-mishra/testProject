@@ -197,11 +197,11 @@ class QueueListDetailsController extends AppController{
        $this->Session->delete('songPlaying');
        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,$userStreamedTime,$eventType,'',$songDuration);
        if(!empty($validationResponse)){
-           if($validationResponse[0] == 'error'){
+           if($validationResponse[0] == 0){
                //$error_message = array('error' => $validationResponse);
                echo json_encode($validationResponse);
                exit;
-           }else if($validationResponse[0] == 'success'){
+           }else if($validationResponse[0] == 1){
                if(!empty($_POST['queueId'])){
                    $this->Session->write("queuePlaying", $_POST['queueId']);
                }else{
