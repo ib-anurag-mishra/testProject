@@ -1578,7 +1578,8 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                 "songLength":songLength,
                 "data":songFile
                 }
-        ];                    
+        ];   
+        alert(newSong);
         pushSongs(newSong);
 
     } 
