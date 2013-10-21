@@ -86,9 +86,7 @@ Class StreamingComponent extends Object
         
         
         
-        
-        
-        
+           
         
         //check the streaming validation
         //this check that library is allow for streaming
@@ -116,9 +114,9 @@ Class StreamingComponent extends Object
             //check the patron record is exist or not
             $patronStreamingresults = $this->checkStreamingInfoExist($libId, $patId);             
 
-            if(is_array($patronStreamingresults)){
+            if(is_array($patronStreamingresults) && !empty($patronStreamingresults)){
                 
-                    $modified_date = $patronStreamingresults['StreamingRecords']['modified_date'];               
+                $modified_date = $patronStreamingresults['StreamingRecords']['modified_date'];               
                     $onlyDate = date('Y-m-d',strtotime($modified_date));
                    
                     $log_data .= PHP_EOL."Streaming Info Exist : modified_date  : ".$modified_date;
