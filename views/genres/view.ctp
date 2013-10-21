@@ -1,5 +1,4 @@
 <?php
-
 /*
   File Name : index.ctp
   File Description : View page for genre index
@@ -56,7 +55,6 @@
 
 
 <?php
-
 $genre_text_conversion = array(
     "Children's Music" => "Children's",
     "Classic" => "Soundtracks",
@@ -83,5 +81,24 @@ $genre_text_conversion = array(
     "World Music (Other)" => "World Music"
 );
 
-var_dump($genre_text_conversion);
+//$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
+$genre_crumb_name = $genre;
+
+$html->addCrumb(__('All Genre', true), '/genres/view/');
+$html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' . base64_encode($genre_crumb_name));
+$totalRows = count($genresAll);
 ?>
+
+
+<section class="genres-page">
+    
+    <div class="breadcrumbs">
+        <span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes'); ?></span>
+    </div>
+
+    <header class="clearfix">
+        <h2> <?php echo __('Search for your favorite music.', true); ?></h2>
+        <div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' => 'index')); ?></div>
+    </header>
+    
+</section>
