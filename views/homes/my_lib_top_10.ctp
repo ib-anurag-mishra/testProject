@@ -82,7 +82,7 @@
                                       $count  =   1;                                                                                
                                       if(count($top_10_songs) > 0) {
 					//for($d=1;$d<$count;$d++) {
-                                        foreach($top_10_songs as $key => $value){ echo '<pre>'; print_r($value);
+                                        foreach($top_10_songs as $key => $value){ 
                                             
                                             
                                             
