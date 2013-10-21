@@ -1579,7 +1579,14 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                 "data":songFile
                 }
         ];   
-        alert(newSong.toString());
+       
+        alert("songId"+prodId);
+        alert("songProviderType"+providerType);
+        alert("label"+songTitle);
+        alert("songTitle"+songTitle);
+        alert("artistName"+artistName);
+        alert("songLength"+songLength);
+        alert("data"+songFile);
         pushSongs(newSong);
 
     } 
