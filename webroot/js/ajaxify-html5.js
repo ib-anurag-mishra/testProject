@@ -112,7 +112,7 @@
 
             // Set Loading
             
-            $body.addClass('loading');
+            $body.addClass('loader');
 
             // Start Fade Out
             // Animating to opacity to 0 still keeps the element's height intact
@@ -209,7 +209,8 @@
                     if ($body.ScrollTo || false) {
                         $body.ScrollTo(scrollOptions);
                     } /* http://balupton.com/projects/jquery-scrollto */
-                    $body.removeClass('loading');
+                    
+                    $body.removeClass('loader');
                     $window.trigger(completedEventName);
 
                     // Inform Google Analytics of the change
