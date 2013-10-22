@@ -7,7 +7,7 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library','Artist','Country', 'LatestDownload');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist','Country', 'LatestDownload','StreamingHistory','StreamingRecords');
 
     
   function cachekey($key){
