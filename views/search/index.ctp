@@ -926,6 +926,7 @@ if ($type != 'all') {
                             </div>
                             <div class="download">
                                     <?php
+                                    $sales_date = Get_Sales_date($psong->TerritorySalesDate);
                                     if($this->Session->read("patron")){
                                     if ($sales_date <= date('Y-m-d')) {
                                         $productInfo = $song->getDownloadData($psong->ProdID,$psong->provider_type);
@@ -1091,6 +1092,7 @@ if (isset($type)) {
                             <a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
 						<div class="download"><?php
+                         $sales_date = Get_Sales_date($psong->TerritorySalesDate);
                          if($this->Session->read("patron")){
                                     if ($sales_date <= date('Y-m-d')) {
                                         $productInfo = $mvideo->getDownloadData($psong->ProdID,$psong->provider_type);
