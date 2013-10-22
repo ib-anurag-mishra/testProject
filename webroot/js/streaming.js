@@ -177,20 +177,32 @@ function swfCallback (e) {
 }
 */
 
+function getTotalPlayerLoadedTime() {
+	var flash =	document.getElementById("fmp_player");
+	//console.log(flash);
+	flash.returnTotalPlayerLoadedTimeAS3();
+	
+}
+
+function returnTotalPlayerLoadedTimeJS(duration) {
+	
+	$('.playerLoaded').html("Player has been loaded for: " + duration + " seconds.");
+	
+}
+
+
+
+
 function pushSongs (newSongArray) {
 
 	
 	var flash =	document.getElementById("fmp_player");
-	console.log(flash);
+	//console.log(flash);
 	flash.pushNewSongsFromJS(newSongArray);
 	
 }
 
-function clearQueue () {
-	
-	var flash = document.getElementById("fmp_player");
-	flash.clearQueueFromJS();
-}
+
 
 
 
@@ -199,31 +211,20 @@ function reportTotalDuration(totalDuration) {
 	
 }
 
-
+/*
 function reportSongInfo(songObj) {
-	
-	$('.song_played').html("Current song being played: <br />" + "Playlist ID: " + songObj.playlistId + "<br />" + "Song ID: " + songObj.songId + "<br />" + "Label: " + songObj.label + "<br />" + "Artist Name: " + songObj.artistName + "<br />" + "Song Title: " + songObj.songTitle + "<br />" + "Song Length: " + songObj.songLength + "<br />" + "Song Data: " + songObj.data); 
-}
 
-function playPressed() {
+	var remainingUserStreamTime = 240;
 	
-	$('.current_action').html('<br />Current action:<br />play pressed');
+	$('.song_played').html("Current song being played: <br />" + "Playlist ID: " + songObj.playlistId + "<br />" + "Song ID: " + songObj.songId + "<br />" + "Label: " + songObj.label + "<br />" + "Artist Name: " + songObj.artistName + "<br />" + "Song Title: " + songObj.songTitle + "<br />" + "Song Length: " + songObj.songLength + "<br />" + "Song Data: " + songObj.data + "<br />" + "Provider Type: " + songObj.providerType + "<br />" + "Total Duration: " + songObj.tld + "<br />" + "Time Elapsed Previous Event: " + songObj.songTimeElapsed); 
+	
+	return remainingUserStreamTime;
 }
+*/
 
-function pausePressed() {
-	
-	$('.current_action').html('<br />Current action:<br />pause pressed');
-}
 
-function prevPressed() {
-	$('.current_action').html('<br />Current action:<br />prev pressed');
-	
-}
 
-function nextPressed() {
-	
-	$('.current_action').html('<br />Current action:<br />next pressed');
-}
+
 
 
 /* this is called before the song is played */ 
@@ -231,21 +232,30 @@ function validateSong(songObj, playerEventCode) {
 
 	
 	// properties sent from flash
-	songObj.songProviderType = 'sony';
-        songObj.songDuration = 60;
-	plaulistId = songObj.playlistId;
-	songId = songObj.songId;
-        songProviderType = songObj.songProviderType;
-	label = songObj.label; 
-	artistName =  songObj.artistName;
-	songTitle  = songObj.songTitle;
-	songLength = songObj.songLength;
-	data = songObj.data;
-	songDuration = songObj.songDuration;
+	
+	plaulistId = songObj.playlistId 
+	songId = songObj.songId
+	//songObj.label
+	//songObj.artistName
+	//songObj.songTitle
+	songLength = songObj.songLength
+	//songObj.data
+	songProviderType = songObj.providerType
+	songDuration = songObj.psld
 	
 	
 	
-	// playerEventCode: 1 = Play, 2 = Pause, 3 = Prev, 4 = Next, 5 = Song Ended, 6 = Switch Stream
+       
+//var songInfoStr = "<p>Playlist ID: " + songObj.playlistId + "</p>" +
+//					  "<p>Song ID: " + songObj.songId + "</p>" +
+//					  "<p>Artist Name: " + songObj.artistName + "</p>" +
+//					  "<p>Song Title: " + songObj.songTitle + "</p>" +
+//					  "<p>Song Length: " + songObj.songLength + "</p>" +
+//					  "<p>Data: " + songObj.data + "</p>" +
+//					  "<p>Provider Type: " + songObj.providerType + "</p>" +
+//					  "<p>Prev Song Listening Duration / Time Before Pause: " + songObj.psld + "</p>";       
+	
+	// playerEventCode: 1 = Play, 2 = Pause, 3 = Prev, 4 = Next, 5 = Song Ended, 6 = Stream Switched
 	
 	var playerEventCodeString;
 	
@@ -279,22 +289,36 @@ function validateSong(songObj, playerEventCode) {
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,'',songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;
 			
 	    case 7:
 			playerEventCodeString = "Queue loaded"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
-                        
 			break;	    	
-			
-		
 	}
 	
-	$('.playerEventCode').html("Player event code is: " + playerEventCodeString); 
-	var isValid = true;
-	return isValid;
-}
+//	var songInfoStr = "<p>Playlist ID: " + songObj.playlistId + "</p>" +
+//					  "<p>Song ID: " + songObj.songId + "</p>" +
+//					  "<p>Artist Name: " + songObj.artistName + "</p>" +
+//					  "<p>Song Title: " + songObj.songTitle + "</p>" +
+//					  "<p>Song Length: " + songObj.songLength + "</p>" +
+//					  "<p>Data: " + songObj.data + "</p>" +
+//					  "<p>Provider Type: " + songObj.providerType + "</p>" +
+//					  "<p>Prev Song Listening Duration / Time Before Pause: " + songObj.psld + "</p>";
+//	
+//	$('.songInfo').html(songInfoStr);
+
+
+	console.log("inside validateSong");
+	
+	
+	//return isValid;
+	//var responseDataArray = [0,"unable to stream this song",9660,6,358,60];
+//	var responseDataArray = [1,"",300,6,358,5000];
+//	streamingValidationJS(responseDataArray);
+
+}		
 
 
 function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
@@ -306,12 +330,12 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         url: postURL,
         data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
     }).done(function(data){
-        var json = JSON.parse(data);
-        var responseData = json;
+        streamingValidationJS(JSON.parse(data));
     })
     .fail(function(){
         var errorFlag = 1;
-        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];alert(errorData[0]);
+        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
+        streamingValidationJS(errorData);
     });
 
     if(errorFlag == 1){
@@ -328,6 +352,16 @@ function pingTimeJS() {
 	
 }
 
+function streamingValidationJS(responseDataJS) {
+	
+		
+	console.log('inside streamingValidationJS');
+	
+	var flash =	document.getElementById("fmp_player");
+	
+	flash.streamingValidationAS(responseDataJS);
+	
+}
 function reportTime(amt) {
 	
 	$('.report_time').html("Current time is " + amt + " seconds.");
