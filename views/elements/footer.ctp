@@ -53,7 +53,7 @@
     }
 </style>
 
-</div>			
+	
 
 <footer class="site-footer">
     <div class="footer-content">
@@ -71,7 +71,7 @@
             </ul>
         </nav>
         <div class="languages">
-            <?php $this->getTextEncode(__('Also available in')); ?>&nbsp;
+            <?php $this->getTextEncode(__('Also available in')); ?>
             <?php
             if ($language)
             {
@@ -90,6 +90,7 @@
                 }
             }
             ?>
+            <?php echo PHP_OS; ?>
         </div>
     </div>
 </footer>
