@@ -88,6 +88,9 @@
                                 
                                 if($this->Session->read("patron")){ 
                                     
+                                    echo "Type: ".$this->Session->read('library_type');
+                                    
+                                    
                                     if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1) 
                                     {
                                         echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'loadSong("'.$albumSong['streamUrl'].'", "'.$albumSong['Song']['SongTitle'].'","'.$albumSong['Song']['ArtistText'].'","'.$albumSong['totalseconds'].'","'.$albumSong['Song']['ProdID'].'","'.$albumSong['Song']['provider_type'].'");'));
