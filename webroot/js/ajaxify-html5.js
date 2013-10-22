@@ -139,7 +139,7 @@
                         {
                             if (window.location.href.indexOf('/homes') > -1)
                             {
-                                current_nav = base_url + url_slice;
+                                current_nav = base_url + '/homes' + url_slice;
                             }
                             else
                             {
@@ -175,7 +175,7 @@
                         {
                             if (window.location.href.indexOf('/homes') > -1)
                             {
-                                current_nav = base_url + url_slice;
+                                current_nav = base_url + '/homes' + url_slice;
                             }
                             else
                             {
