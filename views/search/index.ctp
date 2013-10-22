@@ -867,7 +867,7 @@ if ($type != 'all') {
                             <?php
                             }
                             ?>
-                            <div class="composer"><a style="text-decoration:none;" title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
+                            <div class="composer"><a style="text-decoration:none;" title='<?php echo $this->getTextEncode($psong->Composer); ?>'><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
 
 
                             <div class="wishlist-popover">	
