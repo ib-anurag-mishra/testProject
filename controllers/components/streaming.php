@@ -9,6 +9,9 @@ Class StreamingComponent extends Object
 {
     var $components = array('Auth','Session');
     
+    var $streamingLimit = 10800;
+    var $streamingLog = 'on'; //off
+    var $timerCallDuration = 60; //off
     
     
      /*
@@ -24,17 +27,18 @@ Class StreamingComponent extends Object
      *   
      * @return array
     */
-    function validateSongStreaming($libId,$patId,$prodId,$provider,$agent = null) {
+    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration) {
         
         /**
           creates log file name
         */
         //set the default value
         $currentTimeDuration = 0;
+        $timerCallTime = (2 * $songDuration) ;
         
         $currentTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
-        
-        
+      
+    
         $log_name = 'song_streaming_web_log_'.date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
@@ -46,7 +50,9 @@ Class StreamingComponent extends Object
         if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-            return array('error','Not able to stream this song.You need to login again.',$currentTimeDuration, 1);           
+            
+            //return the final result array
+            return array(0,'Not able to stream this song.You need to login again.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
         
@@ -54,7 +60,8 @@ Class StreamingComponent extends Object
         if(($patId == '' || $patId == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-            return array('error','Not able to play this song.You need to login again.',$currentTimeDuration, 2);            
+             //return the final result array
+            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
             exit;
         }
         
@@ -62,12 +69,30 @@ Class StreamingComponent extends Object
         if(($libId == '' || $libId == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
-            return array('error','Not able to play this song.You need to login again.',$currentTimeDuration, 3);  
+             //return the final result array
+            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
         
+         //if $songDuration  not set then
+        if(($songDuration == '' || $songDuration == 0)){
+             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            $this->log("error|Not able to stream this song,song duration is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
+             //return the final result array
+            return array(0,'Not able to stream this song.',$currentTimeDuration, 4 ,$timerCallTime,$this->timerCallDuration);  
+            exit;
+        }
+        
+        
+        
+        
+           
+        
         //check the streaming validation
+        //this check that library is allow for streaming
+        // and song is allow for streaming or not
         $validationResult = $this->validateStreaming($prodId, $provider,$libId,$patId,$agent);
+        
         $validationFlag = $validationResult[0];
         $validationMessage = $validationResult[1];
         $validationIndex = $validationResult[2];
@@ -87,73 +112,125 @@ Class StreamingComponent extends Object
             $log_data .= PHP_EOL."First Validation Checked :- Valdition Passed : validation Index: ".$validationIndex." ;Validation Message : ".$validationMessage.PHP_EOL;        
             
             //check the patron record is exist or not
-            $streamingInfoFlag = $this->checkStreamingInfoExist($libId, $patId);            
-            if($streamingInfoFlag){
-                //if patron record is exist then fetch the details
-                $patronStreamingresults = $streamingRecordsInstance->find('first',array('conditions' => array('id'=> $streamingInfoFlag),'fields' => 'modified_date'));        
-                if(count($patronStreamingresults) > 0) {                    
-                     $modified_date = $patronStreamingresults['StreamingRecords']['modified_date'];                     
-                     $onlyDate = date('Y-m-d',strtotime($modified_date));                     
+            $patronStreamingresults = $this->checkStreamingInfoExist($libId, $patId);             
 
-                     $log_data .= PHP_EOL."Streaming Info Exist : modified_date  : ".$modified_date;
-                     
-                     //check if the current streaming date is equal to today's date or not
-                     if(strtotime($onlyDate) != strtotime(date('Y-m-d'))){                                       
-                         $updateArr = Array();
-                         $updateArr['id'] = $streamingInfoFlag;                       
-                         $updateArr['consumed_time'] = 0;
-                         $updateArr['modified_date'] = date('Y-m-d H:i:s');                         
-                         $streamingRecordsInstance->setDataSource('master');
-                         //update the date and reset the consumed time as the day start
-                         if($streamingRecordsInstance->save($updateArr)){
-                              $log_data .= "update Streaming_records table(day first request) :- modified_date  : ".$modified_date.PHP_EOL;  
-                         }
-                         $streamingRecordsInstance->setDataSource('default');
-                     }else{
+            if(is_array($patronStreamingresults) && !empty($patronStreamingresults)){
+                
+                $modified_date = $patronStreamingresults['StreamingRecords']['modified_date'];               
+                    $onlyDate = date('Y-m-d',strtotime($modified_date));
+                   
+                    $log_data .= PHP_EOL."Streaming Info Exist : modified_date  : ".$modified_date;
+
+                    //check if the current streaming date is equal to today's date or not
+                    if(strtotime($onlyDate) != strtotime(date('Y-m-d'))){                       
+                        $updateArr = Array();
+                        $updateArr['id'] = $patronStreamingresults['StreamingRecords']['id'];                       
+                        $updateArr['consumed_time'] = 0;
+                        $updateArr['modified_date'] = date('Y-m-d H:i:s');  
+                       
+                        $streamingRecordsInstance->setDataSource('master');
+                        //update the date and reset the consumed time as the day start
+                        if($streamingRecordsInstance->save($updateArr)){
+                            $log_data .= "update Streaming_records table(day first request) :- modified_date  : ".$modified_date.PHP_EOL;  
+                        }
+                        $streamingRecordsInstance->setDataSource('default');
+                    }else{                         
                         $log_data .= PHP_EOL;     
-                     }
-                }                
+                    } 
+                    
             } else {
+                
+                    //insert the patron record if not exist in the streaming records table
+                    $insertArr = Array();
+                    $insertArr['library_id'] = $libId;
+                    $insertArr['patron_id'] = $patId;
+                    $insertArr['consumed_time'] = 0;
+                    $insertArr['modified_date'] = date('Y-m-d H:i:s');
+                    $insertArr['createdOn'] = date('Y-m-d H:i:s');    
+                    $streamingRecordsInstance->setDataSource('master');
+                    if($streamingRecordsInstance->save($insertArr)){
+                        $log_data .= PHP_EOL."Insert Streaming_records table :-  library_id: ".$libId." ;patron_id : ".$patId." ;consumed_time :0 ;modified_date : ".date('Y-m-d H:i:s').PHP_EOL;        
+                    }
+                    $streamingRecordsInstance->setDataSource('default');
+            }            
+            
+            //check the libary unlimited condition
+            $libraryUnlimitedFlag = $this->checkLibraryUnlimited($libId);
+            if($libraryUnlimitedFlag){               
+               
+                $cdate = date('Y:m:d H:i:s');
+                //updated streaming record table
+                $streamingRecordsInstance->setDataSource('master');
+                $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$userStreamedTime.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
+                if($streamingRecordsInstance->query($StreamingRecordsSQL)){                             
+                    $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$userStreamedTime.PHP_EOL;
+                }
+                $streamingRecordsInstance->setDataSource('default'); 
+                
+                //updated streaming history table
+                $currentDate= date('Y-m-d H:i:s');                
                 //insert the patron record if not exist in the streaming records table
                 $insertArr = Array();
                 $insertArr['library_id'] = $libId;
                 $insertArr['patron_id'] = $patId;
-                $insertArr['consumed_time'] = 0;
-                $insertArr['modified_date'] = date('Y-m-d H:i:s');
-                $insertArr['createdOn'] = date('Y-m-d H:i:s');    
-                $streamingRecordsInstance->setDataSource('master');
-                if($streamingRecordsInstance->save($insertArr)){
-                    $log_data .= PHP_EOL."Insert Streaming_records table :-  library_id: ".$libId." ;patron_id : ".$patId." ;consumed_time :0 ;modified_date : ".date('Y-m-d H:i:s').PHP_EOL;        
-                }
-                $streamingRecordsInstance->setDataSource('default');
-            }
+                $insertArr['ProdID'] = $prodId;
+                $insertArr['provider_type'] = $provider;
+                $insertArr['consumed_time'] = $userStreamedTime;
+                $insertArr['action_type'] = $actionType;                
                 
-               
-            //get the requested song duration time
-            $songDuration = $this->checkSongExists($prodId, $provider);
-           
+                $insertArr['modified_date'] = $currentDate;
+                $insertArr['createdOn'] = $currentDate;
+                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                if($agent == null){
+                    $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
+                }else{
+                    $insertArr['user_agent'] = addslashes($agent);   
+                }
+                $streamingRecordsInstance->setDataSource('master');
+                $streamingHistoryInstance->save($insertArr);
+                $streamingRecordsInstance->setDataSource('default');
+                
+                //return the final result array
+                return array(1,'successfully able to streaming this song','86400', 5 ,$timerCallTime,$this->timerCallDuration);
+                exit;
+            }
+            
+            
+            
             //collect the validation facts
-            $validateStreamingInfoResult = $this->validateStreamingDurationInfo($libId, $patId,$songDuration,$agent);
+            $validateStreamingInfoResult = $this->validateStreamingDurationInfo($libId, $patId,$userStreamedTime,$agent);
             $validateStreamingInfoFlag = $validateStreamingInfoResult[0];
             $validateStreamingInfoMessage = $validateStreamingInfoResult[1];
             $validateStreamingInfoIndex = $validateStreamingInfoResult[2];
             
-            $queryUpdateFlag = 0;
-            $queryInsertFlag = 0;
-            
+                       
+                    
             if($validateStreamingInfoFlag){
                 
                 $this->log("Second Validation Checked :- Valdition Passed : validation Index: ".$validateStreamingInfoFlag." ;Validation Message : ".$validateStreamingInfoMessage." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
 
                 //update streaming_record table table
                 $cdate = date('Y:m:d H:i:s');
-                $streamingRecordsInstance->setDataSource('master');
-                $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$songDuration.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
-                if($streamingRecordsInstance->query($StreamingRecordsSQL)){
-                     $queryUpdateFlag = 1;            
-                     $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$songDuration.PHP_EOL;
+                $remainingTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
+                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
+                    $streamingRecordsInstance->setDataSource('master');
+                    $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$userStreamedTime.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
+                    if($streamingRecordsInstance->query($StreamingRecordsSQL)){
+                                   
+                        $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$userStreamedTime.PHP_EOL;
+                    }
+                    $streamingRecordsInstance->setDataSource('default'); 
+                }else if($userStreamedTime > $remainingTimeDuration){
+                    
+                    $streamingRecordsInstance->setDataSource('master');
+                    $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=".$this->streamingLimit.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
+                    if($streamingRecordsInstance->query($StreamingRecordsSQL)){
+                                    
+                        $log_data .= PHP_EOL."update streaming_reocrds table(Error:songduration > remainingTimeDuration: Agent:".$agent."):-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$userStreamedTime."':remainingTimeDuration='".$remainingTimeDuration.PHP_EOL;
+                    }
+                    $streamingRecordsInstance->setDataSource('default'); 
                 }
-                $streamingRecordsInstance->setDataSource('default');
+               
                 $currentDate= date('Y-m-d H:i:s');
                 
                 //insert the patron record if not exist in the streaming records table
@@ -162,33 +239,49 @@ Class StreamingComponent extends Object
                 $insertArr['patron_id'] = $patId;
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
-                $insertArr['consumed_time'] = $songDuration;
+                $insertArr['consumed_time'] = $userStreamedTime;
                 $insertArr['modified_date'] = $currentDate;
+                $insertArr['action_type'] = $actionType; 
                 $insertArr['createdOn'] = $currentDate;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
-                $insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
-                $streamingHistoryInstance->setDataSource('master');
-                if($streamingHistoryInstance->save($insertArr)){
-                    $queryInsertFlag = 1;
-                    $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$songDuration." ;modified_date : ".$currentDate.PHP_EOL;
-                    $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$songDuration." ;modified_date : ".$currentDate,'streaming');            
-                    $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
-                    $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
-                    $this->createStreamingLog($log_data, $log_name);
+                if($agent == null){
+                    $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
+                }else{
+                    $insertArr['user_agent'] = addslashes($agent);   
                 }
-                $streamingHistoryInstance->setDataSource('default');
-                if( ($queryUpdateFlag == 1) && ($queryUpdateFlag == 1) ){
-                     $updatedTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
-                     return array('success',$validateStreamingInfoMessage,$updatedTimeDuration, 4);                  
-                }                
-                exit;
+               
+                //updated record if user Streamed time is not 0 and less then to stream time
+               if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
+                    $streamingHistoryInstance->setDataSource('master');
+                    if($streamingHistoryInstance->save($insertArr)){
+                        $queryInsertFlag = 1;
+                        $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate.PHP_EOL;
+                        $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$userStreamedTime." ;modified_date : ".$currentDate,'streaming');            
+                        $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
+                        $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
+                        $this->createStreamingLog($log_data, $log_name);
+                    }
+                    $streamingHistoryInstance->setDataSource('default');
+                }             
+                
+                $remainingTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
+                if($remainingTimeDuration){
+                     //return the final result array
+                    return array(1,'successfully able to streaming this song',$remainingTimeDuration, 6, $timerCallTime,$this->timerCallDuration);
+                    exit;
+                }else{
+                     //return the final result array
+                    return array(0,'You have not enough streaming time left to play this song',$remainingTimeDuration, 7,$timerCallTime,$this->timerCallDuration);
+                    exit;
+                }        
                 
             }else{
                 $this->log("error|message=".$validateStreamingInfoMessage.";validatin Index :".$validateStreamingInfoIndex,'streaming');            
                 $log_data .= PHP_EOL."error|".$validateStreamingInfoMessage."|".$validateStreamingInfoIndex.PHP_EOL;
                 $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
                 $this->createStreamingLog($log_data, $log_name);
-                return array('error',$validateStreamingInfoMessage,$currentTimeDuration, 5);               
+                //return the final result array
+                return array(0,$validateStreamingInfoMessage,$currentTimeDuration, 8,$timerCallTime,$this->timerCallDuration);               
                 exit;
             }
 
@@ -199,7 +292,8 @@ Class StreamingComponent extends Object
           $log_data .= PHP_EOL."error|".$validationMessage."|".$validationIndex.PHP_EOL;
           $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
           $this->createStreamingLog($log_data, $log_name); 
-          return array('error',$validationMessage,$currentTimeDuration, 6);         
+          //return the final result array
+          return array(0,$validationMessage,$currentTimeDuration, 9,$timerCallTime,$this->timerCallDuration);         
           exit;
         
         }
@@ -221,49 +315,42 @@ Class StreamingComponent extends Object
      * @param $library_id Int  'Uniq library id'
      * @return Boolean
     */
-    function validateStreamingDurationInfo($libId,$patId,$songDuration,$agent = null) {
-        
+    function validateStreamingDurationInfo($libId,$patId,$userStreamedTime,$agent = null) {        
        
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');      
         $streamingRecordsInstance->recursive = -1;
         
-        if(!$agent){
-          
+        if(!$agent){   
+            
           $uid = $patId;
           $libId = $libId;
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
           
-        
         } else {
             $uid = $patId;
             $libId = $libId;
             $ip = $agent;
-            $channel = 'Mobile App';
-            
+            $channel = 'Mobile App';            
         }
       
         $streamingRecordsResults = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         
         if(!empty($streamingRecordsResults)){
            
-            $consumed_time = $streamingRecordsResults['StreamingRecords']['consumed_time'];
+            $consumedTime = $streamingRecordsResults['StreamingRecords']['consumed_time'];
             $updatedDate = $streamingRecordsResults['StreamingRecords']['modified_date'];
            
-            //check patron time limit 
-            if($this->checkPatronStreamingLimitForDay($consumed_time,$updatedDate)){
-                $limitToPlaySong = $songDuration + $consumed_time;
-                if($this->checkPatronStreamingLimitForDay($limitToPlaySong,$updatedDate)){
-                    return array(true,'successfully able to streaming this song.', 1);
-                }else{
-                    $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
-                    return array(false,'You have not enough streaming time left to play this song.', 2);
-                }                
+            //check patron time limit            
+            if($this->checkPatronStreamingLimitForDay($consumedTime,$updatedDate)){                
+                return array(1,'successfully able to streaming this song.', 1);
             }else{
-                $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";limitToPlaySong:".$limitToPlaySong.";updatedDate:".$updatedDate." as the patron limit is over for the day",'streaming');
-                return array(false,'You have not enough streaming time left to play this song.', 3);
-            }
-        }else {
+                $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";songDureation:".$userStreamedTime.";consumedTime:".$consumedTime.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
+                return array(0,'You have not enough streaming time left to play this song.', 2);
+            }                
+            
+        } else {
+            
             $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip." as the  library and patron information not exist in streaming_records tables",'streaming');
             return array(false,'There are no record exist for update.', 4);
         }
@@ -279,13 +366,13 @@ Class StreamingComponent extends Object
   
      * @return Boolean
     */
-    function checkPatronStreamingLimitForDay($consumed_time,$updatedDate){
+    function checkPatronStreamingLimitForDay($consumedTime,$updatedDate){
         //per day allowed time for patron in seconds
          $onlyDate = date('Y-m-d',strtotime($updatedDate));
          if(strtotime($onlyDate) == strtotime(date('Y-m-d'))){ 
             //total allow time in  second for the day 
-            $allowedTime = Configure::read('App.streaming_time');
-            if($consumed_time <= $allowedTime){
+            $allowedTime = $this->streamingLimit;
+            if($consumedTime < $allowedTime){
                 return true;
             }else{
                 return false;
@@ -324,9 +411,10 @@ Class StreamingComponent extends Object
         }
        
         
-        //check the validation
-        if($this->checkLibraryStreaming($libId)){ 
-            if($this->checkSongExists($prodId, $providerType)){                
+        //check for library allow for streaming
+        if($libraryTerritory=$this->checkLibraryStreaming($libId)){           
+            //check song allow for streaming
+            if($this->checkSongExists($prodId, $providerType,$libraryTerritory)){                
                 return array(true,'First validation passed', 1);
             } else {
                 $this->log($channel." : Rejected streaming request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested for streaming does not allow for streaming or its mp4 file id is empty in Songs table",'streaming');
@@ -350,11 +438,31 @@ Class StreamingComponent extends Object
      * 
      * @return false or song duration in seconds
     */
-    function checkSongExists($prodId, $providerType){
+    function checkSongExists($prodId, $providerType,$libraryTerritory){
         $songInstance = ClassRegistry::init('Song');
-        $songInstance->recursive = -1;
-        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType, 'StreamingStatus'=>'1'), 'fields' => array('FullLength_Duration')));                
-        if(isset($song['Song']['FullLength_Duration'])){
+        $songInstance->recursive = -1;        
+        $song = $songInstance->find('first',array(
+        'joins' => array(
+            array(
+                'table' => strtolower($libraryTerritory).'_countries',
+                'alias' => 'Country',
+                'type' => 'INNER',
+                'conditions' => array(
+                    'Country.ProdID = Song.ProdID',
+                    'Country.provider_type = Song.provider_type',
+                )
+            )
+        ),
+        'conditions' => array(
+                            'Song.ProdID'=>$prodId,
+                            'Song.provider_type'=>$providerType,
+                            'Country.StreamingSalesDate < NOW()',
+                            'Country.StreamingStatus'=> 1
+                            ),
+        'fields' => array('Song.FullLength_Duration'))); 
+        
+        
+        if(isset($song['Song']['FullLength_Duration']) && $libraryTerritory){      
             $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);          
             if(isset($secondsValue) && is_numeric($secondsValue)){
                 return $secondsValue;
@@ -375,15 +483,15 @@ Class StreamingComponent extends Object
      * 
      * @param $libId Int  'library uniqe id' 
      *     
-     * @return Boolean
+     * @return false or library territory value
     */
     function checkLibraryStreaming($libId) {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;        
-        $results = $libraryInstance->find('count',array('conditions' => array('library_type = "2"','id' => $libId,'library_status'=>'active')));
-       
-        if($results > 0) {            
-            return true;
+        $results = $libraryInstance->find('first',array('conditions' => array('library_type = "2"','id' => $libId,'library_status'=>'active'),'fields' => 'library_territory'));
+            
+        if(count($results) > 0 && isset($results['Library']['library_territory']) && $results['Library']['library_territory']!='') {            
+            return $results['Library']['library_territory'];
         }
         else {            
             return false;
@@ -395,7 +503,7 @@ Class StreamingComponent extends Object
     
     
     /*
-     Function Name : checkPatronExist
+     Function Name : checkStreamingInfoExist
      Desc : function used for checking library and patron details are stored in the streaming records table or not
      * 
      * @param $libId Int  'library uniqe id'
@@ -406,11 +514,11 @@ Class StreamingComponent extends Object
     function checkStreamingInfoExist($libId,$patId) {
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
-        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId),'fields' => 'id'));
-        if(!empty($results)) {
-            return $results['StreamingRecords']['id'];
-        }
-        else {
+        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId)));
+        if(!empty($results) && isset($results['StreamingRecords']['id']) && $results['StreamingRecords']['id']!='') {
+            //return $results['StreamingRecords']['id'];
+            return $results;
+        } else {
             return false;
         }
     }
@@ -440,7 +548,7 @@ Class StreamingComponent extends Object
     
     /*
      Function Name : getPatronUsedStreamingTime
-     Desc : function used to get the patron remaing streaming time
+     Desc : function used to get the patron remaining streaming time
      * 
      * @param $libId Int  'library uniqe id'
      * @param $patId Int  'patron uniqe id'
@@ -448,13 +556,25 @@ Class StreamingComponent extends Object
      * @return Boolean
     */
     function getPatronUsedStreamingTime($libId,$patId) {
+      
         $streamingRecordsInstance = ClassRegistry::init('StreamingRecords');
         $streamingRecordsInstance->recursive = -1;
-        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId,'date(modified_date)=date(now())'),'fields' => 'consumed_time'));
+        
+        $currentDate = date('Y-m-d');        
+        $results = $streamingRecordsInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId,'date(modified_date)'=>$currentDate),'fields' => 'consumed_time'));
+                
         if(!empty($results)) {
-            return (Configure::read('App.streaming_time')- $results['StreamingRecords']['consumed_time']);
+            
+            $remainingTime = ($this->streamingLimit - $results['StreamingRecords']['consumed_time']);
+           
+            if($remainingTime <= 0){
+                return 0;
+            }else{
+                return $remainingTime;
+            }
+            
         } else {
-            return Configure::read('App.streaming_time');
+            return $this->streamingLimit;
         }
     }
     
@@ -470,11 +590,33 @@ Class StreamingComponent extends Object
     function createStreamingLog($log_data,$log_name){
         
         //check log create condition on or off
-        $streamingLogFlag = Configure::read('App.streaming_log');
+        $streamingLogFlag = $this->streamingLog;
         if($streamingLogFlag == 'on'){
             $this->log($log_data, $log_name);
         }
-    }    
+    }
+    
+    
+    /*
+     Function Name : checkLibraryUnlimited
+     Desc : function used for creating logs for streaming song
+     * 
+     * @param $libID Int  'library id'         
+     * 
+     * @return bool value
+    */
+    function checkLibraryUnlimited($libId){
+        $libraryInstance = ClassRegistry::init('Library');
+        $libraryInstance->recursive = -1;        
+        $results = $libraryInstance->find('first',array('conditions' => array('library_unlimited = "1"','id' => $libId,'library_user_download_limit'=>'5'),'fields' => 'id'));
+          
+        if(count($results) > 0 && isset($results['Library']['id']) && $results['Library']['id']!='') {            
+            return true;
+        }
+        else {            
+            return false;
+        }        
+    }
     
     
 

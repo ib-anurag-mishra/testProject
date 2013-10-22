@@ -39,6 +39,16 @@ class StreamingResponseType{
    * @var string
   */
   public $mp4url; 
+  /**
+   * timerCallTime
+   * @var integer
+  */
+  public $timerCallTime; 
+  /**
+   * timerCallDuration
+   * @var integer
+  */
+  public $timerCallDuration; 
 
   /**
    * Constructor

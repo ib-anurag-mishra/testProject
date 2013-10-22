@@ -1,6 +1,6 @@
 <?php
 
-Configure::write('debug', 2);
+Configure::write('debug', 0);
 
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
@@ -1649,10 +1649,13 @@ STR;
    * @param string authenticationToken
    * @param string ProdID
    * @param string agent
+   * @param int actionID
+   * @param int consumedTime
+   * @param string songDuration
    * @return StreamingResponseType[]
    */
   
-  function validateStreamRequest($authenticationToken, $ProdID, $agent){
+  function validateStreamRequest($authenticationToken, $ProdID, $agent, $actionID, $consumedTime, $songDuration){
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -1663,34 +1666,32 @@ STR;
     
     $product_detail = $this->getProductDetail($ProdID);
     $prodId = $product_detail['Product']['ProdID'];
-    $provider_type = $product_detail['Product']['provider_type'];
-
-    $SongData = array();
-    $SongData = $this->Song->find('first', array(
-      'fields' => array('MP4_FileID'),
-      'conditions' => array('ProdID' => $prodId, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
-      'recursive' => -1
-    ));
- 
-    if(empty($SongData['Song']['MP4_FileID'])) {
-      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
-    }
-   
-    $mp4url = null;
-    $mp4url = $this->getHLSURL($SongData['Song']['MP4_FileID']);
+    $provider_type = $product_detail['Product']['provider_type'];    
       
-    if(empty($mp4url)) {
-      throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
-    }
-
-    $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, 'App-'.$agent);
+    if( (1 == $actionID) || (2 == $actionID) ){
+      $consumedTime = 0;
+    }    
+    
+    $song_duration = $this->Streaming->getSeconds($songDuration);
+    
+    // Library ID | Patron Id | ProdID | Provider Type | Streaming time used by user | Action Type | Agent | Song Duration
+    $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, $consumedTime, $actionID, 'App-'.$agent, $song_duration);
+    // 0/1 | message | Remaining time | 3 message identification number for mobile | timerCallTime | timerCallDuration
+    
     
     switch($response[0]){
-      case 'success': 
-	return $this->createsStreamingResponseObject(true, $response[1], $response[2], $mp4url); 
+      case '1': 
+      
+        $streaming_url = null;
+        if( (1 == $actionID) || (2 == $actionID) ) {
+          $streaming_url = $this->getStreamngURL($prodId, $provider_type);    
+        }
+        return $this->createsStreamingResponseObject(true, $response[1], $response[2], $streaming_url, $response[4], $response[5]); 
+        // success | message | remaningtime | mp4url | timerCallTime | timerCallDuration
       break;
-      case 'error'  : 
-	return $this->createsStreamingResponseObject(false, $response[1], $response[2], '');  
+      case '0'  : 
+      
+        return $this->createsStreamingResponseObject(false, $response[1], $response[2], null, $response[4], $response[5]);  
       break;
       default:  throw new SOAPFault('Soap:stream', 'Sorry, Server is facing some technical challenges in streaming this Song.');
     
@@ -6341,16 +6342,20 @@ STR;
    * @param string $message
    * @param string $remaningtime
    * @param string $mp4url
+   * @param string $timerCallTime
+   * @param string $timerCallDuration
    * @return StreamingResponseType[]
    */
 
-  private function createsStreamingResponseObject($success, $message, $remaningtime, $mp4url){
-
+  private function createsStreamingResponseObject($success, $message, $remaningtime, $mp4url, $timerCallTime, $timerCallDuration){
+    //// success | message | remaningtime | mp4url | timerCallTime | timerCallDuration
     $obj = new StreamingResponseType;
-    $obj->success       = $success;
-    $obj->message       = $message;
-    $obj->remaningtime  = $remaningtime;
-    $obj->mp4url       = $mp4url;
+    $obj->success             = $success;
+    $obj->message             = $message;
+    $obj->remaningtime        = $remaningtime;
+    $obj->mp4url              = $mp4url;
+    $obj->timerCallTime       = $timerCallTime;
+    $obj->timerCallDuration   = $timerCallDuration;
 
     $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'StreamingResponseType');
     $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArrayStreamingResponseType');
@@ -6802,24 +6807,58 @@ STR;
   }
  
   /**
-   * Function Name : getHLSURL
-   * Desc : Returns HLS (mp4) URL for given Song  
-   * @param int mp4FileID
+   * Function Name : getStreamngURL
+   * Desc : Returns m3ui8 or mp3 URL for given Song  
+   * @param int ProdID
+   * @param string provider_type
    * @return string
    */  
-  private function getHLSURL($mp4FileID) {
-
+  private function getStreamngURL($ProdID, $provider_type) {
+  
     $FileData = array();
-    $FileData = $this->File_mp4->find('first', array(
-      'conditions' => array('FileID' =>  $mp4FileID),
+    $FileData = $this->Song->find('first', array(
+      'fields' => array('f4.FileiD', 'f4.SaveAsName', 'f4.CdnPath'),
+      'joins' =>  array(
+        array(
+          'table' => 'File_mp4',
+          'alias' => 'f4',
+          'type' => 'INNER',
+          'foreignKey' => false,
+          'conditions'=> array('Song.MP4_FileID = f4.FileiD')
+        )
+      ),
+      'conditions' => array('ProdID' => $ProdID, 'provider_type' => $provider_type, 'StreamingStatus' => '1'),
+      'recursive' => -1
     ));
     
+    
     if(empty($FileData)) {
-      return null;
+      //send mp3
+      $data = $this->Song->find('first', array(
+        'fields' => array('f.FileiD', 'f.SaveAsName', 'f.CdnPath'),  
+        'joins' => array(
+          array(
+            'table' => 'File',
+            'alias' => 'f',
+            'type' => 'inner',
+            'foreignKey' => false,
+            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID' => $ProdID, 'Song.provider_type' => $provider_type, 'StreamingStatus' => '1')
+          )
+        ),
+        'recursive' => -1,
+      ));
+	
+      $CdnPath = $data['f']['CdnPath'];
+      $SaveAsName = $data['f']['SaveAsName'];
+
+      return Configure::read('App.Music_Path'). shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
+
+    }else{
+      //send mp4
+      //return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
+	return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
     }
 
-// return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['SaveAsName'].' '.$FileData['File_mp4']['CdnPath']);  
-  return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['File_mp4']['CdnPath'].' '.$FileData['File_mp4']['SaveAsName']);
   }
   
  
