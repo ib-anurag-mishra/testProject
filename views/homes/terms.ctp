@@ -26,6 +26,7 @@
     line-height: 25px;
     font-size: 14px;
     padding-left: 20px;
+    padding-top: 20px;
 }
 </style>
 <div class="txt-my-terms">
