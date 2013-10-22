@@ -89,7 +89,7 @@
                                                         $artistText = $this->getTextEncode($value['Songs']['ArtistText']);
                                                 }
                                                 ?>                                                
-						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
+						<a class="add-to-wishlist-button no-ajaxy" href='javascript:void(0);'></a>
 						<div class="album-title">
                                                     <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>

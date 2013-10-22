@@ -37,7 +37,7 @@
           echo $javascript->link('recent-downloads');
           echo $javascript->link('search-results');
            echo $javascript->link('jquery.colorbox');
-        
+         echo $javascript->link('jquery.ui.touch-punch');
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
 		{
