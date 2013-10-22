@@ -162,7 +162,7 @@
                                                                 <?php
                                                   } else {
                                                       ?>
-                                                      <span class="download-now-button "><a  href='javascript:void(0);' style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></a></span>
+                                                      <span class="download-now-button "><a  href='javascript:void(0);' style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> ) '><?php __('Coming Soon');?></a></span>
                                         <?php
                                                   }
                                                     }
