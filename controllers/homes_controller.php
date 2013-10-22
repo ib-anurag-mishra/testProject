@@ -2281,7 +2281,7 @@ STR;
         $wishlistResults = Array();
         //$wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         
-        $wishlistQuery =<<<STR
+        echo $wishlistQuery =<<<STR
                     SELECT 
                             wishlists.*,
                             Song.ReferenceID,
