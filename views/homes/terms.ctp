@@ -22,6 +22,11 @@
     text-indent: -9999px;
     width: 285px;
 }
+.content{
+    line-height: 25px;
+    font-size: 14px;
+    padding-left: 20px;
+}
 </style>
 <div class="txt-my-terms">
 	<?php __('Terms &amp; Conditions');?>
