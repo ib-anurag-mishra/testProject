@@ -137,7 +137,15 @@
 
                         if (url_slice.indexOf('_top_10') > -1)
                         {
-                            current_nav = base_url + '/homes' + url_slice;
+                            if (window.location.href.indexOf('/homes') > -1)
+                            {
+                                current_nav = base_url + url_slice;
+                            }
+                            else
+                            {
+                                current_nav = base_url + '/homes' + url_slice;
+                            }
+
                         }
                         else
                         {
@@ -159,7 +167,14 @@
 
                         if (url_slice.indexOf('_top_10') > -1)
                         {
-                            current_nav = base_url + '/homes' + url_slice;
+                            if (window.location.href.indexOf('/homes') > -1)
+                            {
+                                current_nav = base_url + url_slice;
+                            }
+                            else
+                            {
+                                current_nav = base_url + '/homes' + url_slice;
+                            }
                         }
                         else
                         {
