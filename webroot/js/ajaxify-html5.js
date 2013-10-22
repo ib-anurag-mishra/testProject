@@ -143,7 +143,7 @@
                             }
                             else
                             {
-                                if (url_slice.indexOf('/homes') > -1)
+                                if (url_slice.indexOf('homes') > -1)
                                 {
                                     current_nav = base_url + url_slice;
                                 }
@@ -179,7 +179,7 @@
                             }
                             else
                             {
-                                if (url_slice.indexOf('/homes') > -1)
+                                if (url_slice.indexOf('homes') > -1)
                                 {
                                     current_nav = base_url + url_slice;
                                 }
