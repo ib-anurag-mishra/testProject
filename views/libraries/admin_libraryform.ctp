@@ -67,8 +67,8 @@
 		$getData['Library']['library_country'] = "";
 		$getData['Library']['library_zipcode'] = "";
 		$getData['Library']['library_download_limit'] = "";
-	    $getData['Library']['library_user_download_limit'] = "";
-	    $getData['Library']['library_download_type'] = "daily";
+                $getData['Library']['library_user_download_limit'] = "";
+                $getData['Library']['library_download_type'] = "daily";
 		$getData['Library']['library_territory'] = "";
 		$getData['Library']['library_image_name'] = "";
 		$getData['Library']['library_block_explicit_content'] = 0;
@@ -227,8 +227,7 @@
 									'innovative_wo_pin' => 'Innovative w/o PIN',
 									'innovative_https' => 'Innovative HTTPS',
 									'innovative_var_https' => 'Innovative Var HTTPS',
-									
-									'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
+                                    'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
 									'innovative_var_wo_pin' => 'Innovative Var w/o PIN','mdlogin_reference' => 'MDLogin','mndlogin_reference' => 'MNDLogin'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
 									)
 								);
