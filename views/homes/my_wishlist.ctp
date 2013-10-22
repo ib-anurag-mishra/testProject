@@ -432,12 +432,9 @@ $ieVersion =  ieversion();
                                             <?php
                                             
                                             $filePath = shell_exec('perl files/tokengen_streaming '. $wishlistResults[$i]['File']['CdnPath']."/".$wishlistResults[$i]['File']['SaveAsName']);
-
-                                            echo "<br>StreamingSalesDate: ".$downloadResult['Country']['StreamingSalesDate'];
-                                            echo "<br>StreamingStatus: ".$downloadResult['Country']['StreamingStatus'];
                                             
                                             
-                                            if( $this->Session->read('library_type') == 2 && $downloadResult['Country']['StreamingSalesDate'] <= date('Y-m-d') && $downloadResult['Country']['StreamingStatus'] == 1){                                                 
+                                            if( $this->Session->read('library_type') == 2 && $wishlistResults[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $wishlistResults[$i]['Country']['StreamingStatus'] == 1){                                                 
                                                 //do the streaming work
                                                 
                                                 $filePath = shell_exec('perl files/tokengen_streaming '. $wishlistResults[$i]['File']['CdnPath']."/".$wishlistResults[$i]['File']['SaveAsName']);
