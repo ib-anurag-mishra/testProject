@@ -840,7 +840,7 @@ if ($type != 'all') {
     if (!empty($songs)) {
         $i = 1;
         $country = $this->Session->read('territory');
-        foreach ($songs as $psong) { echo "<pre>"; print_r($psong);
+        foreach ($songs as $psong) { 
             ?>
                         <div class="tracklist">
                             <!--<a href="#" class="preview"></a>-->
