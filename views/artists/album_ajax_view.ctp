@@ -86,9 +86,7 @@
                                     $downloadFlag = 1;                                                                       
                                 }
                                 
-                                if($this->Session->read("patron")){ 
-                                    
-                                    echo "Type: ".$this->Session->read('library_type');
+                                if($this->Session->read("patron")){                                                                         
                                     
                                     
                                     if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1) 
