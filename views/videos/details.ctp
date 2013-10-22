@@ -55,7 +55,7 @@
                                           <?php
                                             } else {
                                             ?>    
-                                            <span class="download-now-button "><a  href='javascript:void(0);' title='<?php __('Coming Soon');?>' style="width:120px;cursor:pointer;"><?php __('Coming Soon');?></a></span>
+                                            <span class="download-now-button "><a  href='javascript:void(0);' title='<?php __('Coming Soon');?>  ( <?php if(isset($VideosData[0]['Country']['SalesDate'])){ echo date("F d Y", strtotime($VideosData[0]['Country']['SalesDate']));} ?> ) ' style="width:120px;cursor:pointer;"><?php __('Coming Soon');?></a></span>
                             <?php                
                                             }
                             
@@ -162,7 +162,7 @@
                                                                 <?php
                                                   } else {
                                                       ?>
-                                                      <span class="download-now-button "><a  href='javascript:void(0);' style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></a></span>
+                                                      <span class="download-now-button "><a  href='javascript:void(0);' style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>  ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> ) '><?php __('Coming Soon');?></a></span>
                                         <?php
                                                   }
                                                     }
