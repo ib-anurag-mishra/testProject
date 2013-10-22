@@ -420,7 +420,7 @@ $ieVersion =  ieversion();
          if(is_array($wishlistResults) && count($wishlistResults) > 0){ 
              
 	
-            for($i = 0; $i < count($wishlistResults); $i++) {
+            for($i = 0; $i < count($wishlistResults); $i++) { echo '<pre>'; print_r($wishlistResults);
 		
 			
 	?>
