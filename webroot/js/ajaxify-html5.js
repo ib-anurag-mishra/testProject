@@ -143,9 +143,15 @@
                             }
                             else
                             {
-                                current_nav = base_url + '/homes' + url_slice;
+                                if (url_slice.indexOf('/homes') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/homes' + url_slice;
+                                }
                             }
-
                         }
                         else
                         {
@@ -173,7 +179,14 @@
                             }
                             else
                             {
-                                current_nav = base_url + '/homes' + url_slice;
+                                if (url_slice.indexOf('/homes') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/homes' + url_slice;
+                                }
                             }
                         }
                         else
