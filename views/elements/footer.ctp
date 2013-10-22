@@ -90,7 +90,7 @@
                 }
             }
             ?>
-            <?php echo PHP_OS; ?>
+          
         </div>
     </div>
 </footer>

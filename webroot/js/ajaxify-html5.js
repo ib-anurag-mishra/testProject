@@ -130,8 +130,20 @@
                     var indexOfHash = window.location.href.indexOf('#.');
                     if (indexOfHash > 0)
                     {
+                        var current_nav = '';
+
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
+                        var url_slice = window.location.href.slice(indexOfHash + 2, window.location.href.length);
+
+                        if (url_slice.indexOf('_top_10') > -1)
+                        {
+                            current_nav = base_url;
+                        }
+                        else
+                        {
+                            current_nav = base_url + url_slice;
+                        }
+
                         window.location.href = current_nav;
                         return true;
                     }
@@ -140,8 +152,20 @@
                     var indexOfHash = window.location.href.indexOf('#');
                     if (indexOfHash > 0)
                     {
+                        var current_nav = '';
+
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 1, window.location.href.length);
+                        var url_slice = window.location.href.slice(indexOfHash + 1, window.location.href.length);
+
+                        if (url_slice.indexOf('_top_10') > -1)
+                        {
+                            current_nav = base_url;
+                        }
+                        else
+                        {
+                            current_nav = base_url + url_slice;
+                        }
+
                         window.location.href = current_nav;
                         return true;
                     }
