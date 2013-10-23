@@ -272,7 +272,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="label">
 						<p>My Account</p>
 					</div>
-                                        <a class="select-arrow" href="#"></a>
+                                        <a class="select-arrow" href="javascript:void(0);"></a>
 					<div class="small-divider"></div>
 					<div class="tooltip">
 						<a href="#" class="no-ajaxy"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
