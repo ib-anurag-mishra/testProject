@@ -65,7 +65,7 @@ class QueuesController extends AppController{
      */
     
     function addToQueue(){
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
          $this->Streaming->getStreamingDetails($_REQUEST['songProdId'], $_REQUEST['songProviderType']); die;
         if( $this->Session->read('library') && $this->Session->read('patron') && !empty($_REQUEST['songProdId']) && !empty($_REQUEST['songProviderType'])&& !empty($_REQUEST['albumProdId'])&& !empty($_REQUEST['albumProviderType'])&& !empty($_REQUEST['queueId']) ){
             $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
