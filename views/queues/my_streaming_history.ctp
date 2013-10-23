@@ -92,10 +92,10 @@ $ieVersion =  ieversion();
 			<div class="recent-downloads-scrollable">
 				<div class="row-container">
 				<?php
-                if(count($streamingResults) != 0)
+                if(count($streamingResultss) != 0)
                 {
                     $i = 1;
-                    foreach($streamingResults as $key => $streamingResults):
+                    foreach($streamingResultss as $key => $streamingResults):
                 ?>
 				
 				<div class="row clearfix">
