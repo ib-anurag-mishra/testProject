@@ -2058,7 +2058,7 @@ STR;
   * @param nil
   **/
   function setAppMyMusicVideoList() {
-
+    Configure::write('debug', 0);
     set_time_limit(0);
 
     $territories = $this->Territory->find("all");
