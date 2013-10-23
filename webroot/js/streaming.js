@@ -275,7 +275,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 	$('.prevSongInfo').html(prevSongInfoStr);
 
 
-
+}
 
 /* this is called before the song is played */ 
 function validateSong(songObj, playerEventCode) {
