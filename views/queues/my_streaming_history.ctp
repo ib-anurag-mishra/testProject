@@ -134,6 +134,7 @@ $ieVersion =  ieversion();
                         }    
                         
                         
+                        
                         ?>
 					</div>
 					<div class="song-title">
@@ -181,15 +182,9 @@ $ieVersion =  ieversion();
                                               }
                                         ?>
 					</div> -->
-					<div class="download"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
-						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .substr($streamingArr['Song']['ArtistText'], 0, 19) . '...</span>';							
-						} else {
-							$ArtistName = $streamingArr['Song']['ArtistText'];
-							echo $ArtistName;
-						}
-						
-					?></a></div>
+					<div class="download"><?php
+						 echo $streamingArr['StreamingHistory']['consumed_time'];						
+					?></div>
 				</div>
 				<?php
                     $i++;
