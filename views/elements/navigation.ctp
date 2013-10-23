@@ -506,7 +506,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             </ul>
                                                     </li>
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor"><?php __('History'); ?></a>
+                                                            <a href="/homes/my_streaming_history" class="sidebar-anchor"><?php __('History'); ?></a>
                                                     </li>
                                             </ul>
                                             <?php } ?>
