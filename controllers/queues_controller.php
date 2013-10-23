@@ -215,7 +215,7 @@ class QueuesController extends AppController{
                                                                                       'alias' => 'Album',
                                                                                       'type' => 'LEFT',
                                                                                        'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
-                                                                                      ),
+                                                                                      ),                                                                                 
                                                                                 array('table' => 'File',
                                                                                       'alias' => 'File',
                                                                                       'type' => 'LEFT',
@@ -228,10 +228,10 @@ class QueuesController extends AppController{
                                                                                   'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
-                                                            'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
+                                                            'fields'=>array('Song.SongTitle', 'Song.Artist', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
                                                             'order'=>"$songSortBy $sortType"));
         
-	echo "patron ID: ".$patronId;
+	
         
         echo "<br>Query: ".$this->StreamingHistory->lastQuery();
         echo '<pre>'; print_r($streamingResults);
