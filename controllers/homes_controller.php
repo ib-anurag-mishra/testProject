@@ -3529,9 +3529,9 @@ STR;
                                                                                      )
                                                                             ),
                                                             'group' => 'StreamingHistory.id',
-                                                            'conditions' => array('library_id' => $libraryId,
-                                                                                  'patron_id' => $patronId,                                                                                  
-                                                                                  'createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
+                                                            'conditions' => array('StreamingHistory.library_id' => $libraryId,
+                                                                                  'StreamingHistory.patron_id' => $patronId,                                                                                  
+                                                                                  'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
                                                             'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
