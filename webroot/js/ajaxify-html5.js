@@ -279,11 +279,11 @@
                     document.location.href = url;
                     return false;
                 },
-                complete: function() {
-                    //$body.removeClass('loader');
-                    $('.loader').fadeOut(2000);
-                    $('.content-wrapper').remove(".loader");
-                }
+            })
+             .done(function() {
+                //$body.removeClass('loader');
+                $('.loader').fadeOut(2000);
+                $('.content-wrapper').remove(".loader");
             }); // end ajax
 
         }); // end onStateChange

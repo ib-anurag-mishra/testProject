@@ -646,6 +646,16 @@ $(function() {
         $(this).find('.preview').css({opacity: 0});
 
     });
+    
+    
+    $(document).on('mouseenter' , '.tracklist-shadow-container .tracklist-scrollable' , function(){
+         $(this).find('.add-to-playlist-button').css({opacity: 1});
+    });
+    
+     $(document).on('mouseleave' , '.tracklist-shadow-container .tracklist-scrollable' , function(){
+         $(this).find('.add-to-playlist-button').css({opacity: 0});
+    });
+    
 
     top_music_video_cover_container.on('mouseenter', function() {
 
@@ -1499,6 +1509,23 @@ $(function() {
 
     });
     /* end my top 10 page */
+
+
+
+     /****** Search page ******/
+     $('.videos-scrollable .video-container').on('mouseenter', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.top-10-download-now-button').css({opacity: 1});
+
+
+    });
+
+    $('.videos-scrollable .video-container').on('mouseleave', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.top-10-download-now-button').css({opacity: 0});
+
+
+    });
 
 
 
