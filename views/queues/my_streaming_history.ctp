@@ -85,7 +85,7 @@ $ieVersion =  ieversion();
             <?php
             }
             ?>  
-			<div class="artist-filter-button filter"style="cursor:pointer;"><?php echo __('Streaming Time'); ?></div>
+			<div class="download-button filter"style="cursor:pointer;"><?php echo __('Streaming Time'); ?></div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
@@ -181,7 +181,7 @@ $ieVersion =  ieversion();
                                               }
                                         ?>
 					</div> -->
-					<div class="artist-name1"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
+					<div class="download"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
 						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .substr($streamingArr['Song']['ArtistText'], 0, 19) . '...</span>';							
 						} else {
