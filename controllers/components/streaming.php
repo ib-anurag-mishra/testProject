@@ -619,6 +619,45 @@ Class StreamingComponent extends Object
     }
     
     
+    /*
+     Function Name : getStreamingDetails
+     Desc : function used for fetching information realted to streaming
+     * 
+     * @param $prodId Int  'song prodID'
+     * @param $providerType varChar 'song provider type'
+     * 
+     * @return false or song duration in seconds
+    */
+    function getStreamingDetails($prodId, $providerType){
+        Configure::write('debug', 2);
+        $songInstance = ClassRegistry::init('Song');
+        $songInstance->recursive = -1;        
+        $song = $songInstance->find('first',array(
+        'joins' => array(
+            array(
+                'table' => $this->Session->read('multiple_countries').'_countries',
+                'alias' => 'Country',
+                'type' => 'INNER',
+                'conditions' => array(
+                    'Country.ProdID = Song.ProdID',
+                    'Country.provider_type = Song.provider_type',
+                )
+            )
+        ),
+        'conditions' => array(
+                            'Song.ProdID'=>$prodId,
+                            'Song.provider_type'=>$providerType,
+                            'Country.StreamingSalesDate < NOW()',
+                            'Country.StreamingStatus'=> 1
+                            ),
+        'fields' => array('Country.StreamingSalesDate', 'Country.StreamingStatus'))); 
+        
+        echo "<br>Query: ".$this->$songInstance->lastQuery();
+        echo "<pre>"; print_r($song);
+        
+    }
+    
+    
 
 }
 ?>
