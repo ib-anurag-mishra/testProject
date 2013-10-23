@@ -3536,9 +3536,10 @@ STR;
                                                                                  ),
                                                             'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
                                                             'order'=>"$songSortBy $sortType"));*/
-	$streamingResults =  $this->Siteconfig->find('all');
         
-        echo "<br>Query: ".$this->Siteconfig->lastQuery();
+	$news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
+        
+        echo "<br>Query: ".$this->News->lastQuery();
         
       
         $this->set('streamingResults',$streamingResults);
