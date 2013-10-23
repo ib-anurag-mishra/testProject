@@ -3459,6 +3459,9 @@ STR;
     function my_streaming_history() {
         
         Configure::write('debug', 2);
+        $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));        
+        echo "<br>Query: ".$this->News->lastQuery();
+        die;
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
