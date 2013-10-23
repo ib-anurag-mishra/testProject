@@ -238,7 +238,7 @@ class QueuesController extends AppController{
                                                                                   'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
-                                                            'fields'=>array('Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_name','Song.Advisory','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type'),
+                                                            'fields'=>array('Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_name','Song.Advisory','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle'),
                                                             'order'=>"$songSortBy $sortType")); 
         
 	
