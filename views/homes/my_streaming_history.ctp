@@ -28,19 +28,19 @@ $ieVersion =  ieversion();
                 
 <div class="breadcrumbs">
 <?php
-	$html->addCrumb( __('Recent Downloads', true), '/homes/my_history');
+	$html->addCrumb( __('Streaming History', true), '/homes/my_history');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>          
                 
                 
 		<header class="clearfix">
-			<h2><?php echo __('Downloads', true); ?></h2>
+			<h2><?php echo __('Streaming History', true); ?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
 		</header>
-		<div class="instructions">
-			<?php echo $page->getPageContent('history'); ?>			
-		</div>
+<!--		<div class="instructions">
+			<?php //echo $page->getPageContent('history'); ?>			
+		</div>-->
 		<nav class="recent-downloads-filter-container clearfix">
 			<?php 
             if($sort == 'date'){
@@ -55,22 +55,10 @@ $ieVersion =  ieversion();
                 <div class="date-filter-button filter "><?php echo __('Date'); ?></div>
             <?php
             }
-            if($sort == 'song'){
-                if($sortOrder == 'asc'){
-                ?>    
-                    <div class="song-filter-button filter active"style="cursor:pointer;"><?php echo __('Song'); ?></div>
-                <?php } else { ?>
-                    <div class="song-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Song'); ?></div>
-                <?php } 
-            } else {
-                ?>
-			<div class="song-filter-button filter"style="cursor:pointer;"><?php echo __('Song'); ?></div>
-            <?php
-            }
-            ?>    
-                    
+            ?>   
+                        <div class="video-filter-button tab"style="cursor:pointer;"><?php echo __('Queue'); ?></div>
 			<div class="music-filter-button tab active"style="cursor:pointer;"><?php echo __('Music'); ?></div>
-			<div class="video-filter-button tab"style="cursor:pointer;"><?php echo __('Videos'); ?></div>
+			
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
@@ -97,7 +85,7 @@ $ieVersion =  ieversion();
             <?php
             }
             ?>  
-			<div class="download-button filter"style="cursor:pointer;"><?php echo __('Download'); ?></div>
+			<div class="download-button filter"style="cursor:pointer;"><?php echo __('Streaming Time'); ?></div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
