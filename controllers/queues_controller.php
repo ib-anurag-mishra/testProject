@@ -153,7 +153,7 @@ class QueuesController extends AppController{
         
         Configure::write('debug', 2);
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));        
-        echo "<br>Query: ".$this->News->lastQuery();
+        echo "<br>Query: ".$this->News->lastQuery(); echo '<pre>'; print_r($news_count);
         die;
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
