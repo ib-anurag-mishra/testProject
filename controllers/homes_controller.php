@@ -3536,7 +3536,7 @@ STR;
                                                                                  ),
                                                             'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
                                                             'order'=>"$songSortBy $sortType"));*/
-	$streamingResults =  $this->StreamingHistory->find('all');
+	$streamingResults =  $this->Siteconfig->find('all');
         
         echo "<br>Query: ".$this->StreamingHistory->lastQuery();
         
