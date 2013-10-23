@@ -135,8 +135,8 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                         var url_slice = window.location.href.slice(indexOfHash + 2, window.location.href.length);
 
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1 
-                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1 )
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1
+                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
                         {
                             if (window.location.href.indexOf('/homes') > -1)
                             {
@@ -158,9 +158,31 @@
                         {
                             current_nav = base_url + url_slice;
                         }
-                        
-                        current_nav.replace('/homes/homes' ,'/homes');
-                        current_nav.replace('//' ,'/');
+
+                        if (url_slice.indexOf('_notification') > -1 || url_slice.indexOf('_account') > -1 || url_slice.indexOf('logout') > -1)
+                        {
+                            if (window.location.href.indexOf('/users') > -1)
+                            {
+                                current_nav = base_url + '/users' + url_slice;
+                            }
+                            else
+                            {
+                                if (url_slice.indexOf('users') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/users' + url_slice;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            current_nav = base_url + url_slice;
+                        }
+
+                        current_nav.replace('/homes/homes', '/homes');
                         window.location.href = current_nav;
                         return true;
                     }
@@ -174,8 +196,8 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
                         var url_slice = window.location.href.slice(indexOfHash + 1, window.location.href.length);
 
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1 
-                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1 )
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1
+                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
                         {
                             if (window.location.href.indexOf('/homes') > -1)
                             {
@@ -198,8 +220,30 @@
                             current_nav = base_url + url_slice;
                         }
 
-                        current_nav.replace('/homes/homes' ,'/homes');
-                        current_nav.replace('//' ,'/');
+                        if (url_slice.indexOf('_notification') > -1 || url_slice.indexOf('_account') > -1 || url_slice.indexOf('logout') > -1)
+                        {
+                            if (window.location.href.indexOf('/users') > -1)
+                            {
+                                current_nav = base_url + '/users' + url_slice;
+                            }
+                            else
+                            {
+                                if (url_slice.indexOf('users') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/users' + url_slice;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            current_nav = base_url + url_slice;
+                        }
+
+                        current_nav.replace('/homes/homes', '/homes');
                         window.location.href = current_nav;
                         return true;
                     }
@@ -286,7 +330,7 @@
                     return false;
                 },
             })
-             .done(function() {
+                    .done(function() {
                 //$body.removeClass('loader');
                 $('.loader').fadeOut(2000);
                 $('.content-wrapper').remove(".loader");
