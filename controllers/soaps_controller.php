@@ -6595,6 +6595,7 @@ STR;
     
     $Country_array = $this->Country->find('first',
 			  array(
+				'fields' => array('SalesDate'),
 				'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $territory, 'Country.provider_type' => $provider_type),
 				'recursive' => -1,
 			  )
@@ -6627,6 +6628,7 @@ STR;
     
     $Country_array = $this->Country->find('first',
 			  array(
+				'fields' => array('StreamingSalesDate', 'StreamingStatus'),
 				'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $territory, 'Country.provider_type' => $provider_type),
 				'recursive' => -1,
 			  )
@@ -6634,7 +6636,7 @@ STR;
         
 		$StreamingSalesDate = $Country_array['Country']['StreamingSalesDate'];
 		$StreamingStatus = $Country_array['Country']['StreamingStatus'];
-    
+    		
 		if( ($StreamingSalesDate <= date('Y-m-d')) && ($StreamingStatus == 1) ) {
 			return 1;
 		} else {
