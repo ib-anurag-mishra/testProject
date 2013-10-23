@@ -416,7 +416,7 @@ function pingTimeJS() {
 function streamingValidationJS(responseDataJS) {
 	
 	responseDataJS[5] = 	responseDataJS[5]*1000;
-	console.log('inside streamingValidationJS');
+	console.log('inside streamingValidationJS'+responseDataJS);
 	
 	var flash =	document.getElementById("fmp_player");
 	
