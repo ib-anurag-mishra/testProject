@@ -65,31 +65,48 @@ class QueuesController extends AppController{
      */
     
     function addToQueue(){
-        //Configure::write('debug', 2);
-         $song_details  =   $this->Streaming->getStreamingDetails($_REQUEST['songProdId'], $_REQUEST['songProviderType']); 
-         echo "<pre>";
-         print_r($song_details);
+        Configure::write('debug', 0);
+          
+        
         if( $this->Session->read('library') && $this->Session->read('patron') && !empty($_REQUEST['songProdId']) && !empty($_REQUEST['songProviderType'])&& !empty($_REQUEST['albumProdId'])&& !empty($_REQUEST['albumProviderType'])&& !empty($_REQUEST['queueId']) ){
-            $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
-            if(!$queuesongsCount){
-                $insertArr = Array();
-                $insertArr['queue_id'] = $_REQUEST['queueId'];
-                $insertArr['song_prodid'] = $_REQUEST['songProdId'];
-                $insertArr['song_providertype'] = $_REQUEST['songProviderType'];
-                $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
-                $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
-                //insert into queuedetail table
-                $this->QueueDetail->setDataSource('master');
-                $this->QueueDetail->save($insertArr);
-                $this->QueueDetail->setDataSource('default');
-                echo "Success";
-                exit;
+            
+            $song_details  =   $this->Streaming->getStreamingDetails($_REQUEST['songProdId'], $_REQUEST['songProviderType']); // Fetch Information related to Streaming
+//            echo "<pre>";
+//            print_r($song_details);
+            
+            
+            if ($this->Session->read('library_type') == 2 && $song_details['Country']['StreamingSalesDate'] <= date('Y-m-d') && $song_details['Country']['StreamingStatus'] == 1)
+            {            
+                    $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
+                    if(!$queuesongsCount)
+                    {
+                        $insertArr = Array();
+                        $insertArr['queue_id'] = $_REQUEST['queueId'];
+                        $insertArr['song_prodid'] = $_REQUEST['songProdId'];
+                        $insertArr['song_providertype'] = $_REQUEST['songProviderType'];
+                        $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
+                        $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
+                        //insert into queuedetail table
+                        $this->QueueDetail->setDataSource('master');
+                        $this->QueueDetail->save($insertArr);
+                        $this->QueueDetail->setDataSource('default');
+                        echo "Success";
+                        exit;
 
-                }else{
-                    echo 'error1';
-                    exit; 
-
-                }            
+                    }
+                    else
+                    {
+                            echo 'error1';
+                            exit; 
+                    }     
+                
+            }
+            else    // Song is not allowed for streaming
+            {
+                     echo 'invalid_for_stream';
+                     exit; 
+            }
+                
         }else{
             echo 'error';
             exit;

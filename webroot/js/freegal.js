@@ -1488,6 +1488,17 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                             document.getElementById("ajaxflashMessage44").style.display="block";
                             document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Queue';
                         }
+                        else if(msg == 'invalid_for_stream')
+                        {                            
+                             if(document.getElementById('flash-message'))
+                            {
+                                document.getElementById('flash-message').innerHTML = '';
+                                document.getElementById("flash-message").setAttribute("class", "");
+                            }
+                            
+                            document.getElementById("ajaxflashMessage44").style.display="block";
+                            document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
+                        }
 			else
 			{	
 				var msg = response.substring(0,7);
@@ -1509,9 +1520,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                                             document.getElementById('flash-message').innerHTML = '';
                                             document.getElementById("flash-message").setAttribute("class", "");
                                         }
-                                        
-                                        document.getElementById('flash-message').innerHTML = '';
-                                        document.getElementById("flash-message").setAttribute("class", "");
+                                                                               
                                         document.getElementById("ajaxflashMessage44").style.display="block";
         				document.getElementById("ajaxflashMessage44").style.background="red";
                                         document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to Queue.';
