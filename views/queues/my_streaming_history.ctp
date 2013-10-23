@@ -109,7 +109,20 @@ $ieVersion =  ieversion();
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
                                 //do the streaming work
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['Download']['ProdID'].', "'.base64_encode($streamingArr['Download']['provider_type']).'", "'.$this->webroot.'");')); 
+                                                            
+//                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['File']['CdnPath']."/".$streamingArr['File']['SourceURL']);
+//
+//                                if(!empty($filePath))
+//                                 {
+//                                    $songPath = explode(':',$filePath);
+//                                    $streamUrl =  trim($songPath[1]);
+//                                    $albumSong['streamUrl'] = $streamUrl;
+//                                    $albumSong['totalseconds']  = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']); 
+//                                 } 
+                                
+                            
+                            
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['StreamingHistory']['ProdID'].', "'.base64_encode($streamingArr['StreamingHistory']['provider_type']).'", "'.$this->webroot.'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
 
@@ -125,29 +138,29 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title">
                     <?php 
-						if (strlen($streamingArr['Download']['track_title']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Download']['track_title']).'">' .substr($streamingArr['Download']['track_title'], 0, 19) . '...</span>';							
+						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
+							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
 						} else {
-							echo $streamingArr['Download']['track_title']; 
+							echo $streamingArr['QueueList']['queue_name']; 
 					 	}
 					?>
                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($streamingArr['Song']['ArtistText']);?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']);?>">
+					<div class="album-title"><a href="/artists/view/<?=base64_encode($streamingArr['Song']['SongTitle']);?>/<?= $streamingArr['Song']['SongTitle']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']);?>">
                                              <?php 
-						if (strlen($streamingArr['Song']['Title']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['Title']).'">' .substr($streamingArr['Song']['Title'], 0, 19) . '...</span>';							
+						if (strlen($streamingArr['Song']['SongTitle']) >= 19) {
+							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .substr($streamingArr['Song']['SongTitle'], 0, 19) . '...</span>';							
 						} else {
-							echo $streamingArr['Song']['Title']; 
+							echo $streamingArr['Song']['SongTitle']; 
 					 	}
 					?>
                                             
                                             </div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
-						if (strlen($streamingArr['Download']['artist']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Download']['artist']).'">' .substr($streamingArr['Download']['artist'], 0, 19) . '...</span>';							
+						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
+							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .substr($streamingArr['Song']['ArtistText'], 0, 19) . '...</span>';							
 						} else {
-							$ArtistName = $streamingArr['Download']['artist'];
+							$ArtistName = $streamingArr['Song']['ArtistText'];
 							echo $ArtistName;
 						}
 						
@@ -168,135 +181,28 @@ $ieVersion =  ieversion();
                                               }
                                         ?>
 					</div> -->
-					<div class="download">
-                   
-                        <p>
-                            <?php
-                            //$productInfo = $song->getDownloadData($streamingArr['Download']['ProdID'],$streamingArr['Download']['provider_type']);
-                            $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-                            ?>
-                                    <span class="beforeClick" id="download_song_<?php echo $streamingArr['Download']['ProdID']; ?>">
-                                            <![if !IE]>
-                                                    <a href='#' onclick='return historyDownloadOthers("<?php echo $streamingArr['Download']['ProdID']; ?>","<?php echo $streamingArr['Download']['library_id']; ?>","<?php echo $streamingArr['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download');?></a>
-                                            <![endif]>
-                                            <!--[if IE]>
-                                                    <a onclick='historyDownload("<?php echo $streamingArr['Download']['ProdID']; ?>","<?php echo $streamingArr['Download']['id']; ?>","<?php echo $streamingArr['Download']['patron_id']; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download');?></a>
-                                            <![endif]-->
-                                    </span>
-                                    <span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
-                                    <span id="download_loader_<?php echo $streamingArr['Download']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-		       </p>
-                    </div>
+					<div class="artist-name"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
+						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
+							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .substr($streamingArr['Song']['ArtistText'], 0, 19) . '...</span>';							
+						} else {
+							$ArtistName = $streamingArr['Song']['ArtistText'];
+							echo $ArtistName;
+						}
+						
+					?></a></div>
 				</div>
 				<?php
                     $i++;
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<tr><td valign="top"><p>';?><?php echo __("No Streaming History from this week or last week."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>
 			</div>
 		</div>
 		<!-- (this is the html for the videos) -->
-		<div class="recent-video-downloads-shadow-container" style="display:none">
-			<div class="recent-video-downloads-scrollable">
-				<div class="row-container">
-				<?php
-                if(count($videoDownloadResults) != 0)
-                {
-                    //$i = 1;
-                    foreach($videoDownloadResults as $key => $videoDownloadResult):
-                    /*$class = null;
-                    if ($i++ % 2 == 0) {
-                        $class = ' class="altrow"';
-                    }*/
-                ?>
-				
-				<div class="row clearfix">
-					<div class="date"><?php echo date("Y-m-d",strtotime($videoDownloadResult['Videodownload']['created'])); ?></div>
-					<div class="small-album-container">
-						<?php
-                        $videoImage = shell_exec('perl files/tokengen_artwork ' . $videoDownloadResult['File']['CdnPath']."/".$videoDownloadResult['File']['SourceURL']);
-                        $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
-                        ?>
-                        <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
-						<!-- <a class="preview" href="#"></a> -->
-					</div>
-					<div class="song-title">
-                    <?php 
-						if (strlen($videoDownloadResult['Videodownload']['track_title']) >= 22) {
-							echo '<span title="'.htmlentities($videoDownloadResult['Videodownload']['track_title']).'">' .substr($videoDownloadResult['Videodownload']['track_title'], 0, 22) . '...</span>';							
-						} else {
-							echo $videoDownloadResult['Videodownload']['track_title']; 
-					 	}
-					?><?php if('T' == $videoDownloadResult['Video']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
-                                        </div>
-					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a href="#">
-                                             <?php 
-						if (strlen($videoDownloadResult['Video']['Title']) >= 22) {
-							echo '<span title="'.htmlentities($videoDownloadResult['Video']['Title']).'">' .substr($videoDownloadResult['Video']['Title'], 0, 22) . '...</span>';							
-						} else {
-							echo $videoDownloadResult['Video']['Title']; 
-					 	}
-					?>
-                                            </a></div>
-					<div class="artist-name"><a href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>">
-                    <?php
-						if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19) {
-							echo '<span title="'.htmlentities($videoDownloadResult['Videodownload']['artist']).'">' .substr($videoDownloadResult['Videodownload']['artist'], 0, 19) . '...</span>';							
-						} else {
-							$ArtistName = $videoDownloadResult['Videodownload']['artist'];
-							echo $ArtistName;
-						}
-						
-					?></a></div>
-					
-					<div class="wishlist-popover">
-						
-						<div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div>
-						
-					</div>
-					<div class="download">
-                       
-                            
-                        <p>
-                        <?php
-                        
-                            //$productInfo = $mvideo->getDownloadData($videoDownloadResult['Videodownload']['ProdID'],$videoDownloadResult['Videodownload']['provider_type']);
-                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-                            $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
-                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
-                            ?>
-                            <span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
-                                                            <![if !IE]>
-                                                                    <a href='javascript:void(0)' onclick='return historyDownloadVideoOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
-                                                            <![endif]>
-                                                            <!--[if IE]>
-                                                                    <a onclick='historyDownloadVideo("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
-                                                            <![endif]-->
-							</span>
-							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
-							<span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-                       </p>
-                    </div>
-				</div>
-				<?php
-                    endforeach;
-                    }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded video from this week or last week."); ?><?php echo '</p></td></tr>';
-                }
-				?>
-				</div>
-			</div>
-		</div>
+		
 
 
 	</section>
