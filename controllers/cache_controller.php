@@ -2091,14 +2091,15 @@ STR;
                 INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
                 LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
                 WHERE c.Territory = "'.$territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
-                ORDER BY cnt DESC';
+                ORDER BY cnt DESC LIMIT 5';
     $arr_video = $this->Video->query($str_query);
-
-    $status = Cache::write("AppMyMusicVideosList_".$territory, 'here'); var_dump($status);
+    
+    $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video); var_dump($status);
     
     echo '<br />=====================AppMyMusicVideosList_'.$territory.'==========================================<br />';
     echo '<pre>';
     echo $str_query; echo '<br />';
+    print_r( $arr_video ); echo '<br />';
     var_dump(Cache::read("AppMyMusicVideosList_".$territory));
     echo '</pre>';
     echo '<br />==================================================================================================<br />';
