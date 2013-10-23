@@ -285,13 +285,9 @@ function validateSong(songObj, playerEventCode) {
 	
 	plaulistId = songObj.playlistId 
 	songId = songObj.songId
-	//songObj.label
-	//songObj.artistName
-	//songObj.songTitle
 	songLength = songObj.songLength
-	//songObj.data
 	songProviderType = songObj.providerType
-	songDuration = songObj.psld
+	songDuration = songObj.tbpp
 
 	
 	
@@ -303,7 +299,7 @@ function validateSong(songObj, playerEventCode) {
 //					  "<p>Song Length: " + songObj.songLength + "</p>" +
 //					  "<p>Data: " + songObj.data + "</p>" +
 //					  "<p>Provider Type: " + songObj.providerType + "</p>" +
-//					  "<p>Prev Song Listening Duration / Time Before Pause: " + songObj.psld + "</p>";       
+//					  "<p>Prev Song Listening Duration / Time Before Pause: " + songObj.tbpp + "</p>";       
 	
 	// playerEventCode: 1 = Play, 2 = Pause, 3 = Prev, 4 = Next, 5 = Song Ended, 6 = Stream Switched
 	
