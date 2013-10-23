@@ -239,12 +239,12 @@ class QueuesController extends AppController{
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
                                                             'fields'=>array('Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_name','Song.Advisory','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type'),
-                                                            'order'=>"$songSortBy $sortType"));
+                                                            'order'=>"$songSortBy $sortType")); 
         
 	
         
 //        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
-//        echo '<pre>'; print_r($streamingResults);
+        echo '<pre>'; print_r($streamingResults);
 //      
         $this->set('streamingData',$streamingResults);
 
