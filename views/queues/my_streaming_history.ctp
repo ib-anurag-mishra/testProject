@@ -99,7 +99,7 @@ $ieVersion =  ieversion();
                 ?>
 				
 				<div class="row clearfix">
-					<div class="date"><?php echo date("Y-m-d",strtotime($streamingResults['Download']['created'])); ?></div>
+					<div class="date"><?php echo date("Y-m-d",strtotime($streamingResults['StreamingHistory']['createdOn'])); ?></div>
 					<div class="small-album-container">
 						
 						<!-- <a class="preview" href="#"></a> -->

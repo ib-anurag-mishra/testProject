@@ -12,7 +12,7 @@ class QueuesController extends AppController{
     var $layout = 'home';
     var $helpers = array( 'Html', 'Form', 'Session');
     var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Streaming');
-    var $uses = array( 'QueueList', 'QueueDetail','User','Album','Song', 'News', 'StreamingHistory');
+    var $uses = array( 'QueueList', 'QueueDetail','User','Album','Song',  'StreamingHistory');
     
     function beforeFilter(){
             parent::beforeFilter();
@@ -238,14 +238,14 @@ class QueuesController extends AppController{
                                                                                   'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
-                                                            'fields'=>array('QueueList.queue_name', 'Song.SongTitle', 'Song.Artist', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
+                                                            'fields'=>array('Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_name', 'Song.SongTitle', 'Song.Artist', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
                                                             'order'=>"$songSortBy $sortType"));
         
 	
         
-        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
-        echo '<pre>'; print_r($streamingResults);
-      
+//        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
+//        echo '<pre>'; print_r($streamingResults);
+//      
         $this->set('streamingResults',$streamingResults);
 
         $this->set('sort',$sort);
