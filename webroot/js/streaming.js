@@ -281,18 +281,18 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 function validateSong(songObj, playerEventCode) {
 
 	
-	/* properties sent from flash
+	// properties sent from flash
 	
-	songObj.playlistId
-	songObj.songId
-	songObj.label
-	songObj.artistName
-	songObj.songTitle
-	songObj.songLength
-	songObj.data
-	songObj.providerType
-	songObj.totalListeningDuration
-	
+	plaulistId = songObj.playlistId 
+	songId = songObj.songId
+	//songObj.label
+	//songObj.artistName
+	//songObj.songTitle
+	songLength = songObj.songLength
+	//songObj.data
+	songProviderType = songObj.providerType
+	songDuration = songObj.psld
+
 	
 	
        
