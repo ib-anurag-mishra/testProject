@@ -629,7 +629,7 @@ Class StreamingComponent extends Object
      * @return false or song duration in seconds
     */
     function getStreamingDetails($prodId, $providerType){
-        //Configure::write('debug', 2);
+        Configure::write('debug', 2);
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;        
         $song = $songInstance->find('first',array(
