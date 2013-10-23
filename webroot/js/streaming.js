@@ -319,8 +319,8 @@ function validateSong(songObj, playerEventCode) {
 	switch(playerEventCode) {
 		
 		case 1:
-			playerEventCodeString = "Play";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+			playerEventCodeString = "Resume";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,2,songLength,songDuration);
 			break;
 			
 		case 2:
@@ -330,13 +330,13 @@ function validateSong(songObj, playerEventCode) {
 			
 		case 3:
 			playerEventCodeString = "Prev"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
 			break;
 			
 		case 5:
@@ -346,16 +346,16 @@ function validateSong(songObj, playerEventCode) {
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,10,songLength,songDuration);
 			break;
 			
 	    case 7:
-			playerEventCodeString = "Queue loaded"
+			playerEventCodeString = "Queue loaded/play"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;	
 	    case 8:
 			playerEventCodeString = "Queue cleared"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,11,songLength,songDuration);
 			break;			    	
 	}
 	
@@ -415,7 +415,7 @@ function pingTimeJS() {
 
 function streamingValidationJS(responseDataJS) {
 	
-		
+	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS');
 	
 	var flash =	document.getElementById("fmp_player");
