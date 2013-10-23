@@ -211,6 +211,9 @@ $(function() {
 
 
     $('.select-arrow').on('click', function(e) {
+        
+        e.preventDefault();
+        
         if ($('.account-options-menu').hasClass('active')) {
 
             $('.account-options-menu').removeClass('active');
@@ -218,7 +221,7 @@ $(function() {
             $('.account-options-menu').addClass('active');
 
         }
-
+        return false;
 
     });
 
