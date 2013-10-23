@@ -2093,7 +2093,7 @@ STR;
                 WHERE c.Territory = "'.$territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
                 ORDER BY cnt DESC';
     $arr_video = $this->Video->query($str_query);
-
+echo '<pre>/'; var_dump($arr_video); echo '/</pre>';
     $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video); var_dump($status);
     
     echo '<br />=====================AppMyMusicVideosList_'.$territory.'==========================================<br />';
