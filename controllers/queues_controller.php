@@ -231,9 +231,9 @@ class QueuesController extends AppController{
                                                             'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
                                                             'order'=>"$songSortBy $sortType"));
         
-	
+	echo "patron ID: ".$patronId;
         
-        echo "<br>Query: ".$this->News->lastQuery();
+        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
         echo '<pre>'; print_r($streamingResults);
       
         $this->set('streamingResults',$streamingResults);
