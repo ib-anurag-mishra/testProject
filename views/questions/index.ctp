@@ -33,7 +33,7 @@
                 }
                 ?>			
                 <li>
-                    <a href="#" class="no-ajaxy">
+                    <a href="javascript:void(0);" class="no-ajaxy">
                         <?php echo strip_tags($questionquText); ?>
                     </a>
                     <p style="display: none;" ></p>

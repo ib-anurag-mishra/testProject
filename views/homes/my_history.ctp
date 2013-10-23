@@ -271,8 +271,8 @@ $ieVersion =  ieversion();
 						
 						<div class="share clearfix">
 							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
+							<a class="facebook" href="javascript:void(0);"></a>
+							<a class="twitter" href="javascript:void(0);"></a>
 						</div>
 						
 					</div>
