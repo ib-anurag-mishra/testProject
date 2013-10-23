@@ -146,7 +146,7 @@ $ieVersion =  ieversion();
 					?>
                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($streamingArr['Song']['SongTitle']);?>/<?= $streamingArr['Song']['SongTitle']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']);?>">
+					<div class="song-title"><a href="/artists/view/<?=base64_encode($streamingArr['Song']['SongTitle']);?>/<?= $streamingArr['Song']['SongTitle']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']);?>">
                                              <?php 
 						if (strlen($streamingArr['Song']['SongTitle']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .substr($streamingArr['Song']['SongTitle'], 0, 19) . '...</span>';							
