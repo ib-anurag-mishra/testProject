@@ -3483,7 +3483,7 @@ STR;
         
         switch($sort){
             case 'date':
-                $songSortBy = 'StreamingHistory.created';                
+                $songSortBy = 'StreamingHistory.createdOn';                
                 $sortType = $sortOrder;
                 break;
             /*case 'song':
