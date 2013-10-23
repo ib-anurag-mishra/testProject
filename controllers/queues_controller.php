@@ -215,7 +215,17 @@ class QueuesController extends AppController{
                                                                                       'alias' => 'Album',
                                                                                       'type' => 'LEFT',
                                                                                        'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
-                                                                                      ),                                                                                 
+                                                                                      ),  
+                                                                                array('table' => 'QueueDetail',
+                                                                                      'alias' => 'QueueDetail',
+                                                                                      'type' => 'LEFT',
+                                                                                       'conditions' => array('QueueDetail.song_prodid = Song.ProdID','QueueDetail.song_providertype = Song.provider_type')
+                                                                                      ),
+                                                                                array('table' => 'QueueList',
+                                                                                      'alias' => 'QueueList',
+                                                                                      'type' => 'LEFT',
+                                                                                       'conditions' => array('QueueList.queue_id = QueueDetail.queue_id','QueueDetail.song_providertype = Song.provider_type')
+                                                                                      ),
                                                                                 array('table' => 'File',
                                                                                       'alias' => 'File',
                                                                                       'type' => 'LEFT',
@@ -228,7 +238,7 @@ class QueuesController extends AppController{
                                                                                   'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
-                                                            'fields'=>array('Song.SongTitle1', 'Song.Artist', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
+                                                            'fields'=>array('QueueList.queue_name', 'Song.SongTitle', 'Song.Artist', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
                                                             'order'=>"$songSortBy $sortType"));
         
 	
