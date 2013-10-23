@@ -653,7 +653,8 @@ Class StreamingComponent extends Object
         'fields' => array('Country.StreamingSalesDate', 'Country.StreamingStatus'))); 
         
        // echo "<br>Query: ".$this->$songInstance->lastQuery();
-        echo "<pre>"; print_r($song);
+        //echo "<pre>"; print_r($song);
+        return $song;
         
     }
     
