@@ -11,7 +11,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo', 'Queue');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Common','Streaming');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode', 'StreamingHistory');
 
     /*
      Function Name : beforeFilter
@@ -3457,13 +3457,15 @@ STR;
      Desc : To show songs user downloaded in last 2 weeks
     */
     function my_streaming_history() {
+        
+        Configure::write('debug', 0);
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
         
         $countryPrefix = $this->Session->read('multiple_countries');
         
-        $sortArray = array('date', 'song', 'artist', 'album');
+        $sortArray = array('date', 'artist', 'album');
         $sortOrderArray = array('asc','desc');
         
         if(isset($_POST)){
@@ -3481,11 +3483,10 @@ STR;
         
         switch($sort){
             case 'date':
-                $songSortBy = 'Download.created';
-                $videoSortBy = 'Videodownload.created';
+                $songSortBy = 'StreamingHistory.created';                
                 $sortType = $sortOrder;
                 break;
-            case 'song':
+            /*case 'song':
                 $songSortBy = 'Download.track_title';
                 $videoSortBy = 'Videodownload.track_title';
                 $sortType = $sortOrder;
@@ -3499,19 +3500,50 @@ STR;
                 $songSortBy = 'Song.Title';
                 $videoSortBy = 'Video.Title';
                 $sortType = $sortOrder;
-                break;
+                break;*/
         }
         
         $countryTableName = $countryPrefix .'countries';
-        $downloadResults = Array();
-        $downloadResults =  $this->Download->find('all',array('joins'=>array(array('table' => 'Songs','alias' => 'Song','type' => 'LEFT','conditions' => array('Download.ProdID = Song.ProdID','Download.provider_type = Song.provider_type')),array('table' => $countryTableName,'alias' => 'Country','type' => 'INNER','conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')),array('table' => 'Albums','alias' => 'Album','type' => 'LEFT','conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Album.FileID = File.FileID'))),'group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Download.ProdID','Download.provider_type','Download.track_title','Download.created','Download.patron_id','Download.library_id','Download.artist, Song.Title,Song.ProdID,Song.Advisory,Song.ArtistText,Song.ReferenceID,Song.provider_type,Album.ProdID,Album.provider_type, File.CdnPath, File.SourceURL','Country.StreamingSalesDate','Country.StreamingStatus'),'order'=>"$songSortBy $sortType"));
+        $streamingResults = Array();
+        $streamingResults =  $this->StreamingHistory->find('all',
+                                                        array('joins'=>array(
+                                                                                array('table' => 'Songs',
+                                                                                      'alias' => 'Song',
+                                                                                      'type' => 'LEFT',
+                                                                                      'conditions' => array('StreamingHistory.ProdID = Song.ProdID','StreamingHistory.provider_type = Song.provider_type')
+                                                                                      ),
+                                                                                array('table' => $countryTableName,
+                                                                                      'alias' => 'Country',
+                                                                                      'type' => 'INNER',
+                                                                                      'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')
+                                                                                     ),
+                                                                                array('table' => 'Albums',
+                                                                                      'alias' => 'Album',
+                                                                                      'type' => 'LEFT',
+                                                                                       'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
+                                                                                      ),
+                                                                                array('table' => 'File',
+                                                                                      'alias' => 'File',
+                                                                                      'type' => 'LEFT',
+                                                                                      'conditions' => array('Album.FileID = File.FileID')
+                                                                                     )
+                                                                            ),
+                                                            'group' => 'StreamingHistory.id',
+                                                            'conditions' => array('library_id' => $libraryId,
+                                                                                  'patron_id' => $patronId,
+                                                                                  'history < 2',
+                                                                                  'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
+                                                                                  Configure::read('App.twoWeekEndDate'))
+                                                                                 ),
+                                                            'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
+                                                            'order'=>"$songSortBy $sortType"));
 	
-      
-        $this->set('downloadResults',$downloadResults);
-        $videoDownloadResults =  $this->Videodownload->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('Videodownload.ProdID = Video.ProdID','Videodownload.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'Videodownload.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Videodownload.ProdID','Videodownload.provider_type','Videodownload.track_title','Videodownload.created','Videodownload.patron_id','Videodownload.library_id','Videodownload.artist', 'Video.ReferenceID','Video.ArtistText','Video.Advisory','Video.provider_type','Video.Title', 'File.CdnPath', 'File.SourceURL'),'order'=>"$videoSortBy $sortType"));
-		
         
-        $this->set('videoDownloadResults',$videoDownloadResults);
+        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
+        
+      
+        $this->set('streamingResults',$streamingResults);
+
         $this->set('sort',$sort);
         $this->set('sortOrder',$sortOrder);
     }

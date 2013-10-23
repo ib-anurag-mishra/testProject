@@ -92,14 +92,14 @@ $ieVersion =  ieversion();
 			<div class="recent-downloads-scrollable">
 				<div class="row-container">
 				<?php
-                if(count($downloadResults) != 0)
+                if(count($streamingResultss) != 0)
                 {
                     $i = 1;
-                    foreach($downloadResults as $key => $downloadResult):
+                    foreach($streamingResultss as $key => $streamingResults):
                 ?>
 				
 				<div class="row clearfix">
-					<div class="date"><?php echo date("Y-m-d",strtotime($downloadResult['Download']['created'])); ?></div>
+					<div class="date"><?php echo date("Y-m-d",strtotime($streamingResults['Download']['created'])); ?></div>
 					<div class="small-album-container">
 						
 						<!-- <a class="preview" href="#"></a> -->
@@ -107,15 +107,15 @@ $ieVersion =  ieversion();
                                                     
                        <?php
                        
-                        if( $this->Session->read('library_type') == 2 && $downloadResult['Country']['StreamingSalesDate'] <= date('Y-m-d') && $downloadResult['Country']['StreamingStatus'] == 1){
+                        if( $this->Session->read('library_type') == 2 && $streamingResults['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingResults['Country']['StreamingStatus'] == 1){
                                 //do the streaming work
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$downloadResult['Download']['ProdID'].', "'.base64_encode($downloadResult['Download']['provider_type']).'", "'.$this->webroot.'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingResults['Download']['ProdID'].', "'.base64_encode($streamingResults['Download']['provider_type']).'", "'.$this->webroot.'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
 
                         }else if($this->Session->read('library_type') == 1){
                                 //do the simple player(this code will be update after discussion)
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$downloadResult['Download']['ProdID'].', "'.base64_encode($downloadResult['Download']['provider_type']).'", "'.$this->webroot.'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingResults['Download']['ProdID'].', "'.base64_encode($streamingResults['Download']['provider_type']).'", "'.$this->webroot.'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
                         }    
@@ -125,29 +125,29 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title">
                     <?php 
-						if (strlen($downloadResult['Download']['track_title']) >= 19) {
-							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</span>';							
+						if (strlen($streamingResults['Download']['track_title']) >= 19) {
+							echo '<span title="'.htmlentities($streamingResults['Download']['track_title']).'">' .substr($streamingResults['Download']['track_title'], 0, 19) . '...</span>';							
 						} else {
-							echo $downloadResult['Download']['track_title']; 
+							echo $streamingResults['Download']['track_title']; 
 					 	}
 					?>
-                    <?php if('T' == $downloadResult['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
+                    <?php if('T' == $streamingResults['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
+					<div class="album-title"><a href="/artists/view/<?=base64_encode($streamingResults['Song']['ArtistText']);?>/<?= $streamingResults['Song']['ReferenceID']; ?>/<?= base64_encode($streamingResults['Song']['provider_type']);?>">
                                              <?php 
-						if (strlen($downloadResult['Song']['Title']) >= 19) {
-							echo '<span title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 19) . '...</span>';							
+						if (strlen($streamingResults['Song']['Title']) >= 19) {
+							echo '<span title="'.htmlentities($streamingResults['Song']['Title']).'">' .substr($streamingResults['Song']['Title'], 0, 19) . '...</span>';							
 						} else {
-							echo $downloadResult['Song']['Title']; 
+							echo $streamingResults['Song']['Title']; 
 					 	}
 					?>
                                             
                                             </div>
-					<div class="artist-name"><a href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"><?php
-						if (strlen($downloadResult['Download']['artist']) >= 19) {
-							echo '<span title="'.htmlentities($downloadResult['Download']['artist']).'">' .substr($downloadResult['Download']['artist'], 0, 19) . '...</span>';							
+					<div class="artist-name"><a href="/artists/album/<?= base64_encode($streamingResults['Song']['ArtistText']); ?>"><?php
+						if (strlen($streamingResults['Download']['artist']) >= 19) {
+							echo '<span title="'.htmlentities($streamingResults['Download']['artist']).'">' .substr($streamingResults['Download']['artist'], 0, 19) . '...</span>';							
 						} else {
-							$ArtistName = $downloadResult['Download']['artist'];
+							$ArtistName = $streamingResults['Download']['artist'];
 							echo $ArtistName;
 						}
 						
@@ -160,7 +160,7 @@ $ieVersion =  ieversion();
 						*/
                                         <?php
                                         if($this->Session->read('library_type') == '2'){
-                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$downloadResult["Song"]["ProdID"],$downloadResult["Song"]["provider_type"],$downloadResult["Album"]["ProdID"],$downloadResult["Album"]["provider_type"]); ?>
+                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$streamingResults["Song"]["ProdID"],$streamingResults["Song"]["provider_type"],$streamingResults["Album"]["ProdID"],$streamingResults["Album"]["provider_type"]); ?>
                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                             <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                         <?php } else {
@@ -172,21 +172,21 @@ $ieVersion =  ieversion();
                    
                         <p>
                             <?php
-                            $productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']);
+                            $productInfo = $song->getDownloadData($streamingResults['Download']['ProdID'],$streamingResults['Download']['provider_type']);
                             $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
 							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
                             ?>
-                                    <span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
+                                    <span class="beforeClick" id="download_song_<?php echo $streamingResults['Download']['ProdID']; ?>">
                                             <![if !IE]>
-                                                    <a href='#' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download');?></a>
+                                                    <a href='#' onclick='return historyDownloadOthers("<?php echo $streamingResults['Download']['ProdID']; ?>","<?php echo $streamingResults['Download']['library_id']; ?>","<?php echo $streamingResults['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download');?></a>
                                             <![endif]>
                                             <!--[if IE]>
-                                                    <a onclick='historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download');?></a>
+                                                    <a onclick='historyDownload("<?php echo $streamingResults['Download']['ProdID']; ?>","<?php echo $streamingResults['Download']['id']; ?>","<?php echo $streamingResults['Download']['patron_id']; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download');?></a>
                                             <![endif]-->
                                     </span>
                                     <span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
-                                    <span id="download_loader_<?php echo $downloadResult['Download']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                    <span id="download_loader_<?php echo $streamingResults['Download']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 		       </p>
                     </div>
 				</div>
