@@ -139,11 +139,18 @@ $ieVersion =  ieversion();
 					</div>
 					<div class="song-title">
                     <?php 
-						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
+						/*if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
 						} else {
 							echo $streamingArr['QueueList']['queue_name']; 
+					 	}*/
+                    
+                                                  if (strlen($streamingArr['Song']['SongTitle']) >= 19) {
+							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .substr($streamingArr['Song']['SongTitle'], 0, 19) . '...</span>';							
+						} else {
+							echo $streamingArr['Song']['SongTitle']; 
 					 	}
+                    
 					?>
                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></div>
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
