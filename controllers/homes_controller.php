@@ -3458,7 +3458,7 @@ STR;
     */
     function my_streaming_history() {
         
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
