@@ -216,12 +216,12 @@ class QueuesController extends AppController{
                                                                                       'type' => 'LEFT',
                                                                                        'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
                                                                                       ),  
-                                                                                array('table' => 'QueueDetail',
+                                                                                array('table' => 'queue_details',
                                                                                       'alias' => 'QueueDetail',
                                                                                       'type' => 'LEFT',
                                                                                        'conditions' => array('QueueDetail.song_prodid = Song.ProdID','QueueDetail.song_providertype = Song.provider_type')
                                                                                       ),
-                                                                                array('table' => 'QueueList',
+                                                                                array('table' => 'queue_lists',
                                                                                       'alias' => 'QueueList',
                                                                                       'type' => 'LEFT',
                                                                                        'conditions' => array('QueueList.queue_id = QueueDetail.queue_id','QueueDetail.song_providertype = Song.provider_type')
