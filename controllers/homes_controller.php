@@ -3538,7 +3538,7 @@ STR;
                                                             'order'=>"$songSortBy $sortType"));*/
 	$streamingResults =  $this->Siteconfig->find('all');
         
-        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
+        echo "<br>Query: ".$this->Siteconfig->lastQuery();
         
       
         $this->set('streamingResults',$streamingResults);
