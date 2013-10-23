@@ -232,19 +232,19 @@ class QueuesController extends AppController{
                                                                                       'conditions' => array('Album.FileID = File.FileID')
                                                                                      )
                                                                             ),
-                                                            'group' => 'StreamingHistory.id',
+                                                            'group' => 'StreamingHistory.consumed_time, StreamingHistory.ProdID, StreamingHistory.provider_type',
                                                             'conditions' => array('StreamingHistory.library_id' => $libraryId,
                                                                                   'StreamingHistory.patron_id' => $patronId,                                                                                  
                                                                                   'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
-                                                            'fields'=>array('Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_name','Song.Advisory','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle'),
+                                                            'fields'=>array('SUM(StreamingHistory.consumed_time)', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_name','Song.Advisory','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle'),
                                                             'order'=>"$songSortBy $sortType")); 
         
 	
         
 //        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
-//        echo '<pre>'; print_r($streamingResults);
+        echo '<pre>'; print_r($streamingResults);
 //      
         $this->set('streamingData',$streamingResults);
 
