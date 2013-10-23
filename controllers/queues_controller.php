@@ -152,9 +152,7 @@ class QueuesController extends AppController{
     function my_streaming_history() {
         
         Configure::write('debug', 2);
-        $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));        
-        echo "<br>Query: ".$this->News->lastQuery(); echo '<pre>'; print_r($news_count);
-        die;
+     
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
@@ -201,7 +199,7 @@ class QueuesController extends AppController{
         
         $countryTableName = $countryPrefix .'countries';
         $streamingResults = Array();
-        /*$streamingResults =  $this->StreamingHistory->find('all',
+        $streamingResults =  $this->StreamingHistory->find('all',
                                                         array('joins'=>array(
                                                                                 array('table' => 'Songs',
                                                                                       'alias' => 'Song',
@@ -231,12 +229,12 @@ class QueuesController extends AppController{
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
                                                             'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
-                                                            'order'=>"$songSortBy $sortType"));*/
+                                                            'order'=>"$songSortBy $sortType"));
         
-	$news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
+	
         
         echo "<br>Query: ".$this->News->lastQuery();
-        
+        echo '<pre>'; print_r($streamingResults);
       
         $this->set('streamingResults',$streamingResults);
 
