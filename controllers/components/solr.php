@@ -56,17 +56,24 @@ class SolrComponent extends Object {
         }
     }
 
-    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false) {
+    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false, $mobileExplicitStatus=0) {
         $query = '';
         $docs = array();
         $cond = " AND DownloadStatus:1";
+
+        if(1 == $mobileExplicitStatus){
+          $cond .= " AND Advisory:F";
+        }else{
         
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
+            if ($this->Session->read('block') == 'yes') {
+              $cond .= " AND Advisory:F";
+              if($type != 'video'){
                 $cond .= " AND AAdvisory:F";
+              }
             }
+
         }
+        
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
@@ -157,7 +164,7 @@ class SolrComponent extends Object {
             }*/
 
             $query = $query . ' AND Territory:' . $country . $cond;
-            
+
             
             
             // echo '<br /> Rows :'.$query.'<br />'; die;
@@ -767,50 +774,50 @@ class SolrComponent extends Object {
                 switch ($type) {
                     case 'song':
                         //$query = '(CSongTitle:(' . $searchkeyword . '))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CSongTitle";
                         $field = 'SongTitle';
                         break;
                     case 'genre':
                         //$query = '(CGenre:(' . $searchkeyword . '))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CGenre";
                         $field = 'Genre';
                         break;
                     case 'album':
                         //$query = '(CTitle:(' . $searchkeyword . '))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CTitle";
                         $field = 'Title';
                         break;
                     case 'artist':
                         //$query = '(CArtistText:(' . $searchkeyword . '))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CArtistText";
                         $field = 'ArtistText';
                         break;
                     case 'label':
                         //$query = '(CLabel:(' . $searchkeyword . '))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CLabel";
                         $field = 'Label';
                         break;
                     case 'video':
                         //$query = '(CVideoTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.'))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
                         $field = 'VideoTitle';
                         break;
                     case 'composer':
                         //$query = '(CComposer:('.strtolower($searchkeyword).') OR TComposer:('.$searchkeyword.') OR Composer:('.$searchkeyword.'))';
                         //$query = '(CComposer:(' . $searchkeyword . '))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CComposer";
                         $field = 'Composer';
                         break;
                     default:
                         //$query = '(CSongTitle:(' . $searchkeyword . '))';
-                        $query = $searchkeyword.'*';
+                        $query = $searchkeyword; //.'*';
                         $queryFields = "CSongTitle";
                         $field = 'SongTitle';
                         break;
