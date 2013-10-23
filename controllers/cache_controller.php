@@ -2094,19 +2094,18 @@ STR;
                 ORDER BY cnt DESC LIMIT 5';
     $arr_video = $this->Video->query($str_query);
     
-    $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video); var_dump($status);
+    $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
     
     echo '<br />=====================AppMyMusicVideosList_'.$territory.'==========================================<br />';
     echo '<pre>';
     echo $str_query; echo '<br />';
-    print_r( $arr_video ); echo '<br />';
     var_dump(Cache::read("AppMyMusicVideosList_".$territory));
     echo '</pre>';
     echo '<br />==================================================================================================<br />';
-    exit('Here');
+
 
     }
-    exit;
+    exit('Complete');
   }
 
 
