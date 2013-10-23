@@ -3530,8 +3530,7 @@ STR;
                                                                             ),
                                                             'group' => 'StreamingHistory.id',
                                                             'conditions' => array('library_id' => $libraryId,
-                                                                                  'patron_id' => $patronId,
-                                                                                  'history < 2',
+                                                                                  'patron_id' => $patronId,                                                                                  
                                                                                   'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
