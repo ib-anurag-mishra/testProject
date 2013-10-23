@@ -3453,7 +3453,7 @@ STR;
        
        
        /*
-     Function Name : my_history
+     Function Name : my_streaming_history
      Desc : To show songs user downloaded in last 2 weeks
     */
     function my_streaming_history() {
