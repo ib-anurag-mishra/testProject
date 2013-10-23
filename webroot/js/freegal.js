@@ -1533,7 +1533,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 	return false; 
 }
 
-    function loadSong(playlistId,songFile,songTitle,artistName,songLength,prodId,providerType) { 
+    function loadSong(songFile,songTitle,artistName,songLength,prodId,providerType) { 
         var newSong = [
                 {
                 "playlistId":0,
