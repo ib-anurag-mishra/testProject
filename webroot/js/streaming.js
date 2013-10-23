@@ -224,6 +224,56 @@ function reportSongInfo(songObj) {
 
 
 
+function reportPrevSong(prevSongObj, playerEventCode) {
+	alert('reportPrevSong'+playerEventCode);
+	var playerEventCodeString;
+	
+	switch(playerEventCode) {
+		
+		case 1:
+			playerEventCodeString = "Play"
+			break;
+			
+		case 2:
+			playerEventCodeString = "Pause"
+			break;
+			
+		case 3:
+			playerEventCodeString = "Prev"
+			break;
+			
+			
+		case 4:
+			playerEventCodeString = "Next"
+			break;
+			
+		case 5:
+			playerEventCodeString = "Song Ended"
+			break;
+			
+		case 6:
+			playerEventCodeString = "User choose another song in the queue"
+			break;
+			
+	    case 7:
+			playerEventCodeString = "Queue loaded"
+			break;	    	
+			
+		
+	}
+	
+	var prevSongInfoStr = "<p><span style='text-decoration:underline; font-weight:bold'>Prev Song Info:</span></p>" +
+					  "<p>Playlist ID: " + prevSongObj.playlistId + "</p>" +
+					  "<p>Song ID: " + prevSongObj.songId + "</p>" +
+					  "<p>Artist Name: " + prevSongObj.artistName + "</p>" +
+					  "<p>Song Title: " + prevSongObj.songTitle + "</p>" +
+					  "<p>Song Length: " + prevSongObj.songLength + "</p>" +
+					  "<p>Data: " + prevSongObj.data + "</p>" +
+					  "<p>Provider Type: " + prevSongObj.providerType + "</p>" +
+					  "<p>Prev Song Listening Duration: " + prevSongObj.psld + "</p>";
+	
+	$('.prevSongInfo').html(prevSongInfoStr);
+
 
 
 
@@ -231,17 +281,17 @@ function reportSongInfo(songObj) {
 function validateSong(songObj, playerEventCode) {
 
 	
-	// properties sent from flash
+	/* properties sent from flash
 	
-	plaulistId = songObj.playlistId 
-	songId = songObj.songId
-	//songObj.label
-	//songObj.artistName
-	//songObj.songTitle
-	songLength = songObj.songLength
-	//songObj.data
-	songProviderType = songObj.providerType
-	songDuration = songObj.psld
+	songObj.playlistId
+	songObj.songId
+	songObj.label
+	songObj.artistName
+	songObj.songTitle
+	songObj.songLength
+	songObj.data
+	songObj.providerType
+	songObj.totalListeningDuration
 	
 	
 	
@@ -295,7 +345,10 @@ function validateSong(songObj, playerEventCode) {
 	    case 7:
 			playerEventCodeString = "Queue loaded"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
-			break;	    	
+			break;	
+	    case 8:
+			playerEventCodeString = "Queue cleared"
+			break;			    	
 	}
 	
 //	var songInfoStr = "<p>Playlist ID: " + songObj.playlistId + "</p>" +
