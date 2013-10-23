@@ -3505,7 +3505,7 @@ STR;
         
         $countryTableName = $countryPrefix .'countries';
         $streamingResults = Array();
-        $streamingResults =  $this->StreamingHistory->find('all',
+        /*$streamingResults =  $this->StreamingHistory->find('all',
                                                         array('joins'=>array(
                                                                                 array('table' => 'Songs',
                                                                                       'alias' => 'Song',
@@ -3535,8 +3535,8 @@ STR;
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
                                                             'fields'=>array('StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type'),
-                                                            'order'=>"$songSortBy $sortType"));
-	
+                                                            'order'=>"$songSortBy $sortType"));*/
+	$streamingResults =  $this->StreamingHistory->find('all');
         
         echo "<br>Query: ".$this->StreamingHistory->lastQuery();
         
