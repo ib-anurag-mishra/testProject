@@ -91,7 +91,7 @@ $ieVersion =  ieversion();
 		<div class="recent-downloads-shadow-container" style="display:none">
 			<div class="recent-downloads-scrollable">
 				<div class="row-container">
-				<?php echo '<pre>'; print_r($streamingData);
+				<?php 
                 if(count($streamingData) != 0)
                 {
                     $i = 1;
