@@ -225,54 +225,65 @@ function reportSongInfo(songObj) {
 
 
 function reportPrevSong(prevSongObj, playerEventCode) {
-	alert('reportPrevSong'+playerEventCode);
+	plaulistId = prevSongObj.playlistId 
+	songId = prevSongObj.songId
+	songLength = prevSongObj.songLength
+	songProviderType = prevSongObj.providerType
+	songDuration = prevSongObj.tbpp        
 	var playerEventCodeString;
-	
 	switch(playerEventCode) {
 		
 		case 1:
-			playerEventCodeString = "Play"
+			playerEventCodeString = "Play";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		case 2:
-			playerEventCodeString = "Pause"
+			playerEventCodeString = "Pause";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		case 3:
-			playerEventCodeString = "Prev"
+			playerEventCodeString = "Prev";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 			
 		case 4:
-			playerEventCodeString = "Next"
+			playerEventCodeString = "Next";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		case 5:
-			playerEventCodeString = "Song Ended"
+			playerEventCodeString = "Song Ended";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		case 6:
-			playerEventCodeString = "User choose another song in the queue"
+			playerEventCodeString = "User choose another song in the queue";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 	    case 7:
-			playerEventCodeString = "Queue loaded"
+			playerEventCodeString = "Queue loaded";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;	    	
 			
 		
 	}
-	
-	var prevSongInfoStr = "<p><span style='text-decoration:underline; font-weight:bold'>Prev Song Info:</span></p>" +
-					  "<p>Playlist ID: " + prevSongObj.playlistId + "</p>" +
-					  "<p>Song ID: " + prevSongObj.songId + "</p>" +
-					  "<p>Artist Name: " + prevSongObj.artistName + "</p>" +
-					  "<p>Song Title: " + prevSongObj.songTitle + "</p>" +
-					  "<p>Song Length: " + prevSongObj.songLength + "</p>" +
-					  "<p>Data: " + prevSongObj.data + "</p>" +
-					  "<p>Provider Type: " + prevSongObj.providerType + "</p>" +
-					  "<p>Prev Song Listening Duration: " + prevSongObj.psld + "</p>";
-	
-	$('.prevSongInfo').html(prevSongInfoStr);
+        
+        console.log("inside reportPrevSong");
+//	var prevSongInfoStr = "<p><span style='text-decoration:underline; font-weight:bold'>Prev Song Info:</span></p>" +
+//					  "<p>Playlist ID: " + prevSongObj.playlistId + "</p>" +
+//					  "<p>Song ID: " + prevSongObj.songId + "</p>" +
+//					  "<p>Artist Name: " + prevSongObj.artistName + "</p>" +
+//					  "<p>Song Title: " + prevSongObj.songTitle + "</p>" +
+//					  "<p>Song Length: " + prevSongObj.songLength + "</p>" +
+//					  "<p>Data: " + prevSongObj.data + "</p>" +
+//					  "<p>Provider Type: " + prevSongObj.providerType + "</p>" +
+//					  "<p>Prev Song Listening Duration: " + prevSongObj.psld + "</p>";
+//	
+//	$('.prevSongInfo').html(prevSongInfoStr);
 
 
 }
@@ -344,6 +355,7 @@ function validateSong(songObj, playerEventCode) {
 			break;	
 	    case 8:
 			playerEventCodeString = "Queue cleared"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;			    	
 	}
 	
