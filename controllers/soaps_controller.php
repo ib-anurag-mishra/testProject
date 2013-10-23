@@ -5667,28 +5667,33 @@ STR;
       
       if(!(empty($data[$cnt]['QueueList']['queue_name']))) {
         if(0 == $this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
-          $obj = new QueueDetailDataType;
+          
+          if(1 == $this->getPlayButtonStatus($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) {
+            
+            $obj = new QueueDetailDataType;
         
-          $obj->QueueName                    = $data[$cnt]['QueueList']['queue_name'];
-          $obj->QueueSongSongTitle           = $data[$cnt]['Songs']['SongTitle'];
-          $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
-          $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
-          $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
-          $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
-          $obj->QueueAlbumProdID             = $data[$cnt]['AProduct']['AlbumProdID'];
-          $obj->QueueSongProdID              = $data[$cnt]['SProduct']['SongProdID'];
-          $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
-          $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
-          $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
-          $obj->QueueFullLength_Duration     = $data[$cnt]['Songs']['FullLength_Duration'];
+            $obj->QueueName                    = $data[$cnt]['QueueList']['queue_name'];
+            $obj->QueueSongSongTitle           = $data[$cnt]['Songs']['SongTitle'];
+            $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
+            $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
+            $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
+            $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
+            $obj->QueueAlbumProdID             = $data[$cnt]['AProduct']['AlbumProdID'];
+            $obj->QueueSongProdID              = $data[$cnt]['SProduct']['SongProdID'];
+            $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
+            $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
+            $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
+            $obj->QueueFullLength_Duration     = $data[$cnt]['Songs']['FullLength_Duration'];
           
-          if( 'T' == $data[$cnt]['Songs']['Advisory']) {
+            if( 'T' == $data[$cnt]['Songs']['Advisory']) {
           
-            $obj->QueueSongSongTitle  = $obj->QueueSongSongTitle . ' (Explicit)';
-            $obj->QueueSongTitle  = $obj->QueueSongTitle . ' (Explicit)';     
-          }
+              $obj->QueueSongSongTitle  = $obj->QueueSongSongTitle . ' (Explicit)';
+              $obj->QueueSongTitle  = $obj->QueueSongTitle . ' (Explicit)';     
+            }
               
-          $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
+            $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
+          
+          } 
         }  
       }     
     }
