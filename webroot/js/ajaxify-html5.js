@@ -323,7 +323,6 @@
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
 
-
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
@@ -332,7 +331,7 @@
             })
                     .done(function() {
                 //$body.removeClass('loader');
-                $('.loader').fadeOut(2000);
+                $('.loader').fadeOut(3000);
                 $('.content-wrapper').remove(".loader");
             }); // end ajax
 
