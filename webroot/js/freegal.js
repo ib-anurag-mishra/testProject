@@ -1538,7 +1538,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                 {
                 "playlistId":0,
                 "songId":prodId,
-                "songProviderType":providerType,
+                "providerType":providerType,
                 "label":songTitle,
                 "songTitle":songTitle,
                 "artistName":artistName,
