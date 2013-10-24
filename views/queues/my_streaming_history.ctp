@@ -145,7 +145,7 @@ $ieVersion =  ieversion();
                                         </div>
                                         
                                         <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: #000;">
-                                            <a href="queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>">
+                                            <a href="/queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>">
                                      <?php 
                                                
                                                 
