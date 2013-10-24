@@ -201,7 +201,7 @@ class QueueListDetailsController extends AppController{
                //$error_message = array('error' => $validationResponse);
                echo json_encode($validationResponse);
                exit;
-           }else if($validationResponse[0] == 1){
+           }else if($validationResponse[0] == 1 && $eventType != 5){
                if(!empty($_POST['queueId'])){
                    $this->Session->write("queuePlaying", $_POST['queueId']);
                }else{
