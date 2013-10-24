@@ -151,7 +151,7 @@ class QueuesController extends AppController{
     */
     function my_streaming_history() {
         
-        Configure::write('debug', 2);
+      //  Configure::write('debug', 2);
      
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
@@ -208,12 +208,12 @@ class QueuesController extends AppController{
                                                                                       ),
                                                                                 array('table' => $countryTableName,
                                                                                       'alias' => 'Country',
-                                                                                      'type' => 'LEFT',
+                                                                                      'type' => 'INNER',
                                                                                       'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')
                                                                                      ),
                                                                                 array('table' => 'Albums',
                                                                                       'alias' => 'Album',
-                                                                                      'type' => 'INNER',
+                                                                                      'type' => 'LEFT',
                                                                                        'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
                                                                                       ),  
                                                                                 array('table' => 'queue_details',
@@ -228,7 +228,7 @@ class QueuesController extends AppController{
                                                                                       ),
                                                                                 array('table' => 'File',
                                                                                       'alias' => 'File',
-                                                                                      'type' => 'INNER',
+                                                                                      'type' => 'LEFT',
                                                                                       'conditions' => array('Song.Sample_FileID = File.FileID')
                                                                                      )
                                                                             ),
