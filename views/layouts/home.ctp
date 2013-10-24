@@ -41,9 +41,10 @@
                 array(
                     'jquery-1.10.2.min',
                     'modernizr.custom',
+                    'lazyload',
                     'jquery.colorbox',
                     'jquery.cycle.all',
-                    'jquery.autocomplete',
+                    'jquery.autocomplete',                    
                     
                     'swfobject',
                     'streaming',
