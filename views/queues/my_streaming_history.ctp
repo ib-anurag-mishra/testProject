@@ -168,7 +168,7 @@ $ieVersion =  ieversion();
 							echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
 					 	}
 					?>
-                                            
+                                            </a>
                                             </div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
 						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
