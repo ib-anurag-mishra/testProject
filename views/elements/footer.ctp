@@ -53,7 +53,7 @@
     }
 </style>
 
-	
+
 
 <footer class="site-footer">
     <div class="footer-content">
@@ -90,7 +90,7 @@
                 }
             }
             ?>
-          
+
         </div>
     </div>
 </footer>
@@ -104,8 +104,8 @@ if ($this->Session->read("patron"))
     <?php
     if ($this->Session->read('library_type') == '2')
     {
-          echo $javascript->link(array('swfobject.js','streaming.js'));
-                    ?>
+        echo $javascript->link(array('swfobject.js', 'streaming.js'));
+        ?>
         <div class="player-wrapper">
             <div class="fmp_container">
                 <div id="alt"></div>
@@ -121,16 +121,22 @@ if ($this->Session->read("patron"))
 <?php } ?>
 
 <script type="text/javascript">
-    
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        //for player initialization
+        var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
+        var attributes = {id: "audioplayer"};
+
+        swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+
+        //for google anlytics
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
         
-        
-    try {
-        var pageTracker = _gat._getTracker("UA-16162084-1");
-        pageTracker._trackPageview();
-    } catch (err) {
-    }</script>
+        try {
+            var pageTracker = _gat._getTracker("UA-16162084-1");
+            pageTracker._trackPageview();
+        } catch (err) {}
+</script>
 
 
 <!-- Code for player -->
