@@ -171,8 +171,8 @@ class QueuesController extends AppController{
         }
         
         
-        echo "<br>sort: ".$sort;
-        echo "<br>sortOrder: ".$sortOrder;
+//        echo "<br>sort: ".$sort;
+//        echo "<br>sortOrder: ".$sortOrder;
         
         if(!in_array($sort, $sortArray)){
             $sort = 'date';
@@ -252,7 +252,7 @@ class QueuesController extends AppController{
         
 //        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
      //  echo '<pre>'; print_r($streamingResults);
-//      
+    
         $this->set('streamingData',$streamingResults);
 
         $this->set('sort',$sort);

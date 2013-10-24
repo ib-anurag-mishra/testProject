@@ -28,7 +28,7 @@ $ieVersion =  ieversion();
                 
 <div class="breadcrumbs">
 <?php
-	$html->addCrumb( __('Streaming History', true), '/homes/my_history');
+	$html->addCrumb( __('Streaming History', true), '/homes/my_streaming_history');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>          
@@ -85,7 +85,7 @@ $ieVersion =  ieversion();
             <?php
             }
             ?>  
-			<div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?></div>
+			<div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?>(in sec.)</div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
