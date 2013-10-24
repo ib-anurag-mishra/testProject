@@ -160,7 +160,7 @@ $ieVersion =  ieversion();
                                         </div>
                                         
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($streamingArr['Song']['ArtistText']);?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']);?>">
+					<div class="album-title"><a href="/artists/view/<?= base64_encode($streamingArr[$i]['Song']['ArtistText']); ?>/<?= $streamingArr[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr[$i]['Song']['provider_type']); ?>">
                                              <?php 
 						if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .substr($streamingArr['Album']['AlbumTitle'], 0, 19) . '...</span>';							
