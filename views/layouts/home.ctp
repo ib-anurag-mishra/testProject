@@ -41,17 +41,20 @@
                 array(
                     'jquery-1.10.2.min',
                     'modernizr.custom',
-                    'lazyload',
                     'jquery.colorbox',
                     'jquery.cycle.all',
                     'jquery.autocomplete',
+                    
                     'swfobject',
                     'streaming',
+                    
                     'audioPlayer',
-                    'site',
+                    
                     'freegal',
                     'recent-downloads',
-                    'search-results'
+                    'search-results',
+                    
+                    'site'
                 )
         );
 
@@ -68,7 +71,7 @@
                 var webroot = '<?php echo $this->webroot; ?>';
                 var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
                 var attributes = {id: "audioplayer"};
-
+                
                 swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
 
                 function validateEmail(email) {
@@ -124,87 +127,87 @@
                         if ($this->Session->read('approved') && $this->Session->read('approved') == 'no')
                         {
                             ?>
-                                            $(".termsApproval")
-                                                    .colorbox(
-                                                    {
-                                                        width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#termsApproval_div",
-                                                        onOpen: function() {
-                                                            $(document).unbind("keydown.cbox_close");
-                                                        }
-                                                    }
-                                            );
+                                    $(".termsApproval")
+                                            .colorbox(
+                                            {
+                                                width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#termsApproval_div",
+                                                onOpen: function() {
+                                                    $(document).unbind("keydown.cbox_close");
+                                                }
+                                            }
+                                    );
                             <?php
                         }
 
                         if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1))
                         {
                             ?>
-                                            function sleep(milliseconds) {
-                                                var start = new Date().getTime();
-                                                for (var i = 0; i < 1e7; i++) {
-                                                    if ((new Date().getTime() - start) > milliseconds) {
-                                                        break;
-                                                    }
-                                                }
-                                            }
+                                function sleep(milliseconds) {
+                                    var start = new Date().getTime();
+                                    for (var i = 0; i < 1e7; i++) {
+                                        if ((new Date().getTime() - start) > milliseconds) {
+                                            break;
+                                        }
+                                    }
+                                }
 
 
 
-                                            $(".notificationApproval").colorbox({width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#notificationApproval_div", onOpen: function() {
-                                                    $(document).unbind("k e ydown.cbox_close");
-                                                }});
-                                            //close the popup 
-                                            $("#colorboxCloseBtn").click(function() {
+                                $(".notificationApproval").colorbox({width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#notificationApproval_div", onOpen: function() {
+                                        $(document).unbind("k e ydown.cbox_close");
+                                    }});
+                                //close the popup 
+                                $("#colorboxCloseBtn").click(function() {
 
-                                                var data = {notificationClose: 1};
-                                                jQuery.ajax({
-                                                    type: "post", // Request  method: post, get
-                                                    url: webroot + "users/saveNotification", // URL to request
-                                                    data: data, // post data
-                                                    success: function(response) {
-                                                        $.fn.colorbox.close();
-                                                    },
-                                                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                                    }
-                                                });
-                                            });
-                                            //save email notificaion data and close t he popup
-                                            $("#colorboxSubmitBtn").click(function() {
+                                    var data = {notificationClose: 1};
+                                    jQuery.ajax({
+                                        type: "post", // Request  method: post, get
+                                        url: webroot + "users/saveNotification", // URL to request
+                                        data: data, // post data
+                                        success: function(response) {
+                                            $.fn.colorbox.close();
+                                        },
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                        }
+                                    });
+                                });
+                                //save email notificaion data and close t he popup
+                                $("#colorboxSubmitBtn").click(function() {
 
-                                                if (!$('#userNewsletterEmailField').val()) {
-                                                    alert('Please enter the valid email address.');
-                                                    return false;
-                                                }
+                                    if (!$('#userNewsletterEmailField').val()) {
+                                        alert('Please enter the valid email address.');
+                                        return false;
+                                    }
 
-                                                if (!validateEmail($('#userNewsletterEmailField').val())) {
-                                                    alert('Please enter the valid email address.');
-                                                    return false;
-                                                }
+                                    if (!validateEmail($('#userNewsletterEmailField').val())) {
+                                        alert('Please enter the valid email address.');
+                                        return false;
+                                    }
 
-                                                //post the notification information
-
-
+                                    //post the notification information
 
 
 
-                                                var pid = <?= $this->Session->read('patron') ?>;
-                                                var lid = <?= $this->Session->read('library') ?>;
-                                                var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
-                                                $('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
-                                                jQuery.ajax({
-                                                    type: "post", // Request method: post, get
-                                                    url: webroot + "users/saveNotification", // URL to request
-                                                    data: data, // postdata
-                                                    async:
-                                                            false,
-                                                    success: function(response) {
-                                                        sleep(1000);
-                                                        $.fn.colorbox.close();
-                                                    },
-                                                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                                    }
-                                                });
-                                            });
+
+
+                                    var pid = <?= $this->Session->read('patron') ?>;
+                                    var lid = <?= $this->Session->read('library') ?>;
+                                    var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid, lid: lid};
+                                    $('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
+                                    jQuery.ajax({
+                                        type: "post", // Request method: post, get
+                                        url: webroot + "users/saveNotification", // URL to request
+                                        data: data, // postdata
+                                        async:
+                                                false,
+                                        success: function(response) {
+                                            sleep(1000);
+                                            $.fn.colorbox.close();
+                                        },
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                        }
+                                    });
+                                });
 
                             <?php
                         }
@@ -213,11 +216,11 @@
 
             </script>
 
-    <?php
-}
-else
-{
-    ?>
+            <?php
+        }
+        else
+        {
+            ?>
             <link href="<?php echo $this->webroot; ?>css/freegal_styles.php" type="text/css" rel="stylesheet" />
             <link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
             <?php
@@ -261,10 +264,10 @@ else
                 }
             </script>
 
-    <?php
-    $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
-}
-?>
+            <?php
+            $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
+        }
+        ?>
 
         <style>
             #slideshow a { display: none }
@@ -281,89 +284,89 @@ else
 
 
         <noscript>
-<?php
-if ($this->params['action'] != 'aboutus')
-{
-    echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err"), false);
-}
-?>
+            <?php
+            if ($this->params['action'] != 'aboutus')
+            {
+                echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err"), false);
+            }
+            ?>
         </noscript>
 
-            <?php
-            //echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); die;
+        <?php
+        //echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); die;
 
-            if ($_SERVER['REQUEST_URI'] == '/index' || $_SERVER['REQUEST_URI'] == '')
-            {
-                $body_class = 'page-news';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/videos')
-            {
-                $body_class = 'page-videos';
-            }
-            else if ((strstr($_SERVER['REQUEST_URI'], '/videos/details/')) != '')
-            {
-                $body_class = 'page-videos-details';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10')
-            {
-                $body_class = 'page-my-lib-top-10';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/homes/us_top_10')
-            {
-                $body_class = 'page-us-top-10';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/homes/new_releases')
-            {
-                $body_class = 'page-new-releases';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/questions')
-            {
-                $body_class = 'page-questions';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/genres/view')
-            {
-                $body_class = 'page-genres';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/homes/my_history')
-            {
-                $body_class = 'page-my-history';
-            }
-            else if ((strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/queue_details')) != '')
-            {
-                $body_class = 'page-queue-details';
-            }
-            else if ((strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/now_streaming')) != '')
-            {
-                $body_class = 'page-now-streaming';
-            }
-            else if ($_SERVER['REQUEST_URI'] == '/homes/my_wishlist')
-            {
-                $body_class = 'page-my-wishlist';
-            }
-            else if ((strstr($_SERVER['REQUEST_URI'], '/search/index')) != '')
-            {
-                $body_class = 'page-search-index';
-            }
-            else if ((strstr($_SERVER['REQUEST_URI'], '/artists/view')) != '')
-            {
-                $body_class = 'page-artists-view';
-            }
-            else if ((strstr($_SERVER['REQUEST_URI'], '/users/')) != '')
-            {
-                $body_class = 'page-users-login';
-            }
-            else
-            {
-                $body_class = 'page-news';
-            }
-            ?> 
+        if ($_SERVER['REQUEST_URI'] == '/index' || $_SERVER['REQUEST_URI'] == '')
+        {
+            $body_class = 'page-news';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/videos')
+        {
+            $body_class = 'page-videos';
+        }
+        else if ((strstr($_SERVER['REQUEST_URI'], '/videos/details/')) != '')
+        {
+            $body_class = 'page-videos-details';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10')
+        {
+            $body_class = 'page-my-lib-top-10';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/homes/us_top_10')
+        {
+            $body_class = 'page-us-top-10';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/homes/new_releases')
+        {
+            $body_class = 'page-new-releases';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/questions')
+        {
+            $body_class = 'page-questions';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/genres/view')
+        {
+            $body_class = 'page-genres';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/homes/my_history')
+        {
+            $body_class = 'page-my-history';
+        }
+        else if ((strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/queue_details')) != '')
+        {
+            $body_class = 'page-queue-details';
+        }
+        else if ((strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/now_streaming')) != '')
+        {
+            $body_class = 'page-now-streaming';
+        }
+        else if ($_SERVER['REQUEST_URI'] == '/homes/my_wishlist')
+        {
+            $body_class = 'page-my-wishlist';
+        }
+        else if ((strstr($_SERVER['REQUEST_URI'], '/search/index')) != '')
+        {
+            $body_class = 'page-search-index';
+        }
+        else if ((strstr($_SERVER['REQUEST_URI'], '/artists/view')) != '')
+        {
+            $body_class = 'page-artists-view';
+        }
+        else if ((strstr($_SERVER['REQUEST_URI'], '/users/')) != '')
+        {
+            $body_class = 'page-users-login';
+        }
+        else
+        {
+            $body_class = 'page-news';
+        }
+        ?> 
     </head>
 
     <body class="<?php echo $body_class; ?>">
 
 
         <div id="audioPixel"><div id="audioflash"></div></div>
-<?php $session->flash(); ?>
+        <?php $session->flash(); ?>
         <a class='upgradeFlash' href="#"></a>
         <div style="display:none;">
             <div id="upgradeFlash_div">   
@@ -373,22 +376,22 @@ if ($this->params['action'] != 'aboutus')
             </div>
         </div>
 
-<?php
-if ($this->Session->read('approved') && $this->Session->read('approved') == 'no')
-{
-    ?>
+        <?php
+        if ($this->Session->read('approved') && $this->Session->read('approved') == 'no')
+        {
+            ?>
             <style>#cboxClose{display:none !important;}</style>
 
             <a class='termsApproval' href="#"></a>
             <div style="display:none;">
                 <div id="termsApproval_div">
                     <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:125px;bottom:0;left:305px;right:0;z-index:10000;">
-    <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                        <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
                     </div>
 
                     <b>You need to accept the terms and conditions to browse the site.</b><br />
                     <div style="overflow:auto;height:200px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">
-    <?php echo $page->getPageContent('terms'); ?>
+                        <?php echo $page->getPageContent('terms'); ?>
                     </div>
 
                     <br />
@@ -397,12 +400,12 @@ if ($this->Session->read('approved') && $this->Session->read('approved') == 'no'
                         <input type="button" value="Deny" onclick="Javascript: history.back();">
                             </div>
                             </div>
-    <?php
-}
+                            <?php
+                        }
 
-if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1))
-{
-    ?>
+                        if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1))
+                        {
+                            ?>
                             <style>#cboxClose{display:none !important;}</style>
 
                             <a class='notificationApproval' href="#"></a>
@@ -410,7 +413,7 @@ if (($this->Session->read('showNotificationPopup') && $this->Session->read('show
                                 <span id="noti_content">
 
                                     <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:125px;bottom:0;left:305px;right:0;z-index:10000;">
-    <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                                        <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
                                     </div>
                                     <b>Email Notification</b><br />
 
@@ -430,25 +433,25 @@ if (($this->Session->read('showNotificationPopup') && $this->Session->read('show
                                             <div style="display:none;">
 
                                             </div>
-    <?php
-}
-?>      
+                                            <?php
+                                        }
+                                        ?>      
 
                                         <div id="border-background" >
                                             <div id="container">
-                                        <?php echo $this->element('header'); ?>
+                                                <?php echo $this->element('header'); ?>
                                                 <div id="content">
-<?php
-if ($this->Session->read('library') && $this->Session->read('library') != '')
-{
-    echo $this->element('navigation');
-}
-echo $content_for_layout;
-?>
+                                                    <?php
+                                                    if ($this->Session->read('library') && $this->Session->read('library') != '')
+                                                    {
+                                                        echo $this->element('navigation');
+                                                    }
+                                                    echo $content_for_layout;
+                                                    ?>
                                                 </div>
                                                 <br class="clr">
                                             </div>
-                                                    <?php echo $this->element('footer');
-                                                    ?>
+                                            <?php echo $this->element('footer');
+                                            ?>
 
                                         </div>
