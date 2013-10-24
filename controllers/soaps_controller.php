@@ -5123,7 +5123,7 @@ STR;
         INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
         LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
         WHERE c.Territory = "'.$library_territory.'" AND v.DownloadStatus = "1" '.$cond.' GROUP BY v.ProdID
-        ORDER BY cnt DESC';
+        ORDER BY cnt DESC LIMIT 100';
         
       $arr_video = array();  
       $arr_video = $this->Video->query($str_query);
@@ -5155,7 +5155,7 @@ STR;
         ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
         $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
         $sobj->VideoFullLength_FileURL = '';
-        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . 'sony_test/'.$arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
+        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec('perl files/tokengen_artwork ' . $arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
           
         if('T' == $arrTemp[$cnt]['v']['Advisory']) {
       
@@ -6284,7 +6284,7 @@ STR;
         $sobj->fileURL            = 'nostring';
         $sobj->FullLengthFileURL  = 'nostring';
       }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $val->ACdnPath."/".$val->ASourceURL);
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl files/tokengen_artwork ' . $val->ACdnPath."/".$val->ASourceURL);
         $vdata = $this->Files->find('first',
           array(
             'fields' => array(
