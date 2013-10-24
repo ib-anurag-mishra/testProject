@@ -57,7 +57,7 @@
                 )
         );
 
-        $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es';
+        
 
 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
@@ -66,7 +66,9 @@
             ?>
         
             <script type="text/javascript">
-
+                
+                <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>
+                    
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
                 
