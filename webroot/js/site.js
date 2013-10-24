@@ -103,10 +103,13 @@ $('document').ready(function()
     var scrollingDown;
     var footer_pos;
     var music_search_results = $('.master-music-search-results');
+
+    var sidebar_anchor = $('.sidebar-anchor');
     var sidebar_a = $('.left-sidebar li a');
+
     var poll = $('.poll');
     var announcements = $('.announcements h4 a');
-    var sidebar_anchor = $('.sidebar-anchor');
+
     var tooltip_a = $('.tooltip a');
     var plays_tooltip = $('.plays-tooltip');
     var filter_text = $('.filter-text');
@@ -133,6 +136,15 @@ $('document').ready(function()
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
 
+    sidebar_anchor.on('click', function(e) {
+        //e.preventDefault();
+        if ($(this).next('ul').hasClass('active')) {
+            $(this).next('ul').removeClass('active');
+        } else {
+
+            $(this).next('ul').addClass('active');
+        }
+    });
 
     sidebar_a.on('click', function(e) {
         //e.preventDefault();
@@ -140,7 +152,7 @@ $('document').ready(function()
         $(this).addClass('active');
 
     });
-    
+
     announcements.on('click', function(e) {
         e.preventDefault();
         if ($(poll).hasClass('active')) {
@@ -151,15 +163,7 @@ $('document').ready(function()
         }
     });
 
-    sidebar_anchor.on('click', function(e) {
-        //e.preventDefault();
-        if ($(this).next('ul').hasClass('active')) {
-            $(this).next('ul').removeClass('active');
-        } else {
 
-            $(this).next('ul').addClass('active');
-        }
-    });
     tooltip_a.hover(
             function() {
 
