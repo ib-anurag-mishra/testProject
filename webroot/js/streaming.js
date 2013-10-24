@@ -409,6 +409,7 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
     }).done(function(data){
         var result = JSON.parse(data);
+        console.log('result in done is ' + result);
         if(result.error){
             var result = [0,"Not able to stream this song due to empty response from compoinent",0,0,0,0];            
         }
