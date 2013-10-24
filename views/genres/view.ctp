@@ -109,7 +109,7 @@ $totalRows = count($genresAll);
                 <ul>
                     <li>
                         <a class="genre_list_item_all <?php echo ($genre == 'All') ? selected : '' ?>" href="#" data-genre="All Artists" id="genre_list_item_0" 
-                           onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/All', '0', '<?php echo addslashes('All'); ?>')">
+                           onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/', '0', '<?php echo addslashes('All'); ?>')">
                                <?php echo __('All Artists'); ?>
                         </a>
                     </li>
@@ -204,18 +204,33 @@ $totalRows = count($genresAll);
             </div>
 
 
-            <div class="artist-list-shadow-container">
-                <h3></h3>
-                <div class="artist-list" id="artistscroll">
-                    <ul id="artistlistrecord">
-                    </ul>
-
-                    <span id="artist_loader" style="display:none;">
-                        <img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" 
-                             style="padding-left:115px;padding-buttom:25px;"/>
-                    </span>
-                </div>
-            </div>
+           <div class="artist-list-shadow-container">
+				<h3>&nbsp;</h3>
+				<div class="artist-list" id="artistscroll">					
+					<ul id="artistlistrecord">						                                            
+                                         <?php                                                           
+                                            if(count($genres) > 0){                                                    
+                                                for ($i = 0; $i < count($genres); $i++) {
+                                                        echo " <li>";
+                                                        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);      
+                                                        //$ArtistName = $this->getValidText($genres[$i]['Song']['ArtistText']);
+                                                        $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".str_replace("'", '', ($ArtistName))."' >";
+                                                        echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
+                                                        echo '</a>';
+                                                        echo '</li>';                                                                    
+                                                }
+                                            }else{
+                                                    echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
+                                            }
+                                         ?> 
+                                            
+                                          <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
+				
+					</ul>
+                                    <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
+				</div>
+			</div>
         </div>
 
         <div class="border"></div>

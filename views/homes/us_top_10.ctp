@@ -1,5 +1,3 @@
-
-
 <section class="my-top-100-page">
 		
 		<div class="breadcrumbs">
@@ -341,11 +339,11 @@
 						</div>
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
-                                                                                                        <?php 
-                                                                                                                    if(strlen($value['Video']['Artist'])>32)
-                                                                                                                    echo substr($value['Video']['Artist'],0,32)."..."; 
-                                                                                                                    else echo $value['Video']['Artist'];
-                                                                                                             ?>
+                                                        <?php 
+                                                            if(strlen($value['Video']['Artist'])>32)
+                                                            echo substr($value['Video']['Artist'],0,32)."..."; 
+                                                            else echo $value['Video']['Artist'];
+                                                        ?>
                                                        </a>
 						</div>
 					</li>
