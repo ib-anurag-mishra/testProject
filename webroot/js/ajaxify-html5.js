@@ -330,7 +330,7 @@
                     .done(function() {
                 //$body.removeClass('loader');
                 
-                $.getScript(webroot+'js/script.js');
+                $.getScript(webroot+'js/site.js');
                 
                 $('.loader').fadeOut(3000);
                 $('.content-wrapper').remove(".loader");
