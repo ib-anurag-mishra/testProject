@@ -2436,29 +2436,29 @@ $(function() {
 
 });
 
-$('document').ready(function() {
-    $('#search-text').autocomplete("/search/autocomplete",
-            {
-                minChars: 1,
-                cacheLength: 10,
-                autoFill: false,
-                extraParams: {
-                    type: 'all'
-                },
-                formatItem: function(data) {
-                    return data[0];
-                },
-                formatResult: function(data) {
-                    return data[1];
-                }
-            }).result(function(e, item) {
-        $('#auto').attr('value', 1);
-        /*if(item[2]==1){
-         $('#header-search-type').val('artist');
-         } else if(item[2]==2){
-         $('#header-search-type').val('album');
-         } else if(item[2]==3){
-         $('#header-search-type').val('song');
-         }*/
-    });
-});
+//$('document').ready(function() {
+//    $('#search-text').autocomplete("/search/autocomplete",
+//            {
+//                minChars: 1,
+//                cacheLength: 10,
+//                autoFill: false,
+//                extraParams: {
+//                    type: 'all'
+//                },
+//                formatItem: function(data) {
+//                    return data[0];
+//                },
+//                formatResult: function(data) {
+//                    return data[1];
+//                }
+//            }).result(function(e, item) {
+//        $('#auto').attr('value', 1);
+//        /*if(item[2]==1){
+//         $('#header-search-type').val('artist');
+//         } else if(item[2]==2){
+//         $('#header-search-type').val('album');
+//         } else if(item[2]==3){
+//         $('#header-search-type').val('song');
+//         }*/
+//    });
+//});
