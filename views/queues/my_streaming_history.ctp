@@ -157,6 +157,8 @@ $ieVersion =  ieversion();
                                         
                                         <div class="song-title">
                                      <?php 
+                                                echo  $streamingArr['QueueList']['queue_name']; ;
+                                     
 						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
 						} else {
