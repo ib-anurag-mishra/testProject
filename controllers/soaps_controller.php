@@ -5081,7 +5081,7 @@ STR;
    * @param int $recordCount
 	 * @return VideoSongDataType[]
    */
-  function getMyMusicVideos($authenticationToken, $startFrom, $recordCount) {
+  function getMyMusicVideos($authenticationToken, $startFrom, $recordCount) { 
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
