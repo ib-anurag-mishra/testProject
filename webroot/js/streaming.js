@@ -157,8 +157,9 @@ function swfCallback (e) {
 	                if(e.ref.PercentLoaded() === 100){
 	                    //Execute function
 	                    //console.log('loaded');
-	                    var flash =	document.getElementById("fmp_player");
-	                    flash.pushNewSongsFromJS(popMostPopular);
+	                    //var flash =	document.getElementById("fmp_player");
+	                    //flash.pushNewSongsFromJS(popMostPopular);
+	                    playerLoaded();
 	                    //Clear timer
 	                    clearInterval(loadCheckInterval);
 	                }
@@ -267,7 +268,14 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 	    case 7:
 			playerEventCodeString = "Queue loaded";
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
-			break;	    	
+			break;
+		case 9:
+			playerEventCodeString = "User ran out of time";
+			break;
+			
+		default:
+			playerEventCodeString = "";
+			break;				    	
 			
 		
 	}
