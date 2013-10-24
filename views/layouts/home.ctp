@@ -54,6 +54,8 @@
                     'freegal',
                     'recent-downloads',
                     'search-results',
+                    
+                    'swfobject.js'
                 )
         );
 

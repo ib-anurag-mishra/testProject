@@ -104,7 +104,7 @@ if ($this->Session->read("patron"))
     <?php
     if ($this->Session->read('library_type') == '2')
     {
-        echo $javascript->link(array('swfobject.js', 'streaming.js'));
+        echo $javascript->link(array( 'streaming.js'));
         ?>
         <div class="player-wrapper">
             <div class="fmp_container">
