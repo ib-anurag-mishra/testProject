@@ -86,7 +86,7 @@
                                             if( $this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)                                                 
                                             {                                                
                                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$nationalTopDownload[$i]['streamUrl'].'", "'.$nationalTopDownload[$i]['Song']['SongTitle'].'","'.$nationalTopDownload[$i]['Song']['ArtistText'].'","'.$nationalTopDownload[$i]['totalseconds'].'","'.$nationalTopDownload[$i]['Song']['ProdID'].'","'.$nationalTopDownload[$i]['Song']['provider_type'].'");'));
-                                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
+                                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample stream", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                                             }
                                             else if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) 
@@ -104,8 +104,11 @@
 
 <?php
 
-    if($this->Session->read('patron')) {
-        if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
+                                        <?php
+                                        if ($this->Session->read('patron'))
+                                        {
+                                            if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d') )
+                                            {
 
             if($libraryDownload == '1' && $patronDownload == '1') {
 		$downloadsUsed =  $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'],$nationalTopDownload[$i]['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
@@ -177,9 +180,10 @@
                                                 {
                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'), $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"], $nationalTopDownload[$i]["Albums"]["ProdID"], $nationalTopDownload[$i]["Albums"]["provider_type"]);
                                                     ?>
-                                                                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
-                                                                                                <?php } ?>
-														
+                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                <?php                                                
+                                                } 
+                                                ?>
 
                                                                                                                     <?php
                                                                                                                     

@@ -1560,11 +1560,13 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
     } 
 
     $(document).ready(function (){
-        $('.play-queue-btn').click(function (){
-            playlist = $('#playlist_data').text();
-            playlist = JSON.parse(playlist);
-            if(playlist.length){
-                pushSongs(playlist);
-            }
+        $(document).on('click','.play-queue-btn', function(){ 
+                playlist = $('#playlist_data').text();
+                playlist = JSON.parse(playlist);
+                if(playlist.length){
+                    pushSongs(playlist);
+                }
+
         });
     });
+    

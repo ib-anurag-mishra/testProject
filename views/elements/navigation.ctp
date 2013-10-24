@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-     $("#FormDelete").submit(function() {
+     $("#FormDelete").submit(function() { alert("HI");
      var frm = $('#FormDelete');
         $.ajax({
             type: "post",

@@ -157,8 +157,9 @@ function swfCallback (e) {
 	                if(e.ref.PercentLoaded() === 100){
 	                    //Execute function
 	                    //console.log('loaded');
-	                    var flash =	document.getElementById("fmp_player");
-	                    flash.pushNewSongsFromJS(popMostPopular);
+	                    //var flash =	document.getElementById("fmp_player");
+	                    //flash.pushNewSongsFromJS(popMostPopular);
+	                    playerLoaded();
 	                    //Clear timer
 	                    clearInterval(loadCheckInterval);
 	                }
@@ -229,45 +230,59 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 	songId = prevSongObj.songId
 	songLength = prevSongObj.songLength
 	songProviderType = prevSongObj.providerType
-	songDuration = prevSongObj.tbpp        
+	songDuration = prevSongObj.psld   
+        
 	var playerEventCodeString;
 	switch(playerEventCode) {
 		
 		case 1:
 			playerEventCodeString = "Play";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,12,songLength,songDuration);
 			break;
 			
 		case 2:
 			playerEventCodeString = "Pause";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,13,songLength,songDuration);
 			break;
 			
 		case 3:
 			playerEventCodeString = "Prev";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,14,songLength,songDuration);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,15,songLength,songDuration);
 			break;
 			
 		case 5:
 			playerEventCodeString = "Song Ended";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,16,songLength,songDuration);
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,17,songLength,songDuration);
 			break;
 			
-	    case 7:
+                 case 7:
 			playerEventCodeString = "Queue loaded";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
-			break;	    	
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,18,songLength,songDuration);
+			break;
+                 case 8:
+			playerEventCodeString = "Queue cleared"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,19,songLength,songDuration);
+			break;                        
+                        
+		case 9:
+			playerEventCodeString = "User ran out of time";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,20,songLength,songDuration);
+			break;
+			
+		default:
+			playerEventCodeString = "";
+			break;				    	
 			
 		
 	}
@@ -319,8 +334,9 @@ function validateSong(songObj, playerEventCode) {
 	switch(playerEventCode) {
 		
 		case 1:
-			playerEventCodeString = "Resume";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,2,songLength,songDuration);
+			playerEventCodeString = "Play";
+                        songDuration = 0;
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;
 			
 		case 2:
@@ -391,19 +407,17 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         url: postURL,
         data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
     }).done(function(data){
-        streamingValidationJS(JSON.parse(data));
+        var result = JSON.parse(data);
+        if(result.error){
+            var result = [0,"Not able to stream this song due to empty response from compoinent",0,0,0,0];            
+        }
+        streamingValidationJS(result);
     })
     .fail(function(){
         var errorFlag = 1;
         var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
         streamingValidationJS(errorData);
     });
-
-    if(errorFlag == 1){
-        return errorData;
-    }else{
-        return responseData;
-    }
 }
 
 function pingTimeJS() {
@@ -432,7 +446,7 @@ function reportTime(amt) {
 
 function flashConsole(msg) {
 	
-	//console.log(msg);
+	console.log(msg);
 }
 
 

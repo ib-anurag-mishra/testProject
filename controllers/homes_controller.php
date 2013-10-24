@@ -87,10 +87,10 @@ class HomesController extends AppController
         
        
 //testing for streaming component       
-//        $prodId='23366336';
+//        $prodId='28320117';
 //        $provider='sony';
-//        $userStreamedTime ='500';
-//        $actionType='1';
+//        $userStreamedTime ='0';
+//        $actionType='5';
 //        $songDuration = 300;
 //        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
 //        print_r($validationResponse);

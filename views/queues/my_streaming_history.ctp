@@ -28,7 +28,7 @@ $ieVersion =  ieversion();
                 
 <div class="breadcrumbs">
 <?php
-	$html->addCrumb( __('Streaming History', true), '/homes/my_history');
+	$html->addCrumb( __('Streaming History', true), '/homes/my_streaming_history');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>          
@@ -48,11 +48,11 @@ $ieVersion =  ieversion();
                 ?>    
                     <div class="date-filter-button filter" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter  toggled"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter  toggled" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter "><?php echo __('Date'); ?></div>
+                <div class="date-filter-button filter " style="cursor:pointer;"><?php echo __('Date'); ?></div>
             <?php
             }
             ?>   
@@ -85,7 +85,7 @@ $ieVersion =  ieversion();
             <?php
             }
             ?>  
-			<div class="artist-filter-button filter"style="cursor:pointer;"><?php echo __('Streaming Time'); ?></div>
+			<div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?> (in sec.)</div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
@@ -101,28 +101,23 @@ $ieVersion =  ieversion();
 				<div class="row clearfix">
 					<div class="date"><?php echo date("Y-m-d",strtotime($streamingArr['StreamingHistory']['createdOn'])); ?></div>
 					<div class="small-album-container">
-						
-						<!-- <a class="preview" href="#"></a> -->
-                        
                                                     
                        <?php
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
-                                //do the streaming work
-                                                            
-//                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['File']['CdnPath']."/".$streamingArr['File']['SourceURL']);
-//
-//                                if(!empty($filePath))
-//                                 {
-//                                    $songPath = explode(':',$filePath);
-//                                    $streamUrl =  trim($songPath[1]);
-//                                    $albumSong['streamUrl'] = $streamUrl;
-//                                    $albumSong['totalseconds']  = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']); 
-//                                 } 
-                                
+                            
+                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['File']['CdnPath']."/".$streamingArr['File']['SourceURL']);
+
+                                if(!empty($filePath))
+                                {
+                                   $songPath = explode(':',$filePath);
+                                   $streamUrl =  trim($songPath[1]);
+                                   $streamingArr['streamUrl'] = $streamUrl;
+                                   $streamingArr['totalseconds']  = $this->Queue->getSeconds($streamingArr['Song']['FullLength_Duration']); 
+                                }
                             
                             
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['StreamingHistory']['ProdID'].', "'.base64_encode($streamingArr['StreamingHistory']['provider_type']).'", "'.$this->webroot.'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr['streamUrl'].'", "'.$streamingArr['Song']['SongTitle'].'","'.$streamingArr['Song']['ArtistText'].'","'.$streamingArr['totalseconds'].'","'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
 
@@ -138,54 +133,49 @@ $ieVersion =  ieversion();
                         ?>
 					</div>
 					<div class="song-title">
-                    <?php 
-						/*if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
+                                    <?php 
+                                                  if(strlen($streamingArr['Song']['SongTitle']) >= 19) {
+							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 19)) . '...</span>';							
 						} else {
-							echo $streamingArr['QueueList']['queue_name']; 
-					 	}*/
-                    
-                                                  if (strlen($streamingArr['Song']['SongTitle']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .substr($streamingArr['Song']['SongTitle'], 0, 19) . '...</span>';							
-						} else {
-							echo $streamingArr['Song']['SongTitle']; 
+							echo $this->getTextEncode($streamingArr['Song']['SongTitle']); 
 					 	}
                     
 					?>
-                    <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
+                                    <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
                                         
-                                        <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: #000;">
+                                        <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: rgba(0, 0, 0, 0.7); text-decoration: none;">
+                                            <a href="/queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>">
                                      <?php 
                                                
-                                     
+                                                
 						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .$this->getTextEncode(substr($streamingArr['QueueList']['queue_name'], 0, 19)) . '...</span>';							
 						} else {
-							echo $streamingArr['QueueList']['queue_name']; 
+							echo $this->getTextEncode($streamingArr['QueueList']['queue_name']); 
 					 	}
                     
 					?>
-                    
+                                            </a>
                                         </div>
                                         
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="/artists/view/<?=base64_encode($streamingArr['Album']['AlbumTitle']);?>/<?= $streamingArr['Album']['AlbumTitle']; ?>/<?= base64_encode($streamingArr['Album']['AlbumTitle']);?>">
+					<div class="album-title"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
                                              <?php 
 						if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .substr($streamingArr['Album']['AlbumTitle'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Album']['AlbumTitle'], 0, 19)) . '...</span>';							
 						} else {
-							echo $streamingArr['Album']['AlbumTitle']; 
+							echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
 					 	}
 					?>
-                                            
+                                            </a>
                                             </div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
 						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .substr($streamingArr['Song']['ArtistText'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .$this->getTextEncode(substr($streamingArr['Song']['ArtistText'], 0, 19)) . '...</span>';							
 						} else {
 							$ArtistName = $streamingArr['Song']['ArtistText'];
-							echo $ArtistName;
+							echo $this->getTextEncode($ArtistName);
 						}
 						
 					?></a></div>

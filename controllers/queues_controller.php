@@ -10,7 +10,7 @@ class QueuesController extends AppController{
     
     var $name = 'Queues';
     var $layout = 'home';
-    var $helpers = array( 'Html', 'Form', 'Session');
+    var $helpers = array( 'Html', 'Form', 'Session', 'Queue');
     var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Streaming');
     var $uses = array( 'QueueList', 'QueueDetail','User','Album','Song',  'StreamingHistory');
     
@@ -162,17 +162,24 @@ class QueuesController extends AppController{
         $sortArray = array('date', 'artist', 'album');
         $sortOrderArray = array('asc','desc');
         
+
+        
+        
         if(isset($_POST)){
             $sort = $_POST['sort'];
             $sortOrder = $_POST['sortOrder'];
         }
+        
+        
+//        echo "<br>sort: ".$sort;
+//        echo "<br>sortOrder: ".$sortOrder;
         
         if(!in_array($sort, $sortArray)){
             $sort = 'date';
         }
         
         if(!in_array($sortOrder, $sortOrderArray)){
-            $sortOrder = 'asc';
+            $sortOrder = 'desc';
         }
         
         switch($sort){
@@ -180,72 +187,72 @@ class QueuesController extends AppController{
                 $songSortBy = 'StreamingHistory.createdOn';                
                 $sortType = $sortOrder;
                 break;
+            case 'artist':
+                $songSortBy = 'Song.ArtistText';                
+                $sortType = $sortOrder;
+                break;
+            case 'album':  
+                $songSortBy = 'Album.AlbumTitle';                
+                $sortType = $sortOrder;
+                break;
             /*case 'song':
                 $songSortBy = 'Download.track_title';
                 $videoSortBy = 'Videodownload.track_title';
                 $sortType = $sortOrder;
-                break;
-            case 'artist':
-                $songSortBy = 'Download.artist';
-                $videoSortBy = 'Videodownload.artist';
-                $sortType = $sortOrder;
-                break;
-            case 'album':  
-                $songSortBy = 'Song.Title';
-                $videoSortBy = 'Video.Title';
-                $sortType = $sortOrder;
-                break;*/
+                break;            
+            */
         }
         
         $countryTableName = $countryPrefix .'countries';
         $streamingResults = Array();
         $streamingResults =  $this->StreamingHistory->find('all',
-                                                        array('joins'=>array(
-                                                                                array('table' => 'Songs',
-                                                                                      'alias' => 'Song',
-                                                                                      'type' => 'LEFT',
-                                                                                      'conditions' => array('StreamingHistory.ProdID = Song.ProdID','StreamingHistory.provider_type = Song.provider_type')
-                                                                                      ),
-                                                                                array('table' => $countryTableName,
-                                                                                      'alias' => 'Country',
-                                                                                      'type' => 'INNER',
-                                                                                      'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')
-                                                                                     ),
-                                                                                array('table' => 'Albums',
-                                                                                      'alias' => 'Album',
-                                                                                      'type' => 'LEFT',
-                                                                                       'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
-                                                                                      ),  
-                                                                                array('table' => 'queue_details',
-                                                                                      'alias' => 'QueueDetail',
-                                                                                      'type' => 'LEFT',
-                                                                                       'conditions' => array('QueueDetail.song_prodid = Song.ProdID','QueueDetail.song_providertype = Song.provider_type')
-                                                                                      ),
-                                                                                array('table' => 'queue_lists',
-                                                                                      'alias' => 'QueueList',
-                                                                                      'type' => 'LEFT',
-                                                                                       'conditions' => array('QueueList.queue_id = QueueDetail.queue_id','QueueDetail.song_providertype = Song.provider_type')
-                                                                                      ),
-                                                                                array('table' => 'File',
-                                                                                      'alias' => 'File',
-                                                                                      'type' => 'LEFT',
-                                                                                      'conditions' => array('Album.FileID = File.FileID')
-                                                                                     )
-                                                                            ),
-                                                            'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type, StreamingHistory.createdOn',
-                                                            'conditions' => array('StreamingHistory.library_id' => $libraryId,
-                                                                                  'StreamingHistory.patron_id' => $patronId,                                                                                  
-                                                                                  'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
-                                                                                  Configure::read('App.twoWeekEndDate'))
-                                                                                 ),
-                                                            'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_name','Song.Advisory','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle'),
-                                                            'order'=>"$songSortBy $sortType")); 
+                                                                array('joins'=>array(
+                                                                                        array('table' => 'Songs',
+                                                                                              'alias' => 'Song',
+                                                                                              'type' => 'LEFT',
+                                                                                              'conditions' => array('StreamingHistory.ProdID = Song.ProdID','StreamingHistory.provider_type = Song.provider_type')
+                                                                                              ),
+                                                                                        array('table' => $countryTableName,
+                                                                                              'alias' => 'Country',
+                                                                                              'type' => 'LEFT',
+                                                                                              'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')
+                                                                                             ),
+                                                                                        array('table' => 'Albums',
+                                                                                              'alias' => 'Album',
+                                                                                              'type' => 'LEFT',
+                                                                                               'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
+                                                                                              ),  
+                                                                                        array('table' => 'queue_details',
+                                                                                              'alias' => 'QueueDetail',
+                                                                                              'type' => 'LEFT',
+                                                                                               'conditions' => array('QueueDetail.song_prodid = Song.ProdID','QueueDetail.song_providertype = Song.provider_type')
+                                                                                              ),
+                                                                                        array('table' => 'queue_lists',
+                                                                                              'alias' => 'QueueList',
+                                                                                              'type' => 'LEFT',
+                                                                                               'conditions' => array('QueueList.queue_id = QueueDetail.queue_id','QueueDetail.song_providertype = Song.provider_type')
+                                                                                              ),
+                                                                                        array('table' => 'File',
+                                                                                              'alias' => 'File',
+                                                                                              'type' => 'LEFT',
+                                                                                              'conditions' => array('Song.Sample_FileID = File.FileID')
+                                                                                             )
+                                                                                    ),
+                                                                    'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type',
+                                                                    'conditions' => array('StreamingHistory.library_id' => $libraryId,
+                                                                                          'StreamingHistory.patron_id' => $patronId, 
+                                                                                          'QueueList.patron_id' => $patronId, 
+                                                                                          'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
+                                                                                          Configure::read('App.twoWeekEndDate'))
+                                                                                         ),
+                                                                    'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name','Song.Advisory', 'Song.FullLength_Duration','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'File.CdnPath', 'File.SourceURL'),
+                                                                    'order'=>"$songSortBy $sortType")); 
         
 	
         
 //        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
-     //   echo '<pre>'; print_r($streamingResults);
-//      
+     //  echo '<pre>'; print_r($streamingResults);
+    
         $this->set('streamingData',$streamingResults);
 
         $this->set('sort',$sort);

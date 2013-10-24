@@ -112,7 +112,7 @@
 
             // Set Loading
             $('.content-wrapper').append('<div class="loader"></div>');
-            
+
             //$body.addClass('loader');
 
             // Start Fade Out
@@ -136,7 +136,7 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                         var url_slice = window.location.href.slice(indexOfHash + 2, window.location.href.length);
 
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
                                 || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
                         {
                             if (window.location.href.indexOf('/homes') > -1)
@@ -178,9 +178,11 @@
                                 }
                             }
                         }
-                       
 
-                        current_nav.replace('/homes/homes', '/homes');
+
+                        current_nav = current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('com//', 'com/');
+
                         window.location.href = current_nav;
                         return true;
                     }
@@ -194,7 +196,7 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
                         var url_slice = window.location.href.slice(indexOfHash + 1, window.location.href.length);
 
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
                                 || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
                         {
                             if (window.location.href.indexOf('/homes') > -1)
@@ -236,8 +238,10 @@
                                 }
                             }
                         }
-                      
-                        current_nav.replace('/homes/homes', '/homes');
+
+                        current_nav = current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('com//', 'com/');
+
                         window.location.href = current_nav;
                         return true;
                     }
@@ -325,6 +329,28 @@
             })
                     .done(function() {
                 //$body.removeClass('loader');
+                $.getScript(webroot + 'js/jquery-1.10.2.min.js');
+
+                $.getScript(webroot + 'js/modernizr.custom.js');
+                $.getScript(webroot + 'js/lazyload.js');
+
+                $.getScript(webroot + 'js/jquery.colorbox.js');
+                $.getScript(webroot + 'js/jquery.cycle.all.js');
+                $.getScript(webroot + 'js/jquery.autocomplete.js');
+
+                $.getScript(webroot + 'js/jquery.history.js');
+                $.getScript(webroot + 'js/ajaxify-html5.js');
+
+                $.getScript(webroot + 'js/audioPlayer.js');
+                $.getScript(webroot + 'js/freegal.js');
+                $.getScript(webroot + 'js/recent-downloads.js');
+                $.getScript(webroot + 'js/search-results.js');
+                $.getScript(webroot + 'js/site.js');
+
+
+                $.getScript(webroot + 'css/styles.css');
+                $.getScript(webroot + 'css/freegal_styles.css');
+
                 $('.loader').fadeOut(3000);
                 $('.content-wrapper').remove(".loader");
             }); // end ajax
