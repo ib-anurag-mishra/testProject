@@ -388,6 +388,7 @@ function validateSong(songObj, playerEventCode) {
 
 
 	console.log("inside validateSong");
+	console.log("streamingResponse is " + streamingResponse);
 	
 	
 	//return isValid;
