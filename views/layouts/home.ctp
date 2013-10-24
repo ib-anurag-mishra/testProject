@@ -40,10 +40,10 @@
         echo $javascript->link(
                 array(
                     'jquery-1.10.2.min',
-                    'http://code.jquery.com/jquery-migrate-1.2.1.js',
                     
                     'modernizr.custom',
                     'lazyload',
+                    
                     'jquery.colorbox',
                     'jquery.cycle.all',
                     'jquery.autocomplete',
