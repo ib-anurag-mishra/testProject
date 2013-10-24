@@ -56,14 +56,14 @@ $ieVersion =  ieversion();
             <?php
             }
             ?>   
-                        <div class="song-filter-button filter active"style="cursor:pointer;"><?php echo __('Music'); ?></div>
-			<div class="music-filter-button filter active"style="cursor:pointer;"><?php echo __('Queue'); ?></div> 
+                        <div class="song-filter-button filter"style="cursor:pointer;"><?php echo __('Music'); ?></div>
+			<div class="music-filter-button filter"style="cursor:pointer;"><?php echo __('Queue'); ?></div> 
 			
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter "style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } else { ?>
                     <div class="artist-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } 
