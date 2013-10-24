@@ -46,7 +46,7 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active" style="cursor:pointer;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
                     <div class="date-filter-button filter  toggled"><?php echo __('Date'); ?></div>
                 <?php } 
