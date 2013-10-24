@@ -881,7 +881,7 @@ Class ArtistsController extends AppController
 									array('Country.Territory' => $country),$cond
 								),
                                                             'or' =>array(array('and'=> array('Country.StreamingStatus' => 1,'Country.StreamingSalesDate <=' => date('Y-m-d')))
-                                                                ,array('and'=> array('Country.DownloadStatus' => 1,'Country.SalesDate <=' => date('Y-m-d')))
+                                                                ,array('and'=> array('Country.DownloadStatus' => 1))
                                                                 )
 							),
 						'fields' => array(
@@ -1452,7 +1452,7 @@ STR;
         
         function album_ajax($id=null,$album=null,$provider=null)
 	{
-            Configure::write('debug', 0);	
+            Configure::write('debug', 2);	
             $this->layout = false;
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
@@ -1475,11 +1475,17 @@ STR;
 
 			
             $id = str_replace('@','/',$id);
+            
             $this->Song->Behaviors->attach('Containable');
             $songs = $this->Song->find('all', array(
                     'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                    'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'order'=>array('Song.provider_type DESC')));
+                    'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,
+                        "Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond,
+                        'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,
+                        'order'=>array('Song.provider_type DESC')));
 
+       
+                 
             $val = '';
             $val_provider_type = '';           
             
@@ -1550,9 +1556,9 @@ STR;
             }
             $this->Album->recursive = 2;
             $albumData = array();
-            $albumData = $this->paginate('Album'); //getting the Albums for the artist
-    
-
+            if(!empty( $songs )){
+                $albumData = $this->paginate('Album'); //getting the Albums for the artist
+            } 
             
             $htmlContain ='<div class="album-list-shadow-container"><h3>Album</h3>
 				<div class="album-list">';
@@ -1623,7 +1629,7 @@ STR;
 
                     }  
               }else{
-                    $htmlContain .= '<div style="color:#000000;font-weight:bold;padding-left:10px;">No Results Found</div>';
+                    $htmlContain .= '<div style="color:#000000;font-weight:bold;font-size:9x;padding-left:10px;">No Results Found</div>';
               }
              $htmlContain .= '</div></div>';
              

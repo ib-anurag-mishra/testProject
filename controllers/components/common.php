@@ -1259,20 +1259,22 @@ STR;
       LIMIT 10
       ";
           }
-              $data = $albumInstance->query($restoregenre_query);
-              $this->log("restoregenre_query for $territory", "cachequery");
-              $this->log($restoregenre_query, "cachequery");
-              if (!empty($data)) {
-                  Cache::delete($genre . $territory);
-                  Cache::write($genre . $territory, $data);
-                  $this->log("cache written for: $genre $territory", "cache");
-              } else {
-                  Cache::write($genre . $territory, Cache::read($genre . $territory));
-                  $this->log("Unable to update key for: $genre $territory", "cache");
-              }
-        
-        
+          
+            $data = $albumInstance->query($restoregenre_query);
+            $this->log("restoregenre_query for $territory", "cachequery");
+            $this->log($restoregenre_query, "cachequery");
+            if (!empty($data)) {
+                Cache::delete($genre . $territory);
+                Cache::write($genre . $territory, $data);
+                $this->log("cache written for: $genre $territory", "cache");
+            } else {
+                Cache::write($genre . $territory, Cache::read($genre . $territory));
+                $this->log("Unable to update key for: $genre $territory", "cache");
+            }
+           
     } 
+    
+    
     /*
      * @func getDifferentGenreData
      * @desc This is used to get top 10 for different genres
