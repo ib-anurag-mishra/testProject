@@ -329,11 +329,29 @@
             })
                     .done(function() {
                 //$body.removeClass('loader');
-                
-                $.getScript(webroot+'js/site.js');
-                $.getScript(webroot+'css/styles.css');
-                $.getScript(webroot+'css/freegal_styles.css');
-                
+                $.getScript(webroot + 'js/jquery-1.10.2.min');
+
+                $.getScript(webroot + 'js/modernizr.custom');
+                $.getScript(webroot + 'js/lazyload');
+
+                $.getScript(webroot + 'js/jquery.colorbox');
+                $.getScript(webroot + 'js/jquery.cycle.all');
+                $.getScript(webroot + 'js/jquery.autocomplete');
+
+                $.getScript(webroot + 'js/jquery.history');
+                $.getScript(webroot + 'js/ajaxify-html5');
+                $.getScript(webroot + 'js/site');
+
+                $.getScript(webroot + 'js/audioPlayer');
+                $.getScript(webroot + 'js/freegal');
+                $.getScript(webroot + 'js/recent-downloads');
+                $.getScript(webroot + 'js/search-results');
+                $.getScript(webroot + 'js/site.js');
+
+
+                $.getScript(webroot + 'css/styles.css');
+                $.getScript(webroot + 'css/freegal_styles.css');
+
                 $('.loader').fadeOut(3000);
                 $('.content-wrapper').remove(".loader");
             }); // end ajax
