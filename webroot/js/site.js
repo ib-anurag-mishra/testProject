@@ -103,6 +103,200 @@ $('document').ready(function()
     var scrollingDown;
     var footer_pos;
     var music_search_results = $('.master-music-search-results');
+    var sidebar_a = $('.left-sidebar li a');
+    var poll = $('.poll');
+    var announcements = $('.announcements h4 a');
+    var sidebar_anchor = $('.sidebar-anchor');
+    var tooltip_a = $('.tooltip a');
+    var plays_tooltip = $('.plays-tooltip');
+    var filter_text = $('.filter-text');
+    var filter_results = $('.filter-results');
+    var music_player_container = $('.music-player-container');
+    var whats_happening_filter_text = $('#whats-happening-filter-text');
+    var whats_happening_filter_results = $('.whats-happening-filter-results');
+    var coming_soon_singles_grid = $('#coming-soon-singles-grid');
+    var site_nav_a = $('.site-nav a');
+    var add_to_playlist = $('.add-to-playlist');
+    var add_to_queue = $('.add-to-queue');
+    var add_to_wishlist = $('.add-to-wishlist');
+    var playlist_list = $('.playlist-options');
+    var preview = $('.preview');
+    //top_100_albums_grid.addClass('active');
+    var top_100_songs_grid = $('#top-100-songs-grid');
+    var grid_view_button = $('.grid-view-button');
+    var grids = $('.grids');
+    var artwork_container = $('.artwork-container');
+    var video_thumbnail_container = $('.video-thumbnail-container');
+    var library_list_scrollable = $('.library-list-scrollable');
+    var most_popular_sub_nav = $('.most-popular-sub-nav');
+    var footer = $('.site-footer');
+    var wishlist_popover = $('.wishlist-popover');
+    var footer_height = footer.height();
+
+
+    sidebar_a.on('click', function(e) {
+        //e.preventDefault();
+        $(sidebar_a).removeClass('active');
+        $(this).addClass('active');
+
+    });
+    
+    announcements.on('click', function(e) {
+        e.preventDefault();
+        if ($(poll).hasClass('active')) {
+            $(poll).removeClass('active');
+        } else {
+            $(poll).addClass('active');
+
+        }
+    });
+
+    sidebar_anchor.on('click', function(e) {
+        //e.preventDefault();
+        if ($(this).next('ul').hasClass('active')) {
+            $(this).next('ul').removeClass('active');
+        } else {
+
+            $(this).next('ul').addClass('active');
+        }
+    });
+    tooltip_a.hover(
+            function() {
+
+                plays_tooltip.show();
+
+
+            },
+            function() {
+                plays_tooltip.hide();
+
+            });
+    coming_soon_singles_grid.addClass('active');
+    filter_text.on('keyup', function() {
+        filter_results.show();
+    });
+    filter_text.on('blur', function() {
+        filter_results.hide();
+    });
+    site_nav_a.on('click', function(e) {
+
+
+
+    });
+
+    whats_happening_filter_text.on('keyup', function() {
+        whats_happening_filter_results.show();
+
+    });
+
+    add_to_playlist.on('mouseenter', function() {
+
+        playlist_list.addClass('active');
+    });
+    add_to_queue.on('mouseenter', function() {
+
+
+        if (playlist_list.hasClass('active')) {
+
+            playlist_list.removeClass('active');
+        }
+
+
+
+    });
+    add_to_wishlist.on('mouseenter', function() {
+
+
+        if (playlist_list.hasClass('active')) {
+
+            playlist_list.removeClass('active');
+        }
+
+
+
+    });
+    playlist_list.on('mouseleave', function() {
+
+        playlist_list.removeClass('active');
+    });
+    playlist_list.bind('mousewheel', function(e) {
+
+
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+
+
+
+
+        //prevent page fom scrolling
+        return false;
+
+
+    });
+    preview.on('mousedown', function(e) {
+        e.preventDefault();
+
+        $(this).addClass('active');
+    });
+    preview.on('mouseup', function(e) {
+        e.preventDefault();
+
+        $(this).removeClass('active');
+    });
+
+    top_100_songs_grid.addClass('active');
+    grid_view_button.addClass('active');
+    grids.addClass('active');
+
+    $(document).on('mouseenter', video_thumbnail_container, function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.featured-video-download-now-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});
+
+    });
+    $(document).on('mouseleave', video_thumbnail_container, function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.featured-video-download-now-button').css({opacity: 0});
+        $(this).find('.preview').css({opacity: 0});
+
+    });
+
+    $(document).on('mouseenter', artwork_container, function() {
+        $(this).find('.preview').css({opacity: 1});
+    });
+    $(document).on('mouseleave', artwork_container, function() {
+        $(this).find('.preview').css({opacity: .5});
+    });
+
+    library_list_scrollable.bind('mousewheel', function(e) {
+
+
+
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+
+
+
+
+        //prevent page fom scrolling
+        return false;
+
+    });
+
+    wishlist_popover.on('mouseleave', function() {
+
+        $(this).removeClass('active');
+    });
+    wishlist_popover.children('a').on('hover', function(e) {
+
+        e.preventDefault();
+
+        if (playlist_list.hasClass('active')) {
+
+            playlist_list.removeClass('active');
+        }
+    });
+
     $(document).on('scroll', function() {
 
         var st = $(this).scrollTop();
@@ -155,214 +349,6 @@ $('document').ready(function()
         $('.account-options-menu').removeClass('active');
     });
 
-    var sidebar_a = $('.left-sidebar li a');
-    sidebar_a.on('click', function(e) {
-        //e.preventDefault();
-        $(sidebar_a).removeClass('active');
-        $(this).addClass('active');
-
-    });
-
-    var poll = $('.poll');
-    var announcements = $('.announcements h4 a');
-    announcements.on('click', function(e) {
-        e.preventDefault();
-        if ($(poll).hasClass('active')) {
-            $(poll).removeClass('active');
-        } else {
-            $(poll).addClass('active');
-
-        }
-    });
-
-    var sidebar_anchor = $('.sidebar-anchor');
-    sidebar_anchor.on('click', function(e) {
-        //e.preventDefault();
-        if ($(this).next('ul').hasClass('active')) {
-            $(this).next('ul').removeClass('active');
-        } else {
-
-            $(this).next('ul').addClass('active');
-        }
-    });
-
-    var tooltip_a = $('.tooltip a');
-    var plays_tooltip = $('.plays-tooltip');
-    tooltip_a.hover(
-            function() {
-
-                plays_tooltip.show();
-
-
-            },
-            function() {
-                plays_tooltip.hide();
-
-            });
-
-    var filter_text = $('.filter-text');
-    var filter_results = $('.filter-results');
-    filter_text.on('keyup', function() {
-        filter_results.show();
-    });
-    filter_text.on('blur', function() {
-        filter_results.hide();
-    });
-
-
-    var music_player_container = $('.music-player-container');
-
-
-    var whats_happening_filter_text = $('#whats-happening-filter-text');
-    var whats_happening_filter_results = $('.whats-happening-filter-results');
-    whats_happening_filter_text.on('keyup', function() {
-        whats_happening_filter_results.show();
-
-    });
-
-    var coming_soon_singles_grid = $('#coming-soon-singles-grid');
-    coming_soon_singles_grid.addClass('active');
-
-    var site_nav_a = $('.site-nav a');
-    site_nav_a.on('click', function(e) {
-
-
-
-    });
-
-    var add_to_playlist = $('.add-to-playlist');
-    add_to_playlist.on('mouseenter', function() {
-
-        playlist_list.addClass('active');
-    });
-
-    var add_to_queue = $('.add-to-queue');
-    add_to_queue.on('mouseenter', function() {
-
-
-        if (playlist_list.hasClass('active')) {
-
-            playlist_list.removeClass('active');
-        }
-
-
-
-    });
-
-    var add_to_wishlist = $('.add-to-wishlist');
-    add_to_wishlist.on('mouseenter', function() {
-
-
-        if (playlist_list.hasClass('active')) {
-
-            playlist_list.removeClass('active');
-        }
-
-
-
-    });
-
-    var playlist_list = $('.playlist-options');
-    playlist_list.on('mouseleave', function() {
-
-        playlist_list.removeClass('active');
-    });
-    playlist_list.bind('mousewheel', function(e) {
-
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
-        //prevent page fom scrolling
-        return false;
-
-
-    });
-
-
-    var preview = $('.preview');
-    preview.on('mousedown', function(e) {
-        e.preventDefault();
-
-        $(this).addClass('active');
-    });
-    preview.on('mouseup', function(e) {
-        e.preventDefault();
-
-        $(this).removeClass('active');
-    });
-
-    //top_100_albums_grid.addClass('active');
-    var top_100_songs_grid = $('#top-100-songs-grid');
-    top_100_songs_grid.addClass('active');
-
-    var grid_view_button = $('.grid-view-button');
-    grid_view_button.addClass('active');
-
-    var grids = $('.grids');
-    grids.addClass('active');
-
-    var artwork_container = $('.artwork-container');
-    $(document).on('mouseenter', artwork_container, function() {
-        $(this).find('.preview').css({opacity: 1});
-    });
-    $(document).on('mouseleave', artwork_container, function() {
-        $(this).find('.preview').css({opacity: .5});
-    });
-
-
-    var video_thumbnail_container = $('.video-thumbnail-container');
-    $(document).on('mouseenter', video_thumbnail_container, function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.featured-video-download-now-button').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});
-
-    });
-    $(document).on('mouseleave', video_thumbnail_container, function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.featured-video-download-now-button').css({opacity: 0});
-        $(this).find('.preview').css({opacity: 0});
-
-    });
-
-    var library_list_scrollable = $('.library-list-scrollable');
-    library_list_scrollable.bind('mousewheel', function(e) {
-
-
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
-        //prevent page fom scrolling
-        return false;
-
-    });
-
-    var most_popular_sub_nav = $('.most-popular-sub-nav');
-
-    var footer = $('.site-footer');
-    var footer_height = footer.height();
-
-    var wishlist_popover = $('.wishlist-popover');
-    wishlist_popover.on('mouseleave', function() {
-
-        $(this).removeClass('active');
-    });
-    wishlist_popover.children('a').on('hover', function(e) {
-
-        e.preventDefault();
-
-        if (playlist_list.hasClass('active')) {
-
-            playlist_list.removeClass('active');
-        }
-    });
 
     $('.news .whats-happening #whats-happening-grid .post-excerpt').bind('mousewheel', function(e) { /* changed 080313 .. .post is now .post-excerpt */
 
@@ -1896,7 +1882,7 @@ $('document').ready(function()
 
     /* overlays */
 
-    $(document).on('click', '.rename-queue', function(e) {
+    $('.rename-queue').on('click', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.rename-queue-dialog-box').addClass('active');
@@ -1904,14 +1890,14 @@ $('document').ready(function()
 
     });
 
-    $(document).on('click', '.delete-queue', function(e) {
+    $('.delete-queue').on('click', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.delete-queue-dialog-box').addClass('active');
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-    $(document).on('click', '.create-new-queue,.create-new-queue-btn', function(e) {
+    $('.create-new-queue,.create-new-queue-btn').on('click', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.create-queue-dialog-box').addClass('active');
@@ -1922,7 +1908,7 @@ $('document').ready(function()
 
 
 
-    $(document).on('click', '.close,.text-close', function(e) {
+    $('.close,.text-close').on('click', function(e) {
         $('.queue-overlay').removeClass('active');
         $('.rename-queue-dialog-box').removeClass('active');
         $('.delete-queue-dialog-box').removeClass('active');
