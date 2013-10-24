@@ -230,7 +230,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 	songId = prevSongObj.songId
 	songLength = prevSongObj.songLength
 	songProviderType = prevSongObj.providerType
-	songDuration = prevSongObj.tbpp   
+	songDuration = prevSongObj.psld   
         
 	var playerEventCodeString;
 	switch(playerEventCode) {
