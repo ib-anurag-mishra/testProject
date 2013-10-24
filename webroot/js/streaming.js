@@ -230,7 +230,8 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 	songId = prevSongObj.songId
 	songLength = prevSongObj.songLength
 	songProviderType = prevSongObj.providerType
-	songDuration = prevSongObj.tbpp        
+	songDuration = prevSongObj.tbpp   
+        
 	var playerEventCodeString;
 	switch(playerEventCode) {
 		
@@ -271,6 +272,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 			break;
 		case 9:
 			playerEventCodeString = "User ran out of time";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
 			break;
 			
 		default:
@@ -327,8 +329,8 @@ function validateSong(songObj, playerEventCode) {
 	switch(playerEventCode) {
 		
 		case 1:
-			playerEventCodeString = "Resume";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,2,songLength,songDuration);
+			playerEventCodeString = "Play";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;
 			
 		case 2:
