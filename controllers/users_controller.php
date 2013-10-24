@@ -172,9 +172,9 @@ Class UsersController extends AppController
     Desc : actions for set message whenever a inative app call
    */
         function libinactive(){
-            $this->layout = 'login';
+            $this->layout = 'login';                        
+            $this->Session->setFlash('The library you are trying to access is no longer registered with us. Please contact your local library for more information.', 'default', array(), 'inactivelib_message');
             $this->set('show_inactivelib',1); 
-            $this -> Session -> setFlash("This page is no longer available.");
         }
    
    /*
@@ -430,43 +430,8 @@ Class UsersController extends AppController
 				$values = array(0 => $date, 1 => session_id());
 				Cache::write("login_".$libraryArr['Library']['library_territory']."_".$libraryId."_".$patronId, $values);
 				//writing to memcache and writing to both the memcached servers
-			/*	if (($currentPatron = Cache::read("login_".$libraryId.$patronId)) === false) {
-					$date = time();
-					$values = array(0 => $date, 1 => session_id());
-					Cache::write("login_".$libraryId.$patronId, $values);
-				} else {
-					$userCache = Cache::read("login_".$libraryId.$patronId);
-					$date = time();
-					$modifiedTime = $userCache[0];
-					if(!($this->Session->read('patron'))){
-						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());
-							Cache::write("login_".$libraryId.$patronId, $values);
-						}
-						else{
-							$this->Session->destroy('user');
-							//$this -> Session -> setFlash("This account is already active.");
-							$this->Cookie->write('msg','This account is already active.');
-							//$this->autoRender = false;
-							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-						}
-					} else {
-						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());
-							Cache::write("login_".$libraryId.$patronId, $values);
-						}
-						else{
-							$this->Session->destroy('user');
-							//$this -> Session -> setFlash("This account is already active.");
-							$this->Cookie->write('msg','This account is already active.');
-							//$this->autoRender = false;
-							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-						}
-					}
-
-				}*/
-
-				$this->Session->write("library", $libraryId);
+			
+                                $this->Session->write("library", $libraryId);
                                 $this->Session->write("loginchk", 'Yes');
                                 
                                 //check this library exist is in the library timezone table
@@ -535,6 +500,7 @@ Class UsersController extends AppController
 	function logout() {
 		$patronId = $this->Session->read('patron');
 		$libraryId = $this->Session->read('library');
+                $this->Cookie->delete('redirecting');
 		$patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
 		if(count($patronDetails) > 0){
 			$updateTime = date( "Y-m-d H:i:s", time()-60 );

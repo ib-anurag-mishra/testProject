@@ -37,6 +37,8 @@
           echo $javascript->link('recent-downloads');
           echo $javascript->link('search-results');
            echo $javascript->link('jquery.colorbox');
+           echo $javascript->link('qtip');
+           echo $javascript->link('qtip_add');
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
@@ -236,7 +238,8 @@ if ($this->Session->read('Config.language') == 'en') {
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->
 
-            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>  
+            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/respond.min.js"></script>   
             
 <!--
             <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
@@ -315,7 +318,7 @@ if ($this->Session->read('Config.language') == 'en') {
                 <noscript>
                     <?php
                     if ($this->params['action'] != 'aboutus') {
-                        echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err"), false);
+                        echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0; url=" . $this->webroot . "homes/aboutus/js_err;"), false);
                     }
                     ?>
                 </noscript>

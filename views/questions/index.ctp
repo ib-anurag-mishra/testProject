@@ -26,12 +26,20 @@
                 $questionquText = $this->getTextEncode($question['Question']['question']);
 
                 if ($Title != $question['Section']['title'])
-                {
-                    ?>
-                    <h3><?php echo $questiontitleText; ?></h3>
-                    <?
-                }
-                ?>			
+                               {?>
+                                       
+                                       
+                               <?
+                                       if($Title=='')   
+                                       {
+                                           echo '<h3>'.$questiontitleText.'</h3><ul>';
+                                       }
+                                       else
+                                       {
+                                           echo '</ul><h3>'.$questiontitleText.'</h3><ul>';
+                                       }
+                               }
+                               ?>			
                 <li>
                     <a href="javascript:void(0);" class="no-ajaxy">
                         <?php echo strip_tags($questionquText); ?>

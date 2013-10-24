@@ -9,7 +9,7 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo', 'Queue');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo','Download','Videodownload', 'Queue');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Common','Streaming');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode', 'StreamingHistory');
 
@@ -34,8 +34,19 @@ class HomesController extends AppController
         //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
         //			}
         //        }           
-                
-         $pat_id    =   $this->Session->read('patron');
+             
+        
+        if ($this->params['action'] == 'convertString' && ($this->Session->read('Auth.User.type_id') == 1)) // For super Admin while accesing convertString action
+        {
+                $pat_id = $this->Session->read('Auth.User.id');
+        }
+        else        //  For Front End
+        {
+                 $pat_id    =   $this->Session->read('patron');
+        }
+        
+         
+          
           if(!empty($pat_id))    //  After Login
           {
                 $this->Auth->allow('*'); 

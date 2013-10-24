@@ -278,7 +278,7 @@ $totalRows = count($genresAll);
 
         $('.album-list-span').html('');
         $('#album_details_container').html('');
-        $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="/app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
+        $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
         // var data = "ajax_genre_name="+genre_name;
         var data = "ajax_genre_name=" + genre_name;
         jQuery.ajax({
@@ -298,7 +298,7 @@ $totalRows = count($genresAll);
     function showAllAlbumsList(albumListURL) {
 
         $('#album_details_container').html('');
-        $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;"><img src="/app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
+       $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
 
         var data = "";
         jQuery.ajax({
@@ -343,7 +343,7 @@ $totalRows = count($genresAll);
     //load the albums details via ajax
     function showAlbumDetails(albumDetailURL) {
 
-        $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="/app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
+        $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
 
         var data = "";
         jQuery.ajax({
@@ -393,7 +393,7 @@ $totalRows = count($genresAll);
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
                 $('#artist_loader').show();
-                var totalPages = 26010;
+            var totalPages = <?=$totalPages?>;
                 var data = "npage=" + artistPage;
 
                 if ((preValue != artistPage) && (artistPage <= totalPages)) {
@@ -401,7 +401,7 @@ $totalRows = count($genresAll);
                     if (artistPage <= totalPages) {
 
                         preValue = artistPage;
-                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/QWxs' + '/All';
+                    var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
 
                         jQuery.ajax({
                             type: "post", // Request method: post, get

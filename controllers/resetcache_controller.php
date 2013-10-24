@@ -597,15 +597,15 @@ class ResetcacheController extends AppController
                 ORDER BY cnt DESC';
     $arr_video = $this->Video->query($str_query);
 
-    Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+    $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video); var_dump($status);
     
     echo '<br />=====================AppMyMusicVideosList_'.$territory.'==========================================<br />';
     echo '<pre>';
     echo $str_query; echo '<br />';
-    print_r(Cache::read("AppMyMusicVideosList_".$territory));
+    var_dump(Cache::read("AppMyMusicVideosList_".$territory));
     echo '</pre>';
     echo '<br />==================================================================================================<br />';
-
+    exit('Here');
 
     }
     exit;

@@ -22,6 +22,8 @@ jQuery(document).ready(function() {
 			<ul>
 				<?php if(count($genre_info) > 0){ ?>
 				<?php
+                    $libId = $this->Session->read('library');
+                    $patId = $this->Session->read('patron');
 					$j =0;
 					$k = $tab_no * 10000;
 					for($i = 0; $i < count($genre_info); $i++) {
@@ -34,7 +36,12 @@ jQuery(document).ready(function() {
 				<?php
 						if($genre_info[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
 							if($libraryDownload == '1' && $patronDownload == '1') {
-								$genre_info[$i]['Song']['status'] = 'avail1';
+                                $downloadsUsed =  $this->Download->getDownloadfind($genre_info[$i]['Song']['ProdID'],$genre_info[$i]['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                if($downloadsUsed > 0){
+	                                $genre_info[$i]['Song']['status'] = 'avail';
+                                } else{
+                                	$genre_info[$i]['Song']['status'] = 'not';
+                                }
 								if($genre_info[$i]['Song']['status'] != 'avail') {
 									?>							
 									<form method="Post" id="form<?php echo $genre_info[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">

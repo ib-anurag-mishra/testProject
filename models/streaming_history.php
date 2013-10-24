@@ -9,7 +9,6 @@ class StreamingHistory extends AppModel
 {
   var $name = 'StreamingHistory';
   var $usetable = 'streaming_histories';
-  var $primaryKey = 'id';
-  
+  var $primaryKey = 'id';  
 }
 ?>

@@ -125,8 +125,8 @@ foreach($downloads as $key => $download) {
 	else{
 		$patron = $download['Download']['patron_id'];
 	}
-    $libraryName = $library->getLibraryName($download['Download']['library_id']);
-    $line = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+    $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
+    $line = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
     $csv->addRow($line);
 }
 
@@ -144,8 +144,8 @@ foreach($videoDownloads as $key => $download) {
 	else{
 		$patron = $download['Videodownload']['patron_id'];
 	}
-    $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
-    $line = array($key+1, $libraryName, $patron, $download['Videodownload']['artist'], $download['Videodownload']['track_title'], date('Y-m-d', strtotime($download['Videodownload']['created'])));
+    $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Videodownload']['library_id']));
+    $line = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
     $csv->addRow($line);
 }
 
@@ -165,7 +165,7 @@ foreach($patronDownloads as $key => $patronDownload) {
 	else{
 		$patron_id = $patronDownload['Downloadpatron']['patron_id'];
 	}
-    $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Downloadpatron']['library_id']), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+    $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
     $csv->addRow($line);
 }
 
@@ -185,7 +185,7 @@ foreach($patronVideoDownloads as $key => $patronDownload) {
 	else{
 		$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
 	}
-    $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id']), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+    $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
     $csv->addRow($line);
 }
 
@@ -199,7 +199,7 @@ $line = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
 foreach($genreDownloads as $key => $genreDownload) {
-    $line = array($key+1, $genreDownload['Downloadgenre']['genre_name'], (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
+    $line = array($key+1, $this->getAdminTextEncode($genreDownload['Downloadgenre']['genre_name']), (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
     $csv->addRow($line);
 }
 
@@ -210,7 +210,7 @@ $line = array('', 'Genre Name', 'Total Number of Videos Downloaded');
 $csv->addRow($line);
 
 foreach($genreVideoDownloads as $key => $genreDownload) {
-    $line = array($key+1, $genreDownload['DownloadVideoGenre']['genre_name'], (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
+    $line = array($key+1, $this->getAdminTextEncode($genreDownload['DownloadVideoGenre']['genre_name']), (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
     $csv->addRow($line);
 }
 
@@ -219,7 +219,8 @@ if($this->data['Report']['library_id'] == "all") {
     $libraryName = "All_Libraries";
 }
 else {
-    $libraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+    //$libraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+    $libraryName = str_replace(" ", "_", $libraries_download[0]['Library']['library_name']);
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);

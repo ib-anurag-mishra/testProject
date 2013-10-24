@@ -10,7 +10,7 @@ Class ArtistsController extends AppController
 	var $name = 'Artists';
 	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download','Video', 'Territory' );
 	var $layout = 'admin';
-	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo',  'Queue');
+	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload', 'Streaming'); 
 
 	/*
@@ -100,23 +100,27 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-                $memcache = new Memcache;
+/*                
+		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s"))
-                {
-                   $this->log("deleted featuredUS",'featured');
-                }
-                else {
-                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s"),'featured');
-                }
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIT");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredNZ");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredAU");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIE");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredGB");
+                memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_e");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_g_b");
 		memcache_close($memcache);
+*/
+		Configure::write('Cache.disable',false);
+		Cache::delete("featuredUS");
+		Cache::delete("featuredCA");
+		Cache::delete("featuredIT");
+		Cache::delete("featuredNZ");
+		Cache::delete("featuredAU");
+		Cache::delete("featuredIE");
+		Cache::delete("featuredGB");
+		Configure::write('Cache.disable',true);
 	}
 
 	/*
@@ -165,24 +169,28 @@ Class ArtistsController extends AppController
                 $insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
-				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                $memcache = new Memcache;
-                                $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-                                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"))
-                                {
-                                   $this->log("deleted featuredUS",'featured');
-                                }
-                                else {
-                                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"),'featured');
-                                }
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIT");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredNZ");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredAU");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIE");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredGB");
-                                memcache_close($memcache);
+                            $this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
+/*                                
+                            $memcache = new Memcache;
+                            $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_e");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_g_b");
+                            memcache_close($memcache);
+*/
+				Configure::write('Cache.disable',false);
+		                Cache::delete("featuredUS");
+				Cache::delete("featuredCA");
+				Cache::delete("featuredIT");
+				Cache::delete("featuredNZ");
+				Cache::delete("featuredAU");
+				Cache::delete("featuredIE");
+				Cache::delete("featuredGB");
+				Configure::write('Cache.disable',true);
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -245,24 +253,29 @@ Class ArtistsController extends AppController
 		$updateObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
-				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
-                                $memcache = new Memcache;
-                                $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-                                if(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"))
-                                {
-                                   $this->log("deleted featuredUS",'featured');
-                                }
-                                else {
-                                    $this->log(memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS"),'featured');
-                                }
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredUS");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredCA");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIT");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredNZ");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredAU");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredIE");
-                                memcache_delete($memcache, Configure::read('App.memcache_key')."_featuredGB");
-                                memcache_close($memcache);
+                            $this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
+/*                                
+                            $memcache = new Memcache;
+                            $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_e");
+                            memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_g_b");
+                            memcache_close($memcache);
+ * 
+ */
+				Configure::write('Cache.disable',false);
+		                Cache::delete("featuredUS");
+				Cache::delete("featuredCA");
+				Cache::delete("featuredIT");
+				Cache::delete("featuredNZ");
+				Cache::delete("featuredAU");
+				Cache::delete("featuredIE");
+				Cache::delete("featuredGB");
+				Configure::write('Cache.disable',true);
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -1345,7 +1358,7 @@ Class ArtistsController extends AppController
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                    'Album.Advisory',
+                                            'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1683,14 +1696,15 @@ STR;
 		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle','Album.provider_type'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
                 $val = '';
 		$this->Song->Behaviors->attach('Containable');
-                $this->Country->setTablePrefix($_REQUEST['Territory']);
+                $countryPrefix = strtolower($_REQUEST['Territory'])."_";
+                $this->Country->setTablePrefix($countryPrefix);
 		foreach($allAlbum as $k => $v){
-			$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
-                        if(count($recordCount) > 0){
-				$val = $val.$v['Album']['ProdID'].",";
-				$result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
-			}
-		}
+                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
+                    if(count($recordCount) > 0){
+                        $val = $val.$v['Album']['ProdID'].",";
+                        $result[$v['Album']['ProdID'] . '-'. $v['Album']['provider_type']] = $v['Album']['AlbumTitle'];
+                    }
+                }
 		$data = "<option value=''>SELECT</option>";
 		foreach($result as $k=>$v){
 			$data = $data."<option value='".$k."'>".$v."</option>";
