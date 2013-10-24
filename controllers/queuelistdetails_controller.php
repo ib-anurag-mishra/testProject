@@ -195,13 +195,15 @@ class QueueListDetailsController extends AppController{
        $patId = $this->Session->read('patron');
        $this->Session->delete('queuePlaying');
        $this->Session->delete('songPlaying');
+       $eventArray = array(5,12,13,14,15,16,17,18,19);
+       
        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,$userStreamedTime,$eventType,'',$songDuration);
        if(!empty($validationResponse)){
            if($validationResponse[0] == 0){
                //$error_message = array('error' => $validationResponse);
                echo json_encode($validationResponse);
                exit;
-           }else if($validationResponse[0] == 1 && $eventType != 5){
+           }else if($validationResponse[0] == 1 && !in_array($eventType,$eventArray)){
                if(!empty($_POST['queueId'])){
                    $this->Session->write("queuePlaying", $_POST['queueId']);
                }else{
