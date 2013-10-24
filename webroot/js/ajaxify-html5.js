@@ -112,7 +112,7 @@
 
             // Set Loading
             $('.content-wrapper').append('<div class="loader"></div>');
-            
+
             //$body.addClass('loader');
 
             // Start Fade Out
@@ -178,9 +178,11 @@
                                 }
                             }
                         }
-                       
+
 
                         current_nav = current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('com//', 'com/');
+
                         window.location.href = current_nav;
                         return true;
                     }
@@ -236,8 +238,10 @@
                                 }
                             }
                         }
-                      
+
                         current_nav = current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('com//', 'com/');
+
                         window.location.href = current_nav;
                         return true;
                     }

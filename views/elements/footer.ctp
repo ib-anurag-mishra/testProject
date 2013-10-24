@@ -108,7 +108,7 @@ if ($this->Session->read("patron"))
         ?>
         <div class="player-wrapper">
             <div class="fmp_container">
-                <div id="no_flash">
+                <div id="no_flash" style="display:none;">
                         <h2>
                                 You need to install Adobe Flash in order to play songs.
                                         Please click here to <a href="http://get.adobe.com/flashplayer/"> Download now.</a>
@@ -140,14 +140,17 @@ if ($this->Session->read("patron"))
             {
                 $("#no_flash").show ();  
             }
-        });
-        //for player initialization
-        if(swfobject !== 'undefined'){
-            var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
-            var attributes = {id: "audioplayer"};
+            
+            //for player initialization
+            if(swfobject !== 'undefined'){
+                var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
+                var attributes = {id: "audioplayer"};
 
-            swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
-        }
+                swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+            }
+            
+        });
+        
         //for google anlytics
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
