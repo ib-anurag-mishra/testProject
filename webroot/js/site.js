@@ -99,7 +99,8 @@ $('.top-videos-scrollable .video-thumb-container .lazy').lazyload({
 
 
 
-$(function() {
+$('document').ready(function() 
+{
 
 
 
