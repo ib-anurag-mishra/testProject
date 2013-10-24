@@ -944,7 +944,7 @@ $(function() {
 
     /* FAQ page */
 
-    faq_container.on('click', function(e) {
+    $('.faq-container').on('click','li a' , function(e) {
         e.preventDefault();
         /* modified 080913
          if($(this).siblings('p').hasClass('active')) {
