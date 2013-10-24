@@ -117,7 +117,7 @@ $ieVersion =  ieversion();
                                 }
                             
                             
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr[$i]['streamUrl'].'", "'.$streamingArr['Song']['SongTitle'].'","'.$streamingArr['Song']['ArtistText'].'","'.$streamingArr['totalseconds'].'","'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr['streamUrl'].'", "'.$streamingArr['Song']['SongTitle'].'","'.$streamingArr['Song']['ArtistText'].'","'.$streamingArr['totalseconds'].'","'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
 
@@ -160,7 +160,7 @@ $ieVersion =  ieversion();
                                         </div>
                                         
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="/artists/view/<?= base64_encode($streamingArr[$i]['Song']['ArtistText']); ?>/<?= $streamingArr[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr[$i]['Song']['provider_type']); ?>">
+					<div class="album-title"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
                                              <?php 
 						if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .substr($streamingArr['Album']['AlbumTitle'], 0, 19) . '...</span>';							
