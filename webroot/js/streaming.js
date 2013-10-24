@@ -407,19 +407,17 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         url: postURL,
         data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
     }).done(function(data){
-        streamingValidationJS(JSON.parse(data));
+        var result = JSON.parse(data);
+        if(result.error){
+            var result = [0,"Not able to stream this song due to empty response from compoinent",0,0,0,0];            
+        }
+        streamingValidationJS(result);
     })
     .fail(function(){
         var errorFlag = 1;
         var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
         streamingValidationJS(errorData);
     });
-
-    if(errorFlag == 1){
-        return errorData;
-    }else{
-        return responseData;
-    }
 }
 
 function pingTimeJS() {

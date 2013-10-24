@@ -215,6 +215,11 @@ class QueueListDetailsController extends AppController{
                exit;
            }
            
+       }else{
+               $this->log('Componenet gave empty response and the response is'.$validationResponse,'streaming'); 
+               $error_message = array('error' => $validationResponse);
+               echo json_encode($validationResponse);
+               exit;           
        }
     } 
     
