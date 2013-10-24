@@ -28,7 +28,7 @@ $ieVersion =  ieversion();
                 
 <div class="breadcrumbs">
 <?php
-	$html->addCrumb( __('Streaming History', true), '/homes/my_history');
+	$html->addCrumb( __('Streaming History', true), '/homes/my_streaming_history');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>          
@@ -85,7 +85,7 @@ $ieVersion =  ieversion();
             <?php
             }
             ?>  
-			<div class="artist-filter-button filter"style="cursor:pointer;"><?php echo __('Streaming Time'); ?></div>
+			<div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?>(in sec.)</div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
@@ -144,7 +144,7 @@ $ieVersion =  ieversion();
                                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
                                         
-                                        <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: #000;">
+                                        <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: rgba(0, 0, 0, 0.7); text-decoration: none;">
                                             <a href="/queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>">
                                      <?php 
                                                
