@@ -135,9 +135,9 @@ $ieVersion =  ieversion();
 					<div class="song-title">
                                     <?php 
                                                   if(strlen($streamingArr['Song']['SongTitle']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .substr($streamingArr['Song']['SongTitle'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 19)) . '...</span>';							
 						} else {
-							echo $streamingArr['Song']['SongTitle']; 
+							echo $this->getTextEncode($streamingArr['Song']['SongTitle']); 
 					 	}
                     
 					?>
@@ -150,9 +150,9 @@ $ieVersion =  ieversion();
                                                
                                                 
 						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .$this->getTextEncode(substr($streamingArr['QueueList']['queue_name'], 0, 19)) . '...</span>';							
 						} else {
-							echo $streamingArr['QueueList']['queue_name']; 
+							echo $this->getTextEncode($streamingArr['QueueList']['queue_name']); 
 					 	}
                     
 					?>
@@ -163,19 +163,19 @@ $ieVersion =  ieversion();
 					<div class="album-title"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
                                              <?php 
 						if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .substr($streamingArr['Album']['AlbumTitle'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Album']['AlbumTitle'], 0, 19)) . '...</span>';							
 						} else {
-							echo $streamingArr['Album']['AlbumTitle']; 
+							echo $this->getTextEncode($streamingArr['Album']['AlbumTitle']); 
 					 	}
 					?>
                                             
                                             </div>
 					<div class="artist-name"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
 						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .substr($streamingArr['Song']['ArtistText'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .$this->getTextEncode(substr($streamingArr['Song']['ArtistText'], 0, 19)) . '...</span>';							
 						} else {
 							$ArtistName = $streamingArr['Song']['ArtistText'];
-							echo $ArtistName;
+							echo $this->getTextEncode($ArtistName);
 						}
 						
 					?></a></div>
