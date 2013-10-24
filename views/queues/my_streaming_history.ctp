@@ -145,9 +145,10 @@ $ieVersion =  ieversion();
                                         </div>
                                         
                                         <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: #000;">
+                                            <a href="queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>">
                                      <?php 
                                                
-                                     
+                                                
 						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
 						} else {
@@ -155,7 +156,7 @@ $ieVersion =  ieversion();
 					 	}
                     
 					?>
-                    
+                                            </a>
                                         </div>
                                         
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
