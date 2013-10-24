@@ -48,11 +48,11 @@ $ieVersion =  ieversion();
                 ?>    
                     <div class="date-filter-button filter" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter  toggled"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter  toggled" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter "><?php echo __('Date'); ?></div>
+                <div class="date-filter-button filter " style="cursor:pointer;"><?php echo __('Date'); ?></div>
             <?php
             }
             ?>   

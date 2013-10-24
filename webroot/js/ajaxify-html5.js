@@ -136,7 +136,7 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
                         var url_slice = window.location.href.slice(indexOfHash + 2, window.location.href.length);
 
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
                                 || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
                         {
                             if (window.location.href.indexOf('/homes') > -1)
@@ -194,7 +194,7 @@
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
                         var url_slice = window.location.href.slice(indexOfHash + 1, window.location.href.length);
 
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('_history') > -1
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
                                 || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
                         {
                             if (window.location.href.indexOf('/homes') > -1)
