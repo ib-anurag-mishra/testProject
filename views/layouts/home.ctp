@@ -55,7 +55,9 @@
                     'recent-downloads',
                     'search-results',
                     
-                    'swfobject.js'
+                    'swfobject.js',
+                    'qtip',
+                    'qtip_add'
                 )
         );
 
