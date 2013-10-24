@@ -232,7 +232,7 @@ class QueuesController extends AppController{
                                                                                       'conditions' => array('Album.FileID = File.FileID')
                                                                                      )
                                                                             ),
-                                                            'group' => 'StreamingHistory.consumed_time, StreamingHistory.ProdID, StreamingHistory.provider_type',
+                                                            'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type, StreamingHistory.createdOn',
                                                             'conditions' => array('StreamingHistory.library_id' => $libraryId,
                                                                                   'StreamingHistory.patron_id' => $patronId,                                                                                  
                                                                                   'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),

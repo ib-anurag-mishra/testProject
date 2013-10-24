@@ -155,7 +155,7 @@ $ieVersion =  ieversion();
                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
                                         
-                                        <div style="padding:13px 0px 0px 241px; font-size: 12px; font-weight: bold; color: #000;">
+                                        <div style="width: 128px; position: absolute; left: 134px; top: 10px; font-size: 12px;  color: #000;">
                                      <?php 
                                                
                                      
