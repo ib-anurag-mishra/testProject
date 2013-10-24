@@ -112,12 +112,12 @@ $ieVersion =  ieversion();
                                 {
                                    $songPath = explode(':',$filePath);
                                    $streamUrl =  trim($songPath[1]);
-                                   $albumSong['streamUrl'] = $streamUrl;
-                                   $albumSong['totalseconds']  = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']); 
+                                   $streamingArr['streamUrl'] = $streamUrl;
+                                   $streamingArr['totalseconds']  = $this->Queue->getSeconds($streamingArr['Song']['FullLength_Duration']); 
                                 }
                             
                             
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['StreamingHistory']['ProdID'].', "'.base64_encode($streamingArr['StreamingHistory']['provider_type']).'", "'.$this->webroot.'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr[$i]['streamUrl'].'", "'.$streamingArr['Song']['SongTitle'].'","'.$streamingArr['Song']['ArtistText'].'","'.$streamingArr['totalseconds'].'","'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
 
