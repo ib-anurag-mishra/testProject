@@ -208,7 +208,7 @@ class QueuesController extends AppController{
                                                                                       ),
                                                                                 array('table' => $countryTableName,
                                                                                       'alias' => 'Country',
-                                                                                      'type' => 'INNER',
+                                                                                      'type' => 'LEFT',
                                                                                       'conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')
                                                                                      ),
                                                                                 array('table' => 'Albums',
