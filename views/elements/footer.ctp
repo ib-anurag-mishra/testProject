@@ -95,6 +95,8 @@
     </div>
 </footer>
 <div class="filler" style="height:100px"></div>
+
+
 <?php
 if ($this->Session->read("patron"))
 {
@@ -102,9 +104,8 @@ if ($this->Session->read("patron"))
     <?php
     if ($this->Session->read('library_type') == '2')
     {
-        ?>
-        <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
-        <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/streaming.js"></script>
+          echo $javascript->link(array('swfobject.js','streaming.js'));
+                    ?>
         <div class="player-wrapper">
             <div class="fmp_container">
                 <div id="alt"></div>
@@ -119,14 +120,12 @@ if ($this->Session->read("patron"))
     <?php } ?>
 <?php } ?>
 
-<script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
-<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
-
 <script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
+        
+        
     try {
         var pageTracker = _gat._getTracker("UA-16162084-1");
         pageTracker._trackPageview();
@@ -135,11 +134,7 @@ if ($this->Session->read("patron"))
 
 
 <!-- Code for player -->
-<!-- History.js -->
-<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 
-<!-- Ajaxify -->
-<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
 
 <?php //if ($this->Session->read('patron') && $this->Session->read('library_type') == 2){    ?>
 

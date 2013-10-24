@@ -44,18 +44,16 @@
                     'lazyload',
                     'jquery.colorbox',
                     'jquery.cycle.all',
-                    'jquery.autocomplete',                    
+                    'jquery.autocomplete',
                     
-                    'swfobject',
-                    'streaming',
+                    'jquery.history',
+                    'ajaxify-html5',
+                    'site',             
                     
-                    'audioPlayer',
-                    
+                    'audioPlayer',                    
                     'freegal',
                     'recent-downloads',
                     'search-results',
-                    
-                    'site'
                 )
         );
 
