@@ -206,7 +206,7 @@ $ieVersion =  ieversion();
                                         ?>
 					</div> -->
 					<div class="download"><?php
-						 echo $streamingArr[0]['SUM(`StreamingHistory`.`consumed_time`)'];						
+						 echo $streamingArr[0]['StreamingTime'];						
 					?></div>
 				</div>
 				<?php
