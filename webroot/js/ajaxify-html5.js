@@ -331,6 +331,8 @@
                 //$body.removeClass('loader');
                 
                 $.getScript(webroot+'js/site.js');
+                $.getScript(webroot+'css/styles.css');
+                $.getScript(webroot+'css/freegal_styles.css');
                 
                 $('.loader').fadeOut(3000);
                 $('.content-wrapper').remove(".loader");
