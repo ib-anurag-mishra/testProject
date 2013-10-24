@@ -155,7 +155,7 @@ $ieVersion =  ieversion();
                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
                                         
-                                        <div class="song-title">
+                                        <div class="queue-title">
                                      <?php 
                                                 echo  $streamingArr['QueueList']['queue_name']; ;
                                      
