@@ -329,6 +329,9 @@
             })
                     .done(function() {
                 //$body.removeClass('loader');
+                
+                $.getScript(webroot+'js/script.js');
+                
                 $('.loader').fadeOut(3000);
                 $('.content-wrapper').remove(".loader");
             }); // end ajax

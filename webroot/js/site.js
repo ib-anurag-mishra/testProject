@@ -1729,7 +1729,7 @@ $('document').ready(function()
 
     /* site login page */
 
-    $(documnet).on('mousedown', '.site-login input[type="submit"]', function(e) {
+    $(document).on('mousedown', '.site-login input[type="submit"]', function(e) {
         $(this).addClass('selected');
     });
 
