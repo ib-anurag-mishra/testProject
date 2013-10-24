@@ -111,7 +111,8 @@
 
 
             // Set Loading
-            $('.content-wrapper').append("<div class='loader'></div>");
+            $('.content-wrapper').append('<div class="loader"></div>');
+            
             //$body.addClass('loader');
 
             // Start Fade Out
