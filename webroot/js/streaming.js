@@ -406,7 +406,8 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         type: "POST",
         cache:false,
         url: postURL,
-        data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime}
+        data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime},
+        async: false
     }).done(function(data){
         var result = JSON.parse(data);
         console.log('result in done is ' + result);
