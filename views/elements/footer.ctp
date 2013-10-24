@@ -108,6 +108,12 @@ if ($this->Session->read("patron"))
         ?>
         <div class="player-wrapper">
             <div class="fmp_container">
+                <div id="no_flash">
+                        <h2>
+                                You need to install Adobe Flash in order to play songs.
+                                        Please click here to <a href="http://get.adobe.com/flashplayer/"> Download now.</a>
+                        </h2>
+                </div>                
                 <div id="alt"></div>
             </div>
 
@@ -121,6 +127,20 @@ if ($this->Session->read("patron"))
 <?php } ?>
 
 <script type="text/javascript">
+    
+        $(document).ready(function (){
+            $("#alt").hide();  
+            $("#no_flash").hide();
+
+            if(swfobject.hasFlashPlayerVersion("9.0.115"))
+            {
+                $("#alt").show (); 
+            }
+            else
+            {
+                $("#no_flash").show ();  
+            }
+        });
         //for player initialization
         if(swfobject !== 'undefined'){
             var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
