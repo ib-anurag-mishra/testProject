@@ -101,25 +101,20 @@ $ieVersion =  ieversion();
 				<div class="row clearfix">
 					<div class="date"><?php echo date("Y-m-d",strtotime($streamingArr['StreamingHistory']['createdOn'])); ?></div>
 					<div class="small-album-container">
-						
-						<!-- <a class="preview" href="#"></a> -->
-                        
                                                     
                        <?php
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
-                                //do the streaming work
-                                                            
-//                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['File']['CdnPath']."/".$streamingArr['File']['SourceURL']);
-//
-//                                if(!empty($filePath))
-//                                 {
-//                                    $songPath = explode(':',$filePath);
-//                                    $streamUrl =  trim($songPath[1]);
-//                                    $albumSong['streamUrl'] = $streamUrl;
-//                                    $albumSong['totalseconds']  = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']); 
-//                                 } 
-                                
+                            
+                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['File']['CdnPath']."/".$streamingArr['File']['SourceURL']);
+
+                                if(!empty($filePath))
+                                {
+                                   $songPath = explode(':',$filePath);
+                                   $streamUrl =  trim($songPath[1]);
+                                   $albumSong['streamUrl'] = $streamUrl;
+                                   $albumSong['totalseconds']  = $this->Queue->getSeconds($albumSong['Song']['FullLength_Duration']); 
+                                }
                             
                             
                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['StreamingHistory']['ProdID'].', "'.base64_encode($streamingArr['StreamingHistory']['provider_type']).'", "'.$this->webroot.'");')); 
@@ -138,21 +133,15 @@ $ieVersion =  ieversion();
                         ?>
 					</div>
 					<div class="song-title">
-                    <?php 
-						/*if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .substr($streamingArr['QueueList']['queue_name'], 0, 19) . '...</span>';							
-						} else {
-							echo $streamingArr['QueueList']['queue_name']; 
-					 	}*/
-                    
-                                                  if (strlen($streamingArr['Song']['SongTitle']) >= 19) {
+                                    <?php 
+                                                  if(strlen($streamingArr['Song']['SongTitle']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .substr($streamingArr['Song']['SongTitle'], 0, 19) . '...</span>';							
 						} else {
 							echo $streamingArr['Song']['SongTitle']; 
 					 	}
                     
 					?>
-                    <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
+                                    <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
                                         
                                         <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: #000;">
