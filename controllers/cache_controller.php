@@ -2058,7 +2058,7 @@ STR;
   * @param nil
   **/
   function setAppMyMusicVideoList() {
-    Configure::write('debug', 2);
+    Configure::write('debug', 0);
     set_time_limit(0);
 
     $territories = $this->Territory->find("all");
@@ -2091,7 +2091,7 @@ STR;
                 INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
                 LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
                 WHERE c.Territory = "'.$territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
-                ORDER BY cnt DESC LIMIT 5';
+                ORDER BY cnt DESC LIMIT 100';
     $arr_video = $this->Video->query($str_query);
     
     $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
