@@ -151,7 +151,7 @@ class QueuesController extends AppController{
     */
     function my_streaming_history() {
         
-      //  Configure::write('debug', 2);
+        Configure::write('debug', 2);
      
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
@@ -238,7 +238,7 @@ class QueuesController extends AppController{
                                                                                   'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                   Configure::read('App.twoWeekEndDate'))
                                                                                  ),
-                                                            'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name','Song.Advisory', 'Song.FullLength_Duration','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'File.CdnPath', 'File.SourceURL'),
+                                                            'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate1', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name','Song.Advisory', 'Song.FullLength_Duration','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Album.AlbumTitle',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn','StreamingHistory.user_agent, StreamingHistory.ip_address,StreamingHistory.action_type', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'File.CdnPath', 'File.SourceURL'),
                                                             'order'=>"$songSortBy $sortType")); 
         
 	
