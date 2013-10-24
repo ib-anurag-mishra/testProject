@@ -57,7 +57,7 @@ $ieVersion =  ieversion();
             }
             ?>   
                         <div class="song-filter-button" style="cursor:pointer;"><?php echo __('Music'); ?></div>
-			<div class="music-filter-button" style="cursor:pointer;"><?php echo __('Queue'); ?></div> 
+			<div class="song-filter-button" style="cursor:pointer;"><?php echo __('Queue'); ?></div> 
 			
 			<?php
             if($sort == 'artist'){
