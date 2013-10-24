@@ -180,7 +180,7 @@
                         }
                        
 
-                        current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('/homes/homes', '/homes');
                         window.location.href = current_nav;
                         return true;
                     }
@@ -237,7 +237,7 @@
                             }
                         }
                       
-                        current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('/homes/homes', '/homes');
                         window.location.href = current_nav;
                         return true;
                     }
