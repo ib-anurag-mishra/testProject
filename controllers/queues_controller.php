@@ -162,10 +162,17 @@ class QueuesController extends AppController{
         $sortArray = array('date', 'artist', 'album');
         $sortOrderArray = array('asc','desc');
         
+
+        
+        
         if(isset($_POST)){
             $sort = $_POST['sort'];
             $sortOrder = $_POST['sortOrder'];
         }
+        
+        
+        echo "<br>sort: ".$sort;
+        echo "<br>sortOrder: ".$sortOrder;
         
         if(!in_array($sort, $sortArray)){
             $sort = 'date';
