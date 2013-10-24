@@ -85,7 +85,7 @@ $ieVersion =  ieversion();
             <?php
             }
             ?>  
-			<div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?>(in sec.)</div>
+			<div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?> (in sec.)</div>
 			
 		</nav>
 		<div class="recent-downloads-shadow-container" style="display:none">
