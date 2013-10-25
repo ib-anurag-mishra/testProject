@@ -336,7 +336,7 @@ function validateSong(songObj, playerEventCode) {
 		case 1:
 			playerEventCodeString = "Play";
                         songDuration = 0;
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,2,songLength,songDuration);
 			break;
 			
 		case 2:
