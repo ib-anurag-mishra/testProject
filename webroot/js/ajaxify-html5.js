@@ -310,12 +310,6 @@
 
                     $window.trigger(completedEventName);
                     
-                    
-                    //$body.removeClass('loader');
-                    $.getScript(webroot + 'css/styles.css');
-                    $.getScript(webroot + 'css/freegal_styles.css');
-                    
-
                     // Inform Google Analytics of the change
                     if (typeof window._gaq !== 'undefined') {
                         window._gaq.push(['_trackPageview', relativeUrl]);
@@ -335,6 +329,11 @@
                         now = new Date(); // update the current time
                     }
 
+                      
+                    //$body.removeClass('loader');
+                    $.getScript(webroot + 'css/styles.css');
+                    $.getScript(webroot + 'css/freegal_styles.css');
+                    
                     $.getScript(webroot + 'js/freegal.js');
                     $.getScript(webroot + 'js/site.js');
                     
