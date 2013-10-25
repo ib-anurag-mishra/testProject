@@ -52,7 +52,7 @@ Class StreamingComponent extends Object
             $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             
             //return the final result array
-            return array(0,'Not able to stream this song.You need to login again.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
+            return array(0,'Not able to stream this song.You need to login again1.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
         
@@ -61,7 +61,7 @@ Class StreamingComponent extends Object
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
-            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
+            return array(0,'Not able to play this song.You need to login again1.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
             exit;
         }
         
@@ -70,7 +70,7 @@ Class StreamingComponent extends Object
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
-            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
+            return array(0,'Not able to play this song.You need to login again1.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
         
