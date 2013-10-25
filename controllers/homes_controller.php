@@ -194,14 +194,14 @@ class HomesController extends AppController
     //this is just for streaming component test
     function checkStreamingComponent(){
         
-        echo 'libid=>'.$libId = $this->Session->read('library');
-        echo '<br>patid=>'.$patId = $this->Session->read('patron');
+        echo 'libid=> '.$libId = $this->Session->read('library');
+        echo '<br>patid=> '.$patId = $this->Session->read('patron');
         //testing for streaming component       
-        $prodId='28320117';
-        $provider='sony';
-        $userStreamedTime ='0';
-        $actionType='5';
-        $songDuration = 300;
+        echo '<br>prodid=> '.$prodId='28320117';
+        echo '<br>providertyp=> '.$provider='sony';
+        echo '<br>userStreamedTime=> '.$userStreamedTime ='0';
+        echo '<br>actionType=> '.$actionType='5';
+        echo '<br>songDuration=> '.$songDuration = 300;
         $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
         print_r($validationResponse);
         die;
