@@ -157,29 +157,22 @@ class QueuesController extends AppController{
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
         
-        $countryPrefix = $this->Session->read('multiple_countries');
+        $countryPrefix = $this->Session->read('multiple_countries');        
         
         $sortArray = array('date', 'artist', 'album');
         $sortOrderArray = array('asc','desc');
-        
-
-        
         
         if(isset($_POST)){
             $sort = $_POST['sort'];
             $sortOrder = $_POST['sortOrder'];
         }
         
-        
-        echo "<br>sort: ".$sort;
-        echo "<br>sortOrder: ".$sortOrder;
-        
         if(!in_array($sort, $sortArray)){
             $sort = 'date';
         }
         
         if(!in_array($sortOrder, $sortOrderArray)){
-            $sortOrder = 'desc';
+            $sortOrder = 'asc';
         }
         
         switch($sort){
