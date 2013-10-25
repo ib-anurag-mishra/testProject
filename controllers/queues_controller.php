@@ -228,7 +228,7 @@ class QueuesController extends AppController{
                                                                                         array('table' => 'queue_lists',
                                                                                               'alias' => 'QueueList',
                                                                                               'type' => 'LEFT',
-                                                                                               'conditions' => array('QueueList.queue_id = QueueDetail.queue_id','QueueDetail.song_providertype = Song.provider_type')
+                                                                                               'conditions' => array('QueueList.queue_id = QueueDetail.queue_id')
                                                                                               ),
                                                                                         array('table' => 'File',
                                                                                               'alias' => 'File',
