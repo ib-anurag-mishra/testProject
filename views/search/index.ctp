@@ -841,6 +841,17 @@ if ($type != 'all') {
         $i = 1;
         $country = $this->Session->read('territory');
         foreach ($songs as $psong) { 
+            
+            $downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus,$psong->TerritorySalesDate,$this->Session->read('territory'));
+            $StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus,$psong->TerritoryStreamingSalesDate,$this->Session->read('territory'));
+            
+            //if song not allowed for streaming and not allowed for download then this song must not be display
+            if($downloadFlag === 0 && $StreamFlag === 0 ){
+                continue;
+            }
+            
+            
+            
             ?>
                         <div class="tracklist">
                             <!--<a href="#" class="preview"></a>-->
@@ -863,15 +874,14 @@ if ($type != 'all') {
                             
                         <?php
                      
-                        $downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus,$psong->TerritorySalesDate,$this->Session->read('territory'));
-                        $StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus,$psong->TerritoryStreamingSalesDate,$this->Session->read('territory'));
+                        
                            
                         if($this->Session->read("patron"))
                         {
-                            if( $this->Session->read('library_type') == 2 && $psong->StreamingSalesDate <= date('Y-m-d') && $psong->StreamingStatus == 1)
+                            if( $this->Session->read('library_type') == 2 && ($StreamFlag === 1))
                             {
                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.$psong->SongTitle.'","'.$psong->ArtistText.'","'.$psong->totalseconds.'","'.$psong->ProdID.'","'.$psong->provider_type.'");'));
-                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
+                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample1", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                             }
                             else
@@ -904,23 +914,10 @@ if ($type != 'all') {
                             <div class="wishlist-popover">	
 
                                 <?php if( $this->Session->read("patron") && $this->Session->read('library_type') == 2 ){ ?>
-                                <div class="playlist-options">
-                                    <ul>
-                                        <li><a href="#">Create New Queue</a></li>
-                                        <li><a href="#">Playlist 1</a></li>
-                                        <li><a href="#">Playlist 2</a></li>
-                                        <li><a href="#">Playlist 3</a></li>
-                                        <li><a href="#">Playlist 4</a></li>
-                                        <li><a href="#">Playlist 5</a></li>
-                                        <li><a href="#">Playlist 6</a></li>
-                                        <li><a href="#">Playlist 7</a></li>
-                                        <li><a href="#">Playlist 8</a></li>
-                                        <li><a href="#">Playlist 9</a></li>
-                                        <li><a href="#">Playlist 10</a></li>
-                                    </ul>
-                                </div>
-
-                                <a class="add-to-playlist" href="#">Add To Queue</a>
+                                 <?php if( $StreamFlag == 1  ){
+                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$psong->ProdID,$psong->provider_type,$psong->ReferenceID,$psong->provider_type); ?>
+                                            <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
+                                    <?php } ?>
                                 <?php } ?>
                                 <?php
                                     if($this->Session->read("patron")){
@@ -945,21 +942,21 @@ if ($type != 'all') {
                                 <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php //echo $psong->ReferenceID; ?>/<?php //echo base64_encode($psong->provider_type); ?>"><img src="<?php //echo $image; ?>" width="27" height="27" /></a> <?php /*alt="<?php echo $psong->SongTitle; ?>"*/ ?>
                             </div-->
                             <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
-                            <div class="song" <?php echo $styleSong; ?>>
+                            <div class="song" <?php echo $styleSong; ?>  sdtyped="<?php echo  $downloadFlag.'-'.$StreamFlag.'-'.$this->Session->read('territory');?>">
                                 <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
                                 <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
         <?php
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
         }
-        echo  $downloadFlag.'-'.$StreamFlag.'-'.$this->Session->read('territory');
+        //
         ?>
                                 </span>
                             </div>
                             <div class="download">
                                     <?php
                                     if($this->Session->read("patron")){
-                                    if ($sales_date <= date('Y-m-d')) {
+                                    if ($downloadFlag === 1) {
                                         $productInfo = $song->getDownloadData($psong->ProdID,$psong->provider_type);
                                         if ($libraryDownload == '1' && $patronDownload == '1') {
                                             $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
@@ -1019,16 +1016,16 @@ if ($type != 'all') {
             ?>
                                     <span title='<?php __("Coming Soon"); ?> ( <?php echo date("F d Y", strtotime($sales_date)); ?> )'><?php __("Coming Soon"); ?></span>
                                     <?php
-                                }
-                                    } else {
-                                        $checklib = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
-                                        if($checklib != 'www' && $checklib != 'freegal' && $checklib != '50'){
-                                            echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
-                                        } else {
-                                            echo $this->Html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
-                                        }
-                                    }
-                                ?>
+               }
+                    } else {
+                        $checklib = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+                        if($checklib != 'www' && $checklib != 'freegal' && $checklib != '50'){
+                            echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
+                        } else {
+                            echo $this->Html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
+                        }
+                    }
+                ?>
                             </div>
 
 
