@@ -279,6 +279,9 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 			playerEventCodeString = "User ran out of time";
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,20,songLength,songDuration);
 			break;
+		case 10:
+			playerEventCodeString = "Queue playback completed";
+			break;
 			
 		default:
 			playerEventCodeString = "";
