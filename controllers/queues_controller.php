@@ -236,7 +236,7 @@ class QueuesController extends AppController{
                                                                                               'conditions' => array('Song.Sample_FileID = File.FileID')
                                                                                              )
                                                                                     ),
-                                                                    'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type',
+                                                                    'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type, QueueList.queue_id',
                                                                     'conditions' => array('StreamingHistory.library_id' => $libraryId,
                                                                                           'StreamingHistory.patron_id' => $patronId, 
                                                                                           'QueueList.patron_id' => $patronId, 
