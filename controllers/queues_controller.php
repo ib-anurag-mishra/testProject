@@ -228,7 +228,7 @@ class QueuesController extends AppController{
                                                                                         array('table' => 'queue_lists',
                                                                                               'alias' => 'QueueList',
                                                                                               'type' => 'LEFT',
-                                                                                               'conditions' => array('QueueList.queue_id = QueueDetail.queue_id','QueueDetail.song_providertype = Song.provider_type', 'QueueList.patron_id ='. $patronId )
+                                                                                               'conditions' => array('QueueList.queue_id = QueueDetail.queue_id','QueueDetail.song_providertype = Song.provider_type')
                                                                                               ),
                                                                                         array('table' => 'File',
                                                                                               'alias' => 'File',
@@ -238,7 +238,8 @@ class QueuesController extends AppController{
                                                                                     ),
                                                                     'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type',
                                                                     'conditions' => array('StreamingHistory.library_id' => $libraryId,
-                                                                                          'StreamingHistory.patron_id' => $patronId,                                                                                           
+                                                                                          'StreamingHistory.patron_id' => $patronId, 
+                                                                                          'QueueList.patron_id' => $patronId, 
                                                                                           'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                           Configure::read('App.twoWeekEndDate'))
                                                                                          ),
