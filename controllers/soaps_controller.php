@@ -4615,7 +4615,12 @@ STR;
         
         if(3 == $validationResult[2]) {
           throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
-        }        
+        }  
+
+        if(2 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+        }
+        
       }
     } else {
       
