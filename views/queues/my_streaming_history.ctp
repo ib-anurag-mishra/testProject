@@ -46,9 +46,9 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter" style="cursor:pointer;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter  toggled" style="cursor:pointer;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active toggled" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
@@ -63,7 +63,7 @@ $ieVersion =  ieversion();
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter "style="cursor:pointer;"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter active"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } else { ?>
                     <div class="artist-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
                 <?php } 
