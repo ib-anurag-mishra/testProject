@@ -55,9 +55,10 @@ Class StreamingComponent extends Object
             return array(0,'Not able to stream this song.You need to login again1.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
-        echo $patId;
-        //if ProdID and Provider type is not set then
+        
+        //if patron is set null than then
         if(($patId == '' || $patId == 0)){
+            echo '--'.$patId;
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
@@ -65,7 +66,7 @@ Class StreamingComponent extends Object
             exit;
         }
         
-        //if ProdID and Provider type is not set then
+        //if library id set null then
         if(($libId == '' || $libId == 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
