@@ -57,7 +57,7 @@ Class StreamingComponent extends Object
         }
         
         //if patron is set null than then
-        if(($patId == '' || $patId == 0)){
+        if(($patId === '' || $patId === 0)){
             echo '--'.$patId; 
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
