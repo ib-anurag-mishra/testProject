@@ -166,7 +166,7 @@ class ServicesController extends AppController {
                 
                 $solrFinalCondition = $solrFinalCondition.")";
 				
-				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
+				$solrFinalCondition = $solrFinalCondition.' AND (TerritoryDownloadStatus:'.$country.'_1 OR TerritoryStreamingStatus:'.$country.'_1) AND '.$condSolr;
 				
                 // print $solrFinalCondition;exit;
 				
@@ -441,7 +441,7 @@ class ServicesController extends AppController {
 				}			
 				$solrTempCondition = $solrGenreSearch;
 				$solrFinalCondition = substr($solrTempCondition, 0, -5);
-				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
+				$solrFinalCondition = $solrFinalCondition.' AND (TerritoryDownloadStatus:'.$country.'_1 OR TerritoryStreamingStatus:'.$country.'_1) AND '.$condSolr;
 				if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -5);
 				}
@@ -615,7 +615,7 @@ class ServicesController extends AppController {
 				}			
 				$solrTempCondition = $solrGenreSearch;
 				$solrFinalCondition = substr($solrTempCondition, 0, -5);
-				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
+				$solrFinalCondition = $solrFinalCondition.' AND (TerritoryDownloadStatus:'.$country.'_1 OR TerritoryStreamingStatus:'.$country.'_1) AND '.$condSolr;
 				if ($condSolr == "") {
 					$solrFinalCondition = substr($solrFinalCondition, 0, -5);
 				}

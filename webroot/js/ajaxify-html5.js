@@ -309,6 +309,12 @@
                     } /* http://balupton.com/projects/jquery-scrollto */
 
                     $window.trigger(completedEventName);
+                    
+                    
+                    //$body.removeClass('loader');
+                    $.getScript(webroot + 'css/styles.css');
+                    $.getScript(webroot + 'css/freegal_styles.css');
+                    
 
                     // Inform Google Analytics of the change
                     if (typeof window._gaq !== 'undefined') {
@@ -320,39 +326,31 @@
                         reinvigorate.ajax_track(url);
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
+                    
+                    var delay = 5; // 5 second delay
+                    var now = new Date();
+                    var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
+                    
+                    while (now < desiredTime) {
+                        now = new Date(); // update the current time
+                    }
+
+                    $.getScript(webroot + 'js/freegal.js');
+                    $.getScript(webroot + 'js/site.js');
+                    
+                    $.getScript(webroot + 'js/audioPlayer.js');
+                    $.getScript(webroot + 'js/recent-downloads.js');
+                    $.getScript(webroot + 'js/search-results.js');
+                    
+    
+                    $('.loader').fadeOut(3000);
+                    $('.content-wrapper').remove(".loader");
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
                     return false;
                 },
-            })
-                    .done(function() {
-                //$body.removeClass('loader');
-                $.getScript(webroot + 'js/jquery-1.10.2.min.js');
-
-                $.getScript(webroot + 'js/modernizr.custom.js');
-                $.getScript(webroot + 'js/lazyload.js');
-
-                $.getScript(webroot + 'js/jquery.colorbox.js');
-                $.getScript(webroot + 'js/jquery.cycle.all.js');
-                $.getScript(webroot + 'js/jquery.autocomplete.js');
-
-                $.getScript(webroot + 'js/jquery.history.js');
-                $.getScript(webroot + 'js/ajaxify-html5.js');
-
-                $.getScript(webroot + 'js/audioPlayer.js');
-                $.getScript(webroot + 'js/freegal.js');
-                $.getScript(webroot + 'js/recent-downloads.js');
-                $.getScript(webroot + 'js/search-results.js');
-                $.getScript(webroot + 'js/site.js');
-
-
-                $.getScript(webroot + 'css/styles.css');
-                $.getScript(webroot + 'css/freegal_styles.css');
-
-                $('.loader').fadeOut(3000);
-                $('.content-wrapper').remove(".loader");
             }); // end ajax
 
         }); // end onStateChange
