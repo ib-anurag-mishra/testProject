@@ -342,6 +342,7 @@ function validateSong(songObj, playerEventCode) {
 		case 2:
 			playerEventCodeString = "Pause"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
+                        
 			break;
 			
 		case 3:
@@ -388,7 +389,7 @@ function validateSong(songObj, playerEventCode) {
 
 
 	console.log("inside validateSong");
-	console.log("streamingResponse is " + streamingResponse);
+	//console.log("streamingResponse is " + streamingResponse);
 	
 	
 	//return isValid;
@@ -400,7 +401,7 @@ function validateSong(songObj, playerEventCode) {
 
 
 function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
-    
+    alert('inside streaming comp0onent');
     var postURL = webroot+'queuelistdetails/getPlaylistData';
     $.ajax({
         type: "POST",
@@ -413,7 +414,7 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         console.log('result in done is ' + result);
         if(result.error){
             var result = [0,"Not able to stream this song due to empty response from compoinent",0,0,0,0];            
-        }
+        }alert('inside success');
         streamingValidationJS(result);
     })
     .fail(function(){
@@ -431,7 +432,7 @@ function pingTimeJS() {
 }
 
 function streamingValidationJS(responseDataJS) {
-	
+	alert('inside calling flash')
 	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS'+responseDataJS);
 	
