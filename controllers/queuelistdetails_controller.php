@@ -203,18 +203,26 @@ class QueueListDetailsController extends AppController{
                //$error_message = array('error' => $validationResponse);
                echo json_encode($validationResponse);
                exit;
-           }else if($validationResponse[0] == 1 && !in_array($eventType,$eventArray)){
-               if(!empty($_POST['queueId'])){
-                   $this->Session->write("queuePlaying", $_POST['queueId']);
-               }else{
-                   if(!empty($prodId) && !empty($provider)){
-                        $songDetails = array('prodId' => $prodId,'providerType' => $provider);
-                        $this->Session->write("songPlaying", $songDetails);
-                   }
+           }else if($validationResponse[0] == 1){
+               if(!in_array($eventType,$eventArray)){
+                    if(!empty($_POST['queueId'])){
+                        $this->Session->write("queuePlaying", $_POST['queueId']);
+                    }else{
+                        if(!empty($prodId) && !empty($provider)){
+                             $songDetails = array('prodId' => $prodId,'providerType' => $provider);
+                             $this->Session->write("songPlaying", $songDetails);
+                        }
+                    }
                }
                //$success_message = array('success' => $validationResponse);
                echo json_encode($validationResponse);
                exit;
+           }else{
+               $this->log('Componenet gave some other value other than 0/1 in response','streaming'); 
+               $error_message = array('error1' => $validationResponse);
+               echo json_encode($validationResponse);
+               exit;                 
+               
            }
            
        }else{
