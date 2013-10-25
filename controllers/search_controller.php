@@ -149,7 +149,7 @@ class SearchController extends AppController {
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-            //print_r($songs); die;
+            //print_r($songs); die; 
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
