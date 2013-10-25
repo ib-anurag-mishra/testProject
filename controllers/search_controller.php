@@ -8,7 +8,7 @@
 class SearchController extends AppController {
 
     var $name = 'Search';
-    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Song', 'Language', 'Album', 'Session','WishlistVideo','Mvideo');
+    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Song', 'Language', 'Album', 'Session','WishlistVideo','Mvideo','Search');
     var $components = array('Auth', 'Acl', 'RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Solr', 'Session');
     var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'Album', 'Song', 'Language', 'Searchrecord');
 
@@ -149,7 +149,7 @@ class SearchController extends AppController {
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-            print_r($songs); die;
+            //print_r($songs); die;
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 

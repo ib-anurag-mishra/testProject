@@ -862,6 +862,10 @@ if ($type != 'all') {
                             
                             
                         <?php
+                          
+                        $downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus,$psong->TerritorySalesDate,$this->Session->read('territory'));
+                        $StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus,$psong->TerritoryStreamingSalesDate,$this->Session->read('territory'));
+                           
                         if($this->Session->read("patron"))
                         {
                             if( $this->Session->read('library_type') == 2 && $psong->StreamingSalesDate <= date('Y-m-d') && $psong->StreamingStatus == 1)
@@ -948,6 +952,7 @@ if ($type != 'all') {
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
         }
+        echo  $downloadFlag.'-'.$StreamFlag;
         ?>
                                 </span>
                             </div>
