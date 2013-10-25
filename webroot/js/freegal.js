@@ -1545,14 +1545,14 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
     function loadSong(songFile,songTitle,artistName,songLength,prodId,providerType) { 
         var newSong = [
                 {
-                "playlistId":0,
-                "songId":prodId,
-                "providerType":providerType,
-                "label":songTitle,
-                "songTitle":songTitle,
-                "artistName":artistName,
-                "songLength":songLength,
-                "data":songFile
+                playlistId:0,
+                songId:prodId,
+                providerType:providerType,
+                label:songTitle,
+                songTitle:songTitle,
+                artistName:artistName,
+                songLength:songLength,
+                data:songFile
                 }
         ];   
         pushSongs(newSong);
