@@ -117,6 +117,12 @@ class LibraryTopTenType{
   public $FullLength_FIleURL;
   
   /**
+	 * playButtonStatus
+	 * @var int
+	 */
+  public $playButtonStatus;
+  
+  /**
 	 * Constructor
 	 */
   public function __construct(){
