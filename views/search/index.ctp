@@ -952,7 +952,7 @@ if ($type != 'all') {
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
         }
-        echo  $downloadFlag.'-'.$StreamFlag;
+        echo  $downloadFlag.'-'.$StreamFlag.'-'.$this->Session->read('territory');
         ?>
                                 </span>
                             </div>
