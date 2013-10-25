@@ -7,64 +7,49 @@
 			<h2><?php echo $queue_list_array[0]['QueueList']['queue_name'];?></h2>
 			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="#">FAQ section.</a></div>
 		</header>
-		<div class="album-info-playlist-container clearfix">
-			<div class="album-info-container">
-				<div class="album-cover-container">
-					
-					<img src="<? echo $this->webroot; ?>app/webroot/img/playlist/album-cover.jpg" alt="album-cover" width="155" height="155" />
-					<a class="add-to-playlist-button no-ajaxy" href="#"></a>
-                                        <?php //$queueList = $this->Queue->getQueuesList($this->Session->read('patron'));?>
-					<div class="wishlist-popover">
-						<div class="playlist-options">
-							<ul>
-								<li><a href="#" class="create-new-queue">Create New Queue</a></li>
-                                                                <!--<?php //if(!empty($queueList)){foreach($queueList as $key => $value){ ?>
-								<li><a href="#"><?php //echo $value['QueueList']['queue_name']; ?></a></li>
-								<?php 
-                                                                    //}
-                                                                //} ?>-->
-							</ul>
-						</div>			
-						<a class="remove-songs" href="#">Download Song</a>
-						<a class="add-to-playlist" href="#">Add To Queue</a>
-						
-						
-						<div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div>
-				
+		<div class="col-container clearfix">
+			<div class="col-1">
+				<img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
+			</div>
+			<div class="col-2">
+				<div class="queue-name">
+					<?php echo $queue_list_array[0]['QueueList']['queue_name'];?>
+				</div>
+				<div class="queue-length">
+					<?php echo $queue_songs_count; ?> Songs
+				</div>
+				<div class="queue-duration">
+					Duration: <?php echo $total_time; ?>
+				</div>
+                                 <input type="hidden" id="hid_Plid" value="<?php echo $queue_id;?>" />
+                                <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["QueueList"]["queue_name"];?>" />
+                                <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"];?>" />
+			</div>
+			<div class="col-3">
+				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="javascript:void(0);">FAQ section</a>.</div>
+				<div class="button-container">
+					<div class="play-queue-btn"></div>
+					<div class="gear-icon no-ajaxy"></div>
+				</div>
+				<div class="queue-options">
+                                    <?php                                    
+                                    
+                                                if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Custom') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
+                                                {
+                                                    ?>
+                                                        <a class="rename-queue" href="javascript:void(0);" onclick="queueModifications();">Rename Queue</a>	
+                					<a class="delete-queue" href="javascript:void(0);" onclick="queueModifications();">Delete Queue</a>
+                                                    <?php
+                                                }
+                                                
+                                    ?>
+					<div class="share clearfix">
+						<p>Share via</p>
+						<a class="facebook" href="javascript:void(0);"></a>
+						<a class="twitter" href="javascript:void(0);"></a>
 					</div>
 				</div>
 			</div>
-
-			<div class="album-info">
-				<p>Now Streaming</p>
-				<div class="now-playing-text"><span class="now-playing-title">Grow Up</span> by <span class="now-playing-artist"><a href="#">Cher Lloyd</a></span> on <span class="now-playing-album-title"><a href="#">Sticks and Stones</a></span></div>
-				<div class="release-genre">Genre: <span><a href="#">Pop</a></span></div>
-				<div class="release-label">Label: <span>Columbia</span></div>
-				<input type="hidden" id="hid_Plid" value="<?php echo $queue_id;?>" />
-                                <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["QueueList"]["queue_name"];?>" />
-                                <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"];?>" />
-
-			</div>
-					
-			<div class="gear-container">
-
-				<div class="gear-icon no-ajaxy">
-					
-				</div>
-				
-				<div class="queue-options">
-					<a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
-					<a class="delete-queue" href="#" onclick="queueModifications();">Delete Queue</a>
-
-				</div>
-				
-				
-			</div>
-			
 		</div>
                 <?php
                 echo $session->flash();

@@ -96,17 +96,30 @@ class QueueListDetailsController extends AppController{
         $songPlaying = $this->Session->read('songPlaying');
         if(!empty($queueId)){
             $queue_list_array   =   $this->Queue->getQueueDetails($queueId);
+            $total_seconds = 0;
             foreach($queue_list_array as $k => $v)
-             {
-                 $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
-                 if(!empty($filePath)){
+            {
+                $full_length    =   $v['Songs']['FullLength_Duration'];
+                $temp_arr       =   explode(":", $full_length);
+                $minutes        =   $temp_arr[0];
+                $seconds        =   $temp_arr[1];
+                $total_seconds +=   $minutes*60+$seconds;
+                $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
+                if(!empty($filePath)){
                     $songPath = explode(':',$filePath);
                     $streamUrl =  trim($songPath[1]);
                     $queue_list_array[$k]['streamUrl'] = $streamUrl;
-                 }                 
-             }        
+                }
+            }
+
+            $total_duration     =    $total_seconds/60;
+            $total_minutes      =    floor($total_duration);
+            $total_seconds      =    $total_seconds%60;
+
             $this->set('queue_list_array',$queue_list_array); 
-            $this->set('queue_id',$this->params['pass'][0]);
+            $this->set('queue_id',$this->params['pass'][0]); 
+            $this->set('queue_songs_count',count($queue_list_array)); 
+            $this->set('total_time',$total_minutes.":".$total_seconds);             
         }else if(!empty($songPlaying)){
             $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'] , $songPlaying['providerType']);
             foreach($trackDetails as $k => $v)
