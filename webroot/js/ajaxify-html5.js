@@ -308,7 +308,7 @@
                         $body.ScrollTo(scrollOptions);
                     } /* http://balupton.com/projects/jquery-scrollto */
 
-                    $window.trigger(completedEventName
+                    $window.trigger(completedEventName);
                     
                     
                     //$body.removeClass('loader');
