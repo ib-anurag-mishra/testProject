@@ -438,6 +438,8 @@ function streamingValidationJS(responseDataJS) {
 	var flash =	document.getElementById("fmp_player");
 	
 	flash.streamingValidationAS(responseDataJS);
+        
+        return false;
 	
 }
 function reportTime(amt) {
