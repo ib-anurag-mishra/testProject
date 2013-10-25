@@ -3,10 +3,6 @@
                     if(!empty($queue_list_array)){
                ?>
 		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
-		<header class="clearfix">
-			<h2><?php echo $queue_list_array[0]['QueueList']['queue_name'];?></h2>
-			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="#">FAQ section.</a></div>
-		</header>
 		<div class="col-container clearfix">
 			<div class="col-1">
 				<img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
