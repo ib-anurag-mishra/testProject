@@ -20,7 +20,7 @@ $ieVersion =  ieversion();
 <!-- new HTML -->
 <form id="sortForm" name="sortForm" method='post'>
     <input id='sort' type='hidden' name="sort" value="<?php echo $sort; ?>" />
-    <input id='sortOrder' type='hidden' name="sortOrder" value="<?php echo ($sortOrder=='asc')?'desc':'asc'; ?>" />
+    <input id='sortOrder' type='hidden' name="sortOrder" value="<?php echo $sortOrder; ?>" />
 </form>
 <section class="recent-downloads-page">
 		
@@ -48,7 +48,7 @@ $ieVersion =  ieversion();
                 ?>    
                     <div class="date-filter-button filter" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter  toggled" style="cursor:pointer;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active toggled" style="cursor:pointer;"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
