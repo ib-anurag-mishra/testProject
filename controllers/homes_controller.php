@@ -86,15 +86,7 @@ class HomesController extends AppController
       
         
        
-//testing for streaming component       
-//        $prodId='28320117';
-//        $provider='sony';
-//        $userStreamedTime ='0';
-//        $actionType='5';
-//        $songDuration = 300;
-//        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
-//        print_r($validationResponse);
-//        die;
+
         
         
         
@@ -199,6 +191,21 @@ class HomesController extends AppController
         */  
     }
 
+    //this is just for streaming component test
+    function checkStreamingComponent(){
+        
+        //testing for streaming component       
+        $prodId='28320117';
+        $provider='sony';
+        $userStreamedTime ='0';
+        $actionType='5';
+        $songDuration = 300;
+        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
+        print_r($validationResponse);
+        die;
+      
+        
+    }
 	function get_genre_tab_content($tab_no , $genre){
 		//Cachec results for Rock Genre
 
