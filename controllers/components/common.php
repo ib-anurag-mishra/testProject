@@ -172,7 +172,7 @@ STR;
                         
                         if($this->Session->read('library_type')==2)
                         {
-                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SaveAsName']);
                             
                             if(!empty($filePath))
                              {
