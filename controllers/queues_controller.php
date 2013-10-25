@@ -167,6 +167,9 @@ class QueuesController extends AppController{
             $sortOrder = $_POST['sortOrder'];
             $sortOrder  = ($sortOrder=='asc')?'desc':'asc';
         }
+        else if(!in_array($sortOrder, $sortOrderArray)){
+            $sortOrder = 'asc';
+        }
         
         echo "<br>sort: ".$sort;
         echo "<br>sortOrder: ".$sortOrder;
@@ -176,9 +179,7 @@ class QueuesController extends AppController{
             $sort = 'date';
         }
         
-        if(!in_array($sortOrder, $sortOrderArray)){
-            $sortOrder = 'asc';
-        }
+        
         
         switch($sort){
             case 'date':
