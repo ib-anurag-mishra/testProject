@@ -98,6 +98,13 @@ class SearchDataType{
   public $DownloadStatus;
   
   /**
+	 * playButtonStatus
+	 * @var int
+	 */
+  public $playButtonStatus;
+  
+  
+  /**
 	 * Constructor
 	 */
   public function __construct(){
