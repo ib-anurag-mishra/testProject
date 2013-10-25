@@ -887,7 +887,7 @@ function wishlistVideoDownloadIE(prodId,id,provider)
 				$('.beforeClick').show();			
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-				document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
+				document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
 				document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
 				document.getElementById('vdownloading_'+prodId).style.display = 'none';
 				document.getElementById('download_video_'+prodId).style.display = 'block';
@@ -1175,9 +1175,9 @@ function wishlistVideoDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloa
 				var downloadUsedArr = response.split('|');		
 				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				if(languageSet == 'en'){
-					document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
+					document.getElementById('download_video_'+prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
 				}else{
-					document.getElementById('download_video_'+prodId).innerHTML = '<a href="/homes/my_history">bajaedas</a>';
+					document.getElementById('download_video_'+prodId).innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
 				}
                                 document.getElementById('vdownload_loader_'+prodId).style.display = 'none';
 				document.getElementById('vdownloading_'+prodId).style.display = 'none';
@@ -1488,6 +1488,17 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                             document.getElementById("ajaxflashMessage44").style.display="block";
                             document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Queue';
                         }
+                        else if(msg == 'invalid_for_stream')
+                        {                            
+                             if(document.getElementById('flash-message'))
+                            {
+                                document.getElementById('flash-message').innerHTML = '';
+                                document.getElementById("flash-message").setAttribute("class", "");
+                            }
+                            
+                            document.getElementById("ajaxflashMessage44").style.display="block";
+                            document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
+                        }
 			else
 			{	
 				var msg = response.substring(0,7);
@@ -1509,9 +1520,7 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                                             document.getElementById('flash-message').innerHTML = '';
                                             document.getElementById("flash-message").setAttribute("class", "");
                                         }
-                                        
-                                        document.getElementById('flash-message').innerHTML = '';
-                                        document.getElementById("flash-message").setAttribute("class", "");
+                                                                               
                                         document.getElementById("ajaxflashMessage44").style.display="block";
         				document.getElementById("ajaxflashMessage44").style.background="red";
                                         document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to Queue.';
@@ -1534,44 +1543,11 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
 }
 
     function loadSong(songFile,songTitle,artistName,songLength,prodId,providerType) { 
-        
-//        var postURL = webroot+'queuelistdetails/getPlaylistData';
-//        $.ajax({
-//            type: "POST",
-//            cache:false,
-//            url: postURL,
-//            data: {prodId : prodId,providerType : providerType}
-//        }).done(function(data){
-//                var json = JSON.parse(data);
-//                if(json.error){
-//                    var result = json.error;
-//                    alert(result[1]);
-//					if(result[3] != 6){
-//                                            var flash = document.getElementById("fmp_player");
-//                                            flash.clearQueueFromJS();
-//					}
-//                }else if(json.success){
-//                    $('#songDetails').val(prodId+'-'+providerType);
-//                    var newSong = [
-//                            {
-//                            "label":songTitle,
-//                            "songTitle":songTitle,
-//                            "artistName":artistName,
-//                            "songLength":songLength,
-//                            "data":songFile
-//                            }
-//                    ];                    
-//                    pushSongs(newSong);
-//                }
-//        })
-//        .fail(function(){
-//            alert('Ajax Call to Validate song has been failed');
-//        }); 
-
         var newSong = [
                 {
+                "playlistId":0,
                 "songId":prodId,
-                "songProviderType":providerType,
+                "providerType":providerType,
                 "label":songTitle,
                 "songTitle":songTitle,
                 "artistName":artistName,
@@ -1579,58 +1555,18 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                 "data":songFile
                 }
         ];   
-       
-//        alert("songId: ["+prodId+"]");
-//        alert("songProviderType: ["+providerType+"]");
-//        alert("label: ["+songTitle+"]");
-//        alert("songTitle: ["+songTitle+"]");
-//        alert("artistName: ["+artistName+"]");
-//        alert("songLength: ["+songLength+"]");
-//        alert("data: ["+songFile+"]");
         pushSongs(newSong);
 
     } 
 
-$(document).ready(function (){
+    $(document).ready(function (){
+        $(document).on('click','.play-queue-btn', function(){ 
+                playlist = $('#playlist_data').text();
+                playlist = JSON.parse(playlist);
+                if(playlist.length){
+                    pushSongs(playlist);
+                }
 
-    $('.play-queue-btn').click(function (){
-//        var item = $('#play_item_1').text();
-//        if(item.length){
-//            var songData = item.split(',');
-//            var prodId = songData[0];
-//            var providerType = songData[1];
-//        }
-//        var queueId = $('#hid_Plid').val();
-//        var postURL = webroot+'queuelistdetails/getPlaylistData';
-//        $.ajax({
-//            type: "POST",
-//            cache:false,
-//            url: postURL,
-//            data: {prodId : prodId,providerType : providerType,queueId : queueId}
-//        }).done(function(data){
-//                var json = JSON.parse(data);
-//                if(json.error){
-//                    alert(json.error[1]);
-//					if(json.error[3] != 6){
-//                                            var flash = document.getElementById("fmp_player");
-//                                            flash.clearQueueFromJS();
-//					}
-//                }else if(json.success){
-//                    playlist = $('#playlist_data').text();
-//                    playlist = JSON.parse(playlist);
-//                    if(playlist.length){
-//                        pushSongs(playlist);
-//                    }
-//                }
-//        })
-//        .fail(function(){
-//            alert('Ajax Call to Validate Playlist has been failed');
-//        });  
-
-        playlist = $('#playlist_data').text();
-        playlist = JSON.parse(playlist);
-        if(playlist.length){
-            pushSongs(playlist);
-        }
+        });
     });
-});
+    

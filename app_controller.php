@@ -1,7 +1,7 @@
 <?php
 class AppController extends Controller
 {
-	var $components = array( 'Session', 'RequestHandler','Cookie');
+	var $components = array( 'Session', 'RequestHandler','Cookie', 'Acl');
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download','Queue' );
 	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country');
         var $view = 'Dataencode';
@@ -89,6 +89,23 @@ class AppController extends Controller
                 //print_r($announcment_rs);
                 $this -> set ( 'announcment_value' ,  $announcment_rs[0]['pages']['page_content']);
                 //$announcment_rs[0]['pages']['page_content'];
+                
+                // Code for Register Concert  -- START
+                
+                if(($this->Session->read("patron")!='') && ($this->Session->read("lId")!=''))
+                {                
+                    $concert_query = "SELECT * from register_concerts WHERE library_card = '".$this->Session->read("patron"). "' and library_id=".$this->Session->read("lId");
+                    $concert_rs = $this->Album->query($concert_query);
+                    $this -> set ( 'register_concert_id' ,  empty($concert_rs[0]['register_concerts']['id'])?'':$concert_rs[0]['register_concerts']['id']);
+                }
+                else
+                {
+                     $this -> set ( 'register_concert_id' ,  '');
+                }
+                
+                // Code for Register Concert  -- END
+                
+                
                 
 	}
 	

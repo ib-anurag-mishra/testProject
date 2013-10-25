@@ -35,7 +35,7 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-08-01';
+//$currentDate = '2013-10-14';
 $currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
@@ -158,7 +158,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                           $data[$library_id][] = $datarow;
                         }
                         //start for sony music videos
-                        if($row['library_contract_start_date'] <= $condStartDate){
+                        /*if($row['library_contract_start_date'] <= $condStartDate){
                           if($row['library_contract_end_date'] >= $condEndDate){
                             $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$condStartDate."' and '".$condEndDate."' and library_id = ".$library_id." group by videodownloads.id";
                           }
@@ -186,7 +186,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         }
                         while ($datarow = mysql_fetch_assoc($dataresult)) {
                           $videodata[$library_id][] = $datarow;
-                        }
+                        }*/
                         //for sony music video end
                     }
                 }
@@ -273,7 +273,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
                     
                     //for sony music video
-                    if(!empty($videodata)){
+                    /*if(!empty($videodata)){
                         foreach ($videodata as $libid=>$lib)
                         {
                             $libSales = 0;
@@ -335,7 +335,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             //echo '</br>';
                             $numSales = $numSales + $libSales;
                         }
-                    }
+                    }*/
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
@@ -506,7 +506,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         }
 //                        echo "<pre>";print_r($data);
                         //start for sony music videos 
-                        if($row['library_contract_start_date'] <= $condStartDate)
+                        /*if($row['library_contract_start_date'] <= $condStartDate)
                         {
                              if($row['library_contract_end_date'] >= $condEndDate)
                              {
@@ -544,7 +544,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         while ($datarow = mysql_fetch_assoc($dataresult))
                         {
                           $videodata[$library_id][] = $datarow;
-                        }
+                        }*/
 //                        echo "<pre>";print_r($data);
                         //for sony music videos end
                     }
@@ -634,7 +634,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $numSales = $numSales + $libSales;
                         }
                     }
-                    if(!empty($videodata)){
+                    /*if(!empty($videodata)){
                         foreach ($videodata as $libid=>$lib)
                         {
                             $libSales = 0;
@@ -698,7 +698,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             //echo '</br>';
                             $numSales = $numSales + $libSales;
                         }
-                    }
+                    }*/
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#

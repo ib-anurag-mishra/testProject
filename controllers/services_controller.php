@@ -162,8 +162,8 @@ class ServicesController extends AppController {
                     $solrFinalCondition = substr($solrTempCondition, 0, -4);
                 } else {
 				$solrFinalCondition = substr($solrTempCondition, 0, -5);
-				}
-
+                }
+                
                 $solrFinalCondition = $solrFinalCondition.")";
 				
 				$solrFinalCondition = $solrFinalCondition.' AND DownloadStatus:1 AND '.$condSolr;
@@ -723,10 +723,10 @@ class ServicesController extends AppController {
 					//	print_r($result);exit;
                             $albumArtWork = null;
 					}
-					}
+                        }
                     if(!empty($albumArtWork)){
 					$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
-				}
+                    }
 				}
 				if(count($result) > 0){
 					$result = $result;

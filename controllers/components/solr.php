@@ -7,7 +7,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/'); //108.166.39.24//192.168.100.24//192.168.100.24
+    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicstage/'); //108.166.39.24//192.168.100.24//192.168.100.24
 
     /**
      * Used for runtime configuration of model
@@ -41,7 +41,7 @@ class SolrComponent extends Object {
         App::import("Vendor", "solr", array('file' => "Apache" . DS . "Solr" . DS . "Service.php"));
         self::$solr = new Apache_Solr_Service($settings['server'], $settings['port'], $settings['solrpath']);
         //var_dump($solr);
-        if (!self::$solr->ping()) {
+        if (!self::$solr->ping(60)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
@@ -49,24 +49,31 @@ class SolrComponent extends Object {
 
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
 
-        if (!self::$solr2->ping()) {
+        if (!self::$solr2->ping(60)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
         }
     }
 
-    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false) {
+    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false, $mobileExplicitStatus=0) {
         $query = '';
         $docs = array();
         $cond = " AND DownloadStatus:1";
 
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
+        if(1 == $mobileExplicitStatus){
+          $cond .= " AND Advisory:F";
+        }else{
+        
+            if ($this->Session->read('block') == 'yes') {
+              $cond .= " AND Advisory:F";
+              if($type != 'video'){
                 $cond .= " AND AAdvisory:F";
+              }
             }
+
         }
+        
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
@@ -502,6 +509,7 @@ class SolrComponent extends Object {
     }
 
     function groupSearch($keyword, $type='song', $page=1, $limit = 5) {
+        set_time_limit(0);
         $query = '';
         $country = $this->Session->read('territory');
         $cond = " AND DownloadStatus:1";
@@ -541,7 +549,7 @@ class SolrComponent extends Object {
                     break;
                 case 'artist':
                     //$query = $keyword . ' OR (CArtistText:(' . $searchkeyword . '))';
-                    $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
+                    $queryFields = "CArtistText^100000 CTitle^80 CSongTitle^60 CGenre^20 CComposer"; // increased priority for artist // CTitle^80 CSongTitle^60 CGenre^20 CComposer
                     $query = $searchkeyword;
                     $field = 'ArtistText';
                     break;

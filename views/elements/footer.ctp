@@ -53,7 +53,7 @@
     }
 </style>
 
-	
+
 
 <footer class="site-footer">
     <div class="footer-content">
@@ -67,7 +67,8 @@
                 <li><?php echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' => 'us_top_10')); ?></li>
                 <li><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases')); ?></li>
                 <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' => 'view')); ?></li>
-                <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
+		<li><?php echo $html->link(__('Terms & Conditions', true), array('controller' => 'homes', 'action' => 'terms')); ?></li>
+		<li class="last-child"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
             </ul>
         </nav>
         <div class="languages">
@@ -90,11 +91,13 @@
                 }
             }
             ?>
-          
+
         </div>
     </div>
 </footer>
 <div class="filler" style="height:100px"></div>
+
+
 <?php
 if ($this->Session->read("patron"))
 {
@@ -102,11 +105,16 @@ if ($this->Session->read("patron"))
     <?php
     if ($this->Session->read('library_type') == '2')
     {
+        echo $javascript->link(array( 'streaming.js'));
         ?>
-        <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/swfobject.js"></script>
-        <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/streaming.js"></script>
         <div class="player-wrapper">
             <div class="fmp_container">
+                <div id="no_flash" style="display:none;">
+                        <h2>
+                                You need to install Adobe Flash in order to play songs.
+                                        Please click here to <a href="http://get.adobe.com/flashplayer/"> Download now.</a>
+                        </h2>
+                </div>                
                 <div id="alt"></div>
             </div>
 
@@ -119,27 +127,45 @@ if ($this->Session->read("patron"))
     <?php } ?>
 <?php } ?>
 
-<script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
-<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
-
 <script type="text/javascript">
+    
+        $(document).ready(function (){
+            $("#alt").hide();  
+            $("#no_flash").hide();
+
+            if(swfobject.hasFlashPlayerVersion("9.0.115"))
+            {
+                $("#alt").show (); 
+            }
+            else
+            {
+                $("#no_flash").show ();  
+            }
+            
+            //for player initialization
+            if(swfobject !== 'undefined'){
+                var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
+                var attributes = {id: "audioplayer"};
+
+                swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+            }
+            
+        });
+        
+        //for google anlytics
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+        
+        try {
+            var pageTracker = _gat._getTracker("UA-16162084-1");
+            pageTracker._trackPageview();
+        } catch (err) {}
 </script>
-<script type="text/javascript">
-    try {
-        var pageTracker = _gat._getTracker("UA-16162084-1");
-        pageTracker._trackPageview();
-    } catch (err) {
-    }</script>
 
 
 <!-- Code for player -->
-<!-- History.js -->
-<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.history.js"></script>
 
-<!-- Ajaxify -->
-<script src="<? echo $this->webroot; ?>app/webroot/js/ajaxify-html5.js"></script>
 
 <?php //if ($this->Session->read('patron') && $this->Session->read('library_type') == 2){    ?>
 

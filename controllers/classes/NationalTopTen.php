@@ -115,6 +115,12 @@ class NationalTopTenType{
 	 * @var string
 	 */
   public $FullLength_FIleURL;
+
+  /**
+	 * playButtonStatus
+	 * @var int
+	 */
+  public $playButtonStatus;
   
   /**
 	 * Constructor

@@ -9,9 +9,9 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo', 'Queue');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo','Download','Videodownload', 'Queue');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth','Downloadsvideos','Common','Streaming');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload','Zipcode', 'StreamingHistory');
 
     /*
      Function Name : beforeFilter
@@ -34,8 +34,19 @@ class HomesController extends AppController
         //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
         //			}
         //        }           
-                
-         $pat_id    =   $this->Session->read('patron');
+             
+        
+        if ($this->params['action'] == 'convertString' && ($this->Session->read('Auth.User.type_id') == 1)) // For super Admin while accesing convertString action
+        {
+                $pat_id = $this->Session->read('Auth.User.id');
+        }
+        else        //  For Front End
+        {
+                 $pat_id    =   $this->Session->read('patron');
+        }
+        
+         
+          
           if(!empty($pat_id))    //  After Login
           {
                 $this->Auth->allow('*'); 
@@ -75,15 +86,7 @@ class HomesController extends AppController
       
         
        
-//testing for streaming component       
-//        $prodId='23366336';
-//        $provider='sony';
-//        $userStreamedTime ='500';
-//        $actionType='1';
-//        $songDuration = 300;
-//        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
-//        print_r($validationResponse);
-//        die;
+
         
         
         
@@ -188,6 +191,23 @@ class HomesController extends AppController
         */  
     }
 
+    //this is just for streaming component test
+    function checkStreamingComponent(){
+        
+        echo 'libid=> '.$libId = $this->Session->read('library');
+        echo '<br>patid=> '.$patId = $this->Session->read('patron');
+        //testing for streaming component       
+        echo '<br>prodid=> '.$prodId='28320117';
+        echo '<br>providertyp=> '.$provider='sony';
+        echo '<br>userStreamedTime=> '.$userStreamedTime ='0';
+        echo '<br>actionType=> '.$actionType='5';
+        echo '<br>songDuration=> '.$songDuration = 300;
+        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
+        print_r($validationResponse);
+        die;
+      
+        
+    }
 	function get_genre_tab_content($tab_no , $genre){
 		//Cachec results for Rock Genre
 
@@ -3450,6 +3470,8 @@ STR;
 
             $this->set('new_releases_albums', $new_releases_albums_rs); 
        }
+       
+       
 }
 
 

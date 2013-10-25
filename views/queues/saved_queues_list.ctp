@@ -30,7 +30,7 @@
                                                 <div class="playlist-info-container">
                                                         <?php if(!empty($value['QueueList']['queue_name'])){ ?>
                                                         <div class="playlist-title"><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></div>
-                                                        <a href="#"><img src="/img/my-playlists/album-cover.jpg" alt="album-cover" width="85" height="85" /></a>
+                                                        <a href="javascript:void(0);"><img src="/img/my-playlists/album-cover.jpg" alt="album-cover" width="85" height="85" /></a>
                                                         <?php } ?>
                                                         <?php if(!empty($value['QueueDetail'])){ ?>
                                                         <div class="playlist-length"><?php echo count($value['QueueDetail']); ?> Songs</div>
