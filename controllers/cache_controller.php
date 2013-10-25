@@ -2085,7 +2085,7 @@ STR;
         $this->Country->setTablePrefix($countryPrefix);
       }
 
-    $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
+      $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
                 v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
                 imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
                 FROM video AS v
@@ -2097,20 +2097,18 @@ STR;
                 LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
                 WHERE c.Territory = "'.$territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
                 ORDER BY cnt DESC LIMIT 100';
-    $arr_video = $this->Video->query($str_query);
+      $arr_video = $this->Video->query($str_query);
     
-    $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+      $status = Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
     
-    echo '<br />=====================AppMyMusicVideosList_'.$territory.'==========================================<br />';
+    /*echo '<br />=====================AppMyMusicVideosList_'.$territory.'==========================================<br />';
     echo '<pre>';
     echo $str_query; echo '<br />';
     var_dump(Cache::read("AppMyMusicVideosList_".$territory));
     echo '</pre>';
-    echo '<br />==================================================================================================<br />';
-
+    echo '<br />==================================================================================================<br />'; */
 
     }
-    exit('Complete');
   }
     
     
@@ -2138,11 +2136,11 @@ STR;
             $this->Common->getFeaturedArtists($territory);
             $this->Common->getDifferentGenreData($territory);
             $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);
-	    $this->setAppMyMusicVideoList();
+            $this->Common->getDefaultQueues($territory);    
         }
         $this->Common->setLibraryTopTenCache();
-        $this->Common->setVideoCacheVar();        
+        $this->Common->setVideoCacheVar();    
+        $this->setAppMyMusicVideoList();        
     }
     
     /*
