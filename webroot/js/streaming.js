@@ -449,7 +449,7 @@ function reportTime(amt) {
 
 function flashConsole(msg) {
 	
-	console.log(msg);
+	//console.log(msg);
 }
 
 
