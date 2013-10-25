@@ -327,15 +327,14 @@
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
                     
+                    var delay = 5; // 5 second delay
+                    var now = new Date();
+                    var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
                     
-                    $.getScript(webroot + 'js/jquery-1.10.2.min.js');
-                    $.getScript(webroot + 'js/modernizr.custom.js');
-                    $.getScript(webroot + 'js/lazyload.js');
-    
-                    $.getScript(webroot + 'js/jquery.colorbox.js');
-                    $.getScript(webroot + 'js/jquery.cycle.all.js');
-                    $.getScript(webroot + 'js/jquery.autocomplete.js');
-    
+                    while (now < desiredTime) {
+                        now = new Date(); // update the current time
+                    }
+
                     $.getScript(webroot + 'js/freegal.js');
                     $.getScript(webroot + 'js/site.js');
                     
