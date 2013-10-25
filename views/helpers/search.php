@@ -1,7 +1,7 @@
 <?php
 /*
-	 File Name : library.php
-	 File Description : helper file for getting library detail
+	 File Name : Search.php
+	 File Description : helper file for getting search detail
 	 Author : m68interactive
  */
 class SearchHelper extends AppHelper {
