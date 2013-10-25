@@ -336,7 +336,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					</div>
                                         <div class="account-options-menu">                                            
                                             
-                                            <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>
+                                            <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?></div>
                                         </div>
 					<div class="play-count"><span id='downloads_used'>0</span></div>     
                                </div>
