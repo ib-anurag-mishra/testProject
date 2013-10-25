@@ -177,7 +177,7 @@ class QueuesController extends AppController{
         }
         
         if(!in_array($sortOrder, $sortOrderArray)){
-            $sortOrder = 'asc';
+            $sortOrder = 'desc';
         }
         
         switch($sort){

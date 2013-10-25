@@ -47,7 +47,7 @@ Class StreamingComponent extends Object
         $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent.PHP_EOL; 
         
         //if ProdID and Provider type is not set then
-        if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
+        if(($prodId === '' || $prodId === 0) && ($provider === '' || $provider === 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             
@@ -55,9 +55,9 @@ Class StreamingComponent extends Object
             return array(0,'Not able to stream this song.You need to login again1.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
-        echo $patId;
-        //if ProdID and Provider type is not set then
-        if(($patId == '' || $patId == 0)){
+        
+        //if patron is set null than then
+        if(($patId === '' || $patId === 0)){           
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
@@ -65,8 +65,8 @@ Class StreamingComponent extends Object
             exit;
         }
         
-        //if ProdID and Provider type is not set then
-        if(($libId == '' || $libId == 0)){
+        //if library id set null then
+        if(($libId === '' || $libId === 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
@@ -75,7 +75,7 @@ Class StreamingComponent extends Object
         }
         
          //if $songDuration  not set then
-        if(($songDuration == '' || $songDuration == 0)){
+        if(($songDuration === '' || $songDuration === 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,song duration is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
