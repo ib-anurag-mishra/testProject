@@ -171,8 +171,8 @@ class QueuesController extends AppController{
         }
         
         
-//        echo "<br>sort: ".$sort;
-//        echo "<br>sortOrder: ".$sortOrder;
+        echo "<br>sort: ".$sort;
+        echo "<br>sortOrder: ".$sortOrder;
         
         if(!in_array($sort, $sortArray)){
             $sort = 'date';
