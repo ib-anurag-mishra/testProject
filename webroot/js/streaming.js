@@ -231,7 +231,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 	songLength = prevSongObj.songLength
 	songProviderType = prevSongObj.providerType
 	songDuration = prevSongObj.psld   
-        songDuration = 0;
+        
 	var playerEventCodeString;
 	switch(playerEventCode) {
 		
@@ -438,8 +438,7 @@ function streamingValidationJS(responseDataJS) {
 	var flash =	document.getElementById("fmp_player");
 	
 	flash.streamingValidationAS(responseDataJS);
-        
-        return false;
+        exit;
 	
 }
 function reportTime(amt) {
