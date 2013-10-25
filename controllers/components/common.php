@@ -172,10 +172,11 @@ STR;
                         
                         if($this->Session->read('library_type')==2)
                         {
-                            echo "<br>1CdnPath: ".$value['File']['CdnPath'];
-                            echo "<br>1SaveAsName: ".$value['File']['SaveAsName'];
+                            echo "<br>1CdnPath: ".$value['Sample_Files']['SaveAsName'];
+                            echo "<br>1SaveAsName: ".$value['Full_Files']['SaveAsName'];
+                             echo "<br>1SaveAsName: ".$value['File']['SaveAsName'];
                             
-                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SaveAsName']);
+                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['Sample_Files']);
                             echo "<br>$filePath: ".$filePath;
                             echo "<br>2CdnPath: ".$value['File']['CdnPath'];
                             echo "<br>2SaveAsName: ".$value['File']['SaveAsName'];
