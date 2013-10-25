@@ -72,12 +72,10 @@ class SearchHelper extends AppHelper {
        $StreamSaltesDate = '';
        $StreamStatus = '';
        
-       print_r($TerritoryStreamingStatusArray);
-       
-       print_r($TerritoryStreamingSalesDateArray);
+      
        //get the donwload status
        if(is_array($TerritoryStreamingStatusArray)){
-           foreach ($TerritoryStreamingStatusArray as $territoryDownloadStatusInfo) {
+           foreach ($TerritoryStreamingStatusArray as $territoryStreamStatusInfo) {
                 $Territory_status_array = explode("_", $territoryStreamStatusInfo);
 
                 if(isset($Territory_status_array[0]) && ($Territory_status_array[0] === $territory)){
