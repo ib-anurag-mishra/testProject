@@ -244,7 +244,7 @@ class QueuesController extends AppController{
                                                                                           Configure::read('App.twoWeekEndDate'))
                                                                                          ),
                                                                     'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name','Song.Advisory', 'Song.FullLength_Duration','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'File.CdnPath', 'File.SourceURL'),
-                                                                    'order'=>"$songSortBy $sortType")); 
+                                                                    'order'=>"$songSortBy $sortType, StreamingHistory.ProdID")); 
         
 	
         
