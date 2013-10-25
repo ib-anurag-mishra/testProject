@@ -836,7 +836,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
      Function Name : patron
      Desc : For validating the patrons for libraries
     */
-    function patron($library = null) {        
+    function patron($library = null) { 
         $this->layout = false;        
         if(isset($_REQUEST['url']))
         {
@@ -875,23 +875,12 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         if($referrerUrl == ''){
             $this -> Session -> setFlash("You are not coming from a correct referral url.".$str);
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
-        }        
+        }
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
-        
-       
-        
-       
-        /*echo $library1;
-        if($library != null)
-        {
-                $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-        }
-        if(count($existingLibraries) == 0)
-        $existingLibraries = $library_data;*/
         
          if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") { 
             $httpURLHeader = 'https://';
@@ -915,59 +904,28 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         }        
         else
         {
-			//writing to memcache and writing to both the memcached servers
-			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-			if(count($currentPatron) > 0){
-			// do nothing
-			} else {
-				$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-				$insertArr['patronid'] = $patronId;
-				$insertArr['session_id'] = session_id();
-				$this->Currentpatron->save($insertArr);						
-			}		
-			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
-				$date = time();
-				$values = array(0 => $date, 1 => session_id());			
-				Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-			} else {
-			Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);			
-		/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
-				$date = time();
-				$values = array(0 => $date, 1 => session_id());			
-				Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-			} else {
-				$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
-				$date = time();
-				$modifiedTime = $userCache[0];
-				if(!($this->Session->read('patron'))){
-					if(($date-$modifiedTime) > 60){
-						$values = array(0 => $date, 1 => session_id());	
-						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-					}
-					else{
-						$this->Session->destroy('user');
-						$this -> Session -> setFlash("This account is already active.");                              
-						$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-					}
-				} else {
-					if(($date-$modifiedTime) > 60){
-						$values = array(0 => $date, 1 => session_id());	
-						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-					}
-					else{
-						$this->Session->destroy('user');
-						$this -> Session -> setFlash("This account is already active.");                              
-						$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-					}		
-				}
-				
-			} */
-			}
+                //writing to memcache and writing to both the memcached servers
+                $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+                if(count($currentPatron) > 0){
+                // do nothing
+                } else {
+                        $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+                        $insertArr['patronid'] = $patronId;
+                        $insertArr['session_id'] = session_id();
+                        $this->Currentpatron->save($insertArr);						
+                }		
+                if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+                        $date = time();
+                        $values = array(0 => $date, 1 => session_id());			
+                        Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+                } else {
+                Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);			
+
+                }
+            
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
             $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-            
-            
             $this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
             if($existingLibraries['0']['Library']['library_logout_url'] != ''){
                     $this->Session->write("referral_url",$existingLibraries['0']['Library']['library_logout_url']);
@@ -990,26 +948,12 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             else{
                 $this ->Session->write("block", 'no');
             }
-            $this->redirect(array('controller' => 'homes', 'action' => 'index')); 
-            
-//            if ($this->Cookie->read('UrlReferer') != '') {
-//                echo  $urlReferer = $this->Cookie->read('UrlReferer');die;
-//            }
-         
-            
-            
-//            if ($this->Cookie->read('UrlReferer') != '') {
-//               $urlReferer = $this->Cookie->read('UrlReferer');             
-//               $this->Cookie->delete('UrlReferer');
-//               $this->redirect($urlReferer);
-//            } else {               
-//              $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-//            }
-           
-            
-            
-                     
-            
+            $redirecting = $this->Cookie->read('redirecting');
+            if(isset($redirecting) && !empty($redirecting) && '/homes/chooser' && !strpos($redirecting,'/users/login') && !strpos($redirecting,'/homes/chooser') ) {
+                $this->redirect($redirecting);
+            }else{
+                $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            } 
         }
     }
     

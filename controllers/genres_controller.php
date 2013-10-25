@@ -282,6 +282,8 @@ Class GenresController extends AppController
         }
         $genreAll = Cache::read("genre" . $country);
 
+        
+        
         $this->set('genresAll', $genreAll);
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -345,7 +347,7 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
             $this->Song->Behaviors->attach('Containable');
             $this->Song->recursive = 0;
-            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 GROUP BY Song.ArtistText');
+            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
 
             $this->paginate = array(
                 'conditions' => $gcondition,
@@ -363,6 +365,7 @@ Class GenresController extends AppController
 
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
+        
 
         $allArtistsNew = $allArtists;
 
@@ -385,8 +388,6 @@ Class GenresController extends AppController
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
-
-
 
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);

@@ -86,29 +86,37 @@
                                     $downloadFlag = 1;                                                                       
                                 }
                                 
-                                if($this->Session->read("patron")){ 
-
-                                    if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
+                                if($this->Session->read("patron")){                                                                         
+                                    
+                                    
+                                    if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1) 
+                                    {
                                         echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'loadSong("'.$albumSong['streamUrl'].'", "'.$albumSong['Song']['SongTitle'].'","'.$albumSong['Song']['ArtistText'].'","'.$albumSong['totalseconds'].'","'.$albumSong['Song']['ProdID'].'","'.$albumSong['Song']['provider_type'].'");'));
                                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
                                         echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
                                     }
-                                }
+                                    else  if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) 
+                                    {
+                                                echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", '.$albumSong["Song"]["ProdID"].', "'.base64_encode($albumSong["Song"]["provider_type"]).'", "'.$this->webroot.'");'));
+                                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
+                                                echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
+                                    }
+                            }
 				?>
 					
                                 
                                 
                                         <div class="song" style="width:200px;"><?php
                                                             if (strlen($albumSong['Song']['SongTitle']) >= 20) {
-                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</span>';
+                                                                    echo '<a title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</a>';
                                                             } else {
-                                                                    echo '<p style="float:left;">' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</p>';
+                                                                    echo '<p style="float:left;"><a title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</a></p>';
                                                             }
                                                             if ($albumSong['Song']['Advisory'] == 'T') {
                                                                     echo '<span class="explicit"> (Explicit)</span>';
                                                             }
                                                     ?></div>
-					<div class="artist"><a href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"><?php
+					<div class="artist"><a title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>"href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"><?php
 										if (strlen($albumSong['Song']['Artist']) >= 11) {
 											if(strlen($albumSong['Song']['Artist']) >= 30){
 												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 30). '...';
@@ -141,10 +149,10 @@
 
                                                                                                             <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
                                                                                                                 <![if !IE]>
-                                                                                                                   <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistDownloadOthers("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download');?></a>
+                                                                                                                   <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistDownloadOthers("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download Now');?></a>
                                                                                                                 <![endif]>
                                                                                                                 <!--[if IE]>
-                                                                                                                       <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download');?></a>
+                                                                                                                       <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download Now');?></a>
                                                                                                                 <![endif]-->
                                                                                                             </span>
 

@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-     $("#FormDelete").submit(function() {
+     $("#FormDelete").submit(function() { alert("HI");
      var frm = $('#FormDelete');
         $.ajax({
             type: "post",
@@ -272,7 +272,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="label">
 						<p>My Account</p>
 					</div>
-                                        <a class="select-arrow" href="#"></a>
+                                        <a class="select-arrow" href="javascript:void(0);"></a>
 					<div class="small-divider"></div>
 					<div class="tooltip">
 						<a href="#" class="no-ajaxy"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
@@ -463,8 +463,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
                                                     <li>
-                                                            <?php echo $html->link(__('Music Popular', true), array('controller' => 'homes', 'action' => 'my_lib_top_10'),array('class'=>'sidebar-anchor' , 'class'=>"sidebar-anchor") ); ?>
-                                                           
+                                                            <a class="sidebar-anchor" style="cursor:pointer" href="javascript:void(0);" ><?php __('Most Popular'); ?></a>
                                                             <ul class="<?php echo $ul_class; ?>">
                                                                 <?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
                                                                         <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
@@ -506,7 +505,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             </ul>
                                                     </li>
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor"><?php __('History'); ?></a>
+                                                            <a href="/queues/my_streaming_history" class="sidebar-anchor"><?php __('History'); ?></a>
                                                     </li>
                                             </ul>
                                             <?php } ?>

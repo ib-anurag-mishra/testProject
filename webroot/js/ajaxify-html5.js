@@ -111,7 +111,8 @@
 
 
             // Set Loading
-            $('.content-wrapper').append("<div class='loader'></div>");
+            $('.content-wrapper').append('<div class="loader"></div>');
+
             //$body.addClass('loader');
 
             // Start Fade Out
@@ -130,8 +131,58 @@
                     var indexOfHash = window.location.href.indexOf('#.');
                     if (indexOfHash > 0)
                     {
+                        var current_nav = '';
+
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 2, window.location.href.length);
+                        var url_slice = window.location.href.slice(indexOfHash + 2, window.location.href.length);
+
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
+                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
+                        {
+                            if (window.location.href.indexOf('/homes') > -1)
+                            {
+                                current_nav = base_url + '/homes' + url_slice;
+                            }
+                            else
+                            {
+                                if (url_slice.indexOf('homes') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/homes' + url_slice;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            current_nav = base_url + url_slice;
+                        }
+
+                        if (url_slice.indexOf('_notification') > -1 || url_slice.indexOf('_account') > -1 || url_slice.indexOf('logout') > -1)
+                        {
+                            if (window.location.href.indexOf('/users') > -1)
+                            {
+                                current_nav = base_url + '/users' + url_slice;
+                            }
+                            else
+                            {
+                                if (url_slice.indexOf('users') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/users' + url_slice;
+                                }
+                            }
+                        }
+
+
+                        current_nav = current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('com//', 'com/');
+
                         window.location.href = current_nav;
                         return true;
                     }
@@ -140,8 +191,57 @@
                     var indexOfHash = window.location.href.indexOf('#');
                     if (indexOfHash > 0)
                     {
+                        var current_nav = '';
+
                         var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
-                        var current_nav = base_url + window.location.href.slice(indexOfHash + 1, window.location.href.length);
+                        var url_slice = window.location.href.slice(indexOfHash + 1, window.location.href.length);
+
+                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
+                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
+                        {
+                            if (window.location.href.indexOf('/homes') > -1)
+                            {
+                                current_nav = base_url + '/homes' + url_slice;
+                            }
+                            else
+                            {
+                                if (url_slice.indexOf('homes') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/homes' + url_slice;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            current_nav = base_url + url_slice;
+                        }
+
+                        if (url_slice.indexOf('_notification') > -1 || url_slice.indexOf('_account') > -1 || url_slice.indexOf('logout') > -1)
+                        {
+                            if (window.location.href.indexOf('/users') > -1)
+                            {
+                                current_nav = base_url + '/users' + url_slice;
+                            }
+                            else
+                            {
+                                if (url_slice.indexOf('users') > -1)
+                                {
+                                    current_nav = base_url + url_slice;
+                                }
+                                else
+                                {
+                                    current_nav = base_url + '/users' + url_slice;
+                                }
+                            }
+                        }
+
+                        current_nav = current_nav.replace('/homes/homes', '/homes');
+                        current_nav = current_nav.replace('com//', 'com/');
+
                         window.location.href = current_nav;
                         return true;
                     }
@@ -221,17 +321,38 @@
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
 
-
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
                     return false;
                 },
-                complete: function() {
-                    //$body.removeClass('loader');
-                    $('.loader').fadeOut(2000);
-                    $('.content-wrapper').remove(".loader");
-                }
+            })
+                    .done(function() {
+                //$body.removeClass('loader');
+                $.getScript(webroot + 'js/jquery-1.10.2.min.js');
+
+                $.getScript(webroot + 'js/modernizr.custom.js');
+                $.getScript(webroot + 'js/lazyload.js');
+
+                $.getScript(webroot + 'js/jquery.colorbox.js');
+                $.getScript(webroot + 'js/jquery.cycle.all.js');
+                $.getScript(webroot + 'js/jquery.autocomplete.js');
+
+                $.getScript(webroot + 'js/jquery.history.js');
+                $.getScript(webroot + 'js/ajaxify-html5.js');
+
+                $.getScript(webroot + 'js/audioPlayer.js');
+                $.getScript(webroot + 'js/freegal.js');
+                $.getScript(webroot + 'js/recent-downloads.js');
+                $.getScript(webroot + 'js/search-results.js');
+                $.getScript(webroot + 'js/site.js');
+
+
+                $.getScript(webroot + 'css/styles.css');
+                $.getScript(webroot + 'css/freegal_styles.css');
+
+                $('.loader').fadeOut(3000);
+                $('.content-wrapper').remove(".loader");
             }); // end ajax
 
         }); // end onStateChange

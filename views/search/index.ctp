@@ -358,7 +358,7 @@ if ($type != 'all') {
                     $artist_name_text = truncate_text($artist_name, 30, $this);
                     $tilte = urlencode($artist->ArtistText);
                     $count = $artist->numFound;
-                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)) . " (" . $count . ")", array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))));
+                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)) . " (" . $count . ")", array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))),array('title'=> str_replace('"', '', $artist->ArtistText)));
                     ?>
                                                 <div class="row"><?php echo $link; ?></div>
                                                 <?php
@@ -422,7 +422,7 @@ if ($type != 'all') {
                     $count = $composer->numFound;
                     $name = $this->getTextEncode($name);
                     ?>
-                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0) {
@@ -656,7 +656,7 @@ if ($type != 'all') {
                 foreach ($artists as $artist) {
                     $tilte = urlencode($artist->ArtistText);
                     $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
-                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))));
+                    $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))),array('title' => $this->getTextEncode($artist->ArtistText)));
                     if(!empty($artist_name_text)) {
                     ?>
                                 <div><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></div>
@@ -694,7 +694,7 @@ if ($type != 'all') {
             $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
             if(!empty($composer_name)){
             ?>
-                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title='<?php echo $this->getTextEncode($composer->Composer) ?>'><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
+                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
         <?php } }
     } else {
         ?>
@@ -862,20 +862,39 @@ if ($type != 'all') {
                             
                             
                         <?php
-                        if($this->Session->read("patron")){
-                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.$psong->SongTitle.'","'.$psong->ArtistText.'","'.$psong->totalseconds.'","'.$psong->ProdID.'","'.$psong->provider_type.'");'));
-                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
-                        echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
+                        if($this->Session->read("patron"))
+                        {
+                            if( $this->Session->read('library_type') == 2 && $psong->StreamingSalesDate <= date('Y-m-d') && $psong->StreamingStatus == 1)
+                            {
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.$psong->SongTitle.'","'.$psong->ArtistText.'","'.$psong->totalseconds.'","'.$psong->ProdID.'","'.$psong->provider_type.'");'));
+                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
+                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
+                            }
+                            else
+                            {
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $psong->ProdID . ', "' . base64_encode($psong->provider_type) . '", "' . $this->webroot . '");'));
+                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
+                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
+                            }
                         }
+                        
                         if($this->Session->read("patron")) {
                             $style = '';
+                            $styleSong = '';
                         } else {
                             $style = 'style="left:10px"';
+                            $styleSong = "style='left:570px'";
                         }
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText) )); ?></div>
+                            <?php
+                            if($this->Session->read("patron")) {
+                                ?>
                             <a class="add-to-playlist-button no-ajaxy" href="#"></a>
-                            <div class="composer"><span title="<?php echo $this->getTextEncode($psong->Composer); ?>"><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></span></div>
+                            <?php
+                            }
+                            ?>
+                            <div class="composer"><a style="text-decoration:none;" title='<?php echo str_replace('"', '', $this->getTextEncode($psong->Composer)); ?>'><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
 
 
                             <div class="wishlist-popover">	
@@ -921,10 +940,10 @@ if ($type != 'all') {
                                 ?>
                                 <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php //echo $psong->ReferenceID; ?>/<?php //echo base64_encode($psong->provider_type); ?>"><img src="<?php //echo $image; ?>" width="27" height="27" /></a> <?php /*alt="<?php echo $psong->SongTitle; ?>"*/ ?>
                             </div-->
-                            <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 15, $this)); ?></a></div>
-                            <div class="song">
+                            <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
+                            <div class="song" <?php echo $styleSong; ?>>
                                 <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                <span title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
+                                <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
         <?php
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
@@ -1054,14 +1073,20 @@ if (isset($type)) {
                         <?php
                         if($this->Session->read("patron")) {
                             $style = '';
+                            $styleSong = '';
                         } else {
                             $style = 'style="left:10px"';
+                            $styleSong = "style='left:440px'";
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
-
+                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))),array('title' => $this->getTextEncode($psong->ArtistText))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText); ?> -->
+                        <?php 
+                        if($this->Session->read("patron")) {
+                        ?>
 						<a class="add-to-playlist-button no-ajaxy" href="#"></a>
-						
+						<?php
+                        }
+                        ?>
 						<div class="wishlist-popover">	
                             <?php
                                 if($this->Session->read("patron")){
@@ -1083,14 +1108,14 @@ if (isset($type)) {
 							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
 						</div>
 						-->
-                        <div class="album"><a href="#"><?php echo truncate_text($this->getTextEncode($psong->Title),25,$this); ?></a></div>
+                        <div class="album"><a href="#" title="<?php echo $this->getTextEncode($psong->Title); ?>" ><?php echo truncate_text($this->getTextEncode($psong->Title),25,$this); ?></a></div>
 						<?php
                             //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                             //$image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
-                        <div class="song">
+                        <div class="song" <?php echo $styleSong; ?>>
                             <!--<img src="<?php //echo $image; ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle); ?>" width="34" height="27" />-->
-                            <a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
+                            <a href="/videos/details/<?php echo $psong->ProdID; ?>" title="<?php echo $this->getTextEncode($psong->Title);?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
@@ -1108,10 +1133,10 @@ if (isset($type)) {
                                                 <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
                                                 <span class="beforeClick" id="download_video_<?php echo $psong->ProdID; ?>">
                                                     <![if !IE]>
-                                                        <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistVideoDownloadOthers("<?php echo $psong->ProdID; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>" , "<?php echo $psong->provider_type; ?>");'><?php __('Download');?></a>
+                                                        <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up two of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistVideoDownloadOthers("<?php echo $psong->ProdID; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>" , "<?php echo $psong->provider_type; ?>");'><?php __('Download');?></a>
                                                      <![endif]>
                                                      <!--[if IE]>
-                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
+                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up two of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>");' href="<?php echo trim($finalVideoUrl);?>"><?php __('Download');?></a>
                                                      <![endif]-->
                                                 </span>
                                                 <span class="afterClick" id="vdownloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait..."); ?></span>

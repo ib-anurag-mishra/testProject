@@ -47,35 +47,35 @@ Class StreamingComponent extends Object
         $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent.PHP_EOL; 
         
         //if ProdID and Provider type is not set then
-        if(($prodId == '' || $prodId == 0) && ($provider == '' || $provider == 0)){
+        if(($prodId === '' || $prodId === 0) && ($provider === '' || $provider === 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             
             //return the final result array
-            return array(0,'Not able to stream this song.You need to login again.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
+            return array(0,'Not able to stream this song.You need to login again1.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
         
-        //if ProdID and Provider type is not set then
-        if(($patId == '' || $patId == 0)){
+        //if patron is set null than then
+        if(($patId === '' || $patId === 0)){           
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
-            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
+            return array(0,'Not able to play this song.You need to login again2.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
             exit;
         }
         
-        //if ProdID and Provider type is not set then
-        if(($libId == '' || $libId == 0)){
+        //if library id set null then
+        if(($libId === '' || $libId === 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
-            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
+            return array(0,'Not able to play this song.You need to login again3.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
         
          //if $songDuration  not set then
-        if(($songDuration == '' || $songDuration == 0)){
+        if(($songDuration === '' || $songDuration === 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,song duration is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
@@ -616,6 +616,46 @@ Class StreamingComponent extends Object
         else {            
             return false;
         }        
+    }
+    
+    
+    /*
+     Function Name : getStreamingDetails
+     Desc : function used for fetching information realted to streaming
+     * 
+     * @param $prodId Int  'song prodID'
+     * @param $providerType varChar 'song provider type'
+     * 
+     * @return false or song duration in seconds
+    */
+    function getStreamingDetails($prodId, $providerType){
+        Configure::write('debug', 0);
+        $songInstance = ClassRegistry::init('Song');
+        $songInstance->recursive = -1;        
+        $song = $songInstance->find('first',array(
+        'joins' => array(
+            array(
+                'table' => $this->Session->read('multiple_countries').'countries',
+                'alias' => 'Country',
+                'type' => 'INNER',
+                'conditions' => array(
+                    'Country.ProdID = Song.ProdID',
+                    'Country.provider_type = Song.provider_type',
+                )
+            )
+        ),
+        'conditions' => array(
+                            'Song.ProdID'=>$prodId,
+                            'Song.provider_type'=>$providerType,
+                            'Country.StreamingSalesDate < NOW()',
+                            'Country.StreamingStatus'=> 1
+                            ),
+        'fields' => array('Country.StreamingSalesDate', 'Country.StreamingStatus'))); 
+        
+       // echo "<br>Query: ".$this->$songInstance->lastQuery();
+        //echo "<pre>"; print_r($song);
+        return $song;
+        
     }
     
     

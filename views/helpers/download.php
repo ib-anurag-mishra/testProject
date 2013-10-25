@@ -23,7 +23,13 @@ class DownloadHelper extends AppHelper {
         $downloadInstance->recursive = -1;
         $downloadCount = $downloadInstance->find('all',array('fields' => array('COUNT(DISTINCT Download.id) AS totalProds'),'conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
         return $downloadCount[0][0]['totalProds'];
-    }      
+    }
+    function getDownloadfind($prodId,$provider_type,$libId,$patID,$startDate,$endDate) {
+        $downloadInstance = ClassRegistry::init('Download');
+        $downloadInstance->recursive = -1;
+        $downloadCount = $downloadInstance->find('all',array('fields' => array('COUNT(DISTINCT Download.id) AS totalProds'),'conditions' => array('ProdID' => $prodId,'provider_type' => $provider_type,'library_id' => $libId,'patron_id' => $patID,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate))));
+        return $downloadCount[0][0]['totalProds'];
+    }
 }
 
 ?>

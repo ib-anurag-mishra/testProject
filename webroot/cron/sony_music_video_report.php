@@ -81,9 +81,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
                 $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day"))." 00:00:00";
                 $condEndDate = date('Y-m-d', strtotime($currentDate." last sunday"))." 23:59:59";
-                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
+                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt";
 
-                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";
+                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt'";
                 $result3 = mysql_query($sql);
                 if($result3)
                 {
@@ -128,7 +128,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     while ($row = mysql_fetch_assoc($result))
                     {
                         $library_id = $row['library_id'];
-                        if($row['library_contract_start_date'] <= $condStartDate){
+                        /*if($row['library_contract_start_date'] <= $condStartDate){
                           if($row['library_contract_end_date'] >= $condEndDate){
                             $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID AND Songs.provider_type=downloads.provider_type LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID AND Albums.provider_type=Songs.provider_type WHERE downloads.provider_type='sony' and downloads.created between '".$condStartDate."' and '".$condEndDate."' and library_id = ".$library_id." group by downloads.id";
                           }
@@ -156,9 +156,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         }
                         while ($datarow = mysql_fetch_assoc($dataresult)) {
                           $data[$library_id][] = $datarow;
-                        }
+                        }*/
                         //start for sony music videos
-                        /*if($row['library_contract_start_date'] <= $condStartDate){
+                        if($row['library_contract_start_date'] <= $condStartDate){
                           if($row['library_contract_end_date'] >= $condEndDate){
                             $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$condStartDate."' and '".$condEndDate."' and library_id = ".$library_id." group by videodownloads.id";
                           }
@@ -186,7 +186,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         }
                         while ($datarow = mysql_fetch_assoc($dataresult)) {
                           $videodata[$library_id][] = $datarow;
-                        }*/
+                        }
                         //for sony music video end
                     }
                 }
@@ -211,7 +211,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $numSales = 0;
                     $numberOfSalesRecords = 0;
                     
-                    if(!empty($data)){
+                    /*if(!empty($data)){
                         foreach ($data as $libid=>$lib)
                         {
                             $libSales = 0;
@@ -270,10 +270,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             //echo '</br>';
                             $numSales = $numSales + $libSales;
                         }
-                    }
+                    }*/
                     
                     //for sony music video
-                    /*if(!empty($videodata)){
+                    if(!empty($videodata)){
                         foreach ($videodata as $libid=>$lib)
                         {
                             $libSales = 0;
@@ -335,7 +335,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             //echo '</br>';
                             $numSales = $numSales + $libSales;
                         }
-                    }*/
+                    }
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
@@ -368,7 +368,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -382,7 +382,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
 
                     //  FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly"))
+                    if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt", $logFileWrite, "weekly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "weekly")) {
@@ -413,9 +413,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $condStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
                 $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
 
-                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
+                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt";
 
-                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";;
+                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt'";;
                 $result3 = mysql_query($sql);
                 
                 if($result3)
@@ -465,7 +465,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     while ($row = mysql_fetch_assoc($result))
                     {
                         $library_id = $row['library_id'];
-                        if($row['library_contract_start_date'] <= $condStartDate)
+                        /*if($row['library_contract_start_date'] <= $condStartDate)
                         {
                              if($row['library_contract_end_date'] >= $condEndDate)
                              {
@@ -503,10 +503,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         while ($datarow = mysql_fetch_assoc($dataresult))
                         {
                           $data[$library_id][] = $datarow;
-                        }
+                        }*/
 //                        echo "<pre>";print_r($data);
                         //start for sony music videos 
-                        /*if($row['library_contract_start_date'] <= $condStartDate)
+                        if($row['library_contract_start_date'] <= $condStartDate)
                         {
                              if($row['library_contract_end_date'] >= $condEndDate)
                              {
@@ -544,7 +544,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         while ($datarow = mysql_fetch_assoc($dataresult))
                         {
                           $videodata[$library_id][] = $datarow;
-                        }*/
+                        }
 //                        echo "<pre>";print_r($data);
                         //for sony music videos end
                     }
@@ -572,7 +572,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 
                     $numSales = 0;
                     $numberOfSalesRecords = 0;
-                    if(!empty($data)){
+                    /*if(!empty($data)){
                         foreach ($data as $libid=>$lib)
                         {
                             $libSales = 0;
@@ -633,8 +633,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             //echo '</br>';
                             $numSales = $numSales + $libSales;
                         }
-                    }
-                    /*if(!empty($videodata)){
+                    }*/
+                    if(!empty($videodata)){
                         foreach ($videodata as $libid=>$lib)
                         {
                             $libSales = 0;
@@ -698,7 +698,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             //echo '</br>';
                             $numSales = $numSales + $libSales;
                         }
-                    }*/
+                    }
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
@@ -733,7 +733,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -747,7 +747,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
+                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt", $logFileWrite, "monthly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {

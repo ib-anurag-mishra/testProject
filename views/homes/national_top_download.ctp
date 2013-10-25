@@ -25,6 +25,8 @@ jQuery(document).ready(function() {
 									<ul>
 										<?php if(count($nationalTopDownload) > 0){ ?>
 										<?php
+                                            $libId = $this->Session->read('library');
+                                            $patId = $this->Session->read('patron');
 											$j = 0;
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopDownload); $i++) {
@@ -36,8 +38,13 @@ jQuery(document).ready(function() {
 										<span class="download">
 										<?php
 												if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
-													if($libraryDownload == '1' && $patronDownload == '1') {	
-														$nationalTopDownload[$i]['Song']['status'] = 'avail1';
+													if($libraryDownload == '1' && $patronDownload == '1') {                                                        
+                                                                                                            $downloadsUsed =  $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'],$nationalTopDownload[$i]['Song']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                                                                            if($downloadsUsed > 0){
+                                                                                                                    $nationalTopDownload[$i]['Song']['status'] = 'avail';
+                                                                                                            } else{
+                                                                                                                    $nationalTopDownload[$i]['Song']['status'] = 'not';
+                                                                                                            }
 														if($nationalTopDownload[$i]['Song']['status'] != 'avail') {
 															?>
 															<form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">

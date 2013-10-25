@@ -20,7 +20,7 @@
                                 <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"];?>" />
 			</div>
 			<div class="col-3">
-				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="#">FAQ section</a>.</div>
+				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="javascript:void(0);">FAQ section</a>.</div>
 				<div class="button-container">
 					<div class="play-queue-btn"></div>
 					<div class="gear-icon no-ajaxy"></div>
@@ -31,16 +31,16 @@
                                                 if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Custom') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
                                                 {
                                                     ?>
-                                                        <a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
-                					<a class="delete-queue" href="#" onclick="queueModifications();">Delete Queue</a>
+                                                        <a class="rename-queue" href="javascript:void(0);" onclick="queueModifications();">Rename Queue</a>	
+                					<a class="delete-queue" href="javascript:void(0);" onclick="queueModifications();">Delete Queue</a>
                                                     <?php
                                                 }
                                                 
                                     ?>
 					<div class="share clearfix">
 						<p>Share via</p>
-						<a class="facebook" href="#"></a>
-						<a class="twitter" href="#"></a>
+						<a class="facebook" href="javascript:void(0);"></a>
+						<a class="twitter" href="javascript:void(0);"></a>
 					</div>
 				</div>
 			</div>
@@ -89,7 +89,7 @@
                                                         $artistText = $this->getTextEncode($value['Songs']['ArtistText']);
                                                 }
                                                 ?>                                                
-						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
+						<a class="add-to-wishlist-button no-ajaxy" href='javascript:void(0);'></a>
 						<div class="album-title">
                                                     <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>
@@ -144,7 +144,7 @@
 					</div>
 					<?php
                                             if(!empty($value['streamUrl']) || !empty($value['Songs']['SongTitle'])){
-                                                 $playItem = array('playlistId' => $queue_id, 'songId' => $value["Songs"]["ProdID"],'songProviderType' => $value["Songs"]["provider_type"],  'label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => $value['Songs']['ArtistText'],'songLength' => $total_duration,'data' => $value['streamUrl']);
+                                                $playItem = array('playlistId' => $queue_id, 'songId' => $value["Songs"]["ProdID"],'providerType' => $value["Songs"]["provider_type"],  'label' => $value['Songs']['SongTitle'],'title' => $value['Songs']['SongTitle'],'artistName' => $value['Songs']['ArtistText'],'songLength' => $total_duration,'data' => $value['streamUrl']);
                                                 $jsonPlayItem = json_encode($playItem);
                                                 $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
                                                 $playListData[] =$jsonPlayItem;

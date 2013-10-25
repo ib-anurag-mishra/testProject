@@ -78,7 +78,8 @@
              <!--[if IE 8]>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->   
-            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>   
+            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/respond.min.js"></script>    
             
 <!--
             <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
@@ -139,7 +140,7 @@
                 <noscript>
                     <?php
                     if ($this->params['action'] != 'aboutus') {
-                        echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err"), false);
+                        echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0; url=" . $this->webroot . "homes/aboutus/js_err"), false);
                     }
                     ?>
                 </noscript>
@@ -298,7 +299,8 @@
                                                                         echo $this->element('navigation');
                                                                     }?>
                                                                     <section class="site-login">
-																	<?php echo $this->getTextEncode($page->getPageContent('login')); ?>
+                                                                    <?php  echo $this->Session->flash('inactivelib_message'); ?>
+                                                                    <?php echo $this->getTextEncode($page->getPageContent('login')); ?>
                                                                     <?php echo $content_for_layout; ?>
                                                                     </section>
                                                                 </div>
