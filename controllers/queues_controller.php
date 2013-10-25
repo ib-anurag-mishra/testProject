@@ -238,8 +238,8 @@ class QueuesController extends AppController{
                                                                                     ),
                                                                     'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type, QueueList.queue_id',
                                                                     'conditions' => array('StreamingHistory.library_id' => $libraryId,
-                                                                                          'StreamingHistory.patron_id' => $patronId, 
-                                                                                          'QueueList.patron_id' => $patronId, 
+                                                                                          'StreamingHistory.patron_id' => $patronId,                                                                                           
+                                                                                          'OR' => array('QueueList.patron_id' => $patronId, QueueList.queue_type =>1 ),
                                                                                           'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
                                                                                           Configure::read('App.twoWeekEndDate'))
                                                                                          ),
