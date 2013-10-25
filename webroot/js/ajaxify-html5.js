@@ -329,8 +329,11 @@
             })
                     .done(function() {
                 //$body.removeClass('loader');
+                $.getScript(webroot + 'css/styles.css');
+                $.getScript(webroot + 'css/freegal_styles.css');
+                
+                
                 $.getScript(webroot + 'js/jquery-1.10.2.min.js');
-
                 $.getScript(webroot + 'js/modernizr.custom.js');
                 $.getScript(webroot + 'js/lazyload.js');
 
@@ -346,10 +349,6 @@
                 $.getScript(webroot + 'js/recent-downloads.js');
                 $.getScript(webroot + 'js/search-results.js');
                 $.getScript(webroot + 'js/site.js');
-
-
-                $.getScript(webroot + 'css/styles.css');
-                $.getScript(webroot + 'css/freegal_styles.css');
 
                 $('.loader').fadeOut(3000);
                 $('.content-wrapper').remove(".loader");
