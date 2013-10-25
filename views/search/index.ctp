@@ -862,7 +862,7 @@ if ($type != 'all') {
                             
                             
                         <?php
-                          die(147);
+                     
                         $downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus,$psong->TerritorySalesDate,$this->Session->read('territory'));
                         $StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus,$psong->TerritoryStreamingSalesDate,$this->Session->read('territory'));
                            
