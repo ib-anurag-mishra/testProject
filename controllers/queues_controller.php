@@ -165,6 +165,7 @@ class QueuesController extends AppController{
         if(isset($_POST)){
             $sort = $_POST['sort'];
             $sortOrder = $_POST['sortOrder'];
+            $sortOrder  = ($sortOrder=='asc')?'desc':'asc';
         }
         
         echo "<br>sort: ".$sort;
