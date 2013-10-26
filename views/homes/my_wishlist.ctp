@@ -420,7 +420,7 @@ $ieVersion =  ieversion();
          if(is_array($wishlistResults) && count($wishlistResults) > 0){ 
              
 	
-            for($i = 0; $i < count($wishlistResults); $i++) { echo '<pre>'; print_r($wishlistResults);
+            for($i = 0; $i < count($wishlistResults); $i++) { 
 		
 			
 	?>
@@ -443,7 +443,7 @@ $ieVersion =  ieversion();
                                                         $songPath = explode(':',$filePath);
                                                         $streamUrl =  trim($songPath[1]);
                                                         $wishlistResults[$i]['streamUrl'] = $streamUrl;
-                                                        $wishlistResults[$i]['totalseconds']  = $this->Queue->getSeconds($wishlistResults[$i]['FullLength_Duration']); 
+                                                        $wishlistResults[$i]['totalseconds']  = $this->Queue->getSeconds($wishlistResults[$i]['Song']['FullLength_Duration']); 
                                                  }
                                                 
                                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$wishlistResults[$i]['streamUrl'].'", "'.$wishlistResults[$i]['wishlists']['track_title'].'","'.$wishlistResults[$i]['wishlists']['artist'].'","'.$wishlistResults[$i]['totalseconds'].'","'.$wishlistResults[$i]['Song']['ProdID'].'","'.$wishlistResults[$i]['Song']['provider_type'].'");')); 
