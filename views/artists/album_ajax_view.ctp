@@ -60,7 +60,7 @@
                                          <?php
                                                 if($this->Session->read('library_type')==2)
                                                 {
-                                                    $filePath = shell_exec('perl files/tokengen_streaming '. $albumSong['File']['CdnPath']."/".$albumSong['File']['SourceURL']);
+                                                    $filePath = shell_exec('perl files/tokengen_streaming '. $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
 
                                                     if(!empty($filePath))
                                                      {
