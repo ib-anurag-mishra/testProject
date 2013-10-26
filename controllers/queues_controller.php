@@ -249,7 +249,7 @@ class QueuesController extends AppController{
 	
         
 //        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
-     //  echo '<pre>'; print_r($streamingResults);
+       echo '<pre>'; print_r($streamingResults);
     
         $this->set('streamingData',$streamingResults);
 
