@@ -283,6 +283,9 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 			playerEventCodeString = "Queue playback completed";
 			break;
 			
+		case 11:
+			playerEventCodeString = "New queue loaded";
+			break;
 		default:
 			playerEventCodeString = "";
 			break;				    	
