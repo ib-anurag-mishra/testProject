@@ -2320,6 +2320,8 @@ STR;
                             Country.StreamingSalesDate,
                             Country.StreamingStatus,
                             Country.DownloadStatus,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
                             File.SaveAsName 
                             
                             
@@ -2327,6 +2329,8 @@ STR;
                             Songs AS Song
                                     LEFT JOIN
                             wishlists AS wishlists ON ( (wishlists.ProdID = Song.ProdID) && (wishlists.provider_type = Song.provider_type) )
+                                    LEFT JOIN 
+                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)                                
                                     LEFT JOIN
                             {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '')
                                     INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
@@ -2402,7 +2406,7 @@ STR;
         
         $countryTableName = $countryPrefix .'countries';
         $downloadResults = Array();
-        $downloadResults =  $this->Download->find('all',array('joins'=>array(array('table' => 'Songs','alias' => 'Song','type' => 'LEFT','conditions' => array('Download.ProdID = Song.ProdID','Download.provider_type = Song.provider_type')),array('table' => $countryTableName,'alias' => 'Country','type' => 'INNER','conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')),array('table' => 'Albums','alias' => 'Album','type' => 'LEFT','conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Album.FileID = File.FileID'))),'group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Download.ProdID','Download.provider_type','Download.track_title','Download.created','Download.patron_id','Download.library_id','Download.artist, Song.Title,Song.ProdID,Song.Advisory,Song.ArtistText,Song.ReferenceID,Song.provider_type,Album.ProdID,Album.provider_type, File.CdnPath, File.SourceURL','Country.StreamingSalesDate','Country.StreamingStatus'),'order'=>"$songSortBy $sortType"));
+        $downloadResults =  $this->Download->find('all',array('joins'=>array(array('table' => 'Songs','alias' => 'Song','type' => 'LEFT','conditions' => array('Download.ProdID = Song.ProdID','Download.provider_type = Song.provider_type')),array('table' => $countryTableName,'alias' => 'Country','type' => 'INNER','conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')),array('table' => 'Albums','alias' => 'Album','type' => 'LEFT','conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Album.FileID = File.FileID')),array('table' => 'File','alias' => 'Full_Files','type' => 'LEFT','conditions' => array('Song.FullLength_FileID = Full_Files.FileID'))),'group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Download.ProdID','Download.provider_type','Download.track_title','Download.created','Download.patron_id','Download.library_id','Download.artist, Song.Title,Song.ProdID,Song.Advisory,Song.ArtistText,Song.ReferenceID,Song.provider_type,Album.ProdID,Album.provider_type, File.CdnPath, File.SourceURL','Country.StreamingSalesDate','Country.StreamingStatus','Full_Files.CdnPath','Full_Files.SaveAsName'),'order'=>"$songSortBy $sortType"));
 	
       
         $this->set('downloadResults',$downloadResults);
