@@ -321,7 +321,7 @@
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
                     
-                    var delay = 5; // 5 second delay
+                    var delay = 2; // 5 second delay
                     var now = new Date();
                     var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
                     

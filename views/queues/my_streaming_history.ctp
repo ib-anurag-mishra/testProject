@@ -106,7 +106,7 @@ $ieVersion =  ieversion();
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
                             
-                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['File']['CdnPath']."/".$streamingArr['File']['SourceURL']);
+                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['Full_Files']['CdnPath']."/".$streamingArr['Full_Files']['SaveAsName']);
 
                                 if(!empty($filePath))
                                 {
@@ -118,9 +118,6 @@ $ieVersion =  ieversion();
                             
                             
                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr['streamUrl'].'", "'.$streamingArr['Song']['SongTitle'].'","'.$streamingArr['Song']['ArtistText'].'","'.$streamingArr['totalseconds'].'","'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
-                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
-                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
-
                         }else if($this->Session->read('library_type') == 1){
                                 //do the simple player(this code will be update after discussion)
                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['Download']['ProdID'].', "'.base64_encode($streamingArr['Download']['provider_type']).'", "'.$this->webroot.'");')); 

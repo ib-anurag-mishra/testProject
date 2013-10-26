@@ -173,8 +173,16 @@ STR;
                         if($this->Session->read('library_type')==2)
                         {                            
                             
-                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
+//                            echo "<br>CdnPath: ".$value['Sample_Files']['CdnPath'];
+//                            echo "<br>CdnPath: ".$value['Sample_Files']['SaveAsName'];
+//                            echo "<br>CdnPath: ".$value['Full_Files']['CdnPath'];
+//                            echo "<br>CdnPath: ".$value['Full_Files']['SaveAsName'];
+//                            echo "<br>CdnPath: ".$value['File']['CdnPath'];
+//                            echo "<br>CdnPath: ".$value['File']['SaveAsName'];
+                            
+                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
 
+                            //echo "<br>filePath: ".$filePath;
                             
                             if(!empty($filePath))
                              {
@@ -653,7 +661,7 @@ STR;
                      
                      if($this->Session->read('library_type')==2)
                     {
-                        $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                        $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
 
                         if(!empty($filePath))
                          {
@@ -1445,7 +1453,7 @@ STR;
                  
                  if($this->Session->read('library_type')==2)
                 {
-                    $filePath = shell_exec('perl files/tokengen_streaming '. $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
 
                     if(!empty($filePath))
                      {
