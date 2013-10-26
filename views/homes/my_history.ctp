@@ -110,7 +110,7 @@ $ieVersion =  ieversion();
                     foreach($downloadResults as $key => $downloadResult):
                         
                         
-                        echo '<pre>'; print_r($downloadResult);
+                        echo '<pre>'; print_r($downloadResult); 
                         
                 ?>
 				
