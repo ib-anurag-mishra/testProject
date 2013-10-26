@@ -84,8 +84,11 @@
                 }
 
                 function setUpperNavigation(pageName) {
-
-
+                    
+                    
+                    var sidebar_anchor = $('.sidebar-anchor');
+                    sidebar_anchor.removeClass('active');                   
+                    
                     var home07 = $('#home07');
                     var musicVideo07 = $('#musicVideo07');
                     var newsRelease07 = $('#newsRelease07');
