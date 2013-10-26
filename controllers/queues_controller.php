@@ -231,9 +231,9 @@ class QueuesController extends AppController{
                                                                                                'conditions' => array('QueueList.queue_id = QueueDetail.queue_id')
                                                                                               ),
                                                                                         array('table' => 'File',
-                                                                                              'alias' => 'File',
+                                                                                              'alias' => 'Full_Files',
                                                                                               'type' => 'LEFT',
-                                                                                              'conditions' => array('Song.Sample_FileID = File.FileID')
+                                                                                              'conditions' => array('Song.FullLength_FileID = Full_Files.FileID')
                                                                                              )
                                                                                     ),
                                                                     'group' => 'StreamingHistory.ProdID, StreamingHistory.provider_type, QueueList.queue_id',
@@ -243,7 +243,7 @@ class QueuesController extends AppController{
                                                                                           Configure::read('App.twoWeekEndDate')),
                                                                                           array('OR' => array('QueueList.patron_id' => $patronId, 'QueueList.queue_type' => 1))
                                                                                           ),
-                                                                    'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name','Song.Advisory', 'Song.FullLength_Duration','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn', 'Album.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'File.CdnPath', 'File.SourceURL'),
+                                                                    'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name','Song.Advisory', 'Song.FullLength_Duration','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn', 'Song.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'Full_Files.CdnPath', 'Full_Files.SaveAsName'),
                                                                     'order'=>"$songSortBy $sortType")); 
         
 	
