@@ -135,7 +135,9 @@ $('document').ready(function()
     var footer = $('.site-footer');
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
-    console.log(window.location);
+    
+    
+   sidebar_anchor.removeClass('active');
     
     sidebar_anchor.on('click', function(e) {
         
