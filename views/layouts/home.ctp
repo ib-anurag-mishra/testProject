@@ -352,18 +352,17 @@
 			{
 				echo $this->element('navigation');
 			}
-			echo $content_for_layout; ?>
+			echo $content_for_layout; 
+			
+			//for page fully loaded issue
+			ob_flush();
+			flush();
+			set_time_limit(max_execution_time);
+		?>
 		</div>
 		<br class="clr">
 	</div>
 	<?php echo $this->element('footer'); ?>
 	
-	
-	<?php 
-		//for page fully loaded issue
-		ob_flush();
-		flush();
-		set_time_limit(max_execution_time);
-	?>
 </body>
 </html>
