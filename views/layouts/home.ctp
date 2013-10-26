@@ -357,6 +357,13 @@
 		<br class="clr">
 	</div>
 	<?php echo $this->element('footer'); ?>
-	</div>
+	
+	
+	<?php 
+		//for page fully loaded issue
+		ob_flush();
+		flush();
+		set_time_limit(max_execution_time);
+	?>
 </body>
 </html>
