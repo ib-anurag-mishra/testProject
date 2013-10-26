@@ -135,10 +135,11 @@ $('document').ready(function()
     var footer = $('.site-footer');
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
+    console.log(window.location);
     
     sidebar_anchor.on('click', function(e) {
         
-        alert(window.location);
+        
         //e.preventDefault();
         if ($(this).next('ul').hasClass('active')) {
             $(this).next('ul').removeClass('active');
