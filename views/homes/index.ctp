@@ -166,11 +166,7 @@
                                             ?> 
                                             <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
 														<div class="wishlist-popover">
-                                                <?php
-                                                
-                                                    echo "<br>library_type: ".$this->Session->read('library_type');
-                                                    echo "<br>StreamingSalesDate: ".$nationalTopDownload[$i]['Country']['StreamingSalesDate'];
-                                                    echo "<br>StreamingStatus: ".$nationalTopDownload[$i]['Country']['StreamingStatus'];
+                                                <?php                                                
                                                     
                                                 
                                                 if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
