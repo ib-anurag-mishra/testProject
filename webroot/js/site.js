@@ -296,7 +296,7 @@ $(document).on('mouseenter', '.add-to-wishlist' , function() {
         return false;
     });
 
-    $(documnet).on('mouseleave','.wishlist-popover', function() {
+    $(document).on('mouseleave','.wishlist-popover', function() {
         $(this).removeClass('active');
     });
 
