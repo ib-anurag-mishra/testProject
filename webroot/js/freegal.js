@@ -1578,6 +1578,8 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
             data: songFile
         }
     ];
+    console.log('load song contains');
+    console.log(newSong);
     pushSongs(newSong);
 
 }
