@@ -16,8 +16,7 @@ class StreamingHelper extends AppHelper {
      * @return Boolean or second value
     */
     function getTotalStreamTime($library_id, $patron_id)
-    {    
-                
+    {                    
             $streamingInstance = ClassRegistry::init('StreamingRecords');
             $streamingInstance->recursive = -1;
             $streamingDetails = $streamingInstance->find('first', array('conditions' => array('patron_id' => $patron_id, 'library_id' => $library_id), 'fields' => 'consumed_time'));
