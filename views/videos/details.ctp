@@ -51,7 +51,7 @@
                                         }
                                     }
                                     ?>
-                                            <a class="add-to-playlist-button " href="#"></a>
+                                            <a class="add-to-playlist-button" href="javascript:void(0);"></a>
                                             <div class="wishlist-popover">
 					
                                                 <?php
@@ -166,7 +166,7 @@
 
                                                             }
                                             ?>
-                                                            <a class="add-to-playlist-button " href="#"></a>
+                                                            <a class="add-to-playlist-button" href="javascript:void(0);"></a>
                                                             <div class="wishlist-popover">
 
                                                                 <?php
@@ -294,7 +294,7 @@
                                                                 }
                                                             }
                                             ?>
-									<a class="add-to-playlist-button " href="#"></a>
+									<a class="add-to-playlist-button" href="javascript:void(0);"></a>
 									<div class="wishlist-popover">
                                                                             <?php
 
