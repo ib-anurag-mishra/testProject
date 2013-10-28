@@ -76,7 +76,7 @@
 
             // Ajaxify
             //$this.find('a:internal:not(.no-ajaxy)').click(function(event) {
-            $this.find('a:internal:not(.no-ajaxy),a[href^="#"]').click(function(event) {
+            $this.find('a:internal:not(.no-ajaxy),a[href^="#top-100-videos"]').click(function(event) {
             	
                 // Prepare
                 var
