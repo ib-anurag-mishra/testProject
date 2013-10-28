@@ -16,7 +16,15 @@ class QueuesController extends AppController{
     
     function beforeFilter(){
             parent::beforeFilter();
-            $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue', 'my_streaming_history');
+            if($this->Session->read('patron')!='')  //  After Login
+            {
+                    $this->Auth->allow('*');
+            }
+            else  //  Before Login
+            {
+                    $this->Auth->allow('getDefaultQueues', 'createQueue','addToQueue');
+            }
+           // $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue', 'my_streaming_history');
     }
     
     /**
