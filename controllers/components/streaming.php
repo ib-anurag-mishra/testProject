@@ -9,7 +9,7 @@ Class StreamingComponent extends Object
 {
     var $components = array('Auth','Session');
     
-    var $streamingLimit = 10800;
+    var $streamingLimit = 10800; //3 hours
     var $streamingLog = 'on'; //off
     var $timerCallDuration = 60; //off
     
@@ -27,7 +27,7 @@ Class StreamingComponent extends Object
      *   
      * @return array
     */
-    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration) {
+    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id=0) {
         
         /**
           creates log file name
@@ -176,7 +176,8 @@ Class StreamingComponent extends Object
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $userStreamedTime;
-                $insertArr['action_type'] = $actionType;                
+                $insertArr['action_type'] = $actionType;
+                $insertArr['queue_id'] = $queue_id;
                 
                 $insertArr['modified_date'] = $currentDate;
                 $insertArr['createdOn'] = $currentDate;
@@ -243,6 +244,7 @@ Class StreamingComponent extends Object
                 $insertArr['modified_date'] = $currentDate;
                 $insertArr['action_type'] = $actionType; 
                 $insertArr['createdOn'] = $currentDate;
+                $insertArr['queue_id'] = $queue_id;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 if($agent == null){
                     $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
