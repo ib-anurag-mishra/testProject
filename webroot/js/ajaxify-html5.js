@@ -75,8 +75,8 @@
             var $this = $(this);
 
             // Ajaxify
-            $this.find('a:internal:not(.no-ajaxy)').click(function(event) {
-            //$this.find('a:internal:not(.no-ajaxy,[href^="#"])').click(function(event) {
+            //$this.find('a:internal:not(.no-ajaxy)').click(function(event) {
+            $this.find('a:internal:not(.no-ajaxy),a[href^="#"]').click(function(event) {
             	
                 // Prepare
                 var
@@ -90,9 +90,9 @@
                 }
 
                 // Ajaxify this link
-				if(url != '#top-100-songs') {
-	                History.pushState(null, title, url);
-	                event.preventDefault();
+				
+	            History.pushState(null, title, url);
+	            event.preventDefault();
                 return false;
                 }
             });
