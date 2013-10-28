@@ -29,7 +29,7 @@
                 completedEventName = 'statechangecomplete',
                 /* Application Generic Variables */
                 $window = $(window),
-                $body = $(document.body),
+                $body = $('.content'),
                 rootUrl = History.getRootUrl(),
                 scrollOptions = {
             duration: 800,
