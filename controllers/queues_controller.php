@@ -46,23 +46,27 @@ class QueuesController extends AppController{
     
     function createQueue(){
         if(isset($this->data)) {
-            if($this->Session->read("Auth.User.type_id") == 1){
-                $this->data['QueueList']['queue_type']  = 1;
-            }else{
-                $this->data['QueueList']['queue_type']  = 0;
+            
+            $patron_id = $this->Session->read('patron');
+            if(!empty($patron_id)){
+                if($this->Session->read("Auth.User.type_id") == 1){
+                    $this->data['QueueList']['queue_type']  = 1;
+                }else{
+                    $this->data['QueueList']['queue_type']  = 0;
+                }
+                $this->data['QueueList']['created']  = date('Y-m-d H:i:s');
+                $this->data['QueueList']['patron_id'] = $this->Session->read('patron');
+                $this->QueueList->setDataSource('master');
+                if($this->QueueList->save($this->data['QueueList'])){
+                        $this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
+                        $this->redirect($this->referer());						
+                }
+                else{
+                        $this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
+                        $this->redirect($this->referer());					
+                }
+                $this->QueueList->setDataSource('default');
             }
-            $this->data['QueueList']['created']  = date('Y-m-d H:i:s');
-            $this->data['QueueList']['patron_id'] = $this->Session->read('patron');
-            $this->QueueList->setDataSource('master');
-            if($this->QueueList->save($this->data['QueueList'])){
-                    $this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
-                    $this->redirect($this->referer());						
-            }
-            else{
-                    $this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
-                    $this->redirect($this->referer());					
-            }
-            $this->QueueList->setDataSource('default');
         }
                                 
     }
