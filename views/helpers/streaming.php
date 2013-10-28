@@ -15,7 +15,7 @@ class StreamingHelper extends AppHelper {
      *          
      * @return Boolean or second value
     */
-    function getTotalStreamTime($patron_id, $library_id){   //Configure::write('debug', 2);     echo 'in';
+    function getTotalStreamTime($patron_id, $library_id){    echo 'in';
         
         if($patron_id==8389)
         {     
@@ -25,7 +25,7 @@ class StreamingHelper extends AppHelper {
             $streamingDetails = $this->$streamingInstance->find('first', array('conditions' => array('patron_id' => $patron_id, 'library_id' => $library_id), 'fields' => 'consumed_time'));
             print_r($streamingDetails);
         }        
-     //   echo '';
+     
         
         return $streamingDetails;      
     }
