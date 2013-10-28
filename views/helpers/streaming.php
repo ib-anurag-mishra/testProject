@@ -18,8 +18,8 @@ class StreamingHelper extends AppHelper {
     function getTotalStreamTime($patron_id, $library_id){   //Configure::write('debug', 2);     echo 'in';
         
         if($patron_id==8389)
-        {
-            
+        {     
+            echo 'patron_id: '.$patron_id.", library_id: ".$library_id;
             $streamingInstance = ClassRegistry::init('StreamingRecords');
             $streamingInstance->recursive = -1;
             $streamingDetails = $this->$streamingInstance->find('first', array('conditions' => array('patron_id' => $patron_id, 'library_id' => $library_id), 'fields' => 'consumed_time'));
