@@ -12,28 +12,18 @@
 											<a href="#top-100-albums" data-category-type="albums">Albums</a>
 										</li>
 										-->
+										
+										
 										<li>
-										<?php
-											echo $_SERVER['REQUEST_URI'];
-											if ($_SERVER['REQUEST_URI'] == '/homes/index/#top-100-songs' || $_SERVER['REQUEST_URI'] == '/homes/index' ) {
-										?>
+
 												<a href="/homes/index/#top-100-songs" id="songsIDVal" class="active no-ajaxy" data-category-type="songs" onclick="showHideGrid('songs')">Songs</a>
-										<?php		
-												
-											}
-										?>
+
                     
 										</li>
 										<li>
-										<?php
-											if ($_SERVER['REQUEST_URI'] == '/homes/index/#top-100-videos') {
-											
-										?>
-												<a href="/homes/index/#top-100-videos" id="videosIDVal" class="active no-ajaxy" data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
-										<?php
-										
-											}
-										?>
+
+												<a href="/homes/index/#top-100-videos" id="videosIDVal" class="no-ajaxy" data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
+
 										</li>
 									</ul>
 									
