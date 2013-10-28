@@ -22,7 +22,7 @@ class QueuesController extends AppController{
             }
             else  //  Before Login
             {
-                    $this->Auth->allow('getDefaultQueues', 'createQueue','addToQueue');
+                   $this->Auth->allow('');
             }
            // $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue', 'my_streaming_history');
     }
@@ -170,25 +170,27 @@ class QueuesController extends AppController{
         $sortArray = array('date', 'artist', 'album');
         $sortOrderArray = array('asc','desc');
         
-        if(isset($_POST)){
+        if(isset($_POST))
+        {
             $sort = $_POST['sort'];
-            $sortOrder = $_POST['sortOrder'];
-            
+            $sortOrder = $_POST['sortOrder'];            
         }
         
 //        echo "<br>sort: ".$sort;
 //        echo "<br>sortOrder: ".$sortOrder;
-        
-        
-        if(!in_array($sort, $sortArray)){
+                
+        if(!in_array($sort, $sortArray))
+        {
             $sort = 'date';
         }
         
-        if(!in_array($sortOrder, $sortOrderArray)){
+        if(!in_array($sortOrder, $sortOrderArray))
+        {
             $sortOrder = 'desc';
         }
         
-        switch($sort){
+        switch($sort)
+        {
             case 'date':
                 $songSortBy = 'StreamingHistory.createdOn';                
                 $sortType = $sortOrder;
