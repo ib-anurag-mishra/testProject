@@ -99,7 +99,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
          if($this->Session->read('patron')==8389)
         {
             $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
-            //echo "Value: ".gmdate("H:i:s", $streamTime)."/".gmdate("H:i:s", "10800");
+           
 
         }
     
@@ -298,6 +298,14 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?></div>
                                         </div>
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
+                                        <?php
+                                                if($this->Session->read('patron')==8389)
+                                               {
+                                        ?>
+                                                  <div class="stream-time"><span id='downloads_used'><?php echo gmdate("H:i:s", $streamTime); ?></span>/<?php echo gmdate("H:i:s", "10800");; ?></div> 
+                                        <?php
+                                                }
+                                        ?>
                                         <?php
                                                 //  Hidden variable to be used in site.js for alerting user before video download
                                         
