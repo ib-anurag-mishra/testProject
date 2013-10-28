@@ -1598,7 +1598,7 @@ function load_artist(link, id_serial, genre_name) {
 
     $('.album-list-span').html('');
     $('#album_details_container').html('');
-    $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<?php echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
+    $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src='+ webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
     // var data = "ajax_genre_name="+genre_name;
     var data = "ajax_genre_name=" + genre_name;
     jQuery.ajax({
@@ -1618,7 +1618,8 @@ function load_artist(link, id_serial, genre_name) {
 function showAllAlbumsList(albumListURL) {
 
     $('#album_details_container').html('');
-    $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;"><img src="<?php echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
+    $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;">\n\
+            <img src='+ webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
 
     var data = "";
     jQuery.ajax({
@@ -1663,7 +1664,7 @@ function showAllAlbumsList(albumListURL) {
 //load the albums details via ajax
 function showAlbumDetails(albumDetailURL) {
 
-    $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<?php echo $this->webroot; ?>most_popular_positionmost_popular_positionapp/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
+    $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="'+ webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
 
     var data = "";
     jQuery.ajax({
