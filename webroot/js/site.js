@@ -221,7 +221,7 @@ $('document').ready(function()
 
     $(document).on('mouseenter', '.add-to-playlist', function() {
 
-        playlist_list.addClass('active');
+        $('.playlist-options').addClass('active');
     });
 
     $(document).on('mouseenter', '.add-to-queue', function() {
