@@ -15,18 +15,14 @@ class StreamingHelper extends AppHelper {
      *          
      * @return Boolean or second value
     */
-    function getTotalStreamTime($library_id, $patron_id){    //echo 'in'.$patron_id;
-        
-        if($patron_id=='8389')
-        {     
-            //echo 'patron_id: '.$patron_id.", library_id: ".$library_id;
+    function getTotalStreamTime($library_id, $patron_id)
+    {    
+                
             $streamingInstance = ClassRegistry::init('StreamingRecords');
             $streamingInstance->recursive = -1;
             $streamingDetails = $streamingInstance->find('first', array('conditions' => array('patron_id' => $patron_id, 'library_id' => $library_id), 'fields' => 'consumed_time'));
-            
-        }             
         
-        return $streamingDetails['StreamingRecords']['consumed_time'];      
+            return $streamingDetails['StreamingRecords']['consumed_time'];      
     }
     
     

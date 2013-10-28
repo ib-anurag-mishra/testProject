@@ -96,12 +96,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	}
 }
 
-         if($this->Session->read('patron')==8389)
-        {
-            $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
-           
-
-        }
+         
     
 ?>
     <div class="queue-overlay">
@@ -299,8 +294,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         </div>
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
-                                                if($this->Session->read('patron')==8389)
-                                               {
+                                                if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
+                                               {                                                    
+                                                    $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
                                         ?>
                                                   <div class="stream-time" style="font-size:14px; padding:0px 0px 0px 113px;"><?php echo $streamTime."/10800"; ?></div> 
                                         <?php
