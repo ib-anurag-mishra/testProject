@@ -298,7 +298,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                {                                                    
                                                     $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
                                         ?>
-                                                  <div class="stream-time"><?php echo $streamTime."/10800"; ?></div> 
+                                                  <div class="stream-time"><?php echo gmdate("H:i:s", $streamTime); ?></div> 
                                         <?php
                                                 }
                                         ?>
