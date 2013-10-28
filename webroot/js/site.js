@@ -1,3 +1,5 @@
+History.log();
+
 $('#top-100-albums-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('#top-100-albums-grid')
