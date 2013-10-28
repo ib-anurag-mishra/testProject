@@ -94,7 +94,7 @@
 	            History.pushState(null, title, url);
 	            event.preventDefault();
                 return false;
-                }
+                
             });
 
             // Chain
