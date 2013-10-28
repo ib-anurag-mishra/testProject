@@ -73,7 +73,7 @@
                                                 $duration = explode(':',$value['Songs']['FullLength_Duration']);
                                                 $duration_in_secs = $duration[0]*60;
                                                 $total_duration = $duration_in_secs+$duration[1];                                                
-                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Songs']['SongTitle'].'","'.$value['Songs']['ArtistText'].'","'.$total_duration.'","'.$value['Songs']['ProdID'].'","'.$value['Songs']['provider_type'].'");')); 
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Songs']['SongTitle'].'","'.$value['Songs']['ArtistText'].'",'.$total_duration.',"'.$value['Songs']['ProdID'].'","'.$value['Songs']['provider_type'].'");')); 
                                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); 
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
 
