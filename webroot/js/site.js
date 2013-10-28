@@ -144,6 +144,7 @@ $('document').ready(function()
         if ($(this).next('ul').hasClass('active')) {
             $(this).next('ul').removeClass('active');
         } else {
+            $(this).next('ul').addClass('active');
             var home07 = $('#home07');
             home07.removeClass('active');
             var musicVideo07 = $('#musicVideo07');
@@ -155,7 +156,7 @@ $('document').ready(function()
             var faq07 = $('#faq07');
             faq07.removeClass('active');
 
-            $(this).next('ul').addClass('active');
+            
         }
 
         return false;
