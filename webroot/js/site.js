@@ -166,6 +166,7 @@ $('document').ready(function()
         $(sidebar_a).removeClass('active');
         $(this).addClass('active');
 
+
         var home07 = $('#home07');
         home07.removeClass('active');
         var musicVideo07 = $('#musicVideo07');
