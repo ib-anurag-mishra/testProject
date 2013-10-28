@@ -14,6 +14,7 @@
 										-->
 										<li>
 										<?php
+											echo $_SERVER['REQUEST_URI'];
 											if ($_SERVER['REQUEST_URI'] == '/homes/index/#top-100-songs') {
 										?>
 												<a href="/homes/index/#top-100-songs" id="songsIDVal" class="active no-ajaxy" data-category-type="songs" onclick="showHideGrid('songs')">Songs</a>
