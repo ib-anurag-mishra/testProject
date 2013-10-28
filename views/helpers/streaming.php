@@ -15,9 +15,9 @@ class StreamingHelper extends AppHelper {
      *          
      * @return Boolean or second value
     */
-    function getTotalStreamTime($patron_id, $library_id){    echo 'in';
+    function getTotalStreamTime($patron_id, $library_id){    echo 'in'.$patron_id;
         
-        if($patron_id==8389)
+        if($patron_id=='8389')
         {     
             echo 'patron_id: '.$patron_id.", library_id: ".$library_id;
             $streamingInstance = ClassRegistry::init('StreamingRecords');
