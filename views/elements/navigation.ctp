@@ -99,7 +99,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
          if($this->Session->read('patron')==8389)
         {
             $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
-            echo "Value: ".$streamTime;
+            echo "Value: ".gmdate("H:i:s", $streamTime);;
 
         }
     
