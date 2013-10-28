@@ -836,11 +836,6 @@ $('document').ready(function()
         return false;
     });
 
-    $('.history-page .history-scrollable').bind('mousewheel', function(e) {
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        //prevent page fom scrolling
-        return false;
-    });
 
     $(document).on('click', '.history-page .add-to-wishlist-button', function(e) {
         e.preventDefault();
@@ -1452,7 +1447,6 @@ $('document').ready(function()
         return false;
     });
 
-
     $(document).on('click', '.tracklist-header span', function(e) {
         if ($(this).hasClass('active')) {
 
@@ -1472,7 +1466,6 @@ $('document').ready(function()
         }
 
     });
-
 
     $('.search-page .wishlist-popover').slice(0, 3).addClass('top');
     $('.search-page .tracklist').slice(0, 3).addClass('current');
@@ -1506,7 +1499,6 @@ $('document').ready(function()
 
 
     /* site login page */
-
     $(document).on('mousedown', '.site-login input[type="submit"]', function(e) {
         $(this).addClass('selected');
     });
@@ -1514,14 +1506,10 @@ $('document').ready(function()
     $(document).on('mouseup', '.site-login input[type="submit"]', function(e) {
         $(this).removeClass('selected');
     });
-
     /* end site login page */
 
 
-
-
     /* now streaming/queue detail page */
-
     $(document).on('click', '.gear-icon', function(e) {
         $('.queue-options').addClass('active');
 
@@ -1531,8 +1519,6 @@ $('document').ready(function()
 
         $('.queue-options').removeClass('active');
     });
-
-
 
     $('.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable').bind('mousewheel', function(e) {
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
@@ -1551,12 +1537,7 @@ $('document').ready(function()
         $(this).removeClass('active');
     });
 
-
-
-
-
     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
-
 
     $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function(e) {
 
@@ -1571,7 +1552,6 @@ $('document').ready(function()
         });
 
     });
-
 
     $(document).on('mouseenter', '.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row', function() {
 
@@ -1596,9 +1576,6 @@ $('document').ready(function()
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
 
     });
-
-
-
 
     $(document).on('mouseenter', '.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview', function(e) {
         $(this).removeClass('hovered').addClass('blue-bkg');
@@ -1649,15 +1626,11 @@ $('document').ready(function()
 
     });
 
-
-
-
-
     /* end now streaming page */
 
     /* overlays */
 
-    $('.rename-queue').on('click', function(e) {
+    $(document).on('click', '.rename-queue', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.rename-queue-dialog-box').addClass('active');
@@ -1665,14 +1638,14 @@ $('document').ready(function()
 
     });
 
-    $('.delete-queue').on('click', function(e) {
+    $(document).on('click', '.delete-queue' , function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.delete-queue-dialog-box').addClass('active');
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-    $('.create-new-queue,.create-new-queue-btn').on('click', function(e) {
+    $(document).on('click', '.create-new-queue,.create-new-queue-btn' , function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.create-queue-dialog-box').addClass('active');
@@ -1682,8 +1655,7 @@ $('document').ready(function()
     });
 
 
-
-    $('.close,.text-close').on('click', function(e) {
+    $(document).on('click', '.close,.text-close' , function(e) {
         $('.queue-overlay').removeClass('active');
         $('.rename-queue-dialog-box').removeClass('active');
         $('.delete-queue-dialog-box').removeClass('active');
