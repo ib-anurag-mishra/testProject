@@ -15,7 +15,7 @@ class StreamingHelper extends AppHelper {
      *          
      * @return Boolean or second value
     */
-    function getTotalStreamTime($patron_id, $library_id){   Configure::write('debug', 2);     echo 'in';
+    function getTotalStreamTime($patron_id, $library_id){   //Configure::write('debug', 2);     echo 'in';
         
         if($patron_id==8389)
         {
