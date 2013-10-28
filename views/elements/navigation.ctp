@@ -302,7 +302,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 if($this->Session->read('patron')==8389)
                                                {
                                         ?>
-                                                  <div class="stream-time"><span id='downloads_used'><?php echo gmdate("H:i:s", $streamTime); ?></span>/<?php echo gmdate("H:i:s", "10800");; ?></div> 
+                                                  <div class="stream-time"><span><?php echo gmdate("H:i:s", $streamTime); ?></span>/<?php echo gmdate("H:i:s", "10800");; ?></div> 
                                         <?php
                                                 }
                                         ?>
