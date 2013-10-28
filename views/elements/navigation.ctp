@@ -302,7 +302,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 if($this->Session->read('patron')==8389)
                                                {
                                         ?>
-                                                  <div class="stream-time"><?php echo $streamTime."/10800"; ?></div> 
+                                                  <div class="stream-time" style="font-size:14px; padding:0px 0px 0px 113px;"><?php echo $streamTime."/10800"; ?></div> 
                                         <?php
                                                 }
                                         ?>
