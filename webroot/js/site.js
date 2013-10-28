@@ -135,49 +135,51 @@ $('document').ready(function()
     var footer = $('.site-footer');
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
-    
-    
-   
-    
-     $(document).on('click', '.sidebar-anchor' , function(e) {
+
+
+
+
+    $(document).on('click', '.sidebar-anchor', function(e) {
         //e.preventDefault();
         if ($(this).next('ul').hasClass('active')) {
             $(this).next('ul').removeClass('active');
-        } else {        
+        } else {
             var home07 = $('#home07');
-            home07.removeClass('active'); 
+            home07.removeClass('active');
             var musicVideo07 = $('#musicVideo07');
-            musicVideo07.removeClass('active'); 
+            musicVideo07.removeClass('active');
             var newsRelease07 = $('#newsRelease07');
-            newsRelease07.removeClass('active'); 
+            newsRelease07.removeClass('active');
             var genre07 = $('#genre07');
-            genre07.removeClass('active'); 
+            genre07.removeClass('active');
             var faq07 = $('#faq07');
-            faq07.removeClass('active');            
-            
+            faq07.removeClass('active');
+
             $(this).next('ul').addClass('active');
         }
+
+        return false;
     });
 
     $(document).on('click', '.left-sidebar li a', function(e) {
         //e.preventDefault();
         $(sidebar_a).removeClass('active');
-        $(this).addClass('active');        
-        
+        $(this).addClass('active');
+
         var home07 = $('#home07');
-            home07.removeClass('active'); 
-            var musicVideo07 = $('#musicVideo07');
-            musicVideo07.removeClass('active'); 
-            var newsRelease07 = $('#newsRelease07');
-            newsRelease07.removeClass('active'); 
-            var genre07 = $('#genre07');
-            genre07.removeClass('active'); 
-            var faq07 = $('#faq07');
-            faq07.removeClass('active'); 
+        home07.removeClass('active');
+        var musicVideo07 = $('#musicVideo07');
+        musicVideo07.removeClass('active');
+        var newsRelease07 = $('#newsRelease07');
+        newsRelease07.removeClass('active');
+        var genre07 = $('#genre07');
+        genre07.removeClass('active');
+        var faq07 = $('#faq07');
+        faq07.removeClass('active');
 
     });
 
-    $(document).on('click', '.announcements h4 a' , function(e) {
+    $(document).on('click', '.announcements h4 a', function(e) {
         e.preventDefault();
         if ($(poll).hasClass('active')) {
             $(poll).removeClass('active');
@@ -188,7 +190,7 @@ $('document').ready(function()
     });
 
 
-     $('.tooltip a').hover(
+    $('.tooltip a').hover(
             function() {
                 plays_tooltip.show();
             },
@@ -215,24 +217,24 @@ $('document').ready(function()
 
     });
 
-$(document).on('mouseenter','.add-to-playlist', function() {
+    $(document).on('mouseenter', '.add-to-playlist', function() {
 
         playlist_list.addClass('active');
     });
 
-$(document).on('mouseenter', '.add-to-queue' , function() {
+    $(document).on('mouseenter', '.add-to-queue', function() {
         if (playlist_list.hasClass('active')) {
             playlist_list.removeClass('active');
         }
-});
+    });
 
-$(document).on('mouseenter', '.add-to-wishlist' , function() {
+    $(document).on('mouseenter', '.add-to-wishlist', function() {
 
         if (playlist_list.hasClass('active')) {
 
             playlist_list.removeClass('active');
         }
- });
+    });
 
     playlist_list.on('mouseleave', function() {
 
@@ -293,11 +295,11 @@ $(document).on('mouseenter', '.add-to-wishlist' , function() {
         return false;
     });
 
-    $(document).on('mouseleave','.wishlist-popover', function() {
+    $(document).on('mouseleave', '.wishlist-popover', function() {
         $(this).removeClass('active');
     });
 
-    $(document).on('hover','.wishlist-popover > a', function(e) {
+    $(document).on('hover', '.wishlist-popover > a', function(e) {
 
         e.preventDefault();
 
@@ -360,8 +362,8 @@ $(document).on('mouseenter', '.add-to-wishlist' , function() {
     });
 
 
-    $('.news .whats-happening #whats-happening-grid .post-excerpt').bind('mousewheel', function(e) 
-		{ /* changed 080313 .. .post is now .post-excerpt */
+    $('.news .whats-happening #whats-happening-grid .post-excerpt').bind('mousewheel', function(e)
+    { /* changed 080313 .. .post is now .post-excerpt */
 
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         //prevent page fom scrolling
@@ -861,7 +863,7 @@ $(document).on('mouseenter', '.add-to-wishlist' , function() {
         $('.history-page .history-scrollable .row').each(function(e) {
 
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-				$(this).find('.wishlist-popover').addClass('top');
+                $(this).find('.wishlist-popover').addClass('top');
             }
 
         });
@@ -1439,7 +1441,7 @@ $(document).on('mouseenter', '.add-to-wishlist' , function() {
     });
 
     $('.search-page .advanced-genres-scrollable').bind('mousewheel', function(e) {
-       $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         //prevent page fom scrolling
         return false;
     });
@@ -1494,7 +1496,7 @@ $(document).on('mouseenter', '.add-to-wishlist' , function() {
     });
 
     $('.search-page .advanced-search #submit').on('mouseup', function(e) {
-       $(this).removeClass('clicked');
+        $(this).removeClass('clicked');
     });
 
     $(document).on('click', '.pagination a', function(e) {
