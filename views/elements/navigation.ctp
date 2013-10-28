@@ -96,8 +96,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	}
 }
 
-       // $streamTime = $streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
-     //   echo $streamTime;
+         if($this->Session->read('patron')==8389)
+        {
+            $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+            echo "Value: ".$streamTime;
+
+        }
     
 ?>
     <div class="queue-overlay">
