@@ -12,9 +12,7 @@
 											<a href="#top-100-albums" data-category-type="albums">Albums</a>
 										</li>
 										-->
-										<?php echo $_SERVER['SCRIPT_NAME']; +'\n' ?>
-										<?php echo $_SERVER['PHP_SELF'] +'\n' ?>
-										<?php echo $_SERVER['REQUEST_URI'] +'\n' ?>
+
 										
 										<li>
 
