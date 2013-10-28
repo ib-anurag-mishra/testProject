@@ -26,7 +26,7 @@
                 $menu = $('.site-nav').filter(':first'),
                 activeClass = 'active selected current youarehere',
                 activeSelector = '.active,.selected,.current,.youarehere',
-                menuChildrenSelector = '> li,> ul > li',
+                //menuChildrenSelector = '> li,> ul > li',
                 completedEventName = 'statechangecomplete',
                 /* Application Generic Variables */
                 $window = $(window),
