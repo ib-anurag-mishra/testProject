@@ -31,56 +31,59 @@ class QueueListDetailsController extends AppController{
     
     
     function index(){
-        $this->QueueDetail->setDataSource('master');
-        $this->QueueList->setDataSource('master');
-        if($_POST['hdn_remove_song']) 
-        {
-            if(!empty($_POST["Pdid"]))
-            {       
-                if($this->QueueDetail->deleteAll(array('id' => $_POST["Pdid"]),false)){
-                        $this->Session ->setFlash('Song has been deleted successfully from queue', 'modal', array( 'class' => 'queue success' ));
-                        $this->redirect($this->referer());						
-                }
-                else{
-                        $this->Session ->setFlash('Error occured while deleting song from queue', 'modal', array( 'class' => 'queue problem' ));
-                        $this->redirect($this->referer());					
-                }               
-            }
-
-        }
-        else if($_POST['hid_action']=='rename_queue') 
-        {
-            if(!empty($_POST["rqPlid"])){
-                $this->data['QueueList']['queue_id'] = $_POST["rqPlid"];
-                $this->QueueList->set($this->data['QueueList']);
-                if($this->QueueList->save()){
-                            $this->Session ->setFlash('Queue has been renamed successfully', 'modal', array( 'class' => 'queue success' ));
+        $patron_id = $this->Session->read('patron');
+        if(!empty($patron_id)){
+            $this->QueueDetail->setDataSource('master');
+            $this->QueueList->setDataSource('master');
+            if($_POST['hdn_remove_song']) 
+            {
+                if(!empty($_POST["Pdid"]))
+                {       
+                    if($this->QueueDetail->deleteAll(array('id' => $_POST["Pdid"]),false)){
+                            $this->Session ->setFlash('Song has been deleted successfully from queue', 'modal', array( 'class' => 'queue success' ));
                             $this->redirect($this->referer());						
                     }
                     else{
-                            $this->Session ->setFlash('Error occured while renaming queue', 'modal', array( 'class' => 'queue problem' ));
+                            $this->Session ->setFlash('Error occured while deleting song from queue', 'modal', array( 'class' => 'queue problem' ));
                             $this->redirect($this->referer());					
+                    }               
                 }
-            }   
-            
-        }
-        else if($_POST['hid_action']=='delete_queue')
-        {                         
-              if(!empty($_POST["dqPlid"])){
-                    $delqueueDetail = $this->QueueDetail->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
-                    $delqueue = $this->QueueList->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
 
-                    if( (true === $delqueueDetail) && (true === $delqueue) ) {
-                        $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
-                        $this->redirect('/queues/savedQueuesList/'.$this->Session->read('patron'));
-                    }else{
-                        $this->Session ->setFlash('Error occured while deleteing queue', 'modal', array( 'class' => 'queue problem' ));
-                        $this->redirect($this->referer());                    
-                    }                     
-              }   
+            }
+            else if($_POST['hid_action']=='rename_queue') 
+            {
+                if(!empty($_POST["rqPlid"])){
+                    $this->data['QueueList']['queue_id'] = $_POST["rqPlid"];
+                    $this->QueueList->set($this->data['QueueList']);
+                    if($this->QueueList->save()){
+                                $this->Session ->setFlash('Queue has been renamed successfully', 'modal', array( 'class' => 'queue success' ));
+                                $this->redirect($this->referer());						
+                        }
+                        else{
+                                $this->Session ->setFlash('Error occured while renaming queue', 'modal', array( 'class' => 'queue problem' ));
+                                $this->redirect($this->referer());					
+                    }
+                }   
+
+            }
+            else if($_POST['hid_action']=='delete_queue')
+            {                         
+                  if(!empty($_POST["dqPlid"])){
+                        $delqueueDetail = $this->QueueDetail->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
+                        $delqueue = $this->QueueList->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
+
+                        if( (true === $delqueueDetail) && (true === $delqueue) ) {
+                            $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
+                            $this->redirect('/queues/savedQueuesList/'.$this->Session->read('patron'));
+                        }else{
+                            $this->Session ->setFlash('Error occured while deleteing queue', 'modal', array( 'class' => 'queue problem' ));
+                            $this->redirect($this->referer());                    
+                        }                     
+                  }   
+            }
+            $this->QueueDetail->setDataSource('default');
+            $this->QueueList->setDataSource('default');
         }
-        $this->QueueDetail->setDataSource('default');
-        $this->QueueList->setDataSource('default');        
         
     }
     
