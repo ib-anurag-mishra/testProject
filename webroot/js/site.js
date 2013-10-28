@@ -143,9 +143,7 @@ $('document').ready(function()
         //e.preventDefault();
         if ($(this).next('ul').hasClass('active')) {
             $(this).next('ul').removeClass('active');
-        } else {
-            
-             
+        } else {        
             var home07 = $('#home07');
             home07.removeClass('active'); 
             var musicVideo07 = $('#musicVideo07');
@@ -155,8 +153,7 @@ $('document').ready(function()
             var genre07 = $('#genre07');
             genre07.removeClass('active'); 
             var faq07 = $('#faq07');
-            faq07.removeClass('active'); 
-            
+            faq07.removeClass('active');            
             
             $(this).next('ul').addClass('active');
         }
