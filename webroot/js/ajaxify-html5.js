@@ -22,11 +22,11 @@
                 contentSelector = '.content,article:first,.article:first,.post:first',
                 $content = $(contentSelector).filter(':first'),
                 contentNode = $content.get(0),
-                //$menu = $('#menu,#nav,nav:first,.nav:first').filter(':first'),
-                $menu = $('.site-nav').filter(':first'),
+                $menu = $('#menu,#nav,nav:first,.nav:first').filter(':first'),
+               
                 activeClass = 'active selected current youarehere',
                 activeSelector = '.active,.selected,.current,.youarehere',
-                //menuChildrenSelector = '> li,> ul > li',
+                menuChildrenSelector = '> li,> ul > li',
                 completedEventName = 'statechangecomplete',
                 /* Application Generic Variables */
                 $window = $(window),
