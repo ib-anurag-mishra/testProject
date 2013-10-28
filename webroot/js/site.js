@@ -1663,10 +1663,29 @@ $('document').ready(function()
         $('.delete-queue-dialog-box').removeClass('active');
         $('.create-queue-dialog-box').removeClass('active');
     });
+    
 
     /* end overlays */
 
 
+/** Genres Page */
+
+  $(document).on('click', '.artist-list a', function() {
+        var artist = $(this).data('artist');
+        $('.artist-list a').removeClass('selected');
+        $(this).addClass('selected');
+        $(this).css("cursor", "pointer");
+    });
+
+    $(document).on('click', '.alphabetical-filter a', function() {
+
+        var letter = $(this).data('letter');
+        $('.alphabetical-filter a').removeClass('selected');
+        $('.artist-list a').removeClass('selected');
+        $(this).addClass('selected');
+    });
+    
+    
     var most_popular_position = $('li.most-popular').position();
     var most_popular_width = $('li.most-popular').outerWidth();
 
@@ -1722,4 +1741,6 @@ $('document').ready(function() {
          $('#header-search-type').val('song');
          }*/
     });
+    
+    
 });
