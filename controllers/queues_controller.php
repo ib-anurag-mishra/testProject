@@ -22,7 +22,7 @@ class QueuesController extends AppController{
             }
             else  //  Before Login
             {
-                   $this->Auth->allow();
+                   $this->Auth->allow('');
             }
            // $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue', 'my_streaming_history');
     }

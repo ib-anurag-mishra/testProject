@@ -24,7 +24,7 @@ class QueueListDetailsController extends AppController{
             }
             else  //  Before Login
             {
-                     $this->Auth->allow();
+                     $this->Auth->allow('');
             }
     }
     
