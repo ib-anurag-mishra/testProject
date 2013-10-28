@@ -156,7 +156,7 @@ $('document').ready(function()
             var faq07 = $('#faq07');
             faq07.removeClass('active');
 
-            
+
         }
 
         return false;
@@ -1640,14 +1640,14 @@ $('document').ready(function()
 
     });
 
-    $(document).on('click', '.delete-queue' , function(e) {
+    $(document).on('click', '.delete-queue', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.delete-queue-dialog-box').addClass('active');
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-    $(document).on('click', '.create-new-queue,.create-new-queue-btn' , function(e) {
+    $(document).on('click', '.create-new-queue,.create-new-queue-btn', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.create-queue-dialog-box').addClass('active');
@@ -1657,20 +1657,20 @@ $('document').ready(function()
     });
 
 
-    $(document).on('click', '.close,.text-close' , function(e) {
+    $(document).on('click', '.close,.text-close', function(e) {
         $('.queue-overlay').removeClass('active');
         $('.rename-queue-dialog-box').removeClass('active');
         $('.delete-queue-dialog-box').removeClass('active');
         $('.create-queue-dialog-box').removeClass('active');
     });
-    
+
 
     /* end overlays */
 
 
-/** Genres Page */
+    /** Genres Page */
 
-  $(document).on('click', '.artist-list a', function() {
+    $(document).on('click', '.artist-list a', function() {
         var artist = $(this).data('artist');
         $('.artist-list a').removeClass('selected');
         $(this).addClass('selected');
@@ -1684,8 +1684,8 @@ $('document').ready(function()
         $('.artist-list a').removeClass('selected');
         $(this).addClass('selected');
     });
-    
-    
+
+
     var most_popular_position = $('li.most-popular').position();
     var most_popular_width = $('li.most-popular').outerWidth();
 
@@ -1741,6 +1741,4 @@ $('document').ready(function() {
          $('#header-search-type').val('song');
          }*/
     });
-    
-    
 });

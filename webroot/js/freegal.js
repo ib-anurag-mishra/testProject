@@ -1663,7 +1663,7 @@ function showAllAlbumsList(albumListURL) {
 //load the albums details via ajax
 function showAlbumDetails(albumDetailURL) {
 
-    $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<?php echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
+    $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="<?php echo $this->webroot; ?>most_popular_positionmost_popular_positionapp/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
 
     var data = "";
     jQuery.ajax({
