@@ -21,7 +21,7 @@ class StreamingHelper extends AppHelper {
         $streamingInstance->recursive = -1;
         $streamingDetails = $this->$streamingInstance->find('first', array('conditions' => array('patron_id' => $patron_id, 'library_id' => $library_id), 'fields' => 'consumed_time'));
         
-        print_r($streamingDetails);
+     //   echo '';
         
         return $streamingDetails;      
     }
