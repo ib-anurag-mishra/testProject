@@ -81,10 +81,8 @@
                 // Prepare
                 var
                         $this = $(this),
-                        if($this.attr('href') != '#top-100-songs' || $this.attr('href') != '#top-100-videos') {
-                        	url = $this.attr('href'),
-							title = $this.attr('title') || null;
-						}
+                        url = $this.attr('href'),
+                        title = $this.attr('title') || null;
 
                 // Continue as normal for cmd clicks etc
                 if (event.which == 2 || event.metaKey) {
@@ -92,6 +90,7 @@
                 }
 
                 // Ajaxify this link
+                console.log('url is ' + url);
                 History.pushState(null, title, url);
                 event.preventDefault();
                 return false;
