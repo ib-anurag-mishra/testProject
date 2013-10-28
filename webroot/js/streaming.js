@@ -368,12 +368,14 @@ function validateSong(songObj, playerEventCode) {
 			break;
 			
 		case 6:
-			playerEventCodeString = "User choose another song in the queue"
+			playerEventCodeString = "User choose another song in the queue";
+                        songDuration = 0;
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,10,songLength,songDuration);
 			break;
 			
 	    case 7:
-			playerEventCodeString = "Queue loaded/play"
+			playerEventCodeString = "Queue loaded/play";
+                        songDuration = 0;
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;	
 	    case 8:
