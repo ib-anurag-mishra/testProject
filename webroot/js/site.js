@@ -343,7 +343,7 @@ $('document').ready(function()
     });
 
 
-    $('.select-arrow').on('click', function(e) {
+    $(document).on('click', '.select-arrow' , function(e) {
 
         e.preventDefault();
 
@@ -358,7 +358,7 @@ $('document').ready(function()
 
     });
 
-    $('.account-options-menu').on('mouseleave', function(e) {
+    $(document).on('mouseleave', '.account-options-menu' , function(e) {
 
         $('.account-options-menu').removeClass('active');
     });
