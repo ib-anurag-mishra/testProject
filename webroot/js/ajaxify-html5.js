@@ -75,13 +75,16 @@
             var $this = $(this);
 
             // Ajaxify
-            
+            //$this.find('a:internal:not(.no-ajaxy)').click(function(event) {
             $this.find('a:internal:not(.no-ajaxy,[href^="#"])').click(function(event) {
+            	
                 // Prepare
                 var
                         $this = $(this),
-                        url = $this.attr('href'),
-                        title = $this.attr('title') || null;
+                        if($this.attr('href') != '#top-100-songs' || $this.attr('href') != '#top-100-videos') {
+                        	url = $this.attr('href'),
+							title = $this.attr('title') || null;
+						}
 
                 // Continue as normal for cmd clicks etc
                 if (event.which == 2 || event.metaKey) {
