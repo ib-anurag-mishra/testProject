@@ -296,12 +296,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         <?php
                                                 if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
                                                {                                                    
-                                                    $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+                                                    $streamTime =   $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+                                                    $streamTime =   gmdate("H:i:s", $streamTime);
+                                               }
+                                               else if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1)
+                                               { 
+                                                     $streamTime = 'UNLIMITED';
+                                               }   
                                         ?>
-                                                  <div class="stream-time" style="font-size:14px; padding:0px 0px 0px 113px;"><?php echo $streamTime."/10800"; ?></div> 
-                                        <?php
-                                                }
-                                        ?>
+                                                <div class="stream-time"><?php echo $streamTime; ?></div> 
                                         <?php
                                                 //  Hidden variable to be used in site.js for alerting user before video download
                                         
