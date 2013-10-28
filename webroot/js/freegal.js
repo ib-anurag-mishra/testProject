@@ -1566,6 +1566,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 }
 
 function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType) {
+	console.log('load song contains');
     var newSong = [
         {
             playlistId: 0,
@@ -1578,7 +1579,7 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
             data: songFile
         }
     ];
-    console.log('load song contains');
+    
     console.log(newSong);
     pushSongs(newSong);
 
