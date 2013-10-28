@@ -96,7 +96,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	}
 }
 
-        $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+        $streamTime = $streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
         echo $streamTime;
     
 ?>
