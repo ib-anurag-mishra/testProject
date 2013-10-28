@@ -95,6 +95,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		$width = 166;
 	}
 }
+
+        $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+        echo $streamTime;
     
 ?>
     <div class="queue-overlay">
