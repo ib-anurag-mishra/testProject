@@ -17,7 +17,15 @@ class QueueListDetailsController extends AppController{
     function beforeFilter(){
            
             parent::beforeFilter();
-            $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');            
+            // $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');     
+            if($this->Session->read('patron')!='')  //  After Login
+            {
+                    $this->Auth->allow('*');
+            }
+            else  //  Before Login
+            {
+                     $this->Auth->allow();
+            }
     }
     
     
@@ -256,7 +264,6 @@ class QueueListDetailsController extends AppController{
     function ajaxQueueValidation() 
     {        
             $this -> layout = 'ajax';
-
              
             if($this->Session->read('patron')=='')
             {
@@ -276,8 +283,7 @@ class QueueListDetailsController extends AppController{
                 {
                     $queue_type  = 0;
                 }
-                
-                
+                                
                 $cond = array('queue_type' => $queue_type, 'status' => '1', 'patron_id' => array($this->Session->read('patron')), 'queue_name' => $this->data['QueueList']['queue_name']);
                 
                 $queueData = $this->QueueList->find('all', array(
@@ -285,9 +291,7 @@ class QueueListDetailsController extends AppController{
                     'fields' => array('queue_id'),
                     'order' => 'QueueList.created DESC'                    
                   ));
-                
-                
-                
+                                                
                 if(count($queueData)==0)
                 {
                     echo 'Insertion Allowed'; 
@@ -297,15 +301,12 @@ class QueueListDetailsController extends AppController{
                     echo 'Queue Name you entered is already present. Please try different name.'; 
                 }
                 
-                die;
-                
+                die;                
             }
        
             die;
     }
-    
-    
-    
+            
 }
 
 
