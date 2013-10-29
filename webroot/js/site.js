@@ -483,6 +483,7 @@ $('document').ready(function()
     });
 
 
+	/*
     $(document).on('mouseenter', '.song-cover-container', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
@@ -495,6 +496,23 @@ $('document').ready(function()
         $(this).find('.top-100-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
 
+    });
+    */
+    
+    $('.song-cover-container').on('mouseenter',function(){
+	    
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.top-100-download-now-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});    
+	    
+    });
+    
+    $('.song-cover-container').on('mouseleave',function(){
+	    
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.top-100-download-now-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});	    
+	    
     });
 
 
