@@ -158,7 +158,6 @@ $('document').ready(function()
         var faq07 = $('#faq07');
         faq07.removeClass('active');
 
-        return false;
     });
 
 //    $(document).on('click', '.left-sidebar li a', function(e) {
@@ -218,14 +217,10 @@ $('document').ready(function()
 
     });
 
-
-
     $('.add-to-playlist').on('mouseenter', function() {
 
         $('.playlist-options').addClass('active');
     });
-
-
 
     $('.add-to-queue').on('mouseenter', function() {
 
@@ -233,8 +228,6 @@ $('document').ready(function()
             playlist_list.removeClass('active');
         }
     });
-
-
 
     $('.add-to-wishlist').on('mouseenter', function() {
 
@@ -277,8 +270,6 @@ $('document').ready(function()
     grid_view_button.addClass('active');
     grids.addClass('active');
 
-
-
     $('.video-thumbnail-container').on('mouseenter', function() {
 
         $(this).find('.add-to-playlist-button').css({opacity: 1});
@@ -286,7 +277,6 @@ $('document').ready(function()
         $(this).find('.preview').css({opacity: 1});
 
     });
-
 
     $('.video-thumbnail-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
@@ -298,6 +288,7 @@ $('document').ready(function()
     $(document).on('mouseenter', artwork_container, function() {
         $(this).find('.preview').css({opacity: 1});
     });
+
     $(document).on('mouseleave', artwork_container, function() {
         $(this).find('.preview').css({opacity: .5});
     });
@@ -353,13 +344,9 @@ $('document').ready(function()
         }
     });
 
-
-    $(document).on('click', '.select-arrow', function(e) {
-
+    $('.select-arrow').on('click',  function(e) {
         e.preventDefault();
-        $('.account-options-menu').toggleClass('active')
-        return false;
-
+        $('.account-options-menu').toggleClass('active')       
     });
 
     $(document).on('mouseleave', '.account-options-menu', function(e) {
