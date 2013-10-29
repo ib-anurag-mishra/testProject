@@ -16,18 +16,19 @@ $('#top-100-videos-grid .lazy').lazyload({
     container: $('#top-100-videos-grid')
 });
 
-
+/*
 $('#featured-video-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('#featured-video-grid')
 });
 
-
+*/
+/*
 $('.video-top-genres-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('.video-top-genres-grid')
 });
-
+*/
 $('.most-downloaded-videos-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('.most-downloaded-videos-grid')
