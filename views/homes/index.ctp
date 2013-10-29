@@ -90,7 +90,7 @@
 <?php if($this->Session->read("patron")){ 
                                             if( $this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)                                                 
                                             {                                                
-                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$nationalTopDownload[$i]['streamUrl'].'", "'.$nationalTopDownload[$i]['Song']['SongTitle'].'","'.$nationalTopDownload[$i]['Song']['ArtistText'].'","'.$nationalTopDownload[$i]['totalseconds'].'","'.$nationalTopDownload[$i]['Song']['ProdID'].'","'.$nationalTopDownload[$i]['Song']['provider_type'].'");'));
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$nationalTopDownload[$i]['streamUrl'].'", "'.$nationalTopDownload[$i]['Song']['SongTitle'].'","'.$nationalTopDownload[$i]['Song']['ArtistText'].'",'.$nationalTopDownload[$i]['totalseconds'].',"'.$nationalTopDownload[$i]['Song']['ProdID'].'","'.$nationalTopDownload[$i]['Song']['provider_type'].'");'));
                                             }
                                             else if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) 
                                             {                                                 

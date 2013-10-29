@@ -880,7 +880,7 @@ if ($type != 'all') {
                         {
                             if( $this->Session->read('library_type') == 2 && ($StreamFlag === 1))
                             {
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.$psong->SongTitle.'","'.$psong->ArtistText.'","'.$psong->totalseconds.'","'.$psong->ProdID.'","'.$psong->provider_type.'");'));
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.$psong->SongTitle.'","'.$psong->ArtistText.'",'.$psong->totalseconds.',"'.$psong->ProdID.'","'.$psong->provider_type.'");'));
                             }
                             else
                             {
