@@ -348,7 +348,7 @@
                     $.getScript(webroot + 'js/search-results.js');
                     
     
-                    $('.loader').fadeOut(3000);
+                    $('.loader').fadeOut(1000);
                     
                     $('.content-wrapper').remove('.loader');
 
