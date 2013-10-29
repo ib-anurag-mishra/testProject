@@ -33,7 +33,7 @@ class AppController extends Controller
 		if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){
                     $patronid = $this->Session->read("patron");
                     if(empty($patronid)){                    
-                        $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url','library_image_name', 'library_country', 'library_territory','library_authentication_method','library_type','library_block_explicit_content'), 'recursive' => -1));
+                        $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url','library_image_name', 'library_country', 'library_territory','library_authentication_method','library_type','test_library_type','library_block_explicit_content'), 'recursive' => -1));
 
                         $this->Session->write("subdomain",$subdomains);
                         $this->Session->write("lId",$libraryIDArray['Library']['id']);                    
@@ -47,7 +47,7 @@ class AppController extends Controller
 		}else{
                     $patronid = $this->Session->read("patron");
                     if(empty($patronid)){
-                        $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory','library_type','library_block_explicit_content'), 'recursive' => -1));            
+                        $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory','test_library_type','library_type','library_block_explicit_content'), 'recursive' => -1));            
                         $country = $libraryData['Library']['library_territory'];
                         $this->Session->write("libCountry",$country);
                         $this->Session->write("territory",$country);
