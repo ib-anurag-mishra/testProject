@@ -66,11 +66,6 @@
 					 
                                             foreach($queue_list_array as $key => $value)
                                             {
-                                                
-                                                if (($this->Session->read('block') == 'yes') && ($value['Songs']['Advisory'] == 'T'))
-                                                {
-                                                    continue;
-                                                }                                                 
 
 					?>
 					
@@ -85,17 +80,7 @@
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
 
                                             ?>
-						<div class="song-title"><?php 
-                                                
-                                                    if ('T' == $value['Songs']['Advisory'])
-                                                    {
-                                                        if (strlen($value['Songs']['SongTitle']) >= 20)
-                                                        {
-                                                            $value['Songs']['SongTitle'] = $this->getTextEncode(substr($value['Songs']['SongTitle'], 0, 20)) . "..";
-                                                        }
-                                                        $value['Songs']['SongTitle'] .='(Explicit)';
-                                                    }                                                
-                                                echo $value['Songs']['SongTitle']?></div>
+						<div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
 						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
                                                 <?php
                                                 if (strlen($value['Songs']['ArtistText']) >= 30 ) {
@@ -183,11 +168,6 @@
 					 
                                             foreach($trackDetails as $key => $value)
                                             {
-                                                
-                                                if (($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] == 'T'))
-                                                {
-                                                    continue;
-                                                }                                                
 
 					?>
 					
@@ -202,17 +182,7 @@
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
 
                                             ?>
-						<div class="song-title"><?php 
-                                                    if ('T' == $value['Song']['Advisory'])
-                                                    {
-                                                        if (strlen($value['Song']['SongTitle']) >= 20)
-                                                        {
-                                                            $value['Song']['SongTitle'] = $this->getTextEncode(substr($value['Song']['SongTitle'], 0, 20)) . "..";
-                                                        }
-                                                        $value['Song']['SongTitle'] .='(Explicit)';
-                                                    }                                                
-                                                
-                                                echo $value['Song']['SongTitle']?></div>
+						<div class="song-title"><?php echo $value['Song']['SongTitle']?></div>
 						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
                                                 <?php
                                                 if (strlen($value['Song']['ArtistText']) >= 30 ) {

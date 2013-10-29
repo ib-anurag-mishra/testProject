@@ -65,10 +65,6 @@
                                             foreach($queue_list_array as $key => $value)
                                             {  
                                                 $i++;
-                                                if (($this->Session->read('block') == 'yes') && ($value['Songs']['Advisory'] == 'T'))
-                                                {
-                                                    continue;
-                                                }                                                
 					?>
 					
 					<div class="row clearfix">
@@ -85,20 +81,7 @@
                                                 <?php if(!empty($value['Songs']['ProdID'])){ ?>
                                                     <div id="play_item_<?php echo $i;?>"style="display:none;"><?php echo $value['Songs']['ProdID'].','.$value['Songs']['provider_type']; ?></div>
 						<?php } ?>
-                                                <div class="song-title"><?php 
-                                                
-                                                    if ('T' == $value['Song']['Advisory'])
-                                                    {
-                                                        if (strlen($value['Songs']['SongTitle']) >= 20)
-                                                        {
-                                                            $value['Songs']['SongTitle'] = $this->getTextEncode(substr($value['Songs']['SongTitle'], 0, 20)) . "..";
-                                                        }
-                                                        $value['Songs']['SongTitle'] .='(Explicit)';
-                                                    }
-                                                    echo $value['Songs']['SongTitle']
-                                                    
-                                                    ?>
-                                                </div>
+                                                <div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
                                                 <?php											
                                                 if (strlen($value['Songs']['ArtistText']) >= 30 ) {
                                                         $artistText = $this->getTextEncode(substr($value['Songs']['ArtistText'], 0, 30)) . "..";
