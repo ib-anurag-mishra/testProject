@@ -117,7 +117,7 @@
 
 
             // Set Loading
-            $('.content-wrapper.content').append('<div class="loader"></div>');
+            $('.content-wrapper .content').append('<div class="loader"></div>');
 
             //$body.addClass('loader');
 
@@ -350,7 +350,7 @@
     
                     $('.loader').fadeOut(3000);
                     
-                    $('.content-wrapper.content').remove('.loader');
+                    $('.content-wrapper .content').remove('.loader');
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
