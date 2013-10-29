@@ -209,8 +209,9 @@
                                         async:
                                                 false,
                                         success: function(response) {
-                                            sleep(1000);
+                                            sleep(2000);
                                             $.fn.colorbox.close();
+                                            $('#noti_content').hide();
                                             
                                         },
                                         error: function(XMLHttpRequest, textStatus, errorThrown) {
