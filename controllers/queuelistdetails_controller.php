@@ -169,7 +169,7 @@ class QueueListDetailsController extends AppController{
                         Cache::write("defaultqueuelistdetails" . $this->params['pass'][0], $queue_list_array);
                     }
               // }
-                
+           
                 $queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]);
                // print_r($queue_list_array );die;
                 $this->set('queueType', 'Default'); 

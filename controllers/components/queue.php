@@ -92,6 +92,7 @@ Class QueueComponent extends Object
             'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID ),                
           )
         );
+          echo $this->Queue->lastQuery();   
         return $queueDetail;
         
         
