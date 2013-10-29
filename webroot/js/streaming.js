@@ -445,6 +445,8 @@ function streamingValidationJS(responseDataJS) {
 	
 	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS'+responseDataJS);
+        
+        document.getElementById('remaining_stream_time').innerHTML = secondsToHms(responseDataJS[2]);
 	
 	var flash =	document.getElementById("fmp_player");
 	
@@ -463,6 +465,14 @@ function flashConsole(msg) {
 	
 	console.log(msg);
 }
+
+    function secondsToHms(d) {
+	d = Number(d);
+	var h = Math.floor(d / 3600);
+	var m = Math.floor(d % 3600 / 60);
+	var s = Math.floor(d % 3600 % 60);
+	return ((h > 0 ? h + ":" : "") + (m > 0 ? (h > 0 && m < 10 ? "0" : "") + m + ":" : "0:") + (s < 10 ? "0" : "") + s); 
+    }
 
 
 $(document).ready(function(){
