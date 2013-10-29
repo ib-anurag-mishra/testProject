@@ -39,7 +39,7 @@ Class QueueComponent extends Object
     
     
     function getQueueDetails($queueID){
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         $queueDetailList = ClassRegistry::init('QueueDetail');
         $queueDetail = $queueDetailList->find('all',
           array(
@@ -92,7 +92,7 @@ Class QueueComponent extends Object
             'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID ),                
           )
         );
-          echo $this->Queue->lastQuery();   
+         
         return $queueDetail;
         
         
