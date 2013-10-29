@@ -162,7 +162,7 @@ class QueueListDetailsController extends AppController{
         
         if($this->params['pass'][1]=='1')   //  Default Queue
         {        
-                if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === false) {
+                if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === true) {
                 $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
                  if (!empty($queue_list_array)) {
                      echo 147;
