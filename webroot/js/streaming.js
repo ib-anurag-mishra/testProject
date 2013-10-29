@@ -446,7 +446,16 @@ function streamingValidationJS(responseDataJS) {
 	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS'+responseDataJS);
         
-        document.getElementById('remaining_stream_time').innerHTML = secondsToHms(responseDataJS[2]);
+        if(responseDataJS[2]==86400)    //  For Patron with unlimited Streaming Limit
+        {
+             document.getElementById('remaining_stream_time').innerHTML = 'UNLIMITED';
+        }
+        else                            //  For Patron with  Streaming Limit of 10800 sec
+        {
+             document.getElementById('remaining_stream_time').innerHTML = secondsToHms(responseDataJS[2]);
+        }
+        
+       
 	
 	var flash =	document.getElementById("fmp_player");
 	
