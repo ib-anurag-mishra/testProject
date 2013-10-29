@@ -395,55 +395,6 @@ $('document').ready(function()
 
     });
 
-    $('.mejs-controls .mejs-button.mejs-prevtrack > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-prevtrack').css({background: 'url(img/music_player/prev_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-prevtrack > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-prevtrack').css({background: 'url(img/music_player/prev_btn.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-nexttrack > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-nexttrack').css({background: 'url(img/music_player/next_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-nexttrack > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-nexttrack').css({background: 'url(img/music_player/next_btn.png)'});
-
-    });
-
-
-    $('.mejs-controls .mejs-button.mejs-volume-button > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-volume-button').css({background: 'url(img/music_player/volume_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-volume-button > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-volume-button').css({background: 'url(img/music_player/volume_btn.png)'});
-
-    });
-
-
-    $('.mejs-controls .mejs-button.mejs-playlist-button > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-playlist-button').css({background: 'url(img/music_player/playlist_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-playlist-button > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-playlist-button').css({background: 'url(img/music_player/playlist_btn.png)'});
-
-    });
 
 
 
@@ -483,21 +434,6 @@ $('document').ready(function()
     });
 
 
-	/*
-    $(document).on('mouseenter', '.song-cover-container', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-100-download-now-button').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});
-
-    });
-
-    $(document).on('mouseleave', '.song-cover-container', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.top-100-download-now-button').css({opacity: 0});
-        $(this).find('.preview').css({opacity: 0});
-
-    });
-    */
     
     $('.song-cover-container').on('mouseenter',function(){
 	    
@@ -509,9 +445,9 @@ $('document').ready(function()
     
     $('.song-cover-container').on('mouseleave',function(){
 	    
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-100-download-now-button').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});	    
+        $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.top-100-download-now-button').css({opacity: 0});
+        $(this).find('.preview').css({opacity: 0});	    
 	    
     });
 
