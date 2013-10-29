@@ -56,7 +56,7 @@ Class QueueComponent extends Object
                 'table' => 'Songs',
                 'alias' => 'Songs',
                 'foreignKey' => false,
-                'conditions' => array('Songs.ProdID = QueueDetail.song_prodid', 'Songs.provider_type = QueueDetail.song_providertype'),        
+                'conditions' => array('QueueDetail.song_prodid=Songs.ProdID', 'QueueDetail.song_providertype=Songs.provider_type'),        
               ),
               array(
                 'type' => 'INNER',
