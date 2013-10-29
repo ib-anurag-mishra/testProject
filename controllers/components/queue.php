@@ -39,6 +39,7 @@ Class QueueComponent extends Object
     
     
     function getQueueDetails($queueID){
+        Configure::write('debug', 0);
         $queueDetailList = ClassRegistry::init('QueueDetail');
         $queueDetail = $queueDetailList->find('all',
           array(
