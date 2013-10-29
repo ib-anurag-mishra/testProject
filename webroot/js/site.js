@@ -223,23 +223,30 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseenter', '.add-to-playlist', function() {
 
-        $('.playlist-options').addClass('active');
+    
+    $('.add-to-playlist').on('mouseenter',function() {
+	    
+	   $('.playlist-options').addClass('active'); 
     });
 
-    $(document).on('mouseenter', '.add-to-queue', function() {
+
+    
+    $('.add-to-queue').on('mouseenter',function(){
+	    
         if (playlist_list.hasClass('active')) {
             playlist_list.removeClass('active');
-        }
+        }	    
     });
 
-    $(document).on('mouseenter', '.add-to-wishlist', function() {
 
+    
+    $('.add-to-wishlist').on('mouseenter',function() {
+	    
         if (playlist_list.hasClass('active')) {
 
             playlist_list.removeClass('active');
-        }
+        }	    
     });
 
     playlist_list.on('mouseleave', function() {
