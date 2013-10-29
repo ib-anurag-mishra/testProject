@@ -1242,11 +1242,13 @@ $('document').ready(function()
         $(this).siblings('.wishlist-popover').addClass('active');
     });
 
-    $(document).on('mouseleave', '.recent-downloads-page .wishlist-popover', function(e) {
 
-        $(this).removeClass('active');
-    });
-
+    
+    
+	$('.recent-downloads-page .wishlist-popover').on('mouseleave',function(){
+		
+		$(this).removeClass('active');
+	});
 
 
     $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').slice(0, 3).addClass('top');
@@ -1576,10 +1578,12 @@ $('document').ready(function()
         $(this).siblings('.wishlist-popover').addClass('active');
     });
 
-    $(document).on('mouseleave', '.now-streaming-page .now-playing-container .wishlist-popover,.queue-detail-page .now-playing-container .wishlist-popover', function(e) {
 
-        $(this).removeClass('active');
+    $('.now-streaming-page .now-playing-container .wishlist-popover,.queue-detail-page .now-playing-container .wishlist-popover').on('mouseleave',function(){
+	   $(this).removeClass('active'); 
+	    
     });
+    
 
     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
