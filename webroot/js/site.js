@@ -275,6 +275,7 @@ $('document').ready(function()
     grid_view_button.addClass('active');
     grids.addClass('active');
 
+	/*
     $(document).on('mouseenter', video_thumbnail_container, function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.featured-video-download-now-button').css({opacity: 1});
@@ -286,6 +287,23 @@ $('document').ready(function()
         $(this).find('.featured-video-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
 
+    });
+    */
+    
+    $('.video-thumbnail-container').on('mouseenter',function() {
+	    
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.featured-video-download-now-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});	    
+	    
+    });
+    
+    
+    $('.video-thumbnail-container').on('mouseleave',function() {
+	    $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.featured-video-download-now-button').css({opacity: 0});
+        $(this).find('.preview').css({opacity: 0}); 
+	    
     });
 
     $(document).on('mouseenter', artwork_container, function() {
