@@ -1585,51 +1585,6 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 
 }
 
-$(document).ready(function() {
-    
-    $(document).on('click', '.play-queue-btn', function() {
-        playlist = $('#playlist_data').text();
-        playlist = JSON.parse(playlist);
-        if (playlist.length) {
-            pushSongs(playlist);
-        }
-
-    });
-
-    $('.select-arrow').on('click', function(e) {
-        e.preventDefault();
-        $('.account-options-menu').toggleClass('active')
-    });
-
-    $(document).on('click', '.sidebar-anchor', function(e) {
-
-        e.preventDefault();
-
-        $(this).next('ul').toggleClass('active');
-
-        if ($('#home07').hasClass('active')) {
-            $('#home07').removeClass('active');
-        }
-
-        if ($('#musicVideo07').hasClass('active')) {
-            $('#musicVideo07').removeClass('active');
-        }
-
-        if ($('#newsRelease07').hasClass('active')) {
-            $('#newsRelease07').removeClass('active');
-        }
-
-        if ($('#genre07').hasClass('active')) {
-            $('#genre07').removeClass('active');
-        }
-
-        if ($('#faq07').hasClass('active')) {
-            $('#faq07').removeClass('active');
-        }
-
-    });
-});
-
 //load the artist list via ajax    
 function load_artist(link, id_serial, genre_name) {
 
@@ -1792,3 +1747,45 @@ function showHideGridCommingSoon(varType) {
     }
 
 }
+
+$(document).ready(function() {
+    
+    $(document).on('click', '.play-queue-btn', function() {
+        playlist = $('#playlist_data').text();
+        playlist = JSON.parse(playlist);
+        if (playlist.length) {
+            pushSongs(playlist);
+        }
+
+    });
+
+    $('.select-arrow').on('click', function(e) {
+         if ($('.account-options-menu').hasClass('active')) {
+            $('.account-options-menu').removeClass('active');
+        } else {
+            $('.account-options-menu').addClass('active');
+        }
+    });
+
+    $(document).on('click', '.sidebar-anchor', function(e) {
+
+       if ($(this).next('ul').hasClass('active')) {
+            $(this).next('ul').removeClass('active');
+        } else {
+            
+            $(this).next('ul').addClass('active');
+            var home07 = $('#home07');
+            home07.removeClass('active');
+            var musicVideo07 = $('#musicVideo07');
+            musicVideo07.removeClass('active');
+            var newsRelease07 = $('#newsRelease07');
+            newsRelease07.removeClass('active');
+            var genre07 = $('#genre07');
+            genre07.removeClass('active');
+            var faq07 = $('#faq07');
+            faq07.removeClass('active');
+        }
+
+    });
+});
+
