@@ -144,24 +144,22 @@ $('document').ready(function()
 
     $(document).on('click', '.sidebar-anchor', function(e) {
         //e.preventDefault();
-        if ($(this).next('ul').hasClass('active')) {
-            $(this).next('ul').removeClass('active');
-        } else {
-            
-            $(this).next('ul').addClass('active');
+      
+            $(this).next('ul').toggleClass('active');
+       
             var home07 = $('#home07');
-            home07.removeClass('active');
+            home07.toggleClass('active');
             var musicVideo07 = $('#musicVideo07');
-            musicVideo07.removeClass('active');
+            musicVideo07.toggleClass('active');
             var newsRelease07 = $('#newsRelease07');
-            newsRelease07.removeClass('active');
+            newsRelease07.toggleClass('active');
             var genre07 = $('#genre07');
-            genre07.removeClass('active');
+            genre07.toggleClass('active');
             var faq07 = $('#faq07');
-            faq07.removeClass('active');
+            faq07.toggleClass('active');
 
 
-        }
+      
 
         return false;
     });
