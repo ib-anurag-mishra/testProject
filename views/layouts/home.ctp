@@ -210,6 +210,7 @@
                                         success: function(response) {
                                             sleep(1000);
                                             $.fn.colorbox.close();
+                                            $('#noti_content').hide();
                                         },
                                         error: function(XMLHttpRequest, textStatus, errorThrown) {
                                         }
