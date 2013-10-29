@@ -1566,7 +1566,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 }
 
 function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType) {
-	console.log('load song contains');
+    console.log('load song contains');
     var newSong = [
         {
             playlistId: 0,
@@ -1579,7 +1579,7 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
             data: songFile
         }
     ];
-    
+
     console.log(newSong);
     pushSongs(newSong);
 
@@ -1601,7 +1601,7 @@ function load_artist(link, id_serial, genre_name) {
 
     $('.album-list-span').html('');
     $('#album_details_container').html('');
-    $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="'+ webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
+    $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="' + webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
     // var data = "ajax_genre_name="+genre_name;
     var data = "ajax_genre_name=" + genre_name;
     jQuery.ajax({
@@ -1622,7 +1622,7 @@ function showAllAlbumsList(albumListURL) {
 
     $('#album_details_container').html('');
     $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;">\n\
-            <img src="'+ webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
+            <img src="' + webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
 
     var data = "";
     jQuery.ajax({
@@ -1667,7 +1667,7 @@ function showAllAlbumsList(albumListURL) {
 //load the albums details via ajax
 function showAlbumDetails(albumDetailURL) {
 
-    $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="'+ webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
+    $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="' + webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
 
     var data = "";
     jQuery.ajax({
@@ -1707,4 +1707,54 @@ function showAlbumDetails(albumDetailURL) {
             // alert('Album detail not available.');
         }
     });
+}
+
+
+function showHideGrid(varType) {
+
+    var top_100_grids = $('.top-100-grids');
+    var top_100_songs_grid = $('#top-100-songs-grid');
+    var top_100_videos_grid = $('#top-100-videos-grid');
+
+    var songsIDVal = $('#songsIDVal');
+    var videosIDVal = $('#videosIDVal');
+
+    if (varType == 'songs') {
+        videosIDVal.removeClass('active');
+        songsIDVal.addClass('active');
+        top_100_videos_grid.removeClass('active');
+        top_100_songs_grid.addClass('active');
+    } else {
+        songsIDVal.removeClass('active');
+        videosIDVal.addClass('active');
+        top_100_songs_grid.removeClass('active');
+        top_100_videos_grid.addClass('active');
+    }
+}
+
+function showHideGridCommingSoon(varType) {
+
+    var top_100_grids = $('.top-100-grids');
+    var coming_soon_singles_grid = $('#coming-soon-singles-grid');
+    var coming_soon_videos_grid = $('#coming-soon-videos-grid');
+
+    var songsIDValComming = $('#songsIDValComming');
+    var videosIDValComming = $('#videosIDValComming');
+
+
+
+    if (varType == 'songs') {
+        videosIDValComming.removeClass('active');
+        songsIDValComming.addClass('active');
+
+        coming_soon_videos_grid.removeClass('active');
+        coming_soon_singles_grid.addClass('active');
+    } else {
+        songsIDValComming.removeClass('active');
+        videosIDValComming.addClass('active');
+
+        coming_soon_singles_grid.removeClass('active');
+        coming_soon_videos_grid.addClass('active');
+    }
+
 }
