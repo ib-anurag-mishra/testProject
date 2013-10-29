@@ -139,38 +139,7 @@ $('document').ready(function()
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
 
-    $('.select-arrow').on('click', function(e) {
-        e.preventDefault();
-        $('.account-options-menu').toggleClass('active')
-    });
-
-    $(document).on('click', '.sidebar-anchor', function(e) {
-
-        e.preventDefault();
-
-        $(this).next('ul').toggleClass('active');
-
-        if ($('#home07').hasClass('active')) {
-            $('#home07').removeClass('active');
-        }
-
-        if ($('#musicVideo07').hasClass('active')) {
-            $('#musicVideo07').removeClass('active');
-        }
-
-        if ($('#newsRelease07').hasClass('active')) {
-            $('#newsRelease07').removeClass('active');
-        }
-
-        if ($('#genre07').hasClass('active')) {
-            $('#genre07').removeClass('active');
-        }
-
-        if ($('#faq07').hasClass('active')) {
-            $('#faq07').removeClass('active');
-        }
-
-    });
+   
 
 //    $(document).on('click', '.left-sidebar li a', function(e) {
 //        //e.preventDefault();
