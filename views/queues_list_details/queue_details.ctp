@@ -37,11 +37,11 @@
                                                 }
                                                 
                                     ?>
-					<div class="share clearfix">
+					<!--<div class="share clearfix">
 						<p>Share via</p>
 						<a class="facebook" href="javascript:void(0);"></a>
 						<a class="twitter" href="javascript:void(0);"></a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
