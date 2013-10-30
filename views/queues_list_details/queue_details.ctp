@@ -74,6 +74,16 @@
 					<div class="row clearfix">
 						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
+                                                
+                                                if ('T' == $value['Songs']['Advisory'])
+                                                {
+                                                    if (strlen($value['Songs']['SongTitle']) >= 20)
+                                                    {
+                                                        $value['Songs']['SongTitle'] = $this->getTextEncode(substr($value['Songs']['SongTitle'], 0, 20)) . "..";
+                                                    }
+                                                    $value['Songs']['SongTitle'] .='(Explicit)';
+                                                }                                            
+                                            
                                                 $duration = explode(':',$value['Songs']['FullLength_Duration']);
                                                 $duration_in_secs = $duration[0]*60;
                                                 $total_duration = $duration_in_secs+$duration[1];                                                
@@ -86,15 +96,6 @@
                                                     <div id="play_item_<?php echo $i;?>"style="display:none;"><?php echo $value['Songs']['ProdID'].','.$value['Songs']['provider_type']; ?></div>
 						<?php } ?>
                                                 <div class="song-title"><?php 
-                                                
-                                                    if ('T' == $value['Songs']['Advisory'])
-                                                    {
-                                                        if (strlen($value['Songs']['SongTitle']) >= 20)
-                                                        {
-                                                            $value['Songs']['SongTitle'] = $this->getTextEncode(substr($value['Songs']['SongTitle'], 0, 20)) . "..";
-                                                        }
-                                                        $value['Songs']['SongTitle'] .='(Explicit)';
-                                                    }
                                                     echo $value['Songs']['SongTitle'];
                                                     
                                                     ?>

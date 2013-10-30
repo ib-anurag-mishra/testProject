@@ -77,6 +77,15 @@
 					<div class="row clearfix">
 						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
+                                                
+                                                if ('T' == $value['Songs']['Advisory'])
+                                                {
+                                                    if (strlen($value['Songs']['SongTitle']) >= 20)
+                                                    {
+                                                        $value['Songs']['SongTitle'] = $this->getTextEncode(substr($value['Songs']['SongTitle'], 0, 20)) . "..";
+                                                    }
+                                                    $value['Songs']['SongTitle'] .='(Explicit)';
+                                                }                                            
                                                 $duration = explode(':',$value['Songs']['FullLength_Duration']);
                                                 $duration_in_secs = $duration[0]*60;
                                                 $total_duration = $duration_in_secs+$duration[1];
@@ -86,15 +95,6 @@
 
                                             ?>
 						<div class="song-title"><?php 
-                                                
-                                                    if ('T' == $value['Songs']['Advisory'])
-                                                    {
-                                                        if (strlen($value['Songs']['SongTitle']) >= 20)
-                                                        {
-                                                            $value['Songs']['SongTitle'] = $this->getTextEncode(substr($value['Songs']['SongTitle'], 0, 20)) . "..";
-                                                        }
-                                                        $value['Songs']['SongTitle'] .='(Explicit)';
-                                                    }                                                
                                                 echo $value['Songs']['SongTitle']?></div>
 						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
                                                 <?php
@@ -194,6 +194,14 @@
 					<div class="row clearfix">
 						<!-- <a class="preview" href="#"></a>  -->
                                             <?php
+                                                if ('T' == $value['Song']['Advisory'])
+                                                {
+                                                    if (strlen($value['Song']['SongTitle']) >= 20)
+                                                    {
+                                                        $value['Song']['SongTitle'] = $this->getTextEncode(substr($value['Song']['SongTitle'], 0, 20)) . "..";
+                                                    }
+                                                    $value['Song']['SongTitle'] .='(Explicit)';
+                                                }                                            
                                                 $duration = explode(':',$value['Song']['FullLength_Duration']);
                                                 $duration_in_secs = $duration[0]*60;
                                                 $total_duration = $duration_in_secs+$duration[1];                                                
@@ -203,15 +211,6 @@
 
                                             ?>
 						<div class="song-title"><?php 
-                                                    if ('T' == $value['Song']['Advisory'])
-                                                    {
-                                                        if (strlen($value['Song']['SongTitle']) >= 20)
-                                                        {
-                                                            $value['Song']['SongTitle'] = $this->getTextEncode(substr($value['Song']['SongTitle'], 0, 20)) . "..";
-                                                        }
-                                                        $value['Song']['SongTitle'] .='(Explicit)';
-                                                    }                                                
-                                                
                                                 echo $value['Song']['SongTitle']?></div>
 						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
                                                 <?php
