@@ -178,18 +178,18 @@ Class StreamingComponent extends Object
                 $insertArr['patron_id'] = $patId;
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
-                $insertArr['consumed_time'] = $userStreamedTime;
-               
-                $insertArr['createdOn'] = $currentDate;
-                
+                $insertArr['consumed_time'] = $userStreamedTime;               
+                $insertArr['createdOn'] = $currentDate;              
+                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['action_type'] = $actionType;
+                $insertArr['songs_queue_id'] = $queue_id;                
                 if($agent == null){
                     $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
                     $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
-                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
-                $insertArr['action_type'] = $actionType;
-                $insertArr['queryID'] = $queue_id;
+                
+                
                 $streamingRecordsInstance->setDataSource('master');
                 $streamingHistoryInstance->save($insertArr);
                 $streamingRecordsInstance->setDataSource('default');
@@ -245,24 +245,22 @@ Class StreamingComponent extends Object
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $userStreamedTime;
                 $insertArr['modified_date'] = $currentDate;              
-                $insertArr['createdOn'] = $currentDate;
-                
-                
+                $insertArr['createdOn'] = $currentDate; 
+                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['action_type'] = $actionType; 
+                $insertArr['songs_queue_id'] = $queue_id;
                 if($agent == null){
                     $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
                     $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
-                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
-                $insertArr['action_type'] = $actionType; 
-                $insertArr['queryID'] = $queue_id;
                
                 //updated record if user Streamed time is not 0 and less then to stream time
                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     $streamingHistoryInstance->setDataSource('master');
                     
                     if($streamingHistoryInstance->save($insertArr)){                
-                       
+                       print_r($insertArr);
                         $log_data .= PHP_EOL."insert streaming_history table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate." ;queue_id :".$queue_id.PHP_EOL;
                         $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$userStreamedTime." ;modified_date : ".$currentDate,'streaming');            
                         $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
