@@ -38,7 +38,7 @@ Class QueueComponent extends Object
     }
     
     
-    function getQueueDetails($queueID){
+    function getQueueDetails($queueID,$territory){
         $queueDetailList = ClassRegistry::init('QueueDetail');
         $queueDetail = $queueDetailList->find('all',
           array(
@@ -64,6 +64,13 @@ Class QueueComponent extends Object
                 'alias' => 'Albums',
                 'foreignKey' => false,
                 'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
+              ),
+              array(
+                'type' => 'INNER',
+                'table' => $territory.'_countries',
+                'alias' => 'Countries',
+                'foreignKey' => false,
+                'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type'),        
               ),
               array(
                 'type' => 'INNER',
