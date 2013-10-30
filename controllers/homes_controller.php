@@ -196,11 +196,15 @@ class HomesController extends AppController
     function checkStreamingComponent(){
          Configure::write('debug', 2);
          
-         $query='select * from streaming_histories where id="3007"';
-         $obj = mysql_query($query);
-         
-         $result = mysql_fetch_array($obj);
+//         $query='select * from streaming_histories where id="3007"';
+//         $obj = mysql_query($query);
+//         
+//         $result = mysql_fetch_array($obj);
+       
+         $result = $this->StreamingHistory->find('first',array('conditions'=>array('id'=>'3007')));
          print_r( $result);
+         
+         
          die;
          
         echo 'libid=> '.$libId = $this->Session->read('library');
