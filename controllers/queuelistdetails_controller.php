@@ -106,7 +106,7 @@ class QueueListDetailsController extends AppController{
         $queueId = $this->Session->read('queuePlaying');
         $songPlaying = $this->Session->read('songPlaying');
         if(!empty($queueId)){
-            $queue_list_array   =   $this->Queue->getQueueDetails($queueId);
+            $queue_list_array   =   $this->Queue->getQueueDetails($queueId,$territory);
             $total_seconds = 0;
             foreach($queue_list_array as $k => $v)
             {

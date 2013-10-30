@@ -57,19 +57,30 @@ class QueuesController extends AppController{
                 $this->data['QueueList']['created']  = date('Y-m-d H:i:s');
                 $this->data['QueueList']['patron_id'] = $this->Session->read('patron');
                 
-                echo "<pre>"; print_r($this->data['QueueList']); die;
                 
-                $this->QueueList->setDataSource('master');
-                if($this->QueueList->save($this->data['QueueList'])){
-                        $this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
-                        $this->redirect($this->referer());						
+                $queue_name     =   $this->data['QueueList']['queue_name'];
+                               
+                if(empty($queue_name))
+                {
+                    $this->Session ->setFlash('Queue Name is empty', 'modal', array( 'class' => 'queue problem' ));
+                    $this->redirect($this->referer());	
                 }
-                else{
-                        $this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
-                        $this->redirect($this->referer());					
-                }
-                $this->QueueList->setDataSource('default');
-            }
+                else 
+                {
+                        $this->QueueList->setDataSource('master');
+                        if($this->QueueList->save($this->data['QueueList']))
+                        {
+                                $this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
+                                $this->redirect($this->referer());						
+                        }
+                        else
+                        {
+                                $this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
+                                $this->redirect($this->referer());					
+                        }
+                        $this->QueueList->setDataSource('default');
+                }           
+             }
         }
                                 
     }
