@@ -198,7 +198,7 @@ class HomesController extends AppController
         echo 'libid=> '.$libId = $this->Session->read('library');
         echo '<br>patid=> '.$patId = $this->Session->read('patron');
         //testing for streaming component       
-        echo '<br>prodid=> '.$prodId='28320117';
+        echo '<br>prodid=> '.$prodId='2743882';
         echo '<br>providertyp=> '.$provider='sony';
         echo '<br>userStreamedTime=> '.$userStreamedTime ='0';
         echo '<br>actionType=> '.$actionType='5';
