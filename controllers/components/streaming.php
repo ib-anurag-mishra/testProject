@@ -186,9 +186,9 @@ Class StreamingComponent extends Object
                 $insertArr['createdOn'] = $currentDate;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 if($agent == null){
-                    $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
+                    $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
-                    $insertArr['user_agent'] = addslashes($agent);   
+                    $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
                 $streamingRecordsInstance->setDataSource('master');
                 $streamingHistoryInstance->save($insertArr);
@@ -250,9 +250,9 @@ Class StreamingComponent extends Object
                 $insertArr['queue_id'] = $queue_id;
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 if($agent == null){
-                    $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
+                    $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
-                    $insertArr['user_agent1'] = addslashes($agent);   
+                    $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
                 
                 
