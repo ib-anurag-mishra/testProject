@@ -178,7 +178,7 @@ Configure::write('debug', 2);
         }
         else        // Custom Queue
         {
-            $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+            $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0],$territory);
             $this->set('queueType', 'Custom'); 
         }
         
