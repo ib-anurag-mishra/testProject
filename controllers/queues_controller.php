@@ -247,16 +247,11 @@ class QueuesController extends AppController{
                                                                                               'alias' => 'Album',
                                                                                               'type' => 'LEFT',
                                                                                                'conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')
-                                                                                              ),  
-                                                                                        array('table' => 'queue_details',
-                                                                                              'alias' => 'QueueDetail',
-                                                                                              'type' => 'LEFT',
-                                                                                               'conditions' => array('QueueDetail.song_prodid = Song.ProdID','QueueDetail.song_providertype = Song.provider_type')
-                                                                                              ),
+                                                                                              ),                                                                                          
                                                                                         array('table' => 'queue_lists',
                                                                                               'alias' => 'QueueList',
                                                                                               'type' => 'LEFT',
-                                                                                               'conditions' => array('QueueList.queue_id = QueueDetail.queue_id')
+                                                                                               'conditions' => array('QueueList.queue_id = StreamingHistory.songs_queue_id')
                                                                                               ),
                                                                                         array('table' => 'File',
                                                                                               'alias' => 'Full_Files',
@@ -268,8 +263,7 @@ class QueuesController extends AppController{
                                                                     'conditions' => array('StreamingHistory.library_id' => $libraryId,
                                                                                           'StreamingHistory.patron_id' => $patronId,                                                                                                                                                                                      
                                                                                           'StreamingHistory.createdOn BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'),
-                                                                                          Configure::read('App.twoWeekEndDate')),
-                                                                                          array('OR' => array('QueueList.patron_id' => $patronId, 'QueueList.queue_type' => 1))
+                                                                                          Configure::read('App.twoWeekEndDate'))
                                                                                           ),
                                                                     'fields'=>array('SUM(StreamingHistory.consumed_time) as StreamingTime', 'Country.StreamingSalesDate', 'Country.StreamingStatus', 'QueueList.queue_id', 'QueueList.queue_name','Song.Advisory', 'Song.FullLength_Duration','Song.ReferenceID', 'Song.SongTitle', 'Song.ArtistText', 'Song.provider_type',  'StreamingHistory.ProdID','StreamingHistory.provider_type','StreamingHistory.patron_id','StreamingHistory.library_id','StreamingHistory.consumed_time','StreamingHistory.createdOn', 'Song.ProdID', 'Album.provider_type', 'Album.AlbumTitle', 'Full_Files.CdnPath', 'Full_Files.SaveAsName'),
                                                                     'order'=>"$songSortBy $sortType")); 
