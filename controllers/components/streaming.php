@@ -473,9 +473,11 @@ Class StreamingComponent extends Object
             if(isset($secondsValue) && is_numeric($secondsValue)){
                 return $secondsValue;
             }else{
+                echo 147;
                  return false;
             }          
         } else {
+            echo 45;
             return false;
         }
     }
