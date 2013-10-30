@@ -467,8 +467,7 @@ Class StreamingComponent extends Object
                             ),
         'fields' => array('Song.FullLength_Duration'))); 
         
-        echo $song['Song']['FullLength_Duration'];
-        echo $libraryTerritory;
+        
         if(isset($song['Song']['FullLength_Duration']) && $libraryTerritory){      
             $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);          
             if(isset($secondsValue) && is_numeric($secondsValue)){
