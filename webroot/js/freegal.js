@@ -1569,7 +1569,7 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
     console.log('load song contains');
     var newSong = [
         {
-            playlistId: "0",
+            playlistId: 0,
             songId: prodId,
             providerType: providerType,
             label: songTitle,
