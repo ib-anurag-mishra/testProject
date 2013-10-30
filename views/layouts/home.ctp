@@ -94,37 +94,53 @@
                     var newsRelease07 = $('#newsRelease07');
                     var genre07 = $('#genre07');
                     var faq07 = $('#faq07');
+                    
+                    
+                    var leftmusicVideo07 = $('#leftmusicVideo07');
+                   
 
                     if (pageName == 'home07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
                         home07.addClass('active');
                     } else if (pageName == 'musicVideo07') {
                         home07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
                         musicVideo07.addClass('active');
                     } else if (pageName == 'newsRelease07') {
                         musicVideo07.removeClass('active');
                         home07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
                         newsRelease07.addClass('active');
                     } else if (pageName == 'genre07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         home07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
                         genre07.addClass('active');
                     } else if (pageName == 'faq07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         home07.removeClass('active');
                         genre07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
                         faq07.addClass('active');
+                    }else if (pageName == 'faq07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.addClass('active');
                     }
                 }
 
