@@ -27,11 +27,14 @@ Class StreamingComponent extends Object
      *   
      * @return array
     */
-    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id='0') {
+    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id) {
         
         /**
           creates log file name
         */
+        
+        if(!isset($queue_id)) { $queue_id = '0'; }
+        
         //set the default value
         $currentTimeDuration = 0;
         $timerCallTime = (2 * $songDuration) ;
@@ -215,7 +218,7 @@ Class StreamingComponent extends Object
                 $remainingTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
                 if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     $streamingRecordsInstance->setDataSource('master');
-                    $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$userStreamedTime.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
+                    echo $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$userStreamedTime.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
                     if($streamingRecordsInstance->query($StreamingRecordsSQL)){
                                    
                         $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$userStreamedTime.PHP_EOL;
@@ -251,7 +254,7 @@ Class StreamingComponent extends Object
                 }else{
                     $insertArr['user_agent'] = addslashes($agent);   
                 }
-                
+                print_r($insertArr);die;
                 
                
                 //updated record if user Streamed time is not 0 and less then to stream time
