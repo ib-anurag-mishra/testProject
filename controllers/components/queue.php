@@ -38,8 +38,20 @@ Class QueueComponent extends Object
     }
     
     
-    function getQueueDetails($queueID,$territory){
+    function getQueueDetails($queueID,$territory=''){
         $queueDetailList = ClassRegistry::init('QueueDetail');
+        $territoryArray = array();
+        if($territory !=''){
+            $territoryArray=  array(
+                'type' => 'INNER',
+                'table' => $territory.'_countries',
+                'alias' => 'Countries',
+                'foreignKey' => false,
+                'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type'),        
+              );
+        }
+        
+        
         $queueDetail = $queueDetailList->find('all',
           array(
             'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle','Songs.ReferenceID', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle','Albums.ProdID','Albums.provider_type', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
@@ -65,13 +77,7 @@ Class QueueComponent extends Object
                 'foreignKey' => false,
                 'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
               ),
-              array(
-                'type' => 'INNER',
-                'table' => $territory.'_countries',
-                'alias' => 'Countries',
-                'foreignKey' => false,
-                'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type'),        
-              ),
+                $territoryArray,
               array(
                 'type' => 'INNER',
                 'table' => 'PRODUCT',
