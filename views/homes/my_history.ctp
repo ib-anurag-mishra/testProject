@@ -132,8 +132,17 @@ $ieVersion =  ieversion();
                                     $downloadResult['totalseconds']  = $this->Queue->getSeconds($downloadResult['Song']['FullLength_Duration']); 
                                  } 
                             
-                            
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$downloadResult['streamUrl'].'", "'.$downloadResult['Song']['SongTitle'].'","'.$downloadResult['Song']['ArtistText'].'",'.$downloadResult['totalseconds'].',"'.$downloadResult['Song']['ProdID'].'","'.$downloadResult['Song']['provider_type'].'");'));
+                                if ('T' == $downloadResult['Song']['Advisory'])
+                                {
+                                       $song_title =   $downloadResult['Song']['SongTitle'].'(Explicit)';
+                                }
+                                else 
+                                {
+                                       $song_title =   $downloadResult['Song']['SongTitle'];
+                                }
+                                 
+                                 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$downloadResult['streamUrl'].'", "'.$song_title.'","'.$downloadResult['Song']['ArtistText'].'",'.$downloadResult['totalseconds'].',"'.$downloadResult['Song']['ProdID'].'","'.$downloadResult['Song']['provider_type'].'");'));
 
                         }else if($this->Session->read('library_type') == 1){
                                 //do the simple player(this code will be update after discussion)

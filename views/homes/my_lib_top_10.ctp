@@ -109,8 +109,17 @@
 <!-- <a href="#" class="preview"></a>  -->
 <?php                                  
                                        if( $this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)                                                 
-                                      {
-                                            echo $html->image('/img/news/top-100/preview-off.png', array( "class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$value['Song']['SongTitle'].'","'.$value['Song']['ArtistText'].'",'.$value['totalseconds'].',"'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
+                                      {                                           
+                                            if ('T' == $value['Song']['Advisory'])
+                                            {
+                                                   $song_title =   $value['Song']['SongTitle'].'(Explicit)';
+                                            }
+                                            else 
+                                            {
+                                                   $song_title =   $value['Song']['SongTitle'];
+                                            }
+                                           
+                                            echo $html->image('/img/news/top-100/preview-off.png', array( "class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$song_title.'","'.$value['Song']['ArtistText'].'",'.$value['totalseconds'].',"'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
                                       }
                                       else if($value['Country']['SalesDate'] <= date('Y-m-d')) 
                                      {
