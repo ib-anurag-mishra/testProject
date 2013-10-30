@@ -252,7 +252,7 @@ Class StreamingComponent extends Object
                 if($agent == null){
                     $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
                 }else{
-                    $insertArr['user_agent'] = addslashes($agent);   
+                    $insertArr['user_agent1'] = addslashes($agent);   
                 }
                 
                 

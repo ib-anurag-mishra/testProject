@@ -194,7 +194,7 @@ class HomesController extends AppController
 
     //this is just for streaming component test
     function checkStreamingComponent(){
-        
+         Configure::write('debug', 2);
         echo 'libid=> '.$libId = $this->Session->read('library');
         echo '<br>patid=> '.$patId = $this->Session->read('patron');
         //testing for streaming component       
