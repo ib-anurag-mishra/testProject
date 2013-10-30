@@ -260,6 +260,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 		case 5:
 			playerEventCodeString = "Song Ended";
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,16,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
 		case 6:
@@ -274,14 +275,18 @@ function reportPrevSong(prevSongObj, playerEventCode) {
                  case 8:
 			playerEventCodeString = "Queue cleared"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,19,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;                        
                         
 		case 9:
 			playerEventCodeString = "User ran out of time";
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,20,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 		case 10:
 			playerEventCodeString = "Queue playback completed";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
 		case 11:
@@ -365,6 +370,7 @@ function validateSong(songObj, playerEventCode) {
 		case 5:
 			playerEventCodeString = "Song Ended"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
 		case 6:
@@ -381,6 +387,7 @@ function validateSong(songObj, playerEventCode) {
 	    case 8:
 			playerEventCodeString = "Queue cleared"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,11,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;			    	
 	}
 	
@@ -406,6 +413,22 @@ function validateSong(songObj, playerEventCode) {
 //	streamingValidationJS(responseDataArray);
 
 }		
+
+
+function clearNowstreamingSession(){
+    var postURL = webroot+'queuelistdetails/clearNowStreamingSession';
+    $.ajax({
+        type: "POST",
+        cache:false,
+        url: postURL
+    }).done(function(data){
+
+    })
+    .fail(function(){
+        alert('Ajax Call to clear now streaming session has been failed');
+    });                                
+
+}
 
 
 function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
@@ -460,7 +483,7 @@ function streamingValidationJS(responseDataJS) {
 	var flash =	document.getElementById("fmp_player");
 	
 	flash.streamingValidationAS(responseDataJS);
-        exit;
+        //exit;
 	
 }
 function reportTime(amt) {
