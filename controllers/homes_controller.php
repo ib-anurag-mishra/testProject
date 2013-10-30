@@ -200,7 +200,7 @@ class HomesController extends AppController
         //testing for streaming component       
         echo '<br>prodid=> '.$prodId='2743882';
         echo '<br>providertyp=> '.$provider='sony';
-        echo '<br>userStreamedTime=> '.$userStreamedTime ='0';
+        echo '<br>userStreamedTime=> '.$userStreamedTime =10;
         echo '<br>actionType=> '.$actionType='5';
         echo '<br>songDuration=> '.$songDuration = 300;
         echo '<br>queue_id=> '.$queue_id = '2';        
