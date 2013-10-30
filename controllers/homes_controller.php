@@ -203,6 +203,8 @@ class HomesController extends AppController
         echo '<br>userStreamedTime=> '.$userStreamedTime ='0';
         echo '<br>actionType=> '.$actionType='5';
         echo '<br>songDuration=> '.$songDuration = 300;
+        echo '<br>queue_id=> '.$queue_id = 2;
+        
         $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration);
         print_r($validationResponse);
         die;
