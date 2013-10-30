@@ -474,7 +474,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<section class="left-sidebar">
                                             <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
                                                     <li>
-                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css,"id"=>'leftmusicVideo07',"onclick"=>'setUpperNavigation("leftmusicVideo07")'))); ?>
+                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
                                                     <li>
                                                             <a class="sidebar-anchor" style="cursor:pointer" href="javascript:void(0);" ><?php __('Most Popular'); ?></a>
