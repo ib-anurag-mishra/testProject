@@ -109,8 +109,19 @@ Class QueueComponent extends Object
         
   }
 
-    function getNowstreamingSongDetails($prodId,$providerType){
+    function getNowstreamingSongDetails($prodId,$providerType,$territory=''){
         $nowStreamingSongDetailList = ClassRegistry::init('Song');
+        $territoryArray = array();
+        if($territory !=''){
+            $territoryArray=  array(
+                'type' => 'INNER',
+                'table' => strtolower($territory).'_countries',
+                'alias' => 'Countries',
+                'foreignKey' => false,
+                'conditions' => array('Song.ProdID = Countries.ProdID', 'Song.provider_type = Countries.provider_type'),        
+              );
+        }
+       
         $nowStreamingSongDetail = $nowStreamingSongDetailList->find('all',
           array(
             'fields' =>  array('Song.SongTitle','Song.ReferenceID', 'Song.FullLength_Duration', 'Song.ProdID', 'Song.provider_type','Song.Advisory', 'Song.Title as STitle', 'Song.ArtistText',  'Song.Artist', 'Albums.AlbumTitle','Albums.ProdID','Albums.provider_type', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
@@ -122,6 +133,7 @@ Class QueueComponent extends Object
                 'foreignKey' => false,
                 'conditions' => array('Albums.ProdID = Song.ReferenceID', 'Albums.provider_type = Song.provider_type'),        
               ),
+                $territoryArray,
               array(
                 'type' => 'INNER',
                 'table' => 'PRODUCT',
