@@ -132,7 +132,7 @@ class QueueListDetailsController extends AppController{
             $this->set('queue_songs_count',count($queue_list_array)); 
             $this->set('total_time',$total_minutes.":".$total_seconds);             
         }else if(!empty($songPlaying)){
-            $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'] , $songPlaying['providerType']);
+            $trackDetails = $this->Queue->getNowstreamingSongDetails($songPlaying['prodId'] , $songPlaying['providerType'],$territory);
             foreach($trackDetails as $k => $v)
              {
                  $filePath = shell_exec('perl files/tokengen_streaming '. $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
