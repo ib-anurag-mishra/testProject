@@ -179,17 +179,17 @@ Class StreamingComponent extends Object
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $userStreamedTime;
-                $insertArr['action_type'] = $actionType;
-                $insertArr['queue_id'] = $queue_id;
-                
-                $insertArr['modified_date'] = $currentDate;
+               
                 $insertArr['createdOn'] = $currentDate;
-                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                
                 if($agent == null){
                     $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
                     $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
+                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['action_type'] = $actionType;
+                $insertArr['queue_id'] = $queue_id;
                 $streamingRecordsInstance->setDataSource('master');
                 $streamingHistoryInstance->save($insertArr);
                 $streamingRecordsInstance->setDataSource('default');
@@ -244,18 +244,18 @@ Class StreamingComponent extends Object
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $userStreamedTime;
-                $insertArr['modified_date'] = $currentDate;
-                $insertArr['action_type'] = $actionType; 
+                $insertArr['modified_date'] = $currentDate;              
                 $insertArr['createdOn'] = $currentDate;
-                $insertArr['queue_id'] = $queue_id;
-                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                
+                
                 if($agent == null){
                     $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
                     $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
-                
-                
+                $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['action_type'] = $actionType; 
+                $insertArr['queue_id'] = $queue_id;
                
                 //updated record if user Streamed time is not 0 and less then to stream time
                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
