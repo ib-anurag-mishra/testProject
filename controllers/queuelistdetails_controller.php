@@ -221,7 +221,7 @@ class QueueListDetailsController extends AppController{
        $patId = $this->Session->read('patron');
        $this->Session->delete('queuePlaying');
        $this->Session->delete('songPlaying');
-       $eventArray = array(5,12,13,14,15,16,17,18,19);
+       $eventArray = array(5,12,13,14,15,16,17,18,19,20,21);
        
        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId, $provider,$userStreamedTime,$eventType,'',$songDuration,"'".$_POST['queueId']."'");
        if(!empty($validationResponse)){
