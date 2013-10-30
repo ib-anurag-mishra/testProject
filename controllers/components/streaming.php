@@ -189,7 +189,7 @@ Class StreamingComponent extends Object
                 }
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $insertArr['action_type'] = $actionType;
-                $insertArr['queue_id'] = $queue_id;
+                $insertArr['queryID'] = $queue_id;
                 $streamingRecordsInstance->setDataSource('master');
                 $streamingHistoryInstance->save($insertArr);
                 $streamingRecordsInstance->setDataSource('default');
@@ -255,7 +255,7 @@ Class StreamingComponent extends Object
                 }
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $insertArr['action_type'] = $actionType; 
-                $insertArr['queue_id'] = $queue_id;
+                $insertArr['queryID'] = $queue_id;
                
                 //updated record if user Streamed time is not 0 and less then to stream time
                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
