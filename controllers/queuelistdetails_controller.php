@@ -148,7 +148,7 @@ class QueueListDetailsController extends AppController{
     
     function queue_details()
     {
-Configure::write('debug', 0);
+        Configure::write('debug', 0);
         $this->layout = 'home';   
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -163,12 +163,12 @@ Configure::write('debug', 0);
         if($this->params['pass'][1]=='1')   //  Default Queue
         {        
           
-       // if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === false) {
+        if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === false) {
                 $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0],$territory);
                  if (!empty($queue_list_array)) {                   
                         Cache::write("defaultqueuelistdetails" . $this->params['pass'][0], $queue_list_array);
                     }
-        // }  
+         }  
 
             $queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]);
             // print_r($queue_list_array );die;
@@ -176,7 +176,7 @@ Configure::write('debug', 0);
         }
         else        // Custom Queue
         {
-            $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+            $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0],$territory);
             $this->set('queueType', 'Custom'); 
         }
         
