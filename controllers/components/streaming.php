@@ -218,7 +218,7 @@ Class StreamingComponent extends Object
                 $remainingTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
                 if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     $streamingRecordsInstance->setDataSource('master');
-                    echo $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$userStreamedTime.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
+                    $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$userStreamedTime.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
                     if($streamingRecordsInstance->query($StreamingRecordsSQL)){
                                    
                         $log_data .= PHP_EOL."update streaming_reocrds table:-LibID='".$libId."':Parameters:-Patron='".$patId."':songDuration='".$userStreamedTime.PHP_EOL;
@@ -254,16 +254,16 @@ Class StreamingComponent extends Object
                 }else{
                     $insertArr['user_agent'] = addslashes($agent);   
                 }
-                print_r($insertArr);die;
+                
                 
                
                 //updated record if user Streamed time is not 0 and less then to stream time
                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     $streamingHistoryInstance->setDataSource('master');
                     
-                    if($streamingHistoryInstance->save($insertArr)){                       
-                        $queryInsertFlag = 1;
-                        $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate." ;queue_id :".$queue_id.PHP_EOL;
+                    if($streamingHistoryInstance->save($insertArr)){                      
+                        print_r($insertArr);
+                        $log_data .= PHP_EOL."insert streaming_history table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate." ;queue_id :".$queue_id.PHP_EOL;
                         $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$userStreamedTime." ;modified_date : ".$currentDate,'streaming');            
                         $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
                         $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
