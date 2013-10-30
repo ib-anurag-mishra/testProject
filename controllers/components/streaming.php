@@ -261,8 +261,8 @@ Class StreamingComponent extends Object
                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     $streamingHistoryInstance->setDataSource('master');
                     
-                    if($streamingHistoryInstance->save($insertArr)){                      
-                        print_r($insertArr);
+                    if($streamingHistoryInstance->save($insertArr)){                
+                       
                         $log_data .= PHP_EOL."insert streaming_history table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate." ;queue_id :".$queue_id.PHP_EOL;
                         $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$userStreamedTime." ;modified_date : ".$currentDate,'streaming');            
                         $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
