@@ -50,7 +50,7 @@ Class QueueComponent extends Object
                 'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type'),        
               );
         }
-        
+        print_r($territoryArray);
         
         $queueDetail = $queueDetailList->find('all',
           array(
