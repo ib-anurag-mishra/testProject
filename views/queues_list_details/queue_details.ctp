@@ -87,7 +87,7 @@
 						<?php } ?>
                                                 <div class="song-title"><?php 
                                                 
-                                                    if ('T' == $value['Song']['Advisory'])
+                                                    if ('T' == $value['Songs']['Advisory'])
                                                     {
                                                         if (strlen($value['Songs']['SongTitle']) >= 20)
                                                         {
@@ -95,7 +95,7 @@
                                                         }
                                                         $value['Songs']['SongTitle'] .='(Explicit)';
                                                     }
-                                                    echo $value['Songs']['SongTitle']
+                                                    echo $value['Songs']['SongTitle'];
                                                     
                                                     ?>
                                                 </div>
