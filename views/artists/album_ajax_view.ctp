@@ -101,7 +101,7 @@
                                     
                                     if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1) 
                                     {
-                                        echo $html->image('play.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'loadSong("'.$albumSong['streamUrl'].'", "'.$song_title.'","'.$albumSong['Song']['ArtistText'].'",'.$albumSong['totalseconds'].',"'.$albumSong['Song']['ProdID'].'","'.$albumSong['Song']['provider_type'].'");'));
+                                                echo $html->image('play.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'loadSong("'.$albumSong['streamUrl'].'", "'.$song_title.'","'.$albumSong['Song']['ArtistText'].'",'.$albumSong['totalseconds'].',"'.$albumSong['Song']['ProdID'].'","'.$albumSong['Song']['provider_type'].'");'));
                                     }
                                     else  if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) 
                                     {

@@ -1565,11 +1565,12 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
     return false;
 }
 
-function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType) {
+function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType,playlistId) {
     console.log('load song contains');
+    playlistId = (playlistId === undefined) ? 0 : playlistId;
     var newSong = [
         {
-            playlistId: 0,
+            playlistId: playlistId,
             songId: prodId,
             providerType: providerType,
             label: songTitle,
