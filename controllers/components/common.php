@@ -171,8 +171,7 @@ STR;
                         $data[$key]['songAlbumImage'] = $songAlbumImage;
                         
                         if($this->Session->read('library_type')==2)
-                        {                            
-                            
+                        {                                                        
                             echo "<br>CdnPath: ".$value['Full_Files']['CdnPath'];
                             echo "<br>SaveAsName: ".$value['Full_Files']['SaveAsName'];
                             
