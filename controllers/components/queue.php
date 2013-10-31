@@ -39,14 +39,11 @@ Class QueueComponent extends Object
     
     
     function getQueueDetails($queueID,$territory=''){
-        $queueDetailList = ClassRegistry::init('QueueDetail');
-        $territoryArray = array();
-        
-       
+        $queueDetailList = ClassRegistry::init('QueueDetail');       
          
         $queueDetail = $queueDetailList->find('all',
           array(
-            'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle','Songs.ReferenceID','Songs.Advisory', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle','Albums.ProdID','Albums.provider_type', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+            'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle','Songs.ReferenceID','Songs.Advisory', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle','Albums.ProdID','Albums.provider_type', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName','Countries.StreamingStatus','Countries.StreamingSalesDate','Countries.DownloadStatus','Countries.SalesDate'),
             'joins' => array(
               array(
                 'type' => 'INNER',
@@ -108,7 +105,7 @@ Class QueueComponent extends Object
                     'or' =>array(array('and'=> array('Countries.StreamingStatus' => 1,'Countries.StreamingSalesDate <=' => date('Y-m-d')))
                         ,array('and'=> array('Countries.DownloadStatus' => 1))
                     )
-             )                
+                )                
           )
         );
         return $queueDetail;
