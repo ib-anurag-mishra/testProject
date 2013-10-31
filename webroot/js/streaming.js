@@ -291,6 +291,8 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 			
 		case 11:
 			playerEventCodeString = "New queue loaded";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 		default:
 			playerEventCodeString = "";
