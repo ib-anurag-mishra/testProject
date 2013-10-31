@@ -95,14 +95,7 @@
                     var faq07 = $('#faq07'); 
                     var topmylib07 = $('#topmylib07'); 
                     var topustop07 = $('#topustop07'); 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                 
                     var leftmusicVideo07 = $('#leftmusicVideo07');
                     var leftmylib07 = $('#leftmylib07');
                     var ustoplib07 = $('#ustoplib07');

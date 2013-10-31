@@ -181,7 +181,7 @@ class QueueListDetailsController extends AppController{
         }
         
         
-        
+       print_r($queue_list_array );die;
         //echo 456;
         //Find Total Duration
         $total_seconds = 0;

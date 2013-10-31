@@ -41,15 +41,7 @@ Class QueueComponent extends Object
     function getQueueDetails($queueID,$territory=''){
         $queueDetailList = ClassRegistry::init('QueueDetail');
         $territoryArray = array();
-        if($territory !=''){
-            $territoryArray=  array(
-                'type' => 'INNER',
-                'table' => strtolower($territory).'_countries',
-                'alias' => 'Countries',
-                'foreignKey' => false,
-                'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type'),        
-              );
-        }
+        
        
          
         $queueDetail = $queueDetailList->find('all',
@@ -77,7 +69,13 @@ Class QueueComponent extends Object
                 'foreignKey' => false,
                 'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
               ),
-                $territoryArray,
+              array(
+                'type' => 'INNER',
+                'table' => strtolower($territory).'_countries',
+                'alias' => 'Countries',
+                'foreignKey' => false,
+                'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type', ),        
+              ),
               array(
                 'type' => 'INNER',
                 'table' => 'PRODUCT',
@@ -101,7 +99,16 @@ Class QueueComponent extends Object
               ),           
             ),
             'recursive' => -1,
-            'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID ),                
+            'conditions' => array('and' =>
+                    array(
+                            array('QueueList.status' => 1),                               
+                            array('QueueDetail.queue_id' => $queueID)									
+
+                    ),
+                    'or' =>array(array('and'=> array('Country.StreamingStatus' => 1,'Country.StreamingSalesDate <=' => date('Y-m-d')))
+                        ,array('and'=> array('Country.DownloadStatus' => 1))
+                    )
+             )                
           )
         );
         return $queueDetail;

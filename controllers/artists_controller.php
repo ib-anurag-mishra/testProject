@@ -366,18 +366,18 @@ Class ArtistsController extends AppController
 					}
 					if( empty( $errorMsg ) ) {
 						if( $updateObj -> insert( $updateArr ) ) {
-              Configure::write('Cache.disable',false);
-              $cacheKey = 'ssartists_'.$this->data['Artist']['territory'].'_'.Configure::read('App.LANGUAGE');
-              if(Cache::delete($cacheKey) == true){
-              	Configure::write('Cache.disable',true);
-                $this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-              	$this -> redirect( 'manageartist' );
-              } else {
-                Configure::write('Cache.disable',true);
-                $this -> Session -> setFlash( 'Data has been saved successfully, but the cache is not cleared!', 'modal', array( 'class' => 'modal success' ) );
-                $this -> redirect( 'manageartist' );
-              }
-            }
+                                                    Configure::write('Cache.disable',false);
+                                                    $cacheKey = 'ssartists_'.$this->data['Artist']['territory'].'_'.Configure::read('App.LANGUAGE');
+                                                    if(Cache::delete($cacheKey) == true){
+                                                        Configure::write('Cache.disable',true);
+                                                        $this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
+                                                        $this -> redirect( 'manageartist' );
+                                                    } else {
+                                                        Configure::write('Cache.disable',true);
+                                                        $this -> Session -> setFlash( 'Data has been saved successfully, but the cache is not cleared!', 'modal', array( 'class' => 'modal success' ) );
+                                                        $this -> redirect( 'manageartist' );
+                                                    }
+                                                    }
 					}
 					else {
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
