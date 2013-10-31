@@ -506,8 +506,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="javascript:void(0)" class="sidebar-anchor "><?php __('Freegal Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
-                                                                <?php foreach($defaultQueues as $key => $value){?>
-                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
+                                                                <?php foreach($defaultQueues as $key => $value){
+                                                                    $fqueuesid = 'leftfqueues_'.$value['QueueList']['queue_id'].'_07';
+                                                                    ?>
+                                                                    <li><a id="<?=$fqueuesid?>" onclick="setUpperNavigation('<?=$fqueuesid?>')" href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
                                                                 <?php } ?>    
                                                             </ul>
                                                     </li>
@@ -515,8 +517,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="javascript:void(0);" class="sidebar-anchor saved-queue "><?php __('My Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
-                                                                    <li><a href="/queuelistdetails/now_streaming"><?php __('Now Streaming'); ?></a></li>
-                                                                    <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Saved Queues'); ?></a></li>
+
+
+                                                                    <li><a id="leftnowstreaming07" onclick="setUpperNavigation('leftnowstreaming07')" href="/queuelistdetails/now_streaming"><?php __('Now Streaming'); ?></a></li>
+                                                                    <li><a id="leftsavedqueues07" onclick="setUpperNavigation('leftsavedqueues07')" href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Saved Queues'); ?></a></li>
                                                             </ul>
                                                     </li>
                                                     <li>
