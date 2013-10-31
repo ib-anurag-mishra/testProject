@@ -106,14 +106,9 @@
 
                                                     if(!empty($filePath))
                                                      {
-                                                        $songPath = explode(':',$filePath);
+                                                        $songPath  = explode(':',$filePath);
                                                         $streamUrl =  trim($songPath[1]);
-                                                                                                                
-                                                        $url_str    =   explode("&", $streamUrl);
-                                                        $token      =   explode("?", $streamUrl);
-                                                                                                                                                                        
-                                                        $nationalTopDownload[$i]['streamUrl'] = $token[0]."?".$url_str[2];;
-                                                        
+                                                        $nationalTopDownload[$i]['streamUrl'] = $streamUrl;
                                                         $nationalTopDownload[$i]['totalseconds']  = $this->Queue->getSeconds($nationalTopDownload[$i]['Song']['FullLength_Duration']); 
                                                      } 
                                                 
