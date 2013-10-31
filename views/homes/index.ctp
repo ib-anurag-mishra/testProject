@@ -16,13 +16,13 @@
 
                 <li>
 
-                    <a href="#top-100-songs" id="songsIDVal" class="active" data-category-type="songs" onclick="showHideGrid('songs')">Songs</a>
+                    <a href="#top-100-songs" id="songsIDVal" class="active no-ajaxy" data-category-type="songs" onclick="showHideGrid('songs')">Songs</a>
 
 
                 </li>
                 <li>
 
-                    <a href="#top-100-videos" id="videosIDVal" data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
+                    <a href="#top-100-videos" id="videosIDVal" class="no-ajaxy" data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
 
                 </li>
             </ul>
@@ -572,8 +572,8 @@
             <nav class="category-filter">
                 <ul class="clearfix">
                     <!-- <li><a href="#coming-soon-album-grid">Albums</a></li> -->
-                    <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active" onclick="showHideGridCommingSoon('songs')">Singles</a></li>
-                    <li><a href="#coming-soon-videos-grid" id="videosIDValComming" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
+                    <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active no-ajaxy" onclick="showHideGridCommingSoon('songs')">Singles</a></li>
+                    <li><a href="#coming-soon-videos-grid" id="videosIDValComming" class="no-ajaxy" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
                 </ul>
 
             </nav>
