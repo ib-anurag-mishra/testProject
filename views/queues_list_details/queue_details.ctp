@@ -144,7 +144,7 @@
                                                          }
                                             }
                                                  ?>
-                                                        <?php   if ($this->Session->read('library_type') == 2 && $value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1)
+                                                        <?php   if ($this->Session->read('library_type') == 2 && $value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1){
 
                                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Songs"]["ProdID"],$value["Songs"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
                                                                     <a class="add-to-playlist" href="#">Add To Queue</a>
