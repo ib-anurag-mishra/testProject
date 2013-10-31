@@ -117,7 +117,9 @@
 
 
             // Set Loading
-            $('.content-wrapper').append("`<div class='loader'></div>`");
+            var loading_div = "<div class='loader'>";
+            loading_div += "</div>";
+            $('.content-wrapper').append(loading_div);
 
             //$body.addClass('loader');
 
