@@ -23,7 +23,9 @@
 				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="javascript:void(0);">FAQ section</a>.</div>
 				<div class="button-container">
 					<div class="play-queue-btn"></div>
-					<div class="gear-icon no-ajaxy"></div>
+					<?php if($default_queue != 1){ ?>
+                                            <div class="gear-icon no-ajaxy"></div>
+                                        <?php } ?>
 				</div>
 				<div class="queue-options">
                                     <?php                                    
