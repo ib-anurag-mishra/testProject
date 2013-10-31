@@ -397,7 +397,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <ul class="clearfix">
 			<li class="regular"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss,"id"=>'home07',"onclick"=>'setUpperNavigation("home07")'));?></li>			
                         <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss,"id"=>'musicVideo07',"onclick"=>'setUpperNavigation("musicVideo07")')); ?></li>
-                        <li class="most-popular"><?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); } else { if($this->Session->read("patron")){ echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); } else { echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'us_top_10')); } } ?></li>
+                        <li class="most-popular"><?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>'setUpperNavigation("topmylib07")')); } else { if($this->Session->read("patron")){ echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>'setUpperNavigation("topmylib07")')); } else { echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' =>'us_top_10'), array("id"=>'topustop07',"onclick"=>'setUpperNavigation("topustop07")')); } } ?></li>
                         <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss,"id"=>'newsRelease07',"onclick"=>'setUpperNavigation("newsRelease07")')); ?></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss,"id"=>'genre07',"onclick"=>'setUpperNavigation("genre07")')); ?></li>   
                         <li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss,"id"=>'faq07',"onclick"=>'setUpperNavigation("faq07")')); ?></li>
@@ -405,13 +405,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     
                     <div class="most-popular-sub-nav">
                             <?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
-                                        <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
+                                        <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>'setUpperNavigation("topmylib07")')); ?></div>
                             <?php } else {
                                     if($this->Session->read("patron")){ ?>
-                                        <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
+                                        <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'), array("id"=>'topmylib07',"onclick"=>'setUpperNavigation("topmylib07")')); ?></div>
                             <?php   } 
                                   } ?>
-                            <div><?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
+                            <div><?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'), array("id"=>'topustop07',"onclick"=>'setUpperNavigation("topustop07")')); ?></div>
                     </div>                   
 
 			</nav>
@@ -474,28 +474,28 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<section class="left-sidebar">
                                             <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
                                                     <li>
-                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css,"id"=>'musicVideo07',"onclick"=>'setUpperNavigation("musicVideo07")')); ?>
+                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css,"id"=>'leftmusicVideo07',"onclick"=>'setUpperNavigation("leftmusicVideo07")')); ?>
                                                     </li>                                                    
                                                     <li>
                                                             <a class="sidebar-anchor" style="cursor:pointer" href="javascript:void(0);" ><?php __('Most Popular'); ?></a>
                                                             <ul class="<?php echo $ul_class; ?>">
                                                                 <?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
-                                                                        <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
+                                                                        <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css,"id"=>'leftmylib07',"onclick"=>'setUpperNavigation("leftmylib07")')); ?></li>
                                                                 <?php } else {
                                                                         if($this->Session->read("patron")){ ?>
-                                                                            <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
+                                                                            <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css,"id"=>'leftmylib07',"onclick"=>'setUpperNavigation("leftmylib07")')); ?></li>
                                                                   <?php } 
                                                                       } ?>
                                                                 <li>
-                                                                        <?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'),array('class'=>$us_top_css)); ?>
+                                                                        <?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'),array('class'=>$us_top_css,"id"=>'ustoplib07',"onclick"=>'setUpperNavigation("ustoplib07")')); ?>
                                                                 </li>
                                                             </ul>
                                                     </li>  
                                                     <li>
-                                                            <?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases'),array('class'=>$new_releases_css)); ?>
+                                                            <?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases'),array('class'=>$new_releases_css,"id"=>'leftnewrelease07',"onclick"=>'setUpperNavigation("leftnewrelease07")')); ?>
                                                     </li> 
                                             </ul>
-                                            <?php if($this->Session->read("patron")){ ?>
+                                          <?php if($this->Session->read("patron")){ ?>
                                             <?php if($this->Session->read('library_type') == '2') {
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
@@ -524,9 +524,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>
                                             <?php } ?>
                                             <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
-                                                    <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
+                                                    <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css,"id"=>'leftmyhistory07',"onclick"=>'setUpperNavigation("leftmyhistory07")')); ?></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
-                                                    <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
+                                                    <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css,"id"=>'leftmywishlist07',"onclick"=>'setUpperNavigation("leftmywishlist07")')); ?></li>
                                                     <?php /* } */ ?>     
                                             </ul>
                                             <?php
