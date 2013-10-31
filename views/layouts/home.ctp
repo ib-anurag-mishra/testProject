@@ -107,6 +107,10 @@
                     
                     
                     if(pageName.indexOf("leftfqueues_") !== -1){
+                        var leftfqueuesclass = $('.leftfqueuesclass');
+                        leftfqueuesclass.removeClass('active'); 
+                        
+                        
                         var leftfqueues = $('#'+pageName);
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');

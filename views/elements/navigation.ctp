@@ -69,6 +69,7 @@ $(document).ready(function() {
 
 </script>
 
+
 <?php
 /**
 	File Name : navigation.php
@@ -509,7 +510,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 <?php foreach($defaultQueues as $key => $value){
                                                                     $fqueuesid = 'leftfqueues_'.$value['QueueList']['queue_id'].'_07';
                                                                     ?>
-                                                                    <li><a id="<?=$fqueuesid?>" onclick="setUpperNavigation('<?=$fqueuesid?>')" href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
+                                                                    <li><a class="leftfqueuesclass" id="<?=$fqueuesid?>" onclick="setUpperNavigation('<?=$fqueuesid?>')" href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
                                                                 <?php } ?>    
                                                             </ul>
                                                     </li>
