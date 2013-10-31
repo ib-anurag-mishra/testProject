@@ -128,7 +128,7 @@ class QueueListDetailsController extends AppController{
             $total_seconds      =    $total_seconds%60;
 
             $this->set('queue_list_array',$queue_list_array); 
-            $this->set('queue_id',$this->params['pass'][0]); 
+            $this->set('queue_id',$queueId); 
             $this->set('queue_songs_count',count($queue_list_array)); 
             $this->set('total_time',$total_minutes.":".$total_seconds);             
         }else if(!empty($songPlaying)){
