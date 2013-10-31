@@ -168,30 +168,8 @@ STR;
                 foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                        $data[$key]['songAlbumImage'] = $songAlbumImage;
+                        $data[$key]['songAlbumImage'] = $songAlbumImage;                        
                         
-                        if($this->Session->read('library_type')==2)
-                        {                            
-                            
-//                            echo "<br>CdnPath: ".$value['Sample_Files']['CdnPath'];
-//                            echo "<br>CdnPath: ".$value['Sample_Files']['SaveAsName'];
-//                            echo "<br>CdnPath: ".$value['Full_Files']['CdnPath'];
-//                            echo "<br>CdnPath: ".$value['Full_Files']['SaveAsName'];
-//                            echo "<br>CdnPath: ".$value['File']['CdnPath'];
-//                            echo "<br>CdnPath: ".$value['File']['SaveAsName'];
-                            
-                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
-
-                            //echo "<br>filePath: ".$filePath;
-                            
-                            if(!empty($filePath))
-                             {
-                                $songPath = explode(':',$filePath);
-                                $streamUrl =  trim($songPath[1]);
-                                $data[$key]['streamUrl'] = $streamUrl;
-                                $data[$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
-                             } 
-                        }
                 }                    
                 Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");
