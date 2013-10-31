@@ -115,17 +115,7 @@
                                                $song_title =   $value['Song']['SongTitle'];
                                         }
                                         
-                                        $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
-
-                                        if(!empty($filePath))
-                                         {
-                                            $songPath = explode(':',$filePath);
-                                            $streamUrl =  trim($songPath[1]);
-                                            $value['streamUrl'] = $streamUrl;
-                                            $value['totalseconds']  = $this->Queue->getSeconds($value['Song']['FullLength_Duration']); 
-                                         }
-                                        
-                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$song_title.'","'.$value['Song']['ArtistText'].'",'.$value['totalseconds'].',"'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
+                                         echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$song_title.'","'.$value['Song']['ArtistText'].'",'.$value['totalseconds'].',"'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
                                   }
                                   else  if($value['Country']['SalesDate'] <= date('Y-m-d')) 
                                   {
