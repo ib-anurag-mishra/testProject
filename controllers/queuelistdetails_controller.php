@@ -192,10 +192,6 @@ class QueueListDetailsController extends AppController{
             $minutes        =   $temp_arr[0];
             $seconds        =   $temp_arr[1];
             $total_seconds +=   $minutes*60+$seconds;
-            
-            echo "<br>SCdnPath: ".$v['SongFile']['SCdnPath'];
-            echo "<br>SSaveAsName: ".$v['SongFile']['SSaveAsName'];
-            
             $filePath = shell_exec('perl files/tokengen_streaming ' . $v['SongFile']['SCdnPath']."/".$v['SongFile']['SSaveAsName']);
             if(!empty($filePath)){
                 $songPath = explode(':',$filePath);
