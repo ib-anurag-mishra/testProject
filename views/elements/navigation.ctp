@@ -298,7 +298,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
                                                {                                                    
                                                     $streamTime =   (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron')));
-                                                    $streamTime =   gmdate("H:i:s", $streamTime);
+                                                    $streamTime =   gmdate("G:i:s", $streamTime);
                                                }
                                                else if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1)
                                                { 
