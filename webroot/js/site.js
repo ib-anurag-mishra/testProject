@@ -197,24 +197,15 @@ $('document').ready(function()
         whats_happening_filter_results.show();
 
     });
-	/*
+	
     $('.add-to-playlist').on('mouseenter', function() {
 		console.log('add to playlist entered');
 		
         $('.playlist-options').addClass('active');
     });
-    */
     
-    $(document).on('mouseenter','.add-to-playlist',function(){
-	   //console.log('add to playlist entered');
-	    
-	   //$('.playlist-options').addClass('active');
-	   
-	   if($('.playlist-options').hasClass('active')) {
-		   $('.playlist-options').removeClass('active');
-		   
-	   }
-    });
+    
+
 
     $('.add-to-queue').on('mouseenter', function() {
 
