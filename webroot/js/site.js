@@ -213,6 +213,13 @@ $('document').ready(function()
 	   $('.playlist-options').addClass('active');
 	    
     });
+    
+    $('.genres-page .album-detail-container').on('mouseleave','.add-to-playlist',function(){
+	    
+	   //console.log('add to playlist entered');
+	   $('.playlist-options').removeClass('active');
+	    
+    })
 
 
     $('.add-to-queue').on('mouseenter', function() {
