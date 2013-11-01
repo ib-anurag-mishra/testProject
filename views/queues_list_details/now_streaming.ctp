@@ -2,7 +2,12 @@
            <?php if(!empty($queue_list_array) || !empty($trackDetails)){ 
                     if(!empty($queue_list_array)){
                ?>
-		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
+		<div class="breadcrumbs">
+                <?php
+                        $html->addCrumb( __('Now Streaming', true), '/queuelistdetails/now_streaming');
+                        echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+                ?>
+                </div>
 		<div class="col-container clearfix">
 			<div class="col-1">
 				<img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
@@ -17,7 +22,7 @@
 				<div class="queue-duration">
 					Duration: <?php echo $total_time; ?>
 				</div>
-                                 <input type="hidden" id="hid_Plid" value="<?php echo $queue_id;?>" />
+                                <input type="hidden" id="hid_Plid" value="<?php echo $queue_id;?>" />
                                 <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["QueueList"]["queue_name"];?>" />
                                 <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"];?>" />
 			</div>

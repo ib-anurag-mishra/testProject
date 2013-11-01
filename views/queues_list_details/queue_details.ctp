@@ -1,6 +1,11 @@
 <section class="queue-detail-page">
             <?php if(!empty($queue_list_array)){ ?>
-		<div class="breadcrumbs"><span>Home</span> > <span>Saved Queues</span> > <span>Queue #1</span></div>
+		<div class="breadcrumbs">
+                    <?php
+                            $html->addCrumb( __($queue_list_array[0]['QueueList']['queue_name'], true), 'queuelistdetails/queue_details/'.$this->param[0]);
+                            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+                    ?>
+                </div>
 		<div class="col-container clearfix">
 			<div class="col-1">
 				<img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
