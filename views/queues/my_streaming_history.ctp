@@ -126,10 +126,10 @@ $ieVersion =  ieversion();
                                 }
                             
                             
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr['streamUrl'].'", "'.$song_title.'","'.$streamingArr['Song']['ArtistText'].'",'.$streamingArr['totalseconds'].',"'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block; left: 91px;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr['streamUrl'].'", "'.$song_title.'","'.$streamingArr['Song']['ArtistText'].'",'.$streamingArr['totalseconds'].',"'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
                         }else if($this->Session->read('library_type') == 1){
                                 //do the simple player(this code will be update after discussion)
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['Download']['ProdID'].', "'.base64_encode($streamingArr['Download']['provider_type']).'", "'.$this->webroot.'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block; left: 91px;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['Download']['ProdID'].', "'.base64_encode($streamingArr['Download']['provider_type']).'", "'.$this->webroot.'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
                         }    
@@ -138,10 +138,10 @@ $ieVersion =  ieversion();
                         
                         ?>
 					</div>
-					<div class="song-title">
+					<div class="song-title" style="left: 115px;">
                                     <?php 
-                                                  if(strlen($streamingArr['Song']['SongTitle']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 19)) . '...</span>';							
+                                                  if(strlen($streamingArr['Song']['SongTitle']) >= 16) {
+							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 16)) . '...</span>';							
 						} else {
 							echo $this->getTextEncode($streamingArr['Song']['SongTitle']); 
 					 	}
@@ -155,8 +155,8 @@ $ieVersion =  ieversion();
                                      <?php 
                                                
                                                 
-						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .$this->getTextEncode(substr($streamingArr['QueueList']['queue_name'], 0, 19)) . '...</span>';							
+						if (strlen($streamingArr['QueueList']['queue_name']) >= 16) {
+							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .$this->getTextEncode(substr($streamingArr['QueueList']['queue_name'], 0, 16)) . '...</span>';							
 						} else {
 							echo $this->getTextEncode($streamingArr['QueueList']['queue_name']); 
 					 	}
