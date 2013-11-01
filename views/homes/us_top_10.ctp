@@ -114,8 +114,8 @@
                                         {
                                                $song_title =   $value['Song']['SongTitle'];
                                         }
-                                        
-                                         echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$song_title.'","'.$value['Song']['ArtistText'].'",'.$value['totalseconds'].',"'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
+                                        echo $this->Queue->getStreamNowLabel($value['streamUrl'],$song_title,$value['Song']['ArtistText'],$value['totalseconds'],$value['Song']['ProdID'],$value['Song']['provider_type']);
+                                         //echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'loadSong("'.$value['streamUrl'].'", "'.$song_title.'","'.$value['Song']['ArtistText'].'",'.$value['totalseconds'].',"'.$value['Song']['ProdID'].'","'.$value['Song']['provider_type'].'");')); 
                                   }
                                   else  if($value['Country']['SalesDate'] <= date('Y-m-d')) 
                                   {
