@@ -504,7 +504,7 @@
     </div>
     <div class="featured">
         <header>
-            <h3>Featured</h3>
+            <h3>Featured Albums</h3>
         </header>
         <div class="featured-grid horiz-scroll">
             <ul style="width:3690px;">
@@ -570,7 +570,7 @@
             <nav class="category-filter">
                 <ul class="clearfix">
                     <!-- <li><a href="#coming-soon-album-grid">Albums</a></li> -->
-                    <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active no-ajaxy" onclick="showHideGridCommingSoon('songs')">Singles</a></li>
+                    <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active no-ajaxy" onclick="showHideGridCommingSoon('songs')">Songs</a></li>
                     <li><a href="#coming-soon-videos-grid" id="videosIDValComming" class="no-ajaxy" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
                 </ul>
 
