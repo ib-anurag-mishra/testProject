@@ -2,7 +2,7 @@
             <?php if(!empty($queue_list_array)){ ?>
 		<div class="breadcrumbs">
                     <?php
-                            $html->addCrumb( __($queue_list_array[0]['QueueList']['queue_name'], true), 'queuelistdetails/queue_details/'.$queue_id);
+                            $html->addCrumb( __($queue_list_array[0]['QueueList']['queue_name'], true), '/queuelistdetails/queue_details/'.$queue_id);
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
                 </div>
