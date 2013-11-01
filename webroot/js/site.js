@@ -199,7 +199,7 @@ $('document').ready(function()
     });
 
     $('.add-to-playlist').on('mouseenter', function() {
-
+		console.log('add to playlist hovered');
         $('.playlist-options').addClass('active');
     });
 
