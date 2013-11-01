@@ -199,16 +199,18 @@ $('document').ready(function()
     });
     
     
-	
+	/*
     $('.add-to-playlist').on('mouseenter', function() {
 		console.log('add to playlist entered');
 		
         $('.playlist-options').addClass('active');
     });
+    */
     
     $('.genres-page .album-detail-container').on('mouseenter','.add-to-playlist',function(){
 	    
 	   console.log('add to playlist entered');
+	   $('.playlist-options').addClass('active');
 	    
     });
 
