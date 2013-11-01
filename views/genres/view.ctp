@@ -176,7 +176,7 @@ $totalRows = count($genresAll);
                                         <a  class="genre_list_item_all selected" 
                                             href="javascript:void(0);" data-genre="<?php echo addslashes($this->getTextEncode($genre_name)); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>" 
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($this->getTextEncode($genre_name)); ?>')" >
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>', '<?php echo $genre_count; ?>', '<?php echo addslashes($this->getTextEncode($genre_name)); ?>')" >
                                                 <?php echo $this->getTextEncode($genre_name); ?>
                                         </a>
                                     </li>
@@ -189,7 +189,7 @@ $totalRows = count($genresAll);
                                         <a  class="genre_list_item_all" href="javascript:void(0);" 
                                             data-genre="<?php echo addslashes($this->getTextEncode($genre_name)); ?>" 
                                             id="genre_list_item_<?php echo $genre_count; ?>"  
-                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All', '<?php echo $genre_count; ?>', '<?php echo addslashes($this->getTextEncode($genre_name)); ?>')" >
+                                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>', '<?php echo $genre_count; ?>', '<?php echo addslashes($this->getTextEncode($genre_name)); ?>')" >
                                                 <?php echo $this->getTextEncode($genre_name); ?>
                                         </a>
                                     </li>
