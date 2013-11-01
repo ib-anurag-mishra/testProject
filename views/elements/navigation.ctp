@@ -434,13 +434,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>
                                            <?php                                                                                             
 
-                                                    if($this->Session->read("lId")==602 || $this->Session->read("lId")==85)  // removed Library: The District of Columbia Public Library (id 486)                                                   
+                                                    if($this->Session->read("lId")==602 || $this->Session->read("lId")==85 || $this->Session->read("lId")==486)  // removed Library: The District of Columbia Public Library (id 486)                                                   
                                                     {                                                         
                                                         ?>    
                                                              <div class="announcements">
                                                                 <h4><?php __('Announcements'); ?></h4>
                                                                 <div class="poll1" style="display:block;height:350px;">                                                                                                                                                                       
-                                                                 Register for Concert Tickets Giveway<br><br>
+                                                                 Register for the Great Fall Concert Ticket Giveaway<br><br>
                                                                  One entry only<br><br>
                                                                  <?php echo $html->link(__('More Info', true), array('controller' => 'registerconcerts','action'=>'great_fall_concert'));?><br> 
                                                                  
@@ -467,7 +467,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                           }
                                                                           else
                                                                           {
-                                                                                $reutrn_message='<br><font style="color:green;">Thanks for entering the Concert Ticket Giveway.</font><br><br>Contest closes October 11, 2013.'; 
+                                                                                $reutrn_message='<br><font style="color:green;">Thanks for entering the Great Fall Concert Ticket Giveaway.</font><br><br>Contest runs Nov 1 - Dec 7, 2013.'; 
                                                                           }
                                                                           ?>
                                                                     <span id="ReturnMessage" ><?php echo $reutrn_message; ?></span>
