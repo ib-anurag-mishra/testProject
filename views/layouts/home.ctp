@@ -86,7 +86,11 @@
                 function setUpperNavigation(pageName) {                    
                     
                     var sidebar_anchor = $('.sidebar-anchor');
-                    sidebar_anchor.removeClass('active');                   
+                    sidebar_anchor.removeClass('active');
+                    
+                    var sidebar_freegalqueues = $('.leftfqueuesclass');
+                    sidebar_freegalqueues.removeClass('active');
+                     
                     
                     var home07 = $('#home07');
                     var musicVideo07 = $('#musicVideo07');
@@ -356,7 +360,7 @@
                         leftnowstreaming07.removeClass('active');
                         leftsavedqueues07.addClass('active');
                        
-                    } else if (pageName == 'leftsavedqueues07') {                      
+                    } else if (pageName == 'leftnowstreaming07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
