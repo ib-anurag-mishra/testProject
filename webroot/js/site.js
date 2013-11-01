@@ -214,12 +214,7 @@ $('document').ready(function()
 	    
     });
     
-    $('.genres-page .album-detail-container').on('mouseleave','.add-to-playlist',function(){
-	    
-	   //console.log('add to playlist entered');
-	   $('.playlist-options').removeClass('active');
-	    
-    })
+
 
 
     $('.add-to-queue').on('mouseenter', function() {
@@ -241,6 +236,12 @@ $('document').ready(function()
 
         playlist_list.removeClass('active');
     });
+    
+    $('.genres-page .album-detail-container').on('mouseleave','.playlist-options',function(){
+	    
+	    $('.playlist-options').removeClass('active');
+    });
+    
     playlist_list.bind('mousewheel', function(e) {
 
 
