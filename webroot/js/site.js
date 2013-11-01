@@ -209,7 +209,7 @@ $('document').ready(function()
     
     $('.genres-page .album-detail-container').on('mouseenter','.add-to-playlist',function(){
 	    
-	   console.log('add to playlist entered');
+	   //console.log('add to playlist entered');
 	   $('.playlist-options').addClass('active');
 	    
     });
