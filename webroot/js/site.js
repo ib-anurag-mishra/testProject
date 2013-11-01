@@ -211,7 +211,7 @@ $('document').ready(function()
 	   //$('.playlist-options').addClass('active');
 	   
 	   if($('.playlist-options').hasClass('active')) {
-		   $('.playlist-options').removeClass('active')
+		   $('.playlist-options').removeClass('active');
 		   
 	   }
     });
