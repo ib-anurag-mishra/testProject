@@ -50,7 +50,7 @@
                     isInternalLink;
 
             // Check link
-            isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1;
+            isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1 || url.substring(0, 0) === '#';
 
             // Ignore or Keep
             return isInternalLink;
@@ -75,7 +75,7 @@
             var $this = $(this);
 
             // Ajaxify
-            $this.find('a:not(.no-ajaxy)').click(function(event) {
+            $this.find('a:internal:not(.no-ajaxy)').click(function(event) {
 			//$this.find('a:internal:not(.no-ajaxy),a[href^="#"]').click(function(event) {
             //$this.find('a:internal:not(.no-ajaxy,[href^="#"])').click(function(event) {
             //$this.find('a:not(.no-ajaxy,[href^="#"])').click(function(event) {	
