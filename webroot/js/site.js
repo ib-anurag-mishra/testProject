@@ -140,25 +140,26 @@ $('document').ready(function()
     var footer_height = footer.height();
 
    
+    $(document).on('click', '.left-sidebar li a', function(e) {
+        //e.preventDefault();
+        $(sidebar_a).removeClass('active');
+        $(this).addClass('active');
 
-//    $(document).on('click', '.left-sidebar li a', function(e) {
-//        //e.preventDefault();
-//        $(sidebar_a).removeClass('active');
-//        $(this).addClass('active');
-//
-//
-//        var home07 = $('#home07');
-//        home07.removeClass('active');
-//        var musicVideo07 = $('#musicVideo07');
-//        musicVideo07.removeClass('active');
-//        var newsRelease07 = $('#newsRelease07');
-//        newsRelease07.removeClass('active');
-//        var genre07 = $('#genre07');
-//        genre07.removeClass('active');
-//        var faq07 = $('#faq07');
-//        faq07.removeClass('active');
-//
-//    });
+
+        var home07 = $('#home07');
+        home07.removeClass('active');
+        var musicVideo07 = $('#musicVideo07');
+        musicVideo07.removeClass('active');
+        var newsRelease07 = $('#newsRelease07');
+        newsRelease07.removeClass('active');
+        var genre07 = $('#genre07');
+        genre07.removeClass('active');
+        var faq07 = $('#faq07');
+        faq07.removeClass('active');
+
+    });
+
+	
 
     $(document).on('click', '.announcements h4 a', function(e) {
         e.preventDefault();
