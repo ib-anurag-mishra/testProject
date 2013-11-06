@@ -52,7 +52,7 @@
 
             // Check link
             isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1;
-			
+			console.log('url is ' + url);
 			console.log('isInternalLink is ' + isInternalLink);
 
             // Ignore or Keep
