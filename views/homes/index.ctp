@@ -570,8 +570,8 @@
             <nav class="category-filter">
                 <ul class="clearfix">
                     <!-- <li><a href="#coming-soon-album-grid">Albums</a></li> -->
-                    <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active no-ajaxy" onclick="showHideGridCommingSoon('songs')">Songs</a></li>
-                    <li><a href="#coming-soon-videos-grid" id="videosIDValComming" class="no-ajaxy" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
+                    <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active no-ajaxy hp-tabs" onclick="showHideGridCommingSoon('songs')">Songs</a></li>
+                    <li><a href="#coming-soon-videos-grid" id="videosIDValComming" class="no-ajaxy hp-tabs" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
                 </ul>
 
             </nav>
