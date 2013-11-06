@@ -354,7 +354,7 @@
     
                     $('.loader').fadeOut(500);
                     
-                    $('.content').remove('.loader');
+                    $('.content-wrapper').remove('.loader');
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
