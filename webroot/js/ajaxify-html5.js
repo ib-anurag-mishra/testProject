@@ -11,6 +11,7 @@
 
     // Check to see if History.js is enabled for our Browser
     if (!History.enabled) {
+    	console.log('history not enabled');
         return false;
     }
 
