@@ -1636,6 +1636,7 @@ $('document').ready(function()
 
     $(document).on('click', '.delete-queue', function(e) {
         e.preventDefault();
+        alert(2);
         $('.queue-overlay').addClass('active');
         $('.delete-queue-dialog-box').addClass('active');
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
