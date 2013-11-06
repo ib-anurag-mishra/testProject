@@ -1711,7 +1711,7 @@ $('document').ready(function()
         }
     }
     
-    $('a:internal:not(.no-ajaxy,[href^="#"])').on('click',function(){
+    $('a[href^="#"]').on('click',function(){
 	    
 	   console.log('clicked'); 
 	    
