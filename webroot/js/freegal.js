@@ -1770,6 +1770,7 @@ $(document).ready(function() {
 
     $(document).on('click', '.sidebar-anchor', function(e) {
 
+		console.log('sidebar anchor clicked');
        if ($(this).next('ul').hasClass('active')) {
             $(this).next('ul').removeClass('active');
         } else {
