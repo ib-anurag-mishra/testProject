@@ -1127,6 +1127,7 @@ if (isset($type)) {
                         </div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
+                                    $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
                                     if ($sales_date <= date('Y-m-d')) {
                                         $productInfo = $mvideo->getDownloadData($psong->ProdID,$psong->provider_type);
                                         $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
