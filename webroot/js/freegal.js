@@ -1793,7 +1793,7 @@ $(document).ready(function() {
 */
 
 	$('.sidebar-anchor.with-sub').on('click',function(){
-		
+		console.log('sidebar anchor clicked');
 		if($(this).next('ul').hasClass('active')) {
 			$(this).next('ul').removeClass('active');
 			
