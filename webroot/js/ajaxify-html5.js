@@ -50,7 +50,7 @@
                     isInternalLink;
 
             // Check link
-            isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1 || url.substring(0, 1) === '#';
+            isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1;
 
             // Ignore or Keep
             return isInternalLink;
