@@ -1767,10 +1767,11 @@ $(document).ready(function() {
             $('.account-options-menu').addClass('active');
         }
     });
-
+/*
     $(document).on('click', '.sidebar-anchor', function(e) {
 
-		console.log('sidebar anchor clicked');
+	
+	
        if ($(this).next('ul').hasClass('active')) {
             $(this).next('ul').removeClass('active');
         } else {
@@ -1789,6 +1790,18 @@ $(document).ready(function() {
         }
 
     });
+*/
+
+	$('.sidebar-anchor.with-sub').on('click',function(){
+		
+		if($(this).next('ul').hasClass('active')) {
+			$(this).next('ul').removeClass('active');
+			
+		} else {
+			
+			$(this).next('ul').addClass('active');
+		}
+	});
 });
 
 
