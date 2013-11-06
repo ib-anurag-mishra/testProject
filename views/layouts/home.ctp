@@ -522,8 +522,7 @@
                     document.getElementById('rqPlid').value = document.getElementById('hid_Plid').value;
                     document.getElementById('dqPlid').value = document.getElementById('hid_Plid').value;
                     queueName = $('#hid_playlist_name').val();
-                    $('.confirm-text span').val(queueName );
-                    alert(1);
+                    $('.confirm-text span').text(queueName);
                 }
             </script>
 
