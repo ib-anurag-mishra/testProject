@@ -81,7 +81,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
                 $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day"))." 00:00:00";
                 $condEndDate = date('Y-m-d', strtotime($currentDate." last sunday"))." 23:59:59";
-                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt";
+//                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt";
 
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt'";
                 $result3 = mysql_query($sql);
@@ -105,7 +105,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
 
                 $row2['ReportCount'] = 0;
-
+                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country."_SFV.txt";
                 $all_Ids = '';
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
                 //$sql = "SELECT library_purchases.library_id as id from freegal.library_purchases join freegal.contract_library_purchases on contract_library_purchases.id_library_purchases = library_purchases.id and contract_library_purchases.library_contract_start_date  <= '" . $condEndDate . "'  AND contract_library_purchases.library_contract_end_date >= '" . $condEndDate . "' join libraries on libraries.id = library_purchases.library_id and contract_library_purchases.library_unlimited='".$lib_type_int."' AND libraries.library_territory='".$country."' group by library_purchases.library_id,contract_library_purchases.library_contract_start_date,contract_library_purchases.library_unlimited order by libraries.id,library_purchases.created;";
@@ -368,7 +368,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -382,7 +382,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
 
                     //  FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt", $logFileWrite, "weekly"))
+                    if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt", $logFileWrite, "weekly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "weekly")) {
@@ -413,7 +413,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $condStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
                 $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
 
-                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt";
+//                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt";
 
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_SFV.txt'";;
                 $result3 = mysql_query($sql);
@@ -439,7 +439,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
 
                 $row2['ReportCount'] = 0;
-
+                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country."_SFV.txt";
                 $all_Ids = '';
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
@@ -733,7 +733,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -747,7 +747,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt", $logFileWrite, "monthly"))
+                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt", $logFileWrite, "monthly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
