@@ -139,7 +139,7 @@ $('document').ready(function()
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
 
-   
+	/*
     $(document).on('click', '.left-sidebar li a', function(e) {
         //e.preventDefault();
         $(sidebar_a).removeClass('active');
@@ -158,7 +158,7 @@ $('document').ready(function()
         faq07.removeClass('active');
 
     });
-
+	*/
 	
 
     $(document).on('click', '.announcements h4 a', function(e) {
