@@ -16,6 +16,7 @@
 
     // Wait for Document
     $(function() {
+    	console.log('inside');
         // Prepare Variables
         var
                 /* Application Specific Variables */
