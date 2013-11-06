@@ -285,7 +285,7 @@ $('document').ready(function()
         $(this).find('.preview').css({opacity: 0});
 
     });
-
+/* commented this as it is creating problem for preview button  display
     $(document).on('mouseenter', artwork_container, function() {
         $(this).find('.preview').css({opacity: 1});
     });
@@ -293,6 +293,8 @@ $('document').ready(function()
     $(document).on('mouseleave', artwork_container, function() {
         $(this).find('.preview').css({opacity: .5});
     });
+    
+*/    
 
     library_list_scrollable.bind('mousewheel', function(e) {
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
@@ -402,7 +404,7 @@ $('document').ready(function()
     });
 
     $('.song-cover-container').on('mouseenter', function() {
-
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
@@ -410,7 +412,7 @@ $('document').ready(function()
     });
 
     $('.song-cover-container').on('mouseleave', function() {
-
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
@@ -1112,7 +1114,7 @@ $('document').ready(function()
 
 
     $('.songs-scrollable .song-container').on('mouseenter', function() {
-
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
@@ -1120,6 +1122,7 @@ $('document').ready(function()
     });
 
     $('.songs-scrollable .song-container').on('mouseleave', function() {
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
