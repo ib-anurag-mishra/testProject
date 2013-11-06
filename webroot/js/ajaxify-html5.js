@@ -94,7 +94,7 @@
 
                 // Ajaxify this link
 				console.log(url);
-				console.log(History.getState());
+				
 	            History.pushState(null, title, url);
 	            event.preventDefault();
                 return false;
