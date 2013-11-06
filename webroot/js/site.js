@@ -160,6 +160,11 @@ $('document').ready(function()
     });
 	*/
 	
+	
+	$('.streaming .sidebar-anchor').on('click',function(e){
+		$('.streaming .sidebar-sub-nav').show();
+	
+	});
 
     $(document).on('click', '.announcements h4 a', function(e) {
         e.preventDefault();
