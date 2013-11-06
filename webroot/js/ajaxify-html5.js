@@ -19,7 +19,7 @@
         // Prepare Variables
         var
                 /* Application Specific Variables */
-                contentSelector = '.content,article:first,.article:first,.post:first',
+                contentSelector = '#content,article:first,.article:first,.post:first',
                 $content = $(contentSelector).filter(':first'),
                 contentNode = $content.get(0),
                 $menu = $('#menu,#nav,nav:first,.nav:first').filter(':first'),
@@ -75,9 +75,9 @@
             var $this = $(this);
 
             // Ajaxify
-            //$this.find('a:internal:not(.no-ajaxy)').click(function(event) {
+            $this.find('a:internal:not(.no-ajaxy)').click(function(event) {
 			//$this.find('a:internal:not(.no-ajaxy),a[href^="#"]').click(function(event) {
-            $this.find('a:internal:not(.no-ajaxy,[href^="#"])').click(function(event) {
+            //$this.find('a:internal:not(.no-ajaxy,[href^="#"])').click(function(event) {
             //$this.find('a:not(.no-ajaxy,[href^="#"])').click(function(event) {	
             //$this.find('a:internal:not(.no-ajaxy,[href^="#"])').on('click',function(event) {
             //$this.find('a:not(.no-ajaxy)').on('click',function(event) {
