@@ -78,8 +78,9 @@
             //$this.find('a:internal:not(.no-ajaxy)').click(function(event) {
 			//$this.find('a:internal:not(.no-ajaxy),a[href^="#"]').click(function(event) {
             //$this.find('a:internal:not(.no-ajaxy,[href^="#"])').click(function(event) {
-            $this.find('a:internal:not(.no-ajaxy,[href^="#"])').on('click',function(event) {
             //$this.find('a:not(.no-ajaxy,[href^="#"])').click(function(event) {	
+            $this.find('a:internal:not(.no-ajaxy,[href^="#"])').on('click',function(event) {
+            
                 // Prepare
                 var
                         $this = $(this),
