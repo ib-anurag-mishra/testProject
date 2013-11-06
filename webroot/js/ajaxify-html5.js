@@ -93,7 +93,7 @@
                 }
 
                 // Ajaxify this link
-				
+				console.log('url is ' + url);
 	            History.pushState(null, title, url);
 	            event.preventDefault();
                 return false;
