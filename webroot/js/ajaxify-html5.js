@@ -16,7 +16,7 @@
 
     // Wait for Document
     $(function() {
-    	console.log('inside');
+    	
         // Prepare Variables
         var
                 /* Application Specific Variables */
@@ -52,6 +52,8 @@
 
             // Check link
             isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1;
+			
+			console.log('isInternalLink is ' + isInternalLink);
 
             // Ignore or Keep
             return isInternalLink;
