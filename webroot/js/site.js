@@ -162,7 +162,7 @@ $('document').ready(function()
 	
 	
 	$('.streaming .sidebar-anchor').on('click',function(e){
-		$('.streaming .sidebar-sub-nav').show();
+		
 	
 	});
 
