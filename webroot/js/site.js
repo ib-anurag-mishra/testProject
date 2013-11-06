@@ -1711,7 +1711,7 @@ $('document').ready(function()
         }
     }
     
-    $('.hp-tabs').on('click',function(){
+    $('#content').on('click','.tabs',function(){
 	    
 	   console.log('clicked'); 
 	    
