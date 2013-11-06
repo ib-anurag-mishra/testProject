@@ -8,12 +8,12 @@
 	<section class="faq">
 		<div class="breadcrumbs">
                     <?php
-                            $html->addCrumb('The Great Fall Concert Ticket Giveway', '/great_fall_concert');
+                            $html->addCrumb('The Great Fall Concert Ticket Giveaway', '/great_fall_concert');
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
                 </div>
 		<header><?php echo $session->flash(); ?>
-			<h2><?php __('The Great Fall Concert Ticket Giveway');?></h2>
+			<h2><?php __('The Great Fall Concert Ticket Giveaway');?></h2>
 		</header>
 		<div class="faq-container">
                     <ul>
