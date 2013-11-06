@@ -49,7 +49,7 @@
                     'jquery.autocomplete',
                     
                     'jquery.history',
-                    'ajaxify-html5',
+                    /*'ajaxify-html5',*/
                     'site',             
                     
                     'audioPlayer',                    
