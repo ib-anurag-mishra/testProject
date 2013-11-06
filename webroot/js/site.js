@@ -1713,7 +1713,7 @@ $('document').ready(function()
     
     $('#content').on('click','.hp-tabs',function(){
 	    
-	   console.log('clicked'); 
+	   console.log('tab clicked'); 
 	    
     });
 
