@@ -4,7 +4,7 @@
   File Description : View page for advance search
   Author : m68interactive
  */
-
+echo $this->Session->read('territory');
 function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null) {
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1) {
