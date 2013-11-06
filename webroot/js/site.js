@@ -1710,6 +1710,12 @@ $('document').ready(function()
             return windowHeight - (top - scrollTop);
         }
     }
+    
+    $('a:internal:not(.no-ajaxy,[href^="#"])').on('click',function(){
+	    
+	   console.log('clicked'); 
+	    
+    });
 
 });
 
