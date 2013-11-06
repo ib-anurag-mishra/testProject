@@ -521,6 +521,7 @@
                     document.getElementById('description').value = document.getElementById('hid_description').value;
                     document.getElementById('rqPlid').value = document.getElementById('hid_Plid').value;
                     document.getElementById('dqPlid').value = document.getElementById('hid_Plid').value;
+                    $('.confirm-text').val($('#hid_playlist_name').val());
 
                 }
             </script>
