@@ -479,7 +479,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css,"id"=>'leftmusicVideo07',"onclick"=>'setUpperNavigation("leftmusicVideo07")')); ?>
                                                     </li>                                                    
                                                     <li>
-                                                            <a class="sidebar-anchor no-ajaxy" style="cursor:pointer" href="javascript:void(0);" ><?php __('Most Popular'); ?></a>
+                                                            <a class="sidebar-anchor" style="cursor:pointer" href="javascript:void(0);" ><?php __('Most Popular'); ?></a>
                                                             <ul class="<?php echo $ul_class; ?>">
                                                                 <?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
                                                                         <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css,"id"=>'leftmylib07',"onclick"=>'setUpperNavigation("leftmylib07")')); ?></li>
@@ -505,7 +505,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
-                                                            <a href="javascript:void(0)" class="sidebar-anchor no-ajaxy"><?php __('Freegal Queues'); ?></a>
+                                                            <a href="javascript:void(0)" class="sidebar-anchor"><?php __('Freegal Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){
                                                                     $fqueuesid = 'leftfqueues_'.$value['QueueList']['queue_id'].'_07';
@@ -516,7 +516,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                                     <?php } ?>
                                                     <li>
-                                                            <a href="javascript:void(0);" class="sidebar-anchor saved-queue no-ajaxy "><?php __('My Queues'); ?></a>
+                                                            <a href="javascript:void(0);" class="sidebar-anchor saved-queue"><?php __('My Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
 
 
