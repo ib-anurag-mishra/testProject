@@ -89,8 +89,8 @@ class CacheController extends AppController {
         set_time_limit(0);
         $territoriesList = $this->Common->getTerritories();
         foreach($territoriesList as $territory){
-            $this->Common->getGenres($territory);
-//            $this->Common->getNationalTop100($territory);
+           // $this->Common->getGenres($territory);
+           $this->Common->getNationalTop100($territory);
 //            $this->Common->getFeaturedVideos($territory);
 //            $this->Common->getTopVideoDownloads($territory);
 //            $this->Common->getNationalTop100Videos($territory);
