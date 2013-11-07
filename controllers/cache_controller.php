@@ -95,8 +95,8 @@ class CacheController extends AppController {
            // $this->Common->getTopVideoDownloads($territory);
           //  $this->Common->getNationalTop100Videos($territory);
           //  $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-//            $this->Common->getUsTop10Songs($territory);
+           // $this->Common->getComingSoonVideos($territory);
+            $this->Common->getUsTop10Songs($territory);
 //            $this->Common->getUsTop10Albums($territory);
 //            $this->Common->getUsTop10Videos($territory);
 //            $this->Common->getNewReleaseAlbums($territory);
