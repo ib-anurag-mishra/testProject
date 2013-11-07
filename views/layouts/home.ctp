@@ -57,130 +57,18 @@
 					
 				}
                                 
-                                
-						.add-to-wishlist-button {
-							
-							
-							display: block;
-							width: 26px;
-							height: 25px;
-							background: url(../img/add-to-playlist-button.png);
-							
-							margin-top: 8px;
-							position: absolute;
-							left: 317px;
-							/*box-shadow(0 0 2px rgba(0,0,0,.5));*/
-							opacity: .5;
-							top:0;
-							
-						}
-						
-						.wishlist-popover {
-							position: absolute;
-							left: 317px;
-							bottom:35px;
-							background: #fff;
-							display: none;
-							/*.box-shadow(0 0 2px rgba(0,0,0,.5));*/
-							z-index: 100;
-							
-						
-							/*
-							a{
-								
-								display: block;
-								padding: 10px 10px 10px 10px;
-								background: #fff;
-								font-size: 12px;
-								line-height: 12px;
-								text-decoration: none;
-								color: #000;
-								
-							}*/
-							
-							
-							
-							.playlist-options {
-								position: absolute;
-								right: -144px;
-								top:32px;
-								display: none;
-								background: #fff;
-								width: 145px;
-								/* height: 167px; 
-								.box-shadow(0 0 2px rgba(0,0,0,.5));*/
-								
-								overflow-x: hidden;
-								
-								
-								
-								
-								
-								ul {
-									
-									li {
-										
-										float: none;
-										padding: 0;
-										
-										a {
-											
-											padding: 10px 10px 10px 10px;
-											text-decoration: none;
-											
-										}
-										
-										
-									}
-								}
-									
-							}
-							
-							.share {
+.add-to-playlist-button {
+					background: url(/img/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					bottom:50px;
+					right: 8px;
+					width: 26px;
+					height: 25px;
+					opacity: 0;
+					.box-shadow(0 0 2px rgba(0,0,0,.5));
 					
-								background: #fff;
-								border-top: 1px solid rgba(0,0,0,.2);
-								padding-bottom: 3px;
-								position: relative;
-								width: 120px;
-								height: 32px;
-								color: #000;
-								
-								p {
-									
-									position: absolute;
-									left: 10px;
-									top:10px;
-									font-size: 12px;
-								}
-								
-								.facebook {
-									background: url(../img/facebook.png) no-repeat center center;
-									
-									display: block;
-									
-									width: 12px;
-									height: 12px;
-									position: absolute;
-									left: 62px;
-									top:1px;
-									
-								}
-								
-								.twitter {
-									background: url(../img/twitter.png) no-repeat center center;
-									
-									display: block;
-									position: absolute;
-									width: 15px;
-									height: 12px;
-									left: 82px;
-									top:3px;
-									
-								}
-							}
-						}
-                                
+				}                                
     
  </style>   
 
