@@ -1603,6 +1603,10 @@ STR;
                  $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                  $album_img =  Configure::read('App.Music_Path').$album_img;
                  $topDownload[$key]['album_img'] = $album_img;
+				 $topDownload[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'view'),
+						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
+					);				 
             }                
             Cache::delete("lib_album" . $libId);
             Cache::write("lib_album" . $libId, $topDownload);
