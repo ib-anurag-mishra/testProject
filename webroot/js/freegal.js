@@ -1760,7 +1760,7 @@ $(document).ready(function() {
 
     });
 	
-    $(document).on('click', '.play-album-btn span', function() {
+    $(document).on('click', '.play-album-btn', function() {
         playlist = $('#playlist_data').text();
         playlist = JSON.parse(playlist);
         if (playlist.length) {
