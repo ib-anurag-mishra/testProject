@@ -170,6 +170,7 @@ class SearchController extends AppController {
             }
 
             $this->set('songs', $songs);
+            print_r($songs);
             // Added code for all functionality
 
            // print_r($songs);

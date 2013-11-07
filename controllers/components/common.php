@@ -1186,7 +1186,7 @@ STR;
                 $this->log("Unable to update new releases videos for " . $territory, "cache");
             }
         }
-        $this->log("cache written for new releases albums for $territory", 'debug');
+        $this->log("cache written for new releases videos for $territory", 'debug');
         //End Caching functionality for new releases videos  
         return $data;
         
