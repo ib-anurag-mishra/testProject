@@ -108,7 +108,19 @@ class CacheController extends AppController {
         }
        // $this->Common->setLibraryTopTenCache();
         //$this->Common->setVideoCacheVar();    
-        //$this->setAppMyMusicVideoList();        
+        //$this->setAppMyMusicVideoList(); 
+        
+        
+        $this->Email->template = 'cron has been successfully run.'.date('Y-m-d H:i:s');       
+        $this->Email->to = 'narendra.nagesh@infobeans.com';
+        $this->Email->from = Configure::read('App.adminEmail');
+        $this->Email->fromName = Configure::read('App.fromName');
+        $this->Email->subject = 'Freegaldev.com - cron update';
+        $this->Email->smtpHostNames = Configure::read('App.SMTP');
+        $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
+        $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
+        $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
+        $result = $this->Email->send();
     }
     
     /*
