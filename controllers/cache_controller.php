@@ -91,8 +91,8 @@ class CacheController extends AppController {
         foreach($territoriesList as $territory){
            // $this->Common->getGenres($territory);
            // $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-//            $this->Common->getTopVideoDownloads($territory);
+           // $this->Common->getFeaturedVideos($territory);
+            $this->Common->getTopVideoDownloads($territory);
 //            $this->Common->getNationalTop100Videos($territory);
 //            $this->Common->getComingSoonSongs($territory);
 //            $this->Common->getComingSoonVideos($territory);
@@ -112,7 +112,7 @@ class CacheController extends AppController {
         
         
         $this->Email->template = 'cron has been successfully run.'.date('Y-m-d H:i:s');       
-        $this->Email->to = 'narendra.nagesh@infobeans.com';
+        $this->Email->to = 'nagesh4group@gmail.com';
         $this->Email->from = Configure::read('App.adminEmail');
         $this->Email->fromName = Configure::read('App.fromName');
         $this->Email->subject = 'Freegaldev.com - cron update';
