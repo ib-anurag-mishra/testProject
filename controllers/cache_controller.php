@@ -90,21 +90,21 @@ class CacheController extends AppController {
          Configure::write('debug', 2);
         $territoriesList = $this->Common->getTerritories();
         foreach($territoriesList as $territory){
-            $this->Common->getGenres($territory);
-            $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-            $this->Common->getNationalTop100Videos($territory);
-            $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-            $this->Common->getUsTop10Albums($territory);
-            $this->Common->getUsTop10Videos($territory);
-            $this->Common->getNewReleaseAlbums($territory);
-            $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
-            $this->getArtistText($territory);
+//            $this->Common->getGenres($territory);
+//            $this->Common->getNationalTop100($territory);
+//            $this->Common->getFeaturedVideos($territory);
+//            $this->Common->getTopVideoDownloads($territory);
+//            $this->Common->getNationalTop100Videos($territory);
+//            $this->Common->getComingSoonSongs($territory);
+//            $this->Common->getComingSoonVideos($territory);
+//            $this->Common->getUsTop10Songs($territory);
+//            $this->Common->getUsTop10Albums($territory);
+//            $this->Common->getUsTop10Videos($territory);
+//            $this->Common->getNewReleaseAlbums($territory);
+//            $this->Common->getNewReleaseVideos($territory);
+//            $this->Common->getFeaturedArtists($territory);
+//            $this->Common->getDifferentGenreData($territory);
+//            $this->getArtistText($territory);
             $this->Common->getDefaultQueues($territory);    
         }
         $this->Common->setLibraryTopTenCache();
