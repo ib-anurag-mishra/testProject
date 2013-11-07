@@ -14,12 +14,14 @@
 <br class="clr">
 <style>
 .txt-my-terms {
-	background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/terms.png") no-repeat scroll 0 0 transparent;
-    height: 62px;
+    /*background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/terms.png") no-repeat scroll 0 0 transparent;*/
+    height: 35px;
+    margin-left:-35px;
+    font-size:30px;
     left: 35px;
     overflow: hidden;
     position: relative;
-    text-indent: -9999px;
+    /*text-indent: -9999px;*/
     width: 285px;
 }
 .content{
@@ -31,7 +33,7 @@
 }
 </style>
 <div class="txt-my-terms">
-	<?php __('Terms &amp; Conditions');?>
+	<?php echo __('Terms &amp; Conditions');?>
 </div>
 <br class="clr">
 <div id="terms">

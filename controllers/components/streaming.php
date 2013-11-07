@@ -9,7 +9,7 @@ Class StreamingComponent extends Object
 {
     var $components = array('Auth','Session');
     
-    var $streamingLimit = 10800;
+    var $streamingLimit = 10800; //3 hours
     var $streamingLog = 'on'; //off
     var $timerCallDuration = 60; //off
     
@@ -27,11 +27,14 @@ Class StreamingComponent extends Object
      *   
      * @return array
     */
-    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration) {
+    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id) {
         
         /**
           creates log file name
         */
+        
+        if(!isset($queue_id)) { $queue_id = '0'; }
+        
         //set the default value
         $currentTimeDuration = 0;
         $timerCallTime = (2 * $songDuration) ;
@@ -52,7 +55,7 @@ Class StreamingComponent extends Object
             $this->log("error|Not able to stream this song,prod_id or provider variables not come;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
             
             //return the final result array
-            return array(0,'Not able to stream this song.You need to login again1.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
+            return array(0,'Not able to stream this song.You need to login again.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
         
@@ -61,7 +64,7 @@ Class StreamingComponent extends Object
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,patron_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
-            return array(0,'Not able to play this song.You need to login again2.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
+            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 2 ,$timerCallTime,$this->timerCallDuration);            
             exit;
         }
         
@@ -70,7 +73,7 @@ Class StreamingComponent extends Object
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,user not login,library_id not set;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
-            return array(0,'Not able to play this song.You need to login again3.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
+            return array(0,'Not able to play this song.You need to login again.',$currentTimeDuration, 3 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
         
@@ -169,23 +172,24 @@ Class StreamingComponent extends Object
                 
                 //updated streaming history table
                 $currentDate= date('Y-m-d H:i:s');                
-                //insert the patron record if not exist in the streaming records table
+                //insert the patron record if not exist in the streaming  table
                 $insertArr = Array();
                 $insertArr['library_id'] = $libId;
                 $insertArr['patron_id'] = $patId;
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
-                $insertArr['consumed_time'] = $userStreamedTime;
-                $insertArr['action_type'] = $actionType;                
-                
-                $insertArr['modified_date'] = $currentDate;
-                $insertArr['createdOn'] = $currentDate;
+                $insertArr['consumed_time'] = $userStreamedTime;               
+                $insertArr['createdOn'] = $currentDate;              
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['action_type'] = $actionType;
+                $insertArr['songs_queue_id'] = $queue_id;                
                 if($agent == null){
-                    $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
+                    $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
-                    $insertArr['user_agent'] = addslashes($agent);   
+                    $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
+                
+                
                 $streamingRecordsInstance->setDataSource('master');
                 $streamingHistoryInstance->save($insertArr);
                 $streamingRecordsInstance->setDataSource('default');
@@ -233,29 +237,31 @@ Class StreamingComponent extends Object
                
                 $currentDate= date('Y-m-d H:i:s');
                 
-                //insert the patron record if not exist in the streaming records table
+                //insert the patron record if not exist in the streaming  table
                 $insertArr = Array();
                 $insertArr['library_id'] = $libId;
                 $insertArr['patron_id'] = $patId;
                 $insertArr['ProdID'] = $prodId;
                 $insertArr['provider_type'] = $provider;
                 $insertArr['consumed_time'] = $userStreamedTime;
-                $insertArr['modified_date'] = $currentDate;
-                $insertArr['action_type'] = $actionType; 
-                $insertArr['createdOn'] = $currentDate;
+                $insertArr['modified_date'] = $currentDate;              
+                $insertArr['createdOn'] = $currentDate; 
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['action_type'] = $actionType; 
+                $insertArr['songs_queue_id'] = $queue_id;
                 if($agent == null){
-                    $insertArr['user_agent'] = str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT']));
+                    $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
-                    $insertArr['user_agent'] = addslashes($agent);   
+                    $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
                
                 //updated record if user Streamed time is not 0 and less then to stream time
                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     $streamingHistoryInstance->setDataSource('master');
-                    if($streamingHistoryInstance->save($insertArr)){
-                        $queryInsertFlag = 1;
-                        $log_data .= PHP_EOL."update streaming_reocrds table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate.PHP_EOL;
+                    
+                    if($streamingHistoryInstance->save($insertArr)){                
+                     
+                        $log_data .= PHP_EOL."insert streaming_history table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate." ;queue_id :".$queue_id.PHP_EOL;
                         $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$userStreamedTime." ;modified_date : ".$currentDate,'streaming');            
                         $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
                         $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
@@ -467,9 +473,11 @@ Class StreamingComponent extends Object
             if(isset($secondsValue) && is_numeric($secondsValue)){
                 return $secondsValue;
             }else{
+                
                  return false;
             }          
         } else {
+           
             return false;
         }
     }
@@ -488,7 +496,7 @@ Class StreamingComponent extends Object
     function checkLibraryStreaming($libId) {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;        
-        $results = $libraryInstance->find('first',array('conditions' => array('library_type = "2"','id' => $libId,'library_status'=>'active'),'fields' => 'library_territory'));
+        $results = $libraryInstance->find('first',array('conditions' => array('test_library_type = "2"','id' => $libId,'library_status'=>'active'),'fields' => 'library_territory'));
             
         if(count($results) > 0 && isset($results['Library']['library_territory']) && $results['Library']['library_territory']!='') {            
             return $results['Library']['library_territory'];

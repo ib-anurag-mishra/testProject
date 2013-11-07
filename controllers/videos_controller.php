@@ -3,7 +3,7 @@
 class VideosController extends AppController {
 
      var $uses = array('Album', 'Genre', 'Siteconfig','Country', 'Video', 'LatestVideodownload', 'Videodownload','Library','WishlistVideo','Download', 'Language');
-     var $helpers = array( 'WishlistVideo', 'Language' ,'Videodownload');
+     var $helpers = array( 'WishlistVideo', 'Language' ,'Videodownload','Mvideo');
      var $components = array('Downloadsvideos', 'Session','Downloads','Common');
      var $layout = 'home';
    
@@ -478,7 +478,8 @@ STR;
     
      function details()
      {
-        $libId = $this->Session->read('library');
+         $this->layout = 'home';
+         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);

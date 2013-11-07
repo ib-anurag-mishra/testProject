@@ -11,18 +11,20 @@
 
     // Check to see if History.js is enabled for our Browser
     if (!History.enabled) {
+    	console.log('history not enabled');
         return false;
     }
 
     // Wait for Document
     $(function() {
+    	
         // Prepare Variables
         var
                 /* Application Specific Variables */
                 contentSelector = '.content,article:first,.article:first,.post:first',
                 $content = $(contentSelector).filter(':first'),
                 contentNode = $content.get(0),
-                $menu = $('#menu,#nav,nav:first,.nav:first').filter(':first'),
+                $menu = $('.left-sidebar,#menu,#nav,nav:first,.nav:first').filter(':first'),
                 activeClass = 'active selected current youarehere',
                 activeSelector = '.active,.selected,.current,.youarehere',
                 menuChildrenSelector = '> li,> ul > li',
@@ -52,6 +54,7 @@
             // Check link
             isInternalLink = url.substring(0, rootUrl.length) === rootUrl || url.indexOf(':') === -1;
 
+
             // Ignore or Keep
             return isInternalLink;
         };
@@ -76,6 +79,8 @@
 
             // Ajaxify
             $this.find('a:internal:not(.no-ajaxy)').click(function(event) {
+            	
+
                 // Prepare
                 var
                         $this = $(this),
@@ -88,9 +93,13 @@
                 }
 
                 // Ajaxify this link
-                History.pushState(null, title, url);
-                event.preventDefault();
+				console.log(url);
+				
+	            History.pushState(null, title, url);
+	            event.preventDefault();
                 return false;
+                
+                
             });
 
             // Chain
@@ -111,7 +120,9 @@
 
 
             // Set Loading
-            $('.content-wrapper').append('<div class="loader"></div>');
+            var loading_div = "<div class='loader'>";
+            loading_div += "</div>";
+            $('.content').append(loading_div);
 
             //$body.addClass('loader');
 
@@ -124,129 +135,7 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
-                    // Below method for removal of '#' & '#.' in between URL
-                    // this is used in IE8 
 
-                    // checking for #. in url 
-                    var indexOfHash = window.location.href.indexOf('#.');
-                    if (indexOfHash > 0)
-                    {
-                        var current_nav = '';
-
-                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 4);
-                        var url_slice = window.location.href.slice(indexOfHash + 2, window.location.href.length);
-
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
-                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
-                        {
-                            if (window.location.href.indexOf('/homes') > -1)
-                            {
-                                current_nav = base_url + '/homes' + url_slice;
-                            }
-                            else
-                            {
-                                if (url_slice.indexOf('homes') > -1)
-                                {
-                                    current_nav = base_url + url_slice;
-                                }
-                                else
-                                {
-                                    current_nav = base_url + '/homes' + url_slice;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            current_nav = base_url + url_slice;
-                        }
-
-                        if (url_slice.indexOf('_notification') > -1 || url_slice.indexOf('_account') > -1 || url_slice.indexOf('logout') > -1)
-                        {
-                            if (window.location.href.indexOf('/users') > -1)
-                            {
-                                current_nav = base_url + '/users' + url_slice;
-                            }
-                            else
-                            {
-                                if (url_slice.indexOf('users') > -1)
-                                {
-                                    current_nav = base_url + url_slice;
-                                }
-                                else
-                                {
-                                    current_nav = base_url + '/users' + url_slice;
-                                }
-                            }
-                        }
-
-
-                        current_nav = current_nav.replace('/homes/homes', '/homes');
-                        current_nav = current_nav.replace('com//', 'com/');
-
-                        window.location.href = current_nav;
-                        return true;
-                    }
-
-                    // chekcing for # in url
-                    var indexOfHash = window.location.href.indexOf('#');
-                    if (indexOfHash > 0)
-                    {
-                        var current_nav = '';
-
-                        var base_url = window.location.href.slice(0, window.location.href.indexOf('.com/') + 5);
-                        var url_slice = window.location.href.slice(indexOfHash + 1, window.location.href.length);
-
-                        if (url_slice.indexOf('_top_10') > -1 || url_slice.indexOf('my_history') > -1
-                                || url_slice.indexOf('_wishlist') > -1 || url_slice.indexOf('_releases') > -1)
-                        {
-                            if (window.location.href.indexOf('/homes') > -1)
-                            {
-                                current_nav = base_url + '/homes' + url_slice;
-                            }
-                            else
-                            {
-                                if (url_slice.indexOf('homes') > -1)
-                                {
-                                    current_nav = base_url + url_slice;
-                                }
-                                else
-                                {
-                                    current_nav = base_url + '/homes' + url_slice;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            current_nav = base_url + url_slice;
-                        }
-
-                        if (url_slice.indexOf('_notification') > -1 || url_slice.indexOf('_account') > -1 || url_slice.indexOf('logout') > -1)
-                        {
-                            if (window.location.href.indexOf('/users') > -1)
-                            {
-                                current_nav = base_url + '/users' + url_slice;
-                            }
-                            else
-                            {
-                                if (url_slice.indexOf('users') > -1)
-                                {
-                                    current_nav = base_url + url_slice;
-                                }
-                                else
-                                {
-                                    current_nav = base_url + '/users' + url_slice;
-                                }
-                            }
-                        }
-
-                        current_nav = current_nav.replace('/homes/homes', '/homes');
-                        current_nav = current_nav.replace('com//', 'com/');
-
-                        window.location.href = current_nav;
-                        return true;
-                    }
-
-                    // After removal of '#' & '#.' the below statements are exceuted
 
                     // Prepare
                     var
@@ -269,12 +158,14 @@
                     }
 
                     // Update the menu
+                    /*
                     $menuChildren = $menu.find(menuChildrenSelector);
                     $menuChildren.filter(activeSelector).removeClass(activeClass);
                     $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
                     if ($menuChildren.length === 1) {
                         $menuChildren.addClass(activeClass);
                     }
+                    */
 
                     // Update the content
                     $content.stop(true, true);
@@ -309,7 +200,7 @@
                     } /* http://balupton.com/projects/jquery-scrollto */
 
                     $window.trigger(completedEventName);
-
+                    
                     // Inform Google Analytics of the change
                     if (typeof window._gaq !== 'undefined') {
                         window._gaq.push(['_trackPageview', relativeUrl]);
@@ -320,39 +211,37 @@
                         reinvigorate.ajax_track(url);
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
+                    
+                    var delay = 2; // 5 second delay
+                    var now = new Date();
+                    var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
+                    
+                    while (now < desiredTime) {
+                        now = new Date(); // update the current time
+                    }
+
+                      
+                    //$body.removeClass('loader');
+                    $.getScript(webroot + 'css/styles.css');
+                    $.getScript(webroot + 'css/freegal_styles.css');
+                    
+                    $.getScript(webroot + 'js/freegal.js');
+                    $.getScript(webroot + 'js/site.js');
+                    
+                    $.getScript(webroot + 'js/audioPlayer.js');
+                    $.getScript(webroot + 'js/recent-downloads.js');
+                    $.getScript(webroot + 'js/search-results.js');
+                    
+    
+                    $('.loader').fadeOut(500);
+                    
+                    $('.content').remove('.loader');
 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
                     return false;
                 },
-            })
-                    .done(function() {
-                //$body.removeClass('loader');
-                $.getScript(webroot + 'js/jquery-1.10.2.min.js');
-
-                $.getScript(webroot + 'js/modernizr.custom.js');
-                $.getScript(webroot + 'js/lazyload.js');
-
-                $.getScript(webroot + 'js/jquery.colorbox.js');
-                $.getScript(webroot + 'js/jquery.cycle.all.js');
-                $.getScript(webroot + 'js/jquery.autocomplete.js');
-
-                $.getScript(webroot + 'js/jquery.history.js');
-                $.getScript(webroot + 'js/ajaxify-html5.js');
-
-                $.getScript(webroot + 'js/audioPlayer.js');
-                $.getScript(webroot + 'js/freegal.js');
-                $.getScript(webroot + 'js/recent-downloads.js');
-                $.getScript(webroot + 'js/search-results.js');
-                $.getScript(webroot + 'js/site.js');
-
-
-                $.getScript(webroot + 'css/styles.css');
-                $.getScript(webroot + 'css/freegal_styles.css');
-
-                $('.loader').fadeOut(3000);
-                $('.content-wrapper').remove(".loader");
             }); // end ajax
 
         }); // end onStateChange

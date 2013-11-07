@@ -24,7 +24,165 @@
             }
             ?>
         </title>
-
+<style type="text/css">
+ 
+ 			.button-container {
+				
+				position: relative;
+				width: 200px;
+				margin-top: 10px;
+			}
+				.gear-icon {
+					
+					position: absolute;
+					right: 0;
+					top:0;
+					background: url(/img/queue-details/gear-off.png);
+					width: 55px;
+					height: 42px;
+					cursor: pointer;
+										
+				}                        
+                        
+				.play-album-btn {
+					
+					position: absolute;
+					right: -358px;
+					top:0;
+					cursor: pointer;
+					background: url(/img/queue-details/play-queue-off.png);
+					width: 137px;
+					height: 42px;
+					
+					
+				}
+                                
+                                
+						.add-to-wishlist-button {
+							
+							
+							display: block;
+							width: 26px;
+							height: 25px;
+							background: url(../img/add-to-playlist-button.png);
+							
+							margin-top: 8px;
+							position: absolute;
+							left: 317px;
+							/*box-shadow(0 0 2px rgba(0,0,0,.5));*/
+							opacity: .5;
+							top:0;
+							
+						}
+						
+						.wishlist-popover {
+							position: absolute;
+							left: 317px;
+							bottom:35px;
+							background: #fff;
+							display: none;
+							/*.box-shadow(0 0 2px rgba(0,0,0,.5));*/
+							z-index: 100;
+							
+						
+							/*
+							a{
+								
+								display: block;
+								padding: 10px 10px 10px 10px;
+								background: #fff;
+								font-size: 12px;
+								line-height: 12px;
+								text-decoration: none;
+								color: #000;
+								
+							}*/
+							
+							
+							
+							.playlist-options {
+								position: absolute;
+								right: -144px;
+								top:32px;
+								display: none;
+								background: #fff;
+								width: 145px;
+								/* height: 167px; 
+								.box-shadow(0 0 2px rgba(0,0,0,.5));*/
+								
+								overflow-x: hidden;
+								
+								
+								
+								
+								
+								ul {
+									
+									li {
+										
+										float: none;
+										padding: 0;
+										
+										a {
+											
+											padding: 10px 10px 10px 10px;
+											text-decoration: none;
+											
+										}
+										
+										
+									}
+								}
+									
+							}
+							
+							.share {
+					
+								background: #fff;
+								border-top: 1px solid rgba(0,0,0,.2);
+								padding-bottom: 3px;
+								position: relative;
+								width: 120px;
+								height: 32px;
+								color: #000;
+								
+								p {
+									
+									position: absolute;
+									left: 10px;
+									top:10px;
+									font-size: 12px;
+								}
+								
+								.facebook {
+									background: url(../img/facebook.png) no-repeat center center;
+									
+									display: block;
+									
+									width: 12px;
+									height: 12px;
+									position: absolute;
+									left: 62px;
+									top:1px;
+									
+								}
+								
+								.twitter {
+									background: url(../img/twitter.png) no-repeat center center;
+									
+									display: block;
+									position: absolute;
+									width: 15px;
+									height: 12px;
+									left: 82px;
+									top:3px;
+									
+								}
+							}
+						}
+                                
+    
+ </style>   
 
         <?php
         echo $this->Html->css(
@@ -83,45 +241,299 @@
                     return re.test(email);
                 }
 
-                function setUpperNavigation(pageName) {
-
-
+                function setUpperNavigation(pageName) {                    
+                    
+                    var sidebar_anchor = $('.sidebar-anchor');
+                    sidebar_anchor.removeClass('active');
+                    
+                    var sidebar_freegalqueues = $('.leftfqueuesclass');
+                    sidebar_freegalqueues.removeClass('active');
+                     
+                    
                     var home07 = $('#home07');
                     var musicVideo07 = $('#musicVideo07');
                     var newsRelease07 = $('#newsRelease07');
                     var genre07 = $('#genre07');
-                    var faq07 = $('#faq07');
-
+                    var faq07 = $('#faq07'); 
+                    var topmylib07 = $('#topmylib07'); 
+                    var topustop07 = $('#topustop07'); 
+                 
+                    var leftmusicVideo07 = $('#leftmusicVideo07');
+                    var leftmylib07 = $('#leftmylib07');
+                    var ustoplib07 = $('#ustoplib07');
+                    var leftnewrelease07 = $('#leftnewrelease07');
+                    var leftmyhistory07 = $('#leftmyhistory07');   
+                    var leftmywishlist07 = $('#leftmywishlist07'); 
+                    var leftsavedqueues07 = $('#leftsavedqueues07'); 
+                    var leftnowstreaming07 = $('#leftnowstreaming07'); 
+                    
+                    
+                    if(pageName.indexOf("leftfqueues_") !== -1){
+                        var leftfqueuesclass = $('.leftfqueuesclass');
+                        leftfqueuesclass.removeClass('active'); 
+                        
+                        
+                        var leftfqueues = $('#'+pageName);
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        home07.removeClass('active');                        
+                        leftfqueues.addClass('active');
+                    }
+                    
+                    
                     if (pageName == 'home07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftmylib07.removeClass('active');
                         home07.addClass('active');
                     } else if (pageName == 'musicVideo07') {
                         home07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
                         musicVideo07.addClass('active');
                     } else if (pageName == 'newsRelease07') {
                         musicVideo07.removeClass('active');
                         home07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmylib07.removeClass('active');
                         newsRelease07.addClass('active');
                     } else if (pageName == 'genre07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         home07.removeClass('active');
                         faq07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
                         genre07.addClass('active');
                     } else if (pageName == 'faq07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         home07.removeClass('active');
                         genre07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmylib07.removeClass('active');
                         faq07.addClass('active');
+                    } else if (pageName == 'leftmusicVideo07') {
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftmusicVideo07.addClass('active');
+                    } else if (pageName == 'leftmylib07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmylib07.addClass('active');
+                    } else if (pageName == 'ustoplib07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        ustoplib07.addClass('active');
+                    } else if (pageName == 'leftnewrelease07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftnewrelease07.addClass('active');
+                    } else if (pageName == 'leftmyhistory07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftmyhistory07.addClass('active');
+                    } else if (pageName == 'leftmywishlist07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        topustop07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        topmylib07.removeClass('active');
+                        leftmywishlist07.addClass('active');
+                    } else if (pageName == 'topmylib07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        topustop07.removeClass('active');
+                        topmylib07.addClass('active');
+                    } else if (pageName == 'topustop07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftnowstreaming07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        leftsavedqueues07.removeClass('active');
+                        topmylib07.addClass('active');                       
+                       
+                    } else if (pageName == 'leftsavedqueues07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        topmylib07.removeClass('active');  
+                        leftnowstreaming07.removeClass('active');
+                        leftsavedqueues07.addClass('active');
+                       
+                    } else if (pageName == 'leftnowstreaming07') {                      
+                        musicVideo07.removeClass('active');
+                        newsRelease07.removeClass('active');
+                        genre07.removeClass('active');
+                        faq07.removeClass('active');
+                        home07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');
+                        leftmylib07.removeClass('active');
+                        ustoplib07.removeClass('active');
+                        leftnewrelease07.removeClass('active');
+                        leftmyhistory07.removeClass('active');
+                        leftmywishlist07.removeClass('active');
+                        topmylib07.removeClass('active');  
+                        leftsavedqueues07.removeClass('active');
+                        leftnowstreaming07.addClass('active');
+                       
                     }
                 }
 
@@ -170,6 +582,7 @@
                                         data: data, // post data
                                         success: function(response) {
                                             $.fn.colorbox.close();
+                                            $('#noti_content').hide();
                                         },
                                         error: function(XMLHttpRequest, textStatus, errorThrown) {
                                         }
@@ -205,8 +618,10 @@
                                         async:
                                                 false,
                                         success: function(response) {
-                                            sleep(1000);
+                                            sleep(2000);
                                             $.fn.colorbox.close();
+                                            $('#noti_content').hide();
+                                            
                                         },
                                         error: function(XMLHttpRequest, textStatus, errorThrown) {
                                         }
@@ -264,7 +679,8 @@
                     document.getElementById('description').value = document.getElementById('hid_description').value;
                     document.getElementById('rqPlid').value = document.getElementById('hid_Plid').value;
                     document.getElementById('dqPlid').value = document.getElementById('hid_Plid').value;
-
+                    queueName = $('#hid_playlist_name').val();
+                    $('.confirm-text span').text(queueName);
                 }
             </script>
 

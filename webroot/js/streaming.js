@@ -140,6 +140,7 @@ var flashvars = {};
 var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
+swfobject.switchOffAutoHideShow();
 swfobject.embedSWF("/swf/fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes/* , swfCallback */);
 
 /*
@@ -259,6 +260,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 		case 5:
 			playerEventCodeString = "Song Ended";
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,16,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
 		case 6:
@@ -273,13 +275,25 @@ function reportPrevSong(prevSongObj, playerEventCode) {
                  case 8:
 			playerEventCodeString = "Queue cleared"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,19,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;                        
                         
 		case 9:
 			playerEventCodeString = "User ran out of time";
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,20,songLength,songDuration);
+                        clearNowstreamingSession();
+			break;
+		case 10:
+			playerEventCodeString = "Queue playback completed";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
+		case 11:
+			playerEventCodeString = "New queue loaded";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        clearNowstreamingSession();
+			break;
 		default:
 			playerEventCodeString = "";
 			break;				    	
@@ -358,20 +372,24 @@ function validateSong(songObj, playerEventCode) {
 		case 5:
 			playerEventCodeString = "Song Ended"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
 		case 6:
-			playerEventCodeString = "User choose another song in the queue"
+			playerEventCodeString = "User choose another song in the queue";
+                        songDuration = 0;
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,10,songLength,songDuration);
 			break;
 			
 	    case 7:
-			playerEventCodeString = "Queue loaded/play"
+			playerEventCodeString = "Queue loaded/play";
+                        songDuration = 0;
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;	
 	    case 8:
 			playerEventCodeString = "Queue cleared"
                         streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,11,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;			    	
 	}
 	
@@ -388,6 +406,8 @@ function validateSong(songObj, playerEventCode) {
 
 
 	console.log("inside validateSong");
+	console.log("Validate Song:");
+	console.log(songObj);
 	//console.log("streamingResponse is " + streamingResponse);
 	
 	
@@ -397,6 +417,22 @@ function validateSong(songObj, playerEventCode) {
 //	streamingValidationJS(responseDataArray);
 
 }		
+
+
+function clearNowstreamingSession(){
+    var postURL = webroot+'queuelistdetails/clearNowStreamingSession';
+    $.ajax({
+        type: "POST",
+        cache:false,
+        url: postURL
+    }).done(function(data){
+
+    })
+    .fail(function(){
+        alert('Ajax Call to clear now streaming session has been failed');
+    });                                
+
+}
 
 
 function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
@@ -412,7 +448,9 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         var result = JSON.parse(data);
         console.log('result in done is ' + result);
         if(result.error){
-            var result = [0,"Not able to stream this song due to empty response from compoinent",0,0,0,0];            
+            var result = [0,"Not able to stream this song due to empty response from component",0,0,0,0];            
+        }else if(result.error1){
+            var result = [0,"Not able to stream this song due to invalid response from component",0,0,0,0];
         }
         streamingValidationJS(result);
     })
@@ -434,11 +472,22 @@ function streamingValidationJS(responseDataJS) {
 	
 	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS'+responseDataJS);
+        
+        if(responseDataJS[2]==86400)    //  For Patron with unlimited Streaming Limit
+        {
+             document.getElementById('remaining_stream_time').innerHTML = 'UNLIMITED';
+        }
+        else                            //  For Patron with  Streaming Limit of 10800 sec
+        {
+             document.getElementById('remaining_stream_time').innerHTML = secondsToHms(responseDataJS[2]);
+        }
+        
+       
 	
 	var flash =	document.getElementById("fmp_player");
 	
 	flash.streamingValidationAS(responseDataJS);
-        exit;
+        //exit;
 	
 }
 function reportTime(amt) {
@@ -450,7 +499,15 @@ function reportTime(amt) {
 
 function flashConsole(msg) {
 	
-	//console.log(msg);
+	console.log(msg);
+}
+
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return ((h > 0 ? h + ":" : "") + (m > 0 ? (h > 0 && m < 10 ? "0" : "") + m + ":" : "0:") + (s < 10 ? "0" : "") + s); 
 }
 
 

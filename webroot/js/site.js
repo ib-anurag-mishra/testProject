@@ -1,3 +1,5 @@
+
+
 $('#top-100-albums-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('#top-100-albums-grid')
@@ -14,18 +16,19 @@ $('#top-100-videos-grid .lazy').lazyload({
     container: $('#top-100-videos-grid')
 });
 
-
-$('#featured-video-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#featured-video-grid')
-});
-
-
-$('.video-top-genres-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('.video-top-genres-grid')
-});
-
+/*
+ $('#featured-video-grid .lazy').lazyload({
+ effect: 'fadeIn',
+ container: $('#featured-video-grid')
+ });
+ 
+ */
+/*
+ $('.video-top-genres-grid .lazy').lazyload({
+ effect: 'fadeIn',
+ container: $('.video-top-genres-grid')
+ });
+ */
 $('.most-downloaded-videos-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('.most-downloaded-videos-grid')
@@ -136,24 +139,31 @@ $('document').ready(function()
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
 
-    sidebar_anchor.on('click', function(e) {
-        //e.preventDefault();
-        if ($(this).next('ul').hasClass('active')) {
-            $(this).next('ul').removeClass('active');
-        } else {
-
-            $(this).next('ul').addClass('active');
-        }
-    });
-
-    sidebar_a.on('click', function(e) {
+	/*
+    $(document).on('click', '.left-sidebar li a', function(e) {
         //e.preventDefault();
         $(sidebar_a).removeClass('active');
         $(this).addClass('active');
 
-    });
 
-    announcements.on('click', function(e) {
+        var home07 = $('#home07');
+        home07.removeClass('active');
+        var musicVideo07 = $('#musicVideo07');
+        musicVideo07.removeClass('active');
+        var newsRelease07 = $('#newsRelease07');
+        newsRelease07.removeClass('active');
+        var genre07 = $('#genre07');
+        genre07.removeClass('active');
+        var faq07 = $('#faq07');
+        faq07.removeClass('active');
+
+    });
+	*/
+	
+	
+
+
+    $(document).on('click', '.announcements h4 a', function(e) {
         e.preventDefault();
         if ($(poll).hasClass('active')) {
             $(poll).removeClass('active');
@@ -164,17 +174,15 @@ $('document').ready(function()
     });
 
 
-    tooltip_a.hover(
+    $('.tooltip a').hover(
             function() {
-
                 plays_tooltip.show();
-
-
             },
             function() {
                 plays_tooltip.hide();
 
             });
+
     coming_soon_singles_grid.addClass('active');
     filter_text.on('keyup', function() {
         filter_results.show();
@@ -192,37 +200,51 @@ $('document').ready(function()
         whats_happening_filter_results.show();
 
     });
-
-    add_to_playlist.on('mouseenter', function() {
-
-        playlist_list.addClass('active');
+    
+    
+	
+    $('.add-to-playlist').on('mouseenter', function() {
+		console.log('add to playlist entered');
+		
+        $('.playlist-options').addClass('active');
     });
-    add_to_queue.on('mouseenter', function() {
+    
+    
+    $('.genres-page .album-detail-container').on('mouseenter','.add-to-playlist',function(){
+	    
+	   //console.log('add to playlist entered');
+	   $('.playlist-options').addClass('active');
+	    
+    });
+    
 
+
+
+    $('.add-to-queue').on('mouseenter', function() {
+
+        if (playlist_list.hasClass('active')) {
+            playlist_list.removeClass('active');
+        }
+    });
+
+    $('.add-to-wishlist').on('mouseenter', function() {
 
         if (playlist_list.hasClass('active')) {
 
             playlist_list.removeClass('active');
         }
-
-
-
     });
-    add_to_wishlist.on('mouseenter', function() {
 
-
-        if (playlist_list.hasClass('active')) {
-
-            playlist_list.removeClass('active');
-        }
-
-
-
-    });
     playlist_list.on('mouseleave', function() {
 
         playlist_list.removeClass('active');
     });
+    
+    $('.genres-page .album-detail-container').on('mouseleave','.playlist-options',function(){
+	    
+	    $('.playlist-options').removeClass('active');
+    });
+    
     playlist_list.bind('mousewheel', function(e) {
 
 
@@ -252,46 +274,42 @@ $('document').ready(function()
     grid_view_button.addClass('active');
     grids.addClass('active');
 
-    $(document).on('mouseenter', video_thumbnail_container, function() {
+    $('.video-thumbnail-container').on('mouseenter', function() {
+
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.featured-video-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
 
     });
-    $(document).on('mouseleave', video_thumbnail_container, function() {
+
+    $('.video-thumbnail-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.featured-video-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
 
     });
-
+/* commented this as it is creating problem for preview button  display
     $(document).on('mouseenter', artwork_container, function() {
         $(this).find('.preview').css({opacity: 1});
     });
+
     $(document).on('mouseleave', artwork_container, function() {
         $(this).find('.preview').css({opacity: .5});
     });
+    
+*/    
 
     library_list_scrollable.bind('mousewheel', function(e) {
-
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
     });
 
-    wishlist_popover.on('mouseleave', function() {
-
+    $(document).on('mouseleave', '.wishlist-popover', function() {
         $(this).removeClass('active');
     });
-    wishlist_popover.children('a').on('hover', function(e) {
+
+    $(document).on('hover', '.wishlist-popover > a', function(e) {
 
         e.preventDefault();
 
@@ -332,162 +350,97 @@ $('document').ready(function()
         }
     });
 
-
-    $('.select-arrow').on('click', function(e) {
-
-        e.preventDefault();
-
-        if ($('.account-options-menu').hasClass('active')) {
-
-            $('.account-options-menu').removeClass('active');
-        } else {
-            $('.account-options-menu').addClass('active');
-
-        }
-        return false;
-
-    });
-
-    $('.account-options-menu').on('mouseleave', function(e) {
+    $(document).on('mouseleave', '.account-options-menu', function(e) {
 
         $('.account-options-menu').removeClass('active');
     });
 
-
-    $('.news .whats-happening #whats-happening-grid .post-excerpt').bind('mousewheel', function(e) { /* changed 080313 .. .post is now .post-excerpt */
-
-
+    $('.news .whats-happening #whats-happening-grid .post-excerpt').bind('mousewheel', function(e)
+    { /* changed 080313 .. .post is now .post-excerpt */
 
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
 
     });
 
-    $('.mejs-controls .mejs-button.mejs-prevtrack > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-prevtrack').css({background: 'url(img/music_player/prev_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-prevtrack > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-prevtrack').css({background: 'url(img/music_player/prev_btn.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-nexttrack > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-nexttrack').css({background: 'url(img/music_player/next_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-nexttrack > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-nexttrack').css({background: 'url(img/music_player/next_btn.png)'});
-
-    });
-
-
-    $('.mejs-controls .mejs-button.mejs-volume-button > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-volume-button').css({background: 'url(img/music_player/volume_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-volume-button > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-volume-button').css({background: 'url(img/music_player/volume_btn.png)'});
-
-    });
-
-
-    $('.mejs-controls .mejs-button.mejs-playlist-button > button').on('mousedown', function() {
-
-        $('.mejs-controls .mejs-button.mejs-playlist-button').css({background: 'url(img/music_player/playlist_btn_down.png)'});
-
-    });
-
-    $('.mejs-controls .mejs-button.mejs-playlist-button > button').on('mouseup', function() {
-
-        $('.mejs-controls .mejs-button.mejs-playlist-button').css({background: 'url(img/music_player/playlist_btn.png)'});
-
-    });
-
-
-
-
-    $(document).on('mouseenter', '.tracklist-shadow-container .tracklist-scrollable', function() {
+    $('.tracklist-shadow-container .tracklist-scrollable').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
+
     });
 
-    $(document).on('mouseleave', '.tracklist-shadow-container .tracklist-scrollable', function() {
+    $('.tracklist-shadow-container .tracklist-scrollable').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
+
     });
 
+    $('.top-music-video-cover-container').on('mouseenter', function() {
 
-    $(document).on('mouseenter', '.top-music-video-cover-container', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-video-login-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
+
     });
 
-    $(document).on('mouseleave', '.top-music-video-cover-container', function() {
+    $('.top-music-video-cover-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-video-login-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
+
+
     });
 
-
-    $(document).on('mouseenter', '.album-cover-container', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-100-download-now-button').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});
-    });
-
-    $(document).on('mouseleave', '.album-cover-container', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.top-100-download-now-button').css({opacity: 0});
-        $(this).find('.preview').css({opacity: 0});
-    });
-
-
-    $(document).on('mouseenter', '.song-cover-container', function() {
+    $('.album-cover-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
 
+
     });
 
-    $(document).on('mouseleave', '.song-cover-container', function() {
+    $('.album-cover-container').on('mouseleave', function() {
+
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
 
     });
 
-
-    $(document).on('mouseenter', '.single-cover-container', function() {
+    $('.song-cover-container').on('mouseenter', function() {
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.top-100-download-now-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});
+
     });
 
-    $(document).on('mouseleave', '.single-cover-container', function() {
+    $('.song-cover-container').on('mouseleave', function() {
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.top-100-download-now-button').css({opacity: 0});
+        $(this).find('.preview').css({opacity: 0});
+
     });
 
-    $(document).on('mouseenter', '.video-cover-container', function() {
+    $('.single-cover-container').on('mouseenter', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+
+    });
+
+    $('.single-cover-container').on('mouseleave', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 0});
+
+    });
+
+    $('.video-cover-container').on('mouseenter', function() {
         $(this).find('.top-video-login-button').css({opacity: 1});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
+
     });
 
-    $(document).on('mouseleave', '.video-cover-container', function() {
+    $('.video-cover-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
@@ -495,41 +448,46 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseenter', '.hero-image-container', function() {
+    $('.hero-image-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.download-now-button').css({opacity: 1});
+
     });
 
-    $(document).on('mouseleave', '.hero-image-container', function() {
+    $('.hero-image-container').on('mouseleave', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.download-now-button').css({opacity: 0});
+
+    });
+
+    $('.more-videos-scrollable .video-thumb-container').on('mouseenter', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.download-now-button').css({opacity: 1});
+
+    });
+
+    $('.more-videos-scrollable .video-thumb-container').on('mouseleave', function() {
+
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.download-now-button').css({opacity: 0});
     });
 
-
-    $(document).on('mouseenter', '.more-videos-scrollable .video-thumb-container', function() {
+    $('.top-videos-scrollable .video-thumb-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.download-now-button').css({opacity: 1});
+
+
     });
 
-    $(document).on('mouseleave', '.more-videos-scrollable .video-thumb-container', function() {
+    $('.top-videos-scrollable .video-thumb-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.download-now-button').css({opacity: 0});
-    });
 
-    $(document).on('mouseenter', '.top-videos-scrollable .video-thumb-container', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.download-now-button').css({opacity: 1});
-    });
 
-    $(document).on('mouseleave', '.top-videos-scrollable .video-thumb-container', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
-        $(this).find('.download-now-button').css({opacity: 0});
     });
-
 
     $(document).on('click', '.add-to-playlist-button', function(e) {
         e.preventDefault();
-
 
         $('.wishlist-popover').removeClass('active');
 
@@ -540,7 +498,6 @@ $('document').ready(function()
 
             $(this).next('.wishlist-popover').addClass('active');
         }
-
 
     });
 
@@ -636,22 +593,23 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseenter', '.site-nav .most-popular a', function(e) {
+    $('.site-nav .most-popular a').on('mouseenter', function(e) {
         e.preventDefault();
 
         $('.most-popular-sub-nav').addClass('active');
-
     });
 
-    $(document).on('mouseleave', '.most-popular-sub-nav', function(e) {
+    $('.most-popular-sub-nav').on('mouseleave', function() {
         $('.most-popular-sub-nav').removeClass('active');
+
     });
 
-    $(document).on('mouseenter', '.site-nav .regular', function(e) {
+    $('.site-nav .regular').on('mouseenter', function() {
         $('.most-popular-sub-nav').removeClass('active');
-    });
 
+    });
     /* albums page */
+    
     $(document).on('click', '.albums-page .tracklist .preview', function(e) {
 
 
@@ -673,18 +631,9 @@ $('document').ready(function()
 
     /* artist page */
     $('.artist-page .tracklist-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $('.artist-page .tracklist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
@@ -692,21 +641,10 @@ $('document').ready(function()
     $(document).on('scroll', '.artist-page .tracklist-scrollable', function(e) {
 
         $('.artist-page .tracklist-scrollable .wishlist-popover').removeClass('top');
-
-
         $('.artist-page .tracklist-scrollable .tracklist').each(function(e) {
-
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-
-
-
-
                 $(this).find('.wishlist-popover').addClass('top');
-
-
-
             }
-
         });
 
     });
@@ -716,7 +654,6 @@ $('document').ready(function()
         if ($(this).hasClass('playing')) {
 
             $(this).removeClass('playing');
-
             $(this).parents('.row').removeClass('playing');
             $(this).parent().removeClass('playing');
             $(this).siblings('.date').removeClass('playing');
@@ -761,59 +698,28 @@ $('document').ready(function()
     /* genres page */
     $('.genre-list').bind('mousewheel', function(e) {
 
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
 
     });
 
     $('.alphabetical-filter').bind('mousewheel', function(e) {
-
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
 
     });
 
     $('.artist-list').bind('mousewheel', function(e) {
-
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
 
     });
 
     $('.album-list').bind('mousewheel', function(e) {
-
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
 
@@ -821,7 +727,6 @@ $('document').ready(function()
 
     $(document).on('click', '.tracklist .preview', function(e) {
         e.preventDefault();
-
     });
 
     $(document).on('click', '.tracklist .add-to-playlist-button', function(e) {
@@ -866,9 +771,6 @@ $('document').ready(function()
     });
 
     $(document).on('click', '.genres-page .tracklist .preview', function(e) {
-
-
-
         $('.tracklist').removeClass('playing');
         $('.preview').removeClass('playing');
         $('.song').removeClass('playing');
@@ -887,34 +789,11 @@ $('document').ready(function()
     /* history page */
 
     $('.history-page .history-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
-    $('.history-page .history-scrollable').bind('mousewheel', function(e) {
-
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
-        //prevent page fom scrolling
-        return false;
-
-
-    });
 
     $(document).on('click', '.history-page .add-to-wishlist-button', function(e) {
         e.preventDefault();
@@ -937,21 +816,18 @@ $('document').ready(function()
         $('.history-page .history-scrollable .row').each(function(e) {
 
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-
-
-
-
                 $(this).find('.wishlist-popover').addClass('top');
-
-
-
             }
 
         });
 
     });
 
-    $(document).on('mouseenter', '.history-page .history-scrollable .row', function() {
+
+
+
+    $('.history-page .history-scrollable .row').on('mouseenter', function() {
+
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
         $(this).find('.artist-name').addClass('hovered');
@@ -959,10 +835,10 @@ $('document').ready(function()
         $(this).find('.song-title').addClass('hovered');
         $(this).find('.preview').addClass('hovered');
         $(this).find('.add-to-wishlist-button').addClass('hovered');
-
     });
 
-    $(document).on('mouseleave', '.history-page .history-scrollable .row', function() {
+
+    $('.history-page .history-scrollable .row').on('mouseleave', function() {
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
         $(this).find('.artist-name').removeClass('hovered');
@@ -973,12 +849,17 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseenter', '.history-page .history-scrollable .row .preview', function(e) {
+
+
+
+
+    $('.history-page .history-scrollable .row .preview').on('mouseenter', function() {
+
         $(this).removeClass('hovered').addClass('blue-bkg');
 
     });
 
-    $(document).on('mouseleave', '.history-page .history-scrollable .row .preview', function(e) {
+    $('.history-page .history-scrollable .row .preview').on('mouseleave', function() {
         $(this).removeClass('blue-bkg').addClass('hovered');
 
     });
@@ -1039,79 +920,65 @@ $('document').ready(function()
     /* end my account page */
 
     /* my top 10 page */
-    $(document).on('mouseenter', '.songs-scrollable .song-container', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 1});
-        $(this).find('.top-10-download-now-button').css({opacity: 1});
-        $(this).find('.preview').css({opacity: 1});
 
-    });
 
-    $(document).on('mouseleave', '.songs-scrollable .song-container', function() {
+    $('.songs-scrollable .song-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
 
     });
 
-    $(document).on('mouseenter', '.videos-scrollable .video-container', function() {
+    $('.songs-scrollable .song-container').on('mouseenter', function() {
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.top-10-download-now-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});
+
+    });
+
+    $('.videos-scrollable .video-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
 
     });
 
-    $(document).on('mouseleave', '.videos-scrollable .video-container', function() {
+    $('.videos-scrollable .video-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
 
     });
+
+
     /* end my top 10 page */
 
 
     /****** Search page ******/
-    $(document).on('mouseenter', '.videos-scrollable .video-container', function() {
+
+
+    $('.videos-scrollable .video-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
 
-
     });
 
-    $(document).on('mouseleave', '.videos-scrollable .video-container', function() {
+    $('.videos-scrollable .video-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
-
 
     });
 
     /* my wishlist page */
 
     $('.my-wishlist-page .my-wishlist-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $('.my-wishlist-page .my-video-wishlist-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $(document).on('click', '.my-wishlist-page .add-to-wishlist-button', function(e) {
@@ -1129,29 +996,16 @@ $('document').ready(function()
     $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
     $('.my-wishlist-page .my-wishlist-scrollable').on('scroll', function(e) {
-
         $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').removeClass('top');
-
-
         $('.my-wishlist-page .my-wishlist-scrollable .row').each(function(e) {
-
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-
-
-
-
                 $(this).find('.wishlist-popover').addClass('top');
-
-
-
             }
-
         });
 
     });
 
-
-    $(document).on('mouseenter', '.my-wishlist-page .my-wishlist-scrollable .row', function() {
+    $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
         $(this).find('.artist-name').addClass('hovered');
@@ -1163,7 +1017,8 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseleave', '.my-wishlist-page .my-wishlist-scrollable .row', function() {
+    $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseleave', function() {
+
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
         $(this).find('.artist-name').removeClass('hovered');
@@ -1172,10 +1027,9 @@ $('document').ready(function()
         $(this).find('.preview').removeClass('hovered');
         $(this).find('.delete-btn').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
-
     });
 
-    $(document).on('mouseenter', '.my-wishlist-page .my-video-wishlist-scrollable .row', function() {
+    $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
         $(this).find('.artist-name').addClass('hovered');
@@ -1187,7 +1041,8 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseleave', '.my-wishlist-page .my-video-wishlist-scrollable .row', function() {
+    $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave', function() {
+
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
         $(this).find('.artist-name').removeClass('hovered');
@@ -1196,15 +1051,18 @@ $('document').ready(function()
         $(this).find('.preview').removeClass('hovered');
         $(this).find('.delete-btn').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
-
     });
 
-    $(document).on('mouseenter', '.my-wishlist-page .my-wishlist-scrollable .row .preview', function(e) {
+
+
+
+
+    $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseenter', function() {
         $(this).removeClass('hovered').addClass('blue-bkg');
 
     });
 
-    $(document).on('mouseleave', '.my-wishlist-page .my-wishlist-scrollable .row .preview', function(e) {
+    $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseleave', function() {
         $(this).removeClass('blue-bkg').addClass('hovered');
 
     });
@@ -1256,33 +1114,39 @@ $('document').ready(function()
 
     /* new release page */
 
-    $(document).on('mouseenter', '.songs-scrollable .song-container', function() {
+
+
+    $('.songs-scrollable .song-container').on('mouseenter', function() {
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
 
     });
 
-    $(document).on('mouseleave', '.songs-scrollable .song-container', function() {
+    $('.songs-scrollable .song-container').on('mouseleave', function() {
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
 
     });
 
-    $(document).on('mouseenter', '.videos-scrollable .video-container', function() {
+
+
+    $('.videos-scrollable .video-container').on('mousenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
 
-
     });
 
-    $(document).on('mouseleave', '.videos-scrollable .video-container', function() {
+    $('.videos-scrollable .video-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
 
-
     });
+
+
 
     /* end new releases page */
 
@@ -1305,13 +1169,7 @@ $('document').ready(function()
 
     $('.recent-downloads-page .recent-downloads-scrollable').bind('mousewheel', function(e) {
 
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
 
@@ -1320,16 +1178,9 @@ $('document').ready(function()
 
     $('.recent-downloads-page .recent-video-downloads-scrollable').bind('mousewheel', function(e) {
 
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
 
     });
 
@@ -1343,11 +1194,13 @@ $('document').ready(function()
         $(this).siblings('.wishlist-popover').addClass('active');
     });
 
-    $(document).on('mouseleave', '.recent-downloads-page .wishlist-popover', function(e) {
+
+
+
+    $('.recent-downloads-page .wishlist-popover').on('mouseleave', function() {
 
         $(this).removeClass('active');
     });
-
 
 
     $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').slice(0, 3).addClass('top');
@@ -1361,22 +1214,17 @@ $('document').ready(function()
         $('.recent-downloads-page .recent-downloads-scrollable .row').each(function(e) {
 
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-
-
-
-
                 $(this).find('.wishlist-popover').addClass('top');
-
-
-
             }
-
         });
 
     });
 
 
-    $(document).on('mouseenter', '.recent-downloads-page .recent-downloads-scrollable .row', function() {
+
+
+
+    $('.recent-downloads-page .recent-downloads-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
         $(this).find('.artist-name').addClass('hovered');
@@ -1387,29 +1235,7 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseleave', '.recent-downloads-page .recent-downloads-scrollable .row', function() {
-        $(this).find('.date').removeClass('hovered');
-        $(this).find('.album-title').removeClass('hovered');
-        $(this).find('.artist-name').removeClass('hovered');
-        $(this).find('.time').removeClass('hovered');
-        $(this).find('.song-title').removeClass('hovered');
-        $(this).find('.preview').removeClass('hovered');
-        $(this).find('.add-to-wishlist-button').removeClass('hovered');
-
-    });
-
-    $(document).on('mouseenter', '.recent-downloads-page .recent-video-downloads-scrollable .row', function() {
-        $(this).find('.date').addClass('hovered');
-        $(this).find('.album-title').addClass('hovered');
-        $(this).find('.artist-name').addClass('hovered');
-        $(this).find('.time').addClass('hovered');
-        $(this).find('.song-title').addClass('hovered');
-        $(this).find('.preview').addClass('hovered');
-        $(this).find('.add-to-wishlist-button').addClass('hovered');
-
-    });
-
-    $(document).on('mouseleave', '.recent-downloads-page .recent-video-downloads-scrollable .row', function() {
+    $('.recent-downloads-page .recent-downloads-scrollable .row').on('mouseleave', function() {
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
         $(this).find('.artist-name').removeClass('hovered');
@@ -1421,12 +1247,42 @@ $('document').ready(function()
     });
 
 
-    $(document).on('mouseenter', '.recent-downloads-page .recent-downloads-scrollable .row .preview', function(e) {
+
+    $('.recent-downloads-page .recent-video-downloads-scrollable .row').on('mouseenter', function() {
+
+        $(this).find('.date').addClass('hovered');
+        $(this).find('.album-title').addClass('hovered');
+        $(this).find('.artist-name').addClass('hovered');
+        $(this).find('.time').addClass('hovered');
+        $(this).find('.song-title').addClass('hovered');
+        $(this).find('.preview').addClass('hovered');
+        $(this).find('.add-to-wishlist-button').addClass('hovered');
+
+    });
+
+    $('.recent-downloads-page .recent-video-downloads-scrollable .row').on('mouseleave', function() {
+
+        $(this).find('.date').removeClass('hovered');
+        $(this).find('.album-title').removeClass('hovered');
+        $(this).find('.artist-name').removeClass('hovered');
+        $(this).find('.time').removeClass('hovered');
+        $(this).find('.song-title').removeClass('hovered');
+        $(this).find('.preview').removeClass('hovered');
+        $(this).find('.add-to-wishlist-button').removeClass('hovered');
+    });
+
+
+
+
+
+    $('.recent-downloads-page .recent-downloads-scrollable .row .preview').on('mouseenter', function() {
+
         $(this).removeClass('hovered').addClass('blue-bkg');
 
     });
 
-    $(document).on('mouseleave', '.recent-downloads-page .recent-downloads-scrollable .row .preview', function(e) {
+    $('.recent-downloads-page .recent-downloads-scrollable .row .preview').on('mouseleave', function() {
+
         $(this).removeClass('blue-bkg').addClass('hovered');
 
     });
@@ -1515,18 +1371,9 @@ $('document').ready(function()
 
 
     $('.saved-queues-page .playlists-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $(document).on('click', '.saved-queues-page .add-to-playlist-button', function(e) {
@@ -1534,19 +1381,19 @@ $('document').ready(function()
         $(this).siblings('.wishlist-popover').addClass('active');
     });
 
-    $(document).on('mouseleave', '.saved-queues-page .wishlist-popover', function(e) {
+
+
+    $('.saved-queues-page .wishlist-popover').on('mouseleave', function() {
 
         $(this).removeClass('active');
     });
+
     /* end saved queues page */
 
 
     /* search results page */
 
     $('.search-page .tracklist .preview').on('click', function(e) {
-
-
-
         $('.tracklist').removeClass('playing');
         $('.preview').removeClass('playing');
         $('.song').removeClass('playing');
@@ -1567,80 +1414,34 @@ $('document').ready(function()
     });
 
     $('.search-page .tracklist-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $('.search-page .advanced-artists-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $('.search-page .advanced-composers-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $('.search-page .advanced-genres-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $('.search-page .advanced-labels-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
-
 
     $(document).on('click', '.tracklist-header span', function(e) {
         if ($(this).hasClass('active')) {
@@ -1662,7 +1463,6 @@ $('document').ready(function()
 
     });
 
-
     $('.search-page .wishlist-popover').slice(0, 3).addClass('top');
     $('.search-page .tracklist').slice(0, 3).addClass('current');
 
@@ -1672,53 +1472,29 @@ $('document').ready(function()
         $('.search-page .tracklist').removeClass('current');
 
         $('.search-page .tracklist').each(function(e) {
-
             if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-
-
                 $(this).addClass('current');
-
                 $(this).find('.wishlist-popover').addClass('top');
-
-
-
             }
-
         });
-
     });
 
 
     $('.search-page .advanced-search #submit').on('mousedown', function(e) {
-
-
         $(this).addClass('clicked');
-
     });
 
     $('.search-page .advanced-search #submit').on('mouseup', function(e) {
-
-
         $(this).removeClass('clicked');
-
     });
 
     $(document).on('click', '.pagination a', function(e) {
-
-
         var target = $(this).attr('href');
-
-
-
-
-
-
     });
     /* end search results page */
 
 
     /* site login page */
-
     $(document).on('mousedown', '.site-login input[type="submit"]', function(e) {
         $(this).addClass('selected');
     });
@@ -1726,39 +1502,26 @@ $('document').ready(function()
     $(document).on('mouseup', '.site-login input[type="submit"]', function(e) {
         $(this).removeClass('selected');
     });
-
     /* end site login page */
 
 
-
-
     /* now streaming/queue detail page */
-
     $(document).on('click', '.gear-icon', function(e) {
         $('.queue-options').addClass('active');
 
     });
 
-    $(document).on('mouseleave', '.queue-options', function(e) {
+
+
+    $('.queue-options').on('mouseleave', function() {
 
         $('.queue-options').removeClass('active');
     });
 
-
-
     $('.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable').bind('mousewheel', function(e) {
-
-
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-
-
-
-
-
         //prevent page fom scrolling
         return false;
-
-
     });
 
     $(document).on('click', '.now-streaming-page .now-playing-container .add-to-wishlist-button,.queue-detail-page .now-playing-container .add-to-wishlist-button', function(e) {
@@ -1767,17 +1530,14 @@ $('document').ready(function()
         $(this).siblings('.wishlist-popover').addClass('active');
     });
 
-    $(document).on('mouseleave', '.now-streaming-page .now-playing-container .wishlist-popover,.queue-detail-page .now-playing-container .wishlist-popover', function(e) {
 
+    $('.now-streaming-page .now-playing-container .wishlist-popover,.queue-detail-page .now-playing-container .wishlist-popover').on('mouseleave', function() {
         $(this).removeClass('active');
+
     });
 
 
-
-
-
     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
-
 
     $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function(e) {
 
@@ -1785,16 +1545,8 @@ $('document').ready(function()
 
 
         $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').each(function(e) {
-
             if ($(this).position().top >= -22 && $(this).position().top <= 130) {
-
-
-
-
                 $(this).find('.wishlist-popover').addClass('top');
-
-
-
             }
 
         });
@@ -1802,8 +1554,7 @@ $('document').ready(function()
     });
 
 
-    $(document).on('mouseenter', '.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row', function() {
-
+    $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').on('mouseenter', function() {
         $(this).find('.album-title').addClass('hovered');
         $(this).find('.artist-name').addClass('hovered');
         $(this).find('.time').addClass('hovered');
@@ -1814,8 +1565,7 @@ $('document').ready(function()
 
     });
 
-    $(document).on('mouseleave', '.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row', function() {
-
+    $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').on('mouseleave', function() {
         $(this).find('.album-title').removeClass('hovered');
         $(this).find('.artist-name').removeClass('hovered');
         $(this).find('.time').removeClass('hovered');
@@ -1829,14 +1579,14 @@ $('document').ready(function()
 
 
 
-    $(document).on('mouseenter', '.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview', function(e) {
-        $(this).removeClass('hovered').addClass('blue-bkg');
+    $('.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview').on('mouseenter', function() {
 
+        $(this).removeClass('hovered').addClass('blue-bkg');
     });
 
-    $(document).on('mouseleave', '.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview', function(e) {
-        $(this).removeClass('blue-bkg').addClass('hovered');
+    $('.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview').on('mouseleave', function() {
 
+        $(this).removeClass('blue-bkg').addClass('hovered');
     });
 
     $(document).on('click', '.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview', function(e) {
@@ -1878,15 +1628,11 @@ $('document').ready(function()
 
     });
 
-
-
-
-
     /* end now streaming page */
 
     /* overlays */
 
-    $('.rename-queue').on('click', function(e) {
+    $(document).on('click', '.rename-queue', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.rename-queue-dialog-box').addClass('active');
@@ -1894,14 +1640,14 @@ $('document').ready(function()
 
     });
 
-    $('.delete-queue').on('click', function(e) {
+    $(document).on('click', '.delete-queue', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.delete-queue-dialog-box').addClass('active');
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-    $('.create-new-queue,.create-new-queue-btn').on('click', function(e) {
+    $(document).on('click', '.create-new-queue,.create-new-queue-btn', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.create-queue-dialog-box').addClass('active');
@@ -1911,15 +1657,33 @@ $('document').ready(function()
     });
 
 
-
-    $('.close,.text-close').on('click', function(e) {
+    $(document).on('click', '.close,.text-close', function(e) {
         $('.queue-overlay').removeClass('active');
         $('.rename-queue-dialog-box').removeClass('active');
         $('.delete-queue-dialog-box').removeClass('active');
         $('.create-queue-dialog-box').removeClass('active');
     });
 
+
     /* end overlays */
+
+
+    /** Genres Page */
+
+    $(document).on('click', '.artist-list a', function() {
+        var artist = $(this).data('artist');
+        $('.artist-list a').removeClass('selected');
+        $(this).addClass('selected');
+        $(this).css("cursor", "pointer");
+    });
+
+    $(document).on('click', '.alphabetical-filter a', function() {
+
+        var letter = $(this).data('letter');
+        $('.alphabetical-filter a').removeClass('selected');
+        $('.artist-list a').removeClass('selected');
+        $(this).addClass('selected');
+    });
 
 
     var most_popular_position = $('li.most-popular').position();
@@ -1949,32 +1713,39 @@ $('document').ready(function()
             return windowHeight - (top - scrollTop);
         }
     }
+    
+    $('.content').on('click','.hp-tabs',function(e){
+	    
+	   //console.log($(this).attr('href') + ' clicked');
+	   e.preventDefault();
+	    
+    });
 
 });
 
-//$('document').ready(function() {
-//    $('#search-text').autocomplete("/search/autocomplete",
-//            {
-//                minChars: 1,
-//                cacheLength: 10,
-//                autoFill: false,
-//                extraParams: {
-//                    type: 'all'
-//                },
-//                formatItem: function(data) {
-//                    return data[0];
-//                },
-//                formatResult: function(data) {
-//                    return data[1];
-//                }
-//            }).result(function(e, item) {
-//        $('#auto').attr('value', 1);
-//        /*if(item[2]==1){
-//         $('#header-search-type').val('artist');
-//         } else if(item[2]==2){
-//         $('#header-search-type').val('album');
-//         } else if(item[2]==3){
-//         $('#header-search-type').val('song');
-//         }*/
-//    });
-//});
+$('document').ready(function() {
+    $('#search-text').autocomplete("/search/autocomplete",
+            {
+                minChars: 1,
+                cacheLength: 10,
+                autoFill: false,
+                extraParams: {
+                    type: 'all'
+                },
+                formatItem: function(data) {
+                    return data[0];
+                },
+                formatResult: function(data) {
+                    return data[1];
+                }
+            }).result(function(e, item) {
+        $('#auto').attr('value', 1);
+        /*if(item[2]==1){
+         $('#header-search-type').val('artist');
+         } else if(item[2]==2){
+         $('#header-search-type').val('album');
+         } else if(item[2]==3){
+         $('#header-search-type').val('song');
+         }*/
+    });
+});

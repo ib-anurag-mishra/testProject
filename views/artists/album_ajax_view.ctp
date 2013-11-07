@@ -60,7 +60,7 @@
                                          <?php
                                                 if($this->Session->read('library_type')==2)
                                                 {
-                                                    $filePath = shell_exec('perl files/tokengen_streaming '. $albumSong['File']['CdnPath']."/".$albumSong['File']['SourceURL']);
+                                                    $filePath = shell_exec('perl files/tokengen_streaming '. $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
 
                                                     if(!empty($filePath))
                                                      {
@@ -86,14 +86,22 @@
                                     $downloadFlag = 1;                                                                       
                                 }
                                 
-                                if($this->Session->read("patron")){                                                                         
+                                if($this->Session->read("patron"))
+                               {                                                                         
+                                    
+                                    if ('T' == $albumSong['Song']['Advisory'])
+                                    {
+                                           $song_title =   $albumSong['Song']['SongTitle'].'(Explicit)';
+                                    }
+                                    else 
+                                    {
+                                           $song_title =   $albumSong['Song']['SongTitle'];
+                                    }
                                     
                                     
                                     if( $this->Session->read('library_type') == 2 && $albumSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $albumSong['Country']['StreamingStatus'] == 1) 
                                     {
-                                        echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'loadSong("'.$albumSong['streamUrl'].'", "'.$albumSong['Song']['SongTitle'].'","'.$albumSong['Song']['ArtistText'].'","'.$albumSong['totalseconds'].'","'.$albumSong['Song']['ProdID'].'","'.$albumSong['Song']['provider_type'].'");'));
-                                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
-                                        echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
+                                                echo $html->image('play.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'loadSong("'.$albumSong['streamUrl'].'", "'.$song_title.'","'.$albumSong['Song']['ArtistText'].'",'.$albumSong['totalseconds'].',"'.$albumSong['Song']['ProdID'].'","'.$albumSong['Song']['provider_type'].'");'));
                                     }
                                     else  if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) 
                                     {
@@ -101,7 +109,7 @@
                                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
                                     }
-                            }
+                              }
 				?>
 					
                                 

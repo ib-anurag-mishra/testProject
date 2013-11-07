@@ -46,42 +46,42 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active" style="cursor:pointer;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active" style="cursor:pointer;width:90px;"><?php echo __('Date'); ?></div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled" style="cursor:pointer;"><?php echo __('Date'); ?></div>
+                    <div class="date-filter-button filter active toggled" style="cursor:pointer;width:90px;"><?php echo __('Date'); ?></div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter " style="cursor:pointer;"><?php echo __('Date'); ?></div>
+                <div class="date-filter-button filter " style="cursor:pointer;width:90px;"><?php echo __('Date'); ?></div>
             <?php
             }
             ?>   
-                        <div class="song-filter-button" style="cursor:pointer;"><?php echo __('Music'); ?></div>
-			<div class="song-filter-button" style="cursor:pointer;"><?php echo __('Queue'); ?></div> 
+                        <div class="song-filter-button" style="cursor:pointer;width:190px;"><?php echo __('Music'); ?></div>
+			<div class="song-filter-button" style="cursor:pointer;width:130px;"><?php echo __('Queue'); ?></div> 
 			
 			<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter active"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
+                    <div class="artist-filter-button filter active toggled"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter"style="cursor:pointer;"><?php echo __('Artists'); ?></div>
+			<div class="artist-filter-button filter"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active"style="cursor:pointer;"><?php echo __('Album'); ?></div>
+                    <div class="album-filter-button filter active"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled"style="cursor:pointer;"><?php echo __('Album'); ?></div>
+                    <div class="album-filter-button filter active toggled"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter"style="cursor:pointer;"><?php echo __('Album'); ?></div>
+			<div class="album-filter-button filter"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
             <?php
             }
             ?>  
@@ -106,7 +106,7 @@ $ieVersion =  ieversion();
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
                             
-                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['File']['CdnPath']."/".$streamingArr['File']['SourceURL']);
+                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['Full_Files']['CdnPath']."/".$streamingArr['Full_Files']['SaveAsName']);
 
                                 if(!empty($filePath))
                                 {
@@ -115,15 +115,21 @@ $ieVersion =  ieversion();
                                    $streamingArr['streamUrl'] = $streamUrl;
                                    $streamingArr['totalseconds']  = $this->Queue->getSeconds($streamingArr['Song']['FullLength_Duration']); 
                                 }
+                                
+                                if ('T' == $streamingArr['Song']['Advisory'])
+                                {
+                                       $song_title =   $streamingArr['Song']['SongTitle'].'(Explicit)';
+                                }
+                                else 
+                                {
+                                       $song_title =   $streamingArr['Song']['SongTitle'];
+                                }
                             
                             
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr['streamUrl'].'", "'.$streamingArr['Song']['SongTitle'].'","'.$streamingArr['Song']['ArtistText'].'","'.$streamingArr['totalseconds'].'","'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
-                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
-                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
-
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block; left: 91px;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$streamingArr['streamUrl'].'", "'.$song_title.'","'.$streamingArr['Song']['ArtistText'].'",'.$streamingArr['totalseconds'].',"'.$streamingArr['Song']['ProdID'].'","'.$streamingArr['Song']['provider_type'].'");')); 
                         }else if($this->Session->read('library_type') == 1){
                                 //do the simple player(this code will be update after discussion)
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['Download']['ProdID'].', "'.base64_encode($streamingArr['Download']['provider_type']).'", "'.$this->webroot.'");')); 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block; left: 91px;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$streamingArr['Download']['ProdID'].', "'.base64_encode($streamingArr['Download']['provider_type']).'", "'.$this->webroot.'");')); 
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
                         }    
@@ -132,10 +138,10 @@ $ieVersion =  ieversion();
                         
                         ?>
 					</div>
-					<div class="song-title">
+					<div class="song-title" style="left: 115px;">
                                     <?php 
-                                                  if(strlen($streamingArr['Song']['SongTitle']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 19)) . '...</span>';							
+                                                  if(strlen($streamingArr['Song']['SongTitle']) >= 16) {
+							echo '<span title="'.htmlentities($streamingArr['Song']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Song']['SongTitle'], 0, 16)) . '...</span>';							
 						} else {
 							echo $this->getTextEncode($streamingArr['Song']['SongTitle']); 
 					 	}
@@ -144,13 +150,13 @@ $ieVersion =  ieversion();
                                     <?php if('T' == $streamingArr['Song']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </div>
                                         
-                                        <div style="width: 128px; position: absolute; left: 259px; top: 25px; font-size: 12px;  color: rgba(0, 0, 0, 0.7); text-decoration: none;">
+                                        <div style="width: 128px; position: absolute; left: 292px; top: 25px; font-size: 12px;  color: rgba(0, 0, 0, 0.7); text-decoration: none;">
                                             <a href="/queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>">
                                      <?php 
                                                
                                                 
-						if (strlen($streamingArr['QueueList']['queue_name']) >= 19) {
-							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .$this->getTextEncode(substr($streamingArr['QueueList']['queue_name'], 0, 19)) . '...</span>';							
+						if (strlen($streamingArr['QueueList']['queue_name']) >= 16) {
+							echo '<span title="'.htmlentities($streamingArr['QueueList']['queue_name']).'">' .$this->getTextEncode(substr($streamingArr['QueueList']['queue_name'], 0, 16)) . '...</span>';							
 						} else {
 							echo $this->getTextEncode($streamingArr['QueueList']['queue_name']); 
 					 	}
@@ -160,7 +166,7 @@ $ieVersion =  ieversion();
                                         </div>
                                         
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
-					<div class="album-title"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
+					<div class="album-title" style="left:561px;"><a href="/artists/view/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>/<?= $streamingArr['Song']['ReferenceID']; ?>/<?= base64_encode($streamingArr['Song']['provider_type']); ?>">
                                              <?php 
 						if (strlen($streamingArr['Album']['AlbumTitle']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['Album']['SongTitle']).'">' .$this->getTextEncode(substr($streamingArr['Album']['AlbumTitle'], 0, 19)) . '...</span>';							
@@ -170,7 +176,7 @@ $ieVersion =  ieversion();
 					?>
                                             </a>
                                             </div>
-					<div class="artist-name"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
+					<div class="artist-name" style="left:422px;"><a href="/artists/album/<?= base64_encode($streamingArr['Song']['ArtistText']); ?>"><?php
 						if (strlen($streamingArr['Song']['ArtistText']) >= 19) {
 							echo '<span title="'.htmlentities($streamingArr['Song']['ArtistText']).'">' .$this->getTextEncode(substr($streamingArr['Song']['ArtistText'], 0, 19)) . '...</span>';							
 						} else {

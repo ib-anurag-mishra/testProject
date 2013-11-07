@@ -107,7 +107,7 @@ $ieVersion =  ieversion();
                 if(count($downloadResults) != 0)
                 {
                     $i = 1;
-                    foreach($downloadResults as $key => $downloadResult):
+                    foreach($downloadResults as $key => $downloadResult): 
                 ?>
 				
 				<div class="row clearfix">
@@ -121,9 +121,28 @@ $ieVersion =  ieversion();
                        
                         if( $this->Session->read('library_type') == 2 && $downloadResult['Country']['StreamingSalesDate'] <= date('Y-m-d') && $downloadResult['Country']['StreamingStatus'] == 1){
                                 //do the streaming work
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$downloadResult['Download']['ProdID'].', "'.base64_encode($downloadResult['Download']['provider_type']).'", "'.$this->webroot.'");')); 
-                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
-                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
+                            
+                                $filePath = shell_exec('perl files/tokengen_streaming '. $downloadResult['Full_Files']['CdnPath']."/".$downloadResult['Full_Files']['SaveAsName']);
+
+                                if(!empty($filePath))
+                                 {
+                                    $songPath = explode(':',$filePath);
+                                    $streamUrl =  trim($songPath[1]);
+                                    $downloadResult['streamUrl'] = $streamUrl;
+                                    $downloadResult['totalseconds']  = $this->Queue->getSeconds($downloadResult['Song']['FullLength_Duration']); 
+                                 } 
+                            
+                                if ('T' == $downloadResult['Song']['Advisory'])
+                                {
+                                       $song_title =   $downloadResult['Song']['SongTitle'].'(Explicit)';
+                                }
+                                else 
+                                {
+                                       $song_title =   $downloadResult['Song']['SongTitle'];
+                                }
+                                 
+                                 
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$downloadResult['streamUrl'].'", "'.$song_title.'","'.$downloadResult['Song']['ArtistText'].'",'.$downloadResult['totalseconds'].',"'.$downloadResult['Song']['ProdID'].'","'.$downloadResult['Song']['provider_type'].'");'));
 
                         }else if($this->Session->read('library_type') == 1){
                                 //do the simple player(this code will be update after discussion)

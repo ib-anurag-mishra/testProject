@@ -437,19 +437,25 @@ $ieVersion =  ieversion();
                                             if( $this->Session->read('library_type') == 2 && $wishlistResults[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $wishlistResults[$i]['Country']['StreamingStatus'] == 1){                                                 
                                                 //do the streaming work
                                                 
-                                                $filePath = shell_exec('perl files/tokengen_streaming '. $wishlistResults[$i]['File']['CdnPath']."/".$wishlistResults[$i]['File']['SaveAsName']);
+                                                $filePath = shell_exec('perl files/tokengen_streaming '. $wishlistResults[$i]['Full_Files']['CdnPath']."/".$wishlistResults[$i]['Full_Files']['SaveAsName']);
                                                 if(!empty($filePath))
                                                  {
                                                         $songPath = explode(':',$filePath);
                                                         $streamUrl =  trim($songPath[1]);
                                                         $wishlistResults[$i]['streamUrl'] = $streamUrl;
-                                                        $wishlistResults[$i]['totalseconds']  = $this->Queue->getSeconds($wishlistResults[$i]['FullLength_Duration']); 
+                                                        $wishlistResults[$i]['totalseconds']  = $this->Queue->getSeconds($wishlistResults[$i]['Song']['FullLength_Duration']); 
                                                  }
+                                                 
+                                                 if ('T' == $wishlistResults[$i]['Song']['Advisory'])
+                                                {
+                                                       $song_title =   $wishlistResults[$i]['wishlists']['track_title'].'(Explicit)';
+                                                }
+                                                else 
+                                                {
+                                                       $song_title =   $wishlistResults[$i]['wishlists']['track_title'];
+                                                }
                                                 
-                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$wishlistResults[$i]['streamUrl'].'", "'.$wishlistResults[$i]['wishlists']['track_title'].'","'.$wishlistResults[$i]['wishlists']['artist'].'","'.$wishlistResults[$i]['totalseconds'].'","'.$wishlistResults[$i]['Song']['ProdID'].'","'.$wishlistResults[$i]['Song']['provider_type'].'");')); 
-                                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
-                                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");'));    
-
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$wishlistResults[$i]['streamUrl'].'", "'.$song_title.'","'.$wishlistResults[$i]['wishlists']['artist'].'",'.$wishlistResults[$i]['totalseconds'].',"'.$wishlistResults[$i]['Song']['ProdID'].'","'.$wishlistResults[$i]['Song']['provider_type'].'");')); 
                                             }else{ 
                                                 //do the simple player(this code will update after discussion)
                                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$wishlistResults[$i]['Song']['ProdID'].', "'.base64_encode($wishlistResults[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
