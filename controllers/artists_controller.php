@@ -19,7 +19,7 @@ Class ArtistsController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view','test','album','album_ajax','album_ajax_view','admin_getAlbums','admin_getAutoArtist');
+		$this->Auth->allowedActions = array('view','test','album','album_ajax','album_ajax_view','admin_getAlbums','admin_getAutoArtist','getAlbumSongs');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
