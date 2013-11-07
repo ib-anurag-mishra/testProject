@@ -219,7 +219,7 @@ STR;
               AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
               GROUP BY Download.ProdID 
               ORDER BY `countProduct` DESC 
-              LIMIT 110";
+              LIMIT 200";
                 } else {
                     $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `downloads` AS `Download` 
@@ -228,7 +228,7 @@ STR;
               AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
               GROUP BY Download.ProdID 
               ORDER BY `countProduct` DESC 
-              LIMIT 110";
+              LIMIT 200";
             }
             $ids = '';
             $ids_provider_type = '';
@@ -300,7 +300,7 @@ STR;
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
                 GROUP BY Song.ReferenceID
-                ORDER BY FIELD(Song.ReferenceID,$ids) ASC
+                ORDER BY COUNT(Song.ReferenceID) DESC
                 LIMIT 100 
 
 STR;
