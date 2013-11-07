@@ -47,7 +47,7 @@
 				.play-album-btn {
 					
 					position: absolute;
-					right: 57px;
+					right: -358px;
 					top:0;
 					cursor: pointer;
 					background: url(/img/queue-details/play-queue-off.png);
