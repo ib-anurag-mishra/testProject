@@ -1759,6 +1759,15 @@ $(document).ready(function() {
         }
 
     });
+	
+    $(document).on('click', '.play-queue-btn span', function() {
+        playlist = $('#playlist_data').text();
+        playlist = JSON.parse(playlist);
+        if (playlist.length) {
+            pushSongs(playlist);
+        }
+
+    });	
 
     $('.select-arrow').on('click', function(e) {
          if ($('.account-options-menu').hasClass('active')) {
