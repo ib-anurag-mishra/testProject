@@ -87,6 +87,7 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
+         Configure::write('debug', 2);
         $territoriesList = $this->Common->getTerritories();
         foreach($territoriesList as $territory){
            // $this->Common->getGenres($territory);
@@ -104,7 +105,7 @@ class CacheController extends AppController {
            // $this->Common->getFeaturedArtists($territory);
            // $this->Common->getDifferentGenreData($territory);
             $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);    
+            //$this->Common->getDefaultQueues($territory);    
         }
        // $this->Common->setLibraryTopTenCache();
         //$this->Common->setVideoCacheVar();    
