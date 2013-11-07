@@ -300,7 +300,7 @@ STR;
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
                 GROUP BY Song.ReferenceID
-                ORDER BY FIELD(Song.ReferenceID,$ids) ASC
+                ORDER BY COUNT(Song.ReferenceID) DESC
                 LIMIT 100 
 
 STR;
