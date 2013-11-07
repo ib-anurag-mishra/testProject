@@ -96,8 +96,8 @@ class CacheController extends AppController {
           //  $this->Common->getNationalTop100Videos($territory);
           //  $this->Common->getComingSoonSongs($territory);
            // $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-//            $this->Common->getUsTop10Albums($territory);
+           // $this->Common->getUsTop10Songs($territory);
+            $this->Common->getUsTop10Albums($territory);
 //            $this->Common->getUsTop10Videos($territory);
 //            $this->Common->getNewReleaseAlbums($territory);
 //            $this->Common->getNewReleaseVideos($territory);
@@ -116,10 +116,10 @@ class CacheController extends AppController {
         $this->Email->from = Configure::read('App.adminEmail');
         $this->Email->fromName = Configure::read('App.fromName');
         $this->Email->subject = 'Freegaldev.com - cron has been successfully run';
-        $this->Email->smtpHostNames = Configure::read('App.SMTP');
-        $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
-        $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
-        $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
+        $this->Email->smtpHostNames = 'mail.infobeans.in';
+        $this->Email->smtpAuth = false;
+        $this->Email->smtpUserName = 'test.account@infobeans.in';
+        $this->Email->smtpPassword = 'test123';
         $result = $this->Email->send();
     }
     
