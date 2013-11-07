@@ -92,8 +92,8 @@ class CacheController extends AppController {
            // $this->Common->getGenres($territory);
            // $this->Common->getNationalTop100($territory);
            // $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-//            $this->Common->getNationalTop100Videos($territory);
+           // $this->Common->getTopVideoDownloads($territory);
+            $this->Common->getNationalTop100Videos($territory);
 //            $this->Common->getComingSoonSongs($territory);
 //            $this->Common->getComingSoonVideos($territory);
 //            $this->Common->getUsTop10Songs($territory);
@@ -111,11 +111,11 @@ class CacheController extends AppController {
         //$this->setAppMyMusicVideoList(); 
         
         
-        $this->Email->template = 'cron has been successfully run.'.date('Y-m-d H:i:s');       
+           
         $this->Email->to = 'nagesh4group@gmail.com';
         $this->Email->from = Configure::read('App.adminEmail');
         $this->Email->fromName = Configure::read('App.fromName');
-        $this->Email->subject = 'Freegaldev.com - cron update';
+        $this->Email->subject = 'Freegaldev.com - cron has been successfully run';
         $this->Email->smtpHostNames = Configure::read('App.SMTP');
         $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
         $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
