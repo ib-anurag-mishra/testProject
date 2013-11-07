@@ -77,7 +77,7 @@
 		</section>
 		<section class="tracklist-container">
 				<div class="button-container">
-					<div class="play-queue-btn"><span></span></div>
+					<div class="play-album-btn"><span></span></div>
 
 				</div>
 			<div class="album-title"><?php

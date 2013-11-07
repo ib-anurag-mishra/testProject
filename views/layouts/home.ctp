@@ -24,7 +24,40 @@
             }
             ?>
         </title>
-
+<style type="text/css">
+ 
+ 			.button-container {
+				
+				position: relative;
+				width: 200px;
+				margin-top: 10px;
+			}
+				.gear-icon {
+					
+					position: absolute;
+					right: 0;
+					top:0;
+					background: url(../img/queue-details/gear-off.png);
+					width: 55px;
+					height: 42px;
+					cursor: pointer;
+										
+				}                        
+                        
+				.play-album-btn {
+					
+					position: absolute;
+					right: 57px;
+					top:0;
+					cursor: pointer;
+					background: url(../img/queue-details/play-queue-off.png);
+					width: 137px;
+					height: 42px;
+					
+					
+				}                        
+    
+ </style>   
 
         <?php
         echo $this->Html->css(
