@@ -279,7 +279,8 @@ STR;
                         Sample_Files.FileID,
                         PRODUCT.pid,
                         Albums.ProdID,
-                        Albums.provider_type
+                        Albums.provider_type,
+						Albums.AlbumTitle
                 FROM
                         Songs AS Song
                                 LEFT JOIN
@@ -299,7 +300,7 @@ STR;
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
                 GROUP BY Song.ReferenceID
-                ORDER BY FIELD(Song.ProdID,$ids) ASC
+                ORDER BY FIELD(Song.ReferenceID,$ids) ASC
                 LIMIT 100 
 
 STR;
@@ -1736,7 +1737,7 @@ STR;
                  $album_img =  Configure::read('App.Music_Path').$album_img;
                  $topDownload[$key]['album_img'] = $album_img;
 				 $topDownload[$key]['albumSongs'] = $this->requestAction(
-						array('controller' => 'artists', 'action' => 'view'),
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
 					);				 
             }                
