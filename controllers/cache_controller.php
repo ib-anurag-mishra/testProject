@@ -5,7 +5,7 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
-    var $components = array('Queue','Common');
+    var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -112,7 +112,7 @@ class CacheController extends AppController {
         
         
         $this->Email->template = 'cron has been successfully run.'.date('Y-m-d H:i:s');       
-        $this->Email->to = 'narendra.nagesh@infobeans.com';
+        $this->Email->to = 'nagesh4group@gmail.com';
         $this->Email->from = Configure::read('App.adminEmail');
         $this->Email->fromName = Configure::read('App.fromName');
         $this->Email->subject = 'Freegaldev.com - cron update';
