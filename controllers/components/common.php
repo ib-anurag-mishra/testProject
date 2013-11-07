@@ -1736,7 +1736,7 @@ STR;
                  $album_img =  Configure::read('App.Music_Path').$album_img;
                  $topDownload[$key]['album_img'] = $album_img;
 				 $topDownload[$key]['albumSongs'] = $this->requestAction(
-						array('controller' => 'artists', 'action' => 'view'),
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
 					);				 
             }                
