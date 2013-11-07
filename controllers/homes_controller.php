@@ -110,12 +110,21 @@ class HomesController extends AppController
         }
         $this->set('nationalTopDownload',$nationalTopDownload);
         // National Top Videos list and Downloads functionality code 
-        if (($national = Cache::read("nationalvideos".$territory)) === false) {
+        /*if (($national = Cache::read("nationalvideos".$territory)) === false) {
             $nationalTopVideoDownload = $this->Common->getNationalTop100Videos($territory);
         }else{
             $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
        }
-        $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
+        $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);*/
+		
+		// National Top 100 Albums slider 
+        if (($national = Cache::read("nationalalbums".$territory)) === false) {
+        //if(1) {
+            $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
+        }else{
+            $nationalTopAlbums = Cache::read("nationalalbums".$territory);                
+        }
+        $this->set('nationalTopVideoDownload',$nationalTopAlbums);
         
         $ids = '';
         $ids_provider_type = '';
