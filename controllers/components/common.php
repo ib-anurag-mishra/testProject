@@ -279,7 +279,8 @@ STR;
                         Sample_Files.FileID,
                         PRODUCT.pid,
                         Albums.ProdID,
-                        Albums.provider_type
+                        Albums.provider_type,
+						Albums.AlbumTitle
                 FROM
                         Songs AS Song
                                 LEFT JOIN
@@ -299,7 +300,7 @@ STR;
                 WHERE
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
                 GROUP BY Song.ReferenceID
-                ORDER BY FIELD(Song.ProdID,$ids) ASC
+                ORDER BY FIELD(Song.ReferenceID,$ids) ASC
                 LIMIT 100 
 
 STR;

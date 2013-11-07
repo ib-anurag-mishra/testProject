@@ -305,7 +305,7 @@
                                                         <?php echo $html->link($html->image($value['songAlbumImage'],array("height" => "250", "width" => "250")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
-							<div class="top-100-ranking"><?php echo $count; ?></div>
+							<div class="top-100-ranking"><?php //echo $count; ?></div>
                                                 <?php
                                                 if ($this->Session->read("patron"))
                                                 {
