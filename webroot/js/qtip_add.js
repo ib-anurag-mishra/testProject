@@ -61,11 +61,7 @@ $(document).ready(function()
 					
 			
 			}
-			overwrite:false,
-			show: {
-				
-				ready:true
-			}
+
 		});	   
 	   
 	   
