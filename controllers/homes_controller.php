@@ -203,7 +203,7 @@ class HomesController extends AppController
 
     //this is just for streaming component test
     function checkStreamingComponent(){
-         Configure::write('debug', 0);
+         Configure::write('debug', 2);
          
 //         $query='select * from streaming_histories where id="3007"';
 //         $obj = mysql_query($query);
@@ -225,7 +225,7 @@ class HomesController extends AppController
         echo '<br>actionType=> '.$actionType='5';
         echo '<br>songDuration=> '.$songDuration = 300;
         echo '<br>queue_id=> '.$queue_id = '2';
-        echo '<br>token_id=> '.$token_id = '15935785246579';
+        echo '<br>token_id=> '.$token_id = 'WEB_15935785246579';
         echo '<br>';
         $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration,$queue_id,$token_id);
         print_r($validationResponse);
