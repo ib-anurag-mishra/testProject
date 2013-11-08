@@ -1127,7 +1127,7 @@ Class ArtistsController extends AppController
 		if(!empty($albumData))
 		{
 			foreach($albumData as $album) {
-                             if($libType != 2){
+                             if($libType == 2){
 						$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
 								'conditions' =>
 									array('and' =>
