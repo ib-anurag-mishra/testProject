@@ -28,7 +28,50 @@ $(document).ready(function()
    });
    */
    
-
+   $('a[title]').on('mouseover',function(){
+	   
+		$(this).qtip({
+			position: {
+				corner: {
+					target: 'topLeft',
+					tooltip: 'bottomRight'
+				}
+			},
+			style: { 
+					
+					color:'#444',
+					fontSize:12,
+					border: {
+		
+						color: '#444'
+					},
+					
+					width: {
+						max:350,
+						min:0
+					},
+			
+					tip:{
+						corner:'bottomRight',
+						size: {
+							x:5,
+							y:5
+						}
+					}
+					
+			
+			}
+			overwrite:false,
+			show: {
+				
+				ready:true
+			}
+		});	   
+	   
+	   
+   });
+   
+   /*
    
    $('a[title]').each(function(){
 	   
@@ -66,6 +109,8 @@ $(document).ready(function()
 		});	   
 	   
    });
+   
+   */
    
    /*
 	$('a[title]').qtip({
