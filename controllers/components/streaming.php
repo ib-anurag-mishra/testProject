@@ -208,10 +208,7 @@ Class StreamingComponent extends Object
                 }else{
                     $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
-                
-                
-                
-                
+              
                 $streamingRecordsInstance->setDataSource('master');
                 $streamingHistoryInstance->save($insertArr);
                 $streamingRecordsInstance->setDataSource('default');
