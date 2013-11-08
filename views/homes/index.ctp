@@ -287,7 +287,7 @@
                 </ul>
             </div>
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-              <ul style="width:27400px;">
+              <ul style="width:27250px;">
 					<?php
                                         
 					 $count  =   1;           
