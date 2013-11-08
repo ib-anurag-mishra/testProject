@@ -124,7 +124,7 @@ class HomesController extends AppController
         }else{
             $nationalTopAlbums = Cache::read("nationalalbums".$territory);                
         }
-        $this->set('nationalTopVideoDownload',$nationalTopAlbums);
+        $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
         
         $ids = '';
         $ids_provider_type = '';
