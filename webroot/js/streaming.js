@@ -428,7 +428,7 @@ function streamingValidationJS(responseDataJS) {
 	
 }
 
-var lowStreamTime = 60;
+//var lowStreamTime = 60;
 function reportLowStreamTime(lsto) {
 	console.log('lsld is ' + lsto.lsld);
 	
