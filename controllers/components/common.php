@@ -1058,7 +1058,7 @@ STR;
         if ( !empty($country ) && ( $territory == "US" ) ) {
 
             $data = array();
-           echo $sql_album_new_release = <<<STR
+            $sql_album_new_release = <<<STR
 SELECT 
 Song.ProdID,
 Song.ReferenceID,
@@ -1092,7 +1092,7 @@ group by Song.ReferenceID
 ORDER BY Country.SalesDate DESC
 LIMIT 100
 STR;
-die;
+
 
             $data = $albumInstance->query($sql_album_new_release);
             $this->log("new release album for $territory", "cachequery");
