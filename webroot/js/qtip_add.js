@@ -28,7 +28,7 @@ $(document).ready(function()
    });
    */
    
-   $('a[title]').on('mouseover',function(){
+   $('a[title]').on('mouseenter',function(){
 	   
 		$(this).qtip({
 			position: {
