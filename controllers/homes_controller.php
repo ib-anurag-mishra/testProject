@@ -407,8 +407,8 @@ class HomesController extends AppController
 
             $ids_provider_type_album = '';
 
-                if(1)
-            //if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                //if(1)
+            if (($libDownload = Cache::read("lib_album".$libId)) === false)
             {
 
                 $topDownload_albums = $this->Common->getLibraryTop10Albums($country,$libId);
