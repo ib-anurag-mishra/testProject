@@ -66,7 +66,7 @@ EOD;
 				if(!empty($albumSongsToAdd)){
 					$albumSongsToAdd = json_encode($albumSongsToAdd);
 				}			
-                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addToQueue('.$albumSongsToAdd.');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
+                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addAlbumSongsToQueue('.$albumSongsToAdd.');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
             }
         }                    
         $str.= '</ul></div>';

@@ -1568,7 +1568,8 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
 function addAlbumSongsToQueue(albumSongsToBeAdded)
 {
-    var data = "songProdId="+albumSongsToBeAdded;
+    albumSongsToBeAdded = JSON.parse(albumSongsToBeAdded);
+	var data = "albumSongs="+albumSongsToBeAdded;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "queues/addAlbumSongsToQueue", // URL to request
