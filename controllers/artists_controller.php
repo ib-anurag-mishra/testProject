@@ -1202,11 +1202,11 @@ Class ArtistsController extends AppController
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
 									array("Song.provider_type" => $provider),
-									array('Country.Territory' => $country),$cond
-								),
-                                                            'or' =>array(array('and'=> array('Country.StreamingStatus' => 1,'Country.StreamingSalesDate <=' => date('Y-m-d')))
-                                                                ,array('and'=> array('Country.DownloadStatus' => 1))
-                                                                )
+									array('Country.Territory' => $country),
+									array('Country.StreamingStatus' => 1),
+									array('Country.StreamingSalesDate <=' => date('Y-m-d')),
+									$cond
+								)
 							),
 						'fields' => array(
 								'Song.ProdID',
