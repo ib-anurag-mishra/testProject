@@ -421,8 +421,13 @@ function validateSong(songObj, playerEventCode) {
 
 //var lowStreamTime = 60;
 function reportLowStreamTime(lsto) {
+	plaulistId = lsto.playlistId 
+	songId = lsto.songId
+	songLength = lsto.songLength
+	songProviderType = lsto.providerType
+	songDuration = lsto.lsld
 	console.log('lsld is ' + lsto.lsld);
-	
+	streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,22,songLength,songDuration);	
 	lowStreamTime = lowStreamTime - lsto.lsld;
 	
 	var flash =	document.getElementById("fmp_player");

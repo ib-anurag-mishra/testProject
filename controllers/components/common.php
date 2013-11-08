@@ -1721,7 +1721,7 @@ STR;
             INNER JOIN File ON (Albums.FileID = File.FileID)
             WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
             GROUP BY Song.ReferenceID
-            ORDER BY count(Song.ProdID) DESC
+            ORDER BY count(Song.ReferenceID) DESC
             LIMIT 10
 STR;
             $topDownload = $albumInstance->query($topDownloaded_query_albums);

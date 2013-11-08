@@ -1756,4 +1756,5 @@ $('document').ready(function() {
          $('#header-search-type').val('song');
          }*/
     });
+	$('#HomeSearchForm').ajaxify();
 });

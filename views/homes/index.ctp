@@ -287,12 +287,12 @@
                 </ul>
             </div>
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-              <ul style="width:47000px;">
+              <ul style="width:27250px;">
 					<?php
                                         
 					 $count  =   1;           
-				if(count($nationalTopVideoDownload) > 0) {
-                                        foreach($nationalTopVideoDownload as $key => $value){
+				if(count($nationalTopAlbumsDownload) > 0) {
+                                        foreach($nationalTopAlbumsDownload as $key => $value){
                                             
                                            //hide song if library block the explicit content
                                         if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
