@@ -27,7 +27,7 @@ Class StreamingComponent extends Object
      *   
      * @return array
     */
-    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id,$token_id) {
+    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id) {
         
         /**
           creates log file name
@@ -46,8 +46,8 @@ Class StreamingComponent extends Object
         $log_id = md5(time());
         $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
         
-        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent." ;song duration : ".$songDuration." ;queueID : ".$queue_id." ;tokenID : ".$token_id,'streaming');            
-        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent." ;song duration : ".$songDuration." ;queueID : ".$queue_id." ;tokenID : ".$token_id.PHP_EOL; 
+        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent,'streaming');            
+        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent.PHP_EOL; 
         
         //if ProdID and Provider type is not set then
         if(($prodId === '' || $prodId === 0) && ($provider === '' || $provider === 0)){
@@ -83,15 +83,6 @@ Class StreamingComponent extends Object
             $this->log("error|Not able to stream this song,song duration is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId,'streaming');            
              //return the final result array
             return array(0,'Not able to stream this song.',$currentTimeDuration, 4 ,$timerCallTime,$this->timerCallDuration);  
-            exit;
-        }
-        
-         //if $songDuration  not set then
-        if(($token_id === '' || $token_id === 0)){
-             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-            $this->log("error|Not able to stream this song,token is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;token id : ".$token_id,'streaming');            
-             //return the final result array
-            return array(0,'Not able to stream this song.Request token is empty.',$currentTimeDuration, 44 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
         
@@ -183,32 +174,22 @@ Class StreamingComponent extends Object
                 $currentDate= date('Y-m-d H:i:s');                
                 //insert the patron record if not exist in the streaming  table
                 $insertArr = Array();
-                
-                //check token already exist or not 
-                //if exist, than update that table otherwise insert new records
-                $tokenExistFlag = $this->checkTokenExist($libId, $patId,$token_id);
-                if($tokenExistFlag){
-                    $idAndTimeArray = explode('-', $tokenExistFlag);
-                    $insertArr['id'] = $idAndTimeArray[0]; 
-                    $insertArr['consumed_time'] = $idAndTimeArray[1]+$userStreamedTime; 
-                }else{
-                    $insertArr['consumed_time'] = $userStreamedTime; 
-                }
                 $insertArr['library_id'] = $libId;
                 $insertArr['patron_id'] = $patId;
                 $insertArr['ProdID'] = $prodId;
-                $insertArr['provider_type'] = $provider;                             
+                $insertArr['provider_type'] = $provider;
+                $insertArr['consumed_time'] = $userStreamedTime;               
                 $insertArr['createdOn'] = $currentDate;              
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
                 $insertArr['action_type'] = $actionType;
-                $insertArr['songs_queue_id'] = $queue_id; 
-                $insertArr['token_id'] = $token_id;
+                $insertArr['songs_queue_id'] = $queue_id;                
                 if($agent == null){
                     $insertArr['user_agent'] = mysql_real_escape_string(str_replace(";","",  addslashes($_SERVER['HTTP_USER_AGENT'])));
                 }else{
                     $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
-              
+                
+                
                 $streamingRecordsInstance->setDataSource('master');
                 $streamingHistoryInstance->save($insertArr);
                 $streamingRecordsInstance->setDataSource('default');
@@ -258,21 +239,11 @@ Class StreamingComponent extends Object
                 
                 //insert the patron record if not exist in the streaming  table
                 $insertArr = Array();
-                //check token already exist or not 
-                //if exist, than update that table otherwise insert new records
-                $tokenExistFlag = $this->checkTokenExist($libId, $patId,$token_id);             
-                if($tokenExistFlag){
-                    $idAndTimeArray = explode('-', $tokenExistFlag);
-                    $insertArr['id'] = $idAndTimeArray[0]; 
-                    $insertArr['consumed_time'] = $idAndTimeArray[1] + $userStreamedTime; 
-                }else{
-                    $insertArr['consumed_time'] = $userStreamedTime; 
-                }
                 $insertArr['library_id'] = $libId;
-                $insertArr['token_id'] = $token_id;
                 $insertArr['patron_id'] = $patId;
                 $insertArr['ProdID'] = $prodId;
-                $insertArr['provider_type'] = $provider;               
+                $insertArr['provider_type'] = $provider;
+                $insertArr['consumed_time'] = $userStreamedTime;
                 $insertArr['modified_date'] = $currentDate;              
                 $insertArr['createdOn'] = $currentDate; 
                 $insertArr['ip_address'] = $_SERVER['REMOTE_ADDR'];
@@ -283,13 +254,13 @@ Class StreamingComponent extends Object
                 }else{
                     $insertArr['user_agent'] = mysql_real_escape_string($agent);   
                 }
-              
+               
                 //updated record if user Streamed time is not 0 and less then to stream time
                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
+                    $streamingHistoryInstance->setDataSource('master');
                     
-                    $streamingHistoryInstance->setDataSource('master');                    
-                    if($streamingHistoryInstance->save($insertArr)){         
-                      
+                    if($streamingHistoryInstance->save($insertArr)){                
+                     
                         $log_data .= PHP_EOL."insert streaming_history table:-LibID=".$libId.":Parameters:-Patron=".$patId.":songDuration=".$userStreamedTime." ;modified_date : ".$currentDate." ;queue_id :".$queue_id.PHP_EOL;
                         $this->log("success:-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;consumed_time : ".$userStreamedTime." ;modified_date : ".$currentDate,'streaming');            
                         $log_data .= PHP_EOL."success|".$validateStreamingInfoMessage.PHP_EOL;
@@ -654,29 +625,6 @@ Class StreamingComponent extends Object
             return false;
         }        
     }
-    
-    /*
-     Function Name : checkTokenExist
-     Desc : function used for checking token exist or not
-     *
-     * @param $libId int()  'library id'  
-     * @param $patId int()  'patron id' 
-     * @param $token_id varChar()  'token id'         
-     * 
-     * @return boolean value 'if found then return record id ,if not than false'
-    */
-    function checkTokenExist($libId,$patId,$token_id){
-        $streamHistoryInstance = ClassRegistry::init('StreamingHistory');
-        $streamHistoryInstance->recursive = -1;   
-        $currentDate = date('Y-m-d'); 
-        $results = $streamHistoryInstance->find('first',array('conditions' => array('library_id' => $libId,'patron_id'=> $patId,'date(createdOn)'=>$currentDate,'token_id' => $token_id),'fields' => array('id','consumed_time')));          
-        if(count($results) > 0 && isset($results['StreamingHistory']['id']) && $results['StreamingHistory']['id']!='') {            
-            return $results['StreamingHistory']['id'].'-'.$results['StreamingHistory']['consumed_time'];
-        } else {            
-            return false;
-        }        
-    }
-    
     
     
     /*
