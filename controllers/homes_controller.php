@@ -225,7 +225,7 @@ class HomesController extends AppController
         echo '<br>actionType=> '.$actionType='5';
         echo '<br>songDuration=> '.$songDuration = 300;
         echo '<br>queue_id=> '.$queue_id = '2';
-        echo '<br>token_id=> '.$token_id = 'WEB_15935785246580';
+        echo '<br>token_id=> '.$token_id = 'WEB_15935785246581';
         echo '<br>';
         $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration,$queue_id,$token_id);
         print_r($validationResponse);
