@@ -55,18 +55,18 @@ EOD;
 EOD;
 
         if(!empty($queueList)){
-            foreach($queueList as $key => $value){
+            foreach($queueList as $key => $queuevalue){
 				if(!empty($albumSongs)){
 					$albumSongsToAdd = array();
 					foreach($albumSongs as $value){
-						$albumSongsToAdd[] = array('song_prodid' => $value['Song']['ProdID'],'song_providertype' => $value['Song']['provider_type'],'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType,'queue_id' => $value['QueueList']['queue_id']);
+						$albumSongsToAdd[] = array('song_prodid' => $value['Song']['ProdID'],'song_providertype' => $value['Song']['provider_type'],'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType,'queue_id' => $queuevalue['QueueList']['queue_id']);
 					}
 				
 				}			
 				if(!empty($albumSongsToAdd)){
 					$albumSongsToAdd = json_encode($albumSongsToAdd);
 				}			
-                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addToQueue('.$albumSongsToAdd.');\'>'.$value['QueueList']['queue_name'].'</a></li>';
+                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addToQueue('.$albumSongsToAdd.');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
             }
         }                    
         $str.= '</ul></div>';
