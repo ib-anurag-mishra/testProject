@@ -100,28 +100,19 @@ class CacheController extends AppController {
 //            $this->Common->getUsTop10Songs($territory);
 //            $this->Common->getUsTop10Albums($territory);
 //            $this->Common->getUsTop10Videos($territory);
-//            $this->Common->getNewReleaseAlbums($territory);
+            $this->Common->getNewReleaseAlbums($territory);
 //            $this->Common->getNewReleaseVideos($territory);
 //            $this->Common->getFeaturedArtists($territory);
 //            $this->Common->getDifferentGenreData($territory);
-           $this->getArtistText($territory);
- //           $this->Common->getDefaultQueues($territory);    
+//            $this->getArtistText($territory);
+//            $this->Common->getDefaultQueues($territory);    
         }
-        $this->Common->setLibraryTopTenCache();
-        $this->Common->setVideoCacheVar();    
-        $this->setAppMyMusicVideoList(); 
+ //       $this->Common->setLibraryTopTenCache();
+ //       $this->Common->setVideoCacheVar();    
+ //       $this->setAppMyMusicVideoList(); 
         
         
-           
-//        $this->Email->to = 'nagesh4group@gmail.com';
-//        $this->Email->from = Configure::read('App.adminEmail');
-//        $this->Email->fromName = Configure::read('App.fromName');
-//        $this->Email->subject = 'Freegaldev.com - cron has been successfully run';
-//        $this->Email->smtpHostNames = 'mail.infobeans.in';
-//        $this->Email->smtpAuth = false;
-//        $this->Email->smtpUserName = 'test.account@infobeans.in';
-//        $this->Email->smtpPassword = 'test123';
-//        $result = $this->Email->send();
+          
     }
     
     /*
