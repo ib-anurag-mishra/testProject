@@ -68,7 +68,47 @@
 					opacity: 0;
 					.box-shadow(0 0 2px rgba(0,0,0,.5));
 					
-				}                                
+				}   
+
+.wishlist-popover {
+    bottom: 37px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    display: none;
+    font-size: 12px;
+    position: absolute;
+    right: 10px;
+    width: 120px;
+    z-index: 100;
+}
+
+.playlist-options {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    display: none;
+    height: 186px;
+    overflow-x: hidden;
+    position: absolute;
+    right: -144px;
+    top: 0;
+    width: 145px;
+}
+
+.add-to-playlist {
+    background: url("/img/create-new-playlists-arrow.png") no-repeat scroll 108px center #FFFFFF;
+}
+
+.wishlist-popover .playlist-options ul {
+    height: 330px;
+    overflow-x: auto;
+    width: 27010px;
+}
+
+
+.wishlist-popover .playlist-options ul li {
+    float: none;
+    padding: 0;
+}
+				
     
  </style>   
 
