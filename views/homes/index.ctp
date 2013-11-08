@@ -22,7 +22,7 @@
                 </li>
                 <li>
 
-                    <a href="#top-100-videos" id="videosIDVal" class="no-ajaxy hp-tabs" data-category-type="videos" onclick="showHideGrid('videos')">Videos</a>
+                    <a href="#top-100-videos" id="videosIDVal" class="no-ajaxy hp-tabs" data-category-type="videos" onclick="showHideGrid('videos')">Albums</a>
 
                 </li>
             </ul>
@@ -287,217 +287,79 @@
                 </ul>
             </div>
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-                <ul style="width:47000px;">
+              <ul style="width:27250px;">
+					<?php
+                                        
+					 $count  =   1;           
+				if(count($nationalTopAlbumsDownload) > 0) {
+                                        foreach($nationalTopAlbumsDownload as $key => $value){
+                                            
+                                           //hide song if library block the explicit content
+                                        if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
+                                            continue;
+                                        } 
 
-                    <?php
-                    if (is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0)
-                    {
-                        ?>
-
-                        <?php
-                        $j = 0;
-                        $k = 2000;
-                        for ($i = 0; $i < count($nationalTopVideoDownload); $i++)
-                        {
-
-                            //hide song if library block the explicit content
-                            if (($this->Session->read('block') == 'yes') && ($nationalTopVideoDownload[$i]['Video']['Advisory'] == 'T'))
-                            {
-                                continue;
-                            }
-
-                            //$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
-                            //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
-                            /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */
-                            ?>
-                            <li>
-                                <div class="top-100-video-detail">
-                                    <div class="video-cover-container">
-                                        <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $this->getValidText($nationalTopVideoDownload[$i]['Video']['ArtistText'] . ' - ' . $nationalTopVideoDownload[$i]['Video']['VideoTitle']); ?>" width="423" height="250" /></a>
-                                        <div class="top-100-ranking"><?php
-                                            $slNo = ($i + 1);
-                                            echo $slNo;
-                                            ?></div>
-                                        <?php
-                                        if ($this->Session->read("patron"))
-                                        {
-                                            ?> 														
-                                            <!--<a href="#" class="preview"></a>-->
-                                            <?php
-                                        }
-
-                                        if ($this->Session->read('patron'))
-                                        {
-                                            if ($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
-                                            {
-
-                                                if ($libraryDownload == '1' && $patronDownload == '1')
-                                                {
-                                                    $productInfo = $mvideo->getDownloadData($nationalTopVideoDownload[$i]["Video"]["ProdID"], $nationalTopVideoDownload[$i]["Video"]["provider_type"]);
-                                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-                                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-                                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-                                                    $downloadsUsed = $this->Videodownload->getVideodownloadfind($nationalTopVideoDownload[$i]['Video']['ProdID'], $nationalTopVideoDownload[$i]['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                                    if ($downloadsUsed > 0)
-                                                    {
-                                                        $nationalTopVideoDownload[$i]['Video']['status'] = 'avail';
-                                                    }
-                                                    else
-                                                    {
-                                                        $nationalTopVideoDownload[$i]['Video']['status'] = 'not';
-                                                    }
-                                                    if ($nationalTopVideoDownload[$i]['Video']['status'] != 'avail')
-                                                    {
-                                                        ?>
-                                                        <span class="top-100-download-now-button">
-                                                            <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
-                                                                <input type="hidden" name="ProdID" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" />
-                                                                <input type="hidden" name="ProviderType" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["provider_type"]; ?>" />
-                                                                <span class="beforeClick" id="download_video_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>">
-                                                                    <![if !IE]>
-                                                                    <a class="no-ajaxy top-10-download-now-button" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthers("<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $nationalTopVideoDownload[$i]['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
-                                                                    <![endif]>
-                                                                    <!--[if IE]>
-                                                                            <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE('<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>','0','<?php echo $nationalTopVideoDownload[$i]['Video']['provider_type']; ?>');" href="<?php echo trim($finalVideoUrl); ?>"><?php __('Download Now'); ?></a></label>
-                                                                    <![endif]-->
-                                                                </span>
-                                                                <span class="afterClick" id="vdownloading_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
-                                                                <span id="vdownload_loader_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
-                                                            </form>
-                                                        </span>
-                                                        <?php
-                                                    }
-                                                    else
-                                                    {
-                                                        ?>
-                                                        <a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></a>
-                                                        <?php
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                    <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?></a>
-                                                    <?php
-                                                }
-                                            }
-                                            else
-                                            {
-                                                ?>
-                                                <a class="top-100-download-now-button" title='<?php __("Coming Soon"); ?> ( <?php
-                                                if (isset($nationalTopVideoDownload[$i]['Country']['SalesDate']))
-                                                {
-                                                    echo date("F d Y", strtotime($nationalTopVideoDownload[$i]['Country']['SalesDate']));
-                                                }
-                                                ?> )' href="javascript:void(0);"><?php __("Coming Soon"); ?></a>
-                                                   <?php
-                                               }
-                                           }
-                                           else
-                                           {
-                                               ?>
-                                            <a class="top-100-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
-
-
-                                            <?php
-                                        }
-                                        ?>
-
-
-                                        <?php
-                                        if ($this->Session->read("patron"))
-                                        {
-                                            ?> 
-
-                                            <a class="add-to-playlist-button no-ajaxy" href="#"></a>
-
-                                            <div class="wishlist-popover">
-                                                <!--
-                                                <div class="playlist-options">
-                                                        <ul>
-                                                                <li><a href="#">Create New Playlist</a></li>
-                                                                <li><a href="#">Playlist 1</a></li>
-                                                                <li><a href="#">Playlist 2</a></li>
-                                                                <li><a href="#">Playlist 3</a></li>
-                                                                <li><a href="#">Playlist 4</a></li>
-                                                                <li><a href="#">Playlist 5</a></li>
-                                                                <li><a href="#">Playlist 6</a></li>
-                                                                <li><a href="#">Playlist 7</a></li>
-                                                                <li><a href="#">Playlist 8</a></li>
-                                                                <li><a href="#">Playlist 9</a></li>
-                                                                <li><a href="#">Playlist 10</a></li>
-                                                        </ul>
-                                                </div>
-                                                
-                                                <a class="add-to-queue" href="#">Add To Queue</a>
-                                                <a class="add-to-playlist" href="#">Add To Playlist</a>
-                                                -->
+					?>					
+					<li>
+						<div class="album-container">							
+                                                        <?php echo $html->link($html->image($value['songAlbumImage'],array("height" => "250", "width" => "250")),
+										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
+										array('class'=>'first','escape'=>false))?>
+							<div class="top-100-ranking"><?php echo $count; ?></div>
                                                 <?php
-                                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($nationalTopVideoDownload[$i]['Video']["ProdID"]);
-
-                                                if ($wishlistInfo == 'Added to Wishlist')
+                                                if ($this->Session->read("patron"))
                                                 {
                                                     ?> 
-                                                    <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist"); ?></a>
-                                                    <?php
-                                                }
-                                                else
-                                                {
-                                                    ?>
-                                                    <span class="beforeClick" id="video_wishlist<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>", "<?php echo $nationalTopVideoDownload[$i]['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist"); ?></a></span>
-                                                    <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait..."); ?></a></span>
-                                                    <?php
-                                                }
-                                                ?>
+                                                    <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php
+                                                        if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
+                                                        {
+                                                            echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Song"]["ProdID"], $value["Song"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?>
 
-                                                <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                        <?php
+                                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
-                                            </div>
-                                        <?php } ?>
-                                    </div>
+                                                        echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
+                                                        ?>
+                                                        
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
+                                                <?php } ?>
+						</div>
+						<div class="album-title">							
+                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                                                if(strlen($value['Albums']['AlbumTitle'])>20)
+                                                                echo substr($value['Albums']['AlbumTitle'],0,20)."..."; 
+                                                                else echo $value['Albums']['AlbumTitle'];
+                                                         ?>
+                                                    </a><?php if('T' == $value['Albums']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+						</div>
+						<div class="artist-name">							
+                                                    <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                    <?php 
+                                                        if(strlen($value['Song']['Artist'])>32)
+                                                        echo substr($value['Song']['Artist'],0,32)."..."; 
+                                                        else echo $value['Song']['Artist'];
+                                                     ?>
+                                                   </a>
+						</div>
+					</li>
+					<?php
+                                                $count++;
+					}
+                                    }else{
 
-                                    <?php
-                                    if (strlen($nationalTopVideoDownload[$i]['Video']['VideoTitle']) >= 50)
-                                    {
-                                        $songTitle = $this->getTextEncode(substr($nationalTopVideoDownload[$i]['Video']['VideoTitle'], 0, 50)) . "..";
+                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                                     }
-                                    else
-                                    {
-                                        $songTitle = $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['VideoTitle']);
-                                    }
-                                    ?>
-
-                                    <?php
-                                    if (strlen($nationalTopVideoDownload[$i]['Video']['ArtistText']) >= 50)
-                                    {
-                                        $ArtistText = $this->getTextEncode(substr($nationalTopVideoDownload[$i]['Video']['ArtistText'], 0, 50)) . "..";
-                                    }
-                                    else
-                                    {
-                                        $ArtistText = $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText']);
-                                    }
-                                    ?>
-                                    <div class="song-title">
-                                            <!--	<a title="<?php echo $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['VideoTitle']); ?>" href="/artists/view/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']); ?>"><?php echo $this->getTextEncode($songTitle); ?></a> -->
-                                        <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $this->getTextEncode($songTitle); ?></a>
-                                        <?php
-                                        if ('T' == $nationalTopVideoDownload[$i]['Video']['Advisory'])
-                                        {
-                                            ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
-                                    </div>
-                                    <div class="artist-name">
-                                            <!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                        <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <?php
-                            $k++;
-                        }
-                    }
-                    ?>	
-                </ul>
+					?>
+				</ul>  
             </div>
         </div> <!-- end .grids -->
 

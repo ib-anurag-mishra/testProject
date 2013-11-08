@@ -1565,6 +1565,101 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
     return false;
 }
 
+
+function addAlbumSongsToQueue(albumSongsToBeAdded)
+{
+    albumSongsToBeAdded = JSON.parse(albumSongsToBeAdded);
+	var data = "albumSongs="+albumSongsToBeAdded;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "queues/addAlbumSongsToQueue", // URL to request
+        data: data, // post data
+        success: function(response) {
+            if (response.length == 6) {
+                var msg = response.substring(0, 6);
+            } else {
+                var msg = response.substring(0, 5);
+            }
+            if (msg == 'error')
+            {
+                if (document.getElementById('flash-message'))
+                {
+                    document.getElementById('flash-message').innerHTML = '';
+                    document.getElementById("flash-message").setAttribute("class", "");
+                }
+
+                document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
+                document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding song to Queuelist.';
+
+                return false;
+            } else if (msg == 'error1') {
+
+                if (document.getElementById('flash-message'))
+                {
+                    document.getElementById('flash-message').innerHTML = '';
+                    document.getElementById("flash-message").setAttribute("class", "");
+                }
+
+                document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Queue';
+            }
+            else if (msg == 'invalid_for_stream')
+            {
+                if (document.getElementById('flash-message'))
+                {
+                    document.getElementById('flash-message').innerHTML = '';
+                    document.getElementById("flash-message").setAttribute("class", "");
+                }
+
+                document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
+            }
+            else
+            {
+                var msg = response.substring(0, 7);
+                if (msg == 'Success')
+                {
+                    if (document.getElementById('flash-message'))
+                    {
+                        document.getElementById('flash-message').innerHTML = '';
+                        document.getElementById("flash-message").setAttribute("class", "");
+                    }
+                    document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to Queue';
+
+                }
+                else
+                {
+                    if (document.getElementById('flash-message'))
+                    {
+                        document.getElementById('flash-message').innerHTML = '';
+                        document.getElementById("flash-message").setAttribute("class", "");
+                    }
+
+                    document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "red";
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to Queue.';
+                    return false;
+                }
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (document.getElementById('flash-message'))
+            {
+                document.getElementById('flash-message').innerHTML = '';
+                document.getElementById("flash-message").setAttribute("class", "");
+            }
+            document.getElementById("ajaxflashMessage44").style.display = "block";
+            document.getElementById("ajaxflashMessage44").style.background = "red";
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to queue is unsuccessfull';
+        }
+    });
+    return false;
+}
+
+
+
 function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType,playlistId) {
     console.log('load song contains');
     playlistId = (playlistId === undefined) ? 0 : playlistId;

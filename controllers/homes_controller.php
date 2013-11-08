@@ -110,12 +110,21 @@ class HomesController extends AppController
         }
         $this->set('nationalTopDownload',$nationalTopDownload);
         // National Top Videos list and Downloads functionality code 
-        if (($national = Cache::read("nationalvideos".$territory)) === false) {
+        /*if (($national = Cache::read("nationalvideos".$territory)) === false) {
             $nationalTopVideoDownload = $this->Common->getNationalTop100Videos($territory);
         }else{
             $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
        }
-        $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
+        $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);*/
+		
+		// National Top 100 Albums slider 
+        if (($national = Cache::read("nationalalbums".$territory)) === false) {
+        //if(1) {
+            $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
+        }else{
+            $nationalTopAlbums = Cache::read("nationalalbums".$territory);                
+        }
+        $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
         
         $ids = '';
         $ids_provider_type = '';
@@ -194,7 +203,7 @@ class HomesController extends AppController
 
     //this is just for streaming component test
     function checkStreamingComponent(){
-         Configure::write('debug', 0);
+         Configure::write('debug', 2);
          
 //         $query='select * from streaming_histories where id="3007"';
 //         $obj = mysql_query($query);
@@ -215,8 +224,10 @@ class HomesController extends AppController
         echo '<br>userStreamedTime=> '.$userStreamedTime =10;
         echo '<br>actionType=> '.$actionType='5';
         echo '<br>songDuration=> '.$songDuration = 300;
-        echo '<br>queue_id=> '.$queue_id = '2';        
-        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration,$queue_id);
+        echo '<br>queue_id=> '.$queue_id = '2';
+        echo '<br>token_id=> '.$token_id = 'WEB_15935785246581';
+        echo '<br>';
+        $validationResponse = $this->Streaming->validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,'',$songDuration,$queue_id,$token_id);
         print_r($validationResponse);
         die;
       

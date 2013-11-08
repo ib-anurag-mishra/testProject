@@ -5,7 +5,7 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
-    var $components = array('Queue','Common');
+    var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -87,13 +87,15 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
+        Configure::write('debug', 2);
         $territoriesList = $this->Common->getTerritories();
         foreach($territoriesList as $territory){
             $this->Common->getGenres($territory);
             $this->Common->getNationalTop100($territory);
             $this->Common->getFeaturedVideos($territory);
             $this->Common->getTopVideoDownloads($territory);
-            $this->Common->getNationalTop100Videos($territory);
+            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
+			$this->Common->getNationalTop100Albums($territory);
             $this->Common->getComingSoonSongs($territory);
             $this->Common->getComingSoonVideos($territory);
             $this->Common->getUsTop10Songs($territory);
@@ -108,7 +110,8 @@ class CacheController extends AppController {
         }
         $this->Common->setLibraryTopTenCache();
         $this->Common->setVideoCacheVar();    
-        $this->setAppMyMusicVideoList();        
+        $this->setAppMyMusicVideoList(); 
+       
     }
     
     /*

@@ -34,7 +34,46 @@ EOD;
         return $str;
     }
     
-    
+	/*
+	function name  : getQueuesListAlbums
+	desc :  This function is used to get mart up for add to queue for albums
+	*/
+	
+  
+	function getQueuesListAlbums($patron_id,$albumSongs,$albumProdId,$albumProviderType){
+		if(!empty($patron_id)){
+			$queueInstance = ClassRegistry::init('QueueList');
+			$queueInstance->recursive = -1;
+			$queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id,'status' => 1),'fields' =>  array('QueueList.queue_id', 'QueueList.queue_name'),'order' => 'QueueList.created DESC'));
+		}else{
+			$queueList = array();
+		}
+			$str = <<<EOD
+           <div class="playlist-options">
+                    <ul>
+                            <li><a href="#" class="create-new-queue-btn">Create New Queue</a></li>
+EOD;
+
+        if(!empty($queueList)){
+            foreach($queueList as $key => $queuevalue){
+				if(!empty($albumSongs)){
+					$albumSongsToAdd = array();
+					foreach($albumSongs as $value){
+						$albumSongsToAdd[] = array('song_prodid' => $value['Song']['ProdID'],'song_providertype' => $value['Song']['provider_type'],'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType,'queue_id' => $queuevalue['QueueList']['queue_id']);
+					}
+				
+				}			
+				if(!empty($albumSongsToAdd)){
+					$albumSongsToAdd = json_encode($albumSongsToAdd);
+				}			
+                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addAlbumSongsToQueue('.$albumSongsToAdd.');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
+            }
+        }                    
+        $str.= '</ul></div>';
+        return $str;
+	}
+
+  
     /* Function name : getStreamNowLabel
      * Description   : This function is used to get stream now mark up replacing play button 
      */
