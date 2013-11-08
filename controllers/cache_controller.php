@@ -112,7 +112,7 @@ class CacheController extends AppController {
  //       $this->setAppMyMusicVideoList(); 
         
         
-          
+      die;    
     }
     
     /*
