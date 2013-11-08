@@ -4,22 +4,10 @@ var WeCantStop = [
 		songTitle:'We Can\'t Stop',
 		artistName:'Miley Cyrus',
 		songLength:400,
-		/* data:'000/000/000/000/279/534/69/MileyCyrus_WeCantStop_G010002990907b_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130930151614&nva=20130930161614&token=508bd813fc901421d6032' */
-		data:'000/000/000/000/279/534/69/MileyCyrus_WeCantStop_G010002990907b_1_1-256K_44S_2C_cbr1x.mp3'
+		data:'000/000/000/000/279/534/69/MileyCyrus_WeCantStop_G010002990907b_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130930151614&nva=20130930161614&token=508bd813fc901421d6032'
+		/* data:'000/000/000/000/279/534/69/MileyCyrus_WeCantStop_G010002990907b_1_1-256K_44S_2C_cbr1x.mp3' */
 		
 	}
-];
-
-var SuperSoaker = [
-	{
-		label:'Supersoaker',
-		songTitle:'Supersoaker',
-		artistName:'Kings Of Leon',
-		songLength:400,
-		data:'000/000/000/000/282/868/54/KingsOfLeon_Supersoaker_G010003006169j_1_1-256K_44S_2C_cbr1x.mp3?token=5a809d308b03ea40363a2',
-		providerType:'Sony'
-	}
-
 ];
 
 var MechanicalBull = [
@@ -30,8 +18,7 @@ var MechanicalBull = [
 		songTitle:'Supersoaker',
 		artistName:'Kings Of Leon',
 		songLength:400,
-		data:'000/000/000/000/282/868/54/KingsOfLeon_Supersoaker_G010003006169j_1_1-256K_44S_2C_cbr1x.mp3?token=5a809d308b03ea40363a2',
-		providerType:'Sony'
+		data:'000/000/000/000/282/868/54/KingsOfLeon_Supersoaker_G010003006169j_1_1-256K_44S_2C_cbr1x.mp3?token=5a809d308b03ea40363a2'
 		
 	},
 	{
@@ -41,8 +28,7 @@ var MechanicalBull = [
 		songTitle:'Rock City',
 		artistName:'Kings Of Leon',
 		songLength:400,
-		data:'000/000/000/000/282/868/55/KingsOfLeon_RockCity_G010003006169j_1_2-256K_44S_2C_cbr1x.mp3?token=5ecd3d549fcf7a5144635',
-		providerType:'Sony'
+		data:'000/000/000/000/282/868/55/KingsOfLeon_RockCity_G010003006169j_1_2-256K_44S_2C_cbr1x.mp3?token=5ecd3d549fcf7a5144635'
 		
 	},
 	{
@@ -52,8 +38,7 @@ var MechanicalBull = [
 		songTitle:'Don\'t Matter',
 		artistName:'Kings Of Leon',
 		songLength:400,
-		data:'000/000/000/000/282/868/56/KingsOfLeon_DontMatter_G010003006169j_1_3-256K_44S_2C_cbr1x.mp3?token=590ae4c1be0f83b5e8e9b',
-		providerType:'Sony'
+		data:'000/000/000/000/282/868/56/KingsOfLeon_DontMatter_G010003006169j_1_3-256K_44S_2C_cbr1x.mp3?token=590ae4c1be0f83b5e8e9b'
 		
 	},
 	{
@@ -63,9 +48,7 @@ var MechanicalBull = [
 		songTitle:'Beautiful War',
 		artistName:'Kings Of Leon',
 		songLength:400,
-		data:'000/000/000/000/282/868/57/KingsOfLeon_BeautifulWar_G010003006169j_1_4-256K_44S_2C_cbr1x.mp3?token=5f3e40ee41975ded7a0a0',
-		providerType:'Sony'
-		
+		data:'000/000/000/000/282/868/57/KingsOfLeon_BeautifulWar_G010003006169j_1_4-256K_44S_2C_cbr1x.mp3?token=5f3e40ee41975ded7a0a0'
 		
 	},
 	{
@@ -75,8 +58,7 @@ var MechanicalBull = [
 		songTitle:'Temple',
 		artistName:'Kings Of Leon',
 		songLength:400,
-		data:'000/000/000/000/282/868/58/KingsOfLeon_Temple_G010003006169j_1_5-256K_44S_2C_cbr1x.mp3?token=5036570790117ebeb55d6',
-		providerType:'Sony'
+		data:'000/000/000/000/282/868/58/KingsOfLeon_Temple_G010003006169j_1_5-256K_44S_2C_cbr1x.mp3?token=5036570790117ebeb55d6'
 		
 	}
 	
@@ -93,8 +75,7 @@ var popMostPopular = [
 		songTitle:'Hot N Cold',
 		artistName:'Katy Perry',
 		songLength:220,
-		data:'000/000/000/000/209/450/50/KatyPerry_HotNCold_G0100017710556_1_2-256K_44S_2C_cbr1x.mp3?token=5c1a131cab1d806dfc156',
-		providerType:'Ioda'
+		data:'000/000/000/000/209/450/50/KatyPerry_HotNCold_G0100017710556_1_2-256K_44S_2C_cbr1x.mp3?token=5c1a131cab1d806dfc156'
 		
 	},
 	{
@@ -104,8 +85,7 @@ var popMostPopular = [
 		songTitle:'Get Lucky',
 		artistName:'Daft Punk',
 		songLength:248,
-		data:'000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?token=59ecf71c8d267a5cd49c9',
-		providerType:'Ioda'
+		data:'000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?token=59ecf71c8d267a5cd49c9'
 		
 	},
 	{
@@ -115,8 +95,7 @@ var popMostPopular = [
 		songTitle:'3 x 5',
 		artistName:'John Mayer',
 		songLength:290,
-		data:'000/000/000/000/000/294/80/JohnMayer_3X5_G0100014157652_1_8-256K_44S_2C_cbr1x.mp3?token=5e9b2913bd18c3c8399dd',
-		providerType:'Ioda'
+		data:'000/000/000/000/000/294/80/JohnMayer_3X5_G0100014157652_1_8-256K_44S_2C_cbr1x.mp3?token=5e9b2913bd18c3c8399dd'
 		
 	},
 	{
@@ -126,8 +105,7 @@ var popMostPopular = [
 		songTitle:'Give Me A Reason',
 		artistName:'P!nk',
 		songLength:243,
-		data:'000/000/000/000/262/308/32/PnkFeatNateRuess_JustGiveMeAReason_G010002829359t_1_4-256K_44S_2C_cbr1x.mp3?token=58ebde353113cb72c3778',
-		providerType:'Ioda'
+		data:'000/000/000/000/262/308/32/PnkFeatNateRuess_JustGiveMeAReason_G010002829359t_1_4-256K_44S_2C_cbr1x.mp3?token=58ebde353113cb72c3778'
 		
 	},
 	{
@@ -137,8 +115,7 @@ var popMostPopular = [
 		songTitle:'Paper Doll',
 		artistName:'John Mayer',
 		songLength:257,
-		data:'000/000/000/000/281/947/74/JohnMayer_PaperDoll_G010003006184n_1_4-256K_44S_2C_cbr1x.mp3?token=5ab28d05110b35ef02777',
-		providerType:'Ioda'
+		data:'000/000/000/000/281/947/74/JohnMayer_PaperDoll_G010003006184n_1_4-256K_44S_2C_cbr1x.mp3?token=5ab28d05110b35ef02777'
 		
 	},
 	{
@@ -148,8 +125,7 @@ var popMostPopular = [
 		songTitle:'Sex On Fire',
 		artistName:'Kings Of Leon',
 		songLength:224,
-		data:'000/000/000/000/276/624/63/KingsOfLeon_SexOnFire_G010002958812p_4_3-256K_44S_2C_cbr1x.mp3?token=5515d45b3bcd52470a8cd',
-		providerType:'Ioda'
+		data:'000/000/000/000/276/624/63/KingsOfLeon_SexOnFire_G010002958812p_4_3-256K_44S_2C_cbr1x.mp3?token=5515d45b3bcd52470a8cd'
 		
 	}
 
@@ -164,6 +140,7 @@ var flashvars = {};
 var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
+swfobject.switchOffAutoHideShow();
 swfobject.embedSWF("/swf/fmp.swf", "alt", "960", "100", "9.0.0", false, flashvars, params, attributes/* , swfCallback */);
 
 /*
@@ -250,98 +227,119 @@ function reportSongInfo(songObj) {
 
 
 function reportPrevSong(prevSongObj, playerEventCode) {
-	
-	
-	
+	plaulistId = prevSongObj.playlistId 
+	songId = prevSongObj.songId
+	songLength = prevSongObj.songLength
+	songProviderType = prevSongObj.providerType
+	songDuration = prevSongObj.psld   
+        
 	var playerEventCodeString;
-	
 	switch(playerEventCode) {
-		/*
+		
 		case 1:
 			playerEventCodeString = "Play";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,12,songLength,songDuration);
 			break;
 			
 		case 2:
 			playerEventCodeString = "Pause";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,13,songLength,songDuration);
 			break;
 			
 		case 3:
 			playerEventCodeString = "Prev";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,14,songLength,songDuration);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,15,songLength,songDuration);
 			break;
 			
 		case 5:
 			playerEventCodeString = "Song Ended";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,16,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,17,songLength,songDuration);
 			break;
 			
-	    case 7:
+                 case 7:
 			playerEventCodeString = "Queue loaded";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,18,songLength,songDuration);
 			break;
-		*/
+                 case 8:
+			playerEventCodeString = "Queue cleared"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,19,songLength,songDuration);
+                        clearNowstreamingSession();
+			break;                        
+                        
 		case 9:
 			playerEventCodeString = "User ran out of time";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,20,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
-			
 		case 10:
 			playerEventCodeString = "Queue playback completed";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
+		case 11:
+			playerEventCodeString = "New queue loaded";
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        clearNowstreamingSession();
+			break;
 		default:
 			playerEventCodeString = "";
-			break;
-		
+			break;				    	
+			
 		
 	}
-	
-	var prevSongInfoStr = "<p><span style='text-decoration:underline; font-weight:bold'>Prev Song Info:</span></p>" +
-					  "<p>Playlist ID: " + prevSongObj.playlistId + "</p>" +
-					  "<p>Song ID: " + prevSongObj.songId + "</p>" +
-					  "<p>Artist Name: " + prevSongObj.artistName + "</p>" +
-					  "<p>Song Title: " + prevSongObj.songTitle + "</p>" +
-					  "<p>Song Length: " + prevSongObj.songLength + "</p>" +
-					  "<p>Data: " + prevSongObj.data + "</p>" +
-					  "<p>Provider Type: " + prevSongObj.providerType + "</p>" +
-					  "<p>Prev Song Listening Duration: " + prevSongObj.psld + "</p>" +
-					  "<p>Player Event: " + playerEventCodeString + "</p>";
-	
-	$('.prevSongInfo').html(prevSongInfoStr);
+        
+        console.log("inside reportPrevSong");
+//	var prevSongInfoStr = "<p><span style='text-decoration:underline; font-weight:bold'>Prev Song Info:</span></p>" +
+//					  "<p>Playlist ID: " + prevSongObj.playlistId + "</p>" +
+//					  "<p>Song ID: " + prevSongObj.songId + "</p>" +
+//					  "<p>Artist Name: " + prevSongObj.artistName + "</p>" +
+//					  "<p>Song Title: " + prevSongObj.songTitle + "</p>" +
+//					  "<p>Song Length: " + prevSongObj.songLength + "</p>" +
+//					  "<p>Data: " + prevSongObj.data + "</p>" +
+//					  "<p>Provider Type: " + prevSongObj.providerType + "</p>" +
+//					  "<p>Prev Song Listening Duration: " + prevSongObj.psld + "</p>";
+//	
+//	$('.prevSongInfo').html(prevSongInfoStr);
 
 
-	//console.log("inside validateSong");
-	
-		
-	
 }
-
-var userRemainingTime = 40;
 
 /* this is called before the song is played */ 
 function validateSong(songObj, playerEventCode) {
+
 	
-	console.log("Validate Song:");
-	console.log(songObj);
-	/* properties sent from flash
+	// properties sent from flash
 	
-	songObj.playlistId
-	songObj.songId
-	songObj.label
-	songObj.artistName
-	songObj.songTitle
-	songObj.songLength
-	songObj.data
-	songObj.providerType
-	songObj.totalListeningDuration
+	plaulistId = songObj.playlistId 
+	songId = songObj.songId
+	songLength = songObj.songLength
+	songProviderType = songObj.providerType
+	songDuration = songObj.tbpp
+
 	
 	
-	*/
+       
+//var songInfoStr = "<p>Playlist ID: " + songObj.playlistId + "</p>" +
+//					  "<p>Song ID: " + songObj.songId + "</p>" +
+//					  "<p>Artist Name: " + songObj.artistName + "</p>" +
+//					  "<p>Song Title: " + songObj.songTitle + "</p>" +
+//					  "<p>Song Length: " + songObj.songLength + "</p>" +
+//					  "<p>Data: " + songObj.data + "</p>" +
+//					  "<p>Provider Type: " + songObj.providerType + "</p>" +
+//					  "<p>Prev Song Listening Duration / Time Before Pause: " + songObj.tbpp + "</p>";       
 	
 	// playerEventCode: 1 = Play, 2 = Pause, 3 = Prev, 4 = Next, 5 = Song Ended, 6 = Stream Switched
 	
@@ -351,82 +349,75 @@ function validateSong(songObj, playerEventCode) {
 		
 		case 1:
 			playerEventCodeString = "Play";
+                        songDuration = 0;
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,2,songLength,songDuration);
 			break;
 			
 		case 2:
-			playerEventCodeString = "Pause";
+			playerEventCodeString = "Pause"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
 			break;
 			
 		case 3:
-			playerEventCodeString = "Prev";
+			playerEventCodeString = "Prev"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
 			break;
 			
 			
 		case 4:
-			playerEventCodeString = "Next";
-			//userRemainingTime = userRemainingTime - 5;
+			playerEventCodeString = "Next"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
 			break;
 			
 		case 5:
-			playerEventCodeString = "Song Ended";
+			playerEventCodeString = "Song Ended"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        clearNowstreamingSession();
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue";
+                        songDuration = 0;
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,10,songLength,songDuration);
 			break;
 			
 	    case 7:
-			playerEventCodeString = "Queue loaded";
+			playerEventCodeString = "Queue loaded/play";
+                        songDuration = 0;
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
 			break;	
 	    case 8:
-			playerEventCodeString = "Queue cleared";
-			break;
- 	    	
-			
-		
+			playerEventCodeString = "Queue cleared"
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,11,songLength,songDuration);
+                        clearNowstreamingSession();
+			break;			    	
 	}
 	
-		
+//	var songInfoStr = "<p>Playlist ID: " + songObj.playlistId + "</p>" +
+//					  "<p>Song ID: " + songObj.songId + "</p>" +
+//					  "<p>Artist Name: " + songObj.artistName + "</p>" +
+//					  "<p>Song Title: " + songObj.songTitle + "</p>" +
+//					  "<p>Song Length: " + songObj.songLength + "</p>" +
+//					  "<p>Data: " + songObj.data + "</p>" +
+//					  "<p>Provider Type: " + songObj.providerType + "</p>" +
+//					  "<p>Prev Song Listening Duration / Time Before Pause: " + songObj.psld + "</p>";
+//	
+//	$('.songInfo').html(songInfoStr);
 
+
+	console.log("inside validateSong");
+	console.log("Validate Song:");
+	console.log(songObj);
+	//console.log("streamingResponse is " + streamingResponse);
 	
-	var songInfoStr = "<p><span style='text-decoration:underline; font-weight:bold'>New Song Info:</span></p>" +
-					  "<p>Playlist ID: " + songObj.playlistId + "</p>" +
-					  "<p>Song ID: " + songObj.songId + "</p>" +
-					  "<p>Artist Name: " + songObj.artistName + "</p>" +
-					  "<p>Song Title: " + songObj.songTitle + "</p>" +
-					  "<p>Song Length: " + songObj.songLength + "</p>" +
-					  "<p>Data: " + songObj.data + "</p>" +
-					  "<p>Provider Type: " + songObj.providerType + "</p>" +
-					  "<p>Time Before Pause: " + songObj.tbpp + "</p>" +
-					  "<p>Player Event: " + playerEventCodeString + "</p>";
-					  
-					  /*"<p>Prev Song Listening Duration / Time Before Pause: " + songObj.psld + "</p>"*/;
-	
-	$('.songInfo').html(songInfoStr);
-
-
-	//console.log("inside validateSong");
-	
-
 	
 	//return isValid;
 	//var responseDataArray = [0,"unable to stream this song",9660,6,358,60];
-	var responseDataArray = [1,"",60,6,358,5000];
-	streamingValidationJS(responseDataArray);
+//	var responseDataArray = [1,"",300,6,358,5000];
+//	streamingValidationJS(responseDataArray);
 
-}
+}		
 
-
-function streamingValidationJS(responseDataJS) {
-	
-		
-	//console.log('inside streamingValidationJS');
-	
-	var flash =	document.getElementById("fmp_player");
-	
-	flash.streamingValidationAS(responseDataJS);
-	
-}
 
 //var lowStreamTime = 60;
 function reportLowStreamTime(lsto) {
@@ -440,8 +431,77 @@ function reportLowStreamTime(lsto) {
 	//console.log(lsto);
 }
 
+function clearNowstreamingSession(){
+    var postURL = webroot+'queuelistdetails/clearNowStreamingSession';
+    $.ajax({
+        type: "POST",
+        cache:false,
+        url: postURL
+    }).done(function(data){
+
+    })
+    .fail(function(){
+        alert('Ajax Call to clear now streaming session has been failed');
+    });                                
+
+}
 
 
+function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
+    
+    var postURL = webroot+'queuelistdetails/getPlaylistData';
+    $.ajax({
+        type: "POST",
+        cache:false,
+        url: postURL,
+        data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime},
+        async: false
+    }).done(function(data){
+        var result = JSON.parse(data);
+        console.log('result in done is ' + result);
+        if(result.error){
+            var result = [0,"Not able to stream this song due to empty response from component",0,0,0,0];            
+        }else if(result.error1){
+            var result = [0,"Not able to stream this song due to invalid response from component",0,0,0,0];
+        }
+        streamingValidationJS(result);
+    })
+    .fail(function(){
+        var errorFlag = 1;
+        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
+        streamingValidationJS(errorData);
+    });
+}
+
+function pingTimeJS() {
+	
+	var flash = document.getElementById("fmp_player");
+	flash.pingTime();
+	
+}
+
+function streamingValidationJS(responseDataJS) {
+	
+	responseDataJS[5] = 	responseDataJS[5]*1000;
+	console.log('inside streamingValidationJS'+responseDataJS);
+        
+        if(responseDataJS[2]==86400)    //  For Patron with unlimited Streaming Limit
+        {
+             document.getElementById('remaining_stream_time').innerHTML = 'UNLIMITED';
+        }
+        else                            //  For Patron with  Streaming Limit of 10800 sec
+        {
+             document.getElementById('remaining_stream_time').innerHTML = secondsToHms(responseDataJS[2]);
+        }
+        
+       
+	
+	var flash =	document.getElementById("fmp_player");
+	
+	flash.streamingValidationAS(responseDataJS);
+        //exit;
+	
+}
 function reportTime(amt) {
 	
 	$('.report_time').html("Current time is " + amt + " seconds.");
@@ -454,36 +514,19 @@ function flashConsole(msg) {
 	console.log(msg);
 }
 
-
-
-
-/*
-function reportTimeBetweenEvents(amt) {
-	
-	
-	$('.timeBetweenEvents').html("Time between last event: " + amt + " seconds.");
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return ((h > 0 ? h + ":" : "") + (m > 0 ? (h > 0 && m < 10 ? "0" : "") + m + ":" : "0:") + (s < 10 ? "0" : "") + s); 
 }
-*/
-
-/*
-function checkTime(obj) {
-	
-	var timeIsUp =  false;
-	
-	
-	return timeIsUp;
-	
-	
-}
-*/
-
 
 
 $(document).ready(function(){
 
 	
 	
-/*
 	var newSong = [
 		{
 		label:'Crawl',
@@ -502,8 +545,6 @@ $(document).ready(function(){
 		
 		pushSongs(newSong);
 	});
-*/
-
 	
 	
 
