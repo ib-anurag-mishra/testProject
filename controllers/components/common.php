@@ -1702,6 +1702,8 @@ STR;
                     Genre.Genre,
                     Country.Territory,
                     Country.SalesDate,
+                    Country.StreamingSalesDate,
+                    Country.StreamingStatus,
                     Sample_Files.CdnPath,
                     Sample_Files.SaveAsName,
                     Full_Files.CdnPath,
