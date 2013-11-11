@@ -305,7 +305,7 @@ $('document').ready(function()
         return false;
     });
     
-    //$(document).onload($('.preview').css({opacity: 0}));
+    $(document).ready($('.preview').css({opacity: 0}));
     
     $(document).on('mouseleave', '.wishlist-popover', function() {
         $(this).removeClass('active');
