@@ -50,9 +50,9 @@
                                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                                                 <?php } ?>
                                                                 <?php
-                                                                    $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-                                                                    echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
-                                                                    echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                                                   // $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+                                                                    //echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
+                                                                    //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                                                 ?>
                                                                 </div>
                                                     <?php } ?>
