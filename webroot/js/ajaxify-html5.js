@@ -107,7 +107,7 @@
 							
 				// Prepare
 				var  $this = $(this);
-				var data = $this.parent().serialize();
+				var data = $this.parents('form').serialize();
 				var url = $this.parents('form').attr('action')+'?'+data;
 				var title = $this.attr('title')||null;
 				
