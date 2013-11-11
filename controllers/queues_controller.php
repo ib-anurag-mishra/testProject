@@ -146,46 +146,46 @@ class QueuesController extends AppController{
 	 */    
 	 
 	function addAlbumSongsToQueue(){
-
-        Configure::write('debug', 0);
-        if( $this->Session->read('library') && $this->Session->read('patron') && !empty($_REQUEST['albumSongs']) ){
-            if ($this->Session->read('library_type') == 2)
-            {            
-                    $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
-                    if(!$queuesongsCount)
-                    {
-                        $insertArr = Array();
-                        $insertArr['queue_id'] = $_REQUEST['queueId'];
-                        $insertArr['song_prodid'] = $_REQUEST['songProdId'];
-                        $insertArr['song_providertype'] = $_REQUEST['songProviderType'];
-                        $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
-                        $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
-                        //insert into queuedetail table
-                        $this->QueueDetail->setDataSource('master');
-                        $this->QueueDetail->save($insertArr);
-                        $this->QueueDetail->setDataSource('default');
-                        echo "Success";
-                        exit;
+            $albumSongs = json_decode($_REQUEST['albumSongs']);    
+            Configure::write('debug', 0);
+            if( $this->Session->read('library') && $this->Session->read('patron') && !empty($albumSongs) ){
+                if ($this->Session->read('library_type') == 2)
+                {        
+                    foreach($albumSongs as $key => $value){
+                        $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $value['queue_id'],'song_prodid' => $value['song_prodid'],'song_providertype' => $value['song_providertype'],'album_prodid' => $value['album_prodid'],'album_providertype' => $value['album_providertype'])));
+                        if($queuesongsCount)
+                        {
+                            $del[] =  $key;    
+                        }
 
                     }
-                    else
-                    {
-                            echo 'error1';
-                            exit; 
-                    }     
-                
+                    if(!empty($del)){
+                        foreach($del as $value){
+                            unset($albumSongs[$value]);
+                        }
+                    }
+                    if(!empty($albumSongs)){
+                        $this->QueueDetail->setDataSource('master');
+                        $this->QueueDetail->saveMany($albumSongs);
+                        $this->QueueDetail->setDataSource('default');
+                        echo "Success";
+                        exit;                    
+                    }
+                    if(!empty($del)){
+                        echo 'error1';
+                        exit;                         
+                    }
+                    
+                }
+                else    // Song is not allowed for streaming
+                {
+                         echo 'invalid_for_stream';
+                         exit; 
+                }
+            }else{
+                echo 'error';
+                exit;
             }
-            else    // Song is not allowed for streaming
-            {
-                     echo 'invalid_for_stream';
-                     exit; 
-            }
-                
-        }else{
-            echo 'error';
-            exit;
-        }
-
 	} 
     
     /**
