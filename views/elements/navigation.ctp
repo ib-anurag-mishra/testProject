@@ -344,7 +344,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     }
                                                     else
                                                     {
-                                                        $streamTime =   (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron')));                                                        
+                                                        $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+
+                                                        if(empty($streamTime))
+                                                        {
+                                                            $streamTime =   10800;
+                                                        }
+                                                        else
+                                                        {
+                                                            $streamTime = (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
+                                                        }
+                                                                                                           
                                                     }
 
                                                      $streamTime =   gmdate("G:i:s", $streamTime);
