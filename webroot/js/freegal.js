@@ -1589,7 +1589,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById("ajaxflashMessage44").style.background = "red";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding song to Queuelist.';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding Album to Queuelist.';
 
                 return false;
             } else if (msg == 'error1') {
@@ -1601,7 +1601,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Queue';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is already added to Queue';
             }
             else if (msg == 'invalid_for_stream')
             {
@@ -1612,7 +1612,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'This song is not allowed for Streaming';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is not allowed for Streaming';
             }
             else
             {
@@ -1625,7 +1625,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to Queue';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added Album to Queue';
 
                 }
                 else
@@ -1638,7 +1638,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 
                     document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById("ajaxflashMessage44").style.background = "red";
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to Queue.';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding Album to Queue.';
                     return false;
                 }
             }
@@ -1651,7 +1651,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to queue is unsuccessfull';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding Album to queue is unsuccessfull';
         }
     });
     return false;
