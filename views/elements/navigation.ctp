@@ -26,7 +26,7 @@ $(document).ready(function() {
                 "The following error occured: "+
                 textStatus, errorThrown
             );
-            }
+            }s
  
         });
  
@@ -333,6 +333,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         <?php
                                                 if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
                                                {                                                    
+                                                    $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
+                                                    $todaysDate         =   date("Y-m-d H:i:s");
+
+                                                     echo "<!--".$lastStreamedDate.", ".$todaysDate."-->";
+
+                                                    
+
                                                     $streamTime =   (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron')));
                                                     $streamTime =   gmdate("G:i:s", $streamTime);
                                                }
