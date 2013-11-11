@@ -1756,5 +1756,7 @@ $('document').ready(function() {
          $('#header-search-type').val('song');
          }*/
     });
-	$('#HomeSearchForm').ajaxify();
+	$("#headerSearchSubmit").click(function(event){
+       alert('chal raha hai'); 
+    });
 });
