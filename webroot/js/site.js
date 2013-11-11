@@ -1748,6 +1748,7 @@ function documentHtml(html) {
 
 function callSearchAjax(){
     $("#headerSearchSubmit").click(function(event){
+       var contentSelector = '.content,article:first,.article:first,.post:first';
        var q = $('#search-text').val();
        var type = $('#master-filter').val();
        $.ajax({
