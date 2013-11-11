@@ -166,7 +166,7 @@ class QueuesController extends AppController{
                     }
                     if(!empty($albumSongs)){
                         $this->QueueDetail->setDataSource('master');
-                        $this->QueueDetail->saveMany($albumSongs);
+                        $this->QueueDetail->saveAll($albumSongs);
                         $this->QueueDetail->setDataSource('default');
                         echo "Success";
                         exit;                    
