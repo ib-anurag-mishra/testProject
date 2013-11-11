@@ -157,7 +157,7 @@
             // Ajax Request the Traditional Page
             $.ajax({
                 url: url,
-				data:data,
+				//data:data,
                 success: function(data, textStatus, jqXHR) {
 
 
