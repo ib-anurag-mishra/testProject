@@ -21,7 +21,7 @@
                                 $patId = $this->Session->read('patron');
                                 $count  =   1;           
 				if(count($ustop10Albums) > 0) {
-                                        foreach($ustop10Albums as $key => $value){ echo '<pre>'; print_r($value);
+                                        foreach($ustop10Albums as $key => $value){ 
                                             
                                              //hide song if library block the explicit content
                                         if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
@@ -46,6 +46,12 @@
                                                         <?php
                                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                                         {
+                                                            
+                                                            echo "<br>patron".$this->Session->read('patron');
+                                                            echo "<br>ProdID".$value['albumSongs'][$value['Albums']['ProdID']];
+                                                            echo "<br>ProdID".$value['Albums']['ProdID'];
+                                                            echo "<br>provider_type".$value['Albums']['provider_type'];
+                                                            
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
