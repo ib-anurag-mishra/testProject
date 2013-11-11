@@ -17,7 +17,7 @@
 
     // Wait for Document
     $(function() {
-    	
+    	var isForm = false;
         // Prepare Variables
         var
                 /* Application Specific Variables */
@@ -76,8 +76,7 @@
         $.fn.ajaxify = function() {
             // Prepare
             var $this = $(this);
-			var isForm = false;
-            // Ajaxify
+			// Ajaxify
             $this.find('a:internal:not(.no-ajaxy)').click(function(event) {
             	
 
@@ -86,7 +85,7 @@
                         $this = $(this),
                         url = $this.attr('href'),
                         title = $this.attr('title') || null;
-
+				isForm = false;
                 // Continue as normal for cmd clicks etc
                 if (event.which == 2 || event.metaKey) {
                     return true;
@@ -109,7 +108,7 @@
 				var  $this = $(this);
 				var data = $this.parents('form').serialize();
 				var method = $this.parents('form').attr('method');
-				var isForm = true;
+				isForm = true;
 				if(method.toLowerCase() == 'post'){
 					var url = $this.parents('form').attr('action');
 				} else {
