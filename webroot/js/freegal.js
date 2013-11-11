@@ -1675,10 +1675,18 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
         }
     ];
 
-    console.log(newSong);
+    //console.log(newSong);
     pushSongs(newSong);
 
 }
+
+function loadAlbumSong(albumSongs) {
+        playlist = JSON.parse(albumSongs);
+        if (playlist.length) {
+            pushSongs(playlist);
+        }
+}
+
 
 //load the artist list via ajax    
 function load_artist(link, id_serial, genre_name) {
