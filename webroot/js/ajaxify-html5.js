@@ -108,7 +108,7 @@
 				// Prepare
 				var  $this = $(this);
 				var data = $this.parent().serialize();
-				var url = $this.parent().attr('action')+'?'+data;
+				var url = $this.parent('form').attr('action')+'?'+data;
 				var title = $this.attr('title')||null;
 				
 				// Continue as normal for cmd clicks etc
