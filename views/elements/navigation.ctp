@@ -336,7 +336,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
                                                     $todaysDate         =   date("Y-m-d H:i:s");
 
-                                                     echo "<!--".$lastStreamedDate.", ".$todaysDate."-->";
+                                                     echo "<!--".strtotime($lastStreamedDate).", ".strtotime($todaysDate)."-->";
 
                                                     if(strtotime($todaysDate) < strtotime($lastStreamedDate))
                                                     {
