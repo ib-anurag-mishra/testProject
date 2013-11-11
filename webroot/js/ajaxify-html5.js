@@ -103,27 +103,24 @@
             });
 			
 			// Ajaxify
-            /*$this.find('form input["type=submit"]').click(function(event) {
-            	
-
-                // Prepare
-                var
-                        $this = $(this),
-                        url = $this.form.attr('action'),
-                        title = $this.attr('title') || null;
-
-                // Continue as normal for cmd clicks etc
-                if (event.which == 2 || event.metaKey) {
-                    return true;
-                }
-
-                // Ajaxify this link
-				console.log(url);
+            $this.find('form input[type=submit]').click(function(event){
+				alert('event fired');
 				
-	            History.pushState(null, title, url);
-	            event.preventDefault();
-                return false;
-            });*/
+				// Prepare
+				var  $this = $(this);
+				var data = $this.parent().serialize();
+				var url = $this.parent().attr('action')+'?'+data;
+				var title = $this.attr('title')||null;
+				
+				alert(url);
+				// Continue as normal for cmd clicks etc
+				if ( event.which == 2 || event.metaKey ) { return true; }
+				
+				// Ajaxify this link
+				History.pushState(null,title,url);
+				event.preventDefault();
+				return false;
+			});
 
             // Chain
             return $this;
