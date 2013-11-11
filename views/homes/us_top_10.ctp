@@ -21,7 +21,7 @@
                                 $patId = $this->Session->read('patron');
                                 $count  =   1;           
 				if(count($ustop10Albums) > 0) {
-                                        foreach($ustop10Albums as $key => $value){
+                                        foreach($ustop10Albums as $key => $value){ echo '<pre>'; print_r($value);
                                             
                                              //hide song if library block the explicit content
                                         if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
@@ -37,7 +37,34 @@
                                                         <img src="<?php echo $value['album_img']; ?>" alt="<?php echo $this->getValidText($value['Song']['Artist'].' - '.$value['Song']['SongTitle']); ?>" width="250" height="250" />
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
-							
+							<?php
+                                                if ($this->Session->read("patron"))
+                                                {
+                                                    ?> 
+                                                    <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php
+                                                        if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
+                                                        {
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?>
+
+                                                        <?php
+                                                        //$wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
+
+                                                        //echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
+                                                        ?>
+                                                        <!--  <div class="share clearfix">
+                                                          <p>Share via</p>
+                                                         <span id="divButtons_<?php //echo $i;     ?>""></span> 
+                                                          </div> -->
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
+                                                <?php } ?>
 						</div>
 						<div class="album-title">
 							<a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
@@ -196,9 +223,7 @@
                                                                                                
 														<div class="wishlist-popover">
                                                                                                                 <?php if( $this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1 ){
-                                                                                                                            //echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]);
-                                                                                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
-                                                                                                                 ?>
+                                                                                                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
                                                                                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                                                                                                 <?php } ?>
                                                                                                                 <?php
