@@ -104,15 +104,13 @@
 			
 			// Ajaxify
             $this.find('form input[type=submit]').click(function(event){
-				alert('event fired');
-				
+							
 				// Prepare
 				var  $this = $(this);
 				var data = $this.parent().serialize();
 				var url = $this.parent().attr('action')+'?'+data;
 				var title = $this.attr('title')||null;
 				
-				alert(url);
 				// Continue as normal for cmd clicks etc
 				if ( event.which == 2 || event.metaKey ) { return true; }
 				
