@@ -1731,6 +1731,25 @@ $('document').ready(function()
 
 });
 
+
+function callSearchAjax(){
+    $("#headerSearchSubmit").click(function(event){
+       var q = $('#search-text').val();
+       var type = $('#master-filter').val();
+       $.ajax({
+           url:'/search/index',
+           method:'get',
+           data:{'q':q,'type':type},
+           success:function(response){
+               $('body').html(response);
+               callSearchAjax();
+           },
+           failure:function(){
+               alert('Problem fetching data');
+           }
+       });
+    });
+} 
 $('document').ready(function() {
     $('#search-text').autocomplete("/search/autocomplete",
             {
@@ -1756,19 +1775,8 @@ $('document').ready(function() {
          $('#header-search-type').val('song');
          }*/
     });
-	$("#headerSearchSubmit").click(function(event){
-       var q = $('#search-text').val();
-       var type = $('#master-filter').val();
-       $.ajax({
-           url:'/search/index',
-           method:'get',
-           data:{'q':q,'type':type},
-           success:function(response){
-               $('body').html(response);
-           },
-           failure:function(){
-               alert('Problem fetching data');
-           }
-       });
-    });
+	
+    callSearchAjax();
+       
+    
 });
