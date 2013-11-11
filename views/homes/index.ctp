@@ -324,9 +324,9 @@
                                                         ?>
 
                                                         <?php
-                                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+                                                        //$wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
-                                                        echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
+                                                        //echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                                         ?>
                                                         
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
