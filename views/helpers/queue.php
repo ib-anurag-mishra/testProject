@@ -115,7 +115,10 @@ EOD;
                 $playList = '['.addslashes($playList).']';
             }				
         }        
-        $str = '<a onclick='.'\'Javascript: loadAlbumSong("'.$playList.'");  class="preview" href="javascript:void(0);" style="background: none repeat scroll 0 0 #FFFFFF;bottom: 10px;box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);color: #000000;display: block;font-size: 12px;font-weight: bold;height: 25px;line-height: 25px; opacity: 0;position: absolute;right: 38px;text-align: center;text-decoration: none;text-transform: uppercase;width: 124px;left: 76px;">Stream Now</a>';        
+ $str = <<<EOD
+       <a onclick="loadAlbumSong("'.$playList.'");"  class="preview" href="javascript:void(0);" style="background: none repeat scroll 0 0 #FFFFFF;bottom: 10px;box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);color: #000000;display: block;font-size: 12px;font-weight: bold;height: 25px;line-height: 25px; opacity: 0;position: absolute;right: 38px;text-align: center;text-decoration: none;text-transform: uppercase;width: 124px;left: 76px;">Stream Now</a>
+EOD;
+ 
         return $str;
 
     }    
