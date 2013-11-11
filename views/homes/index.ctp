@@ -313,7 +313,7 @@
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
-                                                        echo $this->Queue->getStreamNowLabel($nationalTopDownload[$i]['streamUrl'],$song_title,$nationalTopDownload[$i]['Song']['ArtistText'],$nationalTopDownload[$i]['totalseconds'],$nationalTopDownload[$i]['Song']['ProdID'],$nationalTopDownload[$i]['Song']['provider_type']);
+                                                        echo $this->Queue->getStreamNowLabel('xyz','xyz','500','500','sony');
                                                         
                                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                                         {                                                          
