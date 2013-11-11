@@ -515,11 +515,11 @@ class SoapsController extends AppController {
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     $library_terriotry = $this->getLibraryTerritory($libraryId);
-  
+ 
     if (($artists = Cache::read("featured".$library_terriotry)) === false) {
       
       //get all featured artist and make array
-      $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $library_terriotry,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+     $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $library_terriotry,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 
       foreach($featured as $k => $v){
         if($v['Featuredartist']['album'] != 0){
@@ -1851,7 +1851,6 @@ STR;
 
     
     $resp->enc_value->enc_value->user_type = $this->getUserType('', $library_id, 1);
-
     
     return $resp;
   }
@@ -1866,7 +1865,7 @@ STR;
    * @return UserTypeResponseType[]
    */
   function getUserType($token, $libID, $innerCall = 0) {
-  
+    
     if(1 != $innerCall){
       if(!($this->isValidAuthenticationToken($token))) {
         throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -1875,15 +1874,15 @@ STR;
     
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libID),
-      'fields' => array('library_type'),
+      'fields' => array('test_library_type'),
       'recursive' => -1
       )
     );
 
     if(1 != $innerCall){
-      return $this->createsUserTypeResponseObject($libraryDetails['Library']['library_type']);
+      return $this->createsUserTypeResponseObject($libraryDetails['Library']['test_library_type']);
     }else{
-      return $libraryDetails['Library']['library_type'];
+      return $libraryDetails['Library']['test_library_type'];
     }
     
 
@@ -1928,7 +1927,7 @@ STR;
     ));
 				
     if(empty($song_data)) {
-      throw new SOAPFault('Soap:client', 'You do not have any song for this page.');
+      throw new SOAPFault('Soap:client', 'You do not have any songs for this page.');
     }
     
     
@@ -5667,13 +5666,30 @@ STR;
     }
     
     $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
-         
-    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-      
-      if(!(empty($data[$cnt]['QueueList']['queue_name']))) {
+       
+    //filters array value   
+    $tmp_data = array();    
+    for( $cnt = 0; $cnt < (count($data)); $cnt++  ) {
+ 
         if(0 == $this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
           
           if(1 == $this->getPlayButtonStatus($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) {
+            
+            $tmp_data[] = $data[$cnt];
+          }
+        }      
+    }
+    $data = $tmp_data;     
+    //End 
+
+ 
+    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+      
+      if(!(empty($data[$cnt]['QueueList']['queue_name']))) { 
+
+       //if(0 == $this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
+          
+          //if(1 == $this->getPlayButtonStatus($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) {
             
             $obj = new QueueDetailDataType;
         
@@ -5698,8 +5714,8 @@ STR;
               
             $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
           
-          } 
-        }  
+         // } 
+       // }  
       }     
     }
     
@@ -6646,7 +6662,7 @@ STR;
         
 		$StreamingSalesDate = $Country_array['Country']['StreamingSalesDate'];
 		$StreamingStatus = $Country_array['Country']['StreamingStatus'];
-    		
+
 		if( ($StreamingSalesDate <= date('Y-m-d')) && ($StreamingStatus == 1) ) {
 			return 1;
 		} else {
