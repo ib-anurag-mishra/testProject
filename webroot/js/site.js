@@ -1757,7 +1757,7 @@ function callSearchAjax(){
            success:function(response){
                $('.content').html($(response).filter('.content'));
                // Prepare
-                    var $data = $(documentHtml(data)),
+                    var $data = $(documentHtml(response)),
                             $dataBody = $data.find('.document-body:first'),
                             $dataContent = $dataBody.find(contentSelector).filter(':first'),
                             $menuChildren, contentHtml, $scripts;
