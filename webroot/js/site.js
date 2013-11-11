@@ -1744,7 +1744,7 @@ function callSearchAjax(){
            method:'get',
            data:{'q':q,'type':type},
            success:function(response){
-               $('body').html(response);
+               $('.content').html($(response).filter('.content'));
                callSearchAjax();
            },
            failure:function(){
