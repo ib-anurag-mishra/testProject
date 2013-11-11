@@ -72,7 +72,7 @@ EOD;
 						//$albumToQueue = '['.$albumToQueue.']';
 					}				
 				}			
-                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addAlbumSongsToQueue('.$albumToQueue.');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
+                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addAlbumSongsToQueue(\''.$albumToQueue.'\');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
             }
         }                    
         $str.= '</ul></div>';
