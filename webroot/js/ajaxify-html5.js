@@ -102,6 +102,10 @@
                 
             });
                         
+            // Chain
+            return $this;
+        };
+
         // Ajaxify our Internal Links
         $body.ajaxify();
 
