@@ -304,7 +304,11 @@ $('document').ready(function()
         //prevent page fom scrolling
         return false;
     });
-
+    
+    $(document).on('load', function() {
+        $('.preview').css({opacity: 0});
+    });
+    
     $(document).on('mouseleave', '.wishlist-popover', function() {
         $(this).removeClass('active');
     });
