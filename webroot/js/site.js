@@ -1757,6 +1757,18 @@ $('document').ready(function() {
          }*/
     });
 	$("#headerSearchSubmit").click(function(event){
-       alert('chal raha hai'); 
+       var q = $('#search-text').val();
+       var type = $('#master-filter').val();
+       $.ajax({
+           url:'/search/index',
+           method:'get',
+           data:{'q':q,'type':type},
+           success:function(response){
+               $('body').html(response);
+           },
+           failure:function(){
+               alert('Problem fetching data');
+           }
+       });
     });
 });
