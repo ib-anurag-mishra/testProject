@@ -44,14 +44,12 @@
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
+                                                            echo "<br>library_type".$this->Session->read('library_type');
+                                                            echo "<br>StreamingSalesDate".$value['Country']['StreamingSalesDate'];
+                                                            echo "<br>StreamingStatus".$value['Country']['StreamingStatus'];
+                                                            
                                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
-                                                        {
-                                                            
-                                                            echo "<br>patron".$this->Session->read('patron');
-                                                            echo "<br>ProdID".$value['albumSongs'][$value['Albums']['ProdID']];
-                                                            echo "<br>ProdID".$value['Albums']['ProdID'];
-                                                            echo "<br>provider_type".$value['Albums']['provider_type'];
-                                                            
+                                                        { 
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
