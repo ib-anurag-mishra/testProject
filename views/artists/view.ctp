@@ -148,7 +148,7 @@
                                         
                                         echo $html->image('play.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'loadSong("'.$albumSong['streamUrl'].'", "'.$song_title.'","'.$albumSong['Song']['ArtistText'].'",'.$albumSong['totalseconds'].',"'.$albumSong['Song']['ProdID'].'","'.$albumSong['Song']['provider_type'].'");'));
 
-										if(!empty($albumSong['streamUrl']) || !empty($song_title)){
+					if(!empty($albumSong['streamUrl']) || !empty($song_title)){
                                                 $playItem = array('playlistId' => 0, 'songId' => $albumSong['Song']['ProdID'],'providerType' => $albumSong['Song']['provider_type'],  'label' => $song_title,'songTitle' => $song_title,'artistName' => $albumSong['Song']['ArtistText'],'songLength' => $albumSong['totalseconds'],'data' => $albumSong['streamUrl']);
                                                 $jsonPlayItem = json_encode($playItem);
                                                 $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 

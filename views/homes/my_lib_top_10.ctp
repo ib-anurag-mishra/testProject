@@ -43,7 +43,13 @@
                                                         <?php
                                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                                         {                                                        
-                                                            echo $this->Queue->getStreamNowLabel($nationalTopDownload[$i]['streamUrl'],$song_title,$nationalTopDownload[$i]['Song']['ArtistText'],$nationalTopDownload[$i]['totalseconds'],$nationalTopDownload[$i]['Song']['ProdID'],$nationalTopDownload[$i]['Song']['provider_type']);
+                                                            if(!empty($albumSong['streamUrl']) || !empty($song_title)){
+                                                                    $playItem = array('playlistId' => 0, 'songId' => $albumSong['Song']['ProdID'],'providerType' => $albumSong['Song']['provider_type'],  'label' => $song_title,'songTitle' => $song_title,'artistName' => $albumSong['Song']['ArtistText'],'songLength' => $albumSong['totalseconds'],'data' => $albumSong['streamUrl']);
+                                                                    $jsonPlayItem = json_encode($playItem);
+                                                                    $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
+                                                                    $playListData[] =$jsonPlayItem;
+                                                            }                                                            
+                                                            echo $this->Queue->getAlbumStreamNowLabel($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']]);
                                                         } ?>
                                                 <?php
                                                 if ($this->Session->read("patron"))

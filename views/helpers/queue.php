@@ -93,6 +93,35 @@ EOD;
 
     }
     
+    /* Function name : getAlbumStreamNowLabel
+     * Description   : This function is used to get stream now mark up replacing play button 
+     */
+    
+    function getAlbumStreamNowLabel($albumSongs){
+        if(!empty($albumSongs)){
+                foreach($albumSongs as $value){
+                        if(!empty($value['streamUrl']) || !empty($value['Song']['SongTitle'])){
+                            $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"],'providerType' => $value["Song"]["provider_type"],  'label' => $value['Song']['SongTitle'],'songTitle' => $value['Song']['SongTitle'],'artistName' => $value['Song']['ArtistText'],'songLength' => $value['totalseconds'],'data' => $value['streamUrl']);
+                            $jsonPlayItem = json_encode($playItem);
+                            $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
+                            $playListData[] =$jsonPlayItem;
+                        }                    
+                }
+
+        }			
+        if(!empty($playListData)){
+            $playList = implode(',', $playListData);
+            if(!empty($playList)){
+                $playList = '['.$playList.']';
+            }				
+        }        
+$str = <<<EOD
+       <a onclick="loadAlbumSong('$playList');"  class="preview" href="javascript:void(0);" style="background: none repeat scroll 0 0 #FFFFFF;bottom: 10px;box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);color: #000000;display: block;font-size: 12px;font-weight: bold;height: 25px;line-height: 25px; opacity: 0;position: absolute;right: 38px;text-align: center;text-decoration: none;text-transform: uppercase;width: 124px;left: 76px;">Stream Now</a>        
+EOD;
+        return $str;
+
+    }    
+
     /**
      * Function Name: getSocialNetworkinglinksMarkup
      * Description  : This function is used to get mark up of social networking links 
