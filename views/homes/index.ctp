@@ -345,8 +345,8 @@
                                                     <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                     <?php 
                                                         if(strlen($value['Song']['Artist'])>32)
-                                                        echo substr($value['Song']['Artist'],0,32)."..."; 
-                                                        else echo $value['Song']['Artist'];
+                                                        echo $this->getValidText($this->getTextEncode(substr($value['Song']['Artist'],0,32)))."..."; 
+                                                        else echo $this->getValidText($this->getTextEncode($value['Song']['Artist']));
                                                      ?>
                                                    </a>
 						</div>
