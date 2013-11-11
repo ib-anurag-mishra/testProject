@@ -49,7 +49,7 @@
                                                                     $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
                                                                     $playListData[] =$jsonPlayItem;
                                                             }                                                            
-                                                            echo $this->Queue->getAlbumStreamNowLabel($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']]);
+                                                            echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                                         } ?>
                                                 <?php
                                                 if ($this->Session->read("patron"))
@@ -60,7 +60,7 @@
                                                         <?php
                                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                                         {
-                                                            echo $this->Queue->getQueuesListAlbums($value['albumSongs'][$value['Albums']['ProdID']]);
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                                             <?php
