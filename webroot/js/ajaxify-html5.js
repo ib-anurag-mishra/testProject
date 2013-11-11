@@ -8,10 +8,7 @@
 		History = window.History,
 		$ = window.jQuery,
 		document = window.document;
-	var data = null;
-	var method = null;
-	var isForm = false;
-
+	
 	// Check to see if History.js is enabled for our Browser
 	if ( !History.enabled ) {
 		return false;
@@ -95,37 +92,6 @@
 				return false;
 			});
 			
-			// Ajaxify
-			$this.find('form input[type=submit]').click(function(event){
-				
-				alert('event fired');
-				
-				// Prepare
-				var  $this = $(this);
-				
-				isForm = true;
-				
-				data = $this.parents('form').serialize();
-				
-				method = $this.parents('form').attr('method');
-				
-				if(method.toLowerCase() == 'post'){
-					var url = $this.parents('form').attr('action');
-				}else{
-					var url = $this.parents('form').attr('action')+'?'+data;
-				}
-				
-				var title = $this.attr('title')||null;
-				
-				// Continue as normal for cmd clicks etc
-				if ( event.which == 2 || event.metaKey ) { return true; }
-				
-				// Ajaxify this link
-				History.pushState(null,title,url);
-				event.preventDefault();
-				return false;
-			});
-			
 			// Chain
 			return $this;
 		};
@@ -151,11 +117,8 @@
 			
 			// Ajax Request the Traditional Page
 			// alert(data);
-			if(isForm == true && method == 'post') {
 			$.ajax({
 				url: url,
-				data:data,
-				method:'post',
 				success: function(data, textStatus, jqXHR){
 					// Prepare
 					var
@@ -226,81 +189,7 @@
 					return false;
 				}
 			}); // end ajax
-			} else {
-				$.ajax({
-				url: url,
-				success: function(data, textStatus, jqXHR){
-					// Prepare
-					var
-						$data = $(documentHtml(data)),
-						$dataBody = $data.find('.document-body:first'),
-						$dataContent = $dataBody.find(contentSelector).filter(':first'),
-						$menuChildren, contentHtml, $scripts;
-					
-					// Fetch the scripts
-					$scripts = $dataContent.find('.document-script');
-					if ( $scripts.length ) {
-						$scripts.detach();
-					}
-
-					// Fetch the content
-					contentHtml = $dataContent.html()||$data.html();
-					if ( !contentHtml ) {
-						document.location.href = url;
-						return false;
-					}
-					
-					// Update the menu
-					$menuChildren = $menu.find(menuChildrenSelector);
-					$menuChildren.filter(activeSelector).removeClass(activeClass);
-					$menuChildren = $menuChildren.has('a[href^="'+relativeUrl+'"],a[href^="/'+relativeUrl+'"],a[href^="'+url+'"]');
-					if ( $menuChildren.length === 1 ) { $menuChildren.addClass(activeClass); }
-
-					// Update the content
-					$content.stop(true,true);
-					$content.html(contentHtml).ajaxify().css('opacity',100).show(); /* you could fade in here if you'd like */
-
-					// Update the title
-					document.title = $data.find('.document-title:first').text();
-					try {
-						document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
-					}
-					catch ( Exception ) { }
-					
-					// Add the scripts
-					$scripts.each(function(){
-						var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-						if ( $script.attr('src') ) {
-							if ( !$script[0].async ) { scriptNode.async = false; }
-							scriptNode.src = $script.attr('src');
-						}
-    						scriptNode.appendChild(document.createTextNode(scriptText));
-						contentNode.appendChild(scriptNode);
-					});
-
-					// Complete the change
-					if ( $body.ScrollTo||false ) { $body.ScrollTo(scrollOptions); } /* http://balupton.com/projects/jquery-scrollto */
-					$body.removeClass('loading');
-					$window.trigger(completedEventName);
-	
-					// Inform Google Analytics of the change
-					if ( typeof window._gaq !== 'undefined' ) {
-						window._gaq.push(['_trackPageview', relativeUrl]);
-					}
-
-					// Inform ReInvigorate of a state change
-					if ( typeof window.reinvigorate !== 'undefined' && typeof window.reinvigorate.ajax_track !== 'undefined' ) {
-						reinvigorate.ajax_track(url);
-						// ^ we use the full url here as that is what reinvigorate supports
-					}
-				},
-				error: function(jqXHR, textStatus, errorThrown){
-					document.location.href = url;
-					return false;
-				}
-			});
-			}
-
+		
 		}); // end onStateChange
 
 	}); // end onDomLoad
