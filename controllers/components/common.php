@@ -262,7 +262,7 @@ STR;
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
                         Song.provider_type,
-						Song.Genre,
+			Song.Genre,
                         Genre.Genre,
                         Country.Territory,
                         Country.SalesDate,
@@ -280,7 +280,7 @@ STR;
                         PRODUCT.pid,
                         Albums.ProdID,
                         Albums.provider_type,
-						Albums.AlbumTitle
+			Albums.AlbumTitle
                 FROM
                         Songs AS Song
                                 LEFT JOIN
@@ -315,7 +315,11 @@ STR;
                 foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                        $data[$key]['songAlbumImage'] = $songAlbumImage;
+                        $data[$key]['songAlbumImage'] = $songAlbumImage;                        
+                        $data[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
+					);
                         
                         
                 }                    
@@ -918,6 +922,10 @@ STR;
                     $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $album_img =  Configure::read('App.Music_Path').$album_img;
                     $data[$key]['album_img'] = $album_img;
+                    $data[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
+					);
                }                     
                Cache::delete("national_us_top10_albums" . $country);
                Cache::write("national_us_top10_albums" . $country, $data);
