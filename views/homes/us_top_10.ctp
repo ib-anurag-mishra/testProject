@@ -43,11 +43,7 @@
                                                     ?> 
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
-                                                        <?php
-                                                            echo "<br>library_type".$this->Session->read('library_type');
-                                                            echo "<br>StreamingSalesDate".$value['Country']['StreamingSalesDate'];
-                                                            echo "<br>StreamingStatus".$value['Country']['StreamingStatus'];
-                                                            
+                                                        <?php                                                          
                                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                                         { 
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
