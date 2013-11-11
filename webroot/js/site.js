@@ -1754,6 +1754,12 @@ function callSearchAjax(){
     $("#headerSearchSubmit").click(function(event){
        var contentSelector = '.content,article:first,.article:first,.post:first';
        var $content = $(contentSelector).filter(':first');
+       var $body = $(document.body);
+       // Ensure Content
+        if ($content.length === 0) {
+            $content = $body;
+        }
+       
        var q = $('#search-text').val();
        var type = $('#master-filter').val();
        $.ajax({
