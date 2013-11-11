@@ -173,6 +173,8 @@
                     
                     var sidebar_anchor = $('.sidebar-anchor');
                     sidebar_anchor.removeClass('active');
+                    var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
+                    
                     
                     var sidebar_freegalqueues = $('.leftfqueuesclass');
                     sidebar_freegalqueues.removeClass('active');
@@ -406,8 +408,7 @@
                         genre07.removeClass('active');
                         faq07.removeClass('active');
                         home07.removeClass('active');
-                        leftmusicVideo07.removeClass('active');
-                        leftmylib07.removeClass('active');
+                        leftmusicVideo07.removeClass('active');                       
                         ustoplib07.removeClass('active');
                         leftnewrelease07.removeClass('active');
                         leftmyhistory07.removeClass('active');
@@ -415,7 +416,10 @@
                         leftsavedqueues07.removeClass('active');
                         leftnowstreaming07.removeClass('active');
                         topustop07.removeClass('active');
+                        
+                        sidebar_sub_nav_07.addClass('active');
                         topmylib07.addClass('active');
+                        leftmylib07.addClass('active');
                     } else if (pageName == 'topustop07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
