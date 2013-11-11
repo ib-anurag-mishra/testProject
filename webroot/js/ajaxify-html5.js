@@ -108,7 +108,12 @@
 				// Prepare
 				var  $this = $(this);
 				var data = $this.parents('form').serialize();
-				var url = $this.parents('form').attr('action')+'?'+data;
+				var method = $this.parents('form').attr('method');
+				if(method.toLowerCase() == 'post'){
+					var url = $this.parents('form').attr('action');
+				} else {
+					var url = $this.parents('form').attr('action')+'?'+data;
+				}
 				var title = $this.attr('title')||null;
 				
 				// Continue as normal for cmd clicks etc
@@ -152,6 +157,7 @@
             // Ajax Request the Traditional Page
             $.ajax({
                 url: url,
+				data:data,
                 success: function(data, textStatus, jqXHR) {
 
 
