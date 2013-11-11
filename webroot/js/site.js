@@ -304,7 +304,9 @@ $('document').ready(function()
         //prevent page fom scrolling
         return false;
     });
-
+    
+    //$(document).onload($('.preview').css({opacity: 0}));
+    
     $(document).on('mouseleave', '.wishlist-popover', function() {
         $(this).removeClass('active');
     });
@@ -1748,6 +1750,14 @@ function documentHtml(html) {
 
 function callSearchAjax(){
     $("#headerSearchSubmit").click(function(event){
+       var contentSelector = '.content,article:first,.article:first,.post:first';
+       var $content = $(contentSelector).filter(':first');
+       var $body = $(document.body);
+       // Ensure Content
+        if ($content.length === 0) {
+            $content = $body;
+        }
+       
        var q = $('#search-text').val();
        var type = $('#master-filter').val();
        $.ajax({
