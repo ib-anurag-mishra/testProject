@@ -103,7 +103,7 @@
             });
 			
 			// Ajaxify
-            $this.find('form input[type=submit]').click(function(event){
+            /*$this.find('form input[type=submit]').click(function(event){
 							
 				// Prepare
 				var  $this = $(this);
@@ -123,7 +123,7 @@
 				History.pushState(null,title,url);
 				event.preventDefault();
 				return false;
-			});
+			});*/
 
             // Chain
             return $this;
