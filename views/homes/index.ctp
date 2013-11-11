@@ -287,7 +287,7 @@
                 </ul>
             </div>
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-              <ul style="width:27250px;">
+              <ul style="width:27100px;">
 					<?php
                                         
 					 $count  =   1;           
@@ -336,7 +336,7 @@
                                                         <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Albums']['AlbumTitle'])>20)
-                                                                echo substr($value['Albums']['AlbumTitle'],0,20)."..."; 
+                                                                echo $this->getValidText($this->getTextEncode(substr($value['Albums']['AlbumTitle'],0,20)))."..."; 
                                                                 else echo $value['Albums']['AlbumTitle'];
                                                          ?>
                                                     </a><?php if('T' == $value['Albums']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
