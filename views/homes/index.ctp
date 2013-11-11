@@ -1,4 +1,6 @@
-<?php echo $session->flash(); ?>					
+<?php echo $session->flash(); 
+ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is closed
+?>
 <section class="news">
     <div class="top-100">
         <header>
