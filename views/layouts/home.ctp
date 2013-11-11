@@ -242,7 +242,7 @@
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
-                        leftmusicVideo07.removeClass('active');
+                        leftmusicVideo07.addClass('active');
                         ustoplib07.removeClass('active');
                         topmylib07.removeClass('active');
                         topustop07.removeClass('active');
@@ -302,7 +302,7 @@
                         leftmylib07.removeClass('active');
                         faq07.addClass('active');
                     } else if (pageName == 'leftmusicVideo07') {
-                        musicVideo07.removeClass('active');
+                        musicVideo07.addClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
