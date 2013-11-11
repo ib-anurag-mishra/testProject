@@ -338,10 +338,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
                                                      echo "<!--".$lastStreamedDate.", ".$todaysDate."-->";
 
-                                                    
+                                                    if(strtotime($todaysDate) > strtotime($lastStreamedDate))
+                                                    {
+                                                        $streamTime =   10800;                                                        
+                                                    }
+                                                    else
+                                                    {
+                                                        $streamTime =   (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron')));                                                        
+                                                    }
 
-                                                    $streamTime =   (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron')));
-                                                    $streamTime =   gmdate("G:i:s", $streamTime);
+                                                     $streamTime =   gmdate("G:i:s", $streamTime);
+
                                                }
                                                else if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1)
                                                { 
