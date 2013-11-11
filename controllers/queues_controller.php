@@ -146,7 +146,7 @@ class QueuesController extends AppController{
 	 */    
 	 
 	function addAlbumSongsToQueue(){
-            $albumSongs = json_decode($_REQUEST['albumSongs']);    
+            $albumSongs = json_decode($_REQUEST['albumSongs'],true);    
             Configure::write('debug', 0);
             if( $this->Session->read('library') && $this->Session->read('patron') && !empty($albumSongs) ){
                 if ($this->Session->read('library_type') == 2)
@@ -166,7 +166,7 @@ class QueuesController extends AppController{
                     }
                     if(!empty($albumSongs)){
                         $this->QueueDetail->setDataSource('master');
-                        $this->QueueDetail->saveMany($albumSongs);
+                        $this->QueueDetail->saveAll($albumSongs);
                         $this->QueueDetail->setDataSource('default');
                         echo "Success";
                         exit;                    

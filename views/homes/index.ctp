@@ -309,10 +309,12 @@
                                                 <?php
                                                 if ($this->Session->read("patron"))
                                                 {
+                                                        echo $this->Queue->getStreamNowLabel('xyz','ABC','SAM','545','8267','sony');
                                                     ?> 
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
+                                                         
                                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                                         {
                                                             //echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Song"]["ProdID"], $value["Song"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
