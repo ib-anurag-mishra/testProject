@@ -1112,6 +1112,9 @@ Albums.AlbumTitle,
 Genre.Genre,
 Country.Territory,
 Country.SalesDate,
+Country.StreamingSalesDate,
+Country.StreamingStatus,
+Country.DownloadStatus,
 File.CdnPath,
 File.SourceURL,
 File.SaveAsName,
@@ -1141,6 +1144,10 @@ STR;
                      $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                      $album_img =  Configure::read('App.Music_Path').$album_img;
                      $data[$key]['albumImage'] = $album_img;
+                     $data[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
+					);
                 }                    
                 Cache::delete("new_releases_albums" . $country);
                 Cache::write("new_releases_albums" . $country, $data);
