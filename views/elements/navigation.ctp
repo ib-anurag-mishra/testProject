@@ -338,7 +338,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
                                                      echo "<!--".$lastStreamedDate.", ".$todaysDate."-->";
 
-                                                    if(strtotime($todaysDate) > strtotime($lastStreamedDate))
+                                                    if(strtotime($todaysDate) < strtotime($lastStreamedDate))
                                                     {
                                                         $streamTime =   10800;                                                        
                                                     }
