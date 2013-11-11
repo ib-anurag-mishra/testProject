@@ -40,6 +40,11 @@
 										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
+                                                        <?php
+                                                        if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
+                                                        {                                                        
+                                                            echo $this->Queue->getStreamNowLabel($nationalTopDownload[$i]['streamUrl'],$song_title,$nationalTopDownload[$i]['Song']['ArtistText'],$nationalTopDownload[$i]['totalseconds'],$nationalTopDownload[$i]['Song']['ProdID'],$nationalTopDownload[$i]['Song']['provider_type']);
+                                                        } ?>
                                                 <?php
                                                 if ($this->Session->read("patron"))
                                                 {

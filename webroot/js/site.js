@@ -441,11 +441,14 @@ $('document').ready(function()
     });
 
     $('.album-container').on('mouseleave', function() {
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
     });
 	
     $('.album-container').on('mouseenter', function() {
+        $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});
     });
 
     $('.video-cover-container').on('mouseleave', function() {
