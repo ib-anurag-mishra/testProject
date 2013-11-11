@@ -66,13 +66,13 @@ EOD;
 					}
 				
 				}			
-//				if(!empty($albumSongsToAdd)){
-//					$albumToQueue = implode(',', $albumSongsToAdd);
-//					if(!empty($albumToQueue)){
-//						$albumToQueue = '['.$albumToQueue.']';
-//					}				
-//				}			
-                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addAlbumSongsToQueue('.$albumSongsToAdd.');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
+				if(!empty($albumSongsToAdd)){
+					$albumToQueue = implode(',', $albumSongsToAdd);
+					if(!empty($albumToQueue)){
+						//$albumToQueue = '['.$albumToQueue.']';
+					}				
+				}			
+                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addAlbumSongsToQueue('.$albumToQueue.');\'>'.$queuevalue['QueueList']['queue_name'].'</a></li>';
             }
         }                    
         $str.= '</ul></div>';
