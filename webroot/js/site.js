@@ -2058,7 +2058,6 @@ function ajaxNotification(){
            var q = $('#search-text').val();
            var type = $('#master-filter').val();
   */         
- alert($('#UserSendNewsLetterCheck').val());
            if($('#UserSendNewsLetterCheck').val()){
                USendNewsLetterCheck=$('#UserSendNewsLetterCheck').val();
            }
