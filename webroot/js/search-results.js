@@ -114,6 +114,8 @@ $menuChildren.addClass(activeClass);
                alert('Problem fetching data');
            }
        });
+       $('#search-text').val(q);
+       $('#master-filter').val(type);
        return false;
 }
 
