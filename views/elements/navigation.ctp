@@ -26,7 +26,7 @@ $(document).ready(function() {
                 "The following error occured: "+
                 textStatus, errorThrown
             );
-            }s
+            }
  
         });
  
