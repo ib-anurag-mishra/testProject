@@ -239,7 +239,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                            <?php } ?>
                                         </div>
 					<div class="master-music-search-wrapper">
-						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8">							
+						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch()">							
                             <select name="type" id="master-filter">
 								<option value="all">Search All</option>
 								<option value="album">Albums</option>
