@@ -90,10 +90,11 @@ $ieVersion =  ieversion();
             var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
             if(isChecked){               
                 $("#show_newsletterboxField").show();  
-                
+                $('#UserSendNewsLetterCheck').attr('checked',TRUE);
+                $('#UserSendNewsLetterCheck').attr('value',1);
             }else{
                 $("#show_newsletterboxField").hide();
-                
+                $('#UserSendNewsLetterCheck').attr('value',0);
             }            
         });
         
