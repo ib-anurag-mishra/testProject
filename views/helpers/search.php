@@ -31,6 +31,13 @@ class SearchHelper extends AppHelper {
                      $downloadStatus = trim($Territory_status_array[1]);
                 }
            }
+       }else{ 
+           //if single value come then
+            $Territory_status_array = explode("_", $TerritoryDownloadStatusArray);
+
+            if(isset($Territory_status_array[0]) && ($Territory_status_array[0] === $territory)){
+                    $downloadStatus = trim($Territory_status_array[1]);
+            }           
        }
        
        //get the donwload sales date
@@ -42,6 +49,13 @@ class SearchHelper extends AppHelper {
                      $downloadSaltesDate = trim($Territory_salesdate_array[1]);
                 }
            }
+       }else{
+            //if single value come then
+            $Territory_salesdate_array = explode("_", $TerritorySalesDateArray);
+
+            if(isset($Territory_salesdate_array[0]) && ($Territory_salesdate_array[0] === $territory)){
+                    $downloadSaltesDate = trim($Territory_salesdate_array[1]);
+            }           
        }
        
        //check validation for download
@@ -82,6 +96,13 @@ class SearchHelper extends AppHelper {
                      $StreamStatus = trim($Territory_status_array[1]);
                 }
            }
+       }else{
+            //if single value come then
+            $Territory_status_array = explode("_", $TerritoryStreamingStatusArray);
+
+            if(isset($Territory_status_array[0]) && ($Territory_status_array[0] === $territory)){
+                    $StreamStatus = trim($Territory_status_array[1]);
+            }           
        }
        
        //get the download sales date
@@ -93,6 +114,13 @@ class SearchHelper extends AppHelper {
                      $StreamSaltesDate = trim($Territory_salesdate_array[1]);
                 }
            }
+       }else{
+            //if single value come then
+            $Territory_salesdate_array = explode("_", $TerritoryStreamingSalesDateArray);
+
+            if(isset($Territory_salesdate_array[0]) && ($Territory_salesdate_array[0] === $territory)){
+                    $StreamSaltesDate = trim($Territory_salesdate_array[1]);
+            }           
        }
        
        //check validation for Stream
