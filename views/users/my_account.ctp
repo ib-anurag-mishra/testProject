@@ -75,7 +75,8 @@ $ieVersion =  ieversion();
 					<?php echo $this->Form->input('password', array('label' => false,'value' => '','type' => 'password', 'div' => false, 'class' => 'form_fields') ); ?>
                                         </div>
                                         <div>
-                                        <input type="button" value="<?php __('Save')?>" id="btnMyAccount" />
+                                        <!--<input type="button" value="<?php __('Save')?>" id="btnMyAccount" />-->
+                                        <button id="btnMyAccount" type="button" ><?php echo __('Save')?></button>
                                         </div>
                                         <?php echo $this->Form->end(); ?>
                        </div>
