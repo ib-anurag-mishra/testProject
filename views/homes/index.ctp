@@ -294,7 +294,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                         
 					 $count  =   1;           
 				if(count($nationalTopAlbumsDownload) > 0) {
-                                        foreach($nationalTopAlbumsDownload as $key => $value){ echo "<pre>"; print_r($value);
+                                        foreach($nationalTopAlbumsDownload as $key => $value){
                                             
                                            //hide song if library block the explicit content
                                         if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
