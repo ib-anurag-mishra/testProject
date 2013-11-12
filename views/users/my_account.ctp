@@ -176,7 +176,7 @@ $ieVersion =  ieversion();
            // Which prevents that annoying pop bang issue when loading in new content
            $content.animate({opacity: 0}, 800);
 
-
+/*
            $.ajax({
                url:'/users/my_account',
                method:'post',
@@ -286,7 +286,7 @@ $ieVersion =  ieversion();
                failure:function(){
                    alert('Problem fetching data');
                }
-           });
+           });*/
            return false;
         });
 
