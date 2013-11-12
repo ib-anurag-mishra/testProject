@@ -48,6 +48,7 @@ $ieVersion =  ieversion();
                                 <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'manage_notification')); ?>
                                 <div>
                                     <?php
+                                    echo $testVar;
                                     if($notificationAlreadySave==true)
                                     {
                                         $notificationAlreadySaveFlag=1; 
@@ -76,9 +77,9 @@ $ieVersion =  ieversion();
 
 <?php
         
-        }
+       /* }
         
-         if(isset($notificationShow) && $notificationShow == 1){
+         if(isset($notificationShow) && $notificationShow == 1){*/
 ?>
 <script type="text/javascript">
     $(function() {  
