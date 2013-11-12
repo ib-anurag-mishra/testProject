@@ -135,10 +135,10 @@ echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 
     </header>
     <section class="advanced-search">
-        <form method="get" id="searchQueryForm" action="<?php echo $SERVER['PHP_SELF']; ?>">
+        <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type)) ? $type : 'all' ?>" name="type">
-            <input type="submit" name="submit" id="submit" value="Search" />
+            <input type="button" name="submit" id="submit" value="Search" />
         </form>
         <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section</a>.</div>
         <ul class="clearfix">
