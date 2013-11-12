@@ -47,7 +47,7 @@ $ieVersion =  ieversion();
 				<h3>Email Notification</h3>
                                 <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'manage_notification')); ?>
                                 <div>
-                                <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave, 'value' => $notificationAlreadySave)); ?>
+                                <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave)); ?>
                                 Add your email address here to receive twice-weekly email reminders of your available downloads.
                                 </div>
                                 <div id="show_newsletterboxField" style="display:none;">
