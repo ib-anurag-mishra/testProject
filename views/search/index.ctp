@@ -135,7 +135,7 @@ echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 
     </header>
     <section class="advanced-search">
-        <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage(); return false;">
             <input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type)) ? $type : 'all' ?>" name="type">
             <input type="button" name="submit" id="submit" value="Search" />
