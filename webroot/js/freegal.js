@@ -1691,6 +1691,7 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 
 function loadAlbumSong(albumSongs) {
         playlist = base64_decode(albumSongs);
+        playlist = JSON.parse(playlist);
         if (playlist.length) {
             pushSongs(playlist);
         }
