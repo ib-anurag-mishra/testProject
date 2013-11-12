@@ -1760,6 +1760,17 @@ function callSearchAjax(){
        
        var q = $('#search-text').val();
        var type = $('#master-filter').val();
+       
+       var loading_div = "<div class='loader'>";
+            loading_div += "</div>";
+            $('.content').append(loading_div);
+         
+       // Start Fade Out
+       // Animating to opacity to 0 still keeps the element's height intact
+       // Which prevents that annoying pop bang issue when loading in new content
+       $content.animate({opacity: 0}, 800);
+            
+       
        $.ajax({
            url:'/search/index',
            method:'get',
