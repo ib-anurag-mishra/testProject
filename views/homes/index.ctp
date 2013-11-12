@@ -342,7 +342,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                        else
                                                        {
                                                            ?>
-                                                                <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
+                                                               <!-- <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a> -->
                                                            <?php
                                                        }
 ?>
