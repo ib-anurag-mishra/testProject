@@ -336,9 +336,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
                                                     $todaysDate         =   date("Y-m-d");
 
-                                                     echo "<!--".strtotime($lastStreamedDate).", ".strtotime($todaysDate).",".strtotime(date("Y-m-d",$lastStreamedDate)).", ".strtotime(date('Y-m-d'))." -->";
+                                                     echo "<!--".strtotime($lastStreamedDate).", ".strtotime($todaysDate).",".strtotime(date("Y-m-d",strtotime($lastStreamedDate))).", ".strtotime(date('Y-m-d'))." -->";
                                                     
-                                                    if(strtotime(date("Y-m-d",$lastStreamedDate)) != strtotime(date('Y-m-d'))) // if Patron Logs in for first time in day 
+                                                    if(strtotime(date("Y-m-d",strtotime($lastStreamedDate))) != strtotime(date('Y-m-d'))) // if Patron Logs in for first time in day 
                                                     {
                                                         $streamTime =   10800;                                                        
                                                     }
