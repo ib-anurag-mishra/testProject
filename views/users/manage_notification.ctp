@@ -87,7 +87,7 @@ $ieVersion =  ieversion();
         
         
         $('#UserSendNewsLetterCheck').click(function(){	           
-//            var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
+            var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
             if(isChecked){               
                 $("#show_newsletterboxField").show();  
                 $('#UserSendNewsLetterCheck').attr('value','1');
