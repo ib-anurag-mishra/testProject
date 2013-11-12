@@ -1775,7 +1775,7 @@ $('document').ready(function()
 
            $.ajax({
                url:'/users/my_account',
-               method:'get',
+               method:'post',
                data:{'data[User][first_name]':UFirstName,'data[User][last_name]':ULastName,'data[User][email]':UEmail,'data[User][password]':UPassword},
                success:function(response){
                    $('.content').html($(response).filter('.content'));
