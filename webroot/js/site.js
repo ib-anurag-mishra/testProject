@@ -2008,7 +2008,7 @@ function ajaxMyAccount(){
                             $body.ScrollTo(scrollOptions);
                         } /* http://balupton.com/projects/jquery-scrollto */
 
-                        $window.trigger(completedEventName);
+//                        $window.trigger(completedEventName);
 
                         // Inform Google Analytics of the change
                         if (typeof window._gaq !== 'undefined') {
