@@ -93,28 +93,6 @@ $menuChildren.addClass(activeClass);
                         $body.ScrollTo(scrollOptions);
                     } /* http://balupton.com/projects/jquery-scrollto */
 
-                    $window.trigger(completedEventName);
-                    
-                    // Inform Google Analytics of the change
-                    if (typeof window._gaq !== 'undefined') {
-                        window._gaq.push(['_trackPageview', relativeUrl]);
-                    }
-
-                    // Inform ReInvigorate of a state change
-                    if (typeof window.reinvigorate !== 'undefined' && typeof window.reinvigorate.ajax_track !== 'undefined') {
-                        reinvigorate.ajax_track(url);
-                        // ^ we use the full url here as that is what reinvigorate supports
-                    }
-                    
-                    var delay = 2; // 5 second delay
-                    var now = new Date();
-                    var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
-                    
-                    while (now < desiredTime) {
-                        now = new Date(); // update the current time
-                    }
-
-                      
                     //$body.removeClass('loader');
                     $.getScript(webroot + 'css/styles.css');
                     $.getScript(webroot + 'css/freegal_styles.css');
