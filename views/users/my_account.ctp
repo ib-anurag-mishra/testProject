@@ -139,11 +139,7 @@ $ieVersion =  ieversion();
             }            
         });
         
-        $('#btnMyAccount').click(function(){
-            alert("Here");
-            
-           return false;
-        });
+        
 
         
     });

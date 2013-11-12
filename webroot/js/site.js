@@ -1733,6 +1733,13 @@ $('document').ready(function()
 	   e.preventDefault();
 	    
     });
+    
+    
+    $('#btnMyAccount').click(function(){
+            alert("Here");
+            
+           return false;
+        });
 
 });
 
