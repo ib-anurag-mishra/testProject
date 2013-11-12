@@ -87,7 +87,7 @@ $ieVersion =  ieversion();
 ?>
                     
 			<div class="email-notification-wrapper">
-				<h3>Email Notification</h3>
+				<h3>Email Notificatio1n</h3>
                                 <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'manage_notification')); ?>
                                 <div>
                                 <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave)); ?>
