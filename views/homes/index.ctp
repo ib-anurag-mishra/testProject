@@ -391,18 +391,18 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
 
                     //$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
                     //$image =  Configure::read('App.Music_Path').$albumArtwork;
-                    if (strlen($v['Album']['AlbumTitle']) > 24)
+                    if (strlen($v['Album']['AlbumTitle']) > 22)
                     {
-                        $title = substr($v['Album']['AlbumTitle'], 0, 24) . "..";
+                        $title = substr($v['Album']['AlbumTitle'], 0, 22) . "..";
                     }
                     else
                     {
                         $title = $v['Album']['AlbumTitle'];
                     }
 
-                    if (strlen($v['Album']['ArtistText']) > 24)
+                    if (strlen($v['Album']['ArtistText']) > 22)
                     {
-                        $ArtistText = substr($v['Album']['ArtistText'], 0, 24) . "..";
+                        $ArtistText = substr($v['Album']['ArtistText'], 0, 22) . "..";
                     }
                     else
                     {
