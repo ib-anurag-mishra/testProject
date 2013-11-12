@@ -335,7 +335,14 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                         
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
-                                                <?php } ?>
+                                                <?php }
+                                                       else
+                                                       {
+                                                           ?>
+                                                                <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
+                                                           <?php
+                                                       }
+?>
 						</div>
 						<div class="album-title">							
                                                         <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
