@@ -311,7 +311,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                 <?php
                                                 if ($this->Session->read("patron"))
                                                 {
-                                                        echo $this->Queue->getStreamNowLabel('xyz','ABC','SAM','545','8267','sony');
+                                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                                     ?> 
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
