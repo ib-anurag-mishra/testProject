@@ -1483,7 +1483,7 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
         data: data, // post data
         success: function(response) {
             
-            alert(1);
+            
             var playlist_list_popup = $('.playlist-options');
             playlist_list_popup.removeClass('active');
             var wishlist_list_popup = $('.wishlist-popover');
