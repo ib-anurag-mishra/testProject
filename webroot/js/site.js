@@ -1750,6 +1750,11 @@ function documentHtml(html) {
 
 function callSearchAjax(){
     $("#headerSearchSubmit").click(function(event){
+       ajaxSearch();
+    });
+} 
+
+function ajaxSearch(){
        var contentSelector = '.content,article:first,.article:first,.post:first';
        var $content = $(contentSelector).filter(':first');
        var $body = $(document.body);
@@ -1881,8 +1886,8 @@ $menuChildren.addClass(activeClass);
                alert('Problem fetching data');
            }
        });
-    });
-} 
+       return false;
+}
 
 $('document').ready(function() {
     $('#search-text').autocomplete("/search/autocomplete",
