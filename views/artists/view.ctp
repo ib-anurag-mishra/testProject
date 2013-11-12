@@ -42,8 +42,6 @@
             
 	foreach($albumData as $album_key => $album):
             
-            echo '<pre>';
-        print_r($album);
             
 ?>
 		<section class="album-detail">
