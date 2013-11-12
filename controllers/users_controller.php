@@ -1180,7 +1180,7 @@ Class UsersController extends AppController
             $patronId = $this->Session->read('patron');                
             //display notification form when library exist in to the library timzone table
             if($this->Session->read('isLibaryExistInTimzone')==1){                    
-
+echo 'herere';
                   $this->set('notificationShow', 1); 
                   $this->set('notificationAlreadySave', 'false');  
                   $this->set('notificationEmail', '');                      
