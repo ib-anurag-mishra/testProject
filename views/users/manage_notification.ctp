@@ -83,7 +83,7 @@ $ieVersion =  ieversion();
 ?>
 <script type="text/javascript">
     $(function() {  
-        
+        alert('<?php echo $notificationAlreadySave?>');
         <?php 
         
         if($notificationAlreadySave === 'true'){
