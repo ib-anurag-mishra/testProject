@@ -87,7 +87,7 @@ $ieVersion =  ieversion();
 ?>
                     
 			<div class="email-notification-wrapper">
-				<h3>Email Notificatio1n</h3>
+				<h3>Email Notification</h3>
                                 <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'manage_notification')); ?>
                                 <div>
                                 <?php echo $this->Form->checkbox('sendNewsLetterCheck', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $notificationAlreadySave)); ?>
@@ -98,8 +98,7 @@ $ieVersion =  ieversion();
                                 <?php echo $this->Form->input('NewsletterEmail',array('label' => false ,'value' => $notificationEmail, 'div' => false, 'class' => 'form_fields'));?>
                                 </div>    
                                 <div>
-                                <!--<input type="submit" name="notification_submit" onclick="return checkEmailValue()" value="<?php __('Save')?>" />-->
-                                <button id="btnNotification" type="button" onclick="return checkEmailValue()" ><?php echo __('Save')?></button>
+                                <input type="submit" name="notification_submit" onclick="return checkEmailValue()" value="<?php __('Save')?>" />
                                 </div>
                                 <?php echo $this->Form->end(); ?>
                         </div>
