@@ -1482,6 +1482,15 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
         url: webroot + "queues/addToQueue", // URL to request
         data: data, // post data
         success: function(response) {
+            
+            
+            var playlist_list_popup = $('.playlist-options');
+            playlist_list_popup.removeClass('active');
+            var wishlist_list_popup = $('.wishlist-popover');
+            wishlist_list_popup.removeClass('active');
+            
+            
+            
             if (response.length == 6) {
                 var msg = response.substring(0, 6);
             } else {

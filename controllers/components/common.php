@@ -1066,7 +1066,9 @@ STR;
         $songInstance = ClassRegistry::init('Song');        
         //Added caching functionality for new release Albums           
         $country = $territory;
-        if ( !empty($country ) && ( $territory == "US" ) ) {           
+        if ( !empty($country ) ) {   
+            
+        //if ( !empty($country ) && ( $territory == "US" ) ) {   
             
             
             $sql = "SELECT Song.ProdID,Song.ReferenceID,Song.provider_type
@@ -1160,10 +1162,15 @@ STR;
                 Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
                 $this->log("Unable to update new releases albums for " . $territory, "cache");
             }
+            
+            
+            $this->log("cache written for new releases albums for $territory", 'debug');
+            //End Caching functionality for new releases albums
+            return $data;
+        }else{
+            $this->log("not able to  written cache for new releases albums for $territory", 'cache');
         }
-        $this->log("cache written for new releases albums for $territory", 'debug');
-        //End Caching functionality for new releases albums
-        return $data;
+        
         
     } 
     
@@ -1177,7 +1184,7 @@ STR;
     
     
     /*
-     * Function Name : getNewReleaseAlbums
+     * Function Name : getNewReleaseAlbumsBackup
      * Function Description : This function is used to getNewReleaseAlbums.
      */
     

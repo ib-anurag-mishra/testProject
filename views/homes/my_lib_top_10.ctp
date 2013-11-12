@@ -49,7 +49,7 @@
                                                                     $jsonPlayItem = str_replace("\/","/",$jsonPlayItem); 
                                                                     $playListData[] =$jsonPlayItem;
                                                             }                                                            
-                                                            echo $this->Queue->getAlbumStreamNowLabel($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']]);
+                                                            echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                                         } ?>
                                                 <?php
                                                 if ($this->Session->read("patron"))

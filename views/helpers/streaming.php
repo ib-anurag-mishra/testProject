@@ -25,6 +25,24 @@ class StreamingHelper extends AppHelper {
     }
     
     
+      /*
+     Function Name : getLastStreamDate
+     Desc : get Stream Time of Patron for a given Library
+     * 
+     * @param   patron_id, library_id
+     *          
+     * @return Boolean or second value
+    */
+    function getLastStreamDate($library_id, $patron_id)
+    {                    
+            $streamingInstance = ClassRegistry::init('StreamingRecords');
+            $streamingInstance->recursive = -1;
+            $streamingDetails = $streamingInstance->find('first', array('conditions' => array('patron_id' => $patron_id, 'library_id' => $library_id), 'fields' => 'modified_date'));
+        
+            return $streamingDetails['StreamingRecords']['modified_date'];      
+    }
+    
+    
 }
 
 ?>
