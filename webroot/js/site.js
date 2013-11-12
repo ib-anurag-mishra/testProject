@@ -1740,6 +1740,7 @@ $('document').ready(function()
             var ULastName='';
             var UEmail='';
             var UPassword='';
+            var UserID='';
            var contentSelector = '.content,article:first,.article:first,.post:first';
            var $content = $(contentSelector).filter(':first');
            var $body = $(document.body);
@@ -1763,6 +1764,9 @@ $('document').ready(function()
            if($('#UserPassword').val()){
                UPassword=$('#UserPassword').val();
            }
+           if($('#UserId').val()){
+               UserID=$('#UserId').val();
+           }
            var loading_div = "<div class='loader'>";
                 loading_div += "</div>";
                 $('.content').append(loading_div);
@@ -1776,7 +1780,7 @@ $('document').ready(function()
            $.ajax({
                url:'/users/my_account',
                method:'post',
-               data:{'data[User][first_name]':UFirstName,'data[User][last_name]':ULastName,'data[User][email]':UEmail,'data[User][password]':UPassword},
+               data:{'data[User][id]':UserID,'data[User][first_name]':UFirstName,'data[User][last_name]':ULastName,'data[User][email]':UEmail,'data[User][password]':UPassword},
                success:function(response){
                    $('.content').html($(response).filter('.content'));
                    // Prepare
