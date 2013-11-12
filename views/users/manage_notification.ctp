@@ -85,9 +85,14 @@ $ieVersion =  ieversion();
         
         ?>
         
-        
+        var isChecked = $('#UserSendNewsLetterCheck').val()?true:false;           
+        if(isChecked){               
+            $("#show_newsletterboxField").show();  
+        }else{
+            $("#show_newsletterboxField").hide();
+        }
         $('#UserSendNewsLetterCheck').click(function(){	           
-            var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
+//            var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
             if(isChecked){               
                 $("#show_newsletterboxField").show();  
                 $('#UserSendNewsLetterCheck').attr('value','1');
