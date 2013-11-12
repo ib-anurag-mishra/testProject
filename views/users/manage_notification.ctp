@@ -55,7 +55,8 @@ $ieVersion =  ieversion();
                                 <?php echo $this->Form->input('NewsletterEmail',array('label' => false ,'value' => $notificationEmail, 'div' => false, 'class' => 'form_fields'));?>
                                 </div>    
                                 <div>
-                                <input type="submit" name="notification_submit" onclick="return checkEmailValue()" value="<?php __('Save')?>" />
+                                <!--<input type="submit" name="notification_submit" onclick="return checkEmailValue()" value="<?php __('Save')?>" />-->
+                                <button id="btnNotification" type="button" onclick="return checkEmailValue()" ><?php echo __('Save')?></button>
                                 </div>
                                 <?php echo $this->Form->end(); ?>
                         </div>
@@ -89,10 +90,10 @@ $ieVersion =  ieversion();
             var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
             if(isChecked){               
                 $("#show_newsletterboxField").show();  
-                
+                $('#UserSendNewsLetterCheck').attr('value','1');
             }else{
                 $("#show_newsletterboxField").hide();
-                
+                $('#UserSendNewsLetterCheck').attr('value',0);
             }            
         });
         

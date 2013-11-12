@@ -112,7 +112,7 @@ EOD;
         if(!empty($playListData)){
             $playList = implode(',', $playListData);
             if(!empty($playList)){
-                $playList = '['.$playList.']';
+                $playList = base64_encode('['.$playList.']');
             }				
         }        
  $str = <<<EOD

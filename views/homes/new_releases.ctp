@@ -39,7 +39,14 @@
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
-                                                        <?php if($this->Session->read("patron")){ ?> 
+                                                        <?php if($this->Session->read("patron"))
+                                                            {                                                              
+                                                                if ($this->Session->read('library_type') == 2)
+                                                                {
+                                                                    echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
+                                                                }
+                                                        
+                                                        ?>
                                                                 <a class="add-to-playlist-button no-ajaxy" href="#"></a>
 
                                                                 <div class="wishlist-popover">

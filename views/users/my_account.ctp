@@ -75,7 +75,8 @@ $ieVersion =  ieversion();
 					<?php echo $this->Form->input('password', array('label' => false,'value' => '','type' => 'password', 'div' => false, 'class' => 'form_fields') ); ?>
                                         </div>
                                         <div>
-                                        <input type="submit" value="<?php __('Save')?>" />
+                                        <!--<input type="button" value="<?php __('Save')?>" id="btnMyAccount" />-->
+                                        <button id="btnMyAccount" type="button" ><?php echo __('Save')?></button>
                                         </div>
                                         <?php echo $this->Form->end(); ?>
                        </div>
@@ -138,6 +139,9 @@ $ieVersion =  ieversion();
             }            
         });
         
+        
+
+        
     });
     function checkEmailValue(){
         
@@ -159,6 +163,7 @@ $ieVersion =  ieversion();
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
+    
 </script>
 <?php
        
