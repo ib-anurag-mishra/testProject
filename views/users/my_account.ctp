@@ -160,6 +160,7 @@ $ieVersion =  ieversion();
         return re.test(email);
     }
     $('#btnMyAccount').click(function(){
+        alert("Here");
         var UFirstName='';
         var ULastName='';
         var UEmail='';
