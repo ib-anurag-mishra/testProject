@@ -1740,10 +1740,10 @@ $('document').ready(function()
             var ULastName='';
             var UEmail='';
             var UPassword='';
-           /*var contentSelector = '.content,article:first,.article:first,.post:first';
+           var contentSelector = '.content,article:first,.article:first,.post:first';
            var $content = $(contentSelector).filter(':first');
            var $body = $(document.body);
-           // Ensure Content
+           /*/ Ensure Content
             if ($content.length === 0) {
                 $content = $body;
             }
