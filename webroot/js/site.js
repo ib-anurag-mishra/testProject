@@ -2007,8 +2007,8 @@ function ajaxMyAccount(){
                         if ($body.ScrollTo || false) {
                             $body.ScrollTo(scrollOptions);
                         } /* http://balupton.com/projects/jquery-scrollto */
-
-//                        $window.trigger(completedEventName);
+/*
+                        $window.trigger(completedEventName);
 
                         // Inform Google Analytics of the change
                         if (typeof window._gaq !== 'undefined') {
@@ -2028,7 +2028,7 @@ function ajaxMyAccount(){
                         while (now < desiredTime) {
                             now = new Date(); // update the current time
                         }
-
+*/
 
                         //$body.removeClass('loader');
                         $.getScript(webroot + 'css/styles.css');
