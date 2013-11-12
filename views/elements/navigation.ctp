@@ -334,11 +334,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
                                                {                                                    
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
-                                                    $todaysDate         =   date("Y-m-d H:i:s");
+                                                    $todaysDate         =   date("Y-m-d");
 
                                                      echo "<!--".strtotime($lastStreamedDate).", ".strtotime($todaysDate).",".$lastStreamedDate.", ".$todaysDate." -->";
-
-                                                    if(strtotime($todaysDate) < strtotime($lastStreamedDate))
+                                                    
+                                                    if(strtotime(date("Y-m-d",$lastStreamedDate)) != strtotime(date('Y-m-d'))) // if Patron Logs for first time in day 
                                                     {
                                                         $streamTime =   10800;                                                        
                                                     }
@@ -346,11 +346,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     {
                                                         $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
 
-                                                        if(empty($streamTime))
+                                                        if(empty($streamTime))      // if there is no record of patron in streaming_records table i.e. user is streaming for first time
                                                         {
                                                             $streamTime =   10800;
                                                         }
-                                                        else
+                                                        else    // if user has streamed one or more time
                                                         {
                                                             $streamTime = (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
                                                         }
