@@ -845,8 +845,8 @@ Class ArtistsController extends AppController
 								'Song.Sample_FileID',
 								'Song.FullLength_FIleID',
 								'Song.provider_type',
-                						'Song.sequence_number'
-
+                						'Song.sequence_number',
+                                                                'Song.ReferenceID'
 								),
 						'contain' => array(
 							'Genre' => array(
@@ -910,7 +910,8 @@ Class ArtistsController extends AppController
 								'Song.Sample_FileID',
 								'Song.FullLength_FIleID',
 								'Song.provider_type',
-                						'Song.sequence_number'
+                						'Song.sequence_number',
+                                                                'Song.ReferenceID'
 
 								),
 						'contain' => array(
@@ -961,6 +962,12 @@ Class ArtistsController extends AppController
 					} else{
 						$albumSongs[$k][$key]['Song']['status'] = 'not';
 					}
+                                        
+                                        $albumSongs[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
+					);
+                                        
 			}
 		}
 	    $this->set('albumData', $albumData);

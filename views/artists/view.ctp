@@ -41,6 +41,10 @@
             
             
 	foreach($albumData as $album_key => $album):
+            
+            echo '<pre>';
+        print_r($album);
+            
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
@@ -57,6 +61,33 @@
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
 			</div>
+                    
+                         <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                        if ($this->Session->read('library_type') == 2)
+                                        {                                                                                                                                                                              
+                                            echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Albums']['ProdID']]);
+                                        }
+                                    
+                                    ?> 
+                                    <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                    <div class="wishlist-popover">
+                                        <?php
+                                        if ($this->Session->read('library_type') == 2)
+                                        {
+                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Albums']['ProdID']],$album['Albums']['ProdID'],$album['Albums']['provider_type']);
+                                            ?>
+                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                            <?php
+                                        }
+                                        
+                                        echo $this->Queue->getSocialNetworkinglinksMarkup(); 
+                             ?>
+                                    </div>
+                                <?php } ?>
+                    
+                    
 			<div class="release-info">Release Information</div>
                         
                         
