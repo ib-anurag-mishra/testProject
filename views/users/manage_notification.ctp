@@ -74,7 +74,7 @@ $ieVersion =  ieversion();
 
 
 <?php
-eval('<script type="text/javascript">eval("alert('.$notificationAlreadySave.');");</script>');
+echo eval('<script type="text/javascript">eval("alert('.$notificationAlreadySave.');");</script>');
        /* }
         
          if(isset($notificationShow) && $notificationShow == 1){*/
