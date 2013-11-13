@@ -232,66 +232,66 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 	songLength = prevSongObj.songLength
 	songProviderType = prevSongObj.providerType
 	songDuration = prevSongObj.psld   
-        
+        songToken = prevSongObj.token
 	var playerEventCodeString;
 	switch(playerEventCode) {
 		
 		case 1:
 			playerEventCodeString = "Play";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,12,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,12,songLength,songDuration,songToken);
 			break;
 			
 		case 2:
 			playerEventCodeString = "Pause";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,13,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,13,songLength,songDuration,songToken);
 			break;
 			
 		case 3:
 			playerEventCodeString = "Prev";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,14,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,14,songLength,songDuration,songToken);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,15,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,15,songLength,songDuration,songToken);
 			break;
 			
 		case 5:
 			playerEventCodeString = "Song Ended";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,16,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,16,songLength,songDuration,songToken);
                         clearNowstreamingSession();
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,17,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,17,songLength,songDuration,songToken);
 			break;
 			
                  case 7:
 			playerEventCodeString = "Queue loaded";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,18,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,18,songLength,songDuration,songToken);
 			break;
                  case 8:
 			playerEventCodeString = "Queue cleared"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,19,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,19,songLength,songDuration,songToken);
                         clearNowstreamingSession();
 			break;                        
                         
 		case 9:
 			playerEventCodeString = "User ran out of time";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,20,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,20,songLength,songDuration,songToken);
                         clearNowstreamingSession();
 			break;
 		case 10:
 			playerEventCodeString = "Queue playback completed";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration,songToken);
                         clearNowstreamingSession();
 			break;
 			
 		case 11:
 			playerEventCodeString = "New queue loaded";
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,21,songLength,songDuration,songToken);
                         clearNowstreamingSession();
 			break;
 		default:
@@ -328,7 +328,7 @@ function validateSong(songObj, playerEventCode) {
 	songLength = songObj.songLength
 	songProviderType = songObj.providerType
 	songDuration = songObj.tbpp
-
+        songToken = songObj.token
 	
 	
        
@@ -350,45 +350,45 @@ function validateSong(songObj, playerEventCode) {
 		case 1:
 			playerEventCodeString = "Play";
                         songDuration = 0;
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,2,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,2,songLength,songDuration,songToken);
 			break;
 			
 		case 2:
 			playerEventCodeString = "Pause"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,3,songLength,songDuration,songToken);
 			break;
 			
 		case 3:
 			playerEventCodeString = "Prev"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,9,songLength,songDuration,songToken);
 			break;
 			
 			
 		case 4:
 			playerEventCodeString = "Next"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,8,songLength,songDuration,songToken);
 			break;
 			
 		case 5:
 			playerEventCodeString = "Song Ended"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,5,songLength,songDuration,songToken);
                         clearNowstreamingSession();
 			break;
 			
 		case 6:
 			playerEventCodeString = "User choose another song in the queue";
                         songDuration = 0;
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,10,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,10,songLength,songDuration,songToken);
 			break;
 			
 	    case 7:
 			playerEventCodeString = "Queue loaded/play";
                         songDuration = 0;
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,1,songLength,songDuration,songToken);
 			break;	
 	    case 8:
 			playerEventCodeString = "Queue cleared"
-                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,11,songLength,songDuration);
+                        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,11,songLength,songDuration,songToken);
                         clearNowstreamingSession();
 			break;			    	
 	}
@@ -452,14 +452,14 @@ function clearNowstreamingSession(){
 }
 
 
-function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime){
+function callStreamingComponent(prodId,providerType,queueId,eventFired,songLength,userStreamedTime,songToken){
     
     var postURL = webroot+'queuelistdetails/getPlaylistData';
     $.ajax({
         type: "POST",
         cache:false,
         url: postURL,
-        data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime},
+        data: {prodId : prodId,providerType : providerType,queueId : queueId,eventFired:eventFired,songLength:songLength,userStreamedTime:userStreamedTime,songToken:songToken},
         async: false
     }).done(function(data){
         var result = JSON.parse(data);
