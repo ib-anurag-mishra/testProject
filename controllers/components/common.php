@@ -326,8 +326,12 @@ STR;
                         
                         
                 } 
-                     print_r($data);die;
+                     
                 Cache::write("nationalalbums" . $country, $data);
+                
+                $data = Cache::read("nationalalbums" . $country);
+                print_r($data);die;
+                
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             } else {
                 $data = Cache::read("nationalalbums" . $country);
