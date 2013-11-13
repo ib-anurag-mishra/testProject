@@ -445,6 +445,7 @@ $('document').ready(function()
     $('.album-container').on('mouseleave', function() {
         $('.preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.top-100-download-now-button').css({opacity: 0});
     });
 	
     $('.album-container').on('mouseenter', function() {
