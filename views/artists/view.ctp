@@ -39,7 +39,7 @@
             
             <?php
             
-           // echo "<pre>"; print_r($albumData);
+            echo "<pre>"; print_r($albumData);
 	foreach($albumData as $album_key => $album):
 ?>
 		<section class="album-detail">
