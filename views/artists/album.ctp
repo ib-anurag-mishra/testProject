@@ -136,6 +136,24 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 ?>
             <li>
                     <div class="album-container">
+                         <?php
+                                    if ($this->Session->read('library_type') == 2)
+                                    {
+                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
+                                    }
+                            ?>
+                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php
+                                                        if ($this->Session->read('library_type') == 2)
+                                                        {                                                            
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
                         <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
                             <?php
                                 if(empty($album['Files']['CdnPath'])){

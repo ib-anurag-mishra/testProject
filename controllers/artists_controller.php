@@ -1655,7 +1655,13 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //$this->set('count_albums',count($albumData));        
+            //$this->set('count_albums',count($albumData));   
+                        
+            $albumData[0]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+					);            
+            
             $albumSongs = array();
             $this->set('albumData', $albumData);
             if(isset($albumData[0]['Album']['Artist'])) {
