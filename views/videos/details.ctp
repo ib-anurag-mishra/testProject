@@ -114,7 +114,7 @@
 						foreach($MoreVideosData as $key => $value)
 						{		
 
-                                                    print_r($value); 
+                                                   
                                                     //hide video if library block the explicit content
                                                     if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
                                                         continue;
@@ -208,13 +208,14 @@
                                                                                             ?>
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 									</div>
-									<div class="artist-name">										
-                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+									<div class="artist-name">	
+                                                                            <?php $artistText = $VideosData[0]['Video']['ArtistText'];?>
+                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($artistText)); ?>" href="/artists/album/<?php echo base64_encode($artistText); ?>">
                                                                                 <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
-                                                                                                    $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
+                                                                                                    $VideoArtist = $this->getTextEncode(substr($artistText, 0, 35)) . "..";
                                                                                             } else {
-                                                                                                    $VideoArtist = $this->getTextEncode($value['Video']['ArtistText']);
+                                                                                                    $VideoArtist = $this->getTextEncode($artistText);
                                                                                             }    
                                                                                         echo $VideoArtist; 
                                                                                  ?>
