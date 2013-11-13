@@ -816,7 +816,7 @@ Class ArtistsController extends AppController
                 echo "<pre>"; print_r($albumData);
                 $albumData['albumSongs'] = $this->requestAction(
 						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-						array('pass' => array(base64_encode($albumData['Album']['ArtistText']), $albumData['Album']['ProdID'] , base64_encode($albumData['Album']['provider_type'])))
+						array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
 					);
                 
                 
