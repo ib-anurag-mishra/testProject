@@ -206,6 +206,13 @@ STR;
     
     function getNationalTop100Albums($territory){
         set_time_limit(0);
+        
+        Cache::write("nationaltop100albums1" . $territory, 'xyz');
+                
+        $data = Cache::read("nationaltop100albums1" . $country);
+              echo $data; die;
+        
+        
         $countryPrefix = $this->getCountryPrefix($territory);    
         $country = $territory;
         if(!empty($country)){
@@ -327,7 +334,8 @@ STR;
                         
                 } 
                      
-                Cache::write("nationaltop100albums" . $country, $data);
+                Cache::write("nationaltop100albums" . $country, $data);             
+               
                 
                 $data = Cache::read("nationaltop100albums" . $country);
                 print_r($data);die;
