@@ -200,7 +200,7 @@ STR;
     
     
 	 /*
-     * Function Name : getNationalTop100Albums
+     * Function Name : getnationaltop100albums
      * Function Description : This function gets data of national top 100 Albums
      */
     
@@ -314,7 +314,7 @@ STR;
             
        
             if (!empty($data)) {
-                Cache::delete("nationalalbums" . $country);
+                Cache::delete("nationaltop100albums" . $country);
                 foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
@@ -327,15 +327,15 @@ STR;
                         
                 } 
                      
-                Cache::write("nationalalbums" . $country, $data);
+                Cache::write("nationaltop100albums" . $country, $data);
                 
-                $data = Cache::read("nationalalbums" . $country);
+                $data = Cache::read("nationaltop100albums" . $country);
                 print_r($data);die;
                 
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             } else {
-                $data = Cache::read("nationalalbums" . $country);
-                Cache::write("nationalalbums" . $country, Cache::read("nationalalbums" . $country));
+                $data = Cache::read("nationaltop100albums" . $country);
+                Cache::write("nationaltop100albums" . $country, Cache::read("nationaltop100albums" . $country));
                 $this->log("Unable to update national 100 albums for " . $territory, "cache");
             }
         }
