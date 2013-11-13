@@ -45,7 +45,7 @@
                             <?php
                                     if ($this->Session->read('library_type') == 2)
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Albums']['ProdID']]);
+                                        //echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Albums']['ProdID']]);
                                     }
                             ?>
                             <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
