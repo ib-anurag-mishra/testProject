@@ -48,7 +48,6 @@ $ieVersion =  ieversion();
                                 <?php echo $this->Form->create('User', array( 'controller' => 'User','action' => 'manage_notification')); ?>
                                 <div>
                                     <?php
-                                    echo $testVar;
                                     if($notificationAlreadySave==true)
                                     {
                                         $notificationAlreadySaveFlag=1; 
@@ -72,25 +71,21 @@ $ieVersion =  ieversion();
                                 <?php echo $this->Form->end(); ?>
                         </div>
                 </div>
-</section>
 
 
 <?php
-        
        /* }
         
          if(isset($notificationShow) && $notificationShow == 1){*/
 ?>
+<script type="text/javascript">eval("alert('<?php echo $notificationAlreadySave?>');");</script>
 <script type="text/javascript">
-    $(function() {  
-        alert('<?php echo $notificationAlreadySave?>');
+    $(function() {
         <?php 
         
         if($notificationAlreadySave === 'true'){
             ?>
-                $("#show_newsletterboxField").show();  
-                $('#UserSendNewsLetterCheck').attr('value','<?php echo $notificationAlreadySaveFlag ?>');
-                
+                $('#show_newsletterboxField').show();  
                 <?php
         }
         
@@ -100,10 +95,10 @@ $ieVersion =  ieversion();
         $('#UserSendNewsLetterCheck').click(function(){	           
             var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
             if(isChecked){               
-                $("#show_newsletterboxField").show();  
+                $('#show_newsletterboxField').show();  
                 $('#UserSendNewsLetterCheck').attr('value','1');
             }else{
-                $("#show_newsletterboxField").hide();
+                $('#show_newsletterboxField').hide();
                 $('#UserSendNewsLetterCheck').attr('value',0);
             }            
         });
@@ -134,3 +129,4 @@ $ieVersion =  ieversion();
        
         }
 ?>
+</section>
