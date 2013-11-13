@@ -548,15 +548,17 @@ STR;
             {               
                
                 $country= $territory;
+                
                 $decodedId=  trim($VideosData[0]['Video']['ArtistText']);
+                $decodedId = str_replace('@','/',$decodedId);
                 if(!empty($country)){
                     
-                    if ( ((Cache::read("videolist_".$country."_".$decodedId)) === true)  || (Cache::read("videolist_".$country."_".$decodedId)!= null) ) { 
+                    //if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId)=== null) ) { 
                         $MoreVideosData = $this->Common->getAllVideoByArtist($country,$decodedId);
                         Cache::write("videolist_".$country."_".$decodedId, $MoreVideosData);
-                    }else{
+                   // }else{
                         $MoreVideosData = Cache::read("videolist_".$country."_".$decodedId);
-                    }
+                   // }
                     
                     
                         

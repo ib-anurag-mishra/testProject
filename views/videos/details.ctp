@@ -108,7 +108,7 @@
 				<h2><?php echo __('More Videos By', true); ?> <?php echo $VideosData[0]['Video']['ArtistText']; ?></h2>
 			</header>
 			<div class="more-videos-scrollable horiz-scroll">
-				<ul style="width:50900px;">
+				<ul style="width:30900px;">
 					<?php						
 						
 						foreach($MoreVideosData as $key => $value)
