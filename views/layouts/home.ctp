@@ -134,7 +134,7 @@
                     'jquery.cycle.all',
                     'jquery.autocomplete',
                     
-                    'jquery.history',
+                    /*'jquery.history',*/
                     'ajaxify-html5',
                     'site',             
                     
