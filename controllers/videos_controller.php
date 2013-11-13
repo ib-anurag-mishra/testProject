@@ -553,7 +553,7 @@ STR;
                     
                     if ( ((Cache::read("videolist_".$country."_".$decodedId)) === true)  || (Cache::read("videolist_".$country."_".$decodedId)!= null) ) { 
                         $MoreVideosData = $this->Common->getAllVideoByArtist($country,$decodedId);
-                        Cache::write("videolist__".$country."_".$decodedId, $MoreVideosData);
+                        Cache::write("videolist_".$country."_".$decodedId, $MoreVideosData);
                     }else{
                         $MoreVideosData = Cache::read("videolist_".$country."_".$decodedId);
                     }
