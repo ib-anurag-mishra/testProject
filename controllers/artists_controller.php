@@ -812,6 +812,9 @@ Class ArtistsController extends AppController
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 
+                echo "<pre>"; print_r($albumData);
+                
+                
 		$albumSongs = array();
 		if(!empty($albumData))
 		{
