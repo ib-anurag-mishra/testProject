@@ -955,7 +955,7 @@ Class ArtistsController extends AppController
 		// echo "<pre>";
 		// print_r($albumSongs);
 		// exit;
-
+                echo '<pre>'; print_r($albumSongs);
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){ 
 			foreach($albumSong as $key => $value){
