@@ -116,6 +116,7 @@ $menuChildren.addClass(activeClass);
        });
        $('#search-text').val(q);
        $('#master-filter').val(type);
+       History.pushState(null, 'Search', '/search/index'+'?'+'q='+q+'&type='+type);
        return false;
 }
 
