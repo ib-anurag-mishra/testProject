@@ -76,7 +76,7 @@ $ieVersion =  ieversion();
 
 
 <?php
-        
+        eval('<script type="text/javascript">alert("'.$notificationAlreadySave.'");');
        /* }
         
          if(isset($notificationShow) && $notificationShow == 1){*/
@@ -89,8 +89,6 @@ $ieVersion =  ieversion();
         if($notificationAlreadySave === 'true'){
             ?>
                 $("#show_newsletterboxField").show();  
-                $('#UserSendNewsLetterCheck').attr('value','<?php echo $notificationAlreadySaveFlag ?>');
-                
                 <?php
         }
         
