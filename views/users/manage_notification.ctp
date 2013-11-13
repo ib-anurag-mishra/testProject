@@ -80,13 +80,15 @@ $ieVersion =  ieversion();
          if(isset($notificationShow) && $notificationShow == 1){*/
 ?>
 <script type="text/javascript">
-    $(function() {  
-        alert('<?php echo $notificationAlreadySave?>');
+    eval("alert('<?php echo $notificationAlreadySave?>');");
+    </script>
+<script type="text/javascript">
+    $(function() {
         <?php 
         
         if($notificationAlreadySave === 'true'){
             ?>
-                $("#show_newsletterboxField").show();  
+                $('#show_newsletterboxField').show();  
                 <?php
         }
         
@@ -96,10 +98,10 @@ $ieVersion =  ieversion();
         $('#UserSendNewsLetterCheck').click(function(){	           
             var isChecked = $('#UserSendNewsLetterCheck:checked').val()?true:false;           
             if(isChecked){               
-                $("#show_newsletterboxField").show();  
+                $('#show_newsletterboxField').show();  
                 $('#UserSendNewsLetterCheck').attr('value','1');
             }else{
-                $("#show_newsletterboxField").hide();
+                $('#show_newsletterboxField').hide();
                 $('#UserSendNewsLetterCheck').attr('value',0);
             }            
         });
