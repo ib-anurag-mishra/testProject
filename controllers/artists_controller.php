@@ -955,7 +955,7 @@ Class ArtistsController extends AppController
 		// echo "<pre>";
 		// print_r($albumSongs);
 		// exit;
-                echo '<pre>'; print_r($albumSongs);
+                //echo '<pre>'; print_r($albumSongs);
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){ 
 			foreach($albumSong as $key => $value){
@@ -968,7 +968,7 @@ Class ArtistsController extends AppController
                                         
                                         $albumSongs[$key]['albumSongs'] = $this->requestAction(
 						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-						array('pass' => array(base64_encode($albumSong[$k]['Song']['ArtistText']), $albumSong[$k]['Song']['ReferenceID'] , base64_encode($albumSong[$k]['Song']['provider_type'])))
+						array('pass' => array(base64_encode($albumSong[$album['Album']['ProdID']][$k]['Song']['ArtistText']), $albumSong[$album['Album']['ProdID']][$k]['Song']['ReferenceID'] , base64_encode($albumSong[$album['Album']['ProdID']][$k]['Song']['provider_type'])))
 					);
 			}
 		}
