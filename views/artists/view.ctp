@@ -39,7 +39,7 @@
             
             <?php
             
-            echo "<pre>"; print_r($albumData);
+           // echo "<pre>"; print_r($albumData);
             
 	foreach($albumData as $album_key => $album):
 ?>
@@ -48,7 +48,7 @@
                             <?php
                                     if ($this->Session->read('library_type') == 2)
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Albums']['ProdID']]);
+                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                                     }
                             ?>
                             <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
