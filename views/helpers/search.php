@@ -1,5 +1,5 @@
 <?php
-/*
+ /*
 	 File Name : Search.php
 	 File Description : helper file for getting search detail
 	 Author : m68interactive
@@ -19,7 +19,7 @@ class SearchHelper extends AppHelper {
      * @return boolean
     */
     function checkDownloadForSearch($TerritoryDownloadStatusArray,$TerritorySalesDateArray,$territory) {
-       $downloadSaltesDate = '';
+       $downloadSalesDate = '';
        $downloadStatus = '';
        
        //get the donwload status
@@ -46,7 +46,7 @@ class SearchHelper extends AppHelper {
                 $Territory_salesdate_array = explode("_", $TerritorySalesDateInfo);
 
                 if(isset($Territory_salesdate_array[0]) && ($Territory_salesdate_array[0] === $territory)){
-                     $downloadSaltesDate = trim($Territory_salesdate_array[1]);
+                     $downloadSalesDate = trim($Territory_salesdate_array[1]);
                 }
            }
        }else{
@@ -54,12 +54,12 @@ class SearchHelper extends AppHelper {
             $Territory_salesdate_array = explode("_", $TerritorySalesDateArray);
 
             if(isset($Territory_salesdate_array[0]) && ($Territory_salesdate_array[0] === $territory)){
-                    $downloadSaltesDate = trim($Territory_salesdate_array[1]);
+                    $downloadSalesDate = trim($Territory_salesdate_array[1]);
             }           
        }
        
        //check validation for download
-       if(($downloadStatus == 1) && ($downloadSaltesDate <= date('Y-m-d'))){
+       if(($downloadStatus == 1) && ($downloadSalesDate <= date('Y-m-d'))){
            return 1;           
        }else{
            return 0;
@@ -83,7 +83,7 @@ class SearchHelper extends AppHelper {
      * @return boolean
     */
     function checkStreamingForSearch($TerritoryStreamingStatusArray,$TerritoryStreamingSalesDateArray,$territory) {
-       $StreamSaltesDate = '';
+       $StreamSalesDate = '';
        $StreamStatus = '';
        
       
@@ -111,7 +111,7 @@ class SearchHelper extends AppHelper {
                 $Territory_salesdate_array = explode("_", $TerritorySalesDateInfo);
 
                 if(isset($Territory_salesdate_array[0]) && ($Territory_salesdate_array[0] === $territory)){
-                     $StreamSaltesDate = trim($Territory_salesdate_array[1]);
+                     $StreamSalesDate = trim($Territory_salesdate_array[1]);
                 }
            }
        }else{
@@ -119,12 +119,12 @@ class SearchHelper extends AppHelper {
             $Territory_salesdate_array = explode("_", $TerritoryStreamingSalesDateArray);
 
             if(isset($Territory_salesdate_array[0]) && ($Territory_salesdate_array[0] === $territory)){
-                    $StreamSaltesDate = trim($Territory_salesdate_array[1]);
+                    $StreamSalesDate = trim($Territory_salesdate_array[1]);
             }           
        }
        
        //check validation for Stream
-       if(($StreamStatus == 1) && ($StreamSaltesDate <= date('Y-m-d'))){
+       if(($StreamStatus == 1) && ($StreamSalesDate <= date('Y-m-d'))){
            return 1;           
        }else{
            return 0;

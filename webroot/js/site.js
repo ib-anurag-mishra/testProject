@@ -1753,11 +1753,39 @@ function documentHtml(html) {
 
 function callSearchAjax(){
     $("#headerSearchSubmit").click(function(event){
+      
        ajaxSearch();
     });
 } 
 
-function ajaxSearch(){
+function resetNavigation(){
+    
+    var sidebar_anchor = $('.sidebar-anchor');
+    sidebar_anchor.removeClass('active');
+    var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
+    sidebar_sub_nav_07.removeClass('active');
+    var sidebar_freegalqueues = $('.leftfqueuesclass');
+    sidebar_freegalqueues.removeClass('active');
+    var home07 = $('#home07');
+    var musicVideo07 = $('#musicVideo07');
+    var newsRelease07 = $('#newsRelease07');
+    var genre07 = $('#genre07');
+    var faq07 = $('#faq07'); 
+    
+    musicVideo07.removeClass('active');
+    newsRelease07.removeClass('active');
+    genre07.removeClass('active');
+    faq07.removeClass('active');
+    home07.removeClass('active');
+    
+    
+}
+
+function ajaxSearch(){   
+    
+    
+        resetNavigation();
+
        var contentSelector = '.content,article:first,.article:first,.post:first';
        var $content = $(contentSelector).filter(':first');
        var $body = $(document.body);
