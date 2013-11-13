@@ -74,12 +74,11 @@ $ieVersion =  ieversion();
 
 
 <?php
-eval('')
+
        /* }
         
          if(isset($notificationShow) && $notificationShow == 1){*/
 ?>
-<script type="text/javascript">eval("alert('<?php echo $notificationAlreadySave?>');");</script>
 <script type="text/javascript">
     $(function() {
         <?php 
