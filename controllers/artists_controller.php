@@ -968,7 +968,7 @@ Class ArtistsController extends AppController
                                         
                                         $albumSongs[$key]['albumSongs'] = $this->requestAction(
 						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-						array('pass' => array(base64_encode($albumSongs['Song']['ArtistText']), $albumSongs['Song']['ReferenceID'] , base64_encode($albumSongs['Song']['provider_type'])))
+						array('pass' => array(base64_encode($albumSong['Song']['ArtistText']), $albumSong['Song']['ReferenceID'] , base64_encode($albumSong['Song']['provider_type'])))
 					);
 			}
 		}
