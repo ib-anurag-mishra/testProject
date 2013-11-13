@@ -104,7 +104,7 @@
                                <?php
                             
 					$i = 1;
-					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):     echo '<pre>'; print_r($albumSongs);
+					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):     echo '<pre>'; print_r($albumSongs); 
 						
 					 //hide song if library block the explicit content
                                             if(($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] =='T')) {
