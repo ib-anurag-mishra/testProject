@@ -312,7 +312,7 @@ STR;
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
             
-            print_r($data);die;
+       
             if (!empty($data)) {
                 Cache::delete("nationalalbums" . $country);
                 foreach($data as $key => $value){
@@ -325,7 +325,8 @@ STR;
 					);
                         
                         
-                }                    
+                } 
+                     print_r($data);die;
                 Cache::write("nationalalbums" . $country, $data);
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             } else {
