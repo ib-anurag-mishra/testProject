@@ -121,7 +121,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             <div class="album-shadow-container">
             <div class="album-scrollable horiz-scroll">
                 <ul>
-<?php echo "<pre>"; print_r($albumData);
+<?php
 	foreach($albumData as $album_key => $album):
             
             
@@ -129,9 +129,6 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             if(($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] =='T')) {
                 continue;
             } 
-            
-            
-            
             
 ?>
             <li>
