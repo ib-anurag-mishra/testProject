@@ -958,7 +958,7 @@ Class ArtistsController extends AppController
                
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){ 
-			foreach($albumSong as $key => $value){   echo '<pre>'; print_r($value);
+			foreach($albumSong as $key => $value){   //echo '<pre>'; print_r($value);
 					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 					if(count($downloadsUsed) > 0){
 						$albumSongs[$k][$key]['Song']['status'] = 'avail';
@@ -968,7 +968,7 @@ Class ArtistsController extends AppController
                                         
                                         $albumSongs[$key]['albumSongs'] = $this->requestAction(
 						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-						array('pass' => array(base64_encode($albumSong[$album['Album']['ProdID']][$k]['Song']['ArtistText']), $albumSong[$album['Album']['ProdID']][$k]['Song']['ReferenceID'] , base64_encode($albumSong[$album['Album']['ProdID']][$k]['Song']['provider_type'])))
+						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
 					);
 			}
 		}
