@@ -114,6 +114,7 @@
 						foreach($MoreVideosData as $key => $value)
 						{		
 
+                                                    print_r($value);
                                                     //hide video if library block the explicit content
                                                     if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
                                                         continue;
