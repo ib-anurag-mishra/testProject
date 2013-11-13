@@ -40,10 +40,16 @@
             <?php
             
             
-	foreach($albumData as $album_key => $album):
+	foreach($albumData as $album_key => $album): 
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
+                            <?php
+                                    if ($this->Session->read('library_type') == 2)
+                                    {
+                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Albums']['ProdID']]);
+                                    }
+                            ?>
                             <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
@@ -98,7 +104,7 @@
                                <?php
                             
 					$i = 1;
-					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):			
+					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):     echo '<pre>'; print_r($albumSongs); 
 						
 					 //hide song if library block the explicit content
                                             if(($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] =='T')) {
