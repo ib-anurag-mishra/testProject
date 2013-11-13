@@ -1811,7 +1811,7 @@ STR;
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                    'Album.Advisory',
+                                            'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1844,6 +1844,10 @@ STR;
             $albumData = array();
             if(!empty( $songs )){
                 $albumData = $this->paginate('Album'); //getting the Albums for the artist
+                $albumData[0]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                    array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+                            );
             } 
             
             $htmlContain ='<div class="album-list-shadow-container"><h3>Album</h3>
