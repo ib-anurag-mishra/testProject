@@ -790,7 +790,10 @@ Class ArtistsController extends AppController
 							),
 						'Country' => array(
 							'fields' => array(
-								'Country.Territory'
+								'Country.Territory',
+                                                                'Country.StreamingSalesDate',
+                                                                'Country.StreamingStatus',
+                                                                'Country.DownloadStatus',
 								)
 							),
 						'Files' => array(
@@ -910,7 +913,8 @@ Class ArtistsController extends AppController
 								'Song.Sample_FileID',
 								'Song.FullLength_FIleID',
 								'Song.provider_type',
-                						'Song.sequence_number'
+                						'Song.sequence_number',
+                                                                'Song.ReferenceID'
 
 								),
 						'contain' => array(
@@ -961,6 +965,11 @@ Class ArtistsController extends AppController
 					} else{
 						$albumSongs[$k][$key]['Song']['status'] = 'not';
 					}
+                                        
+                                        $albumSongs[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($albumSongs['Song']['ArtistText']), $albumSongs['Song']['ReferenceID'] , base64_encode($albumSongs['Song']['provider_type'])))
+					);
 			}
 		}
 	    $this->set('albumData', $albumData);
