@@ -51,6 +51,28 @@
                                         echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                                     }
                             ?>
+                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php
+                                                         
+                                                        if ($this->Session->read('library_type') == 2)
+                                                        {                                                            
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?>
+
+                                                        <?php
+                                                        //$wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                                        //echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
+                                                        ?>
+                                                        
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
+                            
                             <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
