@@ -790,7 +790,10 @@ Class ArtistsController extends AppController
 							),
 						'Country' => array(
 							'fields' => array(
-								'Country.Territory'
+								'Country.Territory',
+                                                                'Country.StreamingSalesDate',
+                                                                'Country.StreamingStatus',
+                                                                'Country.DownloadStatus',
 								)
 							),
 						'Files' => array(
@@ -910,7 +913,8 @@ Class ArtistsController extends AppController
 								'Song.Sample_FileID',
 								'Song.FullLength_FIleID',
 								'Song.provider_type',
-                						'Song.sequence_number'
+                						'Song.sequence_number',
+                                                                'Song.ReferenceID'
 
 								),
 						'contain' => array(
@@ -951,16 +955,21 @@ Class ArtistsController extends AppController
 		// echo "<pre>";
 		// print_r($albumSongs);
 		// exit;
-
+               
 		$this->Download->recursive = -1;
-		foreach($albumSongs as $k => $albumSong){
-			foreach($albumSong as $key => $value){
+		foreach($albumSongs as $k => $albumSong){ 
+			foreach($albumSong as $key => $value){   //echo '<pre>'; print_r($value);
 					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 					if(count($downloadsUsed) > 0){
 						$albumSongs[$k][$key]['Song']['status'] = 'avail';
 					} else{
 						$albumSongs[$k][$key]['Song']['status'] = 'not';
 					}
+                                        
+                                        $albumSongs[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
+					);
 			}
 		}
 	    $this->set('albumData', $albumData);

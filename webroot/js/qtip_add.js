@@ -29,7 +29,7 @@ $(document).ready(function()
    */
 
    
-   
+ /*  
    
    $('a[title]').each(function(){
 	   
@@ -68,9 +68,9 @@ $(document).ready(function()
 	   
    });
   
+*/   
    
    
-   /*
 	$('a[title]').qtip({
 		position: {
 			corner: {
@@ -103,10 +103,9 @@ $(document).ready(function()
 		
 		}
 	});
-*/
 
 
-	
+/*	
    $('span[title]').each(function(){
 	   $(this).qtip({
 	      position: {
@@ -134,8 +133,9 @@ $(document).ready(function()
 	   
 	   
    });
+ */
    
-/*   
+
    $('span[title]').qtip({
       position: {
          corner: {
@@ -159,8 +159,8 @@ $(document).ready(function()
          tip: true
       }
    });
-*/
 
+/*
 $("#qtip[title]").each(function(){
 	
    $(this).qtip({
@@ -187,8 +187,9 @@ $("#qtip[title]").each(function(){
    });	
 	
 });
+*/
 
-/*
+
       
    $("#qtip[title]").qtip({
       position: {
@@ -212,9 +213,9 @@ $("#qtip[title]").each(function(){
          tip: true
       }
    });
-*/  
 
 
+/*
 $('span .dload').each(function(){
    $(this).qtip({
       position: {
@@ -240,8 +241,9 @@ $('span .dload').each(function(){
    }); 	
 	
 });
+*/
 
-/* 
+ 
    
    $('span .dload').qtip({
       position: {
@@ -266,6 +268,6 @@ $('span .dload').each(function(){
       }
    }); 
    
-*/  
+
  
 });
