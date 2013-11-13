@@ -1389,6 +1389,10 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
+                $albumData[0]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                    array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+                            );
 
 		$albumSongs = array();
 		if(!empty($albumData))
@@ -1843,11 +1847,7 @@ STR;
             $this->Album->recursive = 2;
             $albumData = array();
             if(!empty( $songs )){
-                $albumData = $this->paginate('Album'); //getting the Albums for the artist
-                $albumData[0]['albumSongs'] = $this->requestAction(
-                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                    array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
-                            );
+                $albumData = $this->paginate('Album'); //getting the Albums for the artist    
             } 
             
             $htmlContain ='<div class="album-list-shadow-container"><h3>Album</h3>

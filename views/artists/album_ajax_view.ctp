@@ -1,5 +1,5 @@
 <?php
-	foreach($albumData as $album_key => $album):  echo "<pre>"; print_r($album);
+	foreach($albumData as $album_key => $album):  
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
