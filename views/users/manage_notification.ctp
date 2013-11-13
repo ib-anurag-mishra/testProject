@@ -71,7 +71,6 @@ $ieVersion =  ieversion();
                                 <?php echo $this->Form->end(); ?>
                         </div>
                 </div>
-</section>
 
 
 <?php
@@ -79,9 +78,7 @@ $ieVersion =  ieversion();
         
          if(isset($notificationShow) && $notificationShow == 1){*/
 ?>
-<script type="text/javascript">
-    eval("alert('<?php echo $notificationAlreadySave?>');");
-    </script>
+<script type="text/javascript">eval("alert('<?php echo $notificationAlreadySave?>');");</script>
 <script type="text/javascript">
     $(function() {
         <?php 
@@ -132,3 +129,4 @@ $ieVersion =  ieversion();
        
         }
 ?>
+</section>
