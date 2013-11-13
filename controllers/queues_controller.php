@@ -103,9 +103,9 @@ class QueuesController extends AppController{
             
             if ($this->Session->read('library_type') == 2 && $song_details['Country']['StreamingSalesDate'] <= date('Y-m-d') && $song_details['Country']['StreamingStatus'] == 1)
             {            
-                    $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
-                    if(!$queuesongsCount)
-                    {
+//                    $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
+//                    if(!$queuesongsCount)
+//                    {
                         $insertArr = Array();
                         $insertArr['queue_id'] = $_REQUEST['queueId'];
                         $insertArr['song_prodid'] = $_REQUEST['songProdId'];
@@ -119,12 +119,12 @@ class QueuesController extends AppController{
                         echo "Success";
                         exit;
 
-                    }
-                    else
-                    {
-                            echo 'error1';
-                            exit; 
-                    }     
+//                    }
+//                    else
+//                    {
+//                            echo 'error1';
+//                            exit; 
+//                    }     
                 
             }
             else    // Song is not allowed for streaming
@@ -151,19 +151,19 @@ class QueuesController extends AppController{
             if( $this->Session->read('library') && $this->Session->read('patron') && !empty($albumSongs) ){
                 if ($this->Session->read('library_type') == 2)
                 {        
-                    foreach($albumSongs as $key => $value){
-                        $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $value['queue_id'],'song_prodid' => $value['song_prodid'],'song_providertype' => $value['song_providertype'],'album_prodid' => $value['album_prodid'],'album_providertype' => $value['album_providertype'])));
-                        if($queuesongsCount)
-                        {
-                            $del[] =  $key;    
-                        }
-
-                    }
-                    if(!empty($del)){
-                        foreach($del as $value){
-                            unset($albumSongs[$value]);
-                        }
-                    }
+//                    foreach($albumSongs as $key => $value){
+//                        $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $value['queue_id'],'song_prodid' => $value['song_prodid'],'song_providertype' => $value['song_providertype'],'album_prodid' => $value['album_prodid'],'album_providertype' => $value['album_providertype'])));
+//                        if($queuesongsCount)
+//                        {
+//                            $del[] =  $key;    
+//                        }
+//
+//                    }
+//                    if(!empty($del)){
+//                        foreach($del as $value){
+//                            unset($albumSongs[$value]);
+//                        }
+//                    }
                     if(!empty($albumSongs)){
                         $this->QueueDetail->setDataSource('master');
                         $this->QueueDetail->saveAll($albumSongs);
@@ -171,10 +171,10 @@ class QueuesController extends AppController{
                         echo "Success";
                         exit;                    
                     }
-                    if(!empty($del)){
-                        echo 'error1';
-                        exit;                         
-                    }
+//                    if(!empty($del)){
+//                        echo 'error1';
+//                        exit;                         
+//                    }
                     
                 }
                 else    // Song is not allowed for streaming
