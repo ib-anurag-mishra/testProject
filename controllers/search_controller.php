@@ -807,8 +807,8 @@ class SearchController extends AppController {
                                 $widthLeft = "75px";
                                 $widthRight = "300px";
                             } else {
-                                $widthLeft = "65px";
-                                $widthRight = "170px";
+                                $widthLeft = "130px";
+                                $widthRight = "130px";
                             }
                             
                             $regex = "/^$queryVar/i";
@@ -852,7 +852,7 @@ class SearchController extends AppController {
                         if(isset($_GET['ufl']) && $_GET['ufl'] == 1){
                             $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:300px;text-align:left;'> " . $record . "</div>|" . $record;
                         } else {
-                            $records[] = "<div style='float:left;width:130px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:130px;text-align:left;'> " . $record . "</div>|" . $record;
+                            $records[] = "<div style='float:left;width:65px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:180px;text-align:left;'> " . $record . "</div>|" . $record;
                             //$records[] = $record;
                         }
                     }
