@@ -498,38 +498,38 @@ STR;
         if(isset($this->params['pass'][0]))
         {
             if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
-            $prefix = strtolower($this->Session->read('territory')).'_';  
-            $VideosSql  =
-            "SELECT Video.ProdID,Video.Advisory, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
-            Sample_Files.SaveAsName,
-            Full_Files.CdnPath,
-            Full_Files.SaveAsName,
-            File.CdnPath,
-            File.SourceURL,
-            File.SaveAsName,
-            Sample_Files.FileID,
-            Country.Territory,
-            Country.SalesDate
-            FROM video as Video
-            LEFT JOIN 
-            {$prefix}countries As Country ON (Video.ProdID = Country.ProdID AND Video.provider_type = Country.provider_type)
-            LEFT JOIN
-            File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-            LEFT JOIN
-            File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
-            LEFT JOIN
-            PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
-            INNER JOIN File ON (Video.Image_FileID = File.FileID)
-            Where Video.DownloadStatus = '1' AND Video.ProdID = ".$this->params[pass][0];
+                $prefix = strtolower($this->Session->read('territory')).'_';  
+                $VideosSql  =
+                "SELECT Video.ProdID,Video.Advisory, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
+                Sample_Files.SaveAsName,
+                Full_Files.CdnPath,
+                Full_Files.SaveAsName,
+                File.CdnPath,
+                File.SourceURL,
+                File.SaveAsName,
+                Sample_Files.FileID,
+                Country.Territory,
+                Country.SalesDate
+                FROM video as Video
+                LEFT JOIN 
+                {$prefix}countries As Country ON (Video.ProdID = Country.ProdID AND Video.provider_type = Country.provider_type)
+                LEFT JOIN
+                File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+                LEFT JOIN
+                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
+                LEFT JOIN
+                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
+                INNER JOIN File ON (Video.Image_FileID = File.FileID)
+                Where Video.DownloadStatus = '1' AND Video.ProdID = ".$this->params[pass][0];
 
-            $VideosData = $this->Album->query($VideosSql);
-            $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
-            $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
-            //echo "<pre>"; print_r($VideosData); die;
-            
-            if (!empty($VideosData)) {
-                Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
-            }
+                $VideosData = $this->Album->query($VideosSql);
+                $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
+                $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
+                //echo "<pre>"; print_r($VideosData); die;
+
+                if (!empty($VideosData)) {
+                    Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
+                }
             }
         }
         else
@@ -546,18 +546,25 @@ STR;
             $MoreVideosData = array();
             if(count($VideosData)>0)
             {               
-                
                
                 $country= $territory;
                 $decodedId=  trim($VideosData[0]['Video']['ArtistText']);
                 if(!empty($country)){
+                    
+                    if ( ((Cache::read("videolist_".$country."_".$decodedId)) === true)  || (Cache::read("videolist_".$country."_".$decodedId)!= null) ) { 
                         $MoreVideosData = $this->Common->getAllVideoByArtist($country,$decodedId);
                         Cache::write("videolist__".$country."_".$decodedId, $MoreVideosData);
                     }else{
                         $MoreVideosData = Cache::read("videolist_".$country."_".$decodedId);
-                    }              
+                    }
+                    
+                    
+                        
+                }else{
+                    $MoreVideosData = Cache::read("videolist_".$country."_".$decodedId);
+                }              
                   
-                
+                print_r($MoreVideosData);die;
                 
              
                 

@@ -2172,9 +2172,9 @@ STR;
          $preFix = strtolower($country)."_";
          
         if(!empty($country)){
-            if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) { 
+            
                  $countryPrefix = $this->Session->read('multiple_countries');                 
-                  $sql_us_10_v =<<<STR
+                 $sql_us_10_v =<<<STR
                 SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
@@ -2229,15 +2229,9 @@ STR;
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    }               
-                    Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);
-                    }else{
-                        $artistVideoList = Cache::read("videolist_".$country."_".$decodedId);
-                    }
-                   // $this->set('artistVideoList',$artistVideoList);
+                    }    
+                    
                    
-                    Cache::delete("videolist_".$country."_".$decodedId, $artistVideoList);
-                    Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);
                     return $artistVideoList;
                }
     
