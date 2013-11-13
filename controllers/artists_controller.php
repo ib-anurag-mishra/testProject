@@ -957,7 +957,7 @@ Class ArtistsController extends AppController
 		// exit;
 
 		$this->Download->recursive = -1;
-		foreach($albumSongs as $k => $albumSong){
+		foreach($albumSongs as $k => $albumSong){ echo '<pre>'; print_r($albumSong);
 			foreach($albumSong as $key => $value){
 					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 					if(count($downloadsUsed) > 0){
