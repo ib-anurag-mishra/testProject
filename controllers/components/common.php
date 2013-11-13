@@ -2158,6 +2158,90 @@ STR;
          }        
     }
     
+    
+    /**
+      * @function getAllVideoByArtist
+      * @desc This is used to getAllVideoByArtist
+      */
+    
+    function getAllVideoByArtist($country,$decodedId){
+        
+        
+         $videoInstance = ClassRegistry::init('Video');
+         $preFix = strtolower($country)."_";
+         
+        if(!empty($country)){
+            if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
+                 $countryPrefix = $this->Session->read('multiple_countries');                 
+                  $sql_us_10_v =<<<STR
+                SELECT 
+                                Video.ProdID,
+                                Video.ReferenceID,
+                                Video.Title,
+                                Video.ArtistText,
+                                Video.DownloadStatus,
+                                Video.VideoTitle,
+                                Video.Artist,
+                                Video.Advisory,
+                                Video.Sample_Duration,
+                                Video.FullLength_Duration,
+                                Video.provider_type,
+                                Video.video_label,
+                                Video.CreatedOn,
+                                Video.Image_FileID,
+                                Genre.Genre,
+                                Country.Territory,
+                                Country.SalesDate,
+                                Sample_Files.CdnPath,
+                                Sample_Files.SaveAsName,
+                                Sample_Files.FileID,
+                                Full_Files.CdnPath,
+                                Full_Files.SaveAsName,
+                                Full_Files.FileID,
+                                Image_Files.FileID,
+                                Image_Files.CdnPath,
+                                Image_Files.SourceURL,
+                                PRODUCT.pid
+                FROM
+                                video AS Video
+                                                LEFT JOIN
+                                File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+                                                LEFT JOIN
+                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                                                LEFT JOIN
+                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                                                LEFT JOIN
+         {$preFix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+                                                LEFT JOIN
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                                                LEFT JOIN
+                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                WHERE
+                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                GROUP BY Video.ProdID
+                ORDER BY Country.SalesDate desc  
+STR;
+         
+                    //echo $sql_national_100_v; die;
+                    $artistVideoList = $videoInstance->query($sql_us_10_v);
+                    foreach($artistVideoList as $key => $value){
+                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                        $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }               
+                    Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);
+                    }else{
+                        $artistVideoList = Cache::read("videolist_".$country."_".$decodedId);
+                    }
+                   // $this->set('artistVideoList',$artistVideoList);
+                   
+                    Cache::delete("videolist_".$country."_".$decodedId, $artistVideoList);
+                    Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);
+                    return $artistVideoList;
+               }
+    
+    }
+    
     /**
      * @function getDefaultQueues
      * @desc     This function is used to get default queues.

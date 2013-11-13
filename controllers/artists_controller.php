@@ -1669,67 +1669,81 @@ Class ArtistsController extends AppController
                 $this->set('artistUrl', "N/A");
             }
             $decodedId = trim(base64_decode($id));
-                 $country = $this->Session->read('territory');
-                 if(!empty($country)){
-                 if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
-                 $countryPrefix = $this->Session->read('multiple_countries');                 
-                 $sql_us_10_v =<<<STR
-                SELECT 
-                                Video.ProdID,
-                                Video.ReferenceID,
-                                Video.Title,
-                                Video.ArtistText,
-                                Video.DownloadStatus,
-                                Video.VideoTitle,
-                                Video.Artist,
-                                Video.Advisory,
-                                Video.Sample_Duration,
-                                Video.FullLength_Duration,
-                                Video.provider_type,
-                                Video.video_label,
-                                Genre.Genre,
-                                Country.Territory,
-                                Country.SalesDate,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
-                                PRODUCT.pid
-                FROM
-                                video AS Video
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
-                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-                                                LEFT JOIN
-         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
-                                                LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
-                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
-                GROUP BY Video.ProdID
-                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC 
-STR;
-         
-                    //echo $sql_national_100_v; die;
-                    $artistVideoList = $this->Video->query($sql_us_10_v);
-                    foreach($artistVideoList as $key => $value){
-                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                        $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    }               
-                    Cache::write("videolist_".$decodedId, $artistVideoList);
-                    }else{
-                        $artistVideoList = Cache::read("videolist_".$decodedId);
-                    }
-                    $this->set('artistVideoList',$artistVideoList);
+            $country = $this->Session->read('territory');
+            
+            if(!empty($country)){
+                if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) {
+                   
+                    $artistVideoList = $this->Common->getAllVideoByArtist($country,$decodedId);
                     
-                    
-                 }
+                    Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);  
+
+                }else{
+                        $artistVideoList = Cache::read("videolist_".$country."_".$decodedId);
+                }
+              $this->set('artistVideoList',$artistVideoList);
+            }
+            
+//          if(!empty($country)){
+//            if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
+//                 $countryPrefix = $this->Session->read('multiple_countries');                 
+//                 $sql_us_10_v =<<<STR
+//                SELECT 
+//                                Video.ProdID,
+//                                Video.ReferenceID,
+//                                Video.Title,
+//                                Video.ArtistText,
+//                                Video.DownloadStatus,
+//                                Video.VideoTitle,
+//                                Video.Artist,
+//                                Video.Advisory,
+//                                Video.Sample_Duration,
+//                                Video.FullLength_Duration,
+//                                Video.provider_type,
+//                                Video.video_label,
+//                                Genre.Genre,
+//                                Country.Territory,
+//                                Country.SalesDate,
+//                                Full_Files.CdnPath,
+//                                Full_Files.SaveAsName,
+//                                Full_Files.FileID,
+//                                Image_Files.FileID,
+//                                Image_Files.CdnPath,
+//                                Image_Files.SourceURL,
+//                                PRODUCT.pid
+//                FROM
+//                                video AS Video
+//                                                LEFT JOIN
+//                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+//                                                LEFT JOIN
+//                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+//                                                LEFT JOIN
+//         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+//                                                LEFT JOIN
+//                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+//                LEFT JOIN
+//                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+//                WHERE
+//                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+//                GROUP BY Video.ProdID
+//                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC 
+//STR;
+//         
+//                    //echo $sql_national_100_v; die;
+//                    $artistVideoList = $this->Video->query($sql_us_10_v);
+//                    foreach($artistVideoList as $key => $value){
+//                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+//                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+//                        $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
+//                    }               
+//                    Cache::write("videolist_".$decodedId, $artistVideoList);
+//                    }else{
+//                        $artistVideoList = Cache::read("videolist_".$decodedId);
+//                    }
+//                    $this->set('artistVideoList',$artistVideoList);
+//                    
+//                    
+//                 }
 	}
         
         function album_ajax($id=null,$album=null,$provider=null)
