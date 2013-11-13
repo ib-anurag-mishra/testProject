@@ -2172,7 +2172,7 @@ STR;
          $preFix = strtolower($country)."_";
          
         if(!empty($country)){
-            if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
+            if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) { 
                  $countryPrefix = $this->Session->read('multiple_countries');                 
                   $sql_us_10_v =<<<STR
                 SELECT 
