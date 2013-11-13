@@ -212,7 +212,7 @@ STR;
           $maintainLatestDownload =  $this->Session->read('maintainLatestDownload');
           if($maintainLatestDownload){
 
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                 echo    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -221,7 +221,7 @@ STR;
               ORDER BY `countProduct` DESC 
               LIMIT 400";
                 } else {
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                   echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -230,6 +230,7 @@ STR;
               ORDER BY `countProduct` DESC 
               LIMIT 400";
             }
+            die;
             $ids = '';
             $ids_provider_type = '';
             $albumInstance = ClassRegistry::init('Album');
