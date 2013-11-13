@@ -280,7 +280,8 @@ STR;
                         PRODUCT.pid,
                         Albums.ProdID,
                         Albums.provider_type,
-			Albums.AlbumTitle
+			Albums.AlbumTitle,
+                        Albums.Advisory
                 FROM
                         Songs AS Song
                                 LEFT JOIN

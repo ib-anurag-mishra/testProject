@@ -39,18 +39,31 @@
             
             <?php
             
-            echo "<pre>"; print_r($albumData);
+           // echo "<pre>"; print_r($albumData);
             
-	foreach($albumData as $album_key => $album): 
+	foreach($albumData as $album_key => $album):
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
                             <?php
                                     if ($this->Session->read('library_type') == 2)
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Albums']['ProdID']]);
+                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                                     }
                             ?>
+                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php
+                                                        if ($this->Session->read('library_type') == 2)
+                                                        {                                                            
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
+                            
                             <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
@@ -105,7 +118,7 @@
                                <?php
                             
 					$i = 1;
-					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):     //echo '<pre>'; print_r($albumSongs); 
+					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):			
 						
 					 //hide song if library block the explicit content
                                             if(($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] =='T')) {

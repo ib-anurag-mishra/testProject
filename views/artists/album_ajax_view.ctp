@@ -1,8 +1,27 @@
 <?php
-	foreach($albumData as $album_key => $album):
+	foreach($albumData as $album_key => $album):  
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
+                            <?php
+                                    if ($this->Session->read('library_type') == 2)
+                                    {
+                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
+                                    }
+                            ?>
+                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php                                                         
+                                                        if ($this->Session->read('library_type') == 2)
+                                                        {                                                            
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
                             <?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;

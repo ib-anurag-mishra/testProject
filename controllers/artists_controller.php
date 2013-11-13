@@ -790,10 +790,7 @@ Class ArtistsController extends AppController
 							),
 						'Country' => array(
 							'fields' => array(
-								'Country.Territory',
-                                                                'Country.StreamingSalesDate',
-                                                                'Country.StreamingStatus',
-                                                                'Country.DownloadStatus',
+								'Country.Territory'
 								)
 							),
 						'Files' => array(
@@ -815,6 +812,13 @@ Class ArtistsController extends AppController
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 
+                                
+                $albumData[0]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+					);
+                
+                
 		$albumSongs = array();
 		if(!empty($albumData))
 		{
@@ -913,8 +917,7 @@ Class ArtistsController extends AppController
 								'Song.Sample_FileID',
 								'Song.FullLength_FIleID',
 								'Song.provider_type',
-                						'Song.sequence_number',
-                                                                'Song.ReferenceID'
+                						'Song.sequence_number'
 
 								),
 						'contain' => array(
@@ -955,21 +958,16 @@ Class ArtistsController extends AppController
 		// echo "<pre>";
 		// print_r($albumSongs);
 		// exit;
-               
+
 		$this->Download->recursive = -1;
-		foreach($albumSongs as $k => $albumSong){ 
-			foreach($albumSong as $key => $value){   //echo '<pre>'; print_r($value);
+		foreach($albumSongs as $k => $albumSong){
+			foreach($albumSong as $key => $value){
 					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 					if(count($downloadsUsed) > 0){
 						$albumSongs[$k][$key]['Song']['status'] = 'avail';
 					} else{
 						$albumSongs[$k][$key]['Song']['status'] = 'not';
 					}
-                                        
-                                        $albumSongs[$key]['albumSongs'] = $this->requestAction(
-						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-						array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])))
-					);
 			}
 		}
 	    $this->set('albumData', $albumData);
@@ -1391,6 +1389,10 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
+                $albumData[0]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                    array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+                            );
 
 		$albumSongs = array();
 		if(!empty($albumData))
@@ -1657,7 +1659,13 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //$this->set('count_albums',count($albumData));        
+            //$this->set('count_albums',count($albumData));   
+                        
+            $albumData[0]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+					);            
+            
             $albumSongs = array();
             $this->set('albumData', $albumData);
             if(isset($albumData[0]['Album']['Artist'])) {
@@ -1821,7 +1829,7 @@ Class ArtistsController extends AppController
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                    'Album.Advisory',
+                                            'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1853,7 +1861,7 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             if(!empty( $songs )){
-                $albumData = $this->paginate('Album'); //getting the Albums for the artist
+                $albumData = $this->paginate('Album'); //getting the Albums for the artist    
             } 
             
             $htmlContain ='<div class="album-list-shadow-container"><h3>Album</h3>

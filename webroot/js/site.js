@@ -1896,6 +1896,7 @@ $menuChildren.addClass(activeClass);
                alert('Problem fetching data');
            }
        });
+       History.pushState(null, 'Search', '/search/index'+'?'+'q='+q+'&type='+type);
        return false;
 }
 // code to ajaxify MyAccount form start
