@@ -230,7 +230,7 @@ STR;
               ORDER BY `countProduct` DESC 
               LIMIT 400";
             }
-            die;
+          
             $ids = '';
             $ids_provider_type = '';
             $albumInstance = ClassRegistry::init('Album');
@@ -311,6 +311,8 @@ STR;
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
+            
+            print_r($data);die;
             if (!empty($data)) {
                 Cache::delete("nationalalbums" . $country);
                 foreach($data as $key => $value){
