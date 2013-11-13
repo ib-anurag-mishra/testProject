@@ -88,7 +88,7 @@
                                     
 				</h2><?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 				<h3 class="artist-name">
-					<a title="<?php echo $this->getValidText($this->getTextEncode($VideosData[0]['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
+					<a title="<?php echo $this->getTextEncode($VideosData[0]['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
 				<?php
                                         $duration       =    $VideosData[0]['Video']['FullLength_Duration']; 
