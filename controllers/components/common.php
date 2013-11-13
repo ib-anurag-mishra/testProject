@@ -200,26 +200,19 @@ STR;
     
     
 	 /*
-     * Function Name : getnationaltop100albums
+     * Function Name : getNationalTop100Albums
      * Function Description : This function gets data of national top 100 Albums
      */
     
     function getNationalTop100Albums($territory){
         set_time_limit(0);
-        
-        Cache::write("nationaltop100albums1" . $territory, 'xyz');
-                
-        $data = Cache::read("nationaltop100albums1" . $country);
-              echo $data; die;
-        
-        
         $countryPrefix = $this->getCountryPrefix($territory);    
         $country = $territory;
         if(!empty($country)){
           $maintainLatestDownload =  $this->Session->read('maintainLatestDownload');
           if($maintainLatestDownload){
 
-                 echo    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -228,7 +221,7 @@ STR;
               ORDER BY `countProduct` DESC 
               LIMIT 400";
                 } else {
-                   echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -237,7 +230,6 @@ STR;
               ORDER BY `countProduct` DESC 
               LIMIT 400";
             }
-          
             $ids = '';
             $ids_provider_type = '';
             $albumInstance = ClassRegistry::init('Album');
@@ -318,10 +310,8 @@ STR;
             if ($ids_provider_type == "") {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
-            
-       
             if (!empty($data)) {
-                Cache::delete("nationaltop100albums" . $country);
+                Cache::delete("nationalalbums" . $country);
                 foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
@@ -332,18 +322,12 @@ STR;
 					);
                         
                         
-                } 
-                     
-                Cache::write("nationaltop100albums" . $country, $data);             
-               
-                
-                $data = Cache::read("nationaltop100albums" . $country);
-                print_r($data);die;
-                
+                }                    
+                Cache::write("nationalalbums" . $country, $data);
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             } else {
-                $data = Cache::read("nationaltop100albums" . $country);
-                Cache::write("nationaltop100albums" . $country, Cache::read("nationaltop100albums" . $country));
+                $data = Cache::read("nationalalbums" . $country);
+                Cache::write("nationalalbums" . $country, Cache::read("nationalalbums" . $country));
                 $this->log("Unable to update national 100 albums for " . $territory, "cache");
             }
         }
