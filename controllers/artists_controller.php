@@ -1227,10 +1227,12 @@ Class ArtistsController extends AppController
                                 } 
                            }                                        
 			}
+                        
+                                        echo "<pre>";
+                                        print_r($albumData);
+                                        
 		}
                 
-                echo "<pre>";
-                print_r($albumData);
                 exit;
                 
 	    $this->set('albumData', $albumData);
