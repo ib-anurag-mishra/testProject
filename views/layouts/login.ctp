@@ -24,7 +24,6 @@
           echo $javascript->link('jquery.colorbox');
           echo $javascript->link('jquery.cycle.all');
           echo $javascript->link('curvycorners');
-          echo $javascript->link('swfobject');
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
           echo $javascript->link('jquery.bgiframe');
