@@ -1227,16 +1227,7 @@ Class ArtistsController extends AppController
                                 } 
                            }                                        
 			}
-                        
-                                       
-                                        
 		}
-                
-                echo "<pre>";
-                print_r($albumSongs);
-                
-                exit;
-                
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
