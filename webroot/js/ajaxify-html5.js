@@ -129,7 +129,7 @@
             // Animating to opacity to 0 still keeps the element's height intact
             // Which prevents that annoying pop bang issue when loading in new content
             $content.animate({opacity: 0}, 800);
-            
+
             // Ajax Request the Traditional Page
             $.ajax({
                 url: url,
@@ -219,7 +219,6 @@
                         now = new Date(); // update the current time
                     }
 
-
                     //$body.removeClass('loader');
                     $.getScript(webroot + 'css/styles.css');
                     $.getScript(webroot + 'css/freegal_styles.css');
@@ -230,6 +229,9 @@
                     $.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(webroot + 'js/recent-downloads.js');
                     $.getScript(webroot + 'js/search-results.js');
+
+                    $('.loader').fadeOut(500);
+                    $('.content').remove('.loader');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
@@ -237,10 +239,6 @@
                 },
             }); // end ajax
 
-            $('.loader').fadeOut(500);
-
-            $('.content').remove('.loader');
-            
         }); // end onStateChange
 
     }); // end onDomLoad
