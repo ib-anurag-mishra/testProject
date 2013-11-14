@@ -139,7 +139,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                          <?php
                                     if ($this->Session->read('library_type') == 2)
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
+                                        echo $this->Queue->getAlbumStreamNowLabel($album[$album_key]['albumSongs'][$album['Album']['ProdID']]);
                                     }
                             ?>
                          <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
