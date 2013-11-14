@@ -136,8 +136,6 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
-
-
                     // Prepare
                     var
                             $data = $(documentHtml(data)),

@@ -461,18 +461,23 @@ div.paging span a, div.paging a {
 }
 
 #fmp_player{
-z-index: 999999;
+    z-index: 999999;
 }
 
- .loader{
+.loader{
     position: fixed;
-    left: 0px;top: 0px;
-    width: 100%;height: 100%;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
     z-index: 9999;
-    background: url('../img/AjaxLoader.gif') 50% 50% no-repeat rgba(237, 233, 223, 0.72);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#B7EDE9DF,endColorstr=#B7EDE9DF)"; /* IE8 */ 
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#B7EDE9DF,endColorstr=#B7EDE9DF); /* IE6 & 7 */
-    zoom:1;background-image: url('../img/AjaxLoader.gif');
+
+    background-color: rgba(237, 233, 223, 0.72);
+    background-image: url('../img/AjaxLoader.gif');
     background-repeat:no-repeat; 
     background-position: 50% 50%;
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#B7EDE9DF,endColorstr=#B7EDE9DF)"; /* IE8 */ 
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#B7EDE9DF,endColorstr=#B7EDE9DF); /* IE6 & 7 */
+    zoom:1;
 }
