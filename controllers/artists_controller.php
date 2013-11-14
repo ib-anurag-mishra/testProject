@@ -1093,7 +1093,7 @@ Class ArtistsController extends AppController
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
-                        'Album.Advisory',
+                                                'Album.Advisory',
 						'Album.Artist',
 						'Album.ArtistURL',
 						'Album.Label',
@@ -1165,7 +1165,7 @@ Class ArtistsController extends AppController
 										'Song.Sample_FileID',
 										'Song.FullLength_FIleID',
 										'Song.provider_type',
-												'Song.sequence_number'
+										'Song.sequence_number'
 
 										),
 								'contain' => array(
@@ -1178,9 +1178,9 @@ Class ArtistsController extends AppController
 											'fields' => array(
 													'Country.Territory',
 													'Country.SalesDate',
-																								'Country.StreamingSalesDate',
-																								'Country.StreamingStatus',
-																								'Country.DownloadStatus',                                                                                        
+                                                                                                        'Country.StreamingSalesDate',
+                                                                                                        'Country.StreamingStatus',
+                                                                                                        'Country.DownloadStatus',                                                                                        
 												)
 											),
 									'Sample_Files' => array(
@@ -1203,9 +1203,9 @@ Class ArtistsController extends AppController
 			}
 		}
 
-		// echo "<pre>";
-		// print_r($albumSongs);
-		// exit;
+		 echo "<pre>";
+		 print_r($albumSongs);
+		 exit;
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
