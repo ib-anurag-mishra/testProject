@@ -206,6 +206,10 @@ STR;
     
     function getNationalTop100Albums($territory){
         set_time_limit(0);
+        
+        Cache::write("testvariables102" , 'xyz');
+        
+        
         $countryPrefix = $this->getCountryPrefix($territory);    
         $country = $territory;
         if(!empty($country)){
@@ -312,7 +316,7 @@ STR;
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
             if (!empty($data)) {
-                Cache::delete("nationalalbums" . $country);
+                Cache::delete("nationaltop100albums" . $country);
                 foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
@@ -324,11 +328,11 @@ STR;
                         
                         
                 }                    
-                Cache::write("nationalalbums" . $country, $data);
+                Cache::write("nationaltop100albums" . $country, $data);
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             } else {
-                $data = Cache::read("nationalalbums" . $country);
-                Cache::write("nationalalbums" . $country, Cache::read("nationalalbums" . $country));
+                $data = Cache::read("nationaltop100albums" . $country);
+                Cache::write("nationaltop100albums" . $country, Cache::read("nationaltop100albums" . $country));
                 $this->log("Unable to update national 100 albums for " . $territory, "cache");
             }
         }
