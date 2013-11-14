@@ -122,6 +122,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             <div class="album-scrollable horiz-scroll">
                 <ul>
 <?php
+        echo "<pre>"; print_r($albumData);
 	foreach($albumData as $album_key => $album):
             
             
@@ -133,10 +134,12 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 ?>
             <li>
                     <div class="album-container">
+                         <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                         <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162" alt="">
                          <?php
                                     if ($this->Session->read('library_type') == 2)
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
+                                        echo $this->Queue->getAlbumStreamNowLabel($album[$album_key]['albumSongs'][$album['Album']['ProdID']]);
                                     }
                             ?>
                          <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
@@ -161,7 +164,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                     }
                                 }
                             ?>
-                            <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                           
                             <?php
                                     $image = Configure::read('App.Music_Path').$albumArtwork;
                                     if($page->isImage($image)) {
@@ -171,7 +174,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                             //mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                     }
                             ?>
-                            <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162" alt="">
+                           
                         </a>   
                     </div>
                     <div class="album-title">

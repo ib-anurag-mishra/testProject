@@ -11,13 +11,13 @@
 
     // Check to see if History.js is enabled for our Browser
     if (!History.enabled) {
-            console.log('history not enabled');
+        console.log('history not enabled');
         return false;
     }
 
     // Wait for Document
     $(function() {
-            
+
         // Prepare Variables
         var
                 /* Application Specific Variables */
@@ -79,7 +79,7 @@
 
             // Ajaxify
             $this.find('a:internal:not(.no-ajaxy)').click(function(event) {
-                    
+
 
                 // Prepare
                 var
@@ -93,15 +93,15 @@
                 }
 
                 // Ajaxify this link
-                                console.log(url);
-                                
-         History.pushState(null, title, url);
-         event.preventDefault();
+                console.log(url);
+
+                History.pushState(null, title, url);
+                event.preventDefault();
                 return false;
-                
-                
+
+
             });
-                        
+
             // Chain
             return $this;
         };
@@ -117,7 +117,6 @@
                     State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
-
 
             // Set Loading
             var loading_div = "<div class='loader'>";
@@ -159,13 +158,13 @@
 
                     // Update the menu
                     /*
-$menuChildren = $menu.find(menuChildrenSelector);
-$menuChildren.filter(activeSelector).removeClass(activeClass);
-$menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-if ($menuChildren.length === 1) {
-$menuChildren.addClass(activeClass);
-}
-*/
+                     $menuChildren = $menu.find(menuChildrenSelector);
+                     $menuChildren.filter(activeSelector).removeClass(activeClass);
+                     $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
+                     if ($menuChildren.length === 1) {
+                     $menuChildren.addClass(activeClass);
+                     }
+                     */
 
                     // Update the content
                     $content.stop(true, true);
@@ -200,7 +199,7 @@ $menuChildren.addClass(activeClass);
                     } /* http://balupton.com/projects/jquery-scrollto */
 
                     $window.trigger(completedEventName);
-                    
+
                     // Inform Google Analytics of the change
                     if (typeof window._gaq !== 'undefined') {
                         window._gaq.push(['_trackPageview', relativeUrl]);
@@ -211,32 +210,28 @@ $menuChildren.addClass(activeClass);
                         reinvigorate.ajax_track(url);
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
-                    
+
                     var delay = 2; // 5 second delay
                     var now = new Date();
                     var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
-                    
+
                     while (now < desiredTime) {
                         now = new Date(); // update the current time
                     }
 
-                      
                     //$body.removeClass('loader');
                     $.getScript(webroot + 'css/styles.css');
                     $.getScript(webroot + 'css/freegal_styles.css');
-                    
+
                     $.getScript(webroot + 'js/freegal.js');
                     $.getScript(webroot + 'js/site.js');
-                    
+
                     $.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(webroot + 'js/recent-downloads.js');
                     $.getScript(webroot + 'js/search-results.js');
-                    
-    
-                    $('.loader').fadeOut(500);
-                    
-                    $('.content').remove('.loader');
 
+                    $('.loader').fadeOut(500);
+                    $('.content').remove('.loader');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
