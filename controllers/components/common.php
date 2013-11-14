@@ -316,7 +316,7 @@ STR;
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
             if (!empty($data)) {
-                Cache::delete("nationaltop100albums" . $country);
+               
                 foreach($data as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
@@ -327,7 +327,8 @@ STR;
 					);
                         
                         
-                }                    
+                }   
+                echo 147;
                 Cache::write("nationaltop100albums" . $country, $data);
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             } else {
