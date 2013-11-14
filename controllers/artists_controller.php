@@ -1208,12 +1208,12 @@ Class ArtistsController extends AppController
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
 			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-					if(count($downloadsUsed) > 0){
-						$albumSongs[$k][$key]['Song']['status'] = 'avail';
-					} else{
-						$albumSongs[$k][$key]['Song']['status'] = 'not';
-					}
+//					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+//					if(count($downloadsUsed) > 0){
+//						$albumSongs[$k][$key]['Song']['status'] = 'avail';
+//					} else{
+//						$albumSongs[$k][$key]['Song']['status'] = 'not';
+//					}
                                         
                             if($this->Session->read('library_type')==2)
                            {
@@ -1234,16 +1234,12 @@ Class ArtistsController extends AppController
                             unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
                             unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
                             unset($albumSongs[$k][$key]['Song']['sequence_number']);
-                            unset($albumSongs[$k][$key]['Genre']['Genre']);
-                            unset($albumSongs[$k][$key]['Country']['Territory']);
-                            unset($albumSongs[$k][$key]['Country']['SalesDate']);
-                            unset($albumSongs[$k][$key]['Country']['StreamingSalesDate']);
-                            unset($albumSongs[$k][$key]['Country']['StreamingStatus']);
-                            unset($albumSongs[$k][$key]['Country']['DownloadStatus']);
-                            unset($albumSongs[$k][$key]['Sample_Files']['CdnPath']);
-                            unset($albumSongs[$k][$key]['Sample_Files']['SaveAsName']);
-                            unset($albumSongs[$k][$key]['Full_Files']['CdnPath']);
-                            unset($albumSongs[$k][$key]['Full_Files']['SaveAsName']);
+                            unset($albumSongs[$k][$key]['Song']['Title']);
+                            unset($albumSongs[$k][$key]['Song']['Artist']);
+                            unset($albumSongs[$k][$key]['Genre']);
+                            unset($albumSongs[$k][$key]['Country']);
+                            unset($albumSongs[$k][$key]['Sample_Files']);
+                            unset($albumSongs[$k][$key]['Full_Files']); 
                            
 			}
                         
