@@ -329,7 +329,7 @@ STR;
                         
                 }   
               
-                Cache::write("nationaltop100albums" . $country, 'justtest');              
+                Cache::write("nationaltop100albums" . $country, $data);              
                 
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             } else {
