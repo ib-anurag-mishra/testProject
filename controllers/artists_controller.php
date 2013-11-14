@@ -1667,10 +1667,7 @@ Class ArtistsController extends AppController
 						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 						array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
 					);    
-                
-                echo "<br>ArtistText: ".$albumData[$key]['Album']['ArtistText'];
-                echo "<br>ProdID: ".$albumData[$key]['Album']['ProdID'];
-                echo "<br>provider_type: ".$albumData[$key]['Album']['provider_type'];
+
             }
                  
             
