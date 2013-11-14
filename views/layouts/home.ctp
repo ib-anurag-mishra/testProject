@@ -26,16 +26,6 @@
         </title>
         
         <?php
-            if ($this->Session->read("patron"))
-            {
-                if ($this->Session->read('library_type') == '2')
-                {  ?>      
-                    <script type="text/javascript" src="/js/swfobject.js" charset="utf-8"></script>
-       <?php    }    
-
-            } 
-        ?> 
-        <?php
         echo $this->Html->css(
                 array(
                     'freegal_styles',
@@ -71,9 +61,17 @@
                 )
         );
 
-        
+        ?>
 
+        <?php
+            if ($this->Session->read("patron"))
+            {
+                if ($this->Session->read('library_type') == '2')
+                {  ?>      
+                    <script type="text/javascript" src="/js/swfobject.js" charset="utf-8"></script>
+       <?php    }    
 
+            } 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
         {
             $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
