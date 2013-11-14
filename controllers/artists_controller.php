@@ -1225,25 +1225,29 @@ Class ArtistsController extends AppController
                                    $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
                                    $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
                                 } 
-                           }                                        
+                           }   
+                           
+                           
+                            unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
+                            unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
+                            unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
+                            unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
+                            unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
+                            unset($albumSongs[$k][$key]['Song']['sequence_number']);
+                            unset($albumSongs[$k][$key]['Genre']['Genre']);
+                            unset($albumSongs[$k][$key]['Country']['Territory']);
+                            unset($albumSongs[$k][$key]['Country']['SalesDate']);
+                            unset($albumSongs[$k][$key]['Country']['StreamingSalesDate']);
+                            unset($albumSongs[$k][$key]['Country']['StreamingStatus']);
+                            unset($albumSongs[$k][$key]['Country']['DownloadStatus']);
+                            unset($albumSongs[$k][$key]['Sample_Files']['CdnPath']);
+                            unset($albumSongs[$k][$key]['Sample_Files']['SaveAsName']);
+                            unset($albumSongs[$k][$key]['Full_Files']['CdnPath']);
+                            unset($albumSongs[$k][$key]['Full_Files']['SaveAsName']);
+                           
 			}
                         
-                        unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
-                        unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
-                        unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
-                        unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
-                        unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
-                        unset($albumSongs[$k][$key]['Song']['sequence_number']);
-                        unset($albumSongs[$k][$key]['Genre']['Genre']);
-                        unset($albumSongs[$k][$key]['Country']['Territory']);
-                        unset($albumSongs[$k][$key]['Country']['SalesDate']);
-                        unset($albumSongs[$k][$key]['Country']['StreamingSalesDate']);
-                        unset($albumSongs[$k][$key]['Country']['StreamingStatus']);
-                        unset($albumSongs[$k][$key]['Country']['DownloadStatus']);
-                        unset($albumSongs[$k][$key]['Sample_Files']['CdnPath']);
-                        unset($albumSongs[$k][$key]['Sample_Files']['SaveAsName']);
-                        unset($albumSongs[$k][$key]['Full_Files']['CdnPath']);
-                        unset($albumSongs[$k][$key]['Full_Files']['SaveAsName']);
+                       
                         
 		}
 	    $this->set('albumData', $albumData);
