@@ -3,6 +3,8 @@
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
+                            <?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                            <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
                             <?php
                                     if ($this->Session->read('library_type') == 2)
                                     {
@@ -22,7 +24,7 @@
                                                         ?>
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
-                            <?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                            
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
 					if($page->isImage($image)) {
@@ -33,7 +35,7 @@
 					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
-				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
+				
 			</div>
 			<div class="album-title"><?php
 					if(strlen($album['Album']['AlbumTitle']) >= 50){
