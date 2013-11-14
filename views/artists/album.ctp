@@ -122,6 +122,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             <div class="album-scrollable horiz-scroll">
                 <ul>
 <?php
+        echo "<pre>"; print_r($albumData);
 	foreach($albumData as $album_key => $album):
             
             
