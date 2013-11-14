@@ -123,7 +123,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                 <ul>
 <?php
         
-	foreach($albumData as $album_key => $album):    echo "<pre>"; print_r($album);
+	foreach($albumData as $album_key => $album):   // echo "<pre>"; print_r($album);
             
             
              //hide album if library block the explicit content
