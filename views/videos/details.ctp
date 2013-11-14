@@ -110,7 +110,7 @@
 			<div class="more-videos-scrollable horiz-scroll">
 				<ul style="width:30900px;">
 					<?php						
-						
+					if(!empty($MoreVideosData)){
 						foreach($MoreVideosData as $key => $value)
 						{		
 
@@ -228,6 +228,9 @@
 							
 						
 						}
+                                        }else{
+                                            echo 'Sorry,there are no more videos.';
+                                        }
 					?>
 					
 				</ul>
