@@ -118,11 +118,6 @@
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
 
-            // Start Fade Out
-            // Animating to opacity to 0 still keeps the element's height intact
-            // Which prevents that annoying pop bang issue when loading in new content
-            $content.animate({opacity: 0}, 800);
-
             // Set Loading
             var loading_div = "<div class='loader'>";
             loading_div += "</div>";
@@ -130,7 +125,11 @@
 
             //$body.addClass('loader');
 
-
+            // Start Fade Out
+            // Animating to opacity to 0 still keeps the element's height intact
+            // Which prevents that annoying pop bang issue when loading in new content
+            $content.animate({opacity: 0}, 800);
+            
             // Ajax Request the Traditional Page
             $.ajax({
                 url: url,
@@ -231,11 +230,6 @@
                     $.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(webroot + 'js/recent-downloads.js');
                     $.getScript(webroot + 'js/search-results.js');
-
-                    $('.loader').fadeOut(500);
-
-                    $('.content').remove('.loader');
-
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
@@ -243,6 +237,10 @@
                 },
             }); // end ajax
 
+            $('.loader').fadeOut(500);
+
+            $('.content').remove('.loader');
+            
         }); // end onStateChange
 
     }); // end onDomLoad
