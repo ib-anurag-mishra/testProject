@@ -798,6 +798,11 @@ $('document').ready(function()
         $(this).siblings('.artist').addClass('playing');
         $(this).siblings('.time').addClass('playing');
     });
+    
+    $(document).on('mouseenter','.album-cover-image',function(){
+	   $(this).find('.preview').css('opacity',100); 
+	    
+    });
 
     /* end genres page */
 
