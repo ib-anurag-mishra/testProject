@@ -328,7 +328,7 @@ STR;
                         
                         
                 }   
-               
+               print_r($data);
                 Cache::write("nationaltop100albums" . $country, $data);
                 Cache::write("homepage100alubms".$country, $data);
                 
