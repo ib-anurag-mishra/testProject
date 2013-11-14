@@ -801,6 +801,7 @@ $('document').ready(function()
     
     $(document).on('mouseenter','.album-cover-image',function(){
 	   $(this).find('.preview').css('opacity',100); 
+	   $(this).find('.add-to-playlist-button').css('opacity',100); 
 	    
     });
 
