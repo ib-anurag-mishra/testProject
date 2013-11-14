@@ -68,7 +68,7 @@
             {
                 if ($this->Session->read('library_type') == '2')
                 {  ?>      
-                    <script type="text/javascript" src="/js/swfobject.js" charset="utf-8"></script>
+                    <script type="text/javascript" src="/js/swfobject.js"></script>
        <?php    }    
 
             } 
