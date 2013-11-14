@@ -1203,9 +1203,7 @@ Class ArtistsController extends AppController
 			}
 		}
 
-		 echo "<pre>";
-		 print_r($albumSongs);
-		 exit;
+		 
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
@@ -1230,6 +1228,11 @@ Class ArtistsController extends AppController
                            }                                        
 			}
 		}
+                
+                echo "<pre>";
+                print_r($albumData);
+                exit;
+                
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
