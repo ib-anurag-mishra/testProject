@@ -1256,7 +1256,7 @@ Class ArtistsController extends AppController
 		$pre = '';
 		$res = array();
                 
-                echo "<pre>"; print_r($albumSongs);
+               
                 
         return $albumSongs;       
                 
