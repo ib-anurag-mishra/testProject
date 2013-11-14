@@ -2092,9 +2092,7 @@ STR;
              $this->log("Music video id $indiMusicVidID returns null ", "cache");
         } else {
              $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$EachVideosData[0]['File']['CdnPath']."/".$EachVideosData[0]['File']['SourceURL']);
-             $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;               
-             Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);
-             $this->log("Music video id $indiMusicVidID cache set", "cache");
+             $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;              
         }    
          if(count($EachVideosData)>0)
          {    
