@@ -1668,7 +1668,7 @@ Class ArtistsController extends AppController
 						array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
 					);                
             }
-                        
+                 echo "<pre>"; print_r($albumData);       
             
             $albumSongs = array();
             $this->set('albumData', $albumData);
