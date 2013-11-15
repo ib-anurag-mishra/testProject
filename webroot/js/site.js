@@ -409,18 +409,20 @@ $('document').ready(function()
 
     $('.song-cover-container').on('mouseenter', function() {
         $('.preview').css({opacity: 0});
+        $('.album-preview').css({opacity: 1});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
-
+        $(this).find('.album-preview').css({opacity: 1});
     });
 
     $('.song-cover-container').on('mouseleave', function() {
         $('.preview').css({opacity: 0});
+        $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
-
+        $(this).find('.album-preview').css({opacity: 0});
     });
 
     $('.single-cover-container').on('mouseenter', function() {
