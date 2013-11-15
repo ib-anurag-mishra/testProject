@@ -118,7 +118,7 @@ Class DownloadsvideosComponent extends Object
         $countryInstance->tablePrefix = strtolower($territory)."_";
         $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
        
-        print_r($country);
+       
         if(!empty($country['Country'])){
             return true;
         } else {

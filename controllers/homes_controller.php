@@ -2709,7 +2709,7 @@ STR;
      Desc : For downloading a song in wishlist page
     */
     function wishlistVideoDownload() {
-      Configure::write('debug', 2);
+      Configure::write('debug', 0);
       $this->layout = false;
 
       $libId = $this->Session->read('library');
