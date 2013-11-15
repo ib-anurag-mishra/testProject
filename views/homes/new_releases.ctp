@@ -17,8 +17,8 @@
                      $libId = $this->Session->read('library');
                      $patId = $this->Session->read('patron');
                      $count  =   1;           
-					echo "<pre>"; print_r($value['albumSongs'][$value['Albums']['ProdID']]);
-                                        foreach($new_releases_albums as $key => $value){
+					
+                                        foreach($new_releases_albums as $key => $value){ echo "<pre>"; print_r($value);
                                             
                                         //hide song if library block the explicit content
                                         if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
