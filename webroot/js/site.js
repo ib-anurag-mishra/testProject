@@ -442,18 +442,19 @@ $('document').ready(function()
 
     });
 
-    $('.album-container').on('mouseleave', function() {
+    $('.album-container').on('mouseleave', function() { 
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
     });
 	
-    $('.album-container').on('mouseenter', function() {
+    $('.album-container').on('mouseenter', function() { 
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
+        $(this).find('.album-preview').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
     });
 

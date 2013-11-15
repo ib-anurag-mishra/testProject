@@ -83,13 +83,7 @@ class HomesController extends AppController
         $country = $this->Session->read('territory');
         $territory = $this->Session->read('territory');
        
-      
-        
-       
-
-        
-        
-        
+           
         
         $nationalTopDownload = array();
         if(!empty($patId)){
@@ -109,7 +103,7 @@ class HomesController extends AppController
             $nationalTopDownload = Cache::read("national".$territory);                
         }
         $this->set('nationalTopDownload',$nationalTopDownload);
-       
+   
 		
 	// National Top 100 Albums slider 
        
@@ -122,6 +116,8 @@ class HomesController extends AppController
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
         
+
+ 
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
@@ -138,7 +134,7 @@ class HomesController extends AppController
         /*
             Code OF NEWS Section --- START
         */
-/*
+
         if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
                 $this->Session->write('Config.language', 'en');
         }		
@@ -161,7 +157,7 @@ class HomesController extends AppController
                // echo "<br>Query3: ".$this->News->lastQuery();
         }
         $this->set('news',$news_rs);
-	*/	
+		
         /*
                         Code OF NEWS Section --- END
         */
@@ -169,7 +165,7 @@ class HomesController extends AppController
         /*
         *  Code For Coming Soon --- START
         */ 
-        /*
+   
         $territory = $this->Session->read('territory');
 
         if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {
@@ -192,7 +188,7 @@ class HomesController extends AppController
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);
-        */        
+            
         /*
         * Code For Coming Soon --- END
         */  
