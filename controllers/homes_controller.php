@@ -138,7 +138,7 @@ class HomesController extends AppController
         /*
             Code OF NEWS Section --- START
         */
-/*
+
         if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
                 $this->Session->write('Config.language', 'en');
         }		
@@ -161,14 +161,15 @@ class HomesController extends AppController
                // echo "<br>Query3: ".$this->News->lastQuery();
         }
         $this->set('news',$news_rs);
-	*/	
+		
         /*
                         Code OF NEWS Section --- END
         */
-              
+            
         /*
         *  Code For Coming Soon --- START
         */ 
+        /*
         $territory = $this->Session->read('territory');
 
         if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {
@@ -191,10 +192,11 @@ class HomesController extends AppController
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);
-                
+        */        
         /*
         * Code For Coming Soon --- END
         */  
+        
     }
 
     //this is just for streaming component test
