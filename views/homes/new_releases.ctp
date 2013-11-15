@@ -17,7 +17,7 @@
                      $libId = $this->Session->read('library');
                      $patId = $this->Session->read('patron');
                      $count  =   1;           
-					//for($d=1;$d<$count;$d++) {
+					echo "<pre>"; print_r($new_releases_albums);
                                         foreach($new_releases_albums as $key => $value){
                                             
                                         //hide song if library block the explicit content
@@ -41,7 +41,7 @@
 							
                                                         <?php if($this->Session->read("patron"))
                                                             {                                                              
-                                                                if ($this->Session->read('library_type') == 2)
+                                                                if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                                                 {
                                                                     echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                                                 }
