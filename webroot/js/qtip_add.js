@@ -106,7 +106,7 @@ $(document).ready(function()
 	*/
 	
 	$(document).on('hover','a[title]',function(){
-		$(this.qtip({
+		$(this).qtip({
 			position: {
 				corner: {
 					target: 'topLeft',
