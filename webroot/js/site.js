@@ -226,7 +226,7 @@ $('document').ready(function()
     
     $('.albums-page .album-detail-container').on('mouseleave' , '.album-detail', function(){
         $('.album-preview').css({opacity: 0});
-        $('.add-to-playlist-button').css({opacity: 0});
+        $('.add-to-playlist-button').css({opacity: .6});
     });
     
     
