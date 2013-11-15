@@ -442,14 +442,14 @@ $('document').ready(function()
 
     });
 
-    $('.album-container').on('mouseleave', function() {
+    $('.album-container').on('mouseleave', function() { alert("mouseleave");
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
     });
 	
-    $('.album-container').on('mouseenter', function() {
+    $('.album-container').on('mouseenter', function() { alert("mouseenter");
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
