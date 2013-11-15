@@ -140,7 +140,7 @@ class HomesController extends AppController
         /*
             Code OF NEWS Section --- START
         */
-/*
+
         if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
                 $this->Session->write('Config.language', 'en');
         }		
@@ -163,7 +163,7 @@ class HomesController extends AppController
                // echo "<br>Query3: ".$this->News->lastQuery();
         }
         $this->set('news',$news_rs);
-	*/	
+		
         /*
                         Code OF NEWS Section --- END
         */
