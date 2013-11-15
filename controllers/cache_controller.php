@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -90,27 +90,27 @@ class CacheController extends AppController {
         Configure::write('debug', 2);
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){
-            $this->Common->getGenres($territory);
-            $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
-            $this->Common->getNationalTop100Albums($territory);
-            $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-            $this->Common->getUsTop10Albums($territory);
-            $this->Common->getUsTop10Videos($territory);
-            $this->Common->getNewReleaseAlbums($territory);
-            $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
+//            $this->Common->getGenres($territory);
+//            $this->Common->getNationalTop100($territory);
+//            $this->Common->getFeaturedVideos($territory);
+//            $this->Common->getTopVideoDownloads($territory);
+//            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
+//            $this->Common->getNationalTop100Albums($territory);
+//            $this->Common->getComingSoonSongs($territory);
+//            $this->Common->getComingSoonVideos($territory);
+//            $this->Common->getUsTop10Songs($territory);
+//            $this->Common->getUsTop10Albums($territory);
+//            $this->Common->getUsTop10Videos($territory);
+//            $this->Common->getNewReleaseAlbums($territory);
+//            $this->Common->getNewReleaseVideos($territory);
+//            $this->Common->getFeaturedArtists($territory);
+//            $this->Common->getDifferentGenreData($territory);
             $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);    
+           // $this->Common->getDefaultQueues($territory);    
         }
-        $this->Common->setLibraryTopTenCache();
-        $this->Common->setVideoCacheVar();    
-        $this->setAppMyMusicVideoList(); 
+//        $this->Common->setLibraryTopTenCache();
+//        $this->Common->setVideoCacheVar();    
+//        $this->setAppMyMusicVideoList(); 
        
     }
     
@@ -124,6 +124,8 @@ class CacheController extends AppController {
             $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
             $country = $territory;
+            
+            /*
             $condition = "";
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -183,7 +185,7 @@ class CacheController extends AppController {
                 $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                 $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
             }
-
+    */
 
             $this->Song->bindmodel(array('hasOne'=>array(
                     'Genre' => array(
@@ -197,6 +199,32 @@ class CacheController extends AppController {
                 )
                 )
             );
+            
+            
+            $this->Genre->Behaviors->attach('Containable');
+            $this->Genre->recursive = 2;
+           
+            $genreAll = $this->Genre->find('all', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Country.Territory' => $country, "Genre.Genre NOT IN( 'Caribbean','Downtempo','Dub','Fusion','House','Indie' ,'Progressive Rock','Psychedelic Rock', 'Symphony' ,'World' ,'Porn Groove')"
+                        )
+                    )
+                ),
+                'fields' => array(
+                    'Genre.Genre'
+                ),
+                'contain' => array(
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.Territory'
+                        )
+                    ),
+                ), 'group' => 'Genre.Genre'
+            ));
+           
+           
 
             foreach($genreAll as $genreRow){
                 $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
