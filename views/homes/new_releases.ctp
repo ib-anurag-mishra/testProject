@@ -18,7 +18,7 @@
                      $patId = $this->Session->read('patron');
                      $count  =   1;           
 					
-                                        foreach($new_releases_albums as $key => $value){ echo "<pre>"; print_r($value);
+                                        foreach($new_releases_albums as $key => $value){ 
                                             
                                         //hide song if library block the explicit content
                                         if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
