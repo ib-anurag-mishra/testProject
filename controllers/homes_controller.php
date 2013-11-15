@@ -121,7 +121,7 @@ class HomesController extends AppController
             $nationalTopAlbums = Cache::read("nationaltop100albums".$territory);                
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
-        /*
+        /* 
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
