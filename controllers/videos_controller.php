@@ -48,22 +48,21 @@ class VideosController extends AppController {
         }        
 
        // Cache::delete("featured_videos".$territory);
-//	if ($featuredVideos = Cache::read("featured_videos" . $territory) === false) {
-//   		$featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, Video.Advisory, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW() ";
-//		
-//            $featuredVideos = $this->Album->query($featuredVideosSql);
-//            if (!empty($featuredVideos)) {
-//                foreach($featuredVideos as $key => $featureVideo){
-//                    $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);//"sony_test/".
-//                    // print_r($featureVideo); die;
-//                    $videoImage = Configure::read('App.Music_Path').$videoArtwork;
-//                    $featuredVideos[$key]['videoImage'] = $videoImage;
-//                } 
-//                Cache::write("featured_videos" . $territory, $featuredVideos);
-//            }
-//        }
-//            $featuredVideos = Cache::read("featured_videos" . $territory);
-//            $this->set('featuredVideos', $featuredVideos);
+	if ($featuredVideos = Cache::read("featured_videos" . $territory) === false) {
+   		$featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, Video.Advisory, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID and FeaturedVideo.provider_type = Video.provider_type LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW() ";
+		
+            $featuredVideos = $this->Album->query($featuredVideosSql);
+            if (!empty($featuredVideos)) {
+                foreach($featuredVideos as $key => $featureVideo){
+                    $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);//"sony_test/".
+                    // print_r($featureVideo); die;
+                    $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                    $featuredVideos[$key]['videoImage'] = $videoImage;
+                } 
+                Cache::write("featured_videos" . $territory, $featuredVideos);
+            }
+        }
+
         
  //	Cache::delete("top_download_videos".$territory);
 	if ($topDownloads = Cache::read("top_download_videos" . $territory) === false) {
@@ -81,11 +80,11 @@ class VideosController extends AppController {
             }
         }
 
-        
+        $featuredVideos = Cache::read("featured_videos" . $territory);
 
         $topDownloads = Cache::read("top_download_videos" . $territory);
 
-        
+        $this->set('featuredVideos', $featuredVideos);
 
         $this->set('topVideoDownloads', $topDownloads);
     }
