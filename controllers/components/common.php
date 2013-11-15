@@ -1425,6 +1425,10 @@ STR;
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
                 $image =  Configure::read('App.Music_Path').$albumArtwork;
                 $featured[$k]['featuredImage'] = $image;
+                $featured[$k]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                    array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])))
+                            );                
             }                
             Cache::delete("featured" . $territory);
             Cache::write("featured" . $territory, $featured);

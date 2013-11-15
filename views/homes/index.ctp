@@ -416,7 +416,42 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
 
                                 <a href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $html->image($v['featuredImage'], array("height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'])); ?></a>
 
+                                    <?php
+                                    if ($this->Session->read("patron"))
+                                    {
+                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
+                                            {
+                                                echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs']);
+                                            }
+                                        ?> 
+                                            <?php
 
+                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
+                                            {?>
+                                                <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                <div class="wishlist-popover">                                                
+                                                <?php echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$v['albumSongs'],$v['Album']['ProdID'],$v['Album']['provider_type']);
+                                                ?>
+                                                <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                <?php
+                                            }
+                                            ?>
+
+                                            <?php
+                                            //$wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                            //echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
+                                            ?>
+
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                        </div>
+                                    <?php }
+                                           else
+                                           {
+                                               ?>
+                                                  <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a> 
+                                               <?php
+                                           }?>
                             </div>
                             <div class="album-title">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a>
