@@ -5925,8 +5925,7 @@ img {
 					.box-shadow(0 0 4px rgb(82,198,236));
 				}
 				
-				.add-to-playlist-button {
-					
+				.add-to-playlist-button {					
 					background: url(/img/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
@@ -5936,6 +5935,167 @@ img {
 					height: 25px;
 					opacity: 0;
 				}
+
+                                .album-preview {							
+                                        background: none repeat scroll 0 0 #FFFFFF;
+                                        bottom: 107px;
+                                        box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+                                        color: #000000;
+                                        display: block;
+                                        font-size: 12px;
+                                        font-weight: bold;
+                                        height: 25px;
+                                        line-height: 25px;
+                                        opacity: 0;
+                                        position: absolute;
+                                        right: 38px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        text-transform: uppercase;
+                                        width: 124px;
+                                        left: 68px;
+                                }
+
+                                .wishlist-popover {
+						
+							display: none;
+							position: absolute;
+							bottom: 37px;
+							right:10px;
+							font-size: 12px;
+							z-index: 100;
+							width: 120px;
+							
+							
+							
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							
+							&.active {
+								
+								display: block;
+							}
+							
+							a {
+								background: #fff;
+								
+								display: block;
+								color: #000;
+								padding: 5px 5px 5px 10px;
+							
+								line-height: 20px;
+								text-decoration: none;
+								
+								&:hover {
+									
+									background: #999;
+								}
+								
+							}
+							
+							.playlist-options {
+								position: absolute;
+								right: -144px;
+								top:0;
+								display: none;
+								background: #fff;
+								width: 145px;
+								height: 156px;
+								.box-shadow(0 0 2px rgba(0,0,0,.5));
+								
+								overflow-x: hidden;
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								
+								
+								ul {
+									
+									li {
+										
+										float: none;
+										padding: 0;
+										
+										a {
+											
+											padding: 5px 5px 5px 10px;
+											text-decoration: none;
+											
+											&:hover {
+												
+												text-decoration: none;
+											}
+										}
+									}
+								}
+									
+							}
+							
+							.share {
+								
+								background: #fff;
+								border-top: 1px solid rgba(0,0,0,.2);
+								padding-bottom: 3px;
+								position: relative;
+								width: 120px;
+								height: 32px;
+								
+								p {
+									
+									position: absolute;
+									left: 10px;
+									top:10px;
+									
+								}
+								
+								.facebook {
+									background: url(../img/facebook.png) no-repeat center center;
+									
+									display: block;
+									
+									width: 12px;
+									height: 12px;
+									position: absolute;
+									left: 62px;
+									top:4px;
+									
+									&:hover {
+										background: url(../img/facebook-hover.png) no-repeat center center;
+										
+									}
+								}
+								
+								.twitter {
+									background: url(../img/twitter.png) no-repeat center center;
+									
+									display: block;
+									position: absolute;
+									width: 15px;
+									height: 12px;
+									left: 82px;
+									top:4px;
+									
+									&:hover {
+										
+										background: url(../img/twitter-hover.png) no-repeat center center;
+									}
+								}
+							}
+							
+							.add-to-playlist {
+									
+								background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+								
+								&:hover {
+									
+									color: rgba(0,0,0,1);
+									background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+								}
+							}
+						}
+
 				/*
 				.preview {
 					
