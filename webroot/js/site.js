@@ -228,11 +228,11 @@ $('document').ready(function()
     });
     
     
-    $('.news .featured ul li .featured-album-detail').on('mouseenter' , '.album-detail-container', function(){
+    $('.news .featured .featured-album-detail').on('mouseenter' , '.album-detail-container', function(){
         $('.album-preview').css({opacity: 1});
     });
     
-    $('.news .featured ul li .featured-album-detail').on('mouseleave' , '.album-detail-container', function(){
+    $('.news .featured .featured-album-detail').on('mouseleave' , '.album-detail-container', function(){
         $('.album-preview').css({opacity: 0});
     });
     
