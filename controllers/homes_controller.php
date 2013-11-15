@@ -2752,6 +2752,8 @@ STR;
       if($checkValidation == 1){
           
           $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
+          echo $territory = $this->Session->read('territory');
+          exit;
           
           /**
             records download component request & response
