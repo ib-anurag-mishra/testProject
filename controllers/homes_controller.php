@@ -2709,7 +2709,7 @@ STR;
      Desc : For downloading a song in wishlist page
     */
     function wishlistVideoDownload() {
-      Configure::write('debug', 0);
+      Configure::write('debug', 2);
       $this->layout = false;
 
       $libId = $this->Session->read('library');
@@ -2752,9 +2752,9 @@ STR;
       if($checkValidation == 1){
           
           $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
-          echo $territory = $this->Session->read('territory');
-          exit;
-          
+        
+         
+       
           /**
             records download component request & response
           */
