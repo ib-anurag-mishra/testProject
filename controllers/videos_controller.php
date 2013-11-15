@@ -62,7 +62,8 @@ class VideosController extends AppController {
 //                Cache::write("featured_videos" . $territory, $featuredVideos);
 //            }
 //        }
-
+//            $featuredVideos = Cache::read("featured_videos" . $territory);
+//            $this->set('featuredVideos', $featuredVideos);
         
  //	Cache::delete("top_download_videos".$territory);
 	if ($topDownloads = Cache::read("top_download_videos" . $territory) === false) {
@@ -80,11 +81,11 @@ class VideosController extends AppController {
             }
         }
 
-        $featuredVideos = Cache::read("featured_videos" . $territory);
+        
 
         $topDownloads = Cache::read("top_download_videos" . $territory);
 
-        $this->set('featuredVideos', $featuredVideos);
+        
 
         $this->set('topVideoDownloads', $topDownloads);
     }
