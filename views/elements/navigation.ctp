@@ -65,6 +65,8 @@ $(document).ready(function() {
  
         return false;
     });
+
+    
 });
 
 
@@ -101,6 +103,31 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+
+    $(document).on('click', '.sidebar-anchor', function(e) {
+
+           if ($(this).next('ul').hasClass('active')) {
+
+                $(this).next('ul').removeClass('active');
+
+            } else {
+
+                $(this).next('ul').addClass('active');
+                var home07 = $('#home07');
+                home07.removeClass('active');
+                var musicVideo07 = $('#musicVideo07');
+                musicVideo07.removeClass('active');
+                var newsRelease07 = $('#newsRelease07');
+                newsRelease07.removeClass('active');
+                var genre07 = $('#genre07');
+                genre07.removeClass('active');
+                var faq07 = $('#faq07');
+                faq07.removeClass('active');
+            }
+
+        });
+});
 
 </script>
 
