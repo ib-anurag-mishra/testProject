@@ -209,6 +209,10 @@ $('document').ready(function()
         $('.playlist-options').addClass('active');
     });
     
+    
+    
+    
+    
 
     
     
@@ -255,22 +259,22 @@ $('document').ready(function()
 
     $('.add-to-queue').on('mouseenter', function() {
 
-        if (playlist_list.hasClass('active')) {
-            playlist_list.removeClass('active');
+        if ($('.playlist-options').hasClass('active')) {
+            $('.playlist-options').removeClass('active');
         }
     });
 
     $('.add-to-wishlist').on('mouseenter', function() {
 
-        if (playlist_list.hasClass('active')) {
+        if ($('.playlist-options').hasClass('active')) {
 
-            playlist_list.removeClass('active');
+            $('.playlist-options').removeClass('active');
         }
     });
 
-    playlist_list.on('mouseleave', function() {
+    $('.playlist-options').on('mouseleave', function() {
 
-        playlist_list.removeClass('active');
+        $('.playlist-options').removeClass('active');
     });
     
     $('.genres-page .album-detail-container').on('mouseleave','.playlist-options',function(){
@@ -278,7 +282,7 @@ $('document').ready(function()
 	    $('.playlist-options').removeClass('active');
     });
     
-    playlist_list.bind('mousewheel', function(e) {
+    $('.playlist-options').bind('mousewheel', function(e) {
 
 
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
