@@ -1729,7 +1729,7 @@ function removeSong(pdId){
                 }
 
                 document.getElementById("ajaxflashMessage44").style.display = "block";
-                document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login in order to Remove Song';
+                document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login in for Removing a Song from your Queue';
             }
             else
             {
@@ -1742,7 +1742,7 @@ function removeSong(pdId){
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song to Queue';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Queue';
 
                 }
                 else
@@ -1768,7 +1768,7 @@ function removeSong(pdId){
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to queue is unsuccessfull';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for removing song from queue is unsuccessfull';
         }
     });
     return false;
