@@ -204,7 +204,7 @@ $('document').ready(function()
     
 	
     $('.add-to-playlist').on('mouseenter', function() {
-		console.log('add to playlist entered');
+		//console.log('add to playlist entered');
 		
         $('.playlist-options').addClass('active');
     });
