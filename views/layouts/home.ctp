@@ -1,6 +1,6 @@
 <?php /* <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> */ ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
     <head>
 
@@ -24,94 +24,7 @@
             }
             ?>
         </title>
-<style type="text/css">
- 
- 			.button-container {
-				
-				position: relative;
-				width: 200px;
-				margin-top: 10px;
-			}
-				.gear-icon {
-					
-					position: absolute;
-					right: 0;
-					top:0;
-					background: url(/img/queue-details/gear-off.png);
-					width: 55px;
-					height: 42px;
-					cursor: pointer;
-										
-				}                        
-                        
-				.play-album-btn {
-					
-					position: absolute;
-					right: -358px;
-					top:0;
-					cursor: pointer;
-					background: url(/img/queue-details/play-queue-off.png);
-					width: 137px;
-					height: 42px;
-					
-					
-				}
-                                
-.add-to-playlist-button {
-					background: url(/img/add-to-playlist-button.png);
-					display: block;
-					position: absolute;
-					bottom:50px;
-					right: 8px;
-					width: 26px;
-					height: 25px;
-					opacity: 0;
-					.box-shadow(0 0 2px rgba(0,0,0,.5));
-					
-				}   
-
-.wishlist-popover {
-    bottom: 37px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-    display: none;
-    font-size: 12px;
-    position: absolute;
-    right: 10px;
-    width: 120px;
-    z-index: 100;
-}
-
-.playlist-options {
-    background: none repeat scroll 0 0 #FFFFFF;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-    display: none;
-    height: 186px;
-    overflow-x: hidden;
-    position: absolute;
-    right: -144px;
-    top: 0;
-    width: 145px;
-}
-
-.add-to-playlist {
-    background: url("/img/create-new-playlists-arrow.png") no-repeat scroll 108px center #FFFFFF;
-}
-
-.wishlist-popover .playlist-options ul {
-    height: 330px;
-    overflow-x: auto;
-    width: 27010px;
-}
-
-
-.wishlist-popover .playlist-options ul li {
-    float: none;
-    padding: 0;
-}
-				
-    
- </style>   
-
+        
         <?php
         echo $this->Html->css(
                 array(
@@ -143,15 +56,22 @@
                     'recent-downloads',
                     'search-results',
                     
-                    'swfobject.js',
                     'qtip',
                     'qtip_add'
                 )
         );
 
-        
+        ?>
 
+        <?php
+            if ($this->Session->read("patron"))
+            {
+                if ($this->Session->read('library_type') == '2')
+                {  ?>      
+                    <script type="text/javascript" src="/js/swfobject.js"></script>
+       <?php    }    
 
+            } 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
         {
             $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
@@ -223,7 +143,7 @@
                     }
                     
                     
-                    if (pageName == 'home07') {
+                    if (pageName === 'home07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -239,7 +159,7 @@
                         leftsavedqueues07.removeClass('active');
                         leftmylib07.removeClass('active');
                         home07.addClass('active');
-                    } else if (pageName == 'musicVideo07') {
+                    } else if (pageName === 'musicVideo07') {
                         home07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -255,7 +175,7 @@
                         leftsavedqueues07.removeClass('active');
                         musicVideo07.addClass('active');
                         leftmusicVideo07.addClass('active');
-                    } else if (pageName == 'newsRelease07') {
+                    } else if (pageName === 'newsRelease07') {
                         musicVideo07.removeClass('active');
                         home07.removeClass('active');
                         genre07.removeClass('active');
@@ -272,7 +192,7 @@
                         
                         leftnewrelease07.addClass('active');
                         newsRelease07.addClass('active');
-                    } else if (pageName == 'genre07') {
+                    } else if (pageName === 'genre07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         home07.removeClass('active');
@@ -288,7 +208,7 @@
                         leftmywishlist07.removeClass('active');
                         leftmyhistory07.removeClass('active');
                         genre07.addClass('active');
-                    } else if (pageName == 'faq07') {
+                    } else if (pageName === 'faq07') {
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         home07.removeClass('active');
@@ -304,7 +224,7 @@
                         leftmyhistory07.removeClass('active');
                         leftmylib07.removeClass('active');
                         faq07.addClass('active');
-                    } else if (pageName == 'leftmusicVideo07') {                        
+                    } else if (pageName === 'leftmusicVideo07') {                        
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
                         faq07.removeClass('active');
@@ -320,7 +240,7 @@
                         ustoplib07.removeClass('active');
                         musicVideo07.addClass('active');
                         leftmusicVideo07.addClass('active');
-                    } else if (pageName == 'leftmylib07') {                      
+                    } else if (pageName === 'leftmylib07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -336,7 +256,7 @@
                         leftnewrelease07.removeClass('active');
                         leftmywishlist07.removeClass('active');
                         leftmylib07.addClass('active');
-                    } else if (pageName == 'ustoplib07') {                      
+                    } else if (pageName === 'ustoplib07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -353,7 +273,7 @@
                         leftmylib07.removeClass('active');
                         leftmyhistory07.removeClass('active');
                         ustoplib07.addClass('active');
-                    } else if (pageName == 'leftnewrelease07') {                      
+                    } else if (pageName === 'leftnewrelease07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -370,7 +290,7 @@
                         leftmyhistory07.removeClass('active');
                         newsRelease07.addClass('active');
                         leftnewrelease07.addClass('active');
-                    } else if (pageName == 'leftmyhistory07') {                      
+                    } else if (pageName === 'leftmyhistory07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -386,7 +306,7 @@
                         topustop07.removeClass('active');
                         leftmywishlist07.removeClass('active');
                         leftmyhistory07.addClass('active');
-                    } else if (pageName == 'leftmywishlist07') {                      
+                    } else if (pageName === 'leftmywishlist07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -402,7 +322,7 @@
                         leftnowstreaming07.removeClass('active');
                         topmylib07.removeClass('active');
                         leftmywishlist07.addClass('active');
-                    } else if (pageName == 'topmylib07') {                      
+                    } else if (pageName === 'topmylib07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -420,7 +340,7 @@
                         sidebar_sub_nav_07.addClass('active');
                         topmylib07.addClass('active');
                         leftmylib07.addClass('active');
-                    } else if (pageName == 'topustop07') {                      
+                    } else if (pageName === 'topustop07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -436,7 +356,7 @@
                         leftsavedqueues07.removeClass('active');
                         topmylib07.addClass('active');                       
                        
-                    } else if (pageName == 'leftsavedqueues07') {                      
+                    } else if (pageName === 'leftsavedqueues07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -452,7 +372,7 @@
                         leftnowstreaming07.removeClass('active');
                         leftsavedqueues07.addClass('active');
                        
-                    } else if (pageName == 'leftnowstreaming07') {                      
+                    } else if (pageName === 'leftnowstreaming07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
                         genre07.removeClass('active');
@@ -474,7 +394,7 @@
 
                 $(document).ready(function() {
                         <?php
-                        if ($this->Session->read('approved') && $this->Session->read('approved') == 'no')
+                        if ($this->Session->read('approved') && $this->Session->read('approved') === 'no')
                         {
                             ?>
                                     $(".termsApproval")

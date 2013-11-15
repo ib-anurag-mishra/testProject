@@ -1674,6 +1674,108 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 }
 
 
+function removeSong(pdId){
+    
+    var data = "songId=" + pdId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "queuelistdetails/removeSongFromQueue", // URL to request
+        data: data, // post data
+        success: function(response) {
+            
+            
+            var playlist_list_popup = $('.playlist-options');
+            playlist_list_popup.removeClass('active');
+            var wishlist_list_popup = $('.wishlist-popover');
+            wishlist_list_popup.removeClass('active');
+            
+            
+            
+            if (response.length == 6) {
+                var msg = response.substring(0, 6);
+            } else {
+                var msg = response.substring(0, 5);
+            }
+            if (msg == 'error')
+            {
+                if (document.getElementById('flash-message'))
+                {
+                    document.getElementById('flash-message').innerHTML = '';
+                    document.getElementById("flash-message").setAttribute("class", "");
+                }
+
+                document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById("ajaxflashMessage44").style.background = "red";
+                document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in deleting song from Queue';
+
+                return false;
+            } else if (msg == 'error1') {
+
+                if (document.getElementById('flash-message'))
+                {
+                    document.getElementById('flash-message').innerHTML = '';
+                    document.getElementById("flash-message").setAttribute("class", "");
+                }
+
+                document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById('ajaxflashMessage44').innerHTML = 'This song cannot be deleted';
+            }
+            else if (msg == 'error2')
+            {
+                if (document.getElementById('flash-message'))
+                {
+                    document.getElementById('flash-message').innerHTML = '';
+                    document.getElementById("flash-message").setAttribute("class", "");
+                }
+
+                document.getElementById("ajaxflashMessage44").style.display = "block";
+                document.getElementById('ajaxflashMessage44').innerHTML = 'You need to login in for Removing a Song from your Queue';
+            }
+            else
+            {
+                var msg = response.substring(0, 7);
+                if (msg == 'Success')
+                {
+                    if (document.getElementById('flash-message'))
+                    {
+                        document.getElementById('flash-message').innerHTML = '';
+                        document.getElementById("flash-message").setAttribute("class", "");
+                    }
+                    document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Queue';
+
+                }
+                else
+                {
+                    if (document.getElementById('flash-message'))
+                    {
+                        document.getElementById('flash-message').innerHTML = '';
+                        document.getElementById("flash-message").setAttribute("class", "");
+                    }
+
+                    document.getElementById("ajaxflashMessage44").style.display = "block";
+                    document.getElementById("ajaxflashMessage44").style.background = "red";
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when removing from Queue.';
+                    return false;
+                }
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            if (document.getElementById('flash-message'))
+            {
+                document.getElementById('flash-message').innerHTML = '';
+                document.getElementById("flash-message").setAttribute("class", "");
+            }
+            document.getElementById("ajaxflashMessage44").style.display = "block";
+            document.getElementById("ajaxflashMessage44").style.background = "red";
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for removing song from queue is unsuccessfull';
+        }
+    });
+    return false;
+}
+
+
+
 
 function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType,playlistId) {
     console.log('load song contains');
@@ -1945,39 +2047,6 @@ $(document).ready(function() {
         }
 
     });	
-
-    $('.select-arrow').on('click', function(e) {
-         if ($('.account-options-menu').hasClass('active')) {
-            $('.account-options-menu').removeClass('active');
-        } else {
-            $('.account-options-menu').addClass('active');
-        }
-    });
-
-    $(document).on('click', '.sidebar-anchor', function(e) {
-
-	
-	
-       if ($(this).next('ul').hasClass('active')) {
-            $(this).next('ul').removeClass('active');
-        } else {
-            
-            $(this).next('ul').addClass('active');
-            var home07 = $('#home07');
-            home07.removeClass('active');
-            var musicVideo07 = $('#musicVideo07');
-            musicVideo07.removeClass('active');
-            var newsRelease07 = $('#newsRelease07');
-            newsRelease07.removeClass('active');
-            var genre07 = $('#genre07');
-            genre07.removeClass('active');
-            var faq07 = $('#faq07');
-            faq07.removeClass('active');
-        }
-
-    });
-
-
 
 });
 

@@ -17,7 +17,18 @@
 		echo $this->Html->css('jquery.autocomplete');
 		echo $html->css('colorbox');
 	?>
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,swfobject.js,audioPlayer.js,freegal.js,jquery.bgiframe.js,"></script>
+                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,audioPlayer.js,freegal.js,jquery.bgiframe.js,"></script>
+        <?php
+            if ($this->Session->read("patron"))
+            {
+                if ($this->Session->read('library_type') == '2')
+                {  ?>      
+                    <script type="text/javascript" src="/js/swfobject.js" charset="utf-8"></script>
+       <?php    }    
+
+            } 
+        ?>                 
+               
 	<?php
 		echo $scripts_for_layout;
 	?>

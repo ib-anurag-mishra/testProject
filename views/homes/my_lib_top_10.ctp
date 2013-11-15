@@ -41,7 +41,7 @@
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
                                                         <?php
-                                                        if ($this->Session->read('library_type') == 2)
+                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                                         {                                                                                                                                                                              
                                                             echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                                         } ?>
@@ -52,7 +52,7 @@
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
-                                                        if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
+                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                                         {
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>

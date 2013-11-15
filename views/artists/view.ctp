@@ -39,12 +39,36 @@
             
             <?php
             
+           // echo "<pre>"; print_r($albumData);
             
 	foreach($albumData as $album_key => $album):
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
                             <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                            <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
+                            <?php
+                                    if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
+                                    {
+                                        echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
+                                    
+                            ?>
+                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php
+                                                        if ($this->Session->read('library_type') == 2)
+                                                        {                                                            
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
+                                      <?php
+                                    }
+                                    ?>
+                            
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
 					if($page->isImage($image)) {
@@ -55,7 +79,7 @@
 					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
-				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
+				
 			</div>
 			<div class="release-info">Release Information</div>
                         

@@ -83,13 +83,7 @@ class HomesController extends AppController
         $country = $this->Session->read('territory');
         $territory = $this->Session->read('territory');
        
-      
-        
-       
-
-        
-        
-        
+           
         
         $nationalTopDownload = array();
         if(!empty($patId)){
@@ -109,18 +103,12 @@ class HomesController extends AppController
             $nationalTopDownload = Cache::read("national".$territory);                
         }
         $this->set('nationalTopDownload',$nationalTopDownload);
-        // National Top Videos list and Downloads functionality code 
-        /*if (($national = Cache::read("nationalvideos".$territory)) === false) {
-            $nationalTopVideoDownload = $this->Common->getNationalTop100Videos($territory);
-        }else{
-            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
-       }
-        $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);*/
+   
 		
-		// National Top 100 Albums slider 
+	// National Top 100 Albums slider 
        
         if (($national = Cache::read("nationaltop100albums".$territory)) === false) {
-            
+        //if(1) {   
             $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
         }else{
            
@@ -128,6 +116,8 @@ class HomesController extends AppController
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
         
+
+ 
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
@@ -171,10 +161,11 @@ class HomesController extends AppController
         /*
                         Code OF NEWS Section --- END
         */
-              
+            
         /*
         *  Code For Coming Soon --- START
         */ 
+   
         $territory = $this->Session->read('territory');
 
         if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {
@@ -197,10 +188,11 @@ class HomesController extends AppController
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);
-                
+            
         /*
         * Code For Coming Soon --- END
         */  
+        
     }
 
     //this is just for streaming component test
@@ -3492,7 +3484,8 @@ STR;
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
                
-            if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false){
+            //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false){
+            if(1){
                 $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
             }
             else    //  Show From Cache

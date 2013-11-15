@@ -122,7 +122,8 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             <div class="album-scrollable horiz-scroll">
                 <ul>
 <?php
-	foreach($albumData as $album_key => $album):
+        
+	foreach($albumData as $album_key => $album):   
             
             
              //hide album if library block the explicit content
@@ -130,12 +131,33 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                 continue;
             } 
             
-            
-            
-            
 ?>
             <li>
                     <div class="album-container">
+                         <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                         <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162" alt="">
+                         <?php
+                                    if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
+                                    {                                       
+                                         echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
+                                    
+                            ?>
+                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <?php
+                                                        if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
+                                                        {                                                            
+                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
+                                                            ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <?php
+                                                        }
+                                                        ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>
+                         <?php
+                                    }
+                              ?>
+                         
                         <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
                             <?php
                                 if(empty($album['Files']['CdnPath'])){
@@ -146,7 +168,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                     }
                                 }
                             ?>
-                            <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                           
                             <?php
                                     $image = Configure::read('App.Music_Path').$albumArtwork;
                                     if($page->isImage($image)) {
@@ -156,7 +178,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                             //mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                     }
                             ?>
-                            <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162" alt="">
+                           
                         </a>   
                     </div>
                     <div class="album-title">
@@ -207,7 +229,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             <h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
-                            <ul>
+                            <ul style="width:15000px;">
                                 <?php 
                                 foreach($artistVideoList as $key => $value){
                                 ?>  

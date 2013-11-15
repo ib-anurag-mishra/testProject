@@ -305,7 +305,7 @@ $('document').ready(function()
         return false;
     });
     
-    $(document).ready($('.preview').css({opacity: 0}));
+   // $(document).ready($('.preview').css({opacity: 0}));
     
     $(document).on('mouseleave', '.wishlist-popover', function() {
         $(this).removeClass('active');
@@ -442,15 +442,20 @@ $('document').ready(function()
 
     });
 
-    $('.album-container').on('mouseleave', function() {
+    $('.album-container').on('mouseleave', function() { 
         $('.preview').css({opacity: 0});
+        $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.top-100-download-now-button').css({opacity: 0});
     });
 	
-    $('.album-container').on('mouseenter', function() {
+    $('.album-container').on('mouseenter', function() { 
         $('.preview').css({opacity: 0});
+        $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
+        $(this).find('.album-preview').css({opacity: 1});
+        $(this).find('.top-100-download-now-button').css({opacity: 1});
     });
 
     $('.video-cover-container').on('mouseleave', function() {
@@ -795,6 +800,12 @@ $('document').ready(function()
         $(this).siblings('.song').addClass('playing');
         $(this).siblings('.artist').addClass('playing');
         $(this).siblings('.time').addClass('playing');
+    });
+    
+    $(document).on('mouseenter','.album-cover-image',function(){
+	   $(this).find('.preview').css('opacity',100); 
+	   $(this).find('.add-to-playlist-button').css('opacity',100); 
+	    
     });
 
     /* end genres page */

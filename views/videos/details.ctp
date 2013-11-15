@@ -88,7 +88,7 @@
                                     
 				</h2><?php if('T' == $VideosData[0]['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 				<h3 class="artist-name">
-					<a title="<?php echo $this->getValidText($this->getTextEncode($VideosData[0]['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
+					<a title="<?php echo $this->getTextEncode($VideosData[0]['Video']['ArtistText']); ?>" href="/artists/album/<?php echo base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
 				<?php
                                         $duration       =    $VideosData[0]['Video']['FullLength_Duration']; 
@@ -108,12 +108,13 @@
 				<h2><?php echo __('More Videos By', true); ?> <?php echo $VideosData[0]['Video']['ArtistText']; ?></h2>
 			</header>
 			<div class="more-videos-scrollable horiz-scroll">
-				<ul style="width:2900px;">
+				<ul style="width:30900px;">
 					<?php						
-						
+					if(!empty($MoreVideosData)){
 						foreach($MoreVideosData as $key => $value)
 						{		
 
+                                                   
                                                     //hide video if library block the explicit content
                                                     if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
                                                         continue;
@@ -122,7 +123,7 @@
 						?>								
 								<li>
 									<div class="video-thumb-container">
-                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img alt="" class="lazy" src="<?php echo $value['videoImage']; ?>" data-original="" width="274" height="162" /></a>
+                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img alt="" class="lazy" src="<?php echo $value['videoAlbumImage']; ?>" data-original="" width="274" height="162" /></a>
 										<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
                                               if($this->Session->read('patron'))
@@ -207,13 +208,14 @@
                                                                                             ?>
                                                                                 </a><?php if('T' == $value['Video']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
 									</div>
-									<div class="artist-name">										
-                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['ArtistText'])); ?>" href="/artists/album/<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
+									<div class="artist-name">	
+                                                                            <?php $artistText = $VideosData[0]['Video']['ArtistText'];?>
+                                                                                <a title="<?php echo $this->getValidText($this->getTextEncode($artistText)); ?>" href="/artists/album/<?php echo base64_encode($artistText); ?>">
                                                                                 <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
-                                                                                                    $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
+                                                                                                    $VideoArtist = $this->getTextEncode(substr($artistText, 0, 35)) . "..";
                                                                                             } else {
-                                                                                                    $VideoArtist = $this->getTextEncode($value['Video']['ArtistText']);
+                                                                                                    $VideoArtist = $this->getTextEncode($artistText);
                                                                                             }    
                                                                                         echo $VideoArtist; 
                                                                                  ?>
@@ -226,6 +228,9 @@
 							
 						
 						}
+                                        }else{
+                                            echo 'Sorry,there are no more videos.';
+                                        }
 					?>
 					
 				</ul>

@@ -497,7 +497,7 @@ STR;
        // Cache::delete("musicVideoDetails" . $this->params['pass'][0]);
         if(isset($this->params['pass'][0]))
         {
-            if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
+                        
             $prefix = strtolower($this->Session->read('territory')).'_';  
             $VideosSql  =
             "SELECT Video.ProdID,Video.Advisory, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
@@ -525,68 +525,130 @@ STR;
             $VideosData = $this->Album->query($VideosSql);
             $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
             $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
-                                //echo "<pre>"; print_r($VideosData); die;
-            
-            if (!empty($VideosData)) {
-                Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
-            }
-            }
+                
+                
+//            if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
+//                $prefix = strtolower($this->Session->read('territory')).'_';  
+//                $VideosSql  =
+//                "SELECT Video.ProdID,Video.Advisory, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
+//                Sample_Files.SaveAsName,
+//                Full_Files.CdnPath,
+//                Full_Files.SaveAsName,
+//                File.CdnPath,
+//                File.SourceURL,
+//                File.SaveAsName,
+//                Sample_Files.FileID,
+//                Country.Territory,
+//                Country.SalesDate
+//                FROM video as Video
+//                LEFT JOIN 
+//                {$prefix}countries As Country ON (Video.ProdID = Country.ProdID AND Video.provider_type = Country.provider_type)
+//                LEFT JOIN
+//                File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+//                LEFT JOIN
+//                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
+//                LEFT JOIN
+//                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
+//                INNER JOIN File ON (Video.Image_FileID = File.FileID)
+//                Where Video.DownloadStatus = '1' AND Video.ProdID = ".$this->params[pass][0];
+//
+//                $VideosData = $this->Album->query($VideosSql);
+//                $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
+//                $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
+//                //echo "<pre>"; print_r($VideosData); die;
+//
+//                if (!empty($VideosData)) {
+//                    Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
+//                }
+//            }
         }
         else
         {
              $VideosData =   array();
         }
         
-            $VideosData = Cache::read("musicVideoDetails".$this->params['pass'][0]);
+           // $VideosData = Cache::read("musicVideoDetails".$this->params['pass'][0]);
             
             $this->set('VideosData',$VideosData);
             
             
-        //  More Videos By Artist
-            
-            
+            //  More Videos By Artist            
+            $MoreVideosData = array();
             if(count($VideosData)>0)
-            {    
+            {               
+               
+                $country= $territory;
                 
-                //Cache::delete("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);
-                if ($MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']) === false) {
-                   $MoreVideosSql  =
-                    "SELECT Video.ProdID, Video.ReferenceID,Video.Advisory, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
-                    Sample_Files.SaveAsName,
-                    Full_Files.CdnPath,
-                    Full_Files.SaveAsName,
-                    File.CdnPath,
-                    File.SourceURL,
-                    File.SaveAsName,
-                    Sample_Files.FileID,
-                    Country.Territory,
-                    Country.SalesDate
-                    FROM video as Video
-                    LEFT JOIN
-                    File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-                    LEFT JOIN
-                    File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)   
-                    LEFT JOIN
-                    {$prefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
-                    LEFT JOIN
-                    PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
-                    Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$VideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc limit 0,10";
-
-                    $MoreVideosData = $this->Album->query($MoreVideosSql);
-                    foreach($MoreVideosData as $key => $value)
-                    {		
-                        $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                        $videoImage = Configure::read('App.Music_Path').$videoArtwork;
-                        $MoreVideosData[$key]['videoImage'] = $videoImage;
-                    }
-                    if (!empty($MoreVideosData)) {
-                        Cache::write("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText'], $MoreVideosData);
-                    }                    
+                $decodedId=  trim($VideosData[0]['Video']['ArtistText']);
+                $decodedId = str_replace('@','/',$decodedId);
+                if(!empty($country)){
                     
-                    // echo "<pre>"; print_r($MoreVideosData); die;
+                    //if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId)=== null) ) { 
+                        $MoreVideosData = $this->Common->getAllVideoByArtist($country,$decodedId);
+                        Cache::write("videolist_".$country."_".$decodedId, $MoreVideosData);
+                   // }else{
+                        $MoreVideosData = Cache::read("videolist_".$country."_".$decodedId);
+                   // }
+                    
+                    
+                        
                 }else{
-                    $MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);                    
-                }   
+                    $MoreVideosData = Cache::read("videolist_".$country."_".$decodedId);
+                }              
+                  
+                
+              
+             
+                
+                
+//                if ($MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']) === false) {
+//                   $MoreVideosSql  =
+//                    "SELECT Video.ProdID,
+//                    Video.ReferenceID,
+//                    Video.Advisory,
+//                    Video.VideoTitle,
+//                    Video.ArtistText,
+//                    Video.FullLength_Duration,
+//                    Video.CreatedOn,
+//                    Video.Image_FileID,
+//                    Video.provider_type,
+//                    Sample_Files.CdnPath,
+//                    Sample_Files.SaveAsName,
+//                    Full_Files.CdnPath,
+//                    Full_Files.SaveAsName,
+//                    File.CdnPath,
+//                    File.SourceURL,
+//                    File.SaveAsName,
+//                    Sample_Files.FileID,
+//                    Country.Territory,
+//                    Country.SalesDate
+//                    FROM video as Video
+//                    LEFT JOIN
+//                    File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+//                    LEFT JOIN
+//                    File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)   
+//                    LEFT JOIN
+//                    {$prefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+//                    LEFT JOIN
+//                    PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+//                    INNER JOIN File ON (Video.Image_FileID = File.FileID)
+//                    Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$VideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc limit 0,10";
+//
+//                    $MoreVideosData = $this->Album->query($MoreVideosSql);
+//                    foreach($MoreVideosData as $key => $value)
+//                    {		
+//                        $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+//                        $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+//                        $MoreVideosData[$key]['videoImage'] = $videoImage;
+//                    }
+//                    if (!empty($MoreVideosData)) {
+//                        Cache::write("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText'], $MoreVideosData);
+//                    }                    
+//                    
+//                    // echo "<pre>"; print_r($MoreVideosData); die;
+//                }else{
+//                    $MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);                    
+//                }   
             }
             else
             {

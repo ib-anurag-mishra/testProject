@@ -291,7 +291,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
               <ul style="width:27100px;">
 					<?php
-                                        
+                                       
 					 $count  =   1;           
 				if(count($nationalTopAlbumsDownload) > 0) {
                                         foreach($nationalTopAlbumsDownload as $key => $value){
@@ -342,7 +342,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                        else
                                                        {
                                                            ?>
-                                                               <!-- <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a> -->
+                                                              <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a> 
                                                            <?php
                                                        }
 ?>

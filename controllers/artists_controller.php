@@ -11,7 +11,7 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download','Video', 'Territory' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue');
-	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload', 'Streaming'); 
+	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload', 'Streaming','Common'); 
 
 	/*
 	 Function Name : beforeFilter
@@ -813,7 +813,7 @@ Class ArtistsController extends AppController
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 
                                 
-                $albumData['albumSongs1'] = $this->requestAction(
+                $albumData[0]['albumSongs'] = $this->requestAction(
 						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 						array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
 					);
@@ -1093,7 +1093,7 @@ Class ArtistsController extends AppController
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
-                        'Album.Advisory',
+                                                'Album.Advisory',
 						'Album.Artist',
 						'Album.ArtistURL',
 						'Album.Label',
@@ -1165,7 +1165,7 @@ Class ArtistsController extends AppController
 										'Song.Sample_FileID',
 										'Song.FullLength_FIleID',
 										'Song.provider_type',
-												'Song.sequence_number'
+										'Song.sequence_number'
 
 										),
 								'contain' => array(
@@ -1178,9 +1178,9 @@ Class ArtistsController extends AppController
 											'fields' => array(
 													'Country.Territory',
 													'Country.SalesDate',
-																								'Country.StreamingSalesDate',
-																								'Country.StreamingStatus',
-																								'Country.DownloadStatus',                                                                                        
+                                                                                                        'Country.StreamingSalesDate',
+                                                                                                        'Country.StreamingStatus',
+                                                                                                        'Country.DownloadStatus',                                                                                        
 												)
 											),
 									'Sample_Files' => array(
@@ -1203,19 +1203,17 @@ Class ArtistsController extends AppController
 			}
 		}
 
-		// echo "<pre>";
-		// print_r($albumSongs);
-		// exit;
+		 
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
 			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-					if(count($downloadsUsed) > 0){
-						$albumSongs[$k][$key]['Song']['status'] = 'avail';
-					} else{
-						$albumSongs[$k][$key]['Song']['status'] = 'not';
-					}
+//					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+//					if(count($downloadsUsed) > 0){
+//						$albumSongs[$k][$key]['Song']['status'] = 'avail';
+//					} else{
+//						$albumSongs[$k][$key]['Song']['status'] = 'not';
+//					}
                                         
                             if($this->Session->read('library_type')==2)
                            {
@@ -1227,8 +1225,26 @@ Class ArtistsController extends AppController
                                    $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
                                    $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
                                 } 
-                           }                                        
+                           }   
+                           
+                           
+                            unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
+                            unset($albumSongs[$k][$key]['Song']['Sample_Duration']);
+                            unset($albumSongs[$k][$key]['Song']['FullLength_Duration']);
+                            unset($albumSongs[$k][$key]['Song']['Sample_FileID']);
+                            unset($albumSongs[$k][$key]['Song']['FullLength_FIleID']);
+                            unset($albumSongs[$k][$key]['Song']['sequence_number']);
+                            unset($albumSongs[$k][$key]['Song']['Title']);
+                            unset($albumSongs[$k][$key]['Song']['Artist']);
+                            unset($albumSongs[$k][$key]['Genre']);
+                            unset($albumSongs[$k][$key]['Country']);
+                            unset($albumSongs[$k][$key]['Sample_Files']);
+                            unset($albumSongs[$k][$key]['Full_Files']); 
+                           
 			}
+                        
+                       
+                        
 		}
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -1239,6 +1255,9 @@ Class ArtistsController extends AppController
 		$array = array();
 		$pre = '';
 		$res = array();
+                
+               
+                
         return $albumSongs;       
                 
 }
@@ -1389,6 +1408,10 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
+                $albumData[0]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                    array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+                            );
 
 		$albumSongs = array();
 		if(!empty($albumData))
@@ -1655,7 +1678,18 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //$this->set('count_albums',count($albumData));        
+            //$this->set('count_albums',count($albumData));   
+                     
+            foreach ($albumData as $key => $value) 
+            {
+                $albumData[$key]['albumSongs'] = $this->requestAction(
+						array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+						array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
+					);    
+
+            }
+                 
+            
             $albumSongs = array();
             $this->set('albumData', $albumData);
             if(isset($albumData[0]['Album']['Artist'])) {
@@ -1667,67 +1701,81 @@ Class ArtistsController extends AppController
                 $this->set('artistUrl', "N/A");
             }
             $decodedId = trim(base64_decode($id));
-                 $country = $this->Session->read('territory');
-                 if(!empty($country)){
-                 if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
-                 $countryPrefix = $this->Session->read('multiple_countries');                 
-                 $sql_us_10_v =<<<STR
-                SELECT 
-                                Video.ProdID,
-                                Video.ReferenceID,
-                                Video.Title,
-                                Video.ArtistText,
-                                Video.DownloadStatus,
-                                Video.VideoTitle,
-                                Video.Artist,
-                                Video.Advisory,
-                                Video.Sample_Duration,
-                                Video.FullLength_Duration,
-                                Video.provider_type,
-                                Video.video_label,
-                                Genre.Genre,
-                                Country.Territory,
-                                Country.SalesDate,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
-                                PRODUCT.pid
-                FROM
-                                video AS Video
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
-                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-                                                LEFT JOIN
-         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
-                                                LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
-                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
-                GROUP BY Video.ProdID
-                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC 
-STR;
-         
-                    //echo $sql_national_100_v; die;
-                    $artistVideoList = $this->Video->query($sql_us_10_v);
-                    foreach($artistVideoList as $key => $value){
-                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                        $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
-                    }               
-                    Cache::write("videolist_".$decodedId, $artistVideoList);
-                    }else{
-                        $artistVideoList = Cache::read("videolist_".$decodedId);
-                    }
-                    $this->set('artistVideoList',$artistVideoList);
+            $country = $this->Session->read('territory');
+            
+            if(!empty($country)){
+                if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) {
+                   
+                    $artistVideoList = $this->Common->getAllVideoByArtist($country,$decodedId);
                     
-                    
-                 }
+                    Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);  
+
+                }else{
+                        $artistVideoList = Cache::read("videolist_".$country."_".$decodedId);
+                }
+              $this->set('artistVideoList',$artistVideoList);
+            }
+            
+//          if(!empty($country)){
+//            if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
+//                 $countryPrefix = $this->Session->read('multiple_countries');                 
+//                 $sql_us_10_v =<<<STR
+//                SELECT 
+//                                Video.ProdID,
+//                                Video.ReferenceID,
+//                                Video.Title,
+//                                Video.ArtistText,
+//                                Video.DownloadStatus,
+//                                Video.VideoTitle,
+//                                Video.Artist,
+//                                Video.Advisory,
+//                                Video.Sample_Duration,
+//                                Video.FullLength_Duration,
+//                                Video.provider_type,
+//                                Video.video_label,
+//                                Genre.Genre,
+//                                Country.Territory,
+//                                Country.SalesDate,
+//                                Full_Files.CdnPath,
+//                                Full_Files.SaveAsName,
+//                                Full_Files.FileID,
+//                                Image_Files.FileID,
+//                                Image_Files.CdnPath,
+//                                Image_Files.SourceURL,
+//                                PRODUCT.pid
+//                FROM
+//                                video AS Video
+//                                                LEFT JOIN
+//                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+//                                                LEFT JOIN
+//                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+//                                                LEFT JOIN
+//         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+//                                                LEFT JOIN
+//                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+//                LEFT JOIN
+//                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+//                WHERE
+//                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+//                GROUP BY Video.ProdID
+//                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC 
+//STR;
+//         
+//                    //echo $sql_national_100_v; die;
+//                    $artistVideoList = $this->Video->query($sql_us_10_v);
+//                    foreach($artistVideoList as $key => $value){
+//                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+//                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+//                        $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
+//                    }               
+//                    Cache::write("videolist_".$decodedId, $artistVideoList);
+//                    }else{
+//                        $artistVideoList = Cache::read("videolist_".$decodedId);
+//                    }
+//                    $this->set('artistVideoList',$artistVideoList);
+//                    
+//                    
+//                 }
 	}
         
         function album_ajax($id=null,$album=null,$provider=null)
@@ -1805,7 +1853,7 @@ STR;
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                    'Album.Advisory',
+                                            'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1837,7 +1885,7 @@ STR;
             $this->Album->recursive = 2;
             $albumData = array();
             if(!empty( $songs )){
-                $albumData = $this->paginate('Album'); //getting the Albums for the artist
+                $albumData = $this->paginate('Album'); //getting the Albums for the artist    
             } 
             
             $htmlContain ='<div class="album-list-shadow-container"><h3>Album</h3>
