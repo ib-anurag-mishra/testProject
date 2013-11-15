@@ -95,7 +95,7 @@ class SolrComponent extends Object {
                     case 'album':
                         //$query = $keyword . ' OR (CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
                         $query = $searchkeyword;
-                        $queryFields = "CTitle^100 CArtistText^80 CGenre^60 CSongTitle^20 CComposer";
+                        $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer"; //CArtistText^80
                         break;
                     case 'artist':
                         //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.' OR ArtistText:'.$searchkeyword.')';
@@ -542,7 +542,7 @@ class SolrComponent extends Object {
                     break;
                 case 'album':
                     //$query = $keyword . ' OR (CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') OR CComposer:('.$searchkeyword.'))';
-                    $queryFields = "CTitle^100 CArtistText^80 CGenre^60 CSongTitle^20 CComposer";
+                    $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer"; //CArtistText^80 
                     $query = $searchkeyword;
                     //$field = 'Title';
                     $field = 'rpjoin';
