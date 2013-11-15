@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -199,6 +199,32 @@ class CacheController extends AppController {
                 )
                 )
             );
+            
+            
+            $this->Genre->Behaviors->attach('Containable');
+            $this->Genre->recursive = 2;
+           
+            $genreAll = $this->Genre->find('all', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Country.Territory' => $country, "Genre.Genre NOT IN( 'Caribbean','Downtempo','Dub','Fusion','House','Indie' ,'Progressive Rock','Psychedelic Rock', 'Symphony' ,'World' ,'Porn Groove')"
+                        )
+                    )
+                ),
+                'fields' => array(
+                    'Genre.Genre'
+                ),
+                'contain' => array(
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.Territory'
+                        )
+                    ),
+                ), 'group' => 'Genre.Genre'
+            ));
+           
+           
 
             foreach($genreAll as $genreRow){
                 $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
