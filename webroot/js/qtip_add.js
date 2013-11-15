@@ -70,7 +70,7 @@ $(document).ready(function()
   
 */   
    
-   	/*
+   	
 	$('a[title]').qtip({
 		position: {
 			corner: {
@@ -103,44 +103,9 @@ $(document).ready(function()
 		
 		}
 	});
-	*/
 	
-	$(document).on('hover','a[title]',function(){
-		$(this).qtip({
-			position: {
-				corner: {
-					target: 'topLeft',
-					tooltip: 'bottomRight'
-				}
-			},
-			style: { 
-					
-					color:'#444',
-					fontSize:12,
-					border: {
 	
-						color: '#444'
-					},
-					
-					width: {
-						max:350,
-						min:0
-					},
-			
-					tip:{
-						corner:'bottomRight',
-						size: {
-							x:5,
-							y:5
-						}
-					}
-					
-			
-			}
-		});		
-			
-		
-	});
+
 
 
 /*	
