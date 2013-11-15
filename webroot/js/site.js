@@ -839,6 +839,12 @@ $('document').ready(function()
 	   $(this).find('.add-to-playlist-button').css('opacity',100); 
 	    
     });
+    
+    $(document).on('mouseleave','.album-cover-image',function(){
+	   $(this).find('.preview').css('opacity',0); 
+	   $(this).find('.add-to-playlist-button').css('opacity',0); 
+	    
+    });
 
     /* end genres page */
 
