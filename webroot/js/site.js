@@ -229,6 +229,15 @@ $('document').ready(function()
         $('.add-to-playlist-button').css({opacity: .6});
     });
     
+    //genres-page 
+    $('.genres-page .album-detail-container').on('mouseenter' , '.album-detail' , function(){
+        $('.album-preview').css({opacity: 1});
+    });
+    
+    $('.genres-page .album-detail-container').on('mouseleave' , '.album-detail', function(){
+        $('.album-preview').css({opacity: 0});
+    });
+    
     
     $('.news .featured .featured-grid .featured-album-detail').on('mouseenter' , '.album-cover-container', function(){
         $('.album-preview').css({opacity: 0});
