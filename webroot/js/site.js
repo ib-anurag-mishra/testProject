@@ -221,10 +221,12 @@ $('document').ready(function()
     //album-page js
     $('.albums-page .album-detail-container').on('mouseenter' , '.album-detail' , function(){
         $('.album-preview').css({opacity: 1});
+        $('.add-to-playlist-button').css({opacity: 1});
     });
     
     $('.albums-page .album-detail-container').on('mouseleave' , '.album-detail', function(){
         $('.album-preview').css({opacity: 0});
+        $('.add-to-playlist-button').css({opacity: 0});
     });
     
     
