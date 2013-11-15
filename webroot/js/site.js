@@ -228,11 +228,13 @@ $('document').ready(function()
     });
     
     
-    $('.news .featured .featured-grid .featured-album-detail .album-detail-container').on('mouseenter' , function(){
-        $('.album-preview').css({opacity: 1});
+    $('.news .featured .featured-grid .featured-album-detail').on('mouseenter' , '.album-detail-container', function(){
+        $('.album-preview').css({opacity: 0});
+        $(this).find('.album-preview').css({opacity: 1});        
     });
     
-    $('.news .featured .featured-grid .featured-album-detail .album-detail-container').on('mouseleave' , function(){
+    $('.news .featured .featured-grid .featured-album-detail').on('mouseleave', '.album-detail-container' , function(){
+        $(this).find('.album-preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
     });
     
