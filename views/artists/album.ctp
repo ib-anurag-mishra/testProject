@@ -123,7 +123,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                 <ul>
 <?php
         
-	foreach($albumData as $album_key => $album):   // echo "<pre>"; print_r($album);
+	foreach($albumData as $album_key => $album):   
             
             
              //hide album if library block the explicit content
@@ -146,7 +146,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                          <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
-                                                        if ($this->Session->read('library_type') == 2)
+                                                        if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
                                                         {                                                            
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
                                                             ?>

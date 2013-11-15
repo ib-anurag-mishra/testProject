@@ -48,7 +48,7 @@
                             <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
                             <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
                             <?php
-                                    if ($this->Session->read('library_type') == 2)
+                                    if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                                     }

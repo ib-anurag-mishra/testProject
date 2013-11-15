@@ -481,3 +481,10 @@ div.paging span a, div.paging a {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#B7EDE9DF,endColorstr=#B7EDE9DF); /* IE6 & 7 */
     zoom:1;
 }
+
+
+#album-cover-image .genres_stream_now
+{
+    left: 64px;
+    botton: 107px;
+}
