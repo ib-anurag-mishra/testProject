@@ -229,7 +229,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
             <h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
-                            <ul>
+                            <ul style="width:15000px;">
                                 <?php 
                                 foreach($artistVideoList as $key => $value){
                                 ?>  
