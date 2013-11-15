@@ -209,6 +209,8 @@ $('document').ready(function()
         $('.playlist-options').addClass('active');
     });
     
+
+    
     
     $('.genres-page .album-detail-container').on('mouseenter','.add-to-playlist',function(){
 	    
