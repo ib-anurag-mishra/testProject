@@ -87,6 +87,37 @@ class QueueListDetailsController extends AppController{
         
     }
     
+    
+    function removeSongFromQueue(){
+        Configure::write('debug', 0);
+        if( $this->Session->read('library') && $this->Session->read('patron')){
+            if (!empty($_POST['songId']))
+            {            
+                $this->QueueDetail->setDataSource('master');
+                $this->QueueList->setDataSource('master');
+                if($this->QueueDetail->deleteAll(array('id' => $_POST['songId']),false)){
+                    echo "Success";
+                    exit;						
+                }
+                else{
+                    echo "error";
+                    exit;					
+                }                  
+                
+            }
+            else    // Song cannot be deleted
+            {
+                     echo 'error1';
+                     exit; 
+            }
+                
+        }else{
+            echo 'error2';
+            exit;
+        }         
+        
+    }
+    
     /**
      * function name : queueList
      * Description   : This function is used to retrieve all the queues created by an individual
