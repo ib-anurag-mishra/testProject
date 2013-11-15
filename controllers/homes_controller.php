@@ -171,7 +171,7 @@ class HomesController extends AppController
         /*
         *  Code For Coming Soon --- START
         */ 
-        /*
+   
         $territory = $this->Session->read('territory');
 
         if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {
@@ -194,7 +194,7 @@ class HomesController extends AppController
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);
-        */        
+            
         /*
         * Code For Coming Soon --- END
         */  
