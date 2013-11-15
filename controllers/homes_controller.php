@@ -83,13 +83,7 @@ class HomesController extends AppController
         $country = $this->Session->read('territory');
         $territory = $this->Session->read('territory');
        
-      
-        
-       
-
-        
-        
-        
+           
         
         $nationalTopDownload = array();
         if(!empty($patId)){
@@ -100,7 +94,7 @@ class HomesController extends AppController
             $this->set('patronDownload',$patronDownload);
         }
 
-/*
+
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
         //if(1) {
@@ -109,7 +103,7 @@ class HomesController extends AppController
             $nationalTopDownload = Cache::read("national".$territory);                
         }
         $this->set('nationalTopDownload',$nationalTopDownload);
-       
+       /*
 		
 	// National Top 100 Albums slider 
        
