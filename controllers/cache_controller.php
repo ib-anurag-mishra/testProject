@@ -90,27 +90,27 @@ class CacheController extends AppController {
         Configure::write('debug', 2);
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){
-//            $this->Common->getGenres($territory);
-//            $this->Common->getNationalTop100($territory);
-//            $this->Common->getFeaturedVideos($territory);
-//            $this->Common->getTopVideoDownloads($territory);
-//            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
-//            $this->Common->getNationalTop100Albums($territory);
-//            $this->Common->getComingSoonSongs($territory);
-//            $this->Common->getComingSoonVideos($territory);
-//            $this->Common->getUsTop10Songs($territory);
-//            $this->Common->getUsTop10Albums($territory);
-//            $this->Common->getUsTop10Videos($territory);
-//            $this->Common->getNewReleaseAlbums($territory);
-//            $this->Common->getNewReleaseVideos($territory);
-//            $this->Common->getFeaturedArtists($territory);
-//            $this->Common->getDifferentGenreData($territory);
+            $this->Common->getGenres($territory);
+            $this->Common->getNationalTop100($territory);
+            $this->Common->getFeaturedVideos($territory);
+            $this->Common->getTopVideoDownloads($territory);
+            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
+            $this->Common->getNationalTop100Albums($territory);
+            $this->Common->getComingSoonSongs($territory);
+            $this->Common->getComingSoonVideos($territory);
+            $this->Common->getUsTop10Songs($territory);
+            $this->Common->getUsTop10Albums($territory);
+            $this->Common->getUsTop10Videos($territory);
+            $this->Common->getNewReleaseAlbums($territory);
+            $this->Common->getNewReleaseVideos($territory);
+            $this->Common->getFeaturedArtists($territory);
+            $this->Common->getDifferentGenreData($territory);
             $this->getArtistText($territory);
-           // $this->Common->getDefaultQueues($territory);    
+            $this->Common->getDefaultQueues($territory);    
         }
-//        $this->Common->setLibraryTopTenCache();
-//        $this->Common->setVideoCacheVar();    
-//        $this->setAppMyMusicVideoList(); 
+        $this->Common->setLibraryTopTenCache();
+        $this->Common->setVideoCacheVar();    
+        $this->setAppMyMusicVideoList(); 
        
     }
     
@@ -125,7 +125,7 @@ class CacheController extends AppController {
 
             $country = $territory;
             
-            /*
+           
             $condition = "";
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -185,7 +185,7 @@ class CacheController extends AppController {
                 $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                 $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
             }
-    */
+    
 
             $this->Song->bindmodel(array('hasOne'=>array(
                     'Genre' => array(
