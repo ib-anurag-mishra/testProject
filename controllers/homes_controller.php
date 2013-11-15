@@ -99,7 +99,7 @@ class HomesController extends AppController
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
         }
-/*
+
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
@@ -121,7 +121,7 @@ class HomesController extends AppController
             $nationalTopAlbums = Cache::read("nationaltop100albums".$territory);                
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
-        
+        /*
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
