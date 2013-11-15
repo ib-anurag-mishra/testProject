@@ -2770,8 +2770,8 @@ STR;
       }
       //$user = $this->Auth->user();
       $user = $this->Session->read('Auth.User.id');
-		if(empty($user)){
-			$user = $this->Session->read('patron');
+        if(empty($user)){
+                $user = $this->Session->read('patron');
         }
       if($validationPassed == true){
         $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
