@@ -421,7 +421,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                     {
                                             if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
                                             {
-                                                echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs']);
+                                                echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']]);
                                             }
                                         ?> 
                                             <?php
