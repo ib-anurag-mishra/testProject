@@ -51,7 +51,7 @@
                                     if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
-                                    }
+                                    
                             ?>
                             <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
@@ -65,7 +65,9 @@
                                                         }
                                                         ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
-                            
+                                      <?php
+                                    }
+                                    ?>
                             
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;

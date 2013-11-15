@@ -137,11 +137,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                          <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
                          <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162" alt="">
                          <?php
-                                    if ($this->Session->read('library_type') == 2)
-                                    {
-                                       // echo $this->Queue->getAlbumStreamNowLabel($album[$album_key]['albumSongs'][$album[$album_key]['Album']['ProdID']]);
+                                    if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
+                                    {                                       
                                          echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
-                                    }
+                                    
                             ?>
                          <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
@@ -155,6 +154,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                                         }
                                                         ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
+                         <?php
+                                    }
+                              ?>
+                         
                         <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
                             <?php
                                 if(empty($album['Files']['CdnPath'])){
