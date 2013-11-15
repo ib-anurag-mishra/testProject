@@ -2048,14 +2048,6 @@ $(document).ready(function() {
 
     });	
 
-    $('.select-arrow').on('click', function(e) {
-         if ($('.account-options-menu').hasClass('active')) {
-            $('.account-options-menu').removeClass('active');
-        } else {
-            $('.account-options-menu').addClass('active');
-        }
-    });
-
 });
 
 

@@ -150,14 +150,9 @@
 
 							<!--<a class="remove-song" href="#">Remove Song</a> -->
                                                         <span class="top-100-download-now-button">
-                                                        <form method="Post" name="form_rename<?php echo $value["Songs"]["ProdID"]; ?>" action="/queuelistdetails/index/<?php echo $queue_id; ?>" class="suggest_text1">
-                                                        <input type="hidden" name="Pdid" value="<?php echo $value["QueueDetail"]["id"];?>" />
-                                                        <input type="hidden" name="ProviderType" value="<?php echo $value["Songs"]["provider_type"]; ?>" />
-                                                        <input type="hidden" name="hdn_remove_song" value="1" />
                                                         <span class="beforeClick" id="song_<?php echo $value["Songs"]["ProdID"]; ?>">
-                                                        <a  href='javascript:document.form_rename<?php echo $value["Songs"]["ProdID"]; ?>.submit()' ><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
+                                                        <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
-                                                        </form>
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 						</div>
 					</div>
@@ -271,7 +266,7 @@
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
                                                         <input type="hidden" name="hdn_remove_song" value="1" />
                                                         <span class="beforeClick" id="song_<?php echo $value["Song"]["ProdID"]; ?>">
-                                                        <a  href='javascript:document.form_rename<?php echo $value["Song"]["ProdID"]; ?>.submit()' ><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
+                                                        <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
                                                         </form>
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
