@@ -124,6 +124,8 @@ class CacheController extends AppController {
             $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
             $country = $territory;
+            
+            /*
             $condition = "";
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -183,7 +185,7 @@ class CacheController extends AppController {
                 $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                 $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
             }
-
+    */
 
             $this->Song->bindmodel(array('hasOne'=>array(
                     'Genre' => array(
