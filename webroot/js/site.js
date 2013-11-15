@@ -228,11 +228,11 @@ $('document').ready(function()
     });
     
     
-    $('.album-detail-container').on('mouseenter' , function(){
+    $('.news .featured .featured-grid .featured-album-detail .album-detail-container').on('mouseenter' , function(){
         $('.album-preview').css({opacity: 1});
     });
     
-    $('.album-detail-container').on('mouseleave' , function(){
+    $('.news .featured .featured-grid .featured-album-detail .album-detail-container').on('mouseleave' , function(){
         $('.album-preview').css({opacity: 0});
     });
     
