@@ -6,7 +6,7 @@ $(document).ready(function(){
 		
 	
 		$(this).find('.download-now-button').css('opacity',1);
-		$(this).find('.add-to-playlist-button').css('opacity',1);
+		// $(this).find('.add-to-playlist-button').css('opacity',1);
 			
 		
 	});
@@ -16,7 +16,7 @@ $(document).ready(function(){
 		
 	
 		$(this).find('.download-now-button').css('opacity',.6);
-		$(this).find('.add-to-playlist-button').css('opacity',.6);
+		// $(this).find('.add-to-playlist-button').css('opacity',.6);
 			
 		
 	})
