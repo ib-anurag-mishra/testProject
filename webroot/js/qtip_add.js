@@ -70,7 +70,7 @@ $(document).ready(function()
   
 */   
    
-   
+
 	$('a[title]').qtip({
 		position: {
 			corner: {
@@ -103,6 +103,9 @@ $(document).ready(function()
 		
 		}
 	});
+	
+	
+
 
 
 /*	
@@ -159,6 +162,9 @@ $(document).ready(function()
          tip: true
       }
    });
+   
+   
+
 
 /*
 $("#qtip[title]").each(function(){

@@ -5,30 +5,25 @@
 			<div class="album-cover-image" id="genres_stream_now">
                             <?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
                             <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
-                            <?php
-                                    if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
+                            <?php                                    
+                                    if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                                     
                             ?>
-                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php                                                         
-                                                        if ($this->Session->read('library_type') == 2)
-                                                        {                                                            
+                                                                                                                   
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
-                                                            <?php
-                                                        }
-                                                        ?>
+                                                          
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
                             <?php
                                     }
-                                 ?>   
-                            
-                            
+                                 ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
 					if($page->isImage($image)) {

@@ -137,21 +137,20 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                          <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
                          <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162" alt="">
                          <?php
-                                    if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
+                                    if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
                                     {                                       
                                          echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                                     
                             ?>
-                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                        <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
-                                                        if ($this->Session->read('library_type') == 2 && $this->Session->read("patron"))
-                                                        {                                                            
+                                                                                                                    
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$album['albumSongs'][$album['Album']['ProdID']],$album['Album']['ProdID'],$album['Album']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                                             <?php
-                                                        }
+                                                        
                                                         ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
                          <?php

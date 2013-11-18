@@ -2614,6 +2614,28 @@ img {
 							.box-shadow(0 0 2px rgba(0,0,0,.5));
 							
 						}
+
+                                                .top-10-download-now-button {
+							background: rgb(255,255,255);
+							display: block;
+							position: absolute;
+							width: 124px;
+							height: 25px;
+							line-height: 25px;
+							right: 38px;
+							bottom:10px;
+							-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+							opacity: 0;
+							text-transform: uppercase;
+							font-size: 12px;
+							text-align: center;
+							
+							color:rgb(0,0,0);
+							text-decoration: none;	
+							font-weight: bold;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							
+						}
 						
 						.add-to-playlist-button {
 							background: url(../img/add-to-playlist-button.png);
@@ -3148,7 +3170,7 @@ img {
 						}
 
 
-						.top-10-download-now-button {
+						.top-100-download-now-button , .top-10-download-now-button {
 							background: rgb(255,255,255);
 							display: block;
 							position: absolute;
@@ -12941,7 +12963,7 @@ img {
 					
 					.playlist-options {
 						position: absolute;
-						right: -144px;
+						left:122px;
 						top:0;
 						display: none;
 						background: #fff;
@@ -12950,14 +12972,15 @@ img {
 						.box-shadow(0 0 3px rgba(0,0,0,.5));
 						
 						overflow-x: hidden;
-						
+						overflow-y: auto;
 						&.active {
 							
 							display: block;
 						}
 						
 						ul {
-							
+							height: auto;
+							width:150px;
 							li {
 								
 								float: none;
@@ -13270,6 +13293,8 @@ img {
 						}
 						
 						ul {
+							height: auto;
+							width: 150px;
 							
 							li {
 								

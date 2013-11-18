@@ -41,17 +41,15 @@
                                                 if ($this->Session->read("patron"))
                                                 {
                                                     
-                                                        if ($this->Session->read('library_type') == 2)
+                                                         if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                                         {
                                                             echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
-                                                        }
+                                                        
                                                     
                                                     ?> 
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php                                                          
-                                                        if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
-                                                        { 
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
@@ -59,15 +57,7 @@
                                                         }
                                                         ?>
 
-                                                        <?php
-                                                        //$wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
-
-                                                        //echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
-                                                        ?>
-                                                        <!--  <div class="share clearfix">
-                                                          <p>Share via</p>
-                                                         <span id="divButtons_<?php //echo $i;     ?>""></span> 
-                                                          </div> -->
+                                                       
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
                                                 <?php } 
@@ -210,7 +200,7 @@
 
                
                      ?>
-                          <a class="top-10-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>  
+                          <a class="top-100-download-now-button " href="javascript:void(0);"><?php __("Limit Met");?></a>  
                 <?php
 
                              	
@@ -218,12 +208,12 @@
             }
         } else {
         ?>
-            <a class="top-10-download-now-button " href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+            <a class="top-100-download-now-button " href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
         <?php
         }
 }else{
 ?>
-     <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
+     <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
     <?php

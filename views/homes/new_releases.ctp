@@ -40,29 +40,31 @@
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
                                                         <?php if($this->Session->read("patron"))
-                                                            {                                                              
-                                                                if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
-                                                                {
-                                                                    echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
-                                                                }
-                                                        
-                                                        ?>
-                                                                <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                                              {                                                              
+                                                                    if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                                                    {
+                                                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
 
-                                                                <div class="wishlist-popover">
-                                                                <?php if( $this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1 ){
-                                                                            //echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]);
-                                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
-                                                                 ?>
-                                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            ?>
+                                                                    <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+
+                                                                    <div class="wishlist-popover">
+                                                                    <?php 
+
+                                                                                echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
+                                                                     ?>
+                                                                                <a class="add-to-playlist" href="#">Add To Queue</a>
                                                                 <?php } ?>
-                                                                <?php
-                                                                   // $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-                                                                    //echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
-                                                                    //echo $this->Queue->getSocialNetworkinglinksMarkup();
-                                                                ?>
-                                                                </div>
-                                                    <?php } ?>
+
+                                                                    </div>
+                                                        <?php }
+                                                           else
+                                                           {
+                                                             ?>
+                                                                <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
+                                                             <?php
+                                                           }
+                                                     ?>
                                                         
                                                         
 						</div>

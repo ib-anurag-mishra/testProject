@@ -40,39 +40,37 @@
 										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
-                                                        <?php
-                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
-                                                        {                                                                                                                                                                              
-                                                            echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
-                                                        } ?>
-                                                <?php
+                                             <?php
+                                                        
                                                 if ($this->Session->read("patron"))
-                                                {
+                                                {                                                    
+                                                    if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                                    {                                                                                                                                                                              
+                                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
+                                                    
+                                                
                                                     ?> 
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
-                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
-                                                        {
+                                                        
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                                             <?php
-                                                        }
-                                                        ?>
+                                                     }
+                                              ?>
 
-                                                        <?php
-                                                        //$wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
-
-                                                        //echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
-                                                        ?>
-                                                        <!--  <div class="share clearfix">
-                                                          <p>Share via</p>
-                                                         <span id="divButtons_<?php //echo $i;     ?>""></span> 
-                                                          </div> -->
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
-                                                <?php } ?>
+                                          <?php }
+                                                else
+                                                {
+                                                    ?>
+                                                        <a class="top-10-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a>
+                                                    <?php
+                                                }
+?>
 						</div>
 						<div class="album-title">							
                                                         <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
