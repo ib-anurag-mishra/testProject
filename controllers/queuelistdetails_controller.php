@@ -33,8 +33,9 @@ class QueueListDetailsController extends AppController{
     function index(){
         if( $this->request->is('ajax') ) 
             {            
-                $hid_action = $this->request->data('value_to_send');
+                $hid_action = $this->request->data('hid_action');
             }
+            
         $patron_id = $this->Session->read('patron');
         if(!empty($patron_id)){
             $this->QueueDetail->setDataSource('master');
