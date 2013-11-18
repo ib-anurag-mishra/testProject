@@ -1809,8 +1809,8 @@ function loadAlbumSong(albumSongs) {
 
 
 function loadAlbumParameters(albumSongs) 
-{
-        alert($("#playlist_data").html());
+{        
+        loadAlbumSong($("#playlist_data").html());
 }
 
 
