@@ -238,7 +238,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             data : {'hid_action' :'delete_queue' , 'dqPlid':$('#dqPlid').val() },
 
                             success: function (response) { 
-                              alert(response);
+                              $('.delete-queue-dialog-box').removeClass('active');
+
                               var
                                     $this = $(this),
                                     url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
