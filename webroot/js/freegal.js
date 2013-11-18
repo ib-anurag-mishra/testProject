@@ -1674,7 +1674,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 }
 
 
-function removeSong(pdId){
+function removeSong(pdId,divId){
     
     var data = "songId=" + pdId;
     jQuery.ajax({
@@ -1742,6 +1742,7 @@ function removeSong(pdId){
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
+                    $('.clearfix'+divId).remove();
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Queue';
 
                 }
