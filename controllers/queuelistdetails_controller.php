@@ -31,7 +31,7 @@ class QueueListDetailsController extends AppController{
     
     
     function index(){
-        if( $this->request->is('ajax') ) 
+        if( $this->RequestHandler->isAjax() ) 
             {            
                echo $hid_action = $this->request->data('hid_action');
                echo $dqPlid = $this->request->data('dqPlid');
