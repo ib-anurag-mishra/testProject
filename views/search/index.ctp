@@ -268,6 +268,7 @@ if ($type != 'all') {
                 $i = 0;
                 foreach ($albumData as $palbum) {
                     $albumDetails = $album->getImage($palbum->ReferenceID);
+                    print_r($albumDetails);
                     $albumDetails = $album->getImage($palbum->ReferenceID);
                     if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
