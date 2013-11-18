@@ -1807,6 +1807,13 @@ function loadAlbumSong(albumSongs) {
         }
 }
 
+
+function loadAlbumParameters(albumSongs) 
+{
+        alert($("#playlist_data").html());
+}
+
+
 function base64_decode (data) {
   // http://kevin.vanzonneveld.net
   // +   original by: Tyler Akins (http://rumkin.com)
