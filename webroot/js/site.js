@@ -138,8 +138,12 @@ $('document').ready(function()
     var footer = $('.site-footer');
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
+    
+    
 
-	/*
+
+
+/*
     $(document).on('click', '.left-sidebar li a', function(e) {
         //e.preventDefault();
         $(sidebar_a).removeClass('active');
@@ -1794,6 +1798,18 @@ $('document').ready(function()
     });
     
     
+    var CurrentPageState = History.getState();
+    var ReadycurrentPageState= CurrentPageState.url;
+    if (ReadycurrentPageState.toLowerCase().indexOf("artists/view/") >= 0){
+            resetNavigation();
+    }
+    if (ReadycurrentPageState.toLowerCase().indexOf("artists/album/") >= 0){
+            resetNavigation();
+    }
+    if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0){
+            resetNavigation();
+    }
+    
     
 
 });
@@ -1837,7 +1853,7 @@ function resetNavigation(){
     genre07.removeClass('active');
     faq07.removeClass('active');
     home07.removeClass('active');
-    alert(1);
+ 
     
     
 }
