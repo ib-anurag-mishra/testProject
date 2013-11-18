@@ -434,7 +434,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                 ?>
                                                 <a class="add-to-playlist" href="#">Add To Queue</a>
                                                 <?php
-                                            }
+                                            
                                             ?>
 
                                             <?php
@@ -443,8 +443,12 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                             //echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                             ?>
 
-                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
-                                        </div>
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
+                                             </div>                                            
+                                          <?php  }
+                                          
+                                          ?>
+
                                     <?php }
                                            else
                                            {
