@@ -235,10 +235,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             $.ajax({
                             type: "post",
                             url: webroot+'queuelistdetails/index/'+ $('#dqPlid').val(),
-                            data : {hid_action' :'delete_queue'},
+                            data : {'hid_action' :'delete_queue'},
 
                             success: function (response) { 
                               alert(response);
+                              var
+                                    $this = $(this),
+                                    url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
+                                    title = $this.attr('title') || null;
+                             
+                                History.pushState(null, title, url);
+                                event.preventDefault();
                             },
                             error: function(jqXHR, textStatus, errorThrown){
                                 // log the error to the console
