@@ -1,6 +1,4 @@
-<script lenguage="javascript">
-resetNavigation();
-</script>
+
 <section class="albums-page">
 	<section class="album-detail-container clearfix">
 		<div class="breadcrumbs"><span><?php

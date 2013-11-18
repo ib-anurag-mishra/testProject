@@ -1,6 +1,3 @@
-<script lenguage="javascript">
-resetNavigation();
-</script>
 <section class="artist-page">
 <div class="breadCrumb">
 	<?php
