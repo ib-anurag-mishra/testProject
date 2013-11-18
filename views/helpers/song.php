@@ -35,7 +35,7 @@ class SongHelper extends AppHelper {
     {
         if(strlen($totalTime)>5)
         {
-            $totalTime =  date('i:s', strtotime($totalTime));
+            $totalTime =  ltrim(date('i:s', strtotime($totalTime)), 0);;
         }       
         
         return $totalTime;
