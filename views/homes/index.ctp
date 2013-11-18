@@ -426,11 +426,11 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                         ?> 
                                             <?php
 
-                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
+                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
                                             {?>
                                                 <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                 <div class="wishlist-popover">                                                
-                                                <?php echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$v['albumSongs'][$v['Album']['ProdID']],$v['Album']['ProdID'],$v['Album']['provider_type']);
+                                                <?php echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$v['albumSongs'],$v['Album']['ProdID'],$v['Album']['provider_type']);
                                                 ?>
                                                 <a class="add-to-playlist" href="#">Add To Queue</a>
                                                 <?php
