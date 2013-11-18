@@ -1799,9 +1799,9 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 
 }
 
-function loadAlbumSong(albumSongs) { alert(albumSongs);
-        playlist = base64_decode(albumSongs);
-        playlist = JSON.parse(playlist);
+function loadAlbumSong(albumSongs) { alert("2: "+albumSongs);
+        playlist = base64_decode(albumSongs); alert("3: "+playlist);
+        playlist = JSON.parse(playlist); alert("4: "+playlist);
         if (playlist.length) {
             pushSongs(playlist);
         }
@@ -1811,7 +1811,7 @@ function loadAlbumSong(albumSongs) { alert(albumSongs);
 function loadAlbumParameters() 
 {        
         var albumPara   =   $("#playlist_data").html()
-        alert(albumPara);
+        alert("1: "+albumPara);
         loadAlbumSong(albumPara);
 }
 
