@@ -235,6 +235,22 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
     $(document).ready(function(){
         $('.delete-queue-dialog-box').submit(function(){
             alert('Delete queue clicked');
+                $.ajax({
+                type: "post",
+                url: webroot+'/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>',
+             
+                success: function (response) { 
+                  alert(response);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    // log the error to the console
+                    console.log(
+                        "The following error occured: "+
+                        textStatus, errorThrown
+                    );
+                }
+
+            });
         });
     });
 </script>
