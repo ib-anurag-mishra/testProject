@@ -27,14 +27,13 @@
 			<div class="col-3">
 				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="javascript:void(0);">FAQ section</a>.</div>
 				<div class="button-container" >
-					<div class="play-queue-btn" onclick="loadAlbumParameters();"></div>
+					<div class="play-queue-btn" ></div>
 					<?php if($default_queue != 1){ ?>
                                             <div class="gear-icon no-ajaxy"></div>
                                         <?php } ?>
 				</div>
 				<div class="queue-options">
-                                    <?php                                    
-                                    
+                                    <?php                                                                        
                                                 if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Custom') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
                                                 {
                                                     ?>
@@ -189,7 +188,7 @@
                                             <?php 
                                                 $playList = implode(',', $playListData);
                                                 if(!empty($playList)){
-                                                    echo '['.base64_encode($playList).']';
+                                                    echo '['.($playList).']';
                                                 }
                                             ?>
                                         </div>

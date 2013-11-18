@@ -1799,22 +1799,13 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 
 }
 
-function loadAlbumSong(albumSongs) { alert("2: "+albumSongs);
-        playlist = base64_decode(albumSongs); alert("3: "+playlist);
-        playlist = JSON.parse(playlist); alert("4: "+playlist);
+function loadAlbumSong(albumSongs) {
+        playlist = base64_decode(albumSongs);
+        playlist = JSON.parse(playlist);
         if (playlist.length) {
             pushSongs(playlist);
         }
 }
-
-
-function loadAlbumParameters() 
-{        
-        var albumPara   =   $("#playlist_data").text();
-        alert("1: "+albumPara);
-        loadAlbumSong(albumPara);
-}
-
 
 function base64_decode (data) {
   // http://kevin.vanzonneveld.net
