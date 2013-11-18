@@ -33,8 +33,10 @@ class QueueListDetailsController extends AppController{
     function index(){
         if( $this->request->is('ajax') ) 
             {            
-                $hid_action = $this->request->data('hid_action');
+               echo $hid_action = $this->request->data('hid_action');
+               echo $dqPlid = $this->request->data('dqPlid');
             }
+            $dqPlid = $_POST["dqPlid"];
             
         $patron_id = $this->Session->read('patron');
         if(!empty($patron_id)){
@@ -73,9 +75,9 @@ class QueueListDetailsController extends AppController{
             }
             else if($_POST['hid_action']=='delete_queue' || $hid_action =='delete_queue' )
             {                         
-                  if(!empty($_POST["dqPlid"])){
-                        $delqueueDetail = $this->QueueDetail->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
-                        $delqueue = $this->QueueList->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
+                  if(!empty($dqPlid)){
+                        $delqueueDetail = $this->QueueDetail->deleteAll(array('queue_id' => $dqPlid), false);
+                        $delqueue = $this->QueueList->deleteAll(array('queue_id' => $dqPlid), false);
 
                         if( (true === $delqueueDetail) && (true === $delqueue) ) {
                             $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
