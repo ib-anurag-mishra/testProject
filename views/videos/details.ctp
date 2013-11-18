@@ -1,3 +1,6 @@
+<script lenguage="javascript">
+resetNavigation();
+</script>
 <section class="individual-videos-page">
 		<div class="breadcrumbs">                
                  <?php
