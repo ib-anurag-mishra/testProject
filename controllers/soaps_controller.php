@@ -6129,12 +6129,11 @@ STR;
       $sobj->ISRC                 = '';
       $sobj->DownloadStatus       = '';
       $sobj->fileURL              = '';
-      $sobj->FullLengthFileURL    = 'ALbum Image';
       $sobj->playButtonStatus     = '';
       
       $albumData = $this->Album->find('first',
         array(
-          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type', 'Advisory'),
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type', 'Advisory', 'FileID'),
           'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
           'recursive' => -1,
         )
@@ -6144,7 +6143,9 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
-
+      $imgData = $this->Files->find('first',array('conditions' => array('FileID' => $albumData['Album']['FileID'])));
+      $sobj->FullLengthFileURL    = Configure::read('App.Music_Path') . shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $imgData['Files']['CdnPath']."/".$imgData['Files']['SourceURL']);;
+      
             
       if('T' == $albumData['Album']['Advisory']) { $sobj->AlbumTitle = $sobj->AlbumTitle.' (Explicit)'; }
       
