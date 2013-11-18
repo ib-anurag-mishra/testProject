@@ -212,8 +212,13 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                         <?php
                                         if ($this->Session->read("patron"))
                                         {
+                                            if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
+                                                {
                                             ?> 
-                                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                            <?php
+                                                }
+                                             ?>
                                             <div class="wishlist-popover">
                                                 <?php
                                                 if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
@@ -314,9 +319,12 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                         if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                                         {
                                                             echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
-                                                        }
+                                                        
                                                     ?> 
                                                     <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                    <?php
+                                                        }
+                                                     ?>
                                                     <div class="wishlist-popover">
                                                         <?php
                                                          
