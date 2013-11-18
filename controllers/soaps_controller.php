@@ -36,7 +36,7 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4'); 
-  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr'); 
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming'); 
 
   
   function index(){
@@ -6109,45 +6109,32 @@ STR;
 
     $queryVar   = $searchText;
     $typeVar    = 'album';
-    $sortVar    = 'ArtistText';
-    $sortOrder  = 'asc';
+    (0 == $startFrom) ? $startFrom = 1 : $startFrom = $startFrom;   
     $limit      = $recordCount;
-    
-    $page = ceil(($startFrom + $recordCount)/$recordCount); 
     
     $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
     
-    $Albumlist = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry, false, $mobileExplicitStatus);
-    $total = $this->Solr->total;
-    $totalPages = ceil($total/$limit);
-
-                
+    $Albumlist = $this->Solr->groupSearch($queryVar, $typeVar, $startFrom, $recordCount, $mobileExplicitStatus, $library_terriotry);
+      
     foreach($Albumlist AS $key => $val){
 
       $sobj = new SearchDataType;
-      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
-      $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
-      $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
-      $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
-      $sobj->Sample_Duration      = $val->Sample_Duration;
-      $sobj->FullLength_Duration  = $val->FullLength_Duration;
-      $sobj->ISRC                 = $val->ISRC;
-
-      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+      $sobj->SongProdID           = '';
+      $sobj->SongTitle            = '';
+      $sobj->Title                = '';
+      $sobj->SongArtist           = '';
+      $sobj->ArtistText           = '';
+      $sobj->Sample_Duration      = '';
+      $sobj->FullLength_Duration  = '';
+      $sobj->ISRC                 = '';
+      $sobj->DownloadStatus       = '';
+      $sobj->fileURL              = '';
+      $sobj->FullLengthFileURL    = 'ALbum Image';
+      $sobj->playButtonStatus     = '';
       
-      if($sobj->DownloadStatus) {
-        $sobj->fileURL            = 'nostring';
-        $sobj->FullLengthFileURL  = 'nostring';
-      }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
-        $sobj->FullLengthFileURL  = $this->getFullLengthFileURL($val->FullLength_FIleID);
-      }
-        
-        
       $albumData = $this->Album->find('first',
         array(
-          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type', 'Advisory'),
           'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
           'recursive' => -1,
         )
@@ -6157,9 +6144,9 @@ STR;
       $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
       $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
-      $sobj->playButtonStatus     = $this->getPlayButtonStatus($val->ProdID, $library_terriotry, $val->provider_type);
-      
-      if('T' == $val->Advisory) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
+
+            
+      if('T' == $albumData['Album']['Advisory']) { $sobj->AlbumTitle = $sobj->AlbumTitle.' (Explicit)'; }
       
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 

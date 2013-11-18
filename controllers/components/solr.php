@@ -71,7 +71,6 @@ class SolrComponent extends Object {
                 $cond .= " AND AAdvisory:F";
               }
             }
-
         }
         
         $searchkeyword = strtolower($this->escapeSpace($keyword));
@@ -508,18 +507,29 @@ class SolrComponent extends Object {
         }
     }
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5) {
+    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null) {
+    
         set_time_limit(0);
         $query = '';
-        $country = $this->Session->read('territory');
-        $cond = " AND DownloadStatus:1";
-
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F"; 
-            if($type != 'video'){
-                $cond .= " AND AAdvisory:F";
-            }
+        
+        if((empty($country))){
+          $country = $this->Session->read('territory');
         }
+      
+        $cond = " AND DownloadStatus:1";
+        
+        if(1 == $mobileExplicitStatus){
+          $cond .= " AND Advisory:F";
+        }else{        
+          if ($this->Session->read('block') == 'yes') {
+            $cond .= " AND Advisory:F";
+            if($type != 'video'){
+              $cond .= " AND AAdvisory:F";
+            }
+          }            
+        }
+        
+        
 
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
