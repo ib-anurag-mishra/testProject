@@ -90,7 +90,7 @@
                 }
 
                 function setUpperNavigation(pageName) {                    
-                    
+                   alert(1); 
                     var sidebar_anchor = $('.sidebar-anchor');
                     sidebar_anchor.removeClass('active');
                     var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
@@ -258,7 +258,7 @@
                         leftmywishlist07.removeClass('active');
                         topmylib07.addClass('active');
                         leftmylib07.addClass('active');
-                        topmostpopuler07.addClass('active');
+                        
                     } else if (pageName === 'ustoplib07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
@@ -276,7 +276,7 @@
                         leftmylib07.removeClass('active');
                         leftmyhistory07.removeClass('active');
                         ustoplib07.addClass('active');
-                        topmostpopuler07.addClass('active');
+                       
                     } else if (pageName === 'leftnewrelease07') {                      
                         musicVideo07.removeClass('active');
                         newsRelease07.removeClass('active');
