@@ -1810,7 +1810,7 @@ function loadAlbumSong(albumSongs) { alert("2: "+albumSongs);
 
 function loadAlbumParameters() 
 {        
-        var albumPara   =   $("#playlist_data").html()
+        var albumPara   =   $("#playlist_data").text();
         alert("1: "+albumPara);
         loadAlbumSong(albumPara);
 }
