@@ -142,7 +142,7 @@ $(document).ready(function()
 			show: {
 				
 				event: event.type,
-				ready:true
+				ready:false
 			}			
 			
 			
