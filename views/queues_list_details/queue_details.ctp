@@ -26,8 +26,8 @@
 			</div>
 			<div class="col-3">
 				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="javascript:void(0);">FAQ section</a>.</div>
-				<div class="button-container" onclick="document.getElementById('playlist_data').innerHTML">
-					<div class="play-queue-btn"></div>
+				<div class="button-container" >
+					<div class="play-queue-btn" onclick="document.getElementById('playlist_data').innerHTML"></div>
 					<?php if($default_queue != 1){ ?>
                                             <div class="gear-icon no-ajaxy"></div>
                                         <?php } ?>
