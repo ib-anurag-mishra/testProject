@@ -1818,13 +1818,14 @@ function callSearchAjax(){
 } 
 
 function resetNavigation(){
-    
+    alert(1);
     var sidebar_anchor = $('.sidebar-anchor');
     sidebar_anchor.removeClass('active');
     var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
     sidebar_sub_nav_07.removeClass('active');
     var sidebar_freegalqueues = $('.leftfqueuesclass');
     sidebar_freegalqueues.removeClass('active');
+    
     var home07 = $('#home07');
     var musicVideo07 = $('#musicVideo07');
     var newsRelease07 = $('#newsRelease07');
