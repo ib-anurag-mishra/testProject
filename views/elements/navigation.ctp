@@ -107,29 +107,29 @@ $(document).ready(function() {
 
     $(document).on('click', '.sidebar-anchor', function(e) {
 
-           if ($(this).next('ul').hasClass('active')) {
+        if ($(this).next('ul').hasClass('active')) {
 
-                $(this).next('ul').removeClass('active');
+            $(this).next('ul').removeClass('active');
 
-            } else {
+        } else {
 
-                $(this).next('ul').addClass('active');
-                var home07 = $('#home07');
-                home07.removeClass('active');
-                var musicVideo07 = $('#musicVideo07');
-                musicVideo07.removeClass('active');
-                var newsRelease07 = $('#newsRelease07');
-                newsRelease07.removeClass('active');
-                var genre07 = $('#genre07');
-                genre07.removeClass('active');
-                var faq07 = $('#faq07');
-                faq07.removeClass('active');
-            }
+            $(this).next('ul').addClass('active');
+            /* var home07 = $('#home07');
+            home07.removeClass('active');
+            var musicVideo07 = $('#musicVideo07');
+            musicVideo07.removeClass('active');
+            var newsRelease07 = $('#newsRelease07');
+            newsRelease07.removeClass('active');
+            var genre07 = $('#genre07');
+            genre07.removeClass('active');
+            var faq07 = $('#faq07');
+            faq07.removeClass('active'); */
+        }
 
-        });
+    });
 
     $('.select-arrow').on('click', function(e) {
-         if ($('.account-options-menu').hasClass('active')) {
+        if ($('.account-options-menu').hasClass('active')) {
             $('.account-options-menu').removeClass('active');
         } else {
             $('.account-options-menu').addClass('active');
