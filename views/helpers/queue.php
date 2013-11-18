@@ -36,7 +36,7 @@ EOD;
     
 	/*
 	function name  : getQueuesListAlbums
-	desc :  This function is used to get mart up for add to queue for albums
+	desc :  This function is used to get mark up for add to queue for albums
 	*/
 	
   
