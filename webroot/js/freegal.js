@@ -1799,7 +1799,7 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 
 }
 
-function loadAlbumSong(albumSongs) {
+function loadAlbumSong(albumSongs) { alert(albumSongs);
         playlist = base64_decode(albumSongs);
         playlist = JSON.parse(playlist);
         if (playlist.length) {
@@ -1811,6 +1811,7 @@ function loadAlbumSong(albumSongs) {
 function loadAlbumParameters() 
 {        
         var albumPara   =   $("#playlist_data").html()
+        alert(albumPara);
         loadAlbumSong(albumPara);
 }
 
