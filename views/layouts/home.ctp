@@ -90,8 +90,8 @@
                 }
 
                 function setUpperNavigation(pageName) { 
-                   var State = window.History.getState();
-                   alert(State);
+                   
+                  
                    
                     var sidebar_anchor = $('.sidebar-anchor');
                     sidebar_anchor.removeClass('active');

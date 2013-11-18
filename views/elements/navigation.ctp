@@ -128,6 +128,8 @@ $(document).ready(function() {
 
     });
 
+$(document).on('click', '.sidebar-anchor', function(e) {
+
     $('.select-arrow').on('click', function(e) {
         if ($('.account-options-menu').hasClass('active')) {
             $('.account-options-menu').removeClass('active');
