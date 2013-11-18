@@ -144,12 +144,12 @@ $(document).ready(function() {
             data : {'hid_action' :'delete_queue' , 'dqPlid':$('#dqPlid').val() },
 
             success: function (response) { 
-              $('.delete-queue-dialog-box').removeClass('active');
-
               var
                     $this = $(this),
                     url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
                     title = $this.attr('title') || null;
+                    
+                $('.delete-queue-dialog-box').removeClass('active');
 
                 History.pushState(null, title, url);
                 event.preventDefault();
@@ -161,6 +161,7 @@ $(document).ready(function() {
                     textStatus, errorThrown );
             }                          
         });
+        
         return false;
     });
 });
