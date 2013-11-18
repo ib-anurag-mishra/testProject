@@ -247,8 +247,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     "The following error occured: "+
                                     textStatus, errorThrown
                                 );
-                            }
-                            return false;
+                            }                          
                         });
                         return false;
                     });
