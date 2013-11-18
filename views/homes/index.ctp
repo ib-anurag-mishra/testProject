@@ -311,7 +311,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                 <?php
                                                 if ($this->Session->read("patron"))
                                                 {
-                                                        if ($this->Session->read('library_type') == 2)
+                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                                         {
                                                             echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                                         }
@@ -320,20 +320,14 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                     <div class="wishlist-popover">
                                                         <?php
                                                          
-                                                        if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
+                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                                         {
-                                                            //echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Song"]["ProdID"], $value["Song"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
+                                                            
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>
                                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                                             <?php
                                                         }
-                                                        ?>
-
-                                                        <?php
-                                                        //$wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-
-                                                        //echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                                         ?>
                                                         
                                                         <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
