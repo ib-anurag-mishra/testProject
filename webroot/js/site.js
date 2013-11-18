@@ -1853,7 +1853,7 @@ function resetNavigation(){
     genre07.removeClass('active');
     faq07.removeClass('active');
     home07.removeClass('active');
-    alert(1);
+ 
     
     
 }
