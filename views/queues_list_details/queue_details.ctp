@@ -26,7 +26,7 @@
 			</div>
 			<div class="col-3">
 				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="javascript:void(0);">FAQ section</a>.</div>
-				<div class="button-container">
+				<div class="button-container" onclick="document.getElementById('playlist_data').innerHTML">
 					<div class="play-queue-btn"></div>
 					<?php if($default_queue != 1){ ?>
                                             <div class="gear-icon no-ajaxy"></div>
@@ -189,7 +189,7 @@
                                             <?php 
                                                 $playList = implode(',', $playListData);
                                                 if(!empty($playList)){
-                                                    echo '['.$playList.']';
+                                                    echo '['.base64_encode($playList).']';
                                                 }
                                             ?>
                                         </div>
