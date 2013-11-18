@@ -1795,7 +1795,7 @@ $('document').ready(function()
     
     
    
-  var CurrentPageState = History.getState();
+    var CurrentPageState = History.getState();
     var ReadycurrentPageState= CurrentPageState.url;
     if (ReadycurrentPageState.toLowerCase().indexOf("artists/view/") >= 0){
             resetNavigation();
