@@ -234,7 +234,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         alert('Delete queue clicked');
                             $.ajax({
                             type: "post",
-                            url: webroot+'/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>',
+                            url: webroot+'/queuelistdetails/index/'+ $('#dqPlid').value(),
 
                             success: function (response) { 
                               alert(response);
