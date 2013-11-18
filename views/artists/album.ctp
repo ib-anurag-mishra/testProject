@@ -142,7 +142,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                          echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
                                     
                             ?>
-                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                        <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                     <div class="wishlist-popover">
                                                         <?php
                                                                                                                     
