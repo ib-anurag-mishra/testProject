@@ -130,7 +130,22 @@ if ($this->Session->read("patron"))
 <script type="text/javascript">
     
         $(document).ready(function (){
-            $("#alt").hide();  
+           
+            var CurrentPageState = History.getState();
+            var ReadycurrentPageState= CurrentPageState.url;
+            if (ReadycurrentPageState.toLowerCase().indexOf("artists/view/") >= 0){
+                    resetNavigation();
+            }
+            if (ReadycurrentPageState.toLowerCase().indexOf("artists/album/") >= 0){
+                    resetNavigation();
+            }
+            if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0){
+                    resetNavigation();
+            }
+           
+           
+           
+           $("#alt").hide();  
             $("#no_flash").hide();
 
             if(swfobject.hasFlashPlayerVersion("9.0.115"))
@@ -164,17 +179,7 @@ if ($this->Session->read("patron"))
         
         
         
-    var CurrentPageState = History.getState();
-    var ReadycurrentPageState= CurrentPageState.url;
-    if (ReadycurrentPageState.toLowerCase().indexOf("artists/view/") >= 0){
-            resetNavigation();
-    }
-    if (ReadycurrentPageState.toLowerCase().indexOf("artists/album/") >= 0){
-            resetNavigation();
-    }
-    if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0){
-            resetNavigation();
-    }
+ 
 </script>
 
 
