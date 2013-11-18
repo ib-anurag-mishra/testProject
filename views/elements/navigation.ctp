@@ -235,7 +235,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             $.ajax({
                             type: "post",
                             url: webroot+'/queuelistdetails/index/'+ $('#dqPlid').val(),
-                            data : {hid_action : 'delete_queue'},
+                            data : {'hid_action' :'delete_queue'},
 
                             success: function (response) { 
                               alert(response);
