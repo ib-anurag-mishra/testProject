@@ -89,7 +89,8 @@
                     return re.test(email);
                 }
 
-                function setUpperNavigation(pageName) {                    
+                function setUpperNavigation(pageName) { 
+                    alert(History.getState());
                    
                     var sidebar_anchor = $('.sidebar-anchor');
                     sidebar_anchor.removeClass('active');
