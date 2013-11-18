@@ -128,8 +128,6 @@ $(document).ready(function() {
 
     });
 
-$(document).on('click', '.sidebar-anchor', function(e) {
-
     $('.select-arrow').on('click', function(e) {
         if ($('.account-options-menu').hasClass('active')) {
             $('.account-options-menu').removeClass('active');
@@ -245,8 +243,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                 // log the error to the console
                                 console.log(
                                     "The following error occured: "+
-                                    textStatus, errorThrown
-                                );
+                                    textStatus, errorThrown );
                             }                          
                         });
                         return false;
