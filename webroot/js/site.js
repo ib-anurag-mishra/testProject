@@ -493,6 +493,7 @@ $('document').ready(function()
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
+        $(this).find('.top-10-download-now-button').css({opacity: 0});
     });
 	
     $('.album-container').on('mouseenter', function() { 
@@ -502,6 +503,7 @@ $('document').ready(function()
         $(this).find('.preview').css({opacity: 1});
         $(this).find('.album-preview').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
+        $(this).find('.top-10-download-now-button').css({opacity: 1});
     });
 
     $('.hero-image-container').on('mouseenter', function() {
