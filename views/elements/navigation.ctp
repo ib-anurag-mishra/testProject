@@ -217,7 +217,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                 
                     <div class="close"></div>
                     <header>Delete Queue?</header>
-                   <form  action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
+                   <form   method="post">
                    <div class="confirm-text">
                             <p>Are you sure you want to delete '<span>Queue Name</span>'?</p>
 
@@ -231,6 +231,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </form>
             </div>
             
+<script>
+    $(document).ready(function(){
+        $('.delete-queue-dialog-box').submit(function(){
+            alert('Delete queue clicked');
+        });
+    });
+</script>
 
     </div>
     <div class="wrapper">
