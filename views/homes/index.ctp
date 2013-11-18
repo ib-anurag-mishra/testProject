@@ -426,7 +426,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                         ?> 
                                             <?php
 
-                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs']))
+                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
                                             {?>
                                                 <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                                 <div class="wishlist-popover">                                                
