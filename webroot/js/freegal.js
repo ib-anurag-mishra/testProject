@@ -1808,9 +1808,10 @@ function loadAlbumSong(albumSongs) {
 }
 
 
-function loadAlbumParameters(albumSongs) 
-{
-        alert($("#playlist_data").html());
+function loadAlbumParameters() 
+{        
+        var albumPara   =   $("#playlist_data").html()
+        loadAlbumSong(albumPara);
 }
 
 

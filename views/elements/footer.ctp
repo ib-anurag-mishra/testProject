@@ -131,17 +131,7 @@ if ($this->Session->read("patron"))
     
         $(document).ready(function (){
            
-            var CurrentPageState = History.getState();
-            var ReadycurrentPageState= CurrentPageState.url;
-            if (ReadycurrentPageState.toLowerCase().indexOf("artists/view/") >= 0){
-                    resetNavigation();
-            }
-            if (ReadycurrentPageState.toLowerCase().indexOf("artists/album/") >= 0){
-                    resetNavigation();
-            }
-            if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0){
-                    resetNavigation();
-            }
+            
            
            
            
