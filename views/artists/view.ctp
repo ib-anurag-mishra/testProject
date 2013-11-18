@@ -211,7 +211,7 @@
 											echo $this->getTextEncode($albumSong['Song']['Artist']) ;
 										}
 									?></a></div>
-					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
+					<div class="time"><?php echo $this->Song->getSongDurationTime($albumSong['Song']['FullLength_Duration']); ?></div>
                                                 <?php
                                                                     if($this->Session->read('patron')) {?>
                                                                         

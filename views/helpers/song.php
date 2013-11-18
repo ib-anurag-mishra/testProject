@@ -29,6 +29,18 @@ class SongHelper extends AppHelper {
 	)));
         return  $details;
     }
+    
+    
+    function getSongDurationTime($totalTime)
+    {
+        if(strlen($totalTime)>5)
+        {
+            $totalTime =  date('i:s', strtotime($totalTime));
+        }       
+        
+        return $totalTime;
+        
+    }
 }
 
 ?>
