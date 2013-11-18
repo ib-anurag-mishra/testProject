@@ -31,11 +31,11 @@ class QueueListDetailsController extends AppController{
     
     
     function index(){
-        if( $this->RequestHandler->isAjax() ) 
+         if($this->RequestHandler->isAjax()) 
             {            
-               echo $hid_action = $this->request->data('hid_action');
-               echo $dqPlid = $this->request->data('dqPlid');
+              echo $this->data;
             }
+            
             $dqPlid = $_POST["dqPlid"];
             
         $patron_id = $this->Session->read('patron');
