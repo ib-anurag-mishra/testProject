@@ -84,7 +84,7 @@
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
                 var refreshPage ='';
-                setInterval(function(){ refreshPage = <?php echo ($this->Session->read("patron")=='')?'false':'true'; ?>;},3000);
+                setInterval(function(){refreshPage = <?php echo ($this->Session->read("patron")=='')?'false':'true'; ?>;},3000);
                 
                 
                 function validateEmail(email) {
@@ -722,10 +722,8 @@
                                             <div id="container">
                                                 <?php echo $this->element('header'); ?>
                                                 <div id="content">
-                                                    
                                                     <?php
-                                                    $refreshPage = '<script>document.write("refreshPage");</script>';
-                                                    if ($this->Session->read('library') && $this->Session->read('library') != '' && $refreshPage )
+                                                    if ($this->Session->read('library') && $this->Session->read('library') != '')
                                                     {
                                                         echo $this->element('navigation');
                                                     }
