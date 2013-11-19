@@ -83,7 +83,7 @@
                     
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
-                var refreshPage =   <?php   echo isset($this->Session->read("patron"))?'true':'false'; ?>;
+                var refreshPage =   <?php   echo empty($this->Session->read("patron"))?'false':'true'; ?>;
                 
                 function validateEmail(email) {
                     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
