@@ -270,7 +270,7 @@ if ($type != 'all') {
                    
                   
                     $albumDetails = $album->getImage($palbum->ReferenceID);
-                    print_r($albumDetails);die;
+             
                     //$albumDetails = $album->getImage($palbum->ReferenceID);
                    
                     if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
