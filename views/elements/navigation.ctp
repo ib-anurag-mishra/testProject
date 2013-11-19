@@ -72,7 +72,7 @@ $(document).ready(function() {
 
 function renameQueue()
 {
-    alert($('.rename-form-container').find('#name').val());
+    //alert($('.rename-form-container').find('#name').val());
 
     $.ajax({
             type: "post",
@@ -82,7 +82,10 @@ function renameQueue()
 
             success: function (response) { 
                 $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
+                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
+
                 $('.rename-queue-dialog-box').removeClass('active');
+                $('.queue-overlay').removeClass('active');
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // log the error to the console
@@ -174,7 +177,8 @@ $(document).ready(function() {
                     title = $this.attr('title') || null;
                     
                 $('.delete-queue-dialog-box').removeClass('active');
-
+                $('.queue-overlay').removeClass('active');
+               
                 History.pushState(null, title, url);
                 event.preventDefault();
             },
