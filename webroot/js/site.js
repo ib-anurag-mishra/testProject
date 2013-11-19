@@ -345,7 +345,10 @@ $('document').ready(function()
    // $(document).ready($('.preview').css({opacity: 0}));
     
     $(document).on('mouseleave', '.wishlist-popover', function() {
-        $(this).removeClass('active');
+    	setTimeout(function(){
+    		$(this).removeClass('active');
+    	}, 500)
+        
     });
 
     $(document).on('hover', '.wishlist-popover > a', function(e) {
