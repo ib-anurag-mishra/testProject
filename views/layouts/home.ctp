@@ -83,9 +83,11 @@
                     
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
-                var refreshPage = '';
+                var refreshPage = 0  ;
                 setInterval(function(){
-                    alert('<?php echo ($this->Session->read("patron")) ?>'); 
+                    refreshPage = 0 ;
+                    refreshPage = <?php echo ($this->Session->read("patron")) ?> ;
+               
                 },3000);
                 
                 function validateEmail(email) {
