@@ -1122,8 +1122,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistDownload", // URL to request
         data: data, // post data
-        success: function(response) {
-             alert(response);
+        success: function(response) {            
             var msg = response.substring(0, 5);
             if (msg == 'error')
             {
