@@ -77,7 +77,7 @@ function renameQueue()
             type: "post",
             url: webroot+'queuelistdetails/index/'+ $('#rqPlid').val(),
 
-            data : {'hid_action' :'rename_queue' , 'rqPlid':$('#rqPlid').val() , 'QueueName' : $('#FormRename#name').val()},
+            data : {'hid_action' :'rename_queue' , 'rqPlid':$('#rqPlid').val() , 'QueueName' : $('#FormRename').find('#name').val()},
 
             success: function (response) { 
                 $('.rename-queue-dialog-box').removeClass('active');
