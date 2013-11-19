@@ -52,7 +52,9 @@ class QueueListDetailsController extends AppController{
             }
             else if($_POST['hid_action']=='rename_queue') 
             {
-                echo "<pre>" . $this->data ;
+                echo "<pre>" ;
+                print_r($this->data );
+                
                 die;
                 
                 if(!empty($_POST["rqPlid"])){
