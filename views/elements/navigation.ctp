@@ -39,15 +39,14 @@ $(document).ready(function() {
         var frm = $('#FormRename');
            $.ajax({
                type: "post",
-               url: webroot+'queuelistdetails/ajaxQueueValidation',
+               url: webroot+'queuelistdetails/index',
                data: frm.serialize(),
                success: function (response) { 
                    //alert("["+response+"]");
                    if(response=='Insertion Allowed')
                    {                   
-                          //$( "#FormRename" ).submit();
-                          document.getElementById("FormRename").submit(function(){
-                            alert('Insertion Allowed');
+                         $('.rename-queue-dialog-box').submit(function(){
+
                             });
                    }
                    else
