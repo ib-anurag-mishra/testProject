@@ -111,10 +111,9 @@
 
         // Hook into State Changes
         $window.bind('statechange', function(event) {
-                if(1)
-                {
+            
                     alert(refreshPage);
-                }
+            
             // Prepare Variables
             var
                     State = History.getState(),
