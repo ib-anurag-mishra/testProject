@@ -1123,7 +1123,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
         url: webroot + "homes/wishlistDownload", // URL to request
         data: data, // post data
         success: function(response) {
-            
+             alert(response);
             var msg = response.substring(0, 5);
             if (msg == 'error')
             {
