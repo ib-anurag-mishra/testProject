@@ -112,7 +112,11 @@
         // Hook into State Changes
         $window.bind('statechange', function(event) {
             
-                    alert(refreshPage);
+                    //alert(refreshPage);
+                    if(!refreshPage)
+                    {
+                        window.location.reload();
+                    }
             
             // Prepare Variables
             var
