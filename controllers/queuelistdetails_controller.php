@@ -52,11 +52,6 @@ class QueueListDetailsController extends AppController{
             }
             else if($_POST['hid_action']=='rename_queue') 
             {
-                echo "<pre>" ;
-                print_r($this->data );
-                
-                die;
-                
                 if(!empty($_POST["rqPlid"])){
                     $this->data['QueueList']['queue_id'] = $_POST["rqPlid"];
                     $this->QueueList->set($this->data['QueueList']);

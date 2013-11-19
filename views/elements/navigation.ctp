@@ -39,7 +39,7 @@ $(document).ready(function() {
         var frm = $('#FormRename');
            $.ajax({
                type: "post",
-               url: webroot+'queuelistdetails/index',
+               url: webroot+'queuelistdetails/ajaxQueueValidation',
                data: frm.serialize(),
                success: function (response) { 
                    //alert("["+response+"]");
