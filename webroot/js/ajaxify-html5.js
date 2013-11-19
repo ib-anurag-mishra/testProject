@@ -112,7 +112,7 @@
         // Hook into State Changes
         $window.bind('statechange', function(event) {
             
-                    alert(document.getElementById(patron_id).value);
+                    alert(document.getElementById('patron_id').value);
                     if(!refreshPage)
                     {
                         window.location.reload();
