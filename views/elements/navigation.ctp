@@ -72,8 +72,30 @@ $(document).ready(function() {
 
 function renameQueue()
 {
+    alert('Rename Queue');
+    $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/index/'+ $('#rqPlid').val(),
+            data : {'hid_action' :'delete_queue' , 'rqPlid':$('#rqPlid').val() },
 
-    alert('Rename Queue");
+            success: function (response) { 
+              var
+                    $this = $(this),
+                    url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
+                    title = $this.attr('title') || null;
+                    
+                $('.rename-queue-dialog-box').removeClass('active');
+
+                History.pushState(null, title, url);
+                event.preventDefault();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                // log the error to the console
+                console.log(
+                    "The following error occured: "+
+                    textStatus, errorThrown );
+            }                          
+        });
 }
 
 
