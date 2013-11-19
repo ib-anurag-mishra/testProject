@@ -1,6 +1,8 @@
 // Ajaxify
 // v1.0.1 - 30 September, 2012
 // https://github.com/browserstate/ajaxify
+ var loggedIn = false;
+ 
 (function(window, undefined) {
    
     
@@ -18,8 +20,7 @@
 
     // Wait for Document
     $(function() {
-         var loggedIn = false;
-         
+                 
         // Prepare Variables
         var
                 /* Application Specific Variables */
