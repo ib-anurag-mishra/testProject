@@ -102,7 +102,6 @@ Class DownloadsComponent extends Object
     }
     
     function checkSongExists($prodId, $providerType){
-         Configure::write('debug', 2);
          
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
