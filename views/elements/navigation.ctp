@@ -45,7 +45,7 @@ $(document).ready(function() {
                    //alert("["+response+"]");
                    if(response=='Insertion Allowed')
                    {     
-                        $("#FormRename").unbind("submit");
+                        $("#FormRename").unbind('submit').submit();
                    }
                    else
                    {
