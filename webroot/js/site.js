@@ -344,8 +344,8 @@ $('document').ready(function()
     
    // $(document).ready($('.preview').css({opacity: 0}));
     
-    $(document).on('mouseleave', '.wishlist-popover', function() {
-    	
+    $(document).on('mouseleave', '.wishlist-popover', function(e) {
+    	console.log(e.offsetX);
     	$(this).removeClass('active');
     	
         
