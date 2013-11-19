@@ -106,9 +106,9 @@ Class DownloadsComponent extends Object
          
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first',array('fields'=>'Song.Title'),array('conditions' => array('ProdID1'=>$prodId, 'provider_type'=>$providerType,'DownloadStatus'=>'1')));
+        $song = $songInstance->find('first',array('fields'=>'Song.Title'),array('conditions' => array('ProdID1'=>$prodId, 'provider_type1'=>$providerType,'DownloadStatus'=>'1')));
         
-        print_r($song);die;
+        print_r($song);
         if(!empty($song['Song'])){
             return true;
         } else {
