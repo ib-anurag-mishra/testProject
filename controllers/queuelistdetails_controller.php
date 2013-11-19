@@ -31,12 +31,7 @@ class QueueListDetailsController extends AppController{
     
     
     function index(){
-         if($this->RequestHandler->isAjax()) 
-            {            
-              echo $this->data;
-            }
-            
-            $dqPlid = $_POST["dqPlid"];
+        $dqPlid = $_POST["dqPlid"];
             
         $patron_id = $this->Session->read('patron');
         if(!empty($patron_id)){
@@ -73,7 +68,7 @@ class QueueListDetailsController extends AppController{
                 }   
 
             }
-            else if($_POST['hid_action']=='delete_queue' || $hid_action =='delete_queue' )
+            else if($_POST['hid_action']=='delete_queue' )
             {                         
                   if(!empty($dqPlid)){
                         $delqueueDetail = $this->QueueDetail->deleteAll(array('queue_id' => $dqPlid), false);

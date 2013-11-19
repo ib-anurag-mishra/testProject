@@ -164,6 +164,34 @@ $(document).ready(function() {
         
         return false;
     });
+
+    // Rename Queue
+    $('.rename-queue-dialog-box').submit(function(){
+         $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/index/'+ $('#rqPlid').val(),
+            data : {'hid_action' :'delete_queue' , 'rqPlid':$('#rqPlid').val() },
+
+            success: function (response) { 
+              var
+                    $this = $(this),
+                    url = "queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" ,
+                    title = $this.attr('title') || null;
+                    
+                $('.rename-queue-dialog-box').hide();
+
+                History.pushState(null, title, url);
+                event.preventDefault();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                // log the error to the console
+                console.log(
+                    "The following error occured: "+ textStatus, errorThrown );
+            }                          
+        });
+        
+        return false;
+    });
 });
 
 </script>
@@ -203,7 +231,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="rename-queue-dialog-box">
                     <div class="close"></div>
                     <header>Rename '<span>Queue Name</span>'</header>
-                    <form id="FormRename" action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
+                    <form id="FormRename" action="#">
                     <div class="rename-form-container">
                                     <label id="RenameQueueMessage"></label> 
                                     <label for="name">Name:</label>
