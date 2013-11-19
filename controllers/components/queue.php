@@ -41,9 +41,9 @@ Class QueueComponent extends Object
     function getQueueDetails($queueID,$territory=''){
         $queueDetailList = ClassRegistry::init('QueueDetail');       
          
-        $queueDetail = $queueDetailList->find('all',
+        $queueDetail = $queueDetailList->find('all',  
           array(
-            'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle','Songs.ReferenceID','Songs.Advisory', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle','Albums.ProdID','Albums.provider_type', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName','Countries.StreamingStatus','Countries.StreamingSalesDate','Countries.DownloadStatus','Countries.SalesDate'),
+            'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle','Songs.ReferenceID','Songs.Advisory', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle','Albums.ProdID','Albums.provider_type', 'Albums.Title as ATitle',  'AProduct.pid as AlbumProdID', 'SProduct.pid as SongProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName','Countries.StreamingStatus','Countries.StreamingSalesDate','Countries.DownloadStatus','Countries.SalesDate'),
             'group' => array('Songs.ProdID','Songs.provider_type'),
             'joins' => array(
               array(
@@ -74,13 +74,23 @@ Class QueueComponent extends Object
                 'foreignKey' => false,
                 'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type', ),        
               ),
-              array(
-                'type' => 'INNER',
-                'table' => 'PRODUCT',
-                'alias' => 'Product',
-                'foreignKey' => false,
-                'conditions' => array('Albums.ProdID = Product.ProdID', 'Albums.provider_type = Product.provider_type'),        
-              ),
+          
+          array(
+            'type' => 'INNER',
+            'table' => 'PRODUCT',
+            'alias' => 'AProduct',
+            'foreignKey' => false,
+            'conditions' => array('Albums.ProdID = AProduct.ProdID', 'Albums.provider_type = AProduct.provider_type'),        
+          ),
+          
+          array(
+            'type' => 'INNER',
+            'table' => 'PRODUCT',
+            'alias' => 'SProduct',
+            'foreignKey' => false,
+            'conditions' => array('Songs.ProdID = SProduct.ProdID', 'Songs.provider_type = SProduct.provider_type'),        
+          ),
+          
               array(
                 'type' => 'INNER',
                 'table' => 'File',
