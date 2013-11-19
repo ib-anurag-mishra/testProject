@@ -58,14 +58,10 @@ class QueueListDetailsController extends AppController
             {
                 if (!empty($_POST["rqPlid"]))
                 {
+                    $this->data = $_POST['QueueList'];
                     $this->data['QueueList']['queue_id'] = $_POST["rqPlid"];
-
-                    if ($this->RequestHandler->isAjax())
-                    {
-                        $this->data = $_POST['QueueList'];
-                    }
-
                     $this->QueueList->set($this->data['QueueList']);
+                    
                     if ($this->QueueList->save())
                     {
                         $this->Session->setFlash('Queue has been renamed successfully', 'modal', array('class' => 'queue success'));
