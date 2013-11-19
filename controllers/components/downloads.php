@@ -102,9 +102,10 @@ Class DownloadsComponent extends Object
     }
     
     function checkSongExists($prodId, $providerType){
+         Configure::write('debug', 2);
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'DownloadStatus'=>1)));
+        $song = $songInstance->find('first', array('conditions' => array('ProdID1'=>$prodId, 'provider_type'=>$providerType,'DownloadStatus'=>'1')));
         if(!empty($song['Song'])){
             return true;
         } else {
