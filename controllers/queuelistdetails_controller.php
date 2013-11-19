@@ -31,8 +31,7 @@ class QueueListDetailsController extends AppController{
     
     
     function index(){
-        $dqPlid = $_POST["dqPlid"];
-            
+        $dqPlid = $_POST["dqPlid"];            
         $patron_id = $this->Session->read('patron');
         if(!empty($patron_id)){
             $this->QueueDetail->setDataSource('master');
@@ -50,7 +49,6 @@ class QueueListDetailsController extends AppController{
                             $this->redirect($this->referer());					
                     }               
                 }
-
             }
             else if($_POST['hid_action']=='rename_queue') 
             {
@@ -66,7 +64,6 @@ class QueueListDetailsController extends AppController{
                                 $this->redirect($this->referer());					
                     }
                 }   
-
             }
             else if($_POST['hid_action']=='delete_queue' )
             {                         
