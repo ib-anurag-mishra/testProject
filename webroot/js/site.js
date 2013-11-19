@@ -347,7 +347,7 @@ $('document').ready(function()
     $(document).on('mouseleave', '.wishlist-popover', function() {
     	setTimeout(function(){
     		$(this).removeClass('active');
-    	}, 500)
+    	}, 500);
         
     });
 
