@@ -46,7 +46,7 @@ $(document).ready(function() {
                    if(response=='Insertion Allowed')
                    {     
                         $(this).unbind('submit').submit();
-                        $('.delete-queue-dialog-box').bind('submit').submit();
+                       renameQueue();
                         return false;
                    }
                    else
@@ -70,9 +70,11 @@ $(document).ready(function() {
     
 });
 
- $('.delete-queue-dialog-box').submit(function(){
-    alert("Rename Queue");
- });
+function renameQueue()
+{
+
+    alert('Rename Queue");
+}
 
 
 $(document).ready(function() {
