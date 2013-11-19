@@ -18,11 +18,14 @@ class AlbumHelper extends AppHelper {
     }
     
     function getImage($id) {
+        echo $id;        
         $songInstance = ClassRegistry::init('Album');
         $details = $songInstance->find('all', array(
             'conditions'=>array('Album.ProdID' => $id),
           )
-		    );
+        );
+        print_r($details);
+        die;
         return  $details;
     }
 }
