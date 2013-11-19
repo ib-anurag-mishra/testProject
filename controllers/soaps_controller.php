@@ -36,7 +36,7 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4'); 
-  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr'); 
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Streaming', 'Solr', 'Queue'); 
 
   
   function index(){
@@ -5602,70 +5602,24 @@ STR;
        throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
     } 
     
-    $data = $this->QueueDetail->find('all',
-      array(
-        'fields' =>  array('QueueList.queue_name', 'Songs.SongTitle', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Songs.FullLength_Duration', 'Songs.Advisory', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'AProduct.pid as AlbumProdID', 'SProduct.pid as SongProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
-        'joins' => array(
-          array(
-            'type' => 'INNER',
-            'table' => 'queue_lists',
-            'alias' => 'QueueList',
-            'foreignKey' => false,
-            'conditions' => array('QueueList.queue_id = QueueDetail.queue_id'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'Songs',
-            'alias' => 'Songs',
-            'foreignKey' => false,
-            'conditions' => array('Songs.ProdID = QueueDetail.song_prodid', 'Songs.provider_type = QueueDetail.song_providertype'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'Albums',
-            'alias' => 'Albums',
-            'foreignKey' => false,
-            'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'PRODUCT',
-            'alias' => 'AProduct',
-            'foreignKey' => false,
-            'conditions' => array('Albums.ProdID = AProduct.ProdID', 'Albums.provider_type = AProduct.provider_type'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'PRODUCT',
-            'alias' => 'SProduct',
-            'foreignKey' => false,
-            'conditions' => array('Songs.ProdID = SProduct.ProdID', 'Songs.provider_type = SProduct.provider_type'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'File',
-            'alias' => 'AlbumFile',
-            'foreignKey' => false,
-            'conditions' => array('Albums.FileID = AlbumFile.FileID'),        
-          ),  
-          array(
-            'type' => 'INNER',
-            'table' => 'File',
-            'alias' => 'SongFile',
-            'foreignKey' => false,
-            'conditions' => array('Songs.FullLength_FileID = SongFile.FileID'),        
-          ),           
-        ),
-        'recursive' => -1,
-        'conditions' => array('QueueList.status' => 1, 'QueueList.queue_id' => $queueID),        
-      )
-    );
+    $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
+    
+    
+    if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $queueID) === false) {
+      $queue_list_array   =   $this->Queue->getQueueDetails($queueID, $lib_territory);
+      if (!empty($queue_list_array)) {                   
+        Cache::write("defaultqueuelistdetails" . $queueID, $queue_list_array);
+      }else{
+        throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
+      }
+    } 
+    
+    $data = Cache::read("defaultqueuelistdetails" . $queueID);
     
     if(empty($data)) {
       throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
     }
     
-    $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
        
     //filters array value   
     $tmp_data = array();    

@@ -267,9 +267,10 @@ if ($type != 'all') {
                 <?php
                 $i = 0;
                 foreach ($albumData as $palbum) {
+                     print_r($albumData); die;
                     $albumDetails = $album->getImage($palbum->ReferenceID);
                     //$albumDetails = $album->getImage($palbum->ReferenceID);
-                    //print_r($albumDetails); die;
+                   
                     if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                         $image = Configure::read('App.Music_Path') . $albumArtwork;
