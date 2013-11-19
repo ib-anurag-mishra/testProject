@@ -72,9 +72,12 @@ Class DownloadsComponent extends Object
         }
   
          
-            if($this->checkSongExists($prodId, $providerType)){                
-                if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){                    
+            if($this->checkSongExists($prodId, $providerType)){ 
+                echo 147;die;
+                if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){ 
+                     echo 148;die;
                     if($this->checkLibraryDownload($libId)){
+                         echo 149;die;
                         if($this->checkPatronDownload($uid,$libId)){
                             $this->log($channel." : allowed download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip,'download');
                             return array(true,'', 1);
