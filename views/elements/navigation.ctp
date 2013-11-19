@@ -128,8 +128,6 @@ $(document).ready(function() {
 
     });
 
-$(document).on('click', '.sidebar-anchor', function(e) {
-
     $('.select-arrow').on('click', function(e) {
         if ($('.account-options-menu').hasClass('active')) {
             $('.account-options-menu').removeClass('active');
@@ -138,6 +136,34 @@ $(document).on('click', '.sidebar-anchor', function(e) {
         }
     });
 
+    $('.delete-queue-dialog-box').submit(function(){
+                        
+            $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/index/'+ $('#dqPlid').val(),
+            data : {'hid_action' :'delete_queue' , 'dqPlid':$('#dqPlid').val() },
+
+            success: function (response) { 
+              var
+                    $this = $(this),
+                    url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
+                    title = $this.attr('title') || null;
+                    
+                $('.delete-queue-dialog-box').removeClass('active');
+
+                History.pushState(null, title, url);
+                event.preventDefault();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                // log the error to the console
+                console.log(
+                    "The following error occured: "+
+                    textStatus, errorThrown );
+            }                          
+        });
+        
+        return false;
+    });
 });
 
 </script>
@@ -230,29 +256,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     </form>
             </div>
-            <script>
-                $(document).ready(function(){
-                    $('.delete-queue-dialog-box').submit(function(){
-                        alert('Delete queue clicked');
-                            $.ajax({
-                            type: "post",
-                            url: webroot+'/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>',
-
-                            success: function (response) { 
-                              alert(response);
-                            },
-                            error: function(jqXHR, textStatus, errorThrown){
-                                // log the error to the console
-                                console.log(
-                                    "The following error occured: "+
-                                    textStatus, errorThrown
-                                );
-                            }                          
-                        });
-                        return false;
-                    });
-                });
-            </script>
+       
 
     </div>
     <div class="wrapper">
