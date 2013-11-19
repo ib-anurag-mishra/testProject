@@ -44,10 +44,8 @@ $(document).ready(function() {
                success: function (response) { 
                    //alert("["+response+"]");
                    if(response=='Insertion Allowed')
-                   {                   
-                         $('.rename-queue-dialog-box').submit(function(){
-
-                            });
+                   {     
+                        $("#FormRename").unbind("submit");
                    }
                    else
                    {
@@ -69,6 +67,10 @@ $(document).ready(function() {
 
     
 });
+
+ $('.delete-queue-dialog-box').submit(function(){
+    alert("Rename Queue");
+ });
 
 
 $(document).ready(function() {
