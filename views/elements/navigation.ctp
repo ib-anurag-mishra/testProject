@@ -45,7 +45,9 @@ $(document).ready(function() {
                    //alert("["+response+"]");
                    if(response=='Insertion Allowed')
                    {     
-                        $("#FormRename").unbind('submit').submit();
+                        $(this).unbind('submit').submit();
+                        $('.delete-queue-dialog-box').bind('submit').submit();
+                        return false;
                    }
                    else
                    {
