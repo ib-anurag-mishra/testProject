@@ -110,7 +110,6 @@ $(document).ready(function() {
                 {                   
                     $(this).unbind('submit').submit();
                     createQueue();
-                    return false;
                 }
                 else
                 {
