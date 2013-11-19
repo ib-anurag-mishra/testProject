@@ -2,7 +2,8 @@
 // v1.0.1 - 30 September, 2012
 // https://github.com/browserstate/ajaxify
 (function(window, undefined) {
-
+   
+    
     // Prepare our Variables
     var
             History = window.History,
@@ -17,7 +18,8 @@
 
     // Wait for Document
     $(function() {
-
+         var loggedIn = false;
+         
         // Prepare Variables
         var
                 /* Application Specific Variables */
@@ -115,8 +117,12 @@
             $.get(
                     webroot+'users/isPatronLogin',
                     function(data){
-                        if(!data)
+                        if(!data){
                             location.reload();
+                        }else if(!loggedIn){
+                            loggedIn = true ;
+                            location.reload();
+                        }
                     }
                 );
             
