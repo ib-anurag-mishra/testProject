@@ -112,10 +112,13 @@
         // Hook into State Changes
         $window.bind('statechange', function(event) {
                                 
-            if(!refreshPage)
-            {
-                window.location.reload();
-            }
+            $.get(
+                    webroot+'users/isPatronLogin',
+                    function(data){
+                        if(!data)
+                            location.reload();
+                    }
+                );
             
             // Prepare Variables
             var
