@@ -220,24 +220,22 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </form>
             </div>
             <div class="create-queue-dialog-box">
-                    <div class="close"></div>
-                    <header>Create Queue</header>
-                    <form id="FormDelete" action="/queues/createQueue" method="post">
+                <div class="close"></div>
+                <header>Create Queue</header>
+                <form id="FormDelete" action="/queues/createQueue" method="post">
                     <div class="rename-form-container">
                         <label id="CreateQueueMessage"></label> 
                         <label for="name">Name:</label>
                         <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
                         <label for="description">Description:</label>
                         <?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-
-
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
                             <input type="submit" class="save" value="Create New Queue"></input>
                     </div>
-                    </form>
-                    </div>
+                </form>
+            </div>
         
             <div class="delete-queue-dialog-box">
                 
