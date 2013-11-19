@@ -2546,6 +2546,8 @@ STR;
           $validationPassedMessage = "Not Checked";
           $validationMessage = '';
       }
+      echo $checked;
+      die;
       //$user = $this->Auth->user();
       $user = $this->Session->read('Auth.User.id');
 		if(empty($user)){
