@@ -5631,6 +5631,7 @@ Class UsersController extends AppController
         
         function isPatronLogin()
         {
+            $this -> layout = 'ajax';
             if($this->Session->read("patron"))
             {
                 echo "1";
