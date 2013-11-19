@@ -1,11 +1,8 @@
 // Ajaxify
 // v1.0.1 - 30 September, 2012
-// https://github.com/browserstate/ajaxify
- var loggedIn = false;
- 
+// https://github.com/browserstate/ajaxify 
 (function(window, undefined) {
-   
-    
+      
     // Prepare our Variables
     var
             History = window.History,
@@ -114,15 +111,18 @@
 
         // Hook into State Changes
         $window.bind('statechange', function(event) {
-                                
-            $.get(
-                    webroot+'users/isPatronLogin',
-                    function(data){
+            
+            $.ajax({
+                url : webroot+'users/isPatronLogin',
+                success :
+                        function(data){
                         if(!data){
                             location.reload();
                         }
+                         event.preventDefault();
                     }
-                );
+            });
+           
             
             // Prepare Variables
             var
