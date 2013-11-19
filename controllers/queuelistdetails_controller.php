@@ -58,8 +58,7 @@ class QueueListDetailsController extends AppController
             {
                 if (!empty($_POST["rqPlid"]))
                 {
-                    $this->data = urldecode($_POST['QueueList']);
-                    print_r($this->data['QueueList']);
+                    echo $_POST["QueueName"];
                   die;
                     
                     if ($this->QueueList->save())
