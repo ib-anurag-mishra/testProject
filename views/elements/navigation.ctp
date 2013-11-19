@@ -728,6 +728,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             ?>
                                             <?php } ?>
 					</section>					
-					<div class="content" style="<?php echo $section_class; ?>"><span id="patron_id" style="display:none;"><?php echo $this->Session->read("patron"); ?></span>
+					<div class="content" style="<?php echo $section_class; ?>">
                                             <span class="ajaxmessage44" id="ajaxflashMessage44"></span>
  

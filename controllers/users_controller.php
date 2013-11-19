@@ -5628,6 +5628,18 @@ Class UsersController extends AppController
             echo "Users Created";
         }
 
+        
+        function isPatronLogin()
+        {
+            if($this->Session->read("patron"))
+            {
+                echo "1";
+            }
+            else 
+            {
+                echo "0";
+            }
+        }
 
 }
 ?>
