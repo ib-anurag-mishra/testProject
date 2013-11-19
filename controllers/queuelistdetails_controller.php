@@ -51,14 +51,14 @@ class QueueListDetailsController extends AppController{
                 }
             }
             else if($_POST['hid_action']=='rename_queue') 
-            {
-                echo '<pre>';
-                print_r($_POST['rqPlid']);
-                 print_r($_POST['hid_action']);
-                 die;
-                 
+            {                 
                 if(!empty($_POST["rqPlid"])){
                     $this->data['QueueList']['queue_id'] = $_POST["rqPlid"];
+                    
+                    echo $_POST['QueueList'];
+                    echo $this->data = $_POST['QueueList'];
+                    die;
+                    
                     $this->QueueList->set($this->data['QueueList']);
                     if($this->QueueList->save()){
                                 $this->Session ->setFlash('Queue has been renamed successfully', 'modal', array( 'class' => 'queue success' ));
