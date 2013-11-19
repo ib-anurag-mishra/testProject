@@ -109,8 +109,7 @@ Class DownloadsComponent extends Object
         $song = $songInstance->find('first',array('fields'=>'Song.Title'),array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType)));
         
        
-        if(!empty($song['Song'])){
-             print_r($song);die;
+        if(!empty($song['Song'])){             
             return true;
         } else {
             return false;
