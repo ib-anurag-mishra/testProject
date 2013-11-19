@@ -5634,11 +5634,11 @@ Class UsersController extends AppController
             $this -> layout = 'ajax';
             if($this->Session->read("patron"))
             {
-                echo "1";
+                echo true;
             }
             else 
             {
-                echo "0";
+                echo false;
             }
             
             die;
