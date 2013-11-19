@@ -5640,6 +5640,8 @@ Class UsersController extends AppController
             {
                 echo "0";
             }
+            
+            die;
         }
 
 }
