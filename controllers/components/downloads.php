@@ -106,9 +106,9 @@ Class DownloadsComponent extends Object
          
         $songInstance = ClassRegistry::init('Song');
         $songInstance->recursive = -1;
-        $song = $songInstance->find('first',array('fields'=>'Song.Title'),array('conditions' => array('ProdID1'=>$prodId, 'provider_type1'=>$providerType,'DownloadStatus'=>'1')));
+        $song = $songInstance->find('first',array('fields'=>'Song.Title'),array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType)));
         
-        print_r($song);
+       
         if(!empty($song['Song'])){
             return true;
         } else {
@@ -125,7 +125,7 @@ Class DownloadsComponent extends Object
             $territory = $mobileTerritory;
         }
         $countryInstance->tablePrefix = strtolower($territory)."_";
-        $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
+        $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
         if(!empty($country['Country'])){            
             return true;
         } else {            
