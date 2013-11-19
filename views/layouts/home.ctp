@@ -722,8 +722,10 @@
                                             <div id="container">
                                                 <?php echo $this->element('header'); ?>
                                                 <div id="content">
+                                                    
                                                     <?php
-                                                    if ($this->Session->read('library') && $this->Session->read('library') != '')
+                                                    $refreshPage = '<script>document.write("refreshPage");</script>';
+                                                    if ($this->Session->read('library') && $this->Session->read('library') != '' && $refreshPage )
                                                     {
                                                         echo $this->element('navigation');
                                                     }
