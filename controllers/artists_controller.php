@@ -968,6 +968,8 @@ Class ArtistsController extends AppController
 					} else{
 						$albumSongs[$k][$key]['Song']['status'] = 'not';
 					}
+                                        
+                                        $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
 			}
 		}
 	    $this->set('albumData', $albumData);
