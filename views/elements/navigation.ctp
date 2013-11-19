@@ -134,7 +134,7 @@ $(document).ready(function() {
 function createQueue(){
     $.ajax({
             type: "post",
-            url: webroot+'queuelistdetails/index/',
+            url: webroot+'queues/createQueue',
 
             data : $('#FormDelete').serialize(),
 
@@ -280,7 +280,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="create-queue-dialog-box">
                 <div class="close"></div>
                 <header>Create Queue</header>
-                <form id="FormDelete" action="/queues/createQueue" method="post">
+                <form id="FormDelete" action="#" >
                     <div class="rename-form-container">
                         <label id="CreateQueueMessage"></label> 
                         <label for="name">Name:</label>
