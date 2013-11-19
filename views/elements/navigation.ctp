@@ -36,34 +36,36 @@ $(document).ready(function() {
 
 $(document).ready(function() {
      $("#FormRename").submit(function() {
-     var frm = $('#FormRename');
-        $.ajax({
-            type: "post",
-            url: webroot+'queuelistdetails/ajaxQueueValidation',
-            data: frm.serialize(),
-            success: function (response) { 
-                //alert("["+response+"]");
-                if(response=='Insertion Allowed')
-                {                   
-                       //$( "#FormRename" ).submit();
-                       document.getElementById("FormRename").submit();
-                }
-                else
-                {
-                       $('#RenameQueueMessage').html("<span style='color:red;'>"+response+"</span><br>");                                               
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-            // log the error to the console
-            console.log(
-                "The following error occured: "+
-                textStatus, errorThrown
-            );
-            }
- 
-        });
- 
-        return false;
+        var frm = $('#FormRename');
+           $.ajax({
+               type: "post",
+               url: webroot+'queuelistdetails/ajaxQueueValidation',
+               data: frm.serialize(),
+               success: function (response) { 
+                   //alert("["+response+"]");
+                   if(response=='Insertion Allowed')
+                   {                   
+                          //$( "#FormRename" ).submit();
+                          document.getElementById("FormRename").submit(function(){
+                            alert('Insertion Allowed');
+                            });
+                   }
+                   else
+                   {
+                          $('#RenameQueueMessage').html("<span style='color:red;'>"+response+"</span><br>");                                               
+                   }
+               },
+               error: function(jqXHR, textStatus, errorThrown){
+               // log the error to the console
+               console.log(
+                   "The following error occured: "+
+                   textStatus, errorThrown
+               );
+               }
+
+           });
+
+           return false;
     });
 
     
@@ -165,12 +167,6 @@ $(document).ready(function() {
         return false;
     });
 
-    // Rename Queue
-    $('.rename-queue-dialog-box').submit(function(){
-
-        alert($('#rqPlid').val());
-        return false ;
-    });
 });
 
 </script>
