@@ -46,7 +46,7 @@ $(document).ready(function() {
                    if(response=='Insertion Allowed')
                    {     
                         $(this).unbind('submit').submit();
-                       renameQueue();
+                        renameQueue();
                         return false;
                    }
                    else
@@ -82,7 +82,7 @@ function renameQueue()
 
             success: function (response) { 
                 $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
-                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
+                $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
 
                 $('.rename-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
@@ -105,11 +105,12 @@ $(document).ready(function() {
             url: webroot+'queuelistdetails/ajaxQueueValidation',
             data: frm.serialize(),
             success: function (response) { 
-                //alert("["+response+"]");
+               
                 if(response=='Insertion Allowed')
                 {                   
-                       //$( "#FormRename" ).submit();
-                       document.getElementById("FormDelete").submit();
+                    $(this).unbind('submit').submit();
+                    createQueue();
+                    return false;
                 }
                 else
                 {
@@ -129,6 +130,34 @@ $(document).ready(function() {
         return false;
     });
 });
+
+function createQueue(){
+    $.ajax({
+            type: "post",
+            url: webroot+'queuelistdetails/index/',
+
+            data : $('#FormDelete').serialize(),
+
+            success: function (response) { 
+              var
+                    $this = $(this),
+                    url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
+                    title = $this.attr('title') || null;
+                    
+                $('.delete-queue-dialog-box').removeClass('active');
+                $('.queue-overlay').removeClass('active');
+               
+                History.pushState(null, title, url);
+                event.preventDefault();
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                // log the error to the console
+                console.log(
+                    "The following error occured: "+
+                    textStatus, errorThrown );
+            }                          
+        });
+}
 
 $(document).ready(function() {
 
