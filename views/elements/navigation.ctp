@@ -72,7 +72,8 @@ $(document).ready(function() {
 
 function renameQueue()
 {
-    alert('Rename Queue');
+    alert($('.rename-form-container').find('#name').val());
+
     $.ajax({
             type: "post",
             url: webroot+'queuelistdetails/index/'+ $('#rqPlid').val(),
@@ -80,6 +81,7 @@ function renameQueue()
             data : $('#FormRename').serialize(),
 
             success: function (response) { 
+                $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
                 $('.rename-queue-dialog-box').removeClass('active');
             },
             error: function(jqXHR, textStatus, errorThrown){
