@@ -32,6 +32,9 @@ class QueueListDetailsController extends AppController
 
     function index()
     {
+        print_r($_POST['hid_action']);
+        die;
+        
         $dqPlid = $_POST["dqPlid"];
         $patron_id = $this->Session->read('patron');
         if (!empty($patron_id))
