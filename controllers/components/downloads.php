@@ -110,6 +110,7 @@ Class DownloadsComponent extends Object
         
        
         if(!empty($song['Song'])){
+             print_r($song);die;
             return true;
         } else {
             return false;
