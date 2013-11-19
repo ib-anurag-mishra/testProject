@@ -73,11 +73,11 @@ Class DownloadsComponent extends Object
   
          
             if($this->checkSongExists($prodId, $providerType)){ 
-                echo 147;die;
+               
                 if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){ 
-                     echo 148;die;
+                    
                     if($this->checkLibraryDownload($libId)){
-                         echo 149;die;
+                         
                         if($this->checkPatronDownload($uid,$libId)){
                             $this->log($channel." : allowed download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip,'download');
                             return array(true,'', 1);
@@ -94,6 +94,7 @@ Class DownloadsComponent extends Object
                     return array(false,'The song is not available for this Country.', 4);
                 }
             } else {
+                echo $channel." : Rejected download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table";
                 $this->log($channel." : Rejected download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table",'download');
                 return array(false,'The song requested for download does not exist', 5);
             }
