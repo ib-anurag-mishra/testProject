@@ -120,9 +120,6 @@
                     function(data){
                         if(!data){
                             location.reload();
-                        }else if(!loggedIn){
-                            loggedIn = true ;
-                            location.reload();
                         }
                     }
                 );
