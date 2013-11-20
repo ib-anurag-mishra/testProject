@@ -112,25 +112,23 @@
         // Hook into State Changes
         $window.bind('statechange', function(event) {
 
-            $.ajax({
-                url: webroot + 'users/isPatronLogin',
-                type: "post",
-                success:
-                        function(data) {
-                            if (!data) {
-                                window.location.href = $this.attr('href');
-                            }
-                            event.preventDefault();
-                        }
-            });
-
-
             // Prepare Variables
             var
                     State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
 
+            $.ajax({
+                url: webroot + 'users/isPatronLogin',
+                type: "post",
+                success:
+                        function(data) {
+                            if (!data) {
+                                window.location.href = url;
+                            }
+                            event.preventDefault();
+                        }
+            });
             // Set Loading
             var loading_div = "<div class='loader'>";
             loading_div += "</div>";
