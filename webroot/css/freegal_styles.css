@@ -596,10 +596,10 @@ div.paging span a, div.paging a {
 .qtip-default{
 	border-width: 1px;
 	border-style: solid;
-	border-color: #F1D031;
+	border-color: #444;
 
-	background-color: #FFFFA3;
-	color: #555;
+	background-color: #FFF;
+	color: #444;
 }
 
 	.qtip-default .qtip-titlebar{
