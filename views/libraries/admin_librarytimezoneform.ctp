@@ -49,8 +49,8 @@ echo $this->Html->css('jquery.autocomplete');
                     <table cellspacing="10" cellpadding="0" border="0" width="100%">
                            
                             <tr>
-                                <td align="right" width="250">&nbsp;</td>
-                                <td align="left">&nbsp;</td>
+                                <td align="right" width="250"></td>
+                                <td align="left"></td>
                             </tr>	
                             
                             <tr>
@@ -86,13 +86,13 @@ echo '</select>';
                           
                       
                             <tr >
-                                <td align="right" width="250">&nbsp;</td>
+                                <td align="right" width="250"></td>
                                 <td align="left">
                                     <?php echo $this->Form->hidden( 'edit_id', array( 'label' => false ,'value' => $getData[0]['lbs']['id'])); ?>						
                                 </td>
                             </tr>								   
                             <tr>
-                                <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" style="cursor: pointer;"/>&nbsp;<input type="button" value="Back" onClick="pageRedirect();" style="cursor: pointer;" /></p></td>
+                                <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" style="cursor: pointer;"/><input type="button" value="Back" onClick="pageRedirect();" style="cursor: pointer;" /></p></td>
                             </tr>
                             
                     </table>

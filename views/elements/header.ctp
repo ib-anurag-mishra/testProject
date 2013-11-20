@@ -77,7 +77,7 @@
   <div id="lib_name">FreegalMusic.Com</div>
   <div id="header_right">
   <ul>
-  <li>&nbsp;</li>
+  <li></li>
   <li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
   </ul>
   </div>
