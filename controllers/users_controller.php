@@ -3861,7 +3861,7 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 				}
 				else{
-					if($existingLibraries['0']['Library']['library_territory'] == 'AU' || $existingLibraries['0']['Library']['library_territory'] == 'GB'){
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."sndlogin_validation";
 					}
 					else{
