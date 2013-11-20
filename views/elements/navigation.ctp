@@ -83,6 +83,10 @@ function renameQueue()
             success: function (response) { 
                 $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
+                
+                document.getElementById('ajaxflashMessage44').innerHTML = response ;
+               $('#ajaxflashMessage44').css('display','block');
+                setTimeout( function() {$('#ajaxflashMessage44').hide();},3000 );
 
                 $('.rename-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
@@ -142,7 +146,10 @@ function createQueue(){
                     $this = $(this),
                     url = window.location.pathname ,
                     title = $this.attr('title') || null;
-                    
+                
+                document.getElementById('ajaxflashMessage44').innerHTML = response ;
+                $('#ajaxflashMessage44').css('display','block');
+                setTimeout( function() {$('#ajaxflashMessage44').hide();},3000 );
                 $('.delete-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
                
