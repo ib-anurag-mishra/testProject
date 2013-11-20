@@ -93,11 +93,6 @@
                 }
 
                 // Ajaxify this link
-                if(typeof console === "undefined") {
-                    console = {
-                        log : function () {}
-                    };
-                }
                 console.log(url);
 
                 History.pushState(null, title, url);
