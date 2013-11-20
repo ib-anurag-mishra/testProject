@@ -2994,7 +2994,8 @@ img {
 							z-index: 100;
 							width: 120px;
 							
-							
+							border-right:5px solid transparent;
+							margin-right: -5px;
 							
 							.box-shadow(0 0 2px rgba(0,0,0,.5));
 							
@@ -3022,7 +3023,7 @@ img {
 							
 							.playlist-options {
 								position: absolute;
-								right: -144px;
+								right: -147px;
 								top:0;
 								display: none;
 								background: #fff;
@@ -3031,6 +3032,7 @@ img {
 								.box-shadow(0 0 2px rgba(0,0,0,.5));
 								
 								overflow-x: hidden;
+								overflow-y: auto;
 								
 								&.active {
 									
@@ -3040,6 +3042,8 @@ img {
 								
 								
 								ul {
+									height: auto;
+									width: 157px;
 									
 									li {
 										
