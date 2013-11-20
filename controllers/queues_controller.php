@@ -70,7 +70,7 @@ class QueuesController extends AppController{
                         $this->QueueList->setDataSource('master');
                         if($this->QueueList->save($this->data['QueueList']))
                         {
-                                $this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
+                                //$this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
                                 $this->QueueList->setDataSource('default');
                                 $this->layout = 'ajax';
                                 echo "Queue has been Added successfully";
@@ -79,7 +79,7 @@ class QueuesController extends AppController{
                         }
                         else
                         {
-                                $this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
+                                //$this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
                                 $this->QueueList->setDataSource('default');
                                 $this->layout = 'ajax';
                                 echo "Error occured while adding queue";

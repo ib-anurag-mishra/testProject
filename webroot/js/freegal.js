@@ -1785,9 +1785,9 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
             playlistId: playlistId,
             songId: prodId,
             providerType: providerType,
-            label: songTitle,
-            songTitle: songTitle,
-            artistName: artistName,
+            label: base64_decode(songTitle),
+            songTitle: base64_decode(songTitle),
+            artistName: base64_decode(artistName),
             songLength: songLength,
             data: songFile
         }

@@ -70,7 +70,7 @@ $(document).ready(function()
   
 */   
    
-
+	/*
 	$('a[title]').qtip({
 		position: {
 			corner: {
@@ -103,8 +103,8 @@ $(document).ready(function()
 		
 		}
 	});
+	*/
 	
-	/*
 	$(document).on('mouseover','a[title]',function(event){
 	
 		$(this).qtip({
@@ -138,6 +138,7 @@ $(document).ready(function()
 					
 			
 			},
+			overwrite: false,
 			
 			show: {
 				
@@ -146,10 +147,10 @@ $(document).ready(function()
 			}			
 			
 			
-		}, event);
+		});
 	
 	});
-	*/
+	
 
 
 
