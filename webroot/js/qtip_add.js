@@ -114,7 +114,7 @@ $(document).ready(function()
 					target: 'topLeft',
 					tooltip: 'bottomRight'
 				}
-			}
+			},
 			/*
 			style: { 
 					
