@@ -891,7 +891,7 @@ if ($type != 'all') {
                                     {
                                            $song_title =   $psong->SongTitle;
                                     }                                
-                                    echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.$song_title.'","'.$psong->ArtistText.'",'.$psong->totalseconds.',"'.$psong->ProdID.'","'.$psong->provider_type.'");'));
+                                    echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("'.$psong->streamUrl.'", "'.base64_encode($song_title).'","'.base64_encode($psong->ArtistText).'",'.$psong->totalseconds.',"'.$psong->ProdID.'","'.$psong->provider_type.'");'));
                             }
                             else
                             {

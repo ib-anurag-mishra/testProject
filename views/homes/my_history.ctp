@@ -142,7 +142,7 @@ $ieVersion =  ieversion();
                                 }
                                  
                                  
-                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$downloadResult['streamUrl'].'", "'.$song_title.'","'.$downloadResult['Song']['ArtistText'].'",'.$downloadResult['totalseconds'].',"'.$downloadResult['Song']['ProdID'].'","'.$downloadResult['Song']['provider_type'].'");'));
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'loadSong("'.$downloadResult['streamUrl'].'", "'.base64_encode($song_title).'","'.base64_encode($downloadResult['Song']['ArtistText']).'",'.$downloadResult['totalseconds'].',"'.$downloadResult['Song']['ProdID'].'","'.$downloadResult['Song']['provider_type'].'");'));
 
                         }else if($this->Session->read('library_type') == 1){
                                 //do the simple player(this code will be update after discussion)
