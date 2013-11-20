@@ -117,7 +117,7 @@
                                                     <a href="/artists/view/<?=base64_encode($value['Songs']['ArtistText']);?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
                                                 </div>                                                
                                                 
-						<div class="time"><?php echo $value['Songs']['FullLength_Duration']?></div>
+						<div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>
 						<div class="wishlist-popover">
                                                         <?php
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {
@@ -228,7 +228,7 @@
                                                     <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
                                                 </div>                                                
                                                 
-						<div class="time"><?php echo $value['Song']['FullLength_Duration'];?></div>
+						<div class="time"><?php echo $this->Song->getSongDurationTime($value['Song']['FullLength_Duration']);?></div>
 						<div class="wishlist-popover">
                                                         <?php
                                                                 if($libraryDownload == '1' && $patronDownload == '1') {

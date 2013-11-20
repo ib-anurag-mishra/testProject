@@ -120,7 +120,7 @@
 						<div class="artist-name">
                                                     <a href="/artists/view/<?=base64_encode($value['Songs']['ArtistText']);?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
                                                 </div>
-						<div class="time"><?php echo $value['Songs']['FullLength_Duration']?></div>
+						<div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>
 						<div class="wishlist-popover">
 								
                                                 <?php
