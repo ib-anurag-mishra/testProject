@@ -7,7 +7,8 @@
  
 Class CommonComponent extends Object
 {
-    var $components = array('Session', 'Streaming');
+
+    var $components = array('Session', 'Streaming','Queue');
     
     /*
      * Function Name : getGenres
@@ -2280,8 +2281,7 @@ STR;
         foreach($queueData as $value){
            $defaultQueueId = $value['QueueList']['queue_id'];
            $defaultQueueName = $value['QueueList']['queue_name']; 
-           $queueInstance = ClassRegistry::init('Queue');
-           $eachQueueDetails =  $queueInstance->getQueueDetails($defaultQueueId);
+           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId);
            
            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
