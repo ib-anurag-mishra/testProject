@@ -2251,12 +2251,13 @@ STR;
         
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
+        $queuelistInstance = ClassRegistry::init('QueueList');
         //Unbinded User model
-        $this->QueueList->unbindModel(
+        $queuelistInstance->unbindModel(
             array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
         );
         //fetched the default list
-        $queueData = $this->QueueList->find('all', array(
+        $queueData = $queuelistInstance->find('all', array(
         'conditions' => $cond,
         'fields' => array('queue_id','queue_name'),
         'order' => 'QueueList.created DESC',
@@ -2278,8 +2279,9 @@ STR;
         //set the variable for each freegal default queue 
         foreach($queueData as $value){
            $defaultQueueId = $value['QueueList']['queue_id'];
-           $defaultQueueName = $value['QueueList']['queue_name'];      
-           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId);
+           $defaultQueueName = $value['QueueList']['queue_name']; 
+           $queueInstance = ClassRegistry::init('Queue');
+           $eachQueueDetails =  $queueInstance->getQueueDetails($defaultQueueId);
            
            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
