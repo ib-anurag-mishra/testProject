@@ -2260,7 +2260,7 @@ STR;
         //fetched the default list
         $queueData = $queuelistInstance->find('all', array(
         'conditions' => $cond,
-        'fields' => array('queue_id','queue_name'),
+        'fields' => array('queue_id','queue_name','queue_type'),
         'order' => 'QueueList.created DESC',
         'limit' => 100
         ));        
