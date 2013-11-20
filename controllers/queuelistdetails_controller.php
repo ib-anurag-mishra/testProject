@@ -11,23 +11,22 @@ class QueueListDetailsController extends AppController
 
     var $name = 'QueuesListDetails';
     var $layout = 'home';
-    var $helpers = array('Html', 'Form', 'Session', 'Wishlist', 'Queue', 'Song');
-    var $components = array('Session', 'Auth', 'Acl', 'Queue', 'Downloads', 'Streaming');
-    var $uses = array('QueueDetail', 'User', 'Album', 'Song', 'Wishlist', 'QueueList');
-
-    function beforeFilter()
-    {
-
-        parent::beforeFilter();
-        // $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');     
-        if ($this->Session->read('patron') != '')  //  After Login
-        {
-            $this->Auth->allow('*');
-        }
-        else  //  Before Login
-        {
-            $this->Auth->allow('');
-        }
+    var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist','Queue','Song');
+    var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Downloads','Streaming');
+    var $uses = array( 'QueueDetail','User','Album','Song', 'Wishlist','QueueList','Download');
+    
+    function beforeFilter(){
+           
+            parent::beforeFilter();
+            // $this->Auth->allow('now_streaming', 'queue_details', 'index','getPlaylistData','clearNowStreamingSession', 'ajaxQueueValidation');     
+            if($this->Session->read('patron')!='')  //  After Login
+            {
+                    $this->Auth->allow('*');
+            }
+            else  //  Before Login
+            {
+                     $this->Auth->allow('');
+            }
     }
 
     function index()
@@ -247,12 +246,20 @@ class QueueListDetailsController extends AppController
                 $streamUrl = trim($songPath[1]);
                 $queue_list_array[$k]['streamUrl'] = $streamUrl;
             }
-        }
-
-        $total_duration = $total_seconds / 60;
-        $total_minutes = floor($total_duration);
-        $total_seconds = $total_seconds % 60;
-        if ($this->params['pass'][1] == '1')   //  Default Queue
+            
+            //add the condition for already download songs
+            $this->Download->recursive = -1;
+            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $v['Songs']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+            if(count($downloadsUsed) > 0){
+                    $queue_list_array[$k]['Songs']['status'] = 'avail';
+            } else{
+                    $queue_list_array[$k]['Songs']['status'] = 'not';
+            }
+        }    
+        $total_duration     =    $total_seconds/60;
+        $total_minutes      =    floor($total_duration);
+        $total_seconds      =    $total_seconds%60;
+        if($this->params['pass'][1]=='1')   //  Default Queue
         {
             $this->set('default_queue', $this->params['pass'][1]);
         }
