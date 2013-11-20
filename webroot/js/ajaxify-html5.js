@@ -112,17 +112,17 @@
         // Hook into State Changes
         $window.bind('statechange', function(event) {
 
-//            $.ajax({
-//                url: webroot + 'users/isPatronLogin',
-//                type: "post",
-//                success:
-//                        function(data) {
-//                            if (!data) {
-//                                location.reload();
-//                            }
-//                            event.preventDefault();
-//                        }
-//            });
+            $.ajax({
+                url: webroot + 'users/isPatronLogin',
+                type: "post",
+                success:
+                        function(data) {
+                            if (!data) {
+                                location.reload();
+                            }
+                            event.preventDefault();
+                        }
+            });
 
 
             // Prepare Variables
