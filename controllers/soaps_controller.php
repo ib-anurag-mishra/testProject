@@ -5590,7 +5590,7 @@ STR;
    * @param int $recordCount
 	 * @return QueueDetailDataType[]
    */
-  function getQueueDetails($authenticationToken, $queueID, $startFrom, $recordCount){ 
+  function getQueueDetails($authenticationToken, $queueID, $startFrom, $recordCount){
    
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
