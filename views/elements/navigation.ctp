@@ -85,7 +85,8 @@ function renameQueue()
                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
                 
                 document.getElementById('ajaxflashMessage44').innerHTML = response ;
-                $('#ajaxflashMessage44').css('display','block');
+               $('#ajaxflashMessage44').show();
+                setTimeout( function() {$('#ajaxflashMessage44').hide();},3000 );
 
                 $('.rename-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
@@ -147,8 +148,8 @@ function createQueue(){
                     title = $this.attr('title') || null;
                 
                 document.getElementById('ajaxflashMessage44').innerHTML = response ;
-                $('#ajaxflashMessage44').css('display','block');
-
+                $('#ajaxflashMessage44').show();
+                setTimeout( function() {$('#ajaxflashMessage44').hide();},3000 );
                 $('.delete-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
                
