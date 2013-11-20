@@ -108,6 +108,7 @@ $(document).ready(function()
 	$(document).on('mouseenter','a[title]',function(event){
 	
 		$(this).qtip({
+			/*
 			position: {
 				corner: {
 					target: 'topLeft',
@@ -138,6 +139,7 @@ $(document).ready(function()
 					
 			
 			},
+			*/
 			overwrite: false,
 			
 			show: {
