@@ -54,7 +54,8 @@
                     'recent-downloads',
                     'search-results',
                     
-                    'qtip',
+                    /* 'qtip', */
+                    'qtip.2.1.1.min',
                     'qtip_add'
                 )
         );
