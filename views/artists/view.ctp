@@ -35,7 +35,7 @@
         }
 	$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/'.str_replace('/','@',base64_encode($artistName)).'/'.base64_encode($genre));
 	$html->addCrumb( $this->getTextEncode($albumData[0]['Album']['AlbumTitle'])  , '/artists/view/'.str_replace('/','@',base64_encode($artistName)).'/'.$album.'/'.base64_encode($albumData[0]['Album']['provider_type']));
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 ?></span></div>
             
             <?php

@@ -126,7 +126,7 @@ jQuery(document).ready(function() {
 											}
 											echo "</li>";
 										}else{
-											echo "&nbsp;&nbsp;&nbsp;&nbsp;No Songs has been downloaded yet";
+											echo "    No Songs has been downloaded yet";
 										}
 										?>
 										

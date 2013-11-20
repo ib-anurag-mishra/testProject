@@ -9,7 +9,7 @@
 		<div class="breadcrumbs">
                     <?php
                             $html->addCrumb('About Freegal Music', '/aboutus');
-                            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+                            echo $html->getCrumbs(' > ', __('Home', true), '/homes');
                     ?>
                 </div>
 		<header><?php echo $session->flash(); ?>

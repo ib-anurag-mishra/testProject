@@ -23,7 +23,7 @@
 				}
 				?>
 				<br />
-				by&nbsp;
+				by 
 				<?php
 				if (strlen($songs[$i]['Song']['Artist']) >= 24 ) {
 						echo '<span title="'.$songs[$i]['Song']['Artist'].'">' . $html->link(substr($songs[$i]['Song']['Artist'], 0, 24) . "...", array(

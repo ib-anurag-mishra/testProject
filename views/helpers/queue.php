@@ -22,7 +22,7 @@ class QueueHelper extends AppHelper {
 $str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="#" class="create-new-queue-btn">Create New Queue</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Queue</a></li>
 EOD;
 
         if(!empty($queueList)){
@@ -51,7 +51,7 @@ EOD;
 			$str = <<<EOD
            <div class="playlist-options">
                     <ul>
-                            <li><a href="#" class="create-new-queue-btn">Create New Queue</a></li>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Queue</a></li>
 EOD;
 
         if(!empty($queueList)){

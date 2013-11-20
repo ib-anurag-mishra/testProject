@@ -1722,7 +1722,7 @@ $('document').ready(function()
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-    $(document).on('click', '.create-new-queue,.create-new-queue-btn', function(e) {
+    $(document).on('click', ".create-new-queue , .create-new-queue-btn", function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.create-queue-dialog-box').addClass('active');
@@ -1730,7 +1730,6 @@ $('document').ready(function()
         $('.wishlist-popover').removeClass('active');
 
     });
-
 
     $(document).on('click', '.close,.text-close', function(e) {
         $('.queue-overlay').removeClass('active');

@@ -280,7 +280,7 @@
                                                         <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
                                                     </div>
                                                     <b>Email Notification</b><br />
-                                                    <div style="height:100px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">Please add your email address here to receive twice-weekly email reminders of your available downloads.<br /><br /><br /><div ><b>*Email :</b>&nbsp;&nbsp;<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'></div></div><br />
+                                                    <div style="height:100px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">Please add your email address here to receive twice-weekly email reminders of your available downloads.<br /><br /><br /><div ><b>*Email :  </b><input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'></div></div><br />
                                                     <input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
                                                             </span>
 

@@ -137,7 +137,7 @@ $totalRows = count($genresAll);
 <section class="genres-page">
 
     <div class="breadcrumbs">
-        <span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes'); ?></span>
+        <span><?php echo $html->getCrumbs('>', __('Home', true), '/homes'); ?></span>
     </div>
 
     <header class="clearfix">
@@ -249,7 +249,7 @@ $totalRows = count($genresAll);
 
 
            <div class="artist-list-shadow-container">
-				<h3>&nbsp;</h3>
+				<h3></h3>
 				<div class="artist-list" id="artistscroll">					
 					<ul id="artistlistrecord">						                                            
                                          <?php                                                           

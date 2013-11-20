@@ -38,7 +38,7 @@
 <div class="breadCrumb">
 <?php
 	$html->addCrumb('My Wishlist', '/homes/my_wishlist');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+	echo $html->getCrumbs('>', __('Home', true), '/homes');
 ?>
 </div>
 <br class="clr">

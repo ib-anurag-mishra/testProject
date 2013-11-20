@@ -140,7 +140,7 @@ function createQueue(){
             success: function (response) { 
               var
                     $this = $(this),
-                    url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
+                    url = window.location.pathname ,
                     title = $this.attr('title') || null;
                     
                 $('.delete-queue-dialog-box').removeClass('active');
@@ -272,7 +272,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Save Changes"></input>
+                            <input type="submit" class="save" value="Save Changes" />
                     </div>
                     </form>
             </div>
@@ -289,7 +289,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Create New Queue"></input>
+                            <input type="submit" class="save" value="Create New Queue" />
                     </div>
                 </form>
             </div>
@@ -305,7 +305,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                          <div class="text-close">Close</div>
                          <input type="hidden" name="hid_action" value="delete_queue" />
                          <input type="hidden" id="dqPlid" name="dqPlid" value="" />
-                         <input type="submit" class="save" value="Delete Queue"></input>
+                         <input type="submit" class="save" value="Delete Queue" />
                      </div>
                     </form>
             </div>
@@ -481,7 +481,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                }   
                                         ?>
                                                 
-                                                <div class="stream-time" ><span>Streaming Time Remaining:&nbsp;</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
+                                                <div class="stream-time" ><span>Streaming Time Remaining:</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
                                         <?php
                                                 //  Hidden variable to be used in site.js for alerting user before video download
                                         
@@ -737,8 +737,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <?php //echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?>                                                                     
                                                                     <label for="UserEmail">Phone :</label>                                                                    
                                                                     <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?> <br>    
-                                                                    <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>"></input><br>
-                                                                    <input type="submit" class="save" value="Submit"></input>                                                                
+                                                                    <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>" /><br>
+                                                                    <input type="submit" class="save" value="Submit" />
                                                                 </form>
                                                                         <?php 
                                                                                 $reutrn_message='';
