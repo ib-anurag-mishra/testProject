@@ -2248,7 +2248,7 @@ STR;
      * @desc     This function is used to get default queues.
      */
     
-    function getDefaultQueues(){
+    function getDefaultQueues($territory){
         
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -2281,7 +2281,7 @@ STR;
         foreach($queueData as $value){
            $defaultQueueId = $value['QueueList']['queue_id'];
            $defaultQueueName = $value['QueueList']['queue_name']; 
-           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId);
+           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId,$territory);
            
            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
