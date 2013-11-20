@@ -90,6 +90,7 @@ function renameQueue()
 
                 $('.rename-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
+                resetForms();
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // log the error to the console
@@ -152,7 +153,8 @@ function createQueue(){
                 setTimeout( function() {$('#ajaxflashMessage44').hide();},3000 );
                 $('.delete-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
-               
+                 resetForms();
+
                 History.pushState(null, title, url);
                 event.preventDefault();
             },
@@ -163,6 +165,17 @@ function createQueue(){
                     textStatus, errorThrown );
             }                          
         });
+}
+
+function resetForms()
+{
+    $('#FormDelete').find("input[type=text], textarea").val("");
+    $('#CreateQueueMessage').html("");
+
+     $('#FormRename').find("input[type=text], textarea").val("");
+    $('#RenameQueueMessage').html("");
+
+    $('.delete-queue-dialog-box').closest('form').find("input[type=text], textarea").val("");
 }
 
 $(document).ready(function() {
