@@ -237,6 +237,7 @@ class Apache_Solr_Service
 	 */
 	private function _sendRawGet($url)
 	{
+        echo $url;
 		//$http_response_header is set by file_get_contents
         $http_response_header = null;
 		$response = new Apache_Solr_Response($this->curl_file_get_contents($url), $http_response_header);
@@ -261,6 +262,8 @@ class Apache_Solr_Service
 	 */
 	private function _sendRawPost($url, $rawPost, $contentType = 'text/xml; charset=UTF-8')
 	{
+        
+        echo $url;
 		//ensure content type is correct
 		stream_context_set_option($this->_postContext, 'http', 'header', 'Content-Type: ' . $contentType. "\r\n");
 
