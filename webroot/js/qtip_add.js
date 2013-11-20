@@ -108,13 +108,14 @@ $(document).ready(function()
 	$(document).on('mouseenter','a[title]',function(event){
 	
 		$(this).qtip({
-			
+			/*
 			position: {
 				corner: {
 					target: 'topLeft',
 					tooltip: 'bottomRight'
 				}
 			},
+			*/
 			
 			/*
 			style: { 
@@ -142,6 +143,12 @@ $(document).ready(function()
 			
 			},
 			*/
+			
+			position: {
+				
+				my: 'bottom right',
+				at: 'top left'
+			},
 			overwrite: false,
 			
 			show: {
