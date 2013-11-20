@@ -1,4 +1,3 @@
-<?php /* <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> */ ?>
 <!DOCTYPE html>
 <html>
 
@@ -9,7 +8,6 @@
         echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
         echo $this->Html->meta('icon');
         ?>
-
 
         <title>
             <?php __('Freegal Music : Your New Music Library :'); ?>
@@ -79,8 +77,7 @@
         
             <script type="text/javascript">
                 
-                <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>
-                    
+                <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>                    
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
                           
@@ -395,7 +392,6 @@
                     }
                 }
 
-
                 $(document).ready(function() {
                         <?php
                         if ($this->Session->read('approved') && $this->Session->read('approved') === 'no')
@@ -404,7 +400,9 @@
                                     $(".termsApproval")
                                             .colorbox(
                                             {
-                                                width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#termsApproval_div",
+                                                width: "50%", inline: true, open: true, 
+                                                overlayClose: false, opacity: .5, 
+                                                noEscape: true, href: "#termsApproval_div",
                                                 onOpen: function() {
                                                     $(document).unbind("keydown.cbox_close");
                                                 }
@@ -424,8 +422,6 @@
                                         }
                                     }
                                 }
-
-
 
                                 $(".notificationApproval").colorbox({width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#notificationApproval_div", onOpen: function() {
                                         $(document).unbind("k e ydown.cbox_close");
