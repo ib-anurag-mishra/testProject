@@ -5604,22 +5604,32 @@ STR;
     
     $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
     
+    $isDefault = $this->QueueList->find('count',array(
+      'conditions' => array('queue_type' => '1', 'queue_id' => $queueID),
+      'recursive' => -1
+      )
+    );
     
-    if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $queueID) === false) {
-      $queue_list_array   =   $this->Queue->getQueueDetails($queueID, $lib_territory);
-      if (!empty($queue_list_array)) {                   
-        Cache::write("defaultqueuelistdetails" . $queueID, $queue_list_array);
-      }else{
-        throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
+    if(1 == $isDefault) {
+    
+      if ($data = Cache::read("defaultqueuelistdetails" . $queueID) === false) {
+        $data   =   $this->Queue->getQueueDetails($queueID, $lib_territory);
+        if (!empty($data)) {                   
+          Cache::write("defaultqueuelistdetails" . $queueID, $data);
+        }else{
+          throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
+        }
+      }else {
+        $data = Cache::read("defaultqueuelistdetails" . $queueID);
       }
-    } 
-    
-    $data = Cache::read("defaultqueuelistdetails" . $queueID);
+      
+    } else {
+      $data   =   $this->Queue->getQueueDetails($queueID, $lib_territory);
+    }
     
     if(empty($data)) {
       throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
-    }
-    
+    }   
        
     //filters array value   
     $tmp_data = array();    
