@@ -86,8 +86,12 @@ EOD;
      */
     
     function getStreamNowLabel($streamUrl,$songTitle,$artistText,$songLength,$songProdId,$providerType){
+        
+        $songTitle  =   $this->getValidText($songTitle); 
+        $artistText  =   $this->getValidText($artistText); 
+        
 $str = <<<EOD
-       <a onclick="loadSong('$streamUrl','$this->getValidText($songTitle)','$this->getValidText($artistText)',$songLength,$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>        
+       <a onclick="loadSong('$streamUrl','$songTitle','$artistText',$songLength,$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>        
 EOD;
         return $str;
 
