@@ -1689,10 +1689,10 @@ Class ArtistsController extends AppController
             }
             $this->Album->recursive = 2;
             $albumData = array();
-            print_r($albumData);
+          
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
             //$this->set('count_albums',count($albumData));   
-                     
+               print_r($albumData);        
             foreach ($albumData as $key => $value) 
             {
                 $albumData[$key]['albumSongs'] = $this->requestAction(
