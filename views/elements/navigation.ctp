@@ -140,7 +140,7 @@ function createQueue(){
             success: function (response) { 
               var
                     $this = $(this),
-                    url = "/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>" ,
+                    url = window.location.pathname ,
                     title = $this.attr('title') || null;
                     
                 $('.delete-queue-dialog-box').removeClass('active');
