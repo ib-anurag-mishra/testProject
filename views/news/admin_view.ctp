@@ -14,17 +14,17 @@
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Subject'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $news['News']['subject']; ?>
-			
+			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Place'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $news['News']['place']; ?>
-			
+			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Body'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $news['News']['body']; ?>
-			
+			&nbsp;
 		</dd>
 		
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('News Image'); ?></dt>
@@ -42,12 +42,12 @@
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $news['News']['created']; ?>
-			
+			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Last Modified'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $news['News']['modified']; ?>
-			
+			&nbsp;
 		</dd>
 		
 	</dl>

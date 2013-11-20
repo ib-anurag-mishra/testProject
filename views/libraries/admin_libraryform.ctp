@@ -519,8 +519,8 @@
 					<tr>
 					<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
 					<td  style="font-size:12px;">
-						<input id="varialbe_index_flag00" type="radio" name="data[Variable][0][variable_index]" value="1" class="form_fields"  >Index Value<input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="15" id="authentication_variable_index0">
-						<input id="varialbe_index_flag10" type="radio" name="data[Variable][0][variable_index]" value="2" class="form_fields"  >All Index
+						<input id="varialbe_index_flag00" type="radio" name="data[Variable][0][variable_index]" value="1" class="form_fields"  >&nbsp;Index Value&nbsp;<input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="15" id="authentication_variable_index0">
+						<input id="varialbe_index_flag10" type="radio" name="data[Variable][0][variable_index]" value="2" class="form_fields"  >&nbsp;All Index
 					</td>
 					</tr>
 <!--                                                <tr>
@@ -601,8 +601,8 @@
 					<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
 					<td  style="font-size:12px;">
                                             
-						<input id="varialbe_index_flag0<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="1" class="form_fields"  <?php if($v['Variable']['variable_index'] == 1) { ?> checked="checked" <?php } ?>>Index Value<input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable_index]" value="<?php if($v['Variable']['variable_index'] == 1) { echo $v['Variable']['authentication_variable_index'];} ?>" class="form_fields" size="15" id="authentication_variable_index<?php echo $k; ?>">
-						<input id="varialbe_index_flag1<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="2" class="form_fields"  <?php if($v['Variable']['variable_index'] == 2) { ?> checked="checked" <?php } ?>>All Index
+						<input id="varialbe_index_flag0<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="1" class="form_fields"  <?php if($v['Variable']['variable_index'] == 1) { ?> checked="checked" <?php } ?>>&nbsp;Index Value&nbsp;<input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable_index]" value="<?php if($v['Variable']['variable_index'] == 1) { echo $v['Variable']['authentication_variable_index'];} ?>" class="form_fields" size="15" id="authentication_variable_index<?php echo $k; ?>">
+						<input id="varialbe_index_flag1<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="2" class="form_fields"  <?php if($v['Variable']['variable_index'] == 2) { ?> checked="checked" <?php } ?>>&nbsp;All Index
 					</td>
 					</tr>
                                                         
@@ -640,7 +640,7 @@
 					}
 					?>
 					</td></tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Background Color');?></td>
@@ -689,7 +689,7 @@
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->button('Preview', array('type' => 'button', 'id' => 'preview'));?></td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Contact');?></td></tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('First Name');?></td>
@@ -731,7 +731,7 @@
 					  <td align="right" width="250"><?php echo $this->Form->label('Country');?></td>
 					  <td align="left"><?php echo $this->Form->input('library_country',array('label' => false ,'value' => $getData['Library']['library_country'], 'div' => false, 'class' => 'form_fields'));?></td>
 					 </tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="right" width="255"><?php echo $this->Form->label(null, 'Choose Territory');?></td>
 						<td align="left">
@@ -784,7 +784,7 @@
 							?>
 						</td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Logo Upload ( Image height should not exceed 60 pixels )');?></td></tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Select File');?></td>
@@ -824,7 +824,7 @@
 				<table cellspacing="10" cellpadding="0" border="0">
 					<tr><td id="formError2" class="formError" colspan="2"></td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Admin');?></td></tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('First Name');?></td>
 						<td align="left"><?php echo $this->Form->input('User.first_name',array('label' => false ,'value' => $getData['User']['first_name'], 'div' => false, 'class' => 'form_fields'));?></td>
@@ -877,8 +877,8 @@
 							</span>
 						</td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td colspan="2">
 							<?php
@@ -892,8 +892,8 @@
 							?>
 						</td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr id="block_explicit" <?php if($getData['Library']['library_authentication_method'] == "soap"){?>style="display:none;"<?php } ?>>
 						<td align="left" colspan="2">
 							<?php
@@ -907,7 +907,7 @@
 							<?php echo $this->Form->label('Block Explicit Content');?>
 						</td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td colspan="2" align="right"><?php echo $this->Form->button('Next >', array('type' => 'button', 'id' => 'next_btn3'));?></td>
 					</tr>
@@ -942,10 +942,10 @@
 							?>
 						</td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
-					<tr><td colspan="2"></td></tr>
-					<tr><td colspan="2"></td></tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td colspan="2" align="right"><?php echo $this->Form->button('Next >', array('type' => 'button', 'id' => 'next_btn4'));?></td>
 					</tr>
@@ -955,12 +955,12 @@
 				<h1>Purchase Downloads</h1>
 				<table cellspacing="10" cellpadding="0" border="0">
 					<tr><td id="formError5" class="formError" colspan="2"></td></tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 					<td align="right" width="250"><?php echo $this->Form->label('Library Download Type');?></td>
 					<td  style="font-size:12px;">
-						<input id="redio1" type="radio" name="data[Library][library_unlimited]" value="0" class="form_fields" onClick="get_purFields('0');" <?php if($getData['Library']['library_unlimited'] == 0) { ?> checked="checked" <?php } ?>>A la Carte
-						<input id="redio2" type="radio" name="data[Library][library_unlimited]" value="1" class="form_fields" onClick="get_purFields('1');" <?php if($getData['Library']['library_unlimited'] == 1) { ?> checked="checked" <?php } ?>>Unlimited
+						<input id="redio1" type="radio" name="data[Library][library_unlimited]" value="0" class="form_fields" onClick="get_purFields('0');" <?php if($getData['Library']['library_unlimited'] == 0) { ?> checked="checked" <?php } ?>>&nbsp;A la Carte&nbsp;&nbsp;
+						<input id="redio2" type="radio" name="data[Library][library_unlimited]" value="1" class="form_fields" onClick="get_purFields('1');" <?php if($getData['Library']['library_unlimited'] == 1) { ?> checked="checked" <?php } ?>>&nbsp;Unlimited
 					</td>
 					</tr>
 					<tr>
@@ -993,11 +993,11 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Purchased Amount in $');?></td>
 						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_amount',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td colspan="2" align="right"><?php echo $this->Form->button('Save', array('type' => 'button', 'id' => 'next_btn5'));?></td>
 					</tr>
-					<tr><td colspan="2"></td></tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 				</table>
 				<?php
 				if($getData['Library']['id'] != "") {
@@ -1035,8 +1035,8 @@
 							}
 						}
 						?>
-						<tr><td colspan="2"></td></tr>
-						<tr><td colspan="2"></td></tr>
+						<tr><td colspan="2">&nbsp;</td></tr>
+						<tr><td colspan="2">&nbsp;</td></tr>
 					</table>
 				<?php
 				}

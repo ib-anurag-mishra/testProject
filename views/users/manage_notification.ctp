@@ -22,7 +22,7 @@ $ieVersion =  ieversion();
 <div class="breadCrumb">
 <?php
 	$html->addCrumb(__('Notifications', true), '/users/manage_notification');
-	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>
 <br class="clr">

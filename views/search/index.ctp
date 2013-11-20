@@ -23,7 +23,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             }
         }
 
-        $pagination_str .= " ";
+        $pagination_str .= "&nbsp;";
         if ($type == 'listing') {
             if ($currentPage <= $part) {
                 $fromPage = 1;
@@ -66,9 +66,9 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
                     $pagination_str .= $html->link($pageCount, '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString);
                 }
             }
-            $pagination_str .= " ";
+            $pagination_str .= "&nbsp;";
         }
-        $pagination_str .= " ";
+        $pagination_str .= "&nbsp;";
 
         if ($type == 'listing') {
             if ($currentPage != $totalPages) {
@@ -127,7 +127,7 @@ function Get_Sales_date($sales_date_array, $country) {
     <div class="breadcrumbs">
 <?php
 $html->addCrumb(__('Search Results', true), '/search/index');
-echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
     </div>
     <header class="clearfix">

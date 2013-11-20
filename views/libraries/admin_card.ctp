@@ -40,7 +40,7 @@ echo $this->Form->input('Library', array('options' => $libs , 'label' => false))
 <input type="file" name="xls_sheet" />
 </td>
 </tr>
-<tr><td colspan = '3' align = 'center'></td></tr>
+<tr><td colspan = '3' align = 'center'>&nbsp;&nbsp;</td></tr>
 <tr width = '70%' ><td colspan = '3' align = 'center'><?php echo $this->Form->submit(); ?></td></tr>
 </table>
 

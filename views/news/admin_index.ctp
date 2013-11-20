@@ -27,7 +27,7 @@
 
 	<tr<?php echo $class;?> id="<?php echo $question['News']['id']; ?>">
 
-		<td><?php echo $question['News']['subject']; ?></td>
+		<td><?php echo $question['News']['subject']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $question['News']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $question['News']['id'])); ?>

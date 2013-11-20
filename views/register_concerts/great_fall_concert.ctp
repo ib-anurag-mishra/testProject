@@ -9,7 +9,7 @@
 		<div class="breadcrumbs">
                     <?php
                             $html->addCrumb('The Great Fall Concert Ticket Giveway', '/great_fall_concert');
-                            echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+                            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
                 </div>
 		<header><?php echo $session->flash(); ?>

@@ -8,7 +8,7 @@
 <div class="breadCrumb">
 <?php 
 	$html->addCrumb('Search Results');	
-	echo $html->getCrumbs(' > ','Home','/homes');
+	echo $html->getCrumbs('&nbsp>&nbsp;','Home','/homes');
 ?>
 </div>
 <div style="float:left;width:100%;">
@@ -211,9 +211,9 @@ if(isset($searchtype)){
     ?>
 	<?php 
 		echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
-		echo " ";
+		echo "&nbsp;";
 		echo $paginator->numbers();
-		echo " ";
+		echo "&nbsp;";
 		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
 	?>
 </div>

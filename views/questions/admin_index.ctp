@@ -30,7 +30,7 @@
 		<td>
 			<?php echo $this->Html->link($question['Section']['title'], array('controller' => 'sections', 'action' => 'view', $question['Section']['id'])); ?>
 		</td>
-		<td><?php echo $question['Question']['question']; ?></td>
+		<td><?php echo $question['Question']['question']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $question['Question']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $question['Question']['id'])); ?>

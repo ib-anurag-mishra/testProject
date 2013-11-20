@@ -50,33 +50,33 @@
 		<a href="artist?artist=usher"><img src="img/usher.png" border="0"></a>
 	</div>
 	<div id="artist_search">
-		Artist Search
-		<a href="artist_search?letter=num">#</a>
-		<a href="artist_search?letter=a">A</a>
-		<a href="artist_search?letter=b">B</a>
-		<a href="artist_search?letter=c">C</a>
-		<a href="artist_search?letter=d">D</a>
-		<a href="artist_search?letter=e">E</a>
-		<a href="artist_search?letter=f">F</a>
-		<a href="artist_search?letter=g">G</a>
-		<a href="artist_search?letter=h">H</a>
-		<a href="artist_search?letter=i">I</a>
-		<a href="artist_search?letter=j">J</a>
-		<a href="artist_search?letter=k">K</a>
-		<a href="artist_search?letter=l">L</a>
-		<a href="artist_search?letter=m">M</a>
-		<a href="artist_search?letter=n">N</a>
-		<a href="artist_search?letter=o">O</a>
-		<a href="artist_search?letter=p">P</a>
-		<a href="artist_search?letter=q">Q</a>
-		<a href="artist_search?letter=r">R</a>
-		<a href="artist_search?letter=s">S</a>
-		<a href="artist_search?letter=t">T</a>
-		<a href="artist_search?letter=u">U</a>
-		<a href="artist_search?letter=v">V</a>
-		<a href="artist_search?letter=w">W</a>
-		<a href="artist_search?letter=x">X</a>
-		<a href="artist_search?letter=y">Y</a>
+		Artist Search&nbsp;&nbsp;
+		<a href="artist_search?letter=num">#</a>&nbsp;
+		<a href="artist_search?letter=a">A</a>&nbsp;
+		<a href="artist_search?letter=b">B</a>&nbsp;
+		<a href="artist_search?letter=c">C</a>&nbsp;
+		<a href="artist_search?letter=d">D</a>&nbsp;
+		<a href="artist_search?letter=e">E</a>&nbsp;
+		<a href="artist_search?letter=f">F</a>&nbsp;
+		<a href="artist_search?letter=g">G</a>&nbsp;
+		<a href="artist_search?letter=h">H</a>&nbsp;
+		<a href="artist_search?letter=i">I</a>&nbsp;
+		<a href="artist_search?letter=j">J</a>&nbsp;
+		<a href="artist_search?letter=k">K</a>&nbsp;
+		<a href="artist_search?letter=l">L</a>&nbsp;
+		<a href="artist_search?letter=m">M</a>&nbsp;
+		<a href="artist_search?letter=n">N</a>&nbsp;
+		<a href="artist_search?letter=o">O</a>&nbsp;
+		<a href="artist_search?letter=p">P</a>&nbsp;
+		<a href="artist_search?letter=q">Q</a>&nbsp;
+		<a href="artist_search?letter=r">R</a>&nbsp;
+		<a href="artist_search?letter=s">S</a>&nbsp;
+		<a href="artist_search?letter=t">T</a>&nbsp;
+		<a href="artist_search?letter=u">U</a>&nbsp;
+		<a href="artist_search?letter=v">V</a>&nbsp;
+		<a href="artist_search?letter=w">W</a>&nbsp;
+		<a href="artist_search?letter=x">X</a>&nbsp;
+		<a href="artist_search?letter=y">Y</a>&nbsp;
 		<a href="artist_search?letter=z">Z</a>
 		<div id="artist_searchBox">
 			<div class="scrollarea">

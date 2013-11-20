@@ -344,7 +344,7 @@ $ieVersion =  ieversion();
 <div class="breadcrumbs">
 <?php
 	$html->addCrumb( __('My Wishlist', true), '/homes/my_wishlist');
-	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>
 		<header class="clearfix">

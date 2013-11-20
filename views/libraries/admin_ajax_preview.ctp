@@ -1278,11 +1278,11 @@ div.code-coverage-results span.result-good {
 					<ul>
 						<li>
 							Weekly Downloads <span id="downloads_used">0</span>/5				
-							<img src="/img/question.png" alt="Download Limits" width="12" height="14" id="qtip" />|
-							<a href="#">FAQ</a>|
-							<a href="#">My Wishlist</a>|
-							<a href="#">Recent Downloads</a>|					
-							<a href="#">My Account</a>|
+							<img src="/img/question.png" alt="Download Limits" width="12" height="14" id="qtip" />&nbsp;|&nbsp;
+							<a href="#">FAQ</a>&nbsp;|&nbsp;
+							<a href="#">My Wishlist</a>&nbsp;|&nbsp;
+							<a href="#">Recent Downloads</a>&nbsp;|&nbsp;					
+							<a href="#">My Account</a>&nbsp;|&nbsp;
 							<a href="#">Logout</a>				
 						</li>
 						<li><img src="/img/freegal_logo.png"></li>
@@ -1348,7 +1348,7 @@ div.code-coverage-results span.result-good {
                         <p class='suggest_text'>
                             Test
                             <br />
-                            by
+                            by&nbsp;
                             <a href="#">Grupo Mania</a>                            
 							 <img src="/img/play.png" alt="Play Sample" title="Play Sample" style="cursor:pointer;display:block;" id="play_audio0"  />                            
 							 <img src="/img/ajax-loader.gif" alt="Loading Sample" title="Loading Sample" style="cursor:pointer;display:none;" id="load_audio0" />
@@ -1361,7 +1361,7 @@ div.code-coverage-results span.result-good {
                         <p class='suggest_text'>
                            Test  
 						   <br />
-                            by
+                            by&nbsp;
                             <a href="#">Grupo Mania</a>                            
 							 <img src="/img/play.png" alt="Play Sample" title="Play Sample" style="cursor:pointer;display:block;" id="play_audio0"  />                            
 							 <img src="/img/ajax-loader.gif" alt="Loading Sample" title="Loading Sample" style="cursor:pointer;display:none;" id="load_audio0" />
@@ -1374,7 +1374,7 @@ div.code-coverage-results span.result-good {
                         <p class='suggest_text'>
                             Test 
 							<br />
-                            by
+                            by&nbsp;
                             <a href="#">Grupo Mania</a>                            
 							 <img src="/img/play.png" alt="Play Sample" title="Play Sample" style="cursor:pointer;display:block;" id="play_audio0"  />                            
 							 <img src="/img/ajax-loader.gif" alt="Loading Sample" title="Loading Sample" style="cursor:pointer;display:none;" id="load_audio0" />
@@ -1387,7 +1387,7 @@ div.code-coverage-results span.result-good {
                         <p class='suggest_text'>
                            Test
 						   <br />
-                            by
+                            by&nbsp;
                             <a href="#">Grupo Mania</a>                            
 							 <img src="/img/play.png" alt="Play Sample" title="Play Sample" style="cursor:pointer;display:block;" id="play_audio0"  />                            
 							 <img src="/img/ajax-loader.gif" alt="Loading Sample" title="Loading Sample" style="cursor:pointer;display:none;" id="load_audio0" />
@@ -1405,39 +1405,39 @@ div.code-coverage-results span.result-good {
             <a href="#"><img src="http://music.freegalmusic.com/freegalmusic/test/EN/newartistimg/NAavril_lavigne.jpg" alt="Newly Added Artist" height="215" width="300" /></a></div>
     <div id="artist_search">
 		<div id="artist_links">
-		Artist Search
-		<a href="#bottom">#</a>
-		<a href="#bottom">A</a>
-		<a href="#bottom">B</a>
-		<a href="#bottom">C</a>
-		<a href="#bottom">D</a>
+		Artist Search&nbsp;&nbsp;
+		<a href="#bottom">#</a>&nbsp;
+		<a href="#bottom">A</a>&nbsp;
+		<a href="#bottom">B</a>&nbsp;
+		<a href="#bottom">C</a>&nbsp;
+		<a href="#bottom">D</a>&nbsp;
 
-        <a href="#bottom">E</a>
-        <a href="#bottom">F</a>
-        <a href="#bottom">G</a>
-        <a href="#bottom">H</a>
+        <a href="#bottom">E</a>&nbsp;
+        <a href="#bottom">F</a>&nbsp;
+        <a href="#bottom">G</a>&nbsp;
+        <a href="#bottom">H</a>&nbsp;
 
-        <a href="#bottom">I</a>
-        <a href="#">J</a>
-        <a href="#bottom">K</a>
-        <a href="#bottom">L</a>
-        <a href="#bottom">M</a>
-        <a href="#bottom">N</a>
+        <a href="#bottom">I</a>&nbsp;
+        <a href="#">J</a>&nbsp;
+        <a href="#bottom">K</a>&nbsp;
+        <a href="#bottom">L</a>&nbsp;
+        <a href="#bottom">M</a>&nbsp;
+        <a href="#bottom">N</a>&nbsp;
 
-        <a href="#bottom">O</a>
-        <a href="#bottom">P</a>
+        <a href="#bottom">O</a>&nbsp;
+        <a href="#bottom">P</a>&nbsp;
 
-        <a href="#bottom">Q</a>
-        <a href="#bottom">R</a>
-        <a href="#bottom">S</a>
-        <a href="#bottom">T</a>
+        <a href="#bottom">Q</a>&nbsp;
+        <a href="#bottom">R</a>&nbsp;
+        <a href="#bottom">S</a>&nbsp;
+        <a href="#bottom">T</a>&nbsp;
 
-        <a href="#bottom">U</a>
-        <a href="#bottom">V</a>
+        <a href="#bottom">U</a>&nbsp;
+        <a href="#bottom">V</a>&nbsp;
 
-        <a href="#bottom">W</a>
-        <a href="#bottom">X</a>
-        <a href="#bottom">Y</a>
+        <a href="#bottom">W</a>&nbsp;
+        <a href="#bottom">X</a>&nbsp;
+        <a href="#bottom">Y</a>&nbsp;
         <a href="#bottom">Z</a>
 
 		</div>
@@ -1476,10 +1476,10 @@ div.code-coverage-results span.result-good {
 
 	<div id="footer">
 	<div id="copyright" style="float:left;">
-		&copy; 2010 Library Ideas, LLCAll Rights Reserved
+		&copy; 2010 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
 	</div>	
-	<a>About Freegal Music</a>	|
-	<a>Terms &amp; Conditions</a>	|
+	<a>About Freegal Music</a>	&nbsp;|&nbsp;
+	<a>Terms &amp; Conditions</a>	&nbsp;|&nbsp;
 
 	<a>FAQ</a></div>
 </body>
