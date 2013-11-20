@@ -118,7 +118,7 @@
                 success:
                         function(data) {
                             if (!data) {
-                                location.reload();
+                                window.location.href = $this.attr('href');
                             }
                             event.preventDefault();
                         }
