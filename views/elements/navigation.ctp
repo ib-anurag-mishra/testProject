@@ -147,6 +147,7 @@ function createQueue(){
                     title = $this.attr('title') || null;
                 
                 document.getElementById('ajaxflashMessage44').innerHTML = response ;
+                $('#ajaxflashMessage44').css('display','block');
 
                 $('.delete-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
