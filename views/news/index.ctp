@@ -39,7 +39,7 @@ $(".adjust").toggle(
 <div class="breadCrumb">
 <?php
 	$html->addCrumb('News', '/news');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 ?>
 </div>
 	<br class="clr" />

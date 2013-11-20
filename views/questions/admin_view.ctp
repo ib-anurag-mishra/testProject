@@ -12,27 +12,27 @@
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Section'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $this->Html->link($question['Section']['title'], array('controller' => 'sections', 'action' => 'view', $question['Section']['id'])); ?>
-			&nbsp;
+			
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Question'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $question['Question']['question']; ?>
-			&nbsp;
+			
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Answer'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $question['Question']['answer']; ?>
-			&nbsp;
+			
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Created'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $question['Question']['created']; ?>
-			&nbsp;
+			
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Last Modified'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $question['Question']['modified']; ?>
-			&nbsp;
+			
 		</dd>
 	</dl>
 </div>

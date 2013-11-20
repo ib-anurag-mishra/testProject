@@ -36,7 +36,7 @@ $ieVersion =  ieversion();
 <div class="breadCrumb">
 <?php
 	$html->addCrumb(__('My Account', true), '/users/my_account');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 ?>
 </div>
 <br class="clr">

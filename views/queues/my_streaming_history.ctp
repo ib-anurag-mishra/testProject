@@ -29,7 +29,7 @@ $ieVersion =  ieversion();
 <div class="breadcrumbs">
 <?php
 	$html->addCrumb( __('Streaming History', true), '/homes/my_streaming_history');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 ?>
 </div>          
                 

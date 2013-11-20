@@ -75,7 +75,7 @@ var preValue= 1;
 			</div> 
                                                             
 			<div class="artist-list-shadow-container">
-				<h3>&nbsp;</h3>
+				<h3></h3>
 				<div class="artist-list" id="artistscroll">					
 					<ul id="artistlistrecord">	                                        
                                          <?php

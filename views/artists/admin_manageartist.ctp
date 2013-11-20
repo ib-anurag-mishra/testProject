@@ -99,7 +99,7 @@ function CheckAllChk(theForm,maincheckname)
 			<th class="left">Territory</th>
 			<th>Artist image</th>
 			<th>Edit</th>
-			<th><input type="checkbox" name="maincheckbox" id="maincheckbox" value="1" onClick="CheckAllChk(form,this);">&nbsp;Delete</th>
+			<th><input type="checkbox" name="maincheckbox" id="maincheckbox" value="1" onClick="CheckAllChk(form,this);">Delete</th>
 		</tr>
                 
                 <?php if(count($artists)) { ?>  
@@ -119,7 +119,7 @@ function CheckAllChk(theForm,maincheckname)
 		}
 		?>
                   
-                <tr><td colspan="5">&nbsp;</td></tr>
+                <tr><td colspan="5"></td></tr>
                 <tr>
 			<td class="left" colspan="5"><div class="paging">
 	      <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>

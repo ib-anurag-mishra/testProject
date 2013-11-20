@@ -8,7 +8,7 @@
 <div class="breadCrumb">
 <?php
 	$html->addCrumb(__('Terms & Conditions', true), '/homes/terms');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+	echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 ?>
 </div>
 <br class="clr">

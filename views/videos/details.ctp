@@ -4,7 +4,7 @@
                  <?php
                          
                             $html->addCrumb(__('Video', true), 'javascript:void(0);');
-                            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+                            echo $html->getCrumbs('>', __('Home', true), '/homes');
                   ?>
                 </div>
 		<div class="hero-container clearfix">
