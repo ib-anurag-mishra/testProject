@@ -105,7 +105,7 @@ $(document).ready(function()
 	});
 	*/
 	
-	$(document).on('mouseover','a[title]',function(event){
+	$(document).on('mouseenter','a[title]',function(event){
 	
 		$(this).qtip({
 			position: {
