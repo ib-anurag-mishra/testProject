@@ -41,7 +41,7 @@
                             $html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));
                         }
 		
-			echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+			echo $html->getCrumbs(' > ', __('Home', true), '/homes');
 			echo " > ";
 			if(strlen($artisttext) >= 30){
 				$artisttext = substr($artisttext, 0, 30). '...';
