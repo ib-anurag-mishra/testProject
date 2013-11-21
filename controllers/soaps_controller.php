@@ -815,8 +815,8 @@ class SoapsController extends AppController {
           $obj->Composer                  = (string)'';
           $obj->Genre                     = $this->getTextUTF((string)$data['Genre']['Genre']);
           $obj->Territory                 = (string)$data['Country']['Territory'];
-          $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
-          $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
+          $obj->Sample_Duration           = $this->getSongDurationTime($data['Song']['Sample_Duration']);
+          $obj->FullLength_Duration       = $this->getSongDurationTime($data['Song']['FullLength_Duration']);
           $this->Album->recursive = -1;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
           $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
@@ -966,8 +966,8 @@ STR;
           $obj->Composer                  = $this->getTextUTF((string)$data['Song']['Composer']);
           $obj->Genre                     = $this->getTextUTF((string)$data['Genre']['Genre']);
           $obj->Territory                 = (string)$data['Country']['Territory'];
-          $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
-          $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
+          $obj->Sample_Duration           = $this->getSongDurationTime($data['Song']['Sample_Duration']);
+          $obj->FullLength_Duration       = $this->getSongDurationTime($data['Song']['FullLength_Duration']);
           $this->Album->recursive = -1;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
           $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
@@ -1177,8 +1177,8 @@ STR;
             $sobj->DownloadStatus        = $this->IsDownloadable($val['ProdID'], $library_territory, $val['provider_type']);       
             
             $sobj->TrackBundleCount      = (int)$val['TrackBundleCount'];
-            $sobj->Sample_Duration       = (string)$val['Sample_Duration'];
-            $sobj->FullLength_Duration   = (string)$val['FullLength_Duration'];
+            $sobj->Sample_Duration       = $this->getSongDurationTime($val['Sample_Duration']);
+            $sobj->FullLength_Duration   = $this->getSongDurationTime($val['FullLength_Duration']);
             $sobj->Sample_FileID         = (int)$val['Sample_FileID'];
             $sampFileData = $this->Files->find('first',array('conditions' => array('FileID' => $val['Sample_FileID'])));
             $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $sampFileData['Files']['CdnPath']."/".$sampFileData['Files']['SaveAsName']);
@@ -1941,7 +1941,7 @@ STR;
       $sobj->SongTitle            =    $val['Song']['SongTitle'];
       $sobj->ArtistText           =    $val['Song']['ArtistText'];
       $sobj->Artist               =    $val['Song']['Artist'];
-      $sobj->FullLength_Duration  =    $val['Song']['FullLength_Duration'];
+      $sobj->FullLength_Duration  =    $this->getSongDurationTime($val['Song']['FullLength_Duration']);
 
       if( 'T' == $val['Song']['Advisory'] ) {    
         
@@ -5038,8 +5038,8 @@ STR;
           ($arrTemp[$cnt]['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
           
           $sobj->TrackBundleCount      = (int)    '';
-          $sobj->Sample_Duration       = (string) $arrTemp[$cnt]['Song']['Sample_Duration'];
-          $sobj->FullLength_Duration   = (string) $arrTemp[$cnt]['Song']['FullLength_Duration'];
+          $sobj->Sample_Duration       =  $this->getSongDurationTime($arrTemp[$cnt]['Song']['Sample_Duration']);
+          $sobj->FullLength_Duration   = $this->getSongDurationTime($arrTemp[$cnt]['Song']['FullLength_Duration']);
           $sobj->Sample_FileID         = (int)    '';
 
           $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['Sample_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Sample_Files']['SaveAsName']);
@@ -5157,7 +5157,7 @@ STR;
         $sobj->VideoGenre            = $this->getTextUTF($arrTemp[$cnt]['gr']['Genre']);
         $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
         ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
-        $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
+        $sobj->VideoFullLength_Duration   = $this->getSongDurationTime($arrTemp[$cnt]['v']['FullLength_Duration']);          
         $sobj->VideoFullLength_FileURL = '';
         $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec('perl files/tokengen_artwork ' . $arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
           
@@ -5308,8 +5308,8 @@ STR;
         ($val['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
         
         $sobj->TrackBundleCount      = (int)    '';
-        $sobj->Sample_Duration       = (string) $val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration   = (string) $val['Song']['FullLength_Duration'];
+        $sobj->Sample_Duration       = $this->getSongDurationTime($val['Song']['Sample_Duration']);
+        $sobj->FullLength_Duration   = $this->getSongDurationTime($val['Song']['FullLength_Duration']);
         $sobj->Sample_FileID         = (int)    '';
 
         $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
@@ -5923,8 +5923,8 @@ STR;
       $sobj->Title                = $this->getTextUTF($val->Title);
       $sobj->SongArtist           = $this->getTextUTF($val->Artist);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
-      $sobj->Sample_Duration      = $val->Sample_Duration;
-      $sobj->FullLength_Duration  = $val->FullLength_Duration; 
+      $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
+      $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
       $sobj->ISRC                 = $val->ISRC;
       
   
@@ -6008,8 +6008,8 @@ STR;
       $sobj->Title                = $this->getTextUTF($val->Title);
       $sobj->SongArtist           = $this->getTextUTF($val->Artist);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
-      $sobj->Sample_Duration      = $val->Sample_Duration;
-      $sobj->FullLength_Duration  = $val->FullLength_Duration; 
+      $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
+      $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration); 
       $sobj->ISRC                 = $val->ISRC;
       
   
@@ -6165,8 +6165,8 @@ STR;
       $sobj->Title                = $this->getTextUTF($val->Title);
       $sobj->SongArtist           = $this->getTextUTF($val->Artist);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
-      $sobj->Sample_Duration      = $val->Sample_Duration;
-      $sobj->FullLength_Duration  = $val->FullLength_Duration;
+      $sobj->Sample_Duration      = $this->getSongDurationTime($val->Sample_Duration);
+      $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration);
       $sobj->ISRC                 = $val->ISRC;
 
       $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
@@ -6248,7 +6248,7 @@ STR;
       $sobj->SongArtist           = $this->getTextUTF($val->Artist);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = '';
-      $sobj->FullLength_Duration  = $val->FullLength_Duration;
+      $sobj->FullLength_Duration  = $this->getSongDurationTime($val->FullLength_Duration);
       $sobj->ISRC                 = $val->ISRC;
 
       $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);       
@@ -6881,6 +6881,23 @@ STR;
 	return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
     }
 
+  }
+  
+  /**
+   * Function Name : getSongDurationTime
+   * Desc : Returns hh:mm:ss format to mm:ss
+   * @param int totalTime
+   * @return string
+   */ 
+   
+  private function getSongDurationTime($totalTime)  {
+        
+    if(strlen($totalTime)>5)  {
+      $totalTime =  ltrim(date('i:s', strtotime($totalTime)), 0);
+    }       
+        
+    return $totalTime;
+        
   }
   
  
