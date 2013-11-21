@@ -491,6 +491,7 @@ function streamingValidationJS(responseDataJS) {
 	console.log('inside streamingValidationJS'+responseDataJS);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
         alert(document.getElementById("hid_library_unlimited").value);
@@ -501,6 +502,11 @@ function streamingValidationJS(responseDataJS) {
 
 >>>>>>> 85e1737c60b8065d444016243f6766a934da74b8
         if(responseDataJS[2]==86400)    //  For Patron with unlimited Streaming Limit
+=======
+
+
+        if($("#hid_library_unlimited").text()==1)    //  For Patron with unlimited Streaming Limit
+>>>>>>> aff14279f1d8a0f3071528d9352ce4eb924aa51f
         {
              document.getElementById('remaining_stream_time').innerHTML = 'UNLIMITED';
         }
