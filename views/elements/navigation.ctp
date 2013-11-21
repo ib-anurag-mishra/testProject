@@ -468,7 +468,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         </div>
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
-
+                                                $libraryInfo['Library']['library_unlimited'] =1;
                                                 if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
                                                {                                                    
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
