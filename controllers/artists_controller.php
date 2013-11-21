@@ -1680,7 +1680,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2
+                                    ), 'cache' => 'yes', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                 
