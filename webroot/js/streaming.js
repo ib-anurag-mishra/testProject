@@ -557,3 +557,8 @@ $(document).ready(function(){
 	
 
 });
+
+
+$(window).bind('beforeunload', function(){
+		alert("About to leave tab...");
+	});
