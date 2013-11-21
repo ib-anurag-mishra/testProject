@@ -802,8 +802,7 @@ Class ArtistsController extends AppController
      */
 
     function view($id = null, $album = null, $provider = null)
-    {
-        Configure::write('debug', 2);
+    {       
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
