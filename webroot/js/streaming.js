@@ -489,7 +489,11 @@ function streamingValidationJS(responseDataJS) {
 	
 	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS'+responseDataJS);
+<<<<<<< HEAD
         
+=======
+        alert(document.getElementById("hid_library_unlimited").value);
+>>>>>>> 1ce9b4025db60deb5f3b7bc9f153b435fdee0ebd
         if(responseDataJS[2]==86400)    //  For Patron with unlimited Streaming Limit
         {
              document.getElementById('remaining_stream_time').innerHTML = 'UNLIMITED';

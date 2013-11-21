@@ -2,7 +2,16 @@
 class dataencodeView extends View {
 
 
+<<<<<<< HEAD
     function getTextEncode($text) {                                                             // Function used only in Front End
+=======
+    function getTextEncode($text)
+    {   
+        // Function used only in Front End
+        $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+        return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+    }
+>>>>>>> 1ce9b4025db60deb5f3b7bc9f153b435fdee0ebd
 
     $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
     return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
