@@ -1154,8 +1154,17 @@ STR;
       $obj->DownloadStatus            = (int)$data['Album']['DownloadStatus'];
       $obj->TrackBundleCount          = (int)$data['Album']['TrackBundleCount'];
       
-      if('T' == $data['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
-
+      if(empty($obj->AlbumTitle)) { $obj->AlbumTitle = ' '; }   
+      if(empty($obj->Title)) { $obj->Title = ' '; }   
+      if(empty($obj->ArtistText)) { $obj->ArtistText = ' '; }   
+      if(empty($obj->Artist)) { $obj->Artist = ' '; }   
+      if(empty($obj->ArtistURL)) { $obj->ArtistURL = ' '; }   
+      if(empty($obj->Label)) { $obj->Label = ' '; }   
+      if(empty($obj->Copyright)) { $obj->Copyright = ' '; }
+      if(empty($obj->Advisory)) { $obj->Advisory = ' '; } 
+      
+      if('T' == $data['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; } 
+      
       foreach($data['Song'] AS $val){
 
           if($this->IsTerrotiry($val['ProdID'], $val['provider_type'], $libraryId)) {
