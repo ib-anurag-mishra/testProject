@@ -1684,8 +1684,10 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ), 'cache' => 'yes', 'chk' => 2
+                                    ),'order'=>array('FIELD(Song.ProdID, '.$ids.') DESC'), 'cache' => 'yes', 'chk' => 2
                             );
+            
+                      
             if($this->Session->read('block') == 'yes') {
                 
                                
