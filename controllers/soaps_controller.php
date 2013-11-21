@@ -1153,15 +1153,6 @@ STR;
       $obj->FileURL = $fileURL;
       $obj->DownloadStatus            = (int)$data['Album']['DownloadStatus'];
       $obj->TrackBundleCount          = (int)$data['Album']['TrackBundleCount'];
-
-      if(empty(trim($obj->AlbumTitle))) { $obj->AlbumTitle = ' '; }   
-      if(empty(trim($obj->Title))) { $obj->Title = ' '; }   
-      if(empty(trim($obj->ArtistText))) { $obj->ArtistText = ' '; }   
-      if(empty(trim($obj->Artist))) { $obj->Artist = ' '; }   
-      if(empty(trim($obj->ArtistURL))) { $obj->ArtistURL = ' '; }   
-      if(empty(trim($obj->Label))) { $obj->Label = ' '; }   
-      if(empty(trim($obj->Copyright))) { $obj->Copyright = ' '; }   
-      if(empty(trim($obj->Advisory))) { $obj->Advisory = ' '; }   
       
       if('T' == $data['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
 
