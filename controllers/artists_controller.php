@@ -1684,6 +1684,7 @@ Class ArtistsController extends AppController
                             );
             if($this->Session->read('block') == 'yes') {
                 
+                
                     $cond = array('Song.Advisory' => 'F');
             }else{
                     $cond = "";
