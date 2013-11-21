@@ -1,14 +1,142 @@
-$(document).ready(function() {
+$(document).ready(function()
+{
+	/*
+   $('a[title]').qtip({
+      position: {
+         corner: {
+            target: 'topLeft',
+            tooltip: 'bottomRight'
+         }
+      },
+      style: {
 
-	$(document).on('mouseenter','a[title]',function(event){
+	 name:'cream',
+         padding: '5px 10px',
+         width: {
+            max: 350,
+            min: 0
+         },
+         border: {
+               width: 1,
+               radius: 8,
+               color: '#FAF7AA'
+         },
+
+
+         tip: true
+      }
+   });
+   */
+
+   
+ /*  
+   
+   $('a[title]').each(function(){
+	   
+		$(this).qtip({
+			position: {
+				corner: {
+					target: 'topLeft',
+					tooltip: 'bottomRight'
+				}
+			},
+			style: { 
+					
+					color:'#444',
+					fontSize:12,
+					border: {
+		
+						color: '#444'
+					},
+					
+					width: {
+						max:350,
+						min:0
+					},
+			
+					tip:{
+						corner:'bottomRight',
+						size: {
+							x:5,
+							y:5
+						}
+					}
+					
+			
+			}
+		});	   
+	   
+   });
+  
+*/   
+   
+	/*
+	$('a[title]').qtip({
+		position: {
+			corner: {
+				target: 'topLeft',
+				tooltip: 'bottomRight'
+			}
+		},
+		style: { 
+				
+				color:'#444',
+				fontSize:12,
+				border: {
+
+					color: '#444'
+				},
+				
+				width: {
+					max:350,
+					min:0
+				},
+		
+				tip:{
+					corner:'bottomRight',
+					size: {
+						x:5,
+						y:5
+					}
+				}
+				
+		
+		}
+	});
+	*/
+	
+	$(document).on('mouseover','a[title]',function(event){
 	
 		$(this).qtip({
-
-			
 			position: {
-				at: 'top left',
-				my: 'bottom right'
-				
+				corner: {
+					target: 'topLeft',
+					tooltip: 'bottomRight'
+				}
+			},
+			style: { 
+					
+					color:'#444',
+					fontSize:12,
+					border: {
+	
+						color: '#444'
+					},
+					
+					width: {
+						max:350,
+						min:0
+					},
+			
+					tip:{
+						corner:'bottomRight',
+						size: {
+							x:5,
+							y:5
+						}
+					}
+					
+			
 			},
 			overwrite: false,
 			
@@ -26,77 +154,171 @@ $(document).ready(function() {
 
 
 
-   $(document).on('mouseenter','span[title]',function(event){
-   
+/*	
+   $('span[title]').each(function(){
 	   $(this).qtip({
-			position: {
-			 
-			    at: 'top right',
-			    my: 'bottom right'
-			 
-			},
-			overwrite: false,
-			
-			show: {
-				
-				event: event.type,
-				ready:true
-			}	
-	   });   
-   
+	      position: {
+	         corner: {
+	            target: 'topRight',
+	            tooltip: 'bottomRight'
+	         }
+	      },
+	      style: {
+	         name:'cream',
+	         padding: '10px 0px',
+	         margin: 0,
+	         width: {
+	            max: 210,
+	            min: 0
+	         },
+	         border: {
+	               width: 7,
+	               radius: 5,
+	               color: '#FAF7AA'
+	         },
+	         tip: true
+	      }
+	   });	   
+	   
+	   
    });
+ */
+   
 
-   
-   
-
-
-   $(document).on('mouseenter','#qtip[title]',function(event){
-   
-	   $(this).qtip({
-			position: {
-			 
-			    at: 'left bottom',
-			    my: 'right top'
-			 
-			},
-			overwrite: false,
-			
-			show: {
-				
-				event: event.type,
-				ready:true
-			}	
-	   });   
-   
+   $('span[title]').qtip({
+      position: {
+         corner: {
+            target: 'topRight',
+            tooltip: 'bottomRight'
+         }
+      },
+      style: {
+         name:'cream',
+         padding: '10px 0px',
+         margin: 0,
+         width: {
+            max: 210,
+            min: 0
+         },
+         border: {
+               width: 7,
+               radius: 5,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
    });
+   
+   
+
+
+/*
+$("#qtip[title]").each(function(){
+	
+   $(this).qtip({
+      position: {
+         corner: {
+	    target: 'leftBottom',
+            tooltip: 'rightTop'
+         }
+      },
+      style: {
+	 name:'cream',
+         padding: '2px 5px',
+         width: {
+            max: 500,
+            min: 0
+         },
+         border: {
+               width: 8,
+               radius: 1,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
+   });	
+	
+});
+*/
+
 
       
-
-   $(document).on('mouseenter','span .dload',function(event){
-   
-	   $(this).qtip({
-			position: {
-			 
-			    at: 'top right',
-			    my: 'bottom left'
-			 
-			},
-			overwrite: false,
-			
-			show: {
-				
-				event: event.type,
-				ready:true
-			}	
-	   });   
-   
+   $("#qtip[title]").qtip({
+      position: {
+         corner: {
+	    target: 'leftBottom',
+            tooltip: 'rightTop'
+         }
+      },
+      style: {
+	 name:'cream',
+         padding: '2px 5px',
+         width: {
+            max: 500,
+            min: 0
+         },
+         border: {
+               width: 8,
+               radius: 1,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
    });
 
 
+/*
+$('span .dload').each(function(){
+   $(this).qtip({
+      position: {
+         corner: {
+            target: 'topRight',
+            tooltip: 'bottomLeft'
+         }
+      },
+      style: {
+	 name:'cream',
+         padding: '5px 10px',
+         width: {
+            max: 350,
+            min: 0
+         },
+         border: {
+               width: 1,
+               radius: 8,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
+   }); 	
+	
+});
+*/
 
  
    
- 
+   $('span .dload').qtip({
+      position: {
+         corner: {
+            target: 'topRight',
+            tooltip: 'bottomLeft'
+         }
+      },
+      style: {
+	 name:'cream',
+         padding: '5px 10px',
+         width: {
+            max: 350,
+            min: 0
+         },
+         border: {
+               width: 1,
+               radius: 8,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
+   }); 
    
 
  

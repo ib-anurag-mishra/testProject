@@ -468,7 +468,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         </div>
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
-                                                $libraryInfo['Library']['library_unlimited'] = 1 ;
+<<<<<<< HEAD
+=======
+                                                
+>>>>>>> aff14279f1d8a0f3071528d9352ce4eb924aa51f
                                                 if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
                                                {                                                    
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
@@ -493,7 +496,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                                                            
                                                     }
 
-                                                     $streamTime =   gmdate("H:i:s", $streamTime);
+                                                     $streamTime =   gmdate("G:i:s", $streamTime);
 
                                                }
                                                else if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1)

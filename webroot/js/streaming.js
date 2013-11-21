@@ -489,14 +489,30 @@ function streamingValidationJS(responseDataJS) {
 	
 	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS'+responseDataJS);
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        
+=======
         alert(document.getElementById("hid_library_unlimited").value);
+>>>>>>> 1ce9b4025db60deb5f3b7bc9f153b435fdee0ebd
+=======
+       // alert(document.getElementById("hid_library_unlimited").value);
+        alert($("#hid_library_unlimited").text());
+
+>>>>>>> 85e1737c60b8065d444016243f6766a934da74b8
         if(responseDataJS[2]==86400)    //  For Patron with unlimited Streaming Limit
+=======
+
+
+        if($("#hid_library_unlimited").text()==1)    //  For Patron with unlimited Streaming Limit
+>>>>>>> aff14279f1d8a0f3071528d9352ce4eb924aa51f
         {
              document.getElementById('remaining_stream_time').innerHTML = 'UNLIMITED';
         }
         else                            //  For Patron with  Streaming Limit of 10800 sec
         {
-             document.getElementById('remaining_stream_time').innerHTML = secondstotime(responseDataJS[2]);
+             document.getElementById('remaining_stream_time').innerHTML = secondsToHms(responseDataJS[2]);
         }
         
        
@@ -519,14 +535,12 @@ function flashConsole(msg) {
 	console.log(msg);
 }
 
-function secondstotime(secs)
-{
-    var t = new Date(1970,0,1);
-    t.setSeconds(secs);
-    var s = t.toTimeString().substr(0,8);
-    if(secs > 86399)
-    	s = Math.floor((t - Date.parse("1/1/70")) / 3600000) + s.substr(2);
-    return s;
+function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return ((h > 0 ? h + ":" : "") + (m > 0 ? (h > 0 && m < 10 ? "0" : "") + m + ":" : "0:") + (s < 10 ? "0" : "") + s); 
 }
 
 
