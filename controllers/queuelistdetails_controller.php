@@ -61,13 +61,18 @@ class QueueListDetailsController extends AppController
                     $this->QueueList->set($this->data['QueueList']);
                     if ($this->QueueList->save())
                     {
-                        $this->Session->setFlash('Queue has been renamed successfully', 'modal', array('class' => 'queue success'));
-                        $this->redirect($this->referer());
+                        //$this->Session->setFlash('Queue has been renamed successfully', 'modal', array('class' => 'queue success'));
+                        $this->layout = 'ajax';
+                                echo 'Queue has been renamed successfully';
+                                die;
                     }
                     else
                     {
-                        $this->Session->setFlash('Error occured while renaming queue', 'modal', array('class' => 'queue problem'));
-                        $this->redirect($this->referer());
+//                        $this->Session->setFlash('Error occured while renaming queue', 'modal', array('class' => 'queue problem'));
+//                        $this->redirect($this->referer());
+                        $this->layout = 'ajax';
+                                echo 'Error occured while renaming queue';
+                                die;
                     }
                 }
             }
