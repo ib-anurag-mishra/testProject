@@ -1629,7 +1629,7 @@ Class ArtistsController extends AppController
                     $val .= $v['Song']['ReferenceID'];
                     $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
                 } else {
-                    $val .= ',' . $natTopSong['Download']['ProdID'];
+                    $val .= ',' . $v['Song']['ReferenceID'];
                     $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
                 }
             }
