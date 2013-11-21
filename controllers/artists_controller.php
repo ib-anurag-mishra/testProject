@@ -1656,7 +1656,7 @@ Class ArtistsController extends AppController
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
                                     'fields' => array(
-                                            'Album.ProdID1',
+                                            'Album.ProdID',
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
@@ -1665,7 +1665,11 @@ Class ArtistsController extends AppController
                                             'Album.ArtistURL',
                                             'Album.Label',
                                             'Album.Copyright',
-                                            'Album.provider_type'
+                                            'Album.provider_type',
+                                            'Files.CdnPath',
+                                            'Files.SaveAsName',
+                                            'Files.SourceURL',
+                                            'Genre.Genre'
                                             ),
                                     'contain' => array(
                                             'Genre' => array(
