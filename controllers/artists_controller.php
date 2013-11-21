@@ -1680,9 +1680,10 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'no', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'yes', 'chk' => 2
                             );
-            if($this->Session->read('block') == 'yes') {                
+            if($this->Session->read('block') == 'yes') {
+                
                                
                     $cond = array('Song.Advisory' => 'F');
             }else{
@@ -1692,7 +1693,7 @@ Class ArtistsController extends AppController
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
             //$this->set('count_albums',count($albumData));   
-              //print_r($albumData);      
+               print_r($albumData);     
             foreach ($albumData as $key => $value) 
             {
                 $albumData[$key]['albumSongs'] = $this->requestAction(
