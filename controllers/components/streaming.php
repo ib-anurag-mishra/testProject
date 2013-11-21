@@ -27,7 +27,7 @@ Class StreamingComponent extends Object
      *   
      * @return array
     */
-    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id,$token_id) {
+    function validateSongStreaming($libId,$patId,$prodId,$provider,$userStreamedTime,$actionType,$agent = null,$songDuration,$queue_id,$token_id) { die;
         
         /**
           creates log file name
