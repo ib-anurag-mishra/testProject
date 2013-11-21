@@ -205,11 +205,11 @@
                         <div class="song <?php echo $class; ?>"><?php
                             if (strlen($albumSong['Song']['SongTitle']) >= 30)
                             {
-                                echo '<a style="text-decoration:none;" title="' . $this->getValidText($albumSong['Song']['SongTitle']) . '">' . $this->getValidText(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
+                                echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
                             }
                             else
                             {
-                                echo '<a style="text-decoration:none;" title="' . $this->getValidText($albumSong['Song']['SongTitle']) . '">' . $this->getValidText($albumSong['Song']['SongTitle']) . '</a>';
+                                echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '</a>';
                             }
                             if ($albumSong['Song']['Advisory'] == 'T')
                             {
