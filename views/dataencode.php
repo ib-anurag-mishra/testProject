@@ -1,24 +1,16 @@
 <?php
-class dataencodeView extends View {
 
+class dataencodeView extends View
+{
 
-<<<<<<< HEAD
-    function getTextEncode($text) {                                                             // Function used only in Front End
-=======
     function getTextEncode($text)
     {   
         // Function used only in Front End
         $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
         return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
     }
->>>>>>> 1ce9b4025db60deb5f3b7bc9f153b435fdee0ebd
 
-    $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
-    return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
-  }
-
-
-  /**
+    /**
      *
      * @Utf8_decode
      *
@@ -66,7 +58,7 @@ class dataencodeView extends View {
             'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'р',
             'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я',
             'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'
-            );
+        );
 
         $replace = array(
             'A', 'A', 'A', 'A', 'A', 'A', 'AE', 'A', 'A',
@@ -103,24 +95,21 @@ class dataencodeView extends View {
             'a', 'b', 'b', 'r', 'a', 'e', 'e', 'x', '3', 'n', 'n', 'k', 'n', 'm', 'h', 'o', 'p',
             'C', 'T', 'Y', 'O', 'X', 'U', 'u', 'W', 'W', 'b', 'b', 'b', 'E', 'O', 'R',
             'c', 't', 'y', 'o', 'x', 'u', 'u', 'w', 'w', 'b', 'b', 'b', 'e', 'o', 'r'
-            );
+        );
 
         return str_replace($accented, $replace, $string);
-}
+    }
 
-    
+    function getAdminTextEncode($text)                    // Function used only in Admin
+    {
+        //return $this->decode_utf8($text);
+        return $this->decode_utf8($this->getTextEncode($text));
+    }
 
-  function getAdminTextEncode($text)                    // Function used only in Admin
-  {
-      //return $this->decode_utf8($text);
-      return $this->decode_utf8($this->getTextEncode($text));
-  }
-
-
-  function getValidText($text)                    // Replace Single, Double Quotes, & with HTML entities in Text
-  {
-       return htmlentities($this->getAdminTextEncode($text));
-  }  
+    function getValidText($text)                    // Replace Single, Double Quotes, & with HTML entities in Text
+    {
+        return htmlentities($this->getAdminTextEncode($text));
+    }
 
 }
 
