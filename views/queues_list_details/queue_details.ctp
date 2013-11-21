@@ -127,7 +127,7 @@
                                 ?>                                                
                                 <a class="add-to-wishlist-button no-ajaxy" href='javascript:void(0);'></a>
                                 <div class="album-title">
-                                    <a href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= $value['Songs']['provider_type']; ?>">
+                                    <a href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
                                         <?php echo $value['Albums']['AlbumTitle']; ?>
                                     </a>                                                
                                 </div>
