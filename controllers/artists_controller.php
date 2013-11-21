@@ -1628,7 +1628,7 @@ Class ArtistsController extends AppController
                     $val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
             }
 
-echo $val_provider_type;
+
             $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
             $this->layout = 'home';
@@ -1656,7 +1656,7 @@ echo $val_provider_type;
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                                     ),
                                     'fields' => array(
-                                            'Album.ProdID',
+                                            'Album.ProdID1',
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
