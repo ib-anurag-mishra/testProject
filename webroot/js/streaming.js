@@ -485,7 +485,7 @@ function pingTimeJS() {
 	
 }
 
-function streamingValidationJS(responseDataJS) {
+function streamingValidationJS(responseDataJS) { alert(typeof(responseDataJS));
 	
 	responseDataJS[5] = 	responseDataJS[5]*1000;
 	console.log('inside streamingValidationJS'+responseDataJS);
