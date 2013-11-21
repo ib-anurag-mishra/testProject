@@ -1683,6 +1683,7 @@ Class ArtistsController extends AppController
                                     ), 'order' => array('Album.provider_type'=>'desc'), 'cache' => 'no', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
+                
                     $cond = array('Song.Advisory' => 'F');
             }else{
                     $cond = "";
