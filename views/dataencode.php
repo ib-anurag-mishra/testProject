@@ -7,7 +7,7 @@ class dataencodeView extends View
     {   
         // Function used only in Front End
         $text = @iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
-        return @iconv(mb_detect_encoding(htmlentities($text)), "UTF-8//IGNORE", $text);
+        return @iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
     }
 
     /**
