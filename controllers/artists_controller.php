@@ -1680,7 +1680,7 @@ echo $val_provider_type;
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ), 'cache' => 'yes', 'chk' => 2
+                                    ), 'cache' => 'no', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                 
