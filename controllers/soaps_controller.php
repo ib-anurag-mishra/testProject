@@ -1146,7 +1146,7 @@ STR;
       $obj->ArtistURL                 = (string)$data['Album']['ArtistURL'];
       $obj->Label                     = $this->getTextUTF((string)$data['Album']['Label']);
       $obj->Copyright                 = (string)$data['Album']['Copyright'];
-      $obj->Advisory                  = (string)$data['Album']['Advisory'];
+      $obj->Advisory                  = $data['Album']['Advisory'];
       $imgData = $this->Files->find('first',array('conditions' => array('FileID' => $data['Album']['FileID'])));
       $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $imgData['Files']['CdnPath']."/".$imgData['Files']['SourceURL']);
       $fileURL = Configure::read('App.Music_Path').$fileURL;
@@ -1154,6 +1154,15 @@ STR;
       $obj->DownloadStatus            = (int)$data['Album']['DownloadStatus'];
       $obj->TrackBundleCount          = (int)$data['Album']['TrackBundleCount'];
 
+      if(empty(trim($obj->AlbumTitle))) { $obj->AlbumTitle = ' '; }   
+      if(empty(trim($obj->Title))) { $obj->Title = ' '; }   
+      if(empty(trim($obj->ArtistText))) { $obj->ArtistText = ' '; }   
+      if(empty(trim($obj->Artist))) { $obj->Artist = ' '; }   
+      if(empty(trim($obj->ArtistURL))) { $obj->ArtistURL = ' '; }   
+      if(empty(trim($obj->Label))) { $obj->Label = ' '; }   
+      if(empty(trim($obj->Copyright))) { $obj->Copyright = ' '; }   
+      if(empty(trim($obj->Advisory))) { $obj->Advisory = ' '; }   
+      
       if('T' == $data['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
 
       foreach($data['Song'] AS $val){
