@@ -1623,9 +1623,15 @@ Class ArtistsController extends AppController
             $val = '';
             $val_provider_type = '';
 
+           
             foreach($songs as $k => $v){
-                    $val .= $v['Song']['ReferenceID'].",";
-                    $val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
+                if (empty($val)) {
+                    $val .= $v['Song']['ReferenceID'];
+                    $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                } else {
+                    $val .= ',' . $natTopSong['Download']['ProdID'];
+                    $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                }
             }
 
 
@@ -1684,7 +1690,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ),'order'=>array('FIELD(Album.ProdID, '.$val.') DESC'), 'cache' => 'yes', 'chk' => 2
+                                    ),'order'=>array('FIELD(Album.ProdID, '.$val.') ASC'), 'cache' => 'yes', 'chk' => 2
                             );
             
                       
