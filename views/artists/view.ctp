@@ -197,18 +197,18 @@
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $album_key . $key, "onClick" => 'stopThis(this, "' . $album_key . $key . '");'));
                             }
                             $class = 'logged_in';
-                        }
-                        
-                        $cs = '';
-                        if(!($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && !($albumSong['Country']['DownloadStatus'] == 1))
-                        {
-                            $cs = 'cs';
+                            
+                            $cs = '';
+                            if (($albumSong['Country']['SalesDate'] > date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
+                            {
+                                $cs = 'cs';
+                            }
                         }
                         ?>
 
 
 
-                        <div class="song <?php echo $class; echo $cs; ?>"><?php
+                        <div class="song <?php echo $class; echo $cs ; ?>"><?php
                             if (strlen($albumSong['Song']['SongTitle']) >= 30)
                             {
                                 echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
@@ -315,7 +315,7 @@
 
                                 echo $wishlist->getWishListMarkup($wishlistInfo, $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"]);
                                 ?>
-                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
+                                <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
                             </div> 
                             <?php
                         }
@@ -346,7 +346,7 @@
                         }
                         ?>
                     </div>
-    <?php } ?>    
+                <?php } ?>    
 
 
             </section>
