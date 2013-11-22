@@ -138,13 +138,15 @@ Class QueueComponent extends Object
                                                           'recursive' => -1,
                                                           'conditions' => array('and' =>
                                                                   array(
-                                                                          array('QueueList.status1' => 1),                               
+                                                                          array('QueueList.status' => 1),                               
                                                                           array('QueueDetail.queue_id' => $queueID)									
 
                                                                   ),                    
                                                               )                
                                                         )
                                                       ); 
+                
+                echo "Query: ".$this->QueueDetail->lastQuery();
                 
                 echo "<pre>"; print_r($queueDetail);
                 
