@@ -118,7 +118,39 @@ Class QueueComponent extends Object
                     )
                 )                
           )
-        ); echo "<pre>"; print_r($queueDetail);
+        ); 
+        
+        
+        if(count($queueDetail)==0)
+        {
+                $queueDetail = $queueDetailList->find('all',  
+                                                        array(
+                                                          'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', ),                                                          
+                                                          'joins' => array(
+                                                            array(
+                                                              'type' => 'INNER',
+                                                              'table' => 'queue_lists',
+                                                              'alias' => 'QueueList',
+                                                              'foreignKey' => false,
+                                                              'conditions' => array('QueueList.queue_id = QueueDetail.queue_id'),        
+                                                            ),
+                                                          ),
+                                                          'recursive' => -1,
+                                                          'conditions' => array('and' =>
+                                                                  array(
+                                                                          array('QueueList.status' => 1),                               
+                                                                          array('QueueDetail.queue_id' => $queueID)									
+
+                                                                  ),                    
+                                                              )                
+                                                        )
+                                                      ); 
+                
+                echo "<pre>"; print_r($queueDetail);
+                
+        }
+        
+        
         return $queueDetail;
         
         
