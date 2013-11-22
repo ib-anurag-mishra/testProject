@@ -389,8 +389,6 @@
                                     <div class="wishlist-popover">
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
-                                        //test
-                                       
 
                                         if ($wishlistInfo == 'Added to Wishlist')
                                         {
@@ -404,64 +402,63 @@
 
                                             <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>">
                                                 <a class="add-to-wishlist" href='JavaScript:void(0);' 
-
                                                    onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>", "<?php echo $value["Video"]["provider_type"]; ?>");'>
-                <?php __("Add to Wishlist"); ?>
+                                                       <?php __("Add to Wishlist"); ?>
                                                 </a>
                                             </span>
                                             <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;">
                                                 <a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button">
-                <?php __("Please Wait..."); ?>
+                                                        <?php __("Please Wait..."); ?>
                                                     </label>
                                                 </a>
                                             </span>
-                <?php
-            }
-            ?>														
+                                            <?php
+                                        }
+                                        ?>														
                                     </div>
-                                    <?php } ?>
+                                <?php } ?>
 
 
 
                             </div>
-        <?php
-        $title_song_replace = str_replace('"', '', $this->getTextEncode($value['Video']['VideoTitle']));
-        ?>
+                            <?php
+                            $title_song_replace = str_replace('"', '', $this->getTextEncode($value['Video']['VideoTitle']));
+                            ?>
                             <div class="song-title">
                                 <a title="<?php echo $title_song_replace; ?>" href="javascript:void(0);">
-        <?php
-        if (strlen($value['Video']['VideoTitle']) > 25)
-            echo substr($value['Video']['VideoTitle'], 0, 25) . "...";
-        else
-            echo $value['Video']['VideoTitle'];
-        ?>
+                                    <?php
+                                    if (strlen($value['Video']['VideoTitle']) > 25)
+                                        echo substr($value['Video']['VideoTitle'], 0, 25) . "...";
+                                    else
+                                        echo $value['Video']['VideoTitle'];
+                                    ?>
                                 </a><?php
-                                    if ('T' == $value['Video']['Advisory'])
-                                    {
-                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
+                                if ('T' == $value['Video']['Advisory'])
+                                {
+                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
                             </div>
                             <div class="genre">
-        <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
+                                <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
                             </div>
-                                <?php
-                                if (!empty($value['Video']['video_label']))
-                                {
-                                    ?>
+                            <?php
+                            if (!empty($value['Video']['video_label']))
+                            {
+                                ?>
                                 <div class="label">
                                     Label: <?php
-                    if (strlen($value['Video']['video_label']) > 25)
-                        echo substr($value['Video']['video_label'], 0, 25) . "...";
-                    else
-                        echo $value['Video']['video_label'];
+                                    if (strlen($value['Video']['video_label']) > 25)
+                                        echo substr($value['Video']['video_label'], 0, 25) . "...";
+                                    else
+                                        echo $value['Video']['video_label'];
                                     ?>
 
                                 </div>
-        <?php } ?>
+                            <?php } ?>
                         </li>
-                        <?php } ?>      
+                    <?php } ?>      
                 </ul>
             </div>
         </div>
-<?php } ?>
+    <?php } ?>
     <br class="clr">
 </section>
