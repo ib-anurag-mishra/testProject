@@ -212,10 +212,11 @@ $('document').ready(function()
     $('.add-to-playlist').on('mouseenter', function() {
 	//console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
-        $(this).addClass('active');
+        
     });
     
-
+    
+    
     
     
     
@@ -276,10 +277,6 @@ $('document').ready(function()
 
             $('.playlist-options').removeClass('active');
         }
-    });
-    
-    $('.add-to-wishlist').on('mouseleave', function() {
-    	$(this).removeClass('active');
     });
 
     $('.playlist-options').on('mouseleave', function() {
@@ -351,9 +348,8 @@ $('document').ready(function()
     
     $(document).on('mouseleave', '.wishlist-popover', function() {
     	
-    	if(!$(this).find('.add-to-playlist').hasClass('active')) {
-    		$(this).removeClass('active');
-    	}
+    	$(this).removeClass('active');
+    	
         
     });
 
