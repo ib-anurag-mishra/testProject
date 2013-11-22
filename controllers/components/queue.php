@@ -136,13 +136,7 @@ Class QueueComponent extends Object
                                                             ),
                                                           ),
                                                           'recursive' => -1,
-                                                          'conditions' => array('and' =>
-                                                                  array(
-                                                                          array('QueueList.status' => 1),                               
-                                                                          array('QueueList.queue_id' => $queueID)									
-
-                                                                  )                    
-                                                              )                
+                                                          'conditions' => array('QueueList.status' => 1, 'QueueList.queue_id' => $queueID),        
                                                         )
                                                       ); 
                 
