@@ -389,7 +389,7 @@
                                     <div class="wishlist-popover">
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
-
+                                        print_r($value["Video"]["ProdID"]);
                                         if ($wishlistInfo == 'Added to Wishlist')
                                         {
                                             ?> 
@@ -398,13 +398,9 @@
                                         }
                                         else
                                         {
+                                          
                                             ?>
-                                            <pre>
-                                                <?php
-                                                print_r($wishlistInfo);
-                                                ?>
-                                            </pre>
-
+                                            
                                             <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>">
                                                 <a class="add-to-wishlist" href='JavaScript:void(0);' 
 
