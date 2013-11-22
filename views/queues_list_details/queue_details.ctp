@@ -1,9 +1,8 @@
 <section class="queue-detail-page <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
     <?php
-    echo "<pre>"; print_r($queue_list_array);
-    echo "queue_list_array: ".count($queue_list_array);
-    if (!empty($queue_list_array))
-    {
+
+//    if (!empty($queue_list_array))
+//    {
         ?>
         <div class="breadcrumbs">
             <?php
@@ -253,13 +252,13 @@
             </div>
         </div>
         <?php
-    }
+   /* }
     else
     {
         ?>
 
-        <h2> There are no songs associated with this queue </h2>
+       <!--  <h2> There are no songs associated with this queue </h2> -->
 
-    <?php } ?>
+    <?php } */ ?>
 </section>
 
