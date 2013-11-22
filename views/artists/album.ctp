@@ -389,7 +389,13 @@
                                     <div class="wishlist-popover">
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
-                                        print_r($value["Video"]["ProdID"]);
+                                        //test
+                                        $wishlistInstance = ClassRegistry::init('Wishlist');
+                                        $libraryId = $this->Session->read('library');
+                                        $patronId = $this->Session->read('patron');  
+                                        $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id)));
+                                        print_r($wishlistDetails);
+                                        
                                         if ($wishlistInfo == 'Added to Wishlist')
                                         {
                                             ?> 
