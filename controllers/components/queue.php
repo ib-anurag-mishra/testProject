@@ -118,37 +118,7 @@ Class QueueComponent extends Object
                     )
                 )                
           )
-        ); 
-        
-        
-        /*if(count($queueDetail)==0)
-        {
-                $queueDetail = $queueDetailList->find('all',  
-                                                        array(
-                                                          'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description'),                                                          
-                                                          'joins' => array(
-                                                            array(
-                                                              'type' => 'INNER',
-                                                              'table' => 'queue_lists',
-                                                              'alias' => 'QueueList',
-                                                              'foreignKey' => false,
-                                                              'conditions' => array('QueueList.queue_id = QueueDetail.queue_id'),        
-                                                            ),
-                                                          ),
-                                                          'recursive' => -1,
-                                                          'conditions' => array('QueueList.status' => 1, 'QueueList.queue_id' => $queueID),        
-                                                        )
-                                                      ); 
-                
-                echo "queueID: ".$queueID;
-                
-               // echo "Query: ".$this->QueueDetail->lastQuery();
-                
-                echo "<pre>"; print_r($queueDetail);
-                
-        }*/
-        
-        
+        );
         return $queueDetail;
         
         

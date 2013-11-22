@@ -16,7 +16,7 @@
             </div>
             <div class="col-2">
                 <div class="queue-name">
-                    <?php echo $queue_list_array[0]['QueueList']['queue_name']; ?>
+                    <?php echo empty($queue_list_array[0]['QueueList']['queue_name'])?$queue_name:$queue_list_array[0]['QueueList']['queue_name']; ?>
                 </div>
                 <div class="queue-length">
                     <?php echo $queue_songs_count; ?> Songs
