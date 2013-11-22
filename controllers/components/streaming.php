@@ -96,7 +96,7 @@ Class StreamingComponent extends Object
         }
         
          //if $songDuration  not set then
-        if(($userStreamedTime != '' || $userStreamedTime < 0)){
+        if(($userStreamedTime === '' || $userStreamedTime < 0)){
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,stream time is negetive;songDuration :".$songDuration." ;ConsumedTime : ".$userStreamedTime." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;token id : ".$token_id,'streaming');            
              //return the final result array
