@@ -139,12 +139,14 @@ Class QueueComponent extends Object
                                                           'conditions' => array('and' =>
                                                                   array(
                                                                           array('QueueList.status' => 1),                               
-                                                                          array('QueueDetail.queue_id' => $queueID)									
+                                                                          array('QueueList.queue_id' => $queueID)									
 
                                                                   ),                    
                                                               )                
                                                         )
                                                       ); 
+                
+                echo "queueID: ".$queueID;
                 
                // echo "Query: ".$this->QueueDetail->lastQuery();
                 
