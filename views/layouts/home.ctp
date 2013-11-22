@@ -425,7 +425,7 @@
                                 }
 
                                 $(".notificationApproval").colorbox({width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#notificationApproval_div", onOpen: function() {
-                                        $(document).unbind("k e ydown.cbox_close");
+                                        $(document).unbind("keydown.cbox_close");
                                     }});
                                 //close the popup 
                                 $("#colorboxCloseBtn").click(function() {
@@ -473,7 +473,7 @@
                                         async:
                                                 false,
                                         success: function(response) {
-                                            sleep(2000);
+                                            sleep(4000);
                                             $.fn.colorbox.close();
                                             $('#noti_content').hide();
                                             
