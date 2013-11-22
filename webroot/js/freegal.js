@@ -39,14 +39,14 @@ var message = "Function Disabled!";
 
 ///////////////////////////////////
 function clickIE4() {
-    if (event.button ===2) {
+    if (event.button === 2) {
         return false;
     }
 }
 
 function clickNS4(e) {
     if (document.layers || document.getElementById && !document.all) {
-        if (e.which ===2 || e.which ===3) {
+        if (e.which === 2 || e.which === 3) {
             return false;
         }
     }
@@ -77,19 +77,19 @@ function userDownloadIE(prodId)
         data: data, // post data
         success: function(response) {
             var msg = response.substring(0, 5);
-            if (msg ==='error')
+            if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
                 location.reload();
                 return false;
             }
-            else if (msg ==='incld')
+            else if (msg === 'incld')
             {
                 alert("You have already downloaded this song.Get it from your recent downloads");
                 document.getElementById('download_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('song_' + prodId).innerHTML = '';
-                if (languageSet ===  'en') {
+                if (languageSet === 'en') {
                     document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
                 } else {
                     document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
@@ -100,7 +100,7 @@ function userDownloadIE(prodId)
                 $('.beforeClick').show();
                 return false;
             }
-            else if (msg ===  'suces')
+            else if (msg === 'suces')
             {
                 $('.afterClick').hide();
                 $('.beforeClick').show();
@@ -109,7 +109,7 @@ function userDownloadIE(prodId)
                 document.getElementById('download_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('song_' + prodId).innerHTML = '';
-                if (languageSet ===  'en') {
+                if (languageSet === 'en') {
                     document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
                 } else {
                     document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
@@ -138,7 +138,7 @@ function changeLang(type) { //alert("http://jeffersonlibrary.freegaldev.com/"+we
         data: data, // post data
         success: function(response) { //alert("in js"+webroot);
             var msg = response.substring(0, 5);
-            if (msg ===  'error')
+            if (msg === 'error')
             {
                 alert("There was an error while saving your request.");
                 location.reload();
@@ -1122,7 +1122,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistDownload", // URL to request
         data: data, // post data
-        success: function(response) {            
+        success: function(response) {
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
@@ -1176,7 +1176,7 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
         url: webroot + "homes/wishlistVideoDownload", // URL to request
         data: data, // post data
         success: function(response) {
-           //  alert(response);
+            //  alert(response);
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
@@ -1481,15 +1481,15 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
         url: webroot + "queues/addToQueue", // URL to request
         data: data, // post data
         success: function(response) {
-            
-            
+
+
             var playlist_list_popup = $('.playlist-options');
             playlist_list_popup.removeClass('active');
             var wishlist_list_popup = $('.wishlist-popover');
             wishlist_list_popup.removeClass('active');
-            
-            
-            
+
+
+
             if (response.length === 6) {
                 var msg = response.substring(0, 6);
             } else {
@@ -1576,14 +1576,14 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
 
 function addAlbumSongsToQueue(albumSongsToBeAdded)
 {
-    
+
     var playlist_list_popup = $('.playlist-options');
     playlist_list_popup.removeClass('active');
     var wishlist_list_popup = $('.wishlist-popover');
     wishlist_list_popup.removeClass('active');
-    
-    
-    var data = "albumSongs="+albumSongsToBeAdded;
+
+
+    var data = "albumSongs=" + albumSongsToBeAdded;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "queues/addAlbumSongsToQueue", // URL to request
@@ -1673,23 +1673,23 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
 }
 
 
-function removeSong(pdId,divId){
-    
+function removeSong(pdId, divId) {
+
     var data = "songId=" + pdId;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "queuelistdetails/removeSongFromQueue", // URL to request
         data: data, // post data
         success: function(response) {
-            
-            
+
+
             var playlist_list_popup = $('.playlist-options');
             playlist_list_popup.removeClass('active');
             var wishlist_list_popup = $('.wishlist-popover');
             wishlist_list_popup.removeClass('active');
-            
-            
-            
+
+
+
             if (response.length === 6) {
                 var msg = response.substring(0, 6);
             } else {
@@ -1741,7 +1741,7 @@ function removeSong(pdId,divId){
                         document.getElementById("flash-message").setAttribute("class", "");
                     }
                     document.getElementById("ajaxflashMessage44").style.display = "block";
-                    $('.clearfix'+divId).remove();
+                    $('.clearfix' + divId).remove();
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully removed song from Queue';
 
                 }
@@ -1777,9 +1777,9 @@ function removeSong(pdId,divId){
 
 
 
-function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType,playlistId) {
+function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType, playlistId) {
     console.log('load song contains');
-    playlistId = (playlistId ===  undefined) ? 0 : playlistId;
+    playlistId = (playlistId === undefined) ? 0 : playlistId;
     var newSong = [
         {
             playlistId: playlistId,
@@ -1799,67 +1799,67 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 }
 
 function loadAlbumSong(albumSongs) {
-        playlist = base64_decode(albumSongs);
-        playlist = JSON.parse(playlist);
-        if (playlist.length) {
-            pushSongs(playlist);
-        }
+    playlist = base64_decode(albumSongs);
+    playlist = JSON.parse(playlist);
+    if (playlist.length) {
+        pushSongs(playlist);
+    }
 }
 
-function base64_decode (data) {
-  // http://kevin.vanzonneveld.net
-  // +   original by: Tyler Akins (http://rumkin.com)
-  // +   improved by: Thunder.m
-  // +      input by: Aman Gupta
-  // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-  // +   bugfixed by: Onno Marsman
-  // +   bugfixed by: Pellentesque Malesuada
-  // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-  // +      input by: Brett Zamir (http://brett-zamir.me)
-  // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-  // *     example 1: base64_decode('S2V2aW4gdmFuIFpvbm5ldmVsZA==');
-  // *     returns 1: 'Kevin van Zonneveld'
-  // mozilla has this native
-  // - but breaks in 2.0.0.12!
-  //if (typeof this.window['atob'] ===  'function') {
-  //    return atob(data);
-  //}
-  var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-  var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
-    ac = 0,
-    dec = "",
-    tmp_arr = [];
+function base64_decode(data) {
+    // http://kevin.vanzonneveld.net
+    // +   original by: Tyler Akins (http://rumkin.com)
+    // +   improved by: Thunder.m
+    // +      input by: Aman Gupta
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   bugfixed by: Onno Marsman
+    // +   bugfixed by: Pellentesque Malesuada
+    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +      input by: Brett Zamir (http://brett-zamir.me)
+    // +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // *     example 1: base64_decode('S2V2aW4gdmFuIFpvbm5ldmVsZA==');
+    // *     returns 1: 'Kevin van Zonneveld'
+    // mozilla has this native
+    // - but breaks in 2.0.0.12!
+    //if (typeof this.window['atob'] ===  'function') {
+    //    return atob(data);
+    //}
+    var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
+            ac = 0,
+            dec = "",
+            tmp_arr = [];
 
-  if (!data) {
-    return data;
-  }
-
-  data += '';
-
-  do { // unpack four hexets into three octets using index points in b64
-    h1 = b64.indexOf(data.charAt(i++));
-    h2 = b64.indexOf(data.charAt(i++));
-    h3 = b64.indexOf(data.charAt(i++));
-    h4 = b64.indexOf(data.charAt(i++));
-
-    bits = h1 << 18 | h2 << 12 | h3 << 6 | h4;
-
-    o1 = bits >> 16 & 0xff;
-    o2 = bits >> 8 & 0xff;
-    o3 = bits & 0xff;
-
-    if (h3 === 64) {
-      tmp_arr[ac++] = String.fromCharCode(o1);
-    } else if (h4 === 64) {
-      tmp_arr[ac++] = String.fromCharCode(o1, o2);
-    } else {
-      tmp_arr[ac++] = String.fromCharCode(o1, o2, o3);
+    if (!data) {
+        return data;
     }
-  } while (i < data.length);
 
-  dec = tmp_arr.join('');
+    data += '';
 
-  return dec;
+    do { // unpack four hexets into three octets using index points in b64
+        h1 = b64.indexOf(data.charAt(i++));
+        h2 = b64.indexOf(data.charAt(i++));
+        h3 = b64.indexOf(data.charAt(i++));
+        h4 = b64.indexOf(data.charAt(i++));
+
+        bits = h1 << 18 | h2 << 12 | h3 << 6 | h4;
+
+        o1 = bits >> 16 & 0xff;
+        o2 = bits >> 8 & 0xff;
+        o3 = bits & 0xff;
+
+        if (h3 === 64) {
+            tmp_arr[ac++] = String.fromCharCode(o1);
+        } else if (h4 === 64) {
+            tmp_arr[ac++] = String.fromCharCode(o1, o2);
+        } else {
+            tmp_arr[ac++] = String.fromCharCode(o1, o2, o3);
+        }
+    } while (i < data.length);
+
+    dec = tmp_arr.join('');
+
+    return dec;
 }
 
 
@@ -2029,7 +2029,7 @@ function showHideGridCommingSoon(varType) {
 }
 
 $(document).ready(function() {
-    
+
     $(document).on('click', '.play-queue-btn', function() {
         playlist = $('#playlist_data').text();
         playlist = JSON.parse(playlist);
@@ -2038,7 +2038,7 @@ $(document).ready(function() {
         }
 
     });
-	
+
     $(document).on('click', '.play-album-btn', function() {
         playlist = $('#playlist_data').text();
         playlist = JSON.parse(playlist);
@@ -2046,17 +2046,300 @@ $(document).ready(function() {
             pushSongs(playlist);
         }
 
-    });	
+    });
 
+    /************* Wishlist javascripts ***********************/
+
+    $('.songdelete').click(function(e) {
+        e.preventDefault();
+        var parent = $(this).parent();
+        // alert(parent.attr('id'));
+        $.ajax({
+            type: 'post',
+            url: webroot + 'homes/removeWishlistSong/',
+            data: 'ajax=1&delete=' + parent.attr('id').replace('wishlistsong-', ''),
+            beforeSend: function() {
+                parent.animate({'backgroundColor': '#fb6c6c'}, 600);
+            },
+            success: function(data) {
+                // alert(data);
+                parent.slideUp(600, function() {
+                    parent.remove();
+                });
+            }
+        });
+    });
+
+    $('.videodelete').click(function(e) {
+        e.preventDefault();
+        var parent = $(this).parent();
+        //alert(parent.attr('id').replace('wishlistvideo-',''));
+        $.ajax({
+            type: 'post',
+            url: webroot + 'homes/removeWishlistVideo/',
+            data: 'ajax=1&delete=' + parent.attr('id').replace('wishlistvideo-', ''),
+            beforeSend: function() {
+                parent.animate({'backgroundColor': '#fb6c6c'}, 600);
+            },
+            success: function() {
+                //alert(1);
+                parent.slideUp(600, function() {
+                    parent.remove();
+                });
+            }
+        });
+    });
+
+    $('.my-wishlist-page .date-filter-button').addClass('active');
+    
+    $('.my-wishlist-page .music-filter-button').addClass('active');
+
+    $('.my-wishlist-page .my-wishlist-filter-container div.filter').on('click', function(e) {
+
+        if ($(this).hasClass('date-filter-button')) {
+            $('#sortForm #sort').val('date');
+        } else if ($(this).hasClass('song-filter-button')) {
+            $('#sortForm #sort').val('song');
+        } else if ($(this).hasClass('artist-filter-button')) {
+            $('#sortForm #sort').val('artist');
+        } else if ($(this).hasClass('album-filter-button')) {
+            $('#sortForm #sort').val('album');
+        }
+        if ($(this).hasClass('active')) {
+
+            if ($(this).hasClass('toggled')) {
+
+                $(this).removeClass('toggled');
+                $('#sortForm #sortOrder').val('asc');
+
+            } else {
+
+                $(this).addClass('toggled');
+                $('#sortForm #sortOrder').val('desc');
+            }
+
+
+        } else {
+            $('.my-wishlist-page .my-wishlist-filter-container div.filter').removeClass('active');
+            $(this).addClass('active');
+            $('#sortForm #sortOrder').val('asc');
+
+
+        }
+
+        $('#sortForm').submit();
+    });
+
+    $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
+        if ($(this).hasClass('active')) {
+
+            if ($(this).hasClass('toggled')) {
+
+                $(this).removeClass('toggled');
+
+            } else {
+
+                $(this).addClass('toggled');
+            }
+
+
+        } else {
+            $('.my-wishlist-page .my-wishlist-filter-container div.tab').removeClass('active');
+            $(this).addClass('active');
+
+
+        }
+
+
+    });
+
+    $('.my-wishlist-page .my-wishlist-scrollable').bind('mousewheel', function(e) {
+
+
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+
+
+
+
+        //prevent page fom scrolling
+        return false;
+
+
+    });
+
+    $('.my-wishlist-page .my-video-wishlist-scrollable').bind('mousewheel', function(e) {
+
+
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+
+
+
+
+        //prevent page fom scrolling
+        return false;
+
+
+    });
+
+    $('.my-wishlist-page .add-to-wishlist-button').on('click', function(e) {
+        e.preventDefault();
+
+        $(this).siblings('.wishlist-popover').addClass('active');
+    });
+
+    $('.my-wishlist-page .wishlist-popover').on('mouseleave', function(e) {
+
+        $(this).removeClass('active');
+    });
+
+    $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
+
+    $('.my-wishlist-page .my-wishlist-scrollable').on('scroll', function(e) {
+
+        $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').removeClass('top');
+
+
+        $('.my-wishlist-page .my-wishlist-scrollable .row').each(function(e) {
+
+            if ($(this).position().top >= -22 && $(this).position().top <= 110) {
+
+
+
+
+                $(this).find('.wishlist-popover').addClass('top');
+
+
+
+            }
+
+        });
+
+    });
+
+    $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseenter', function() {
+        $(this).find('.date').addClass('hovered');
+        $(this).find('.album-title').addClass('hovered');
+        $(this).find('.artist-name').addClass('hovered');
+        $(this).find('.time').addClass('hovered');
+        $(this).find('.song-title').addClass('hovered');
+        $(this).find('.preview').addClass('hovered');
+        $(this).find('.add-to-wishlist-button').addClass('hovered');
+
+    });
+
+    $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave', function() {
+        $(this).find('.date').removeClass('hovered');
+        $(this).find('.album-title').removeClass('hovered');
+        $(this).find('.artist-name').removeClass('hovered');
+        $(this).find('.time').removeClass('hovered');
+        $(this).find('.song-title').removeClass('hovered');
+        $(this).find('.preview').removeClass('hovered');
+        $(this).find('.add-to-wishlist-button').removeClass('hovered');
+
+    });
+
+    $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseenter', function() {
+        $(this).find('.date').addClass('hovered');
+        $(this).find('.album-title').addClass('hovered');
+        $(this).find('.artist-name').addClass('hovered');
+        $(this).find('.time').addClass('hovered');
+        $(this).find('.song-title').addClass('hovered');
+        $(this).find('.preview').addClass('hovered');
+        $(this).find('.add-to-wishlist-button').addClass('hovered');
+
+    });
+
+    $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave', function() {
+        $(this).find('.date').removeClass('hovered');
+        $(this).find('.album-title').removeClass('hovered');
+        $(this).find('.artist-name').removeClass('hovered');
+        $(this).find('.time').removeClass('hovered');
+        $(this).find('.song-title').removeClass('hovered');
+        $(this).find('.preview').removeClass('hovered');
+        $(this).find('.add-to-wishlist-button').removeClass('hovered');
+
+    });
+
+    $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseenter', function(e) {
+        $(this).removeClass('hovered').addClass('blue-bkg');
+
+    });
+
+    $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseleave', function(e) {
+        $(this).removeClass('blue-bkg').addClass('hovered');
+
+    });
+
+    $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('click', function(e) {
+
+        if ($(this).hasClass('playing')) {
+
+            $(this).removeClass('playing');
+
+            $(this).parents('.row').removeClass('playing');
+            $(this).parent().removeClass('playing');
+            $(this).siblings('.date').removeClass('playing');
+            $(this).siblings('.album-title').removeClass('playing');
+            $(this).siblings('.artist-name').removeClass('playing');
+            $(this).siblings('.time').removeClass('playing');
+            $(this).siblings('.song-title').removeClass('playing');
+            $(this).siblings('.add-to-wishlist-button').removeClass('playing');
+            $(this).siblings('.download').removeClass('playing');
+
+
+        } else {
+
+            $('.my-wishlist-page .my-wishlist-scrollable .row').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .date').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .preview').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .album-title').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .artist-name').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .time').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .song-title').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .add-to-wishlist-button').removeClass('playing');
+            $('.my-wishlist-page .my-wishlist-scrollable .row .download').removeClass('playing');
+
+            $(this).addClass('playing');
+            $(this).parents('.row').addClass('playing');
+            $(this).parent().addClass('playing');
+            $(this).siblings('.date').addClass('playing');
+            $(this).siblings('.album-title').addClass('playing');
+            $(this).siblings('.artist-name').addClass('playing');
+            $(this).siblings('.time').addClass('playing');
+            $(this).siblings('.song-title').addClass('playing');
+            $(this).siblings('.add-to-wishlist-button').addClass('playing');
+            $(this).siblings('.download').addClass('playing');
+
+
+        }
+
+    });
+
+    $('.video-filter-button').click(function() {
+        $(this).addClass('active');
+        $('.music-filter-button').removeClass('active');
+        $('.my-wishlist-shadow-container').hide();
+        $('.my-video-wishlist-shadow-container').show();
+
+    });
+
+    $('.music-filter-button').click(function() {
+        $(this).addClass('active');
+        $('.video-filter-button').removeClass('active');
+        $('.my-video-wishlist-shadow-container').hide();
+        $('.my-wishlist-shadow-container').show();
+    });
 });
 
 
 
 
-                    // Below method for removal of '#' & '#.' in between URL
-                    // this is used in IE8 
+// Below method for removal of '#' & '#.' in between URL
+// this is used in IE8 
 
-                    // checking for #. in url 
+// checking for #. in url 
 //                    var indexOfHash = window.location.href.indexOf('#.');
 //                    if (indexOfHash > 0)
 //                    {
@@ -2175,5 +2458,5 @@ $(document).ready(function() {
 //                        return true;
 //                    }
 
-                    // After removal of '#' & '#.' the below statements are exceuted
+// After removal of '#' & '#.' the below statements are exceuted
 
