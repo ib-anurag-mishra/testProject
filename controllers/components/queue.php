@@ -146,6 +146,8 @@ Class QueueComponent extends Object
                                                         )
                                                       ); 
                 
+                echo "queueID: ".$queueID;
+                
                // echo "Query: ".$this->QueueDetail->lastQuery();
                 
                 echo "<pre>"; print_r($queueDetail);
