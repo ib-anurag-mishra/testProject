@@ -26,13 +26,10 @@ function ieversion()
 $ieVersion =  ieversion();
 
 ?>
-<style type="text/css">
 
-</style>
 <script lenguage="javascript">
-   var languageSet = '<?php echo $setLang; ?>';  
-   
-   
+   var languageSet = "<?= $setLang; ?>";  
+      
    $(document).ready(function() {
 	$('.songdelete').click(function(e) {
 		e.preventDefault();

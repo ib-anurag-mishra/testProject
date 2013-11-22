@@ -13,7 +13,10 @@ class WishlistHelper extends AppHelper {
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');  
-        $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id)));
+        $wishlistDetails = $wishlistInstance->find('all', array(
+            'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id),
+            'fields' => array('ProdID')
+            ));
              
         if(count($wishlistDetails) != 0) {
             return "Added to Wishlist";
