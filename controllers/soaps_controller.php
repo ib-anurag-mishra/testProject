@@ -1721,7 +1721,7 @@ STR;
    * @return StreamingResponseType[]
    */
   
-  function validateStreamRequest($authenticationToken, $ProdID, $agent, $actionID, $consumedTime, $songDuration){
+  function validateStreamRequest($authenticationToken, $ProdID, $agent, $actionID, $consumedTime, $songDuration, $queueID, $instanceToken){
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -1741,7 +1741,7 @@ STR;
     $song_duration = $this->Streaming->getSeconds($songDuration);
     
     // Library ID | Patron Id | ProdID | Provider Type | Streaming time used by user | Action Type | Agent | Song Duration
-    $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, $consumedTime, $actionID, $agent, $song_duration);
+    $response = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider_type, $consumedTime, $actionID, $agent, $song_duration, $queueID, $instanceToken);
     // 0/1 | message | Remaining time | 3 message identification number for mobile | timerCallTime | timerCallDuration
     
     
