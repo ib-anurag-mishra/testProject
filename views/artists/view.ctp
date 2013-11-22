@@ -201,7 +201,7 @@
                             $cs = '';
                             if (($albumSong['Country']['SalesDate'] > date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                             {
-                                $cs = 'cs';
+                                $cs = ' cs';
                             }
                         }
                         ?>

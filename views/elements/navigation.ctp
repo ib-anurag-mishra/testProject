@@ -698,7 +698,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php if($this->Session->read('library_type') == '2') {
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
-                                            <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
+                                            <ul class="streaming sidebar-nav">
+                                                    <h3>Streaming</h3>								
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>

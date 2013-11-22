@@ -268,6 +268,7 @@ class QueueListDetailsController extends AppController
         {
             $this->set('default_queue', $this->params['pass'][1]);
         }
+        $this->set('queue_type', $queue_list_array);
         $this->set('queue_list_array', $queue_list_array);
         $this->set('queue_id', $this->params['pass'][0]);
         $this->set('queue_songs_count', count($queue_list_array));

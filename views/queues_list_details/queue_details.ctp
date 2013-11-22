@@ -1,4 +1,4 @@
-<section class="queue-detail-page">
+<section class="queue-detail-page <?php ($queueType == 'Default') ? 'fq' : ''; ?>">
     <?php
     if (!empty($queue_list_array))
     {
@@ -41,8 +41,8 @@
                 </div>
                 <div class="queue-options">
                     <?php
-                    if (($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Default') || 
-                            ($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Custom') || 
+                    if (($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Default') ||
+                            ($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Custom') ||
                             ($this->Session->read("Auth.User.type_id") != 1 && $queueType == 'Custom'))
                     {
                         ?>
@@ -194,7 +194,7 @@
                                        }
                                        ?>
                                        <?php
-                                       if ($this->Session->read('library_type') == 2 && 
+                                       if ($this->Session->read('library_type') == 2 &&
                                                $value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1)
                                        {
                                            echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Songs"]["ProdID"], $value["Songs"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
