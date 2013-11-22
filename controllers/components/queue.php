@@ -141,7 +141,7 @@ Class QueueComponent extends Object
                                                                           array('QueueList.status' => 1),                               
                                                                           array('QueueList.queue_id' => $queueID)									
 
-                                                                  ),                    
+                                                                  )                    
                                                               )                
                                                         )
                                                       ); 
