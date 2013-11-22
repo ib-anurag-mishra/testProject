@@ -1,5 +1,7 @@
 <section class="queue-detail-page <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
     <?php
+    echo "<pre>"; print_r($queue_list_array);
+    echo "queue_list_array: ".count($queue_list_array);
     if (!empty($queue_list_array))
     {
         ?>
