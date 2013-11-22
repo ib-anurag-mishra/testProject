@@ -390,12 +390,10 @@
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
                                         //test
-                                        $wishlistInstance = ClassRegistry::init('Wishlist');
-                                        $libraryId = $this->Session->read('library');
-                                        $patronId = $this->Session->read('patron');  
-                                        $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $value["Video"]["ProdID"])));
-                                        print_r($wishlistDetails);
-                                        
+                                       
+                                        print_r($this->Session->read('library'));
+                                       print_r($this->Session->read('patron') ) ;
+                                         
                                         if ($wishlistInfo == 'Added to Wishlist')
                                         {
                                             ?> 
