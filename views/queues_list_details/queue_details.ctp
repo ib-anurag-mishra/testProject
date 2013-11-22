@@ -113,7 +113,7 @@
                                     <div id="play_item_<?php echo $i; ?>"style="display:none;"><?php echo $value['Songs']['ProdID'] . ',' . $value['Songs']['provider_type']; ?></div>
                                 <?php } ?>
                                 <div class="song-title"><?php
-                                    echo $value['Songs']['SongTitle'];
+                                    echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle']));
                                     ?>
                                 </div>
                                 <?php
@@ -129,11 +129,11 @@
                                 <a class="add-to-wishlist-button no-ajaxy" href='javascript:void(0);'></a>
                                 <div class="album-title">
                                     <a href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
-                                        <?php echo $value['Albums']['AlbumTitle']; ?>
+                                        <?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>
                                     </a>                                                
                                 </div>
                                 <div class="artist-name">
-                                    <a href="/artists/album/<?= base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>"><?php echo $artistText; ?></a>                                                
+                                    <a href="/artists/album/<?= base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>"><?php echo $this->getValidText($this->getTextEncode($artistText)); ?></a>                                                
                                 </div>
                                 <div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>
                                 <div class="wishlist-popover">
