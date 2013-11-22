@@ -28,7 +28,7 @@ $ieVersion =  ieversion();
 ?>
 
 <script lenguage="javascript">
-   var languageSet = "<?= $setLang; ?>";  
+//   var languageSet = "<?php //echo $setLang; ?>";  
       
    $(document).ready(function() {
 	$('.songdelete').click(function(e) {
