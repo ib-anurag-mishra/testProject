@@ -1162,6 +1162,9 @@ STR;
       if(empty($obj->Label)) { $obj->Label = ' '; }   
       if(empty($obj->Copyright)) { $obj->Copyright = ' '; }
       if(empty($obj->Advisory)) { $obj->Advisory = ' '; } 
+      if(empty($obj->FileURL)) { $obj->FileURL = ' '; } 
+      if(empty($obj->DownloadStatus)) { $obj->DownloadStatus = ' '; } 
+      if(empty($obj->TrackBundleCount)) { $obj->TrackBundleCount = ' '; } 
       
       if('T' == $data['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; } 
       
@@ -1205,6 +1208,28 @@ STR;
             $sobj->UpdateOn              = (string)$val['UpdateOn'];
             
             $sobj->playButtonStatus      = $this->getPlayButtonStatus($val['ProdID'], $library_territory, $val['provider_type']);
+            
+            
+            if(empty($sobj->Title)) { $sobj->Title = ' '; } 
+            if(empty($sobj->SongTitle)) { $sobj->SongTitle = ' '; } 
+            if(empty($sobj->ArtistText)) { $sobj->ArtistText = ' '; } 
+            if(empty($sobj->Artist)) { $sobj->Artist = ' '; } 
+            if(empty($sobj->Advisory)) { $sobj->Advisory = ' '; } 
+            if(empty($sobj->ISRC)) { $sobj->ISRC = ' '; } 
+            if(empty($sobj->Composer)) { $sobj->Composer = ' '; } 
+            if(empty($sobj->Genre)) { $sobj->Genre = ' '; } 
+            if(empty($sobj->Territory)) { $sobj->Territory = ' '; } 
+            if(empty($sobj->DownloadStatus)) { $sobj->DownloadStatus = ' '; } 
+            if(empty($sobj->TrackBundleCount)) { $sobj->TrackBundleCount = ' '; } 
+            if(empty($sobj->Sample_Duration)) { $sobj->Sample_Duration = ' '; } 
+            if(empty($sobj->FullLength_Duration)) { $sobj->FullLength_Duration = ' '; } 
+            if(empty($sobj->Sample_FileID)) { $sobj->Sample_FileID = ' '; } 
+            if(empty($sobj->Sample_FileURL)) { $sobj->Sample_FileURL = ' '; } 
+            if(empty($sobj->FullLength_FIleURL)) { $sobj->FullLength_FIleURL = ' '; } 
+            if(empty($sobj->FullLength_FIleID)) { $sobj->FullLength_FIleID = ' '; } 
+            if(empty($sobj->CreatedOn)) { $sobj->CreatedOn = ' '; } 
+            if(empty($sobj->UpdateOn)) { $sobj->UpdateOn = ' '; } 
+            
             
             if('T' == $val['Advisory']) $sobj->SongTitle = $sobj->SongTitle.' (Explicit)';
             $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
