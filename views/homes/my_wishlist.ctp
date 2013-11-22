@@ -28,10 +28,10 @@ $ieVersion =  ieversion();
 ?>
 
 <script lenguage="javascript">
-//   var languageSet = "<?php //echo $setLang; ?>";  
+ var languageSet = "<?php echo $setLang; ?>";  
       
    $(document).ready(function() {
-	$('.songdelete').click(function(e) {
+	$('.songdelete').on('click' ,function(e) {
 		e.preventDefault();
 		var parent = $(this).parent();		
                // alert(parent.attr('id'));
@@ -51,7 +51,7 @@ $ieVersion =  ieversion();
 		});
 	});
         
-        $('.videodelete').click(function(e) {
+        $('.videodelete').on('click' , function(e) {
 		e.preventDefault();
 		var parent = $(this).parent();		
                 //alert(parent.attr('id').replace('wishlistvideo-',''));
