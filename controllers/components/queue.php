@@ -125,7 +125,7 @@ Class QueueComponent extends Object
         {
                 $queueDetail = $queueDetailList->find('all',  
                                                         array(
-                                                          'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', ),                                                          
+                                                          'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description'),                                                          
                                                           'joins' => array(
                                                             array(
                                                               'type' => 'INNER',
