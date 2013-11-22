@@ -121,7 +121,7 @@ Class QueueComponent extends Object
         ); 
         
         
-        if(count($queueDetail)==0)
+        /*if(count($queueDetail)==0)
         {
                 $queueDetail = $queueDetailList->find('all',  
                                                         array(
@@ -146,7 +146,7 @@ Class QueueComponent extends Object
                 
                 echo "<pre>"; print_r($queueDetail);
                 
-        }
+        }*/
         
         
         return $queueDetail;
