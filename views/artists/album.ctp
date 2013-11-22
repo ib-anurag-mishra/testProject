@@ -389,18 +389,29 @@
                                     <div class="wishlist-popover">
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
-
+                                        
                                         if ($wishlistInfo == 'Added to Wishlist')
                                         {
                                             ?> 
-                                            <a class="add-to-wishlist " data-wishlist ="<?= $wishlistInfo;?>" href="javascript:void(0);"><?php __("Added to Wishlist"); ?></a>
+                                            <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added to Wishlist"); ?></a>
                                             <?php
                                         }
                                         else
                                         {
                                             ?>
-                                            <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="add-to-wishlist " href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>", "<?php echo $value["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist"); ?></a></span>
-                                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button"><?php __("Please Wait..."); ?></label></a></span>
+                                            <span class="beforeClick" data-wishlist='<?= $wishlistInfo; ?>' id="wishlist<?php echo $value["Video"]["ProdID"]; ?>">
+                                                <a class="add-to-wishlist" href='JavaScript:void(0);' 
+                                                   
+                                                   onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>", "<?php echo $value["Video"]["provider_type"]; ?>");'>
+                                                       <?php __("Add to Wishlist"); ?>
+                                                </a>
+                                            </span>
+                                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;">
+                                                <a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button">
+                                                    <?php __("Please Wait..."); ?>
+                                                    </label>
+                                                </a>
+                                            </span>
                                             <?php
                                         }
                                         ?>														
