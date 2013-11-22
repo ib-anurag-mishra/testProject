@@ -15,7 +15,8 @@ class WishlistHelper extends AppHelper {
         $patronId = $this->Session->read('patron');  
         $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id)));
         
-        print_r($wishlistDetails);
+        echo $this->Wishlist->lastQuery();
+        //print_r($wishlistDetails);
         
         if(count($wishlistDetails) != 0) {
             return "Added to Wishlist";
