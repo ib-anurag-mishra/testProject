@@ -690,6 +690,7 @@
                             <style>#cboxClose{display:none !important;}</style>
 
                             <a class='notificationApproval' href="#"></a>
+                             <div style="display:none;">
                             <div id="notificationApproval_div">
                                 <span id="noti_content">
 
@@ -711,7 +712,7 @@
 
                                             </span>
                                             </div>
-                                            <div style="display:none;">
+                                           
 
                                             </div>
                                             <?php
