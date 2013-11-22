@@ -215,7 +215,7 @@ $('document').ready(function()
         $(this).addClass('active');
     });
     
-    
+
     
     
     
@@ -276,6 +276,10 @@ $('document').ready(function()
 
             $('.playlist-options').removeClass('active');
         }
+    });
+    
+    $('.add-to-wishlist').on('mouseleave', function() {
+    	$(this).removeClass('active');
     });
 
     $('.playlist-options').on('mouseleave', function() {
@@ -347,8 +351,9 @@ $('document').ready(function()
     
     $(document).on('mouseleave', '.wishlist-popover', function() {
     	
-    	$(this).removeClass('active');
-    	
+    	if(!$(this).find('.add-to-playlist').hasClass('active')) {
+    		$(this).removeClass('active');
+    	}
         
     });
 
