@@ -130,7 +130,7 @@
 
                 <?php
                 $i = 1;
-                foreach ($albumSongs[$album['Album']['ProdID']] as $key => $albumSong):
+                foreach ($albumSongs[$album['Album']['ProdID']] as $key => $albumSong): echo "<pre>"; print_r($albumSong);
 
                     //hide song if library block the explicit content
                     if (($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] == 'T'))
