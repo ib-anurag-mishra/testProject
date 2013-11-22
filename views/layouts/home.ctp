@@ -430,7 +430,7 @@
                                                 width: "50%", inline: true, open: true, 
                                                 overlayClose: false, opacity: .5, 
                                                 noEscape: true, href: "#notificationApproval_div", 
-                                                onOpen: function() { alert("hi");                                                
+                                                onOpen: function() {                                                 
                                                     $(document).unbind("keydown.cbox_close");
                                     }});
                                 //close the popup 
