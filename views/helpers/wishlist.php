@@ -9,7 +9,7 @@ class WishlistHelper extends AppHelper {
     var $uses = array('Wishlist');
     
     function getWishlistData($id) {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');  
