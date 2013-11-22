@@ -561,11 +561,11 @@ $(document).ready(function(){
 
 $(window).bind('beforeunload', function(){
 	//alert("About to leave tab...");
-	
+	/*
 	var flash =	document.getElementById("fmp_player");
 	
 	flash.streamingValidationAS(windowClosed);	
-		
+	*/	
 });
 
 function reportWindowClosedSongInfo (wcsobj) {
