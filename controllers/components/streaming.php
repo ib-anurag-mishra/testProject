@@ -655,7 +655,7 @@ Class StreamingComponent extends Object
     function checkLibraryUnlimited($libId){
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;        
-        $results = $libraryInstance->find('first',array('conditions' => array('library_unlimited = "1"','id' => $libId,'library_user_download_limit'=>'5'),'fields' => 'id'));
+        $results = $libraryInstance->find('first',array('conditions' => array('library_unlimited = "1"','id' => $libId,'library_user_download_limit > 4'),'fields' => 'id'));
           
         if(count($results) > 0 && isset($results['Library']['id']) && $results['Library']['id']!='') {            
             return true;
