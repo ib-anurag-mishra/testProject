@@ -87,7 +87,7 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){
             $this->Common->getGenres($territory);

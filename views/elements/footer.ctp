@@ -101,6 +101,7 @@
 <?php
 if ($this->Session->read("patron"))
 {
+   /*
     ?>
     <?php
     if ($this->Session->read('library_type') == '2')
@@ -125,17 +126,16 @@ if ($this->Session->read("patron"))
           <!--<input type="button" id="clearQueue" value="Clear Queue" style="display:block" onclick="clearQueue();" />-->
         </div>
     <?php } ?>
-<?php } ?>
+<?php */ 
+    
+} ?>
 
 <script type="text/javascript">
-    
+    /*
         $(document).ready(function (){
            
-            
-           
-           
-           
-           $("#alt").hide();  
+          
+            $("#alt").hide();  
             $("#no_flash").hide();
 
             if(swfobject.hasFlashPlayerVersion("9.0.115"))
@@ -166,10 +166,8 @@ if ($this->Session->read("patron"))
             var pageTracker = _gat._getTracker("UA-16162084-1");
             pageTracker._trackPageview();
         } catch (err) {}
-        
-        
-        
- 
+        */
+      
 </script>
 
 
