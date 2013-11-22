@@ -46,8 +46,8 @@ Class StreamingComponent extends Object
         $log_id = md5(time());
         $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
         
-        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent." ;song duration : ".$songDuration." ;queueID : ".$queue_id." ;tokenID : ".$token_id,'streaming');            
-        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;agent : ".$agent." ;song duration : ".$songDuration." ;queueID : ".$queue_id." ;tokenID : ".$token_id.PHP_EOL; 
+        $this->log("Streaming Request :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;ConsumedTime  : ".$userStreamedTime." ;agent : ".$agent." ;song duration : ".$songDuration." ;queueID : ".$queue_id." ;tokenID : ".$token_id,'streaming');            
+        $log_data .= PHP_EOL."Streaming Request  :-ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;ConsumedTime : ".$userStreamedTime." ;agent : ".$agent." ;song duration : ".$songDuration." ;queueID : ".$queue_id." ;tokenID : ".$token_id.PHP_EOL; 
         
         //if ProdID and Provider type is not set then
         if(($prodId === '' || $prodId === 0) && ($provider === '' || $provider === 0)){
@@ -92,6 +92,15 @@ Class StreamingComponent extends Object
             $this->log("error|Not able to stream this song,token is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;token id : ".$token_id,'streaming');            
              //return the final result array
             return array(0,'Not able to stream this song.Request token is empty.',$currentTimeDuration, 44 ,$timerCallTime,$this->timerCallDuration);  
+            exit;
+        }
+        
+         //if $songDuration  not set then
+        if(($userStreamedTime != '' || $userStreamedTime < 0)){
+             //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            $this->log("error|Not able to stream this song,stream time is negetive;songDuration :".$songDuration." ;ConsumedTime : ".$userStreamedTime." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;token id : ".$token_id,'streaming');            
+             //return the final result array
+            return array(0,'Not able to process.Stream time is negetive.',$currentTimeDuration, 45 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
         
@@ -234,7 +243,7 @@ Class StreamingComponent extends Object
                 //update streaming_record table table
                 $cdate = date('Y:m:d H:i:s');
                 $remainingTimeDuration = $this->getPatronUsedStreamingTime($libId,$patId);
-                if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
+                if( ($userStreamedTime > 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     $streamingRecordsInstance->setDataSource('master');
                     $StreamingRecordsSQL = "UPDATE `streaming_records` SET consumed_time=consumed_time+".$userStreamedTime.",modified_date='".$cdate."' Where patron_id='".$patId."' and library_id='".$libId."'";
                     if($streamingRecordsInstance->query($StreamingRecordsSQL)){
@@ -286,7 +295,7 @@ Class StreamingComponent extends Object
                 }
               
                 //updated record if user Streamed time is not 0 and less then to stream time
-               if( ($userStreamedTime != 0) && ($userStreamedTime <= $remainingTimeDuration) ){
+               if( ($userStreamedTime > 0) && ($userStreamedTime <= $remainingTimeDuration) ){
                     
                     $streamingHistoryInstance->setDataSource('master');                    
                     if($streamingHistoryInstance->save($insertArr)){         
