@@ -391,8 +391,8 @@
                                         $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
                                         //test
                                        
-                                        print_r($this->Session->read('library'));
-                                       print_r($this->Session->read('patron') ) ;
+                                        echo 'library :',print_r($this->Session->read('library'));
+                                       echo 'patron :',print_r($this->Session->read('patron') ) ;
                                          
                                         if ($wishlistInfo == 'Added to Wishlist')
                                         {
