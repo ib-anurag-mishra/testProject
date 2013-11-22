@@ -564,7 +564,7 @@ $(window).bind('beforeunload', function(){
 	
 	var flash =	document.getElementById("fmp_player");
 	
-	flash.streamingValidationAS(windowClosed);	
+	flash.windowClosed();	
 	
 });
 
