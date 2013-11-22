@@ -27,7 +27,7 @@ $ieVersion =  ieversion();
 
 ?>
 
-<script lenguage="javascript">
+<script>
  var languageSet = "<?php echo $setLang; ?>";  
       
    $(document).ready(function() {
