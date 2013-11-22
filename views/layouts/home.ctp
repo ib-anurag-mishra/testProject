@@ -424,8 +424,14 @@
                                     }
                                 }
 
-                                $(".notificationApproval").colorbox({width: "50%", inline: true, open: true, overlayClose: false, opacity: .5, noEscape: true, href: "#notificationApproval_div", onOpen: function() {
-                                        $(document).unbind("keydown.cbox_close");
+                                $(".notificationApproval")
+                                            .colorbox(
+                                            {
+                                                width: "50%", inline: true, open: true, 
+                                                overlayClose: false, opacity: .5, 
+                                                noEscape: true, href: "#notificationApproval_div", 
+                                                onOpen: function() { alert("hi");                                                
+                                                    $(document).unbind("keydown.cbox_close");
                                     }});
                                 //close the popup 
                                 $("#colorboxCloseBtn").click(function() {
@@ -473,7 +479,7 @@
                                         async:
                                                 false,
                                         success: function(response) {
-                                            sleep(4000);
+                                            sleep(2000);
                                             $.fn.colorbox.close();
                                             $('#noti_content').hide();
                                             
