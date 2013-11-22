@@ -7,6 +7,8 @@
 ?>
 <?php
 
+$setLang = 'en';
+
 if ($this->Session->read('Config.language') == 'en') {
     $setLang = 'en';
 } else {

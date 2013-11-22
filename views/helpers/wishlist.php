@@ -9,10 +9,14 @@ class WishlistHelper extends AppHelper {
     var $uses = array('Wishlist');
     
     function getWishlistData($id) {
+        Configure::write('debug', 2);
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');  
         $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id)));
+        
+        print_r($wishlistDetails);
+        
         if(count($wishlistDetails) != 0) {
             return "Added to Wishlist";
         }

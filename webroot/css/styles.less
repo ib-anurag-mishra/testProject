@@ -372,7 +372,7 @@ img {
 		position: absolute;
 		right: 0;
 		top:-40px;
-        width: 236px;
+        width: 240px;
         text-align: right;
 		
 		
@@ -1802,11 +1802,11 @@ img {
 					display: none;
 					position: absolute;
 					bottom: 77px; /* changed 080313 from top */
-					top:100px;
+					
 					font-size: 12px;
 					z-index: 100;
-					width: 120px;
-                                        left:148px;
+					width: auto;
+                    right:8px;
 					
 					&.active {
 						
@@ -1820,7 +1820,7 @@ img {
 						
 						display: block;
 						color: #000;
-						padding: 5px 5px 5px 10px;
+						padding: 5px 10px 5px 10px;
 					
 						line-height: 20px;
 						text-decoration: none;
@@ -2267,7 +2267,7 @@ img {
 					right:8px;
 					font-size: 12px;
 					z-index: 100;
-					width: 120px;
+					width: auto;
 					
 					&.active {
 						
@@ -2281,7 +2281,7 @@ img {
 						
 						display: block;
 						color: #000;
-						padding: 5px 5px 5px 10px;
+						padding: 5px 10px 5px 10px;
 					
 						line-height: 20px;
 						text-decoration: none;
@@ -2708,6 +2708,8 @@ img {
 							font-size: 12px;
 							z-index: 100;
 							width: 120px;
+							margin-right: -5px;
+							border-right:5px solid transparent;
 							
 							
 							
@@ -2738,15 +2740,16 @@ img {
 							
 							.playlist-options {
 								position: absolute;
-								right: -144px;
+								right: -147px;
 								top:0;
 								display: none;
 								background: #fff;
 								width: 145px;
-								height: 186px;
+								height: 110px;
 								.box-shadow(0 0 2px rgba(0,0,0,.5));
 								
 								overflow-x: hidden;
+								overflow-y: auto;
 								
 								&.active {
 									
@@ -2754,11 +2757,15 @@ img {
 								}
 								
 								ul {
+									width: 145px;
+									height: auto;
 									
 									li {
 										
 										float: none;
 										padding: 0;
+										width: 145px;
+										
 										a {
 											
 											padding: 5px 5px 5px 10px;
@@ -2988,7 +2995,8 @@ img {
 							z-index: 100;
 							width: 120px;
 							
-							
+							border-right: 5px solid transparent;
+							margin-right: -5px;
 							
 							.box-shadow(0 0 2px rgba(0,0,0,.5));
 							
@@ -3016,16 +3024,16 @@ img {
 							
 							.playlist-options {
 								position: absolute;
-								right: -144px;
+								right: -147px;
 								top:0;
 								display: none;
 								background: #fff;
 								width: 145px;
-								height: 156px;
+								height: 135px;
 								.box-shadow(0 0 2px rgba(0,0,0,.5));
 								
 								overflow-x: hidden;
-								
+								overflow-y: auto;
 								&.active {
 									
 									display: block;
@@ -3034,11 +3042,13 @@ img {
 								
 								
 								ul {
-									
+									width: 145px;
+									height: auto;
 									li {
 										
 										float: none;
 										padding: 0;
+										margin-right: 0;
 										
 										a {
 											
@@ -3344,7 +3354,7 @@ img {
 							right:10px;
 							font-size: 12px;
 							z-index: 100;
-							width: 120px;
+							width: auto;
 							
 							
 							
@@ -3360,7 +3370,7 @@ img {
 								
 								display: block;
 								color: #000;
-								padding: 5px 5px 5px 10px;
+								padding: 5px 10px 5px 10px;
 							
 								line-height: 20px;
 								text-decoration: none;
@@ -5983,11 +5993,12 @@ img {
 							display: none;
 							position: absolute;
 							bottom: 37px;
-							right:10px;
+							right:8px;
 							font-size: 12px;
 							z-index: 100;
 							width: 120px;
-							
+							margin-right: -5px;
+							border-right: 5px solid transparent;
 							
 							
 							.box-shadow(0 0 2px rgba(0,0,0,.5));
@@ -6016,12 +6027,12 @@ img {
 							
 							.playlist-options {
 								position: absolute;
-								right: -144px;
+								right: -147px;
 								top:0;
 								display: none;
 								background: #fff;
 								width: 145px;
-								height: 156px;
+								height: auto;
 								.box-shadow(0 0 2px rgba(0,0,0,.5));
 								
 								overflow-x: hidden;
@@ -6397,11 +6408,12 @@ img {
 					display: none;
 					position: absolute;
 					left: 201px;
-					top:-57px;
+					top:-85px;
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
-					
+					border-right: 5px solid transparent;
+					margin-right: -5px;
 					
 					
 					.box-shadow(0 0 2px rgba(0,0,0,.5));
@@ -6430,12 +6442,12 @@ img {
 					
 					.playlist-options {
 						position: absolute;
-						right: -144px;
+						right: -147px;
 						top:0;
 						display: none;
 						background: #fff;
 						width: 145px;
-						height: 186px;
+						height: auto;
 						.box-shadow(0 0 2px rgba(0,0,0,.5));
 						
 						overflow-x: hidden;
@@ -6723,7 +6735,8 @@ img {
                                                 font-size: 12px;
                                                 z-index: 100;
                                                 width: 120px;
-
+												margin-right: -5px;
+												border-right: 5px solid transparent;
 
 
                                                 .box-shadow(0 0 2px rgba(0,0,0,.5));
@@ -6770,6 +6783,7 @@ img {
 
 
                                                         ul {
+                                                        
 
                                                                 li {
 
@@ -7136,7 +7150,8 @@ img {
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
-					
+					border-right: 5px solid transparent;
+					margin-right: -5px;
 					
 					
 					.box-shadow(0 0 2px rgba(0,0,0,.5));
@@ -7170,10 +7185,11 @@ img {
 						display: none;
 						background: #fff;
 						width: 145px;
-						height: 186px;
+						height: auto;
 						.box-shadow(0 0 2px rgba(0,0,0,.5));
 						
 						overflow-x: hidden;
+						
 						
 						&.active {
 							
@@ -9745,7 +9761,7 @@ img {
 				bottom:32px; /* changed 080313 */
 				font-size: 12px;
 				z-index: 100;
-				width: 120px;
+				width: auto;
 				.box-shadow(0 0 3px rgba(0,0,0,.5));
 				
 				&.active {
@@ -9760,7 +9776,7 @@ img {
 					
 					display: block;
 					color: #000;
-					padding: 5px 5px 5px 10px;
+					padding: 5px 10px 5px 10px;
 				
 					line-height: 20px;
 					text-decoration: none;
@@ -10117,7 +10133,7 @@ img {
 							bottom:31px; /* changed 080313 */
 							font-size: 12px;
 							z-index: 100;
-							width: 120px;
+							width: auto;
 							
 							&.active {
 								
@@ -10131,7 +10147,7 @@ img {
 								
 								display: block;
 								color: #000;
-								padding: 5px 5px 5px 10px;
+								padding: 5px 10px 5px 10px;
 							
 								line-height: 20px;
 								text-decoration: none;
@@ -10410,7 +10426,7 @@ img {
 							bottom:31px; /* changed 080313 */
 							font-size: 12px;
 							z-index: 100;
-							width: 120px;
+							width: auto;
 							
 							&.active {
 								
@@ -10424,7 +10440,7 @@ img {
 								
 								display: block;
 								color: #000;
-								padding: 5px 5px 5px 10px;
+								padding: 5px 10px 5px 10px;
 							
 								line-height: 20px;
 								text-decoration: none;
@@ -14156,7 +14172,7 @@ img {
 						
 						display: block;
 						color: #000;
-						padding: 5px 5px 5px 10px;
+						padding: 5px 10px 5px 10px;
 						line-height: 20px;
 						text-decoration: none;
 						
@@ -14542,7 +14558,7 @@ img {
 						
 						display: block;
 						color: #000;
-						padding: 5px 5px 5px 10px;
+						padding: 5px 10px 5px 10px;
 						line-height: 20px;
 						text-decoration: none;
 						
@@ -20999,7 +21015,7 @@ img {
 							
 							&.top {
 								
-								bottom:-58px;
+								bottom:-86px;
 								left: 317px;
 								
 							}

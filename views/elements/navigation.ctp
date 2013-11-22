@@ -84,10 +84,10 @@ function renameQueue()
                 $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
                 
+                document.getElementById('ajaxflashMessage44').innerHTML = '' ;
                 document.getElementById('ajaxflashMessage44').innerHTML = response ;
-               $('#ajaxflashMessage44').css('display','block');
-                setTimeout( function() {$('#ajaxflashMessage44').css('display','none');},3000 );
-
+                $('#ajaxflashMessage44').css('display','block');
+                
                 $('.rename-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
                 resetForms();
@@ -148,9 +148,10 @@ function createQueue(){
                     url = window.location.pathname ,
                     title = $this.attr('title') || null;
                 
+                document.getElementById('ajaxflashMessage44').innerHTML = '' ;
                 document.getElementById('ajaxflashMessage44').innerHTML = response ;
                 $('#ajaxflashMessage44').css('display','block');
-                setTimeout( function() {$('#ajaxflashMessage44').css('display','none');},3000 );
+                
                 $('.delete-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
                  resetForms();
@@ -491,7 +492,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             $streamTime = (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
                                                         }
                                                                                                            
-                                                    }
+                                                    } 
 
                                                      $streamTime =   gmdate("H:i:s", $streamTime);
 
@@ -502,7 +503,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                }   
                                         ?>
                                                 <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryInfo['Library']['library_unlimited']; ?></span>
-                                                <div class="stream-time" ><span>Streaming Time Remaining:</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
+                                                <div class="stream-time" ><span>Streaming Time Remaining&nbsp;:&nbsp;</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
                                         <?php
                                                 //  Hidden variable to be used in site.js for alerting user before video download
                                         

@@ -1725,7 +1725,7 @@ STR;
                  $songs_img =  Configure::read('App.Music_Path').$songs_img;
                  $topDownload[$key]['songs_img'] = $songs_img;
                  
-                 if($this->Session->read('library_type')==2)
+                if($this->Session->read('library_type')==2)
                 {
                     $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
 
