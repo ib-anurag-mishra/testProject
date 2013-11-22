@@ -473,7 +473,7 @@
                                         async:
                                                 false,
                                         success: function(response) {
-                                            sleep(2000);
+                                            sleep(4000);
                                             $.fn.colorbox.close();
                                             $('#noti_content').hide();
                                             
