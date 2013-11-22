@@ -212,7 +212,6 @@ class QueueListDetailsController extends AppController
 
         if ($this->params['pass'][1] == '1')   //  Default Queue
         {
-
             if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === false)
             {
                 $queue_list_array = $this->Queue->getQueueDetails($this->params['pass'][0], $territory);
@@ -264,11 +263,12 @@ class QueueListDetailsController extends AppController
         $total_duration     =    $total_seconds/60;
         $total_minutes      =    floor($total_duration);
         $total_seconds      =    $total_seconds%60;
+        
         if($this->params['pass'][1]=='1')   //  Default Queue
         {
             $this->set('default_queue', $this->params['pass'][1]);
         }
-        $this->set('queue_type', $queue_list_array);
+      
         $this->set('queue_list_array', $queue_list_array);
         $this->set('queue_id', $this->params['pass'][0]);
         $this->set('queue_songs_count', count($queue_list_array));

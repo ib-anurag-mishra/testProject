@@ -1,4 +1,4 @@
-<section class="queue-detail-page <?php ($queueType == 'Default') ? 'fq' : ''; ?>">
+<section class="queue-detail-page <?php ($default_queue != 1) ? '' : 'fq'; ?>">
     <?php
     if (!empty($queue_list_array))
     {
