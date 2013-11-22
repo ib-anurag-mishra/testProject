@@ -212,6 +212,7 @@ $('document').ready(function()
     $('.add-to-playlist').on('mouseenter', function() {
 	//console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
+        $(this).addClass('active');
     });
     
     
