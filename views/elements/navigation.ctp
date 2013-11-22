@@ -503,7 +503,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                }   
                                         ?>
                                                 <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryInfo['Library']['library_unlimited']; ?></span>
-                                                <div class="stream-time" ><span>Streaming Time Remaining&nbsp;:&nbsp;</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
+                                                <div class="stream-time" ><span>Streaming Time Remaining:&nbsp;</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
                                         <?php
                                                 //  Hidden variable to be used in site.js for alerting user before video download
                                         

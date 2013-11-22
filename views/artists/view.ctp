@@ -198,11 +198,17 @@
                             }
                             $class = 'logged_in';
                         }
+                        
+                        $cs = '';
+                        if(!($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && !($albumSong['Country']['DownloadStatus'] == 1))
+                        {
+                            $cs = 'cs';
+                        }
                         ?>
 
 
 
-                        <div class="song <?php echo $class; ?>"><?php
+                        <div class="song <?php echo $class; echo $cs; ?>"><?php
                             if (strlen($albumSong['Song']['SongTitle']) >= 30)
                             {
                                 echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
