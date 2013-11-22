@@ -390,8 +390,7 @@
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
                                         //test
-                                        $data = Model::find('all', array('conditions' => array('library_id' => '11', 'patron_id' => '83891', 'ProdID' => $value["Video"]["ProdID"])));
-                                        print_r($data);
+                                       
 
                                         if ($wishlistInfo == 'Added to Wishlist')
                                         {
