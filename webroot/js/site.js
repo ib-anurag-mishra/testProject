@@ -262,7 +262,16 @@ $('document').ready(function()
         $('.album-preview').css({opacity: 0});
     });
     
+    /******* search page ***********/
+    $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-scrollable').on('mouseenter' , '.album-cover-container', function(){
+        $('.album-preview').css({opacity: 0});
+        $(this).find('.album-preview').css({opacity: 1});        
+    });
     
+    $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-scrollable').on('mouseleave', '.album-cover-container' , function(){
+        $(this).find('.album-preview').css({opacity: 0});
+        $('.album-preview').css({opacity: 0});
+    });
 
     $('.add-to-queue').on('mouseenter', function() {
 
