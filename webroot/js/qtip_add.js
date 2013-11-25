@@ -1,113 +1,10 @@
-$(document).ready(function()
-{
-	/*
-   $('a[title]').qtip({
-      position: {
-         corner: {
-            target: 'topLeft',
-            tooltip: 'bottomRight'
-         }
-      },
-      style: {
+$(document).ready(function() {
 
-	 name:'cream',
-         padding: '5px 10px',
-         width: {
-            max: 350,
-            min: 0
-         },
-         border: {
-               width: 1,
-               radius: 8,
-               color: '#FAF7AA'
-         },
-
-
-         tip: true
-      }
-   });
-   */
-
-   
- /*  
-   
-   $('a[title]').each(function(){
-	   
-		$(this).qtip({
-			position: {
-				corner: {
-					target: 'topLeft',
-					tooltip: 'bottomRight'
-				}
-			},
-			style: { 
-					
-					color:'#444',
-					fontSize:12,
-					border: {
-		
-						color: '#444'
-					},
-					
-					width: {
-						max:350,
-						min:0
-					},
-			
-					tip:{
-						corner:'bottomRight',
-						size: {
-							x:5,
-							y:5
-						}
-					}
-					
-			
-			}
-		});	   
-	   
-   });
-  
-*/   
-   
-	/*
-	$('a[title]').qtip({
-		position: {
-			corner: {
-				target: 'topLeft',
-				tooltip: 'bottomRight'
-			}
-		},
-		style: { 
-				
-				color:'#444',
-				fontSize:12,
-				border: {
-
-					color: '#444'
-				},
-				
-				width: {
-					max:350,
-					min:0
-				},
-		
-				tip:{
-					corner:'bottomRight',
-					size: {
-						x:5,
-						y:5
-					}
-				}
-				
-		
-		}
-	});
-	*/
 	
 	$(document).on('mouseover','a[title]',function(event){
 	
 		$(this).qtip({
+/*
 			position: {
 				corner: {
 					target: 'topLeft',
@@ -138,6 +35,9 @@ $(document).ready(function()
 					
 			
 			},
+*/
+
+			
 			overwrite: false,
 			
 			show: {
@@ -150,39 +50,7 @@ $(document).ready(function()
 		});
 	
 	});
-	
 
-
-
-/*	
-   $('span[title]').each(function(){
-	   $(this).qtip({
-	      position: {
-	         corner: {
-	            target: 'topRight',
-	            tooltip: 'bottomRight'
-	         }
-	      },
-	      style: {
-	         name:'cream',
-	         padding: '10px 0px',
-	         margin: 0,
-	         width: {
-	            max: 210,
-	            min: 0
-	         },
-	         border: {
-	               width: 7,
-	               radius: 5,
-	               color: '#FAF7AA'
-	         },
-	         tip: true
-	      }
-	   });	   
-	   
-	   
-   });
- */
    
 
    $('span[title]').qtip({
