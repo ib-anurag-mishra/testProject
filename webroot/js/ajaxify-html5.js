@@ -248,6 +248,10 @@
 
                     $('.loader').fadeOut(500);
                     $('.content').remove('.loader');
+                    $('#top-100-albums-grid .lazy').lazyload({
+					    effect: 'fadeIn',
+					    container: $('#top-100-albums-grid')
+					});
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
