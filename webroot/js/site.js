@@ -67,15 +67,7 @@ $('.featured-grid .lazy').lazyload({
 })
 
 
-$('#coming-soon-singles-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#coming-soon-singles-grid')
-});
 
-$('#coming-soon-videos-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#coming-soon-videos-grid')
-});
 
 $('#whats-happening-grid .lazy').lazyload({
     effect: 'fadeIn',
@@ -161,7 +153,15 @@ $('document').ready(function()
 	    container: $('#top-100-videos-grid')
 	});  
     
-
+	$('#coming-soon-singles-grid .lazy').lazyload({
+	    effect: 'fadeIn',
+	    container: $('#coming-soon-singles-grid')
+	});
+	
+	$('#coming-soon-videos-grid .lazy').lazyload({
+	    effect: 'fadeIn',
+	    container: $('#coming-soon-videos-grid')
+	});
 
 
 /*
