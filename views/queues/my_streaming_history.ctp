@@ -151,7 +151,7 @@ $ieVersion =  ieversion();
                                         </div>
                                         
                                         <div style="width: 128px; position: absolute; left: 292px; top: 25px; font-size: 12px;  color: rgba(0, 0, 0, 0.7); text-decoration: none;">
-                                            <a href="/queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>">
+                                            <a href="/queuelistdetails/queue_details/<?php echo $streamingArr['QueueList']['queue_id']; ?>/<?php echo $streamingArr['QueueList']['queue_type']; ?>/<?php echo base64_encode($streamingArr['QueueList']['queue_name']); ?>">
                                      <?php 
                                                
                                                 
