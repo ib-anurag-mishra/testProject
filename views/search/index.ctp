@@ -778,9 +778,9 @@ function Get_Sales_date($sales_date_array, $country)
                                             <?php
                                             if ($this->Session->read("patron"))
                                             {
-                                                if ($this->Session->read('library_type') == 2 && !empty($palbum))
+                                                if ($this->Session->read('library_type') == 2 )
                                                 {
-                                                    echo $this->Queue->getAlbumStreamNowLabel($palbum);
+                                                    echo $this->Queue->getAlbumStreamNowLabel($palbum->ProdID);
                                                 }
                                             }
                                             ?> 
