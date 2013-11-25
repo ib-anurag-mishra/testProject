@@ -27,7 +27,90 @@ $(document).ready(function() {
 		});
 	
 	});
+	
+	
+	
+	$(document).on('mouseover','span[title]',function(event){
+	
+		$(this).qtip({
 
+
+			position:{
+				
+				my:'top right', //target
+				at:'bottom right' //tooltip
+			},
+				
+
+
+			
+			overwrite: false,
+			
+			show: {
+				
+				event: event.type,
+				ready:true
+			}			
+			
+			
+		});
+	
+	});
+	
+	
+	$(document).on('mouseover','#qtip[title]',function(event){
+	
+		$(this).qtip({
+
+
+			position:{
+				
+				my:'left bottom', //target
+				at:'right top' //tooltip
+			},
+				
+
+
+			
+			overwrite: false,
+			
+			show: {
+				
+				event: event.type,
+				ready:true
+			}			
+			
+			
+		});
+	
+	});
+	
+	$(document).on('mouseover','span .dload',function(event){
+	
+		$(this).qtip({
+
+
+			position:{
+				
+				my:'top right', //target
+				at:'bottom left' //tooltip
+			},
+				
+
+
+			
+			overwrite: false,
+			
+			show: {
+				
+				event: event.type,
+				ready:true
+			}			
+			
+			
+		});
+	
+	});
    
 /*
    $('span[title]').qtip({
