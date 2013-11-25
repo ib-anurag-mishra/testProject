@@ -1,5 +1,16 @@
+$(document).ajaxStop(function(){
+	
+	$('#top-100-albums-grid .lazy').lazyload({
+	    effect: 'fadeIn',
+	    container: $('#top-100-albums-grid')
+	});
+	
+});
 
-
+$('#top-100-albums-grid .lazy').lazyload({
+    effect: 'fadeIn',
+    container: $('#top-100-albums-grid')
+});
 
 
 $('#top-100-songs-grid .lazy').lazyload({
@@ -138,10 +149,7 @@ $('document').ready(function()
     
     
     
-    $('#top-100-albums-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#top-100-albums-grid')
-	});
+    
 
 
 
