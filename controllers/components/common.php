@@ -2676,9 +2676,9 @@ STR;
 STR;
         $data = $albumInstance->query($album_songs);
         
-        echo '<pre>';
-        print_r($data) ;
-        die;
+//        echo '<pre>';
+//        print_r($data) ;
+//        die;
 //        $data[$key]['albumSongs'] = $this->requestAction(
 //                array('controller' => 'artists',
 //            'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']),

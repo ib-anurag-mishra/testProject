@@ -407,9 +407,9 @@ function Get_Sales_date($sales_date_array, $country)
                                                         if ($this->Session->read('library_type') == 2)
                                                         {
                                                            
-                                                            echo $this->Common->getSearchAlbumSongs($palbum->ProdID);
+                                                            //echo $this->Common->getSearchAlbumSongs($palbum->ProdID);
                                                            
-                                                            //echo $this->Queue->getAlbumStreamNowLabel($palbum->ProdID);
+                                                            echo $this->Queue->getAlbumStreamNowLabel($palbum->ProdID);
                                                         }
                                                     }
                                                     ?> 
