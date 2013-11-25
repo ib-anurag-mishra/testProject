@@ -292,7 +292,7 @@ class QueueListDetailsController extends AppController
         $eventArray = array(5, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
 
         $validationResponse = $this->Streaming->validateSongStreaming($libId, $patId, $prodId, $provider, $userStreamedTime, $eventType, '', $songDuration, $_POST['queueId'], $_POST['songToken']);
-        if (!empty($validationResponse))
+        if (!empty($validationResponse) && is_array($validationResponse))
         {
             if ($validationResponse[0] == 0)
             {
