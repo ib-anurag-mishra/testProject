@@ -137,7 +137,8 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                     $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                                     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                                     $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
-                                                    $downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                    //$downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                    $downloadsUsed=0;
                                                     if ($downloadsUsed > 0)
                                                     {
                                                         $nationalTopDownload[$i]['Song']['status'] = 'avail';
