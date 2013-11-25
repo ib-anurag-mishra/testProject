@@ -396,10 +396,21 @@ function Get_Sales_date($sales_date_array, $country)
                                                     $explicit = '';
                                                 }
                                                 ?>
-                                                <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
-                                                   title="<?php echo $this->getTextEncode($palbum->Title); ?>">
-                                                    <img src="<?php echo $image; ?>" alt="<?php echo $this->getTextEncode($palbum->Title); ?>" width="162" height="162" />
-                                                </a>
+                                                <div class="album-cover-container">	
+                                                    <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
+                                                       title="<?php echo $this->getTextEncode($palbum->Title); ?>">
+                                                        <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
+                                                    </a>
+                                                    <?php
+                                                    if ($this->Session->read("patron"))
+                                                    {
+                                                        if ($this->Session->read('library_type') == 2)
+                                                        {
+                                                            echo $this->Queue->getAlbumStreamNowLabel($palbum->ProdID);
+                                                        }
+                                                    }
+                                                    ?> 
+                                                </div>
                                                 <div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>" ><?php echo $album_title; ?> <?php echo $explicit; ?></a></div>
                                                 <div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
                                                 <div class="album-label">Label: <span><a href="#"><?php echo $album_label; ?></a></span></div>
@@ -778,7 +789,7 @@ function Get_Sales_date($sales_date_array, $country)
                                             <?php
                                             if ($this->Session->read("patron"))
                                             {
-                                                if ($this->Session->read('library_type') == 2 )
+                                                if ($this->Session->read('library_type') == 2)
                                                 {
                                                     echo $this->Queue->getAlbumStreamNowLabel($palbum->ProdID);
                                                 }
@@ -788,7 +799,7 @@ function Get_Sales_date($sales_date_array, $country)
                                         <div class="album-title">
                                             <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
                                                title="<?php echo $this->getTextEncode($palbum->Title); ?>">
-                                                   <?php echo $album_title; ?></a></div>
+                                                <?php echo $album_title; ?></a></div>
                                         <div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
                                         <div class="album-label"><?php echo $album_label_str; ?></span></div>
                                     </li>
@@ -945,13 +956,13 @@ function Get_Sales_date($sales_date_array, $country)
             <?php /*             * *******************Genre Block End****************************** */ ?>
 
             <?php /*             * *******************Label Block Started****************************** */ ?>            
-                                        <!--            <section class="advanced-labels">
-                                                        <header class="clearfix">
-                                                            <h5><?php __("Labels"); ?></h5>
-                                                            <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
-                                                        </header>
-                                                        <div class="advanced-labels-shadow-container">
-                                                            <div class="advanced-labels-scrollable">
+                                            <!--            <section class="advanced-labels">
+                                                            <header class="clearfix">
+                                                                <h5><?php __("Labels"); ?></h5>
+                                                                <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
+                                                            </header>
+                                                            <div class="advanced-labels-shadow-container">
+                                                                <div class="advanced-labels-scrollable">
             <?php
             if (!empty($labels))
             {
@@ -962,28 +973,28 @@ function Get_Sales_date($sales_date_array, $country)
                     $name = $label->Label;
                     $count = $label->numFound;
                     ?>
-                                                                                                                                                <div><a href="/search/index?q=<?php echo $tilte; ?>&type=label" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $label_name_text : ""); ?> <span>(<?php echo $count; ?>)</span></a></div>
+                                                                                                                                                            <div><a href="/search/index?q=<?php echo $tilte; ?>&type=label" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $label_name_text : ""); ?> <span>(<?php echo $count; ?>)</span></a></div>
                     <?php
                 }
             }
             else
             {
                 ?>
-                                                                                                             <div style='color:red'><?php __("No Labels Found"); ?></div>     
+                                                                                                                     <div style='color:red'><?php __("No Labels Found"); ?></div>     
             <?php } ?>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </section> -->
+                                                        </section> -->
             <?php /*             * *******************Label Block End****************************** */ ?>
 
             <?php /*             * *******************Video Block Started****************************** */ ?>            
-                                    <!--            <section class="advanced-labels">
-                                                        <header class="clearfix">
-                                                            <h5><?php __("Videos"); ?></h5>
-                                                            <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=video">See more videos</a></h6>
-                                                        </header>
-                                                        <div class="advanced-labels-shadow-container">
-                                                            <div class="advanced-labels-scrollable">
+                                        <!--            <section class="advanced-labels">
+                                                            <header class="clearfix">
+                                                                <h5><?php __("Videos"); ?></h5>
+                                                                <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=video">See more videos</a></h6>
+                                                            </header>
+                                                            <div class="advanced-labels-shadow-container">
+                                                                <div class="advanced-labels-scrollable">
             <?php
             if (!empty($videos))
             {
@@ -996,7 +1007,7 @@ function Get_Sales_date($sales_date_array, $country)
                     if (!empty($video_name_text))
                     {
                         ?>
-                                                                                                                                                                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
+                                                                                                                                                                                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
                         <?php
                     }
                 }
@@ -1004,11 +1015,11 @@ function Get_Sales_date($sales_date_array, $country)
             else
             {
                 ?>
-                                                                                                             <div style='color:red'><?php __("No Videos Found"); ?></div>     
+                                                                                                                     <div style='color:red'><?php __("No Videos Found"); ?></div>     
             <?php } ?>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </section> 
+                                                        </section> 
             <?php /*             * *******************Video Block End****************************** */ ?>
 
             -->
@@ -1149,7 +1160,7 @@ function Get_Sales_date($sales_date_array, $country)
                                 //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
                                 //$image = Configure::read('App.Music_Path') . $imageUrl;
                                 ?>
-                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));          ?>/<?php //echo $psong->ReferenceID;          ?>/<?php //echo base64_encode($psong->provider_type);          ?>"><img src="<?php //echo $image;          ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
+                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));           ?>/<?php //echo $psong->ReferenceID;           ?>/<?php //echo base64_encode($psong->provider_type);           ?>"><img src="<?php //echo $image;           ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
                                 </div-->
                                 <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
                                 <div class="song" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
@@ -1325,7 +1336,7 @@ else
                             $styleSong = "style='left:440px'";
                         }
                         ?>
-                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText);        ?> -->
+                        <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></a></div><!-- <?php //echo $this->getTextEncode($psong->ArtistText);         ?> -->
                         <?php
                         if ($this->Session->read("patron"))
                         {
@@ -1362,7 +1373,7 @@ else
                         //$image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
                         <div class="song" <?php echo $styleSong; ?>>
-                            <!--<img src="<?php //echo $image;         ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle);         ?>" width="34" height="27" />-->
+                            <!--<img src="<?php //echo $image;          ?>" alt="<?php //echo $this->getTextEncode($psong->SongTitle);          ?>" width="34" height="27" />-->
                             <a href="/videos/details/<?php echo $psong->ProdID; ?>" title="<?php echo $this->getTextEncode($psong->Title); ?>"><?php echo $this->getTextEncode($psong->VideoTitle); ?></a>
                         </div>
                         <div class="download"><?php
