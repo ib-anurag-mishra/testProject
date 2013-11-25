@@ -9,7 +9,7 @@ $(document).ready(function() {
 			position:{
 				
 				my:'bottom right', //target
-				at:'top left' //tooltipo
+				at:'top left' //tooltip
 			},
 				
 
@@ -57,34 +57,7 @@ $(document).ready(function() {
 */   
 
 
-/*
-$("#qtip[title]").each(function(){
-	
-   $(this).qtip({
-      position: {
-         corner: {
-	    target: 'leftBottom',
-            tooltip: 'rightTop'
-         }
-      },
-      style: {
-	 name:'cream',
-         padding: '2px 5px',
-         width: {
-            max: 500,
-            min: 0
-         },
-         border: {
-               width: 8,
-               radius: 1,
-               color: '#FAF7AA'
-         },
-         tip: true
-      }
-   });	
-	
-});
-*/
+
 
 
 /*     
