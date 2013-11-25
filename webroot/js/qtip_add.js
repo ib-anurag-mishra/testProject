@@ -37,11 +37,10 @@ $(document).ready(function() {
 			},
 */
 
-			position: {
+			position.my:'bottom right',
+			position.at:'top left',
 				
-				my: 'bottom right',
-				at: 'top left'
-			},
+
 
 			
 			overwrite: false,
