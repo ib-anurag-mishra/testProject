@@ -6,7 +6,8 @@
         ?>
         <div class="breadcrumbs">
             <?php
-            $html->addCrumb(__($queue_list_array[0]['QueueList']['queue_name'], true), '/queuelistdetails/queue_details/' . $queue_id);
+            $queue_type  =   ($queueType=='Default')?'1':'0';
+            $html->addCrumb(__(empty($queue_list_array[0]['QueueList']['queue_name'])?$queue_name:$queue_list_array[0]['QueueList']['queue_name'], true), '/queuelistdetails/queue_details/'. $queue_id.'/'.$queue_type.'/'.$queue_name);
             echo $html->getCrumbs(' > ', __('Home', true), '/homes');
             ?>
         </div>

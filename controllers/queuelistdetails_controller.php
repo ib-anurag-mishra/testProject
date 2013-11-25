@@ -222,7 +222,8 @@ class QueueListDetailsController extends AppController
             }
 
             $queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]);
-            // print_r($queue_list_array );die;
+            $queue_name = base64_decode($this->params['pass'][2]);
+            $this->set('queue_name', $queue_name);
             $this->set('queueType', 'Default');
         }
         else        // Custom Queue
