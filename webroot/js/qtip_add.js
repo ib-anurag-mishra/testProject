@@ -4,44 +4,12 @@ $(document).ready(function() {
 	$(document).on('mouseover','a[title]',function(event){
 	
 		$(this).qtip({
-/*
-			position: {
-				corner: {
-					target: 'topLeft',
-					tooltip: 'bottomRight'
-				}
-			},
-			style: { 
-					
-					color:'#444',
-					fontSize:12,
-					border: {
-	
-						color: '#444'
-					},
-					
-					width: {
-						max:350,
-						min:0
-					},
-			
-					tip:{
-						corner:'bottomRight',
-						size: {
-							x:5,
-							y:5
-						}
-					}
-					
-			
-			},
-*/
 
 
 			position:{
 				
-				my:'bottom right',
-				at:'top left'
+				my:'bottom right', //target
+				at:'top left' //tooltipo
 			},
 				
 
@@ -61,7 +29,7 @@ $(document).ready(function() {
 	});
 
    
-
+/*
    $('span[title]').qtip({
       position: {
          corner: {
@@ -86,7 +54,7 @@ $(document).ready(function() {
       }
    });
    
-   
+*/   
 
 
 /*
@@ -119,7 +87,7 @@ $("#qtip[title]").each(function(){
 */
 
 
-      
+/*     
    $("#qtip[title]").qtip({
       position: {
          corner: {
@@ -142,35 +110,9 @@ $("#qtip[title]").each(function(){
          tip: true
       }
    });
-
+*/
 
 /*
-$('span .dload').each(function(){
-   $(this).qtip({
-      position: {
-         corner: {
-            target: 'topRight',
-            tooltip: 'bottomLeft'
-         }
-      },
-      style: {
-	 name:'cream',
-         padding: '5px 10px',
-         width: {
-            max: 350,
-            min: 0
-         },
-         border: {
-               width: 1,
-               radius: 8,
-               color: '#FAF7AA'
-         },
-         tip: true
-      }
-   }); 	
-	
-});
-*/
 
  
    
@@ -196,7 +138,7 @@ $('span .dload').each(function(){
          tip: true
       }
    }); 
-   
+*/   
 
  
 });
