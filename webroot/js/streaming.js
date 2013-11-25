@@ -569,6 +569,14 @@ $(window).bind('beforeunload', function(){
 });
 
 function reportWindowClosedSongInfo (wcsobj) {
-	
+
+	plaulistId = wcsobj.playlistId 
+	songId = wcsobj.songId
+	songLength = wcsobj.songLength
+	songProviderType = wcsobj.providerType
+	songDuration = wcsobj.tbpp
+        songToken = wcsobj.token
+        
+        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
 	
 }
