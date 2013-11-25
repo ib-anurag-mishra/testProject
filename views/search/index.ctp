@@ -778,14 +778,17 @@ function Get_Sales_date($sales_date_array, $country)
                                             <?php
                                             if ($this->Session->read("patron"))
                                             {
-                                                if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
+                                                if ($this->Session->read('library_type') == 2 && !empty($palbum))
                                                 {
-                                                    echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']]);
+                                                    echo $this->Queue->getAlbumStreamNowLabel($palbum);
                                                 }
                                             }
                                             ?> 
                                         </div>
-                                        <div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>"><?php echo $album_title; ?></a></div>
+                                        <div class="album-title">
+                                            <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
+                                               title="<?php echo $this->getTextEncode($palbum->Title); ?>">
+                                                   <?php echo $album_title; ?></a></div>
                                         <div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
                                         <div class="album-label"><?php echo $album_label_str; ?></span></div>
                                     </li>
