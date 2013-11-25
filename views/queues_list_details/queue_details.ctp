@@ -39,7 +39,14 @@
                         ?>
                         <div class="gear-icon no-ajaxy"></div>
                     <?php } ?>
+                        <?php
+                                if($queue_songs_count>0)
+                                {
+                        ?>
                     <div class="play-queue-btn" ></div>
+                         <?php
+                                }
+                           ?>
                 </div>
                 <div class="queue-options">
                     <?php
