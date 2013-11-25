@@ -7,7 +7,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/'); //108.166.39.24//192.168.100.24//192.168.100.24
+    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicstage/'); //108.166.39.24//192.168.100.24//192.168.100.24
 
     /**
      * Used for runtime configuration of model
