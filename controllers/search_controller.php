@@ -5,10 +5,11 @@
   Author: Maycreate
  */
 
-class SearchController extends AppController {
+class SearchController extends AppController
+{
 
     var $name = 'Search';
-    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Song', 'Language', 'Album', 'Session','WishlistVideo','Mvideo','Search','Queue');
+    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Song', 'Language', 'Album', 'Session', 'WishlistVideo', 'Mvideo', 'Search', 'Queue');
     var $components = array('Auth', 'Acl', 'RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Solr', 'Session');
     var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'Album', 'Song', 'Language', 'Searchrecord');
 
@@ -17,7 +18,8 @@ class SearchController extends AppController {
       Desc : actions that needed before other functions are getting called
      */
 
-    function beforeFilter() {
+    function beforeFilter()
+    {
         parent::beforeFilter();
         $this->Auth->allow('index', 'autocomplete');
         /* if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
@@ -36,17 +38,21 @@ class SearchController extends AppController {
           $this->Cookie->domain = 'freegalmusic.com'; */
     }
 
-    function index($page = 1, $facetPage = 1) {
+    function index($page = 1, $facetPage = 1)
+    {
         //echo "<br>Started at ".date("Y-m-d H:i:s");
         // reset page parameters when serach keyword changes
-        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type']))) {
+        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
+        {
             unset($_SESSION['SearchReq']);
         }// unset session when no params
-        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type']))) {
+        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])))
+        {
             unset($_SESSION['SearchReq']);
             $this->redirect(array('controller' => 'search', 'action' => 'index?q=' . $_GET['q'] . '&type=' . $_GET['type']));
         }//reset session & redirect to 1st page
-        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type']))) {
+        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type'])))
+        {
             $_SESSION['SearchReq']['word'] = $_GET['q'];
             $_SESSION['SearchReq']['type'] = $_GET['type'];
         }//sets values in session
@@ -58,21 +64,27 @@ class SearchController extends AppController {
         $sortVar = 'ArtistText';
         $sortOrder = 'asc';
 
-        if (isset($_GET['q'])) {
-            $queryVar = $_GET['q'];// html_entity_decode();
+        if (isset($_GET['q']))
+        {
+            $queryVar = $_GET['q']; // html_entity_decode();
         }
-        if (isset($_GET['type'])) {
+        if (isset($_GET['type']))
+        {
             $type = $_GET['type'];
             $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer' || $_GET['type'] == 'video') ? $_GET['type'] : 'all');
-        } else {
+        }
+        else
+        {
             $typeVar = 'all';
         }
         $this->set('type', $typeVar);
 
-        if (isset($_GET['sort'])) {
+        if (isset($_GET['sort']))
+        {
             $sort = $_GET['sort'];
             $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer') ? $sort : 'artist');
-            switch ($sort) {
+            switch ($sort)
+            {
                 case 'song':
                     $sortVar = 'SongTitle';
                     break;
@@ -98,23 +110,29 @@ class SearchController extends AppController {
                     $sortVar = 'ArtistText';
                     break;
             }
-        } else {
+        }
+        else
+        {
             $sort = 'artist';
         }
 
         $this->set('sort', $sort);
 
-        if (isset($_GET['sortOrder'])) {
+        if (isset($_GET['sortOrder']))
+        {
             $sortOrder = $_GET['sortOrder'];
             $sortOrder = (($sortOrder == 'asc' || $sortOrder == 'desc') ? $sortOrder : 'asc');
-        } else {
+        }
+        else
+        {
             $sortOrder = 'asc';
         }
 
         $this->set('sortOrder', $sortOrder);
 
 
-        if (!empty($queryVar)) {
+        if (!empty($queryVar))
+        {
             //Added code for log search data
             $insertArr[] = $this->searchrecords($typeVar, $queryVar);
             $this->Searchrecord->saveAll($insertArr);
@@ -133,15 +151,21 @@ class SearchController extends AppController {
             $total = 0;
             $limit = 10;
 
-            if (!isset($page) || $page < 1) {
+            if (!isset($page) || $page < 1)
+            {
                 $page = 1;
-            } else {
+            }
+            else
+            {
                 $page = $page;
             }
 
-            if (!isset($facetPage) || $facetPage < 1) {
+            if (!isset($facetPage) || $facetPage < 1)
+            {
                 $facetPage = 1;
-            } else {
+            }
+            else
+            {
                 $facetPage = $facetPage;
             }
 
@@ -153,18 +177,23 @@ class SearchController extends AppController {
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
-            if ($total != 0) {
+            if ($total != 0)
+            {
                 /* if($page > $totalPages){
                   $page = $totalPages;
                   $this->redirect();
                   } */
             }
 
-            foreach ($songs as $key => $song) {
+            foreach ($songs as $key => $song)
+            {
                 $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                if (count($downloadsUsed) > 0) {
+                if (count($downloadsUsed) > 0)
+                {
                     $songs[$key]->status = 'avail';
-                } else {
+                }
+                else
+                {
                     $songs[$key]->status = 'not';
                 }
             }
@@ -172,22 +201,23 @@ class SearchController extends AppController {
             $this->set('songs', $songs);
             //print_r($songs);
             // Added code for all functionality
+            // print_r($songs);
 
-           // print_r($songs);
-            
-            if (!empty($type) && !($type == 'all')) {
+            if (!empty($type) && !($type == 'all'))
+            {
 
-                switch ($typeVar) {
+                switch ($typeVar)
+                {
                     case 'album':
                         $limit = 24;
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
-                        
+
                         echo '<pre>';
                         print_r($albums);
                         die;
-                        
+
                         // echo "Group Search for Albums Ended at ".time();
                         /* $queryArr = null;
                           $albumData = array();
@@ -234,13 +264,18 @@ class SearchController extends AppController {
                 }
 
                 $this->set('totalFacetFound', $totalFacetCount);
-                if (!empty($totalFacetCount)) {
+                if (!empty($totalFacetCount))
+                {
                     $this->set('totalFacetPages', ceil($totalFacetCount / $limit));
-                } else {
+                }
+                else
+                {
                     $this->set('totalFacetPages', 0);
                 }
-            } else {
-                
+            }
+            else
+            {
+
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
@@ -249,11 +284,12 @@ class SearchController extends AppController {
                 $queryArr = null;
                 $albumData = array();
                 $albumsCheck = array_keys($albums);
-                for ($i = 0; $i <= count($albumsCheck) - 1; $i++) {
+                for ($i = 0; $i <= count($albumsCheck) - 1; $i++)
+                {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
-                
+
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
                 //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
@@ -277,7 +313,6 @@ class SearchController extends AppController {
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
                 $this->set('videos', $videos);
-            
             }
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
@@ -290,17 +325,21 @@ class SearchController extends AppController {
         //echo "<br>search end- ".date("Y-m-d H:i:s");
     }
 
-    function advanced_search($page = 1, $facetPage = 1) {
+    function advanced_search($page = 1, $facetPage = 1)
+    {
 
         // reset page parameters when serach keyword changes
-        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type']))) {
+        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
+        {
             unset($_SESSION['SearchReq']);
         }// unset session when no params
-        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type']))) {
+        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])))
+        {
             unset($_SESSION['SearchReq']);
             $this->redirect(array('controller' => 'search', 'action' => 'advanced_search?q=' . $_GET['q'] . '&type=' . $_GET['type']));
         }//reset session & redirect to 1st page
-        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type']))) {
+        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type'])))
+        {
             $_SESSION['SearchReq']['word'] = $_GET['q'];
             $_SESSION['SearchReq']['type'] = $_GET['type'];
         }//sets values in session
@@ -312,21 +351,27 @@ class SearchController extends AppController {
         $sortVar = 'ArtistText';
         $sortOrder = 'asc';
 
-        if (isset($_GET['q'])) {
+        if (isset($_GET['q']))
+        {
             $queryVar = html_entity_decode($_GET['q']);
         }
-        if (isset($_GET['type'])) {
+        if (isset($_GET['type']))
+        {
             $type = $_GET['type'];
             $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'all');
-        } else {
+        }
+        else
+        {
             $typeVar = 'all';
         }
         $this->set('type', $typeVar);
 
-        if (isset($_GET['sort'])) {
+        if (isset($_GET['sort']))
+        {
             $sort = $_GET['sort'];
             $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer') ? $sort : 'artist');
-            switch ($sort) {
+            switch ($sort)
+            {
                 case 'song':
                     $sortVar = 'SongTitle';
                     break;
@@ -349,23 +394,29 @@ class SearchController extends AppController {
                     $sortVar = 'ArtistText';
                     break;
             }
-        } else {
+        }
+        else
+        {
             $sort = 'artist';
         }
 
         $this->set('sort', $sort);
 
-        if (isset($_GET['sortOrder'])) {
+        if (isset($_GET['sortOrder']))
+        {
             $sortOrder = $_GET['sortOrder'];
             $sortOrder = (($sortOrder == 'asc' || $sortOrder == 'desc') ? $sortOrder : 'asc');
-        } else {
+        }
+        else
+        {
             $sortOrder = 'asc';
         }
 
         $this->set('sortOrder', $sortOrder);
 
 
-        if (!empty($queryVar)) {
+        if (!empty($queryVar))
+        {
             //Added code for log search data
             $insertArr[] = $this->searchrecords($typeVar, $queryVar);
             $this->Searchrecord->saveAll($insertArr);
@@ -384,15 +435,21 @@ class SearchController extends AppController {
             $total = 0;
             $limit = 10;
 
-            if (!isset($page) || $page < 1) {
+            if (!isset($page) || $page < 1)
+            {
                 $page = 1;
-            } else {
+            }
+            else
+            {
                 $page = $page;
             }
 
-            if (!isset($facetPage) || $facetPage < 1) {
+            if (!isset($facetPage) || $facetPage < 1)
+            {
                 $facetPage = 1;
-            } else {
+            }
+            else
+            {
                 $facetPage = $facetPage;
             }
 
@@ -401,18 +458,23 @@ class SearchController extends AppController {
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
-            if ($total != 0) {
+            if ($total != 0)
+            {
                 /* if($page > $totalPages){
                   $page = $totalPages;
                   $this->redirect();
                   } */
             }
 
-            foreach ($songs as $key => $song) {
+            foreach ($songs as $key => $song)
+            {
                 $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                if (count($downloadsUsed) > 0) {
+                if (count($downloadsUsed) > 0)
+                {
                     $songs[$key]->status = 'avail';
-                } else {
+                }
+                else
+                {
                     $songs[$key]->status = 'not';
                 }
             }
@@ -420,9 +482,11 @@ class SearchController extends AppController {
             $this->set('songs', $songs);
             // Added code for all functionality
 
-            if (!empty($type) && !($type == 'all')) {
+            if (!empty($type) && !($type == 'all'))
+            {
 
-                switch ($typeVar) {
+                switch ($typeVar)
+                {
                     case 'album':
                         $limit = 24;
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
@@ -472,18 +536,24 @@ class SearchController extends AppController {
                 }
 
                 $this->set('totalFacetFound', $totalFacetCount);
-                if (!empty($totalFacetCount)) {
+                if (!empty($totalFacetCount))
+                {
                     $this->set('totalFacetPages', ceil($totalFacetCount / $limit));
-                } else {
+                }
+                else
+                {
                     $this->set('totalFacetPages', 0);
                 }
-            } else {
+            }
+            else
+            {
                 //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
                 $queryArr = null;
                 $albumData = array();
                 $albumsCheck = array_keys($albums);
-                for ($i = 0; $i <= count($albumsCheck) - 1; $i++) {
+                for ($i = 0; $i <= count($albumsCheck) - 1; $i++)
+                {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
@@ -511,16 +581,20 @@ class SearchController extends AppController {
         $this->set('keyword', htmlspecialchars($queryVar));
     }
 
-    function searchrecords($type, $search_text) {
+    function searchrecords($type, $search_text)
+    {
         $search_text = strtolower(trim($search_text));
         $search_text = preg_replace('/\s\s+/', ' ', $search_text);
         $insertArr['search_text'] = $search_text;
         $insertArr['type'] = $type;
         $genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
-        if (count($genre_id_count_array) > 0) {
+        if (count($genre_id_count_array) > 0)
+        {
             $insertArr['count'] = $genre_id_count_array[0]['Searchrecord']['count'] + 1;
             $insertArr['id'] = $genre_id_count_array[0]['Searchrecord']['id'];
-        } else {
+        }
+        else
+        {
             $insertArr['count'] = 1;
         }
 
@@ -718,23 +792,30 @@ class SearchController extends AppController {
       $this->set('records',$records);
       } */
 
-    function autocomplete() {
+    function autocomplete()
+    {
         Configure::write('debug', 0);
         $this->layout = 'ajax';
-        if (isset($_GET['q'])) {
+        if (isset($_GET['q']))
+        {
             $queryVar = $_GET['q'];
         }
-        if (isset($_GET['type'])) {
+        if (isset($_GET['type']))
+        {
             $type = $_GET['type'];
             $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer' || $_GET['type'] == 'video') ? $_GET['type'] : 'all');
-        } else {
+        }
+        else
+        {
             $typeVar = 'all';
         }
-        if ($type != 'all') {
+        if ($type != 'all')
+        {
             $data = $this->Solr->getAutoCompleteData($queryVar, $type, 10);
         }
         $records = array();
-        switch ($typeVar) {
+        switch ($typeVar)
+        {
             case 'all':
                 $records = array();
                 $data1 = array();
@@ -751,8 +832,10 @@ class SearchController extends AppController {
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'song', 18, '1');
 
                 // formates array
-                foreach ($arr_data as $key1 => $val1) {
-                    foreach ($val1 as $key2 => $val2) {
+                foreach ($arr_data as $key1 => $val1)
+                {
+                    foreach ($val1 as $key2 => $val2)
+                    {
                         $arr_result[$key2] = $val2;
                     }
                 }
@@ -763,8 +846,10 @@ class SearchController extends AppController {
                 //get 3 elements of each filter
                 $arr_show = $arr_result;
                 $in_basket = 0;
-                foreach ($arr_result AS $key1 => $val1) {
-                    foreach ($val1 AS $key2 => $val2) {
+                foreach ($arr_result AS $key1 => $val1)
+                {
+                    foreach ($val1 AS $key2 => $val2)
+                    {
 
                         $val2 = array_slice($val2, 0, 3, true);
                         $in_basket = $in_basket + count($val2);
@@ -777,12 +862,15 @@ class SearchController extends AppController {
 
 
                 //get remaining elements from most revelant filter
-                if (0 != $to_be_in_basket) {
+                if (0 != $to_be_in_basket)
+                {
 
-                    foreach ($arr_result AS $key1 => $val1) {
+                    foreach ($arr_result AS $key1 => $val1)
+                    {
                         if (0 == $to_be_in_basket)
                             break;
-                        foreach ($val1 AS $key2 => $val2) {
+                        foreach ($val1 AS $key2 => $val2)
+                        {
 
                             $val2 = array_slice($val2, 3, $to_be_in_basket, true);
                             $to_be_in_basket = $to_be_in_basket - count($val2);
@@ -793,36 +881,48 @@ class SearchController extends AppController {
                 }
 
                 $rank = 1;
-                foreach ($arr_show as $key => $val) {
-                    foreach ($val as $name => $value) {
-                        foreach ($value as $record => $count) {
-                            if($name == 'album'){
-                                $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $record);
-                                $albumdocs = $this->Solr->query('Title:'.$keyword,1);
+                foreach ($arr_show as $key => $val)
+                {
+                    foreach ($val as $name => $value)
+                    {
+                        foreach ($value as $record => $count)
+                        {
+                            if ($name == 'album')
+                            {
+                                $keyword = str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $record);
+                                $albumdocs = $this->Solr->query('Title:' . $keyword, 1);
                                 //$imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
                                 //$image = Configure::read('App.Music_Path') . preg_replace(array("/\r\n/","/\r/","/\n/"), array('','',''), $imageUrl);
                                 //$imageData = "<img src='".$image."' height='40px' width='40px' />";
-                            } else {
+                            }
+                            else
+                            {
                                 $imageData = "";
                             }
                             //if(preg_match("/^".$queryVar."/i",$record)){
                             //$records[] = $record."|".$record;
-                            
-                            if(isset($_GET['ufl']) && $_GET['ufl'] == 1){
+
+                            if (isset($_GET['ufl']) && $_GET['ufl'] == 1)
+                            {
                                 $widthLeft = "75px";
                                 $widthRight = "300px";
-                            } else {
+                            }
+                            else
+                            {
                                 $widthLeft = "130px";
                                 $widthRight = "130px";
                             }
-                            
+
                             $regex = "/^$queryVar/i";
-                            
-                            if(preg_match($regex,$record)){
-                                $str = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'>" . $record . "</div>|" . $record . "|" . $rank;
+
+                            if (preg_match($regex, $record))
+                            {
+                                $str = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'>" . $record . "</div>|" . $record . "|" . $rank;
                                 array_unshift($records, $str);
-                            } else {
-                                $records[] = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                            }
+                            else
+                            {
+                                $records[] = "<div style='float:left;width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
                             }
                             $rank++;
                             //}
@@ -835,8 +935,10 @@ class SearchController extends AppController {
                 //$records = array_slice($records,0,20);
                 break;
             case 'artist':
-                foreach ($data as $record => $count) {
-                    if (stripos($record, $queryVar) !== false) {
+                foreach ($data as $record => $count)
+                {
+                    if (stripos($record, $queryVar) !== false)
+                    {
                         $record = trim($record, '"');
                         $record = preg_replace("/\n/", '', $record);
                         $records[] = $record;
@@ -844,28 +946,35 @@ class SearchController extends AppController {
                 }
                 break;
             case 'album':
-                foreach ($data as $record => $count) {
-                    if (stripos($record, $queryVar) !== false) {
+                foreach ($data as $record => $count)
+                {
+                    if (stripos($record, $queryVar) !== false)
+                    {
                         $record = trim($record, '"');
                         $record = preg_replace("/\n/", '', $record);
-                        $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $record);
-                        $albumdocs = $this->Solr->query('Title:'.$keyword,1);
+                        $keyword = str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $record);
+                        $albumdocs = $this->Solr->query('Title:' . $keyword, 1);
                         //$imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
                         //$image = Configure::read('App.Music_Path') . preg_replace(array("/\r\n/","/\r/","/\n/"), array('','',''), $imageUrl);
                         //$imageData = "<img src='".$image."' height='40px' width='40px' />";
                         $imageData = "";
-                        if(isset($_GET['ufl']) && $_GET['ufl'] == 1){
-                            $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:300px;text-align:left;'> " . $record . "</div>|" . $record;
-                        } else {
-                            $records[] = "<div style='float:left;width:65px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:180px;text-align:left;'> " . $record . "</div>|" . $record;
+                        if (isset($_GET['ufl']) && $_GET['ufl'] == 1)
+                        {
+                            $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='float:right;width:300px;text-align:left;'> " . $record . "</div>|" . $record;
+                        }
+                        else
+                        {
+                            $records[] = "<div style='float:left;width:65px;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='float:right;width:180px;text-align:left;'> " . $record . "</div>|" . $record;
                             //$records[] = $record;
                         }
                     }
                 }
                 break;
             case 'composer':
-                foreach ($data as $record => $count) {
-                    if (stripos($record, $queryVar) !== false) {
+                foreach ($data as $record => $count)
+                {
+                    if (stripos($record, $queryVar) !== false)
+                    {
                         $record = trim($record, '"');
                         $record = preg_replace("/\n/", '', $record);
                         $records[] = $record;
@@ -873,8 +982,10 @@ class SearchController extends AppController {
                 }
                 break;
             case 'song':
-                foreach ($data as $record => $count) {
-                    if (stripos($record, $queryVar) !== false) {
+                foreach ($data as $record => $count)
+                {
+                    if (stripos($record, $queryVar) !== false)
+                    {
                         $record = trim($record, '"');
                         $record = preg_replace("/\n/", '', $record);
                         $records[] = $record;
@@ -882,8 +993,10 @@ class SearchController extends AppController {
                 }
                 break;
             case 'label':
-                foreach ($data as $record => $count) {
-                    if (stripos($record, $queryVar) !== false) {
+                foreach ($data as $record => $count)
+                {
+                    if (stripos($record, $queryVar) !== false)
+                    {
                         $record = trim($record, '"');
                         $record = preg_replace("/\n/", '', $record);
                         $records[] = $record;
@@ -891,8 +1004,10 @@ class SearchController extends AppController {
                 }
                 break;
             case 'video':
-                foreach ($data as $record => $count) {
-                    if (stripos($record, $queryVar) !== false) {
+                foreach ($data as $record => $count)
+                {
+                    if (stripos($record, $queryVar) !== false)
+                    {
                         $record = trim($record, '"');
                         $record = preg_replace("/\n/", '', $record);
                         $records[] = $record;
@@ -901,8 +1016,10 @@ class SearchController extends AppController {
                 break;
             case 'genre':
                 //echo '<pre>'; print_r($data); 
-                foreach ($data as $record => $count) {
-                    if (stripos($record, $queryVar) !== false) {
+                foreach ($data as $record => $count)
+                {
+                    if (stripos($record, $queryVar) !== false)
+                    {
                         $record = trim($record, '"');
                         $record = preg_replace("/\n/", '', $record);
                         $records[] = $record;
@@ -913,6 +1030,82 @@ class SearchController extends AppController {
         //print_r($typeVar); print_r($records); //die;
         $this->set('type', $typeVar);
         $this->set('records', $records);
+    }
+
+    /**
+     * @func getSearchAlbumSongs
+     * @desc This is used to get Songs list for Stream Now on Search page
+     */
+    function getSearchAlbumSongs($ProdID)
+    {
+        $data = array();
+
+         $country = $this->Session->read('territory');
+         $countryPrefix = $this->getCountryPrefix($territory);
+        $album_songs = <<<STR
+                SELECT 
+                        Song.ProdID,
+                        Song.ReferenceID,
+                        Song.Title,
+                        Song.ArtistText,
+                        Song.DownloadStatus,
+                        Song.SongTitle,
+                        Song.Artist,
+                        Song.Advisory,
+                        Song.Sample_Duration,
+                        Song.FullLength_Duration,
+                        Song.provider_type,
+			Song.Genre,
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Country.StreamingSalesDate,
+                        Country.StreamingStatus,
+                        Country.DownloadStatus,
+                        Sample_Files.CdnPath,
+                        Sample_Files.SaveAsName,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        File.CdnPath,
+                        File.SourceURL,
+                        File.SaveAsName,
+                        Sample_Files.FileID,
+                        PRODUCT.pid,
+                        Albums.ProdID,
+                        Albums.provider_type,
+			Albums.AlbumTitle,
+                        Albums.Advisory
+                FROM
+                        Songs AS Song
+                                LEFT JOIN
+                        File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                LEFT JOIN
+                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                LEFT JOIN
+                        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
+                                LEFT JOIN
+                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+                                LEFT JOIN
+                        PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
+                                INNER JOIN 
+                        Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                INNER JOIN 
+                        File ON (Albums.FileID = File.FileID) 
+                WHERE
+                        Song.ProdID = '$ProdID'
+                GROUP BY Song.ReferenceID
+                ORDER BY COUNT(Song.ReferenceID) DESC
+                LIMIT 100 
+
+STR;
+        $data = $albumInstance->query($album_songs);
+        
+//        $data[$key]['albumSongs'] = $this->requestAction(
+//                array('controller' => 'artists',
+//            'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']),
+//                $value['Song']['ReferenceID'],
+//                base64_encode($value['Song']['provider_type'])))
+//        );
     }
 
 }
