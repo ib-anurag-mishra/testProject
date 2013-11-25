@@ -137,7 +137,7 @@
                                     <a href="/artists/album/<?= base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>"><?php echo $this->getValidText($this->getTextEncode($artistText)); ?></a>                                                
                                 </div>
                                 <div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>
-                                <div class="wishlist-popover">
+                                <div class="wishlist-popover <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
 
                                     <?php
                                     //check if this song is allowed for download

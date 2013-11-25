@@ -6412,8 +6412,7 @@ img {
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
-					border-right: 5px solid transparent;
-					margin-right: -5px;
+
 					
 					
 					.box-shadow(0 0 2px rgba(0,0,0,.5));
@@ -21012,18 +21011,31 @@ img {
 						.wishlist-popover {
 							position: absolute;
 							left: 317px;
+							/* right: 413px; */
 							bottom:35px;
-							background: #fff;
-							display: none;
-							.box-shadow(0 0 2px rgba(0,0,0,.5));
-							z-index: 100;
 							
+							display: none;
+							
+							z-index: 100;
+							width: 120px;
+
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
 							&.top {
 								
-								bottom:-86px;
+								bottom:-94px;
 								left: 317px;
+
 								
+								&.fq {
+									bottom:-62px;
+
+									
+									
+								}
 							}
+							
+
+
 							
 							a {
 								
@@ -21044,7 +21056,8 @@ img {
 								
 								&:last-child {
 									
-									padding: 5px 5px 10px 10px;
+									/* padding: 5px 5px 10px 10px; */
+									padding: 10px;
 								}
 								
 								&.add-to-playlist {
@@ -21067,7 +21080,7 @@ img {
 							.playlist-options {
 								position: absolute;
 								right: -147px;
-								top:27px;
+								top:32px;
 								display: none;
 								background: #fff;
 								width: 145px;
@@ -21075,7 +21088,8 @@ img {
 								.box-shadow(0 0 2px rgba(0,0,0,.5));
 								
 								overflow-x: hidden;
-								
+								overflow-y: auto;
+	
 								&.active {
 									
 									display: block;
@@ -21294,23 +21308,7 @@ img {
 
 /* end queue detail page */
 
-/* freegal queues */
 
-.queue-detail-page.fq {
-	
-	.wishlist-popover {
-	
-		&.top {
-			bottom:-53px;
-		}
-		
-		a {
-			padding:5px 10px;
-		}
-		
-		
-	}
-}
 
 
 
