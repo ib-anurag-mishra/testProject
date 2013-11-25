@@ -37,6 +37,12 @@ $(document).ready(function() {
 			},
 */
 
+			position: {
+				
+				my: 'bottom right',
+				at: 'top left'
+			},
+
 			
 			overwrite: false,
 			
