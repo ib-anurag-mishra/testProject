@@ -265,6 +265,7 @@ class QueueListDetailsController extends AppController
         $total_duration     =    $total_seconds/60;
         $total_minutes      =    floor($total_duration);
         $total_seconds      =    $total_seconds%60;
+        $total_seconds      =   ($total_seconds < 10 ) ? '0'.$total_seconds  : $total_seconds ;
         
         if($this->params['pass'][1]=='1')   //  Default Queue
         {
