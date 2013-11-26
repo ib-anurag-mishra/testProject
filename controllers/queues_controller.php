@@ -350,19 +350,24 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-//        echo $this->Queue->getQueuesListAlbums(
-//                $this->Session->read('patron'), 
-//                $value['albumSongs'][$value['Albums']['ProdID']], 
-//                $value['Albums']['ProdID'], 
-//                $value['Albums']['provider_type']);
+
 
         echo $prodID = $_POST["prodID"];
         echo $type = $_POST["type"];
-
+        $patronID = $this->Session->read("patron");
+        
         if ($type == 'album')
         {
-            $data = $this->Common->getSearchAlbumSongs($prodID);
-            print_r($data);
+            $albumDetails = $this->Common->getQueueAlbumDetails($prodID);
+             print_r($albumDetails);
+             
+            $albumSongs = $this->Common->getQueueAlbumSongs( $albumDetails->ProdID );
+//            $albumSongs = $this->Queue->getQueuesListAlbums(
+//               $patronID, 
+//                $value['albumSongs'][$value['Albums']['ProdID']], 
+//                $albumDetails->ProdID, 
+//                $albumDetails->provider_type );
+            print_r($albumSongs);
         }
         else
         {

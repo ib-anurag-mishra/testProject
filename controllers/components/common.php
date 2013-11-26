@@ -2609,43 +2609,16 @@ STR;
     }
 
     /**
-     * @func getSearchAlbumSongs
+     * @func getQueueAlbumDetails
      * @desc This is used to get Songs list for Stream Now on Search page
      */
-    function getSearchAlbumSongs($ProdID)
+    function getQueueAlbumDetails($ProdID)
     {
         $albumInstance = ClassRegistry::init('Album');
         $country = $this->Session->read('territory');
         $countryPrefix = $this->getCountryPrefix($country);
         $album_songs = <<<STR
-                SELECT 
-                        Song.ProdID,
-                        Song.ReferenceID,
-                        Song.Title,
-                        Song.ArtistText,
-                        Song.DownloadStatus,
-                        Song.SongTitle,
-                        Song.Artist,
-                        Song.Advisory,
-                        Song.Sample_Duration,
-                        Song.FullLength_Duration,
-                        Song.provider_type,
-			Song.Genre,
-                        Genre.Genre,
-                        Country.Territory,
-                        Country.SalesDate,
-                        Country.StreamingSalesDate,
-                        Country.StreamingStatus,
-                        Country.DownloadStatus,
-                        Sample_Files.CdnPath,
-                        Sample_Files.SaveAsName,
-                        Full_Files.CdnPath,
-                        Full_Files.SaveAsName,
-                        File.CdnPath,
-                        File.SourceURL,
-                        File.SaveAsName,
-                        Sample_Files.FileID,
-                        PRODUCT.pid,
+                SELECT                         
                         Albums.ProdID,
                         Albums.provider_type,
 			Albums.AlbumTitle,
@@ -2675,9 +2648,19 @@ STR;
 STR;
     
        
-        return $albumInstance->query($album_songs); ;
+        return $albumInstance->query($album_songs); 
     }
 
+    function getQueueAlbumSongs($albumProdID)
+    {
+         $albumInstance = ClassRegistry::init('Album');
+        return $albumInstance->query("select * from Songs where ReferenceID='$albumProdID'");
+    }
+    
+    function getQueueSong()
+    {
+        
+    }
 }
 
 ?>
