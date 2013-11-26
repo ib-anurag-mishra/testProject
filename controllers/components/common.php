@@ -2657,6 +2657,7 @@ STR;
         
         $country = $this->Session->read('territory');
         $countryPrefix = $this->getCountryPrefix($country);
+        
         $album_songs = <<<STR
                 SELECT                         
                         Song.ProdID,
@@ -2679,7 +2680,8 @@ STR;
                                 LEFT JOIN
                         Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
                                 LEFT JOIN
-                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1'
+                            AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                                 LEFT JOIN
                         PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
                                 INNER JOIN 
