@@ -45,7 +45,7 @@ $('#top-100-videos-list-view .lazy').lazyload({
 $('.featured-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('.featured-grid')
-})
+});
 
 
 $('#coming-soon-singles-grid .lazy').lazyload({
