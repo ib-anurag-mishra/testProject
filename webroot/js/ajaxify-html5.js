@@ -21,7 +21,6 @@
         // Prepare Variables
         var
                 /* Application Specific Variables */
-                backButtonPressed = false,
                 contentSelector = '.content,article:first,.article:first,.post:first',
                 $content = $(contentSelector).filter(':first'),
                 contentNode = $content.get(0),
@@ -118,12 +117,6 @@
 
         // Hook into State Changes
         $window.bind('statechange', function(event) {
-            if (backButtonPressed !== true)
-            {
-                alert('Back Button Pressed');
-            }
-            backButtonPressed = false;
-
             // Prepare Variables
             var
                     State = History.getState(),
@@ -179,15 +172,14 @@
                         return false;
                     }
 
-                    // Update the menu
-                    /*
-                     $menuChildren = $menu.find(menuChildrenSelector);
-                     $menuChildren.filter(activeSelector).removeClass(activeClass);
-                     $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-                     if ($menuChildren.length === 1) {
-                     $menuChildren.addClass(activeClass);
-                     }
-                     */
+                    // Update the menu                    
+                    $menuChildren = $menu.find(menuChildrenSelector);
+                    $menuChildren.filter(activeSelector).removeClass(activeClass);
+                    $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
+                    if ($menuChildren.length === 1) {
+                        $menuChildren.addClass(activeClass);
+                    }
+
 
                     // Update the content
                     $content.stop(true, true);
