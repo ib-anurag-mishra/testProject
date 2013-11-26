@@ -457,7 +457,7 @@ div.paging span a, div.paging a {
     height: 100px;
     position: fixed;
     width: 100%;  
-    z-index:9999;
+    z-index:25001;
 }
 
 #fmp_player{
