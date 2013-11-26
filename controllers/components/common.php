@@ -2693,7 +2693,8 @@ STR;
                 LIMIT 100 
 
 STR;
-
+                        
+        print_r($album_songs);
         $data = $albumInstance->query($album_songs);
 
 //        if (!empty($data))
