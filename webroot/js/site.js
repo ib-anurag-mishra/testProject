@@ -2124,6 +2124,7 @@ function callNotificationAjax() {
     });
 }
 
+// code to ajaxify Notification form end
 function ajaxNotification() {
 //       $('#btnMyAccount').click(function(){
     var USendNewsLetterCheck = '';
@@ -2252,7 +2253,12 @@ function ajaxNotification() {
     return false;
 //    });
 }
-// code to ajaxify Notification form end
+
+
+//funciton to get Queue List on fly
+function getQueueList(){
+    alert("start of queue list");
+}
 
 $('document').ready(function() {
     $('#search-text').autocomplete("/search/autocomplete",
