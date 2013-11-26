@@ -1898,8 +1898,6 @@ STR;
             }
             Cache::delete("lib" . $libId);
             Cache::write("lib" . $libId, $topDownload);
-            $nagesh = Cache::read("lib" . $libId);
-            print_r($nagesh);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
         }
@@ -2561,8 +2559,8 @@ STR;
             $libId = $val['Library']['id'];
             $country = $val['Library']['library_territory'];
             $this->getLibraryTopTenSongs($country, $libId);
-            //$this->getLibraryTop10Albums($country, $libId);
-            //$this->getLibraryTop10Videos($country, $libId);
+            $this->getLibraryTop10Albums($country, $libId);
+            $this->getLibraryTop10Videos($country, $libId);
         }
     }
 
@@ -2674,7 +2672,7 @@ STR;
                 LIMIT 100 
 
 STR;
-        $data = $albumInstance->query($album_songs);
+        return $albumInstance->query($album_songs);
 
 //        echo '<pre>';
 //        print_r($data) ;
