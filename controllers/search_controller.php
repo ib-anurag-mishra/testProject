@@ -236,8 +236,6 @@ class SearchController extends AppController
                                    );
                             
                         }
-                        echo "<pre>";
-                        print_r($arr_albumStream); 
                         
                         $this->set('albumData', $albums);
                         $this->set('arr_albumStream', $arr_albumStream);
