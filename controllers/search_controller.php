@@ -227,7 +227,7 @@ class SearchController extends AppController
                           $this->set('albumData',$albumData); */
                         
                         
-                        foreach ($albums as $objKey=>$objAlbum) 
+                        /*foreach ($albums as $objKey=>$objAlbum) 
                         {                                                       
                             $albums[$objKey]['albumSongs']  = $this->requestAction(
                                            array('controller' => 'artists', 'action' => 'getAlbumSongs'),
@@ -236,7 +236,7 @@ class SearchController extends AppController
                             
                         }
                         echo "<pre>";
-                        print_r($albums);
+                        print_r($albums);*/
                         
                         $this->set('albumData', $albums);
 
