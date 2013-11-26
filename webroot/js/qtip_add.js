@@ -128,6 +128,75 @@ $(document).ready(function()
 	
 	});
 	
+	$(document).on('mouseover','span[title]',function(event){
+	
+		$(this).qtip({
+			position: {
+			
+				my: 'bottom right', //tooltip
+				at: 'top right' //target
+
+			},
+
+			overwrite: false,
+			
+			show: {
+				
+				event: event.type,
+				ready:true
+			}			
+			
+			
+		});
+	
+	});
+
+
+	$(document).on('mouseover','#qtip[title]',function(event){
+	
+		$(this).qtip({
+			position: {
+				at: 'left bottom' //target
+				my: 'right top', //tooltip
+
+
+			},
+
+			overwrite: false,
+			
+			show: {
+				
+				event: event.type,
+				ready:true
+			}			
+			
+			
+		});
+	
+	});
+	
+	$(document).on('mouseover','span .dload',function(event){
+	
+		$(this).qtip({
+			position: {
+				at: 'top right' //target
+				my: 'bottom left', //tooltip
+
+
+			},
+
+			overwrite: false,
+			
+			show: {
+				
+				event: event.type,
+				ready:true
+			}			
+			
+			
+		});
+	
+	});		
 
 
 
@@ -162,6 +231,7 @@ $(document).ready(function()
  */
    
 
+/*
    $('span[title]').qtip({
       position: {
          corner: {
@@ -185,6 +255,7 @@ $(document).ready(function()
          tip: true
       }
    });
+*/
    
    
 
@@ -219,6 +290,7 @@ $("#qtip[title]").each(function(){
 */
 
 
+/*
       
    $("#qtip[title]").qtip({
       position: {
@@ -242,6 +314,7 @@ $("#qtip[title]").each(function(){
          tip: true
       }
    });
+*/
 
 
 /*
@@ -273,7 +346,7 @@ $('span .dload').each(function(){
 */
 
  
-   
+   /*
    $('span .dload').qtip({
       position: {
          corner: {
@@ -296,7 +369,7 @@ $('span .dload').each(function(){
          tip: true
       }
    }); 
-   
+   */
 
  
 });
