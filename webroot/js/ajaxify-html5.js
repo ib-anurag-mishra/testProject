@@ -175,13 +175,13 @@
                     // Update the menu                    
                     $menuChildren = $menu.find(menuChildrenSelector);
                     $menuChildren.each(function() {
-                        if ($(this).hasClass('active')) 
+                        if ($(this).find('a').hasClass('active')) 
                         {
-                            $(this).removeClass('active');
+                            $(this).find('a').removeClass('active');
                         }
                         if ($(this).has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]'))
                         {
-                            $(this).addClass('active');
+                            $(this).find('a').addClass('active');
                         }
                     });
 //                    $menuChildren.filter(activeSelector).removeClass(activeClass);
