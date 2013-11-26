@@ -371,8 +371,8 @@ class QueuesController extends AppController
                     )
             );
             
-//            $queueList = $this->Queue->getQueuesListAlbums(
-//                    $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type']);
+            $queueList = $this->Queue->getQueuesListAlbums(
+                    $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type']);
 
            print_r($albumSongs[$albumDetails['ProdID']]);
         }
