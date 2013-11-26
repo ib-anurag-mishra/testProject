@@ -1898,9 +1898,11 @@ STR;
             }
             Cache::delete("lib" . $libId);
             Cache::write("lib" . $libId, $topDownload);
+           $nagesh= Cache::read("lib" . $libId);
+           print_r($nagesh);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
-            print_r($topDownload);die;
+            
         }
 
         //library top 10 cache set for songs end
