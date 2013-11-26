@@ -1,10 +1,3 @@
-<script type="javascript">
-  $( document ).ready(function() {
-$('section.album-detail').ajaxify();
-
-});
-</script>
-
 <?php
 	foreach($albumData as $album_key => $album):  
 ?>
