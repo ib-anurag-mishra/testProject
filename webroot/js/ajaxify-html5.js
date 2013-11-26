@@ -174,11 +174,21 @@
 
                     // Update the menu                    
                     $menuChildren = $menu.find(menuChildrenSelector);
-                    $menuChildren.filter(activeSelector).removeClass(activeClass);
-                    $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-                    if ($menuChildren.length === 1) {
-                        $menuChildren.addClass(activeClass);
-                    }
+                    $menuChildren.each(function() {
+                        if ($(this).hasClass('active')) 
+                        {
+                            $(this).removeClass('active');
+                        }
+                        if ($(this).has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]'))
+                        {
+                            $(this).addClass('active');
+                        }
+                    });
+//                    $menuChildren.filter(activeSelector).removeClass(activeClass);
+//                    $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
+//                    if ($menuChildren.length === 1) {
+//                        $menuChildren.addClass(activeClass);
+//                    }
 
 
                     // Update the content
