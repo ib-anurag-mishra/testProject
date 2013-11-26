@@ -12,7 +12,7 @@ class QueuesController extends AppController
     var $name = 'Queues';
     var $layout = 'home';
     var $helpers = array('Html', 'Form', 'Session', 'Queue');
-    var $components = array('Session', 'Auth', 'Acl', 'Queue', 'Streaming');
+    var $components = array('Session', 'Auth', 'Acl', 'Queue', 'Streaming' ,'Common'); 
     var $uses = array('QueueList', 'QueueDetail', 'User', 'Album', 'Song', 'StreamingHistory');
 
     function beforeFilter()
