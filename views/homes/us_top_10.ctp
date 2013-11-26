@@ -48,8 +48,9 @@
                                         ?> 
                                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                         <div class="wishlist-popover">
+                                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" />
                                             <?php
-                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
+                                            //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                             ?>
                                             <a class="add-to-playlist" href="#">Add To Queue</a>
                                             <?php
@@ -70,7 +71,8 @@
                                 ?>
                             </div>
                             <div class="album-title">
-                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" 
+                                   href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
                                     <?php
                                     //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                     if (strlen($value['Albums']['AlbumTitle']) > 20)

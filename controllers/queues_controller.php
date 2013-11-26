@@ -339,7 +339,13 @@ class QueuesController extends AppController{
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-        echo 'test';
+//        echo $this->Queue->getQueuesListAlbums(
+//                $this->Session->read('patron'), 
+//                $value['albumSongs'][$value['Albums']['ProdID']], 
+//                $value['Albums']['ProdID'], 
+//                $value['Albums']['provider_type']);
+        
+        echo 'testing';
         die;
     }
 }
