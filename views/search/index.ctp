@@ -402,7 +402,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                         <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
                                                     </a>
                                                     <?php
-                                                           // echo "<pre>".$palbum->ProdID;  print_r($arr_albumStream[$i]['albumSongs']); 
+                                                            echo "<pre>".$palbum->ProdID;  print_r($arr_albumStream); 
                                                             
                                                     if ($this->Session->read("patron"))
                                                     {
