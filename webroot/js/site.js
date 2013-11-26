@@ -2268,7 +2268,7 @@ function getQueueList(ProdID , type , addTo) {
         url: webroot + 'queues/queueListAlbums',
         success: function(response)
         {
-            addTo.next('.wishlist-popover').append(response);
+            $(addTo).next('.wishlist-popover').append(response);
         },
         error: function(response)
         {
