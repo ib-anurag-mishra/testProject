@@ -110,8 +110,8 @@ $(document).ready(function()
 		$(this).qtip({
 			position: {
 			
-				my: 'top left', //target
-				at: 'bottom right' //tooltip
+				my: 'bottom right', //tooltip
+				at: 'top left' //target
 
 			},
 
