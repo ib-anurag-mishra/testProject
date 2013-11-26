@@ -125,7 +125,7 @@ $('document').ready(function()
     var footer_height = footer.height();
 
 
-  
+
 
 
     /*
@@ -546,6 +546,7 @@ $('document').ready(function()
 
     $(document).on('click', '.add-to-playlist-button', function(e) {
         e.preventDefault();
+        getQueueList();
 
         $('.wishlist-popover').removeClass('active');
 
@@ -2257,8 +2258,19 @@ function ajaxNotification() {
 
 
 //funciton to get Queue List on fly
-function getQueueList(){
-    alert("start of queue list");
+function getQueueList() {
+    $.ajax({
+        type: "post",
+        url: webroot + 'queues/queueListAlbums',
+        success: function(response)
+        {
+            alert(response);
+        },
+        error: function(response)
+        {
+            alert(response);
+        }
+    });
 }
 
 $('document').ready(function() {
