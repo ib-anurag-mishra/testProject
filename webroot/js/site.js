@@ -546,7 +546,7 @@ $('document').ready(function()
 
     $(document).on('click', '.add-to-playlist-button', function(e) {
         e.preventDefault();
-        var ProdID = $(this).find('.wishlist-popover').find('input[type="hidden"]').attr('id');
+        var ProdID = $(this).next('.wishlist-popover').find('input[type="hidden"]').attr('id');
         getQueueList(ProdID);
 
         $('.wishlist-popover').removeClass('active');
