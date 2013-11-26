@@ -175,29 +175,37 @@
                     // Update the top bar menu                    
                     $menuChildren = $('.site-nav li');
                     $menuChildren.each(function() {
-                        if ($(this).find('a').hasClass('active')) 
+                        if ($(this).find('a').hasClass('active'))
                         {
                             $(this).find('a').removeClass('active');
                         }
-                        if ($(this).find('a').attr('href') === '/'+relativeUrl || $(this).find('a').attr('href') === '/homes/us_top_10')
+                        if ($(this).find('a').attr('href') === '/' + relativeUrl)
                         {
                             $(this).find('a').addClass('active');
                         }
                     });
-                    
+
                     // update side bar menu
                     $menuChildren = $('.left-sidebar li');
                     $menuChildren.each(function() {
-                        if ($(this).find('a').hasClass('active')) 
+                        if ($(this).find('a').hasClass('active'))
                         {
                             $(this).find('a').removeClass('active');
                         }
-                        if ($(this).find('a').attr('href') === '/'+relativeUrl)
+                        if ($(this).find('a').attr('href') === '/' + relativeUrl)
                         {
                             $(this).find('a').addClass('active');
                         }
+
+
                     });
-                    
+
+                    if (relativeUrl === '/homes/us_top_10')
+                    {
+                        $('#topmylib07').addClass('active');
+                        $('#topmostpopuler07').addClass('active');
+                        $('#ustoplib07').addClass('active');
+                    }
 //                    $menuChildren.filter(activeSelector).removeClass(activeClass);
 //                    $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
 //                    if ($menuChildren.length === 1) {
