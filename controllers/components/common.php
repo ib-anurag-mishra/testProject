@@ -2622,7 +2622,8 @@ STR;
                         Albums.ProdID,
                         Albums.provider_type,
 			Albums.AlbumTitle,
-                        Albums.Advisory
+                        Albums.Advisory,
+                        Albums.ArtistText
                 FROM
                         Songs AS Song
                                 LEFT JOIN
