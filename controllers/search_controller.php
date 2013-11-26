@@ -225,6 +225,11 @@ class SearchController extends AppController
                           }
                           $this->set('albums', $albums);
                           $this->set('albumData',$albumData); */
+                        
+                        echo "<pre>";
+                        print_r($albums);
+                        
+                        
                         $this->set('albumData', $albums);
 
                         break;
