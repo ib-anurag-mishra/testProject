@@ -5,8 +5,8 @@ $(document).ready(function() {
 	
 		$(this).qtip({
 			position: {
-				at: 'top left' //target
-				my: 'bottom right', //tooltip
+				at: 'top left', //target
+				my: 'bottom right' //tooltip
 				
 
 			},
@@ -28,8 +28,8 @@ $(document).ready(function() {
 	
 		$(this).qtip({
 			position: {
-				at: 'top right' //target
-				my: 'bottom right', //tooltip
+				at: 'top right', //target
+				my: 'bottom right' //tooltip
 				
 
 			},
@@ -52,8 +52,8 @@ $(document).ready(function() {
 	
 		$(this).qtip({
 			position: {
-				at: 'left bottom' //target
-				my: 'right top', //tooltip
+				at: 'left bottom', //target
+				my: 'right top' //tooltip
 
 
 			},
@@ -75,8 +75,8 @@ $(document).ready(function() {
 	
 		$(this).qtip({
 			position: {
-				at: 'top right' //target
-				my: 'bottom left', //tooltip
+				at: 'top right', //target
+				my: 'bottom left' //tooltip
 
 
 			},
