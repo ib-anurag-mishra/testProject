@@ -331,6 +331,17 @@ class QueuesController extends AppController{
         $this->set('sortOrder',$sortOrder);
     }
     
+    
+    /*
+     Function Name : queueListAlbums
+     Desc : This function is used to get mark up for add to queue for albums
+     */
+    function queueListAlbums()
+    {
+        $this->layout = 'ajax';
+        echo 'test';
+        die;
+    }
 }
 
 
