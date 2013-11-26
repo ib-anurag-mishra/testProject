@@ -173,13 +173,13 @@
                     }
 
                     // Update the menu                    
-                    $menuChildren = $menu.find(menuChildrenSelector);
+                    $menuChildren = $('.site-nav li');
                     $menuChildren.each(function() {
                         if ($(this).find('a').hasClass('active')) 
                         {
                             $(this).find('a').removeClass('active');
                         }
-                        if ($(this).has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]'))
+                        if ($(this).find('a').attr('href') === '/'+relativeUrl)
                         {
                             $(this).find('a').addClass('active');
                         }
