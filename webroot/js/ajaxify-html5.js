@@ -179,7 +179,7 @@
                         {
                             $(this).find('a').removeClass('active');
                         }
-                        if ($(this).find('a').attr('href') === '/'+relativeUrl)
+                        if ($(this).find('a').attr('href') === '/'+relativeUrl || $(this).find('a').attr('href') === '/homes/us_top_10')
                         {
                             $(this).find('a').addClass('active');
                         }
