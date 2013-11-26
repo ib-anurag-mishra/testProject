@@ -93,9 +93,10 @@
                 }
 
                 // Ajaxify this link
-                if(typeof console === "undefined") {
+                if (typeof console === "undefined") {
                     console = {
-                        log : function () {}
+                        log: function() {
+                        }
                     };
                 }
                 console.log(url);
@@ -256,15 +257,15 @@
             }); // end ajax
 
         }); // end onStateChange
-        
-        $(window).bind('popstate', function(event){
-             var hashLocation = location.hash;
-    var hashSplit = hashLocation.split("#!/");
-    var hashName = hashSplit[1];
-    if(hashName != '')
-    {
-        alert('gotcha! the back hash name was: ('+hashName+')');
-    }
+
+        $(window).bind('popstate', function(event) {
+            var hashLocation = location.hash;
+            var hashSplit = hashLocation.split("#!/");
+            var hashName = hashSplit[1];
+            if (hashName != '')
+            {
+                alert('gotcha! the back hash name was: (' + hashName + ')');
+            }
         });
 
     }); // end onDomLoad
