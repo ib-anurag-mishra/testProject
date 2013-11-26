@@ -2673,17 +2673,11 @@ STR;
                 LIMIT 100 
 
 STR;
-        return $albumInstance->query($album_songs);
-
-//        echo '<pre>';
-//        print_r($data) ;
-//        die;
-//        $data[$key]['albumSongs'] = $this->requestAction(
-//                array('controller' => 'artists',
-//            'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']),
-//                $value['Song']['ReferenceID'],
-//                base64_encode($value['Song']['provider_type'])))
-//        );
+        print_r($album_songs);
+        $data = $albumInstance->query($album_songs);
+        
+        print_r($data);
+        return $data ;
     }
 
 }

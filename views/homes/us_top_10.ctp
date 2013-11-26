@@ -48,7 +48,7 @@
                                         ?> 
                                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                         <div class="wishlist-popover">
-                                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" />
+                                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             <?php
                                             //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                             ?>

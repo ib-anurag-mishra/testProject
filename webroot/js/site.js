@@ -547,7 +547,8 @@ $('document').ready(function()
     $(document).on('click', '.add-to-playlist-button', function(e) {
         e.preventDefault();
         var ProdID = $(this).next('.wishlist-popover').find('input[type="hidden"]').attr('id');
-        getQueueList(ProdID);
+        var type = $(this).next('.wishlist-popover').find('input[type="hidden"]').attr('value');
+        getQueueList(ProdID , type);
 
         $('.wishlist-popover').removeClass('active');
 
@@ -2259,11 +2260,11 @@ function ajaxNotification() {
 
 
 //funciton to get Queue List on fly
-function getQueueList(ProdID) {
+function getQueueList(ProdID , type) {
        
     $.ajax({
         type: "post",
-        data : { 'prodID' : ProdID} ,
+        data : { 'prodID' : ProdID , 'type' : type} ,
         url: webroot + 'queues/queueListAlbums',
         success: function(response)
         {
