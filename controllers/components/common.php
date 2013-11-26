@@ -2654,6 +2654,7 @@ STR;
     function getQueueAlbumSongs($albumProdID)
     {
         $albumInstance = ClassRegistry::init('Album');
+        
         $country = $this->Session->read('territory');
         $countryPrefix = $this->getCountryPrefix($country);
         $album_songs = <<<STR
@@ -2695,16 +2696,16 @@ STR;
 
         $data = $albumInstance->query($album_songs);
 
-        if (!empty($data))
-        {
-            foreach ($data as $key => $value)
-            {
-                $data['albumSongs'] = $this->requestAction(
-                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']),
-                        $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
-                );
-            }
-        }
+//        if (!empty($data))
+//        {
+//            foreach ($data as $key => $value)
+//            {
+//                $data['albumSongs'] = $this->requestAction(
+//                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']),
+//                        $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
+//                );
+//            }
+//        }
         return $data;
     }
 
