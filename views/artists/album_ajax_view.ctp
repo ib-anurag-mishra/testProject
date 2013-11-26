@@ -1,5 +1,5 @@
 <script type="javascript">
-$('a').ajaxify();
+$('section.album-detail').ajaxify();
 </script>
 
 <?php
