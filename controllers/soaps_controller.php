@@ -1777,106 +1777,107 @@ STR;
    * @param string $last_name
    * @param string $library_id
    * @param string $agent
+   * @param string $cron_call
 	 * @return AuthenticationResponseDataType[]
    */
 
 
- 	function loginByWebservice($authtype, $email, $password, $card, $pin, $last_name, $library_id, $agent) {
+ 	function loginByWebservice($authtype, $email, $password, $card, $pin, $last_name, $library_id, $agent, $cron_call = 0) {
 
     switch($authtype){
 
       case '1':  {
-        $resp = $this->loginAuthinticate($email, $password, $library_id, $agent);
+        $resp = $this->loginAuthinticate($email, $password, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '2':  {
-        $resp = $this->iloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->iloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '3':  {
-        $resp = $this->inloginAuthinticate($card, $library_id, $agent);
+        $resp = $this->inloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '4':  {
-        $resp = $this->inhloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->inhloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '5':  {
-        $resp = $this->ihdloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->ihdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '6':  {
-        $resp = $this->ildloginAuthinticate($card, $last_name, $library_id, $agent);
+        $resp = $this->ildloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '7':  {
-        $resp = $this->ilhdloginAuthinticate($card, $last_name, $library_id, $agent);
+        $resp = $this->ilhdloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '8':  {
-        $resp = $this->sloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->sloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '9':  {
-        $resp = $this->sdloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->sdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '10':  {
-        $resp = $this->ploginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->ploginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '11':  {
-        $resp = $this->indloginAuthinticate($card, $library_id, $agent);
+        $resp = $this->indloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '12':  {
-        $resp = $this->inhdloginAuthinticate($card, $library_id, $agent);
+        $resp = $this->inhdloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '13':  {
-        $resp = $this->snloginAuthinticate($card, $library_id, $agent);
+        $resp = $this->snloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '14':  {
-        $resp = $this->sndloginAuthinticate($card, $library_id, $agent);
+        $resp = $this->sndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '15':  {
-        $resp = $this->cloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->cloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '16':  {
-        $resp = $this->referralAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->referralAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '17':  {
-        $resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
 
       case '18':  {
-        $resp = $this->mndloginAuthinticate($card, $library_id, $agent);
+        $resp = $this->mndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call);
       }
       break;
       
       case '19':  {
-        $resp = $this->mdloginAuthinticate($card, $pin, $library_id, $agent);
+        $resp = $this->mdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
       break;
       
@@ -2005,7 +2006,7 @@ STR;
   * @return AuthenticationResponseDataType[]
   */
 
-  private function loginAuthinticate($email, $password, $library_id, $agent){
+  private function loginAuthinticate($email, $password, $library_id, $agent, $authtype, $cron_call){
 
     $retVal = FALSE;
 
@@ -2071,7 +2072,14 @@ STR;
 			$insertArr['auth_time'] = time();
 			$insertArr['agent'] = $agent;
 			$insertArr['auth_method'] = $library_authentication_method;
-			$this->AuthenticationToken->save($insertArr);
+      
+      $insertArr['authtype'] = $authtype;
+      $insertArr['email'] = $email;
+      $insertArr['password'] = $password;
+      
+      if(0 == $cron_call) {
+        $this->AuthenticationToken->save($insertArr);
+      }  
 
       $response = true;
       $response_msg = 'Login Successfull';
@@ -2117,7 +2125,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function iloginAuthinticate($card, $pin, $library_id, $agent) {
+  private function iloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
     $card = str_replace(" ", "", $card);
     $card = strtolower($card);
@@ -2214,7 +2222,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -2234,7 +2249,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-	private function inloginAuthinticate($card, $library_id, $agent){
+	private function inloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
     $patronId = $card;
     $data['patronId'] = $patronId;
@@ -2319,7 +2334,13 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -2339,7 +2360,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function inhloginAuthinticate($card, $pin, $library_id, $agent) {
+  private function inhloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
 
 		$card = str_replace(" ","", $card);
@@ -2437,8 +2458,15 @@ STR;
 				$insertArr['auth_time'] = time();
 				$insertArr['agent'] = $agent;
 				$insertArr['auth_method'] = $library_authentication_method;
-				$this->AuthenticationToken->save($insertArr);
-
+        
+        $insertArr['authtype'] = $authtype;
+        $insertArr['card'] = $card;
+        $insertArr['pin'] = $pin;
+        
+        if(0 == $cron_call) {
+          $this->AuthenticationToken->save($insertArr);
+        }
+        
         $patron_id = $insertArr['patron_id'];
         $response_msg = 'Login Successfull';
         return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
@@ -2455,7 +2483,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function ihdloginAuthinticate($card, $pin, $library_id, $agent) {
+  private function ihdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
 
     $card = str_replace(" ","",$card);
@@ -2550,7 +2578,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+					
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin; 
+          
+          if(0 == $cron_call) { 
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -2569,7 +2604,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function ildloginAuthinticate($card, $last_name, $library_id, $agent) {
+  private function ildloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call) {
 
 
 		$card = str_replace(" ","",$card);
@@ -2667,7 +2702,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['last_name'] = $last_name;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -2688,7 +2730,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function ilhdloginAuthinticate($card, $last_name, $library_id, $agent) {
+  private function ilhdloginAuthinticate($card, $last_name, $library_id, $agent, $authtype, $cron_call) {
 
 
 		$card = str_replace(" ","",$card);
@@ -2784,7 +2826,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['last_name'] = $last_name;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -2806,7 +2855,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function sloginAuthinticate($card, $pin, $library_id, $agent) {
+  private function sloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
 
     $card = str_replace(" ","",$card);
@@ -2890,7 +2939,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = $resultAnalysis[1];
@@ -2911,7 +2967,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function sdloginAuthinticate($card, $pin, $library_id, $agent) {
+  private function sdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
     $data['card_orig'] = $card;
 
@@ -2997,7 +3053,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -3020,7 +3083,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function ploginAuthinticate($card, $pin, $library_id, $agent) {
+  private function ploginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
 
     $card = str_replace(" ","",$card);
@@ -3108,7 +3171,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -3127,7 +3197,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-	private function indloginAuthinticate($card, $library_id, $agent){
+	private function indloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
 
     $patronId = $card;
@@ -3212,7 +3282,13 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
@@ -3234,7 +3310,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-	private function inhdloginAuthinticate($card, $library_id, $agent){
+	private function inhdloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
 
     $patronId = $card;
@@ -3320,8 +3396,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
-
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }
+          
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
           return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
@@ -3340,7 +3422,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-	private function snloginAuthinticate($card, $library_id, $agent){
+	private function snloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
 
     $patronId = $card;
@@ -3419,8 +3501,14 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
-
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }
+          
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
           return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
@@ -3440,7 +3528,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-	private function sndloginAuthinticate($card, $library_id, $agent){
+	private function sndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
     $data['card_orig'] = $card;
 
@@ -3520,7 +3608,13 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }  
 
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull.';
@@ -3539,7 +3633,7 @@ STR;
    * @param $agent
    * @return AuthenticationResponseDataType[]
    */
-	private function cloginAuthinticate($card, $pin, $library_id, $agent){
+	private function cloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
 
 
     $patronId = $card;
@@ -3608,8 +3702,15 @@ STR;
         $insertArr['auth_time'] = time();
         $insertArr['agent'] = $agent;
         $insertArr['auth_method'] = $library_authentication_method;
-        $this->AuthenticationToken->save($insertArr);
-
+        
+        $insertArr['authtype'] = $authtype;
+        $insertArr['card'] = $card;
+        $insertArr['pin'] = $pin;
+        
+        if(0 == $cron_call) {
+          $this->AuthenticationToken->save($insertArr);
+        }
+        
         $patron_id = $insertArr['patron_id'];
         $response_msg = 'Login Successfull';
         return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
@@ -3629,7 +3730,7 @@ STR;
    * @param $agent
    * @return AuthenticationResponseDataType[]
    */
-	private function referralAuthinticate($card, $pin, $library_id, $agent){
+	private function referralAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
 
     $card = trim($card);
     $data['card'] = $card;
@@ -3730,7 +3831,14 @@ STR;
                 $insertArr['auth_time'] = time();
                 $insertArr['agent'] = $agent;
                 $insertArr['auth_method'] = $library_authentication_method;
-                $this->AuthenticationToken->save($insertArr);
+                
+                $insertArr['authtype'] = $authtype;
+                $insertArr['card'] = $card;
+                $insertArr['pin'] = $pin;
+                
+                if(0 == $cron_call) {
+                  $this->AuthenticationToken->save($insertArr);
+                }  
 
                 $patron_id = $insertArr['patron_id'];
                 $response_msg = 'Login Successfull';
@@ -3764,8 +3872,15 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
-
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
+        
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }
+          
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
           return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
@@ -3786,7 +3901,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-  private function idloginAuthinticate($card, $pin, $library_id, $agent) {
+  private function idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call) {
 
 
     $card = str_replace(" ","",$card);
@@ -3882,8 +3997,15 @@ STR;
 					$insertArr['auth_time'] = time();
 					$insertArr['agent'] = $agent;
 					$insertArr['auth_method'] = $library_authentication_method;
-					$this->AuthenticationToken->save($insertArr);
-
+          
+          $insertArr['authtype'] = $authtype;
+          $insertArr['card'] = $card;
+          $insertArr['pin'] = $pin;
+          
+          if(0 == $cron_call) {
+            $this->AuthenticationToken->save($insertArr);
+          }
+          
           $patron_id = $insertArr['patron_id'];
           $response_msg = 'Login Successfull';
           return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
@@ -3900,7 +4022,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-	private function mndloginAuthinticate($card, $library_id, $agent){
+	private function mndloginAuthinticate($card, $library_id, $agent, $authtype, $cron_call){
 
 
     $data['wrongReferral'] = '';
@@ -3955,8 +4077,14 @@ STR;
             $insertArr['auth_time'] = time();
             $insertArr['agent'] = $agent;
             $insertArr['auth_method'] = $library_authentication_method;
+            
+            $insertArr['authtype'] = $authtype;
+            $insertArr['card'] = $card;
+          
+          if(0 == $cron_call) {
             $this->AuthenticationToken->save($insertArr);
-
+          }
+          
             $patron_id = $insertArr['patron_id'];
             $response_msg = 'Login Successfull.';
             return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
@@ -3981,7 +4109,7 @@ STR;
    * @return AuthenticationResponseDataType[]
    */
 
-	private function mdloginAuthinticate($card, $pin, $library_id, $agent){
+	private function mdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
 
    
     $data['wrongReferral'] = '';
@@ -4045,7 +4173,14 @@ STR;
               $insertArr['auth_time'] = time();
               $insertArr['agent'] = $agent;
               $insertArr['auth_method'] = $library_authentication_method;
-              $this->AuthenticationToken->save($insertArr);
+              
+              $insertArr['authtype'] = $authtype;
+              $insertArr['card'] = $card;
+              $insertArr['pin'] = $pin;
+
+              if(0 == $cron_call) {
+                $this->AuthenticationToken->save($insertArr);
+              }  
 
               $patron_id = $insertArr['patron_id'];
               $response_msg = 'Login Successfull.';
