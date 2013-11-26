@@ -189,7 +189,8 @@ $('document').ready(function()
         whats_happening_filter_results.show();
 
     });
-
+	
+	$('.top-video-login-button').css({opacity:0});
 
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
