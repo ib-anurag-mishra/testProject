@@ -352,8 +352,8 @@ class QueuesController extends AppController
         $this->layout = 'ajax';
 
 
-        echo $prodID = $_POST["prodID"];
-        echo $type = $_POST["type"];
+         $prodID = $_POST["prodID"];
+         $type = $_POST["type"];
         $patronID = $this->Session->read("patron");
         
         if ($type == 'album')

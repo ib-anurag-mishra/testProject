@@ -2686,7 +2686,7 @@ STR;
                                 INNER JOIN 
                         File ON (Albums.FileID = File.FileID) 
                 WHERE
-                        Albums.ProdID = '$ProdID'
+                        Song.ReferenceID='$albumProdID'
                 GROUP BY Song.ReferenceID
                 ORDER BY COUNT(Song.ReferenceID) DESC
                 LIMIT 100 
