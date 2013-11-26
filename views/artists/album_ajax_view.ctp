@@ -136,9 +136,9 @@
                                 
                                         <div class="song" style="width:200px;"><?php
                                                             if (strlen($albumSong['Song']['SongTitle']) >= 20) {
-                                                                    echo '<a title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</a>';
+                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 20)) . '...</span>';
                                                             } else {
-                                                                    echo '<p style="float:left;"><a title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</a></p>';
+                                                                    echo '<p style="float:left;"><span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">' . $this->getTextEncode($albumSong['Song']['SongTitle']) .'</span></p>';
                                                             }
                                                             if ($albumSong['Song']['Advisory'] == 'T') {
                                                                     echo '<span class="explicit"> (Explicit)</span>';
