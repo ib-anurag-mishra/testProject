@@ -2275,6 +2275,7 @@ function getQueueList(ProdID , type) {
             alert(response);
         }
     });
+    return false ;
 }
 
 $('document').ready(function() {
