@@ -190,7 +190,7 @@ $('document').ready(function()
 
     });
 	
-	$('.top-video-login-button').css({opacity:0});
+
 
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
