@@ -229,7 +229,7 @@ class SearchController extends AppController
                         
                         foreach ($albums as $objKey=>$objAlbum) 
                         {                                                       
-                            $albums->$objKey->$albumSongs  = $this->requestAction(
+                            $albums->$objKey->albumSongs  = $this->requestAction(
                                            array('controller' => 'artists', 'action' => 'getAlbumSongs'),
                                            array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
                                    );
