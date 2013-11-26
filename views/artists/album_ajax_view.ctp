@@ -1,5 +1,8 @@
 <script type="javascript">
+  $( document ).ready(function() {
 $('section.album-detail').ajaxify();
+
+});
 </script>
 
 <?php
