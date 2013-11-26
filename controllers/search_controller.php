@@ -228,11 +228,15 @@ class SearchController extends AppController
                         
                         
                         foreach ($albums as $objKey=>$objAlbum) 
-                        {
-                            echo "<pre>";
-                            print_r($objKey);
-                            print_r($objAlbum);
+                        {                                                       
+                            $albums[$objKey]['albumSongs']  = $this->requestAction(
+                                           array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                           array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
+                                   );
+                            
                         }
+                        echo "<pre>";
+                        print_r($albums);
                         
                         $this->set('albumData', $albums);
 
