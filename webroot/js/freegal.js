@@ -1947,7 +1947,7 @@ function showAlbumDetails(albumDetailURL) {
             
             
             $('#album_details_container').html(response);
-            $('section.album-detail').ajaxify();
+            $('#album_details_container').ajaxify();
             $('a[title]').qtip({
                 position: {
                     corner: {
