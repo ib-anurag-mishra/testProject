@@ -406,7 +406,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                             
                                                     if ($this->Session->read("patron"))
                                                     {
-                                                        if ($this->Session->read('library_type') == 2)
+                                                        if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
                                                         {                                                          
                                                             //echo $this->Common->getSearchAlbumSongs($palbum->ProdID);
                                                            
