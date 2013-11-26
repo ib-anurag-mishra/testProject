@@ -1897,9 +1897,7 @@ STR;
                 }
             }
             Cache::delete("lib" . $libId);
-            Cache::write("lib" . $libId, $topDownload);
-           $nagesh= Cache::read("lib" . $libId);
-           print_r($nagesh);
+            Cache::write("lib" . $libId, $topDownload);           
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
             
@@ -2562,8 +2560,8 @@ STR;
             $libId = $val['Library']['id'];
             $country = $val['Library']['library_territory'];
             $this->getLibraryTopTenSongs($country, $libId);
-            //$this->getLibraryTop10Albums($country, $libId);
-            //$this->getLibraryTop10Videos($country, $libId);
+            $this->getLibraryTop10Albums($country, $libId);
+            $this->getLibraryTop10Videos($country, $libId);
         }
     }
 
