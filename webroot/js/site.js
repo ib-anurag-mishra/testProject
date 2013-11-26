@@ -123,35 +123,43 @@ $('document').ready(function()
     var footer = $('.site-footer');
     var wishlist_popover = $('.wishlist-popover');
     var footer_height = footer.height();
-    
-    
+
+
     /******* Back Button Click event **********/
-    
+
+    if (window.history && window.history.pushState) {
+
+        window.history.pushState('forward', null, './#forward');
+
+        $(window).on('popstate', function() {
+            alert('Back button was pressed.');
+        });
+
+    }
 
 
+    /*
+     $(document).on('click', '.left-sidebar li a', function(e) {
+     //e.preventDefault();
+     $(sidebar_a).removeClass('active');
+     $(this).addClass('active');
+     
+     
+     var home07 = $('#home07');
+     home07.removeClass('active');
+     var musicVideo07 = $('#musicVideo07');
+     musicVideo07.removeClass('active');
+     var newsRelease07 = $('#newsRelease07');
+     newsRelease07.removeClass('active');
+     var genre07 = $('#genre07');
+     genre07.removeClass('active');
+     var faq07 = $('#faq07');
+     faq07.removeClass('active');
+     
+     });
+     */
 
-/*
-    $(document).on('click', '.left-sidebar li a', function(e) {
-        //e.preventDefault();
-        $(sidebar_a).removeClass('active');
-        $(this).addClass('active');
 
-
-        var home07 = $('#home07');
-        home07.removeClass('active');
-        var musicVideo07 = $('#musicVideo07');
-        musicVideo07.removeClass('active');
-        var newsRelease07 = $('#newsRelease07');
-        newsRelease07.removeClass('active');
-        var genre07 = $('#genre07');
-        genre07.removeClass('active');
-        var faq07 = $('#faq07');
-        faq07.removeClass('active');
-
-    });
-	*/
-	
-	
 
 
     $(document).on('click', '.announcements h4 a', function(e) {
@@ -191,75 +199,75 @@ $('document').ready(function()
         whats_happening_filter_results.show();
 
     });
-      
-	
+
+
     $('.add-to-playlist').on('mouseenter', function() {
-	//console.log('add to playlist entered');		
+        //console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
-        
+
     });
-        
-    $('.genres-page .album-detail-container').on('mouseenter','.add-to-playlist',function(){
-	    
-	   //console.log('add to playlist entered');
-	   $('.playlist-options').addClass('active');
-	    
+
+    $('.genres-page .album-detail-container').on('mouseenter', '.add-to-playlist', function() {
+
+        //console.log('add to playlist entered');
+        $('.playlist-options').addClass('active');
+
     });
-    
+
     //album-page js
-    $('.albums-page .album-detail-container').on('mouseenter' , '.album-cover-image' , function(){
+    $('.albums-page .album-detail-container').on('mouseenter', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 1});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
     });
-    
-    $('.albums-page .album-detail-container').on('mouseleave' , '.album-cover-image', function(){
+
+    $('.albums-page .album-detail-container').on('mouseleave', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
     });
-    
+
     //genres-page 
-    $('.genres-page .album-detail-container').on('mouseenter' , '.album-detail' , function(){
+    $('.genres-page .album-detail-container').on('mouseenter', '.album-detail', function() {
         $('.album-preview').css({opacity: 1});
     });
-    
-    $('.genres-page .album-detail-container').on('mouseleave' , '.album-detail', function(){
+
+    $('.genres-page .album-detail-container').on('mouseleave', '.album-detail', function() {
         $('.album-preview').css({opacity: 0});
     });
-    
-    
-    $('.news .featured .featured-grid .featured-album-detail').on('mouseenter' , '.album-cover-container', function(){
+
+
+    $('.news .featured .featured-grid .featured-album-detail').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
-        $(this).find('.album-preview').css({opacity: 1});        
+        $(this).find('.album-preview').css({opacity: 1});
     });
-    
-    $('.news .featured .featured-grid .featured-album-detail').on('mouseleave', '.album-cover-container' , function(){
+
+    $('.news .featured .featured-grid .featured-album-detail').on('mouseleave', '.album-cover-container', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
     });
-    
+
     /******* search page ***********/
-    $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseenter' , '.album-cover-container', function(){
+    $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
-        $(this).find('.album-preview').css({opacity: 1});        
+        $(this).find('.album-preview').css({opacity: 1});
     });
-    
-    $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseleave', '.album-cover-container' , function(){
+
+    $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseleave', '.album-cover-container', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
     });
-    
-    $('.search-page .advanced-search-results-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseenter' , '.album-cover-container', function(){
+
+    $('.search-page .advanced-search-results-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
-        $(this).find('.album-preview').css({opacity: 1});        
+        $(this).find('.album-preview').css({opacity: 1});
     });
-    
-    $('.search-page .advanced-search-results-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseleave', '.album-cover-container' , function(){
+
+    $('.search-page .advanced-search-results-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseleave', '.album-cover-container', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
     });
-    
-    
-    
+
+
+
 
     $('.add-to-queue').on('mouseenter', function() {
 
@@ -280,12 +288,12 @@ $('document').ready(function()
 
         $('.playlist-options').removeClass('active');
     });
-    
-    $('.genres-page .album-detail-container').on('mouseleave','.playlist-options',function(){
-	    
-	    $('.playlist-options').removeClass('active');
+
+    $('.genres-page .album-detail-container').on('mouseleave', '.playlist-options', function() {
+
+        $('.playlist-options').removeClass('active');
     });
-    
+
     $('.playlist-options').bind('mousewheel', function(e) {
 
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
@@ -324,30 +332,30 @@ $('document').ready(function()
         $(this).find('.preview').css({opacity: 0});
 
     });
-/* commented this as it is creating problem for preview button  display
-    $(document).on('mouseenter', artwork_container, function() {
-        $(this).find('.preview').css({opacity: 1});
-    });
-
-    $(document).on('mouseleave', artwork_container, function() {
-        $(this).find('.preview').css({opacity: .5});
-    });
-    
-*/    
+    /* commented this as it is creating problem for preview button  display
+     $(document).on('mouseenter', artwork_container, function() {
+     $(this).find('.preview').css({opacity: 1});
+     });
+     
+     $(document).on('mouseleave', artwork_container, function() {
+     $(this).find('.preview').css({opacity: .5});
+     });
+     
+     */
 
     library_list_scrollable.bind('mousewheel', function(e) {
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         //prevent page fom scrolling
         return false;
     });
-    
-   // $(document).ready($('.preview').css({opacity: 0}));
-    
+
+    // $(document).ready($('.preview').css({opacity: 0}));
+
     $(document).on('mouseleave', '.wishlist-popover', function() {
-    	
-    	$(this).removeClass('active');
-    	
-        
+
+        $(this).removeClass('active');
+
+
     });
 
     $(document).on('hover', '.wishlist-popover > a', function(e) {
@@ -420,14 +428,14 @@ $('document').ready(function()
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-video-login-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
-        
+
     });
 
     $('.top-music-video-cover-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-video-login-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
-       
+
     });
 
     $('.album-cover-container').on('mouseenter', function() {
@@ -488,17 +496,17 @@ $('document').ready(function()
         $(this).find('.preview').css({opacity: 0});
         $(this).find('.top-video-login-button').css({opacity: 0});
         $(this).find('.album-preview').css({opacity: 0});
-    });	
-    
-    $('.album-container').on('mouseleave', function() { 
+    });
+
+    $('.album-container').on('mouseleave', function() {
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
     });
-	
-    $('.album-container').on('mouseenter', function() { 
+
+    $('.album-container').on('mouseenter', function() {
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
@@ -669,7 +677,7 @@ $('document').ready(function()
 
     });
     /* albums page */
-    
+
     $(document).on('click', '.albums-page .tracklist .preview', function(e) {
 
 
@@ -843,17 +851,17 @@ $('document').ready(function()
         $(this).siblings('.artist').addClass('playing');
         $(this).siblings('.time').addClass('playing');
     });
-    
-    $(document).on('mouseenter','.album-cover-image',function(){
-	   $(this).find('.preview').css('opacity',100); 
-	   $(this).find('.add-to-playlist-button').css('opacity',100); 
-	    
+
+    $(document).on('mouseenter', '.album-cover-image', function() {
+        $(this).find('.preview').css('opacity', 100);
+        $(this).find('.add-to-playlist-button').css('opacity', 100);
+
     });
-    
-    $(document).on('mouseleave','.album-cover-image',function(){
-	   $(this).find('.preview').css('opacity',0); 
-	   $(this).find('.add-to-playlist-button').css('opacity',0); 
-	    
+
+    $(document).on('mouseleave', '.album-cover-image', function() {
+        $(this).find('.preview').css('opacity', 0);
+        $(this).find('.add-to-playlist-button').css('opacity', 0);
+
     });
 
     /* end genres page */
@@ -1788,470 +1796,470 @@ $('document').ready(function()
             return windowHeight - (top - scrollTop);
         }
     }
-    
-    $('.content').on('click','.hp-tabs',function(e){
-	    
-	   //console.log($(this).attr('href') + ' clicked');
-	   e.preventDefault();
-	    
+
+    $('.content').on('click', '.hp-tabs', function(e) {
+
+        //console.log($(this).attr('href') + ' clicked');
+        e.preventDefault();
+
     });
-    
-    
-   
+
+
+
     var CurrentPageState = History.getState();
-    var ReadycurrentPageState= CurrentPageState.url;
-    if (ReadycurrentPageState.toLowerCase().indexOf("artists/view/") >= 0){
-            resetNavigation();
+    var ReadycurrentPageState = CurrentPageState.url;
+    if (ReadycurrentPageState.toLowerCase().indexOf("artists/view/") >= 0) {
+        resetNavigation();
     }
-    if (ReadycurrentPageState.toLowerCase().indexOf("artists/album/") >= 0){
-            resetNavigation();
+    if (ReadycurrentPageState.toLowerCase().indexOf("artists/album/") >= 0) {
+        resetNavigation();
     }
-    if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0){
-            resetNavigation();
-    }  
-    
+    if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0) {
+        resetNavigation();
+    }
+
 
 });
 
 function documentHtml(html) {
-            // Prepare
-            var result = String(html)
-                    .replace(/<\!DOCTYPE[^>]*>/i, '')
-                    .replace(/<(html|head|body|title|meta|script)([\s\>])/gi, '<div class="document-$1"$2')
-                    .replace(/<\/(html|head|body|title|meta|script)\>/gi, '</div>')
-                    ;
+    // Prepare
+    var result = String(html)
+            .replace(/<\!DOCTYPE[^>]*>/i, '')
+            .replace(/<(html|head|body|title|meta|script)([\s\>])/gi, '<div class="document-$1"$2')
+            .replace(/<\/(html|head|body|title|meta|script)\>/gi, '</div>')
+            ;
 
-            // Return
-            return $.trim(result);
+    // Return
+    return $.trim(result);
 }
 
-function callSearchAjax(){
-    $("#headerSearchSubmit").click(function(event){
-      
-       ajaxSearch();
-    });
-} 
+function callSearchAjax() {
+    $("#headerSearchSubmit").click(function(event) {
 
-function resetNavigation(){
-  
+        ajaxSearch();
+    });
+}
+
+function resetNavigation() {
+
     var sidebar_anchor = $('.sidebar-anchor');
     sidebar_anchor.removeClass('active');
     var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
     sidebar_sub_nav_07.removeClass('active');
     var sidebar_freegalqueues = $('.leftfqueuesclass');
     sidebar_freegalqueues.removeClass('active');
-    
+
     var home07 = $('#home07');
     var musicVideo07 = $('#musicVideo07');
     var newsRelease07 = $('#newsRelease07');
     var genre07 = $('#genre07');
-    var faq07 = $('#faq07'); 
-    
+    var faq07 = $('#faq07');
+
     musicVideo07.removeClass('active');
     newsRelease07.removeClass('active');
     genre07.removeClass('active');
     faq07.removeClass('active');
     home07.removeClass('active');
- 
-    
-    
+
+
+
 }
 
-function ajaxSearch(){   
-    
-    
-        resetNavigation();
+function ajaxSearch() {
 
-       var contentSelector = '.content,article:first,.article:first,.post:first';
-       var $content = $(contentSelector).filter(':first');
-       var $body = $(document.body);
-       // Ensure Content
-        if ($content.length === 0) {
-            $content = $body;
+
+    resetNavigation();
+
+    var contentSelector = '.content,article:first,.article:first,.post:first';
+    var $content = $(contentSelector).filter(':first');
+    var $body = $(document.body);
+    // Ensure Content
+    if ($content.length === 0) {
+        $content = $body;
+    }
+
+    var q = $('#search-text').val();
+    var type = $('#master-filter').val();
+
+    var loading_div = "<div class='loader'>";
+    loading_div += "</div>";
+    $('.content').append(loading_div);
+
+    // Start Fade Out
+    // Animating to opacity to 0 still keeps the element's height intact
+    // Which prevents that annoying pop bang issue when loading in new content
+    $content.animate({opacity: 0}, 800);
+
+
+    $.ajax({
+        url: '/search/index',
+        method: 'get',
+        data: {'q': q, 'type': type},
+        success: function(response) {
+            $('.content').html($(response).filter('.content'));
+            // Prepare
+            var $data = $(documentHtml(response)),
+                    $dataBody = $data.find('.document-body:first'),
+                    $dataContent = $dataBody.find(contentSelector).filter(':first'),
+                    $menuChildren, contentHtml, $scripts;
+
+            // Fetch the scripts
+            $scripts = $dataContent.find('.document-script');
+            if ($scripts.length) {
+                $scripts.detach();
+            }
+
+            // Fetch the content
+            contentHtml = $dataContent.html() || $data.html();
+            if (!contentHtml) {
+                alert('Problem fetching data');
+                return false;
+            }
+
+            // Update the menu
+            /*
+             $menuChildren = $menu.find(menuChildrenSelector);
+             $menuChildren.filter(activeSelector).removeClass(activeClass);
+             $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
+             if ($menuChildren.length === 1) {
+             $menuChildren.addClass(activeClass);
+             }
+             */
+
+            // Update the content
+            $content.stop(true, true);
+            $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
+
+            // Update the title
+            document.title = $data.find('.document-title:first').text();
+            try {
+                document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+            }
+            catch (Exception) {
+            }
+
+            // Add the scripts
+            if ($scripts.length > 1) {
+                $scripts.each(function() {
+                    var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
+                    if ($script.attr('src')) {
+                        if (!$script[0].async) {
+                            scriptNode.async = false;
+                        }
+                        scriptNode.src = $script.attr('src');
+                    }
+                    scriptNode.appendChild(document.createTextNode(scriptText));
+                    contentNode.appendChild(scriptNode);
+                });
+            }
+
+            // Complete the change
+            if ($body.ScrollTo || false) {
+                $body.ScrollTo(scrollOptions);
+            } /* http://balupton.com/projects/jquery-scrollto */
+
+
+            //$body.removeClass('loader');
+            $.getScript(webroot + 'css/styles.css');
+            $.getScript(webroot + 'css/freegal_styles.css');
+
+            $.getScript(webroot + 'js/freegal.js');
+            $.getScript(webroot + 'js/site.js');
+
+            $.getScript(webroot + 'js/audioPlayer.js');
+            $.getScript(webroot + 'js/recent-downloads.js');
+            $.getScript(webroot + 'js/search-results.js');
+
+
+            $('.loader').fadeOut(500);
+
+            $('.content').remove('.loader');
+            callSearchAjax();
+        },
+        failure: function() {
+            alert('Problem fetching data');
         }
-       
-       var q = $('#search-text').val();
-       var type = $('#master-filter').val();
-       
-       var loading_div = "<div class='loader'>";
-            loading_div += "</div>";
-            $('.content').append(loading_div);
-         
-       // Start Fade Out
-       // Animating to opacity to 0 still keeps the element's height intact
-       // Which prevents that annoying pop bang issue when loading in new content
-       $content.animate({opacity: 0}, 800);
-            
-       
-       $.ajax({
-           url:'/search/index',
-           method:'get',
-           data:{'q':q,'type':type},
-           success:function(response){
-               $('.content').html($(response).filter('.content'));
-               // Prepare
-                    var $data = $(documentHtml(response)),
-                            $dataBody = $data.find('.document-body:first'),
-                            $dataContent = $dataBody.find(contentSelector).filter(':first'),
-                            $menuChildren, contentHtml, $scripts;
-
-                    // Fetch the scripts
-                    $scripts = $dataContent.find('.document-script');
-                    if ($scripts.length) {
-                        $scripts.detach();
-                    }
-
-                    // Fetch the content
-                    contentHtml = $dataContent.html() || $data.html();
-                    if (!contentHtml) {
-                        alert('Problem fetching data');
-                        return false;
-                    }
-
-                    // Update the menu
-                    /*
-$menuChildren = $menu.find(menuChildrenSelector);
-$menuChildren.filter(activeSelector).removeClass(activeClass);
-$menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-if ($menuChildren.length === 1) {
-$menuChildren.addClass(activeClass);
-}
-*/
-
-                    // Update the content
-                    $content.stop(true, true);
-                    $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
-
-                    // Update the title
-                    document.title = $data.find('.document-title:first').text();
-                    try {
-                        document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
-                    }
-                    catch (Exception) {
-                    }
-
-                    // Add the scripts
-                    if ($scripts.length > 1) {
-                        $scripts.each(function() {
-                            var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-                            if ($script.attr('src')) {
-                                if (!$script[0].async) {
-                                    scriptNode.async = false;
-                                }
-                                scriptNode.src = $script.attr('src');
-                            }
-                            scriptNode.appendChild(document.createTextNode(scriptText));
-                            contentNode.appendChild(scriptNode);
-                        });
-                    }
-
-                    // Complete the change
-                    if ($body.ScrollTo || false) {
-                        $body.ScrollTo(scrollOptions);
-                    } /* http://balupton.com/projects/jquery-scrollto */
-
-                                
-                    //$body.removeClass('loader');
-                    $.getScript(webroot + 'css/styles.css');
-                    $.getScript(webroot + 'css/freegal_styles.css');
-                    
-                    $.getScript(webroot + 'js/freegal.js');
-                    $.getScript(webroot + 'js/site.js');
-                    
-                    $.getScript(webroot + 'js/audioPlayer.js');
-                    $.getScript(webroot + 'js/recent-downloads.js');
-                    $.getScript(webroot + 'js/search-results.js');
-                    
-    
-                    $('.loader').fadeOut(500);
-                    
-                    $('.content').remove('.loader');
-               callSearchAjax();
-           },
-           failure:function(){
-               alert('Problem fetching data');
-           }
-       });
-       History.pushState(null, 'Search', '/search/index'+'?'+'q='+q+'&type='+type);
-       return false;
+    });
+    History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+    return false;
 }
 // code to ajaxify MyAccount form start
-function callMyAccountAjax(){
-    $("#btnMyAccount").click(function(event){
-       ajaxMyAccount();
+function callMyAccountAjax() {
+    $("#btnMyAccount").click(function(event) {
+        ajaxMyAccount();
     });
-} 
+}
 
-function ajaxMyAccount(){
+function ajaxMyAccount() {
 //       $('#btnMyAccount').click(function(){
-            var UFirstName='';
-            var ULastName='';
-            var UEmail='';
-            var UPassword='';
-            var UserID='';
-           var contentSelector = '.content,article:first,.article:first,.post:first';
-           var $content = $(contentSelector).filter(':first');
-           var $body = $(document.body);
-          //  Ensure Content
-            if ($content.length === 0) {
-                $content = $body;
-            }
-/*
-           var q = $('#search-text').val();
-           var type = $('#master-filter').val();
-  */         
-           if($('#UserFirstName').val()){
-               UFirstName=$('#UserFirstName').val();
-           }
-           if($('#UserLastName').val()){
-               ULastName=$('#UserLastName').val();
-           }
-           if($('#UserEmail').val()){
-               UEmail=$('#UserEmail').val();
-           }
-           if($('#UserPassword').val()){
-               UPassword=$('#UserPassword').val();
-           }
-           if($('#UserId').val()){
-               UserID=$('#UserId').val();
-           }
-           var loading_div = "<div class='loader'>";
-                loading_div += "</div>";
-                $('.content').append(loading_div);
-
-           // Start Fade Out
-           // Animating to opacity to 0 still keeps the element's height intact
-           // Which prevents that annoying pop bang issue when loading in new content
-           $content.animate({opacity: 0}, 800);
-
-
-           $.ajax({
-               url:'/users/my_account',
-               method:'post',
-               data:{'data[User][id]':UserID,'data[User][first_name]':UFirstName,'data[User][last_name]':ULastName,'data[User][email]':UEmail,'data[User][password]':UPassword},
-               success:function(response){
-                   $('.content').html($(response).filter('.content'));
-                   // Prepare
-                        var $data = $(documentHtml(response)),
-                                $dataBody = $data.find('.document-body:first'),
-                                $dataContent = $dataBody.find(contentSelector).filter(':first'),
-                                $menuChildren, contentHtml, $scripts;
-
-                        // Fetch the scripts
-                        $scripts = $dataContent.find('.document-script');
-                        if ($scripts.length) {
-                            $scripts.detach();
-                        }
-
-                        // Fetch the content
-                        contentHtml = $dataContent.html() || $data.html();
-                        if (!contentHtml) {
-                            alert('Problem fetching data');
-                            return false;
-                        }
-
-                        // Update the menu
-                        /*
-    $menuChildren = $menu.find(menuChildrenSelector);
-    $menuChildren.filter(activeSelector).removeClass(activeClass);
-    $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-    if ($menuChildren.length === 1) {
-    $menuChildren.addClass(activeClass);
+    var UFirstName = '';
+    var ULastName = '';
+    var UEmail = '';
+    var UPassword = '';
+    var UserID = '';
+    var contentSelector = '.content,article:first,.article:first,.post:first';
+    var $content = $(contentSelector).filter(':first');
+    var $body = $(document.body);
+    //  Ensure Content
+    if ($content.length === 0) {
+        $content = $body;
     }
-    */
+    /*
+     var q = $('#search-text').val();
+     var type = $('#master-filter').val();
+     */
+    if ($('#UserFirstName').val()) {
+        UFirstName = $('#UserFirstName').val();
+    }
+    if ($('#UserLastName').val()) {
+        ULastName = $('#UserLastName').val();
+    }
+    if ($('#UserEmail').val()) {
+        UEmail = $('#UserEmail').val();
+    }
+    if ($('#UserPassword').val()) {
+        UPassword = $('#UserPassword').val();
+    }
+    if ($('#UserId').val()) {
+        UserID = $('#UserId').val();
+    }
+    var loading_div = "<div class='loader'>";
+    loading_div += "</div>";
+    $('.content').append(loading_div);
 
-                        // Update the content
-                        $content.stop(true, true);
-                        $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
+    // Start Fade Out
+    // Animating to opacity to 0 still keeps the element's height intact
+    // Which prevents that annoying pop bang issue when loading in new content
+    $content.animate({opacity: 0}, 800);
 
-                        // Update the title
-                        document.title = $data.find('.document-title:first').text();
-                        try {
-                            document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+
+    $.ajax({
+        url: '/users/my_account',
+        method: 'post',
+        data: {'data[User][id]': UserID, 'data[User][first_name]': UFirstName, 'data[User][last_name]': ULastName, 'data[User][email]': UEmail, 'data[User][password]': UPassword},
+        success: function(response) {
+            $('.content').html($(response).filter('.content'));
+            // Prepare
+            var $data = $(documentHtml(response)),
+                    $dataBody = $data.find('.document-body:first'),
+                    $dataContent = $dataBody.find(contentSelector).filter(':first'),
+                    $menuChildren, contentHtml, $scripts;
+
+            // Fetch the scripts
+            $scripts = $dataContent.find('.document-script');
+            if ($scripts.length) {
+                $scripts.detach();
+            }
+
+            // Fetch the content
+            contentHtml = $dataContent.html() || $data.html();
+            if (!contentHtml) {
+                alert('Problem fetching data');
+                return false;
+            }
+
+            // Update the menu
+            /*
+             $menuChildren = $menu.find(menuChildrenSelector);
+             $menuChildren.filter(activeSelector).removeClass(activeClass);
+             $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
+             if ($menuChildren.length === 1) {
+             $menuChildren.addClass(activeClass);
+             }
+             */
+
+            // Update the content
+            $content.stop(true, true);
+            $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
+
+            // Update the title
+            document.title = $data.find('.document-title:first').text();
+            try {
+                document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+            }
+            catch (Exception) {
+            }
+
+            // Add the scripts
+            if ($scripts.length > 1) {
+                $scripts.each(function() {
+                    var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
+                    if ($script.attr('src')) {
+                        if (!$script[0].async) {
+                            scriptNode.async = false;
                         }
-                        catch (Exception) {
-                        }
+                        scriptNode.src = $script.attr('src');
+                    }
+                    scriptNode.appendChild(document.createTextNode(scriptText));
+                    contentNode.appendChild(scriptNode);
+                });
+            }
 
-                        // Add the scripts
-                        if ($scripts.length > 1) {
-                            $scripts.each(function() {
-                                var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-                                if ($script.attr('src')) {
-                                    if (!$script[0].async) {
-                                        scriptNode.async = false;
-                                    }
-                                    scriptNode.src = $script.attr('src');
-                                }
-                                scriptNode.appendChild(document.createTextNode(scriptText));
-                                contentNode.appendChild(scriptNode);
-                            });
-                        }
-
-                        // Complete the change
-                        if ($body.ScrollTo || false) {
-                            $body.ScrollTo(scrollOptions);
-                        } /* http://balupton.com/projects/jquery-scrollto */
+            // Complete the change
+            if ($body.ScrollTo || false) {
+                $body.ScrollTo(scrollOptions);
+            } /* http://balupton.com/projects/jquery-scrollto */
 
 
-                        //$body.removeClass('loader');
-                        $.getScript(webroot + 'css/styles.css');
-                        $.getScript(webroot + 'css/freegal_styles.css');
+            //$body.removeClass('loader');
+            $.getScript(webroot + 'css/styles.css');
+            $.getScript(webroot + 'css/freegal_styles.css');
 
-                        $.getScript(webroot + 'js/freegal.js');
-                        $.getScript(webroot + 'js/site.js');
+            $.getScript(webroot + 'js/freegal.js');
+            $.getScript(webroot + 'js/site.js');
 
-                        $.getScript(webroot + 'js/audioPlayer.js');
-                        $.getScript(webroot + 'js/recent-downloads.js');
-                        $.getScript(webroot + 'js/search-results.js');
+            $.getScript(webroot + 'js/audioPlayer.js');
+            $.getScript(webroot + 'js/recent-downloads.js');
+            $.getScript(webroot + 'js/search-results.js');
 
 
-                        $('.loader').fadeOut(500);
+            $('.loader').fadeOut(500);
 
-                        $('.content').remove('.loader');
-                    callMyAccountAjax();
-               },
-               failure:function(){
-                   alert('Problem fetching data');
-               }
-           });
-           return false;
+            $('.content').remove('.loader');
+            callMyAccountAjax();
+        },
+        failure: function() {
+            alert('Problem fetching data');
+        }
+    });
+    return false;
 //    });
 }
 // code to ajaxify MyAccount form end
 
 // code to ajaxify Notification form start
-function callNotificationAjax(){
-    $("#btnNotification").click(function(event){
-       ajaxNotification();
+function callNotificationAjax() {
+    $("#btnNotification").click(function(event) {
+        ajaxNotification();
     });
-} 
+}
 
-function ajaxNotification(){
+function ajaxNotification() {
 //       $('#btnMyAccount').click(function(){
-            var USendNewsLetterCheck='';
-            var UNewsletterEmail='';
+    var USendNewsLetterCheck = '';
+    var UNewsletterEmail = '';
 //            var UserID='';
-           var contentSelector = '.content,article:first,.article:first,.post:first';
-           var $content = $(contentSelector).filter(':first');
-           var $body = $(document.body);
-          //  Ensure Content
-            if ($content.length === 0) {
-                $content = $body;
-            }
-/*
-           var q = $('#search-text').val();
-           var type = $('#master-filter').val();
-  */         
-           if($('#UserSendNewsLetterCheck').val()){
-               USendNewsLetterCheck=$('#UserSendNewsLetterCheck').val();
-           }
-           if($('#UserNewsletterEmail').val()){
-               UNewsletterEmail=$('#UserNewsletterEmail').val();
-           }
-           
-           /*if($('#UserId').val()){
-               UserID=$('#UserId').val();
-           }*/
-           var loading_div = "<div class='loader'>";
-                loading_div += "</div>";
-                $('.content').append(loading_div);
-
-           // Start Fade Out
-           // Animating to opacity to 0 still keeps the element's height intact
-           // Which prevents that annoying pop bang issue when loading in new content
-           $content.animate({opacity: 0}, 800);
-
-
-           $.ajax({
-               url:'/users/manage_notification',
-               method:'post',
-               data:{'data[User][sendNewsLetterCheck]':USendNewsLetterCheck,'data[User][NewsletterEmail]':UNewsletterEmail},
-               success:function(response){
-                   $('.content').html($(response).filter('.content'));
-                   // Prepare
-                        var $data = $(documentHtml(response)),
-                                $dataBody = $data.find('.document-body:first'),
-                                $dataContent = $dataBody.find(contentSelector).filter(':first'),
-                                $menuChildren, contentHtml, $scripts;
-
-                        // Fetch the scripts
-                        $scripts = $dataContent.find('.document-script');
-                        if ($scripts.length) {
-                            $scripts.detach();
-                        }
-
-                        // Fetch the content
-                        contentHtml = $dataContent.html() || $data.html();
-                        if (!contentHtml) {
-                            alert('Problem fetching data');
-                            return false;
-                        }
-
-                        // Update the menu
-                        /*
-    $menuChildren = $menu.find(menuChildrenSelector);
-    $menuChildren.filter(activeSelector).removeClass(activeClass);
-    $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-    if ($menuChildren.length === 1) {
-    $menuChildren.addClass(activeClass);
+    var contentSelector = '.content,article:first,.article:first,.post:first';
+    var $content = $(contentSelector).filter(':first');
+    var $body = $(document.body);
+    //  Ensure Content
+    if ($content.length === 0) {
+        $content = $body;
     }
-    */
+    /*
+     var q = $('#search-text').val();
+     var type = $('#master-filter').val();
+     */
+    if ($('#UserSendNewsLetterCheck').val()) {
+        USendNewsLetterCheck = $('#UserSendNewsLetterCheck').val();
+    }
+    if ($('#UserNewsletterEmail').val()) {
+        UNewsletterEmail = $('#UserNewsletterEmail').val();
+    }
 
-                        // Update the content
-                        $content.stop(true, true);
-                        $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
+    /*if($('#UserId').val()){
+     UserID=$('#UserId').val();
+     }*/
+    var loading_div = "<div class='loader'>";
+    loading_div += "</div>";
+    $('.content').append(loading_div);
 
-                        // Update the title
-                        document.title = $data.find('.document-title:first').text();
-                        try {
-                            document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+    // Start Fade Out
+    // Animating to opacity to 0 still keeps the element's height intact
+    // Which prevents that annoying pop bang issue when loading in new content
+    $content.animate({opacity: 0}, 800);
+
+
+    $.ajax({
+        url: '/users/manage_notification',
+        method: 'post',
+        data: {'data[User][sendNewsLetterCheck]': USendNewsLetterCheck, 'data[User][NewsletterEmail]': UNewsletterEmail},
+        success: function(response) {
+            $('.content').html($(response).filter('.content'));
+            // Prepare
+            var $data = $(documentHtml(response)),
+                    $dataBody = $data.find('.document-body:first'),
+                    $dataContent = $dataBody.find(contentSelector).filter(':first'),
+                    $menuChildren, contentHtml, $scripts;
+
+            // Fetch the scripts
+            $scripts = $dataContent.find('.document-script');
+            if ($scripts.length) {
+                $scripts.detach();
+            }
+
+            // Fetch the content
+            contentHtml = $dataContent.html() || $data.html();
+            if (!contentHtml) {
+                alert('Problem fetching data');
+                return false;
+            }
+
+            // Update the menu
+            /*
+             $menuChildren = $menu.find(menuChildrenSelector);
+             $menuChildren.filter(activeSelector).removeClass(activeClass);
+             $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
+             if ($menuChildren.length === 1) {
+             $menuChildren.addClass(activeClass);
+             }
+             */
+
+            // Update the content
+            $content.stop(true, true);
+            $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
+
+            // Update the title
+            document.title = $data.find('.document-title:first').text();
+            try {
+                document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+            }
+            catch (Exception) {
+            }
+
+            // Add the scripts
+            if ($scripts.length > 1) {
+                $scripts.each(function() {
+                    var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
+                    if ($script.attr('src')) {
+                        if (!$script[0].async) {
+                            scriptNode.async = false;
                         }
-                        catch (Exception) {
-                        }
+                        scriptNode.src = $script.attr('src');
+                    }
+                    scriptNode.appendChild(document.createTextNode(scriptText));
+                    contentNode.appendChild(scriptNode);
+                });
+            }
 
-                        // Add the scripts
-                        if ($scripts.length > 1) {
-                            $scripts.each(function() {
-                                var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-                                if ($script.attr('src')) {
-                                    if (!$script[0].async) {
-                                        scriptNode.async = false;
-                                    }
-                                    scriptNode.src = $script.attr('src');
-                                }
-                                scriptNode.appendChild(document.createTextNode(scriptText));
-                                contentNode.appendChild(scriptNode);
-                            });
-                        }
-
-                        // Complete the change
-                        if ($body.ScrollTo || false) {
-                            $body.ScrollTo(scrollOptions);
-                        } /* http://balupton.com/projects/jquery-scrollto */
+            // Complete the change
+            if ($body.ScrollTo || false) {
+                $body.ScrollTo(scrollOptions);
+            } /* http://balupton.com/projects/jquery-scrollto */
 
 
-                        //$body.removeClass('loader');
-                        $.getScript(webroot + 'css/styles.css');
-                        $.getScript(webroot + 'css/freegal_styles.css');
+            //$body.removeClass('loader');
+            $.getScript(webroot + 'css/styles.css');
+            $.getScript(webroot + 'css/freegal_styles.css');
 
-                        $.getScript(webroot + 'js/freegal.js');
-                        $.getScript(webroot + 'js/site.js');
+            $.getScript(webroot + 'js/freegal.js');
+            $.getScript(webroot + 'js/site.js');
 
-                        $.getScript(webroot + 'js/audioPlayer.js');
-                        $.getScript(webroot + 'js/recent-downloads.js');
-                        $.getScript(webroot + 'js/search-results.js');
+            $.getScript(webroot + 'js/audioPlayer.js');
+            $.getScript(webroot + 'js/recent-downloads.js');
+            $.getScript(webroot + 'js/search-results.js');
 
 
-                        $('.loader').fadeOut(500);
+            $('.loader').fadeOut(500);
 
-                        $('.content').remove('.loader');
-                    callNotificationAjax();
-               },
-               failure:function(){
-                   alert('Problem fetching data');
-               }
-           });
-           return false;
+            $('.content').remove('.loader');
+            callNotificationAjax();
+        },
+        failure: function() {
+            alert('Problem fetching data');
+        }
+    });
+    return false;
 //    });
 }
 // code to ajaxify Notification form end
@@ -2281,9 +2289,9 @@ $('document').ready(function() {
          $('#header-search-type').val('song');
          }*/
     });
-	
+
     callSearchAjax();
-    callMyAccountAjax();   
-    callNotificationAjax();   
-    
+    callMyAccountAjax();
+    callNotificationAjax();
+
 });
