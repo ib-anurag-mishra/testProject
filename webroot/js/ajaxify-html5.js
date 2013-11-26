@@ -200,7 +200,7 @@
 
                     });
 
-                    if (relativeUrl === '/homes/us_top_10')
+                    if (relativeUrl === 'homes/us_top_10')
                     {
                         $('#topmylib07').addClass('active');
                         $('#topmostpopuler07').addClass('active');
