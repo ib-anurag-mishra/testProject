@@ -358,7 +358,7 @@ class QueuesController extends AppController
 
         if ($type == 'album')
         {
-            $albumDetails = array_pop($this->Common->getQueueAlbumDetails($prodID));
+            $albumDetails = array_pop(array_pop($this->Common->getQueueAlbumDetails($prodID)));
             print_r($albumDetails);
 
 //            $albumSongs = $albumData[$key]['albumSongs'] = $this->requestAction(

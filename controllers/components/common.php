@@ -2651,67 +2651,7 @@ STR;
         return $albumInstance->query($album_songs);
     }
 
-    function getQueueAlbumSongs($albumProdID)
-    {
-        $albumInstance = ClassRegistry::init('Album');
-        
-        $country = $this->Session->read('territory');
-        $countryPrefix = $this->getCountryPrefix($country);
-        
-        $album_songs = <<<STR
-                SELECT                         
-                        Song.ProdID,
-                        Song.ReferenceID,
-                        Song.Title,
-                        Song.ArtistText,
-                        Song.DownloadStatus,
-                        Song.SongTitle,
-                        Song.Artist,
-                        Song.Advisory,
-                        Song.Sample_Duration,
-                        Song.FullLength_Duration,
-                        Song.provider_type,
-                FROM
-                        Songs AS Song
-                                LEFT JOIN
-                        File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                LEFT JOIN
-                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                LEFT JOIN
-                        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-                                LEFT JOIN
-                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1'
-                            AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
-                                LEFT JOIN
-                        PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
-                                INNER JOIN 
-                        Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                INNER JOIN 
-                        File ON (Albums.FileID = File.FileID) 
-                WHERE
-                        Song.ReferenceID='$albumProdID'
-                GROUP BY Song.ReferenceID
-                ORDER BY COUNT(Song.ReferenceID) DESC
-                LIMIT 100 
-
-STR;
-                        
-        print_r($album_songs);
-        $data = $albumInstance->query($album_songs);
-
-//        if (!empty($data))
-//        {
-//            foreach ($data as $key => $value)
-//            {
-//                $data['albumSongs'] = $this->requestAction(
-//                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']),
-//                        $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
-//                );
-//            }
-//        }
-        return $data;
-    }
-
+   
     function getQueueSong()
     {
         
