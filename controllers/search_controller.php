@@ -226,9 +226,13 @@ class SearchController extends AppController
                           $this->set('albums', $albums);
                           $this->set('albumData',$albumData); */
                         
-                        echo "<pre>";
-                        print_r($albums);
                         
+                        foreach ($albums as $objKey=>$objAlbum) 
+                        {
+                            echo "<pre>";
+                            print_r($objKey);
+                            print_r($objAlbum);
+                        }
                         
                         $this->set('albumData', $albums);
 
