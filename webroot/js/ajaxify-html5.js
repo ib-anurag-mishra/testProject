@@ -21,6 +21,7 @@
         // Prepare Variables
         var
                 /* Application Specific Variables */
+                backButtonPressed = false,
                 contentSelector = '.content,article:first,.article:first,.post:first',
                 $content = $(contentSelector).filter(':first'),
                 contentNode = $content.get(0),
@@ -93,9 +94,10 @@
                 }
 
                 // Ajaxify this link
-                if(typeof console === "undefined") {
+                if (typeof console === "undefined") {
                     console = {
-                        log : function () {}
+                        log: function() {
+                        }
                     };
                 }
                 console.log(url);
@@ -116,6 +118,11 @@
 
         // Hook into State Changes
         $window.bind('statechange', function(event) {
+            if (backButtonPressed !== true)
+            {
+                alert('Back Button Pressed');
+            }
+            backButtonPressed = false;
 
             // Prepare Variables
             var
@@ -256,7 +263,7 @@
             }); // end ajax
 
         }); // end onStateChange
-       
+
 
     }); // end onDomLoad
 
