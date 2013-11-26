@@ -144,7 +144,7 @@
                                                                     echo '<span class="explicit"> (Explicit)</span>';
                                                             }
                                                     ?></div>
-					<div class="artist"><a href="/artists/album/RGFuYWhlciAmIENsb3Vk" data-hasqtip="20" oldtitle="Danaher &amp; Cloud" title="" aria-describedby="qtip-20">Danaher &amp; Cloud</a></div>
+					<div ><a href="/artists/album/RGFuYWhlciAmIENsb3Vk" data-hasqtip="20" oldtitle="Danaher &amp; Cloud" title="" aria-describedby="qtip-20">Danaher &amp; Cloud</a></div>
 					<div class="time"><?php echo $this->Song->getSongDurationTime($albumSong['Song']['FullLength_Duration']);?></div>
                                                 <?php
                                                                     
