@@ -361,20 +361,22 @@ class QueuesController extends AppController
             $albumDetails = array_pop(array_pop($this->Common->getQueueAlbumDetails($prodID)));
             print_r($albumDetails);
 
-//            $albumSongs = $albumData[$key]['albumSongs'] = $this->requestAction(
-//                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array(
-//                'pass' => array(
-//                    base64_encode($albumData[$key]['Album']['ArtistText']),
-//                    $albumData[$key]['Album']['ProdID'],
-//                    base64_encode($albumData[$key]['Album']['provider_type']))
-//                    )
-//            );
+            $albumSongs = $this->requestAction(
+                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), 
+                    array(
+                        'pass' => array(
+                            base64_encode($albumDetails['ArtistText']),
+                            $albumDetails['ProdID'],
+                            base64_encode($albumDetails['provider_type'])
+                        )
+                    )
+            );
 //            $albumSongs = $this->Queue->getQueuesListAlbums(
 //               $patronID, 
 //                $value['albumSongs'][$value['Albums']['ProdID']], 
 //                $albumDetails->ProdID, 
 //                $albumDetails->provider_type );
-           // print_r($albumSongs);
+            print_r($albumSongs);
         }
         else
         {
