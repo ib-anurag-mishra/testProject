@@ -2667,17 +2667,15 @@ STR;
                                 INNER JOIN 
                         File ON (Albums.FileID = File.FileID) 
                 WHERE
-                        Song.ProdID = '$ProdID'
+                        Albums.ProdID = '$ProdID'
                 GROUP BY Song.ReferenceID
                 ORDER BY COUNT(Song.ReferenceID) DESC
                 LIMIT 100 
 
 STR;
-        print_r($album_songs);
-        $data = $albumInstance->query($album_songs);
-        
-        print_r($data);
-        return $data ;
+    
+       
+        return $albumInstance->query($album_songs); ;
     }
 
 }
