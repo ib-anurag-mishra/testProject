@@ -39,7 +39,8 @@
                     'jquery-1.10.2.min',
                     
                     'modernizr.custom',
-                    'lazyload',
+                    /* 'lazyload', */
+                    'lazyload.1.9.1',
                     
                     'jquery.colorbox',
                     'jquery.cycle.all',
