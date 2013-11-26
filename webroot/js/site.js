@@ -790,6 +790,7 @@ $('document').ready(function()
     $(document).on('click', '.tracklist .add-to-playlist-button', function(e) {
         e.preventDefault();
         $(this).siblings('.wishlist-popover').addClass('active');
+        getQueueList();
     });
 
     $(document).on('click', '.genre-list a', function(e) {
