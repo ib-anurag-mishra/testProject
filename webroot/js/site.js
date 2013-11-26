@@ -1,5 +1,3 @@
-
-
 $('#top-100-albums-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('#top-100-albums-grid')
@@ -16,19 +14,6 @@ $('#top-100-videos-grid .lazy').lazyload({
     container: $('#top-100-videos-grid')
 });
 
-/*
- $('#featured-video-grid .lazy').lazyload({
- effect: 'fadeIn',
- container: $('#featured-video-grid')
- });
- 
- */
-/*
- $('.video-top-genres-grid .lazy').lazyload({
- effect: 'fadeIn',
- container: $('.video-top-genres-grid')
- });
- */
 $('.most-downloaded-videos-grid .lazy').lazyload({
     effect: 'fadeIn',
     container: $('.most-downloaded-videos-grid')
@@ -140,7 +125,7 @@ $('document').ready(function()
     var footer_height = footer.height();
     
     
-    
+    /******* Back Button Click event **********/
     
 
 
@@ -206,23 +191,14 @@ $('document').ready(function()
         whats_happening_filter_results.show();
 
     });
-    
-    
+      
 	
     $('.add-to-playlist').on('mouseenter', function() {
 	//console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
         
     });
-    
-    
-    
-    
-    
-    
-
-    
-    
+        
     $('.genres-page .album-detail-container').on('mouseenter','.add-to-playlist',function(){
 	    
 	   //console.log('add to playlist entered');
@@ -230,7 +206,6 @@ $('document').ready(function()
 	    
     });
     
-
     //album-page js
     $('.albums-page .album-detail-container').on('mouseenter' , '.album-cover-image' , function(){
         $(this).find('.album-preview').css({opacity: 1});
