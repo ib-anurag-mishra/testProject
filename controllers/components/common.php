@@ -2614,6 +2614,7 @@ STR;
      */
     function getSearchAlbumSongs($ProdID)
     {
+        $albumInstance = ClassRegistry::init('Album');
         $country = $this->Session->read('territory');
         $countryPrefix = $this->getCountryPrefix($country);
         $album_songs = <<<STR
