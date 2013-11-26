@@ -1944,7 +1944,10 @@ function showAlbumDetails(albumDetailURL) {
         url: webroot + albumDetailURL, // URL to request
         data: data, // post data
         success: function(response) {
+            
+            
             $('#album_details_container').html(response);
+            $('#album_details_container').ajaxify();
             $('a[title]').qtip({
                 position: {
                     corner: {
