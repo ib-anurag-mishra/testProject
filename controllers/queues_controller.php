@@ -356,7 +356,10 @@ class QueuesController extends AppController
 //                $value['Albums']['ProdID'], 
 //                $value['Albums']['provider_type']);
 
-        echo $prodID = $_POST["prodID"];
+         $prodID = $_POST["prodID"];
+         
+         $data = $this->Common->getSearchAlbumSongs($prodID);
+         print_r($data);
         die;
     }
 

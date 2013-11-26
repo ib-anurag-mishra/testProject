@@ -1898,11 +1898,10 @@ STR;
             }
             Cache::delete("lib" . $libId);
             Cache::write("lib" . $libId, $topDownload);
-           $nagesh= Cache::read("lib" . $libId);
-           print_r($nagesh);
+            $nagesh = Cache::read("lib" . $libId);
+            print_r($nagesh);
             //library top 10 cache set
             $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
-            
         }
 
         //library top 10 cache set for songs end
@@ -2611,16 +2610,14 @@ STR;
         return $territoryNames;
     }
 
-     /**
+    /**
      * @func getSearchAlbumSongs
      * @desc This is used to get Songs list for Stream Now on Search page
      */
     function getSearchAlbumSongs($ProdID)
     {
-        $data = array();
-
-         $country = $this->Session->read('territory');
-         $countryPrefix = $this->getCountryPrefix($territory);
+        $country = $this->Session->read('territory');
+        $countryPrefix = $this->getCountryPrefix($country);
         $album_songs = <<<STR
                 SELECT 
                         Song.ProdID,
@@ -2678,7 +2675,7 @@ STR;
 
 STR;
         $data = $albumInstance->query($album_songs);
-        
+
 //        echo '<pre>';
 //        print_r($data) ;
 //        die;
@@ -2689,6 +2686,7 @@ STR;
 //                base64_encode($value['Song']['provider_type'])))
 //        );
     }
- }
+
+}
 
 ?>
