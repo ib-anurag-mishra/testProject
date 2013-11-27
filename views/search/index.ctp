@@ -734,6 +734,7 @@ function Get_Sales_date($sales_date_array, $country)
                         <div style="display:block" class="advanced-albums-scrollable horiz-scroll">
                             <ul>
                                 <?php
+                                $i = 0;
                                 foreach ($albumData as $palbum)
                                 {
                                     ?>
@@ -807,6 +808,8 @@ function Get_Sales_date($sales_date_array, $country)
                                     </li>
 
                                     <?php
+                                    
+                                        $i++;
                                 }
                                 ?>
                             </ul>
