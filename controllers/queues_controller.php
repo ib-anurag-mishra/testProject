@@ -354,6 +354,8 @@ class QueuesController extends AppController
 
         $prodID = $_POST["prodID"];
         $type = $_POST["type"];
+        $queueId= $_POST['QueueID'];
+        
         $patronID = $this->Session->read("patron");
 
         if ($type == 'album')
@@ -372,7 +374,7 @@ class QueuesController extends AppController
             );
 
             $queueList = $this->Queue->getAlbumEncodeSongsList(
-                    $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type']);
+                    $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type'] , $queueId );
 
             print_r($queueList);
             //adding album songs to queue

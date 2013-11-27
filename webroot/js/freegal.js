@@ -1480,7 +1480,7 @@ function addToAlbumTest( queueID , addTo )
  
     $.ajax({
         type: "post",
-        data: {'prodID': ProdID, 'type': type},
+        data: {'prodID': ProdID, 'type': type , 'QueueID' : queueID },
         url: webroot + 'queues/queueListAlbums',
         success: function(response)
         {

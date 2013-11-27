@@ -237,13 +237,14 @@ EOD;
      * Function Name: getAlbumEncodeSongsList
      * Description  : This function is used to get mark up of social networking links 
      */
-     function getAlbumEncodeSongsList($patron_id, $albumSongs, $albumProdId, $albumProviderType)
+     function getAlbumEncodeSongsList($patron_id, $albumSongs, $albumProdId, $albumProviderType , $queueID )
     {
         if (!empty($patron_id))
         {
             $queueInstance = ClassRegistry::init('QueueList');
             $queueInstance->recursive = -1;
-            $queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id, 'status' => 1), 'fields' => array('QueueList.queue_id', 'QueueList.queue_name'), 'order' => 'QueueList.created DESC'));
+            $queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id, 'status' => 1), 
+                'fields' => array('QueueList.queue_id', 'QueueList.queue_name'), 'order' => 'QueueList.created DESC'));
         }
         else
         {
@@ -260,7 +261,7 @@ EOD;
                     $albumSongsToAdd = array();
                     foreach ($albumSongs as $value)
                     {
-                        $albumSongsArray = array('song_prodid' => $value['Song']['ProdID'], 'song_providertype' => $value['Song']['provider_type'], 'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType, 'queue_id' => $queuevalue['QueueList']['queue_id']);
+                        $albumSongsArray = array('song_prodid' => $value['Song']['ProdID'], 'song_providertype' => $value['Song']['provider_type'], 'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType, 'queue_id' => $queueId );
                         $albumSongsArray = json_encode($albumSongsArray);
                         $albumSongsArray = str_replace("\/", "/", $albumSongsArray);
                         $albumSongsToAdd[] = $albumSongsArray;
