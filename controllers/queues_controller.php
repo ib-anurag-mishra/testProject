@@ -379,30 +379,32 @@ class QueuesController extends AppController
           
             //adding album songs to queue
             $decodedAlbumSongs = json_decode($queueList, true);
-            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($decodedAlbumSongs))
-            {
-                if ($this->Session->read('library_type') == 2)
-                {
-                    if (!empty($decodedAlbumSongs))
-                    {
-                        $this->QueueDetail->setDataSource('master');
-                        $this->QueueDetail->saveAll($decodedAlbumSongs);
-                        $this->QueueDetail->setDataSource('default');
-                        echo "Success";
-                        exit;
-                    }
-                }
-                else    // Song is not allowed for streaming
-                {
-                    echo 'invalid_for_stream';
-                    exit;
-                }
-            }
-            else
-            {
-                echo 'error';
-                exit;
-            }
+            
+            print_r($decodedAlbumSongs);
+//            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($decodedAlbumSongs))
+//            {
+//                if ($this->Session->read('library_type') == 2)
+//                {
+//                    if (!empty($decodedAlbumSongs))
+//                    {
+//                        $this->QueueDetail->setDataSource('master');
+//                        $this->QueueDetail->saveAll($decodedAlbumSongs);
+//                        $this->QueueDetail->setDataSource('default');
+//                        echo "Success";
+//                        exit;
+//                    }
+//                }
+//                else    // Song is not allowed for streaming
+//                {
+//                    echo 'invalid_for_stream';
+//                    exit;
+//                }
+//            }
+//            else
+//            {
+//                echo 'error';
+//                exit;
+//            }
             
         }
         else
