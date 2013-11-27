@@ -44,7 +44,7 @@ EOD;
         {
             foreach ($queueList as $key => $value)
             {
-                $str.='<li><a href="JavaScript:void(0);" \'>' . $value['QueueList']['queue_name'] . '</a></li>';
+                $str.='<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('.$value['QueueList']['queue_id'].', this );" \'>' . $value['QueueList']['queue_name'] . '</a></li>';
             }
         }
 

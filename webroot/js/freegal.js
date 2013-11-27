@@ -1862,9 +1862,6 @@ function base64_decode(data) {
     return dec;
 }
 
-
-
-
 //load the artist list via ajax    
 function load_artist(link, id_serial, genre_name) {
 
@@ -1980,7 +1977,6 @@ function showAlbumDetails(albumDetailURL) {
         }
     });
 }
-
 
 function showHideGrid(varType) {
 
@@ -2336,7 +2332,10 @@ $(document).ready(function() {
     });
 });
 
-
+function addToAlbumTest( queueID , addTo )
+{
+    alert(queueID + " : add to " + addTo );
+}
 
 
 // Below method for removal of '#' & '#.' in between URL

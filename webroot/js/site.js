@@ -557,12 +557,14 @@ $('document').ready(function()
         } else {
 
             $(this).next('.wishlist-popover').addClass('active');
-        }        
+        }
     });
-    
-    $(document).on('click' , '.my-top-100-page .add-to-playlist-button', function(e) {
-      var queuelist = $(document).find('.playlist-options-test').html() ;
-       $(this).next('.wishlist-popover').append(queuelist);
+
+    $(document).on('click', '.my-top-100-page .add-to-playlist-button', function(e) {
+        var queuelist = $(document).find('.playlist-options-test').html();
+        $(this).next('.wishlist-popover')
+                .find('.playlist-options').remove()
+                .append(queuelist);
     });
 
     /* clickoffs */

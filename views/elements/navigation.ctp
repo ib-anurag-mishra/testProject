@@ -159,7 +159,7 @@ function createQueue(){
                 $('.queue-overlay').removeClass('active');
                  resetForms();
 
-                 var updated_queue_list = '<li><a href="JavaScript:void(0);" id="'+album_data[1]+'" >' +album_data[2] + '</a></li>';
+                 var updated_queue_list = '<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('+album_data[1]+', this );" >' +album_data[2] + '</a></li>';
                  $(document).find('.playlist-options-test').find('.playlist-options').find('ul li:eq(1)').prepend(updated_queue_list);
 
                 History.pushState(null, title, url);
