@@ -1473,18 +1473,19 @@ function videoDownloadAll(prodId)
 
 }
 
-function addToAlbumTest( queueID , addTo )
+function addToAlbumTest(queueID, addTo)
 {
-    var type = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('value') ;
-    var ProdID = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('id') ;
- 
+    var type = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
+    var ProdID = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
+
     $.ajax({
         type: "post",
-        data: {'prodID': ProdID, 'type': type , 'QueueID' : queueID },
+        data: {'prodID': ProdID, 'type': type, 'QueueID': queueID},
         url: webroot + 'queues/queueListAlbums',
         success: function(response)
         {
             alert(response);
+            addToQueueResponse(response);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
@@ -1494,6 +1495,79 @@ function addToAlbumTest( queueID , addTo )
         }
     });
     return false;
+}
+
+function addToQueueResponse(response)
+{
+    if (response.length === 6) {
+        var msg = response.substring(0, 6);
+    } else {
+        var msg = response.substring(0, 5);
+    }
+
+    if (msg === 'error')
+    {
+        if (document.getElementById('flash-message'))
+        {
+            document.getElementById('flash-message').innerHTML = '';
+            document.getElementById("flash-message").setAttribute("class", "");
+        }
+
+        document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById("ajaxflashMessage44").style.background = "red";
+        document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding Album to Queuelist.';
+
+        return false;
+    } else if (msg === 'error1') {
+
+        if (document.getElementById('flash-message'))
+        {
+            document.getElementById('flash-message').innerHTML = '';
+            document.getElementById("flash-message").setAttribute("class", "");
+        }
+
+        document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is already added to Queue';
+    }
+    else if (msg === 'invalid_for_stream')
+    {
+        if (document.getElementById('flash-message'))
+        {
+            document.getElementById('flash-message').innerHTML = '';
+            document.getElementById("flash-message").setAttribute("class", "");
+        }
+
+        document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is not allowed for Streaming';
+    }
+    else
+    {
+        var msg = response.substring(0, 7);
+        if (msg === 'Success')
+        {
+            if (document.getElementById('flash-message'))
+            {
+                document.getElementById('flash-message').innerHTML = '';
+                document.getElementById("flash-message").setAttribute("class", "");
+            }
+            document.getElementById("ajaxflashMessage44").style.display = "block";
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added Album to Queue';
+
+        }
+        else
+        {
+            if (document.getElementById('flash-message'))
+            {
+                document.getElementById('flash-message').innerHTML = '';
+                document.getElementById("flash-message").setAttribute("class", "");
+            }
+
+            document.getElementById("ajaxflashMessage44").style.display = "block";
+            document.getElementById("ajaxflashMessage44").style.background = "red";
+            document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding Album to Queue.';
+            return false;
+        }
+    }
 }
 
 function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType, queueId)
@@ -1964,8 +2038,8 @@ function showAlbumDetails(albumDetailURL) {
         url: webroot + albumDetailURL, // URL to request
         data: data, // post data
         success: function(response) {
-            
-            
+
+
             $('#album_details_container').html(response);
             $('#album_details_container').ajaxify();
             $('a[title]').qtip({
@@ -2113,7 +2187,7 @@ $(document).ready(function() {
     });
 
     $('.my-wishlist-page .date-filter-button').addClass('active');
-    
+
     $('.my-wishlist-page .music-filter-button').addClass('active');
 
     $('.my-wishlist-page .my-wishlist-filter-container div.filter').on('click', function(e) {
