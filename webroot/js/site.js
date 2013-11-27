@@ -561,7 +561,8 @@ $('document').ready(function()
     });
     
     $(document).on('click' , '.my-top-100-page .add-to-playlist-button', function(e) {
-        alert('us top 10 page add to button clicked');
+        alert($(document).find('.playlist-options-test'));
+        //$(this).next('.wishlist-popover').append();
     });
 
     /* clickoffs */
