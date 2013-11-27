@@ -1475,7 +1475,25 @@ function videoDownloadAll(prodId)
 
 function addToAlbumTest( queueID , addTo )
 {
-    alert(queueID + " : add to " + $(addTo).parent().parent().parent() );
+    var type = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('value') ;
+    var ProdID = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('id') ;
+ 
+    $.ajax({
+        type: "post",
+        data: {'prodID': ProdID, 'type': type},
+        url: webroot + 'queues/queueListAlbums',
+        success: function(response)
+        {
+            alert(response);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log(
+                    "The following error occured: " +
+                    textStatus, errorThrown);
+        }
+    });
+    return false;
 }
 
 function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType, queueId)

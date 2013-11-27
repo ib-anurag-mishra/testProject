@@ -80,7 +80,7 @@ class QueuesController extends AppController
                         //$this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
                         $this->QueueList->setDataSource('default');
                         $this->layout = 'ajax';
-                        echo "Queue has been Added successfully.&".$this->QueueList->getLastInsertID()."&".$this->data['QueueList']['queue_name'];
+                        echo "Queue has been Added successfully.&" . $this->QueueList->getLastInsertID() . "&" . $this->data['QueueList']['queue_name'];
                         die;
                         //$this->redirect($this->referer());						
                     }
@@ -350,7 +350,7 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-         //Configure::write('debug', 2);
+        //Configure::write('debug', 2);
 
         $prodID = $_POST["prodID"];
         $type = $_POST["type"];
@@ -370,11 +370,38 @@ class QueuesController extends AppController
                 )
                     )
             );
-            
-            $queueList = $this->Queue->getQueuesListAlbums(
+
+            $queueList = $this->Queue->getAlbumEncodeSongsList(
                     $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type']);
 
-           echo $queueList;
+            print_r($queueList);
+            //adding album songs to queue
+//            $decodedAlbumSongs = json_decode($queueList, true);
+//            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($decodedAlbumSongs))
+//            {
+//                if ($this->Session->read('library_type') == 2)
+//                {
+//                    if (!empty($decodedAlbumSongs))
+//                    {
+//                        $this->QueueDetail->setDataSource('master');
+//                        $this->QueueDetail->saveAll($decodedAlbumSongs);
+//                        $this->QueueDetail->setDataSource('default');
+//                        echo "Success";
+//                        exit;
+//                    }
+//                }
+//                else    // Song is not allowed for streaming
+//                {
+//                    echo 'invalid_for_stream';
+//                    exit;
+//                }
+//            }
+//            else
+//            {
+//                echo 'error';
+//                exit;
+//            }
+//            echo $queueList;
         }
         else
         {

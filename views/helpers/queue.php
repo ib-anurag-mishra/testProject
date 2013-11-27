@@ -232,6 +232,54 @@ EOD;
             return 0;
         }
     }
+    
+     /**
+     * Function Name: getAlbumEncodeSongsList
+     * Description  : This function is used to get mark up of social networking links 
+     */
+     function getAlbumEncodeSongsList($patron_id, $albumSongs, $albumProdId, $albumProviderType)
+    {
+        if (!empty($patron_id))
+        {
+            $queueInstance = ClassRegistry::init('QueueList');
+            $queueInstance->recursive = -1;
+            $queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id, 'status' => 1), 'fields' => array('QueueList.queue_id', 'QueueList.queue_name'), 'order' => 'QueueList.created DESC'));
+        }
+        else
+        {
+            $queueList = array();
+        }
+       
+
+        if (!empty($queueList))
+        {
+            foreach ($queueList as $key => $queuevalue)
+            {
+                if (!empty($albumSongs))
+                {
+                    $albumSongsToAdd = array();
+                    foreach ($albumSongs as $value)
+                    {
+                        $albumSongsArray = array('song_prodid' => $value['Song']['ProdID'], 'song_providertype' => $value['Song']['provider_type'], 'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType, 'queue_id' => $queuevalue['QueueList']['queue_id']);
+                        $albumSongsArray = json_encode($albumSongsArray);
+                        $albumSongsArray = str_replace("\/", "/", $albumSongsArray);
+                        $albumSongsToAdd[] = $albumSongsArray;
+                    }
+                }
+                if (!empty($albumSongsToAdd))
+                {
+                    $albumToQueue = implode(',', $albumSongsToAdd);
+                    if (!empty($albumToQueue))
+                    {
+                        $albumToQueue = '[' . addslashes($albumToQueue) . ']';
+                    }
+                }
+               
+            }
+        }
+      
+        return $albumToQueue ;
+    }
 
 }
 
