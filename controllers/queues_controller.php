@@ -80,7 +80,7 @@ class QueuesController extends AppController
                         //$this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
                         $this->QueueList->setDataSource('default');
                         $this->layout = 'ajax';
-                        echo "Queue has been Added successfully.&".$this->QueueList->getLastInsertID();
+                        echo "Queue has been Added successfully.&".$this->QueueList->getLastInsertID()."&".$this->data['QueueList']['queue_name'];
                         die;
                         //$this->redirect($this->referer());						
                     }
