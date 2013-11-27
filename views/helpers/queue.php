@@ -20,20 +20,7 @@ class QueueHelper extends AppHelper
     function getUserQueuesList($patron_id=null)
     {
       $queueList = array();
-        if (!empty($patron_id))
-        {
-            if (!isset($this->Session->read('queues')))
-            {
-                $queueInstance = ClassRegistry::init('QueueList');
-                $queueInstance->recursive = -1;
-                
-                $this->Session->write('queues', $queueList);
-            }
-        }
-        else
-        {
-            $queueList = array();
-        }
+    
         return $queueList ;
     }
 
