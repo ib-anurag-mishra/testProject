@@ -10,18 +10,21 @@ class QueueHelper extends AppHelper
 {
 
     var $uses = array('QueueList');
-    
     var $helpers = array('Session');
 
     /**
      * Function name : getUserQueuesList
      * Description   : This function is used to get queues list for user
      */
-    function getUserQueuesList($patron_id=null)
+    function getUserQueuesList($patron_id = null)
     {
-      $queueList = array();
-    
-        return $queueList ;
+        $queueList = array();
+        if (!empty($patron_id))
+        {
+            $queueInstance = ClassRegistry::init('QueueList');
+            $queueInstance->recursive = -1;
+        }
+        return $queueList;
     }
 
     /**
