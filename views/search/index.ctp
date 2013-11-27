@@ -789,7 +789,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                title="<?php echo $this->getTextEncode($palbum->Title); ?>">
                                                 <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
                                             </a>
-                                            <?php  echo '<pre>'.$palbum->ReferenceID; print_r($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]); 
+                                            <?php   
                                             if ($this->Session->read("patron"))
                                             {
                                                 if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
@@ -1048,7 +1048,7 @@ function Get_Sales_date($sales_date_array, $country)
             </section>
             <div class="tracklist-shadow-container">
                 <div class="tracklist-scrollable">
-                    <?php
+                    <?php 
                     if (!empty($songs))
                     {
                         $i = 1;
@@ -1072,6 +1072,7 @@ function Get_Sales_date($sales_date_array, $country)
                                 if ($this->Session->read('library_type') == 2)
                                 {
                                     $filePath = shell_exec('perl files/tokengen_streaming ' . $psong->CdnPath . "/" . $psong->SaveAsName);
+                                  
 
                                     if (!empty($filePath))
                                     {
