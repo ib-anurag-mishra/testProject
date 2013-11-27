@@ -16,33 +16,33 @@ class QueueHelper extends AppHelper
      * Function name : getUserQueuesList
      * Description   : This function is used to get queues list for user
      */
-    function getUserQueuesList($patron_id)
-    {
-        if (!empty($patron_id))
-        {
-            if (!isset($this->Session->read('queues')))
-            {
-                $queueInstance = ClassRegistry::init('QueueList');
-                $queueInstance->recursive = -1;
-                $queueList = $queueInstance->find(
-                        'all', array('conditions' =>
-                    array(
-                        'patron_id' => $patron_id, 'status' => 1),
-                    'fields' => array(
-                        'QueueList.queue_id', 
-                        'QueueList.queue_name'
-                    ),
-                    'order' => 'QueueList.created DESC')
-                );
-                $this->Session->write('queues', $queueList);
-            }
-        }
-        else
-        {
-            $queueList = $this->Session->read('queues');
-        }
-        return $queueList ;
-    }
+//    function getUserQueuesList($patron_id)
+//    {
+//        if (!empty($patron_id))
+//        {
+//            if (!isset($this->Session->read('queues')))
+//            {
+//                $queueInstance = ClassRegistry::init('QueueList');
+//                $queueInstance->recursive = -1;
+//                $queueList = $queueInstance->find(
+//                        'all', array('conditions' =>
+//                    array(
+//                        'patron_id' => $patron_id, 'status' => 1),
+//                    'fields' => array(
+//                        'QueueList.queue_id', 
+//                        'QueueList.queue_name'
+//                    ),
+//                    'order' => 'QueueList.created DESC')
+//                );
+//                $this->Session->write('queues', $queueList);
+//            }
+//        }
+//        else
+//        {
+//            $queueList = $this->Session->read('queues');
+//        }
+//        return $queueList ;
+//    }
 
     /**
      * Function name : getQueuesList
