@@ -1473,6 +1473,11 @@ function videoDownloadAll(prodId)
 
 }
 
+function addToAlbumTest( queueID , addTo )
+{
+    alert(queueID + " : add to " + $(addTo).parent().parent().parent() );
+}
+
 function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType, queueId)
 {
     var data = "songProdId=" + songProdId + "&songProviderType=" + songProviderType + "&albumProdId=" + albumProdId + "&albumProviderType=" + albumProviderType + "&queueId=" + queueId;
@@ -2332,10 +2337,7 @@ $(document).ready(function() {
     });
 });
 
-function addToAlbumTest( queueID , addTo )
-{
-    alert(queueID + " : add to " + addTo );
-}
+
 
 
 // Below method for removal of '#' & '#.' in between URL
