@@ -204,7 +204,7 @@ Class QueueComponent extends Object
                     $albumSongsToAdd = array();
                     foreach ($albumSongs as $value)
                     {
-                        $albumSongsArray = array('song_prodid' => $value['Song']['ProdID'], 'song_providertype' => $value['Song']['provider_type'], 'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType, 'queue_id' => $queueId);
+                        $albumSongsArray = array('song_prodid' => $value['Song']['ProdID'], 'song_providertype' => $value['Song']['provider_type'], 'album_prodid' => $albumProdId, 'album_providertype' => $albumProviderType, 'queue_id' => $queueID);
                         $albumSongsArray = json_encode($albumSongsArray);
                         $albumSongsArray = str_replace("\/", "/", $albumSongsArray);
                         $albumSongsToAdd[] = $albumSongsArray;
