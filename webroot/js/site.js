@@ -1970,6 +1970,7 @@ function ajaxSearch() {
             $('.loader').fadeOut(500);
 
             $('.content').remove('.loader');
+            $('div.ac_results').hide();
             callSearchAjax();
         },
         failure: function() {
