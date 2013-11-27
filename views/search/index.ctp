@@ -1071,7 +1071,7 @@ function Get_Sales_date($sales_date_array, $country)
                                 <?php
                                 if ($this->Session->read('library_type') == 2)
                                 {
-                                    $filePath = shell_exec('perl files/tokengen_streaming ' . $psong->CdnPath . "/" . $psong->SaveAsName);
+                                    $filePath = shell_exec('perl files/tokengen_streaming ' . $psong->CdnPath . "/" . $psong->SaveAsNameFullStream);
                                   
 
                                     if (!empty($filePath))
