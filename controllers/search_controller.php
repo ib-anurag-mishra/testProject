@@ -298,6 +298,18 @@ class SearchController extends AppController
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
+                
+                
+                $arr_albumStream    =   array();
+                            
+                foreach ($albums as $objKey=>$objAlbum) 
+                {                                                       
+                    $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
+                                   array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                   array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
+                           );
+
+                }
 
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
@@ -314,6 +326,7 @@ class SearchController extends AppController
                 //echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
                 // print_r($videos); die;
                 $this->set('albums', $albums);
+                $this->set('arr_albumStream', $arr_albumStream);
                 //$this->set('albumData',$albumData);
                 $this->set('albumData', $albums);
                 $this->set('artists', $artists);

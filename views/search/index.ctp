@@ -408,8 +408,6 @@ function Get_Sales_date($sales_date_array, $country)
                                                     {
                                                         if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
                                                         {                                                          
-                                                            //echo $this->Common->getSearchAlbumSongs($palbum->ProdID);
-                                                           
                                                             echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                         }
                                                     }
@@ -736,6 +734,7 @@ function Get_Sales_date($sales_date_array, $country)
                         <div style="display:block" class="advanced-albums-scrollable horiz-scroll">
                             <ul>
                                 <?php
+                                $i = 0;
                                 foreach ($albumData as $palbum)
                                 {
                                     ?>
@@ -790,12 +789,12 @@ function Get_Sales_date($sales_date_array, $country)
                                                title="<?php echo $this->getTextEncode($palbum->Title); ?>">
                                                 <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
                                             </a>
-                                            <?php
+                                            <?php echo "<pre>"; print_r($arr_albumStream);
                                             if ($this->Session->read("patron"))
                                             {
-                                                if ($this->Session->read('library_type') == 2)
-                                                {
-                                                    echo $this->Queue->getAlbumStreamNowLabel($palbum->ProdID);
+                                                if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
+                                                {                                                          
+                                                    echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                 }
                                             }
                                             ?> 
@@ -809,6 +808,8 @@ function Get_Sales_date($sales_date_array, $country)
                                     </li>
 
                                     <?php
+                                    
+                                        $i++;
                                 }
                                 ?>
                             </ul>
