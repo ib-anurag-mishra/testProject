@@ -40,10 +40,16 @@ class QueueHelper extends AppHelper
                     <ul>
                             <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Queue</a></li>
 EOD;
-
+        if (!empty($queueList))
+        {
+            foreach ($queueList as $key => $value)
+            {
+                $str.='<li><a href="JavaScript:void(0);" \'>' . $value['QueueList']['queue_name'] . '</a></li>';
+            }
+        }
 
         $str.= '</ul></div>';
-        return $queueList;
+        return $str;
     }
 
     /**
