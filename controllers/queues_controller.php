@@ -350,7 +350,7 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-         Configure::write('debug', 2);
+         //Configure::write('debug', 2);
 
         $prodID = $_POST["prodID"];
         $type = $_POST["type"];
