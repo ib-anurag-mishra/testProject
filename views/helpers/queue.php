@@ -10,6 +10,7 @@ class QueueHelper extends AppHelper
 {
 
     var $uses = array('QueueList');
+    
     var $helpers = array('Session');
 
     /**
@@ -18,7 +19,7 @@ class QueueHelper extends AppHelper
      */
     function getUserQueuesList($patron_id)
     {
-      Configure::write('debug', 2);
+      
         if (!empty($patron_id))
         {
             if (!isset($this->Session->read('queues')))
