@@ -549,10 +549,6 @@ $('document').ready(function()
 
     $(document).on('click', '.add-to-playlist-button', function(e) {
         e.preventDefault();
-        var ProdID = $(this).next('.wishlist-popover').find('input[type="hidden"]').attr('id');
-        var type = $(this).next('.wishlist-popover').find('input[type="hidden"]').attr('value');
-        getQueueList(ProdID, type, this);
-        
         $('.wishlist-popover').removeClass('active');
 
         if ($(this).next('.wishlist-popover').hasClass('active')) {
@@ -561,8 +557,11 @@ $('document').ready(function()
         } else {
 
             $(this).next('.wishlist-popover').addClass('active');
-        }
-        return false ;
+        }        
+    });
+    
+    $(document).on('click' , '.my-top-100-page .add-to-playlist-button', function(e) {
+        alert('us top 10 page add to button clicked');
     });
 
     /* clickoffs */

@@ -331,7 +331,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     </form>
             </div>
        
-
+            <div class="playlist-options-test">
+                <?php
+                    echo $this->Queue->getUserQueuesList($this->Session->read('patron'));
+                ?>
+            </div>
     </div>
     <div class="wrapper">
 			<!-- site header -->
