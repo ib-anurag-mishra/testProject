@@ -408,8 +408,6 @@ function Get_Sales_date($sales_date_array, $country)
                                                     {
                                                         if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
                                                         {                                                          
-                                                            //echo $this->Common->getSearchAlbumSongs($palbum->ProdID);
-                                                           
                                                             echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                         }
                                                     }
@@ -793,9 +791,9 @@ function Get_Sales_date($sales_date_array, $country)
                                             <?php
                                             if ($this->Session->read("patron"))
                                             {
-                                                if ($this->Session->read('library_type') == 2)
-                                                {
-                                                    echo $this->Queue->getAlbumStreamNowLabel($palbum->ProdID);
+                                                if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
+                                                {                                                          
+                                                    echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                 }
                                             }
                                             ?> 
