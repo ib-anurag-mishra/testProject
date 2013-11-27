@@ -21,10 +21,28 @@ class QueueHelper extends AppHelper
         $queueList = array();
         if (!empty($patron_id))
         {
-            $queueInstance = ClassRegistry::init('QueueList');
-            $queueInstance->recursive = -1;
-            $queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id, 'status' => 1), 'fields' => array('QueueList.queue_id', 'QueueList.queue_name'), 'order' => 'QueueList.created DESC'));
+            if (!$this->Session->check('queuelist'))
+            {
+                $queueInstance = ClassRegistry::init('QueueList');
+                $queueInstance->recursive = -1;
+                $queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id, 'status' => 1), 'fields' => array('QueueList.queue_id', 'QueueList.queue_name'), 'order' => 'QueueList.created DESC'));
+                $this->Session->write('queuelist', $queueList);
+            }
+            else
+            {
+                $queueList = $this->Session->read('queuelist');
+            }
         }
+
+
+        $str = <<<EOD
+           <div class="playlist-options">
+                    <ul>
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Queue</a></li>
+EOD;
+
+
+        $str.= '</ul></div>';
         return $queueList;
     }
 

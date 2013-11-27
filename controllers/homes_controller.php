@@ -427,7 +427,6 @@ class HomesController extends AppController
         
         function us_top_10()
         {
-            Configure::write('debug', 2);
             $this->layout = 'home';  
 
             $libId = $this->Session->read('library');
