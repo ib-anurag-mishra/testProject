@@ -1048,7 +1048,7 @@ function Get_Sales_date($sales_date_array, $country)
             </section>
             <div class="tracklist-shadow-container">
                 <div class="tracklist-scrollable">
-                    <?php
+                    <?php echo "<pre>"; print_r($songs);
                     if (!empty($songs))
                     {
                         $i = 1;
