@@ -143,18 +143,24 @@ function createQueue(){
             data : $('#FormDelete').serialize(),
 
             success: function (response) { 
+                
+            var album_data = response.split('&');
+            
               var
                     $this = $(this),
                     url = window.location.pathname ,
                     title = $this.attr('title') || null;
                 
                 document.getElementById('ajaxflashMessage44').innerHTML = '' ;
-                document.getElementById('ajaxflashMessage44').innerHTML = response ;
+                document.getElementById('ajaxflashMessage44').innerHTML = album_data[0] ;
                 $('#ajaxflashMessage44').css('display','block');
                 
                 $('.delete-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
                  resetForms();
+
+                 var updated_queue_list = '<li><a href="JavaScript:void(0);" id='+album_data[1]+'>' +$('#QueueListQueueName').val() + '</a></li>';
+                 $(document).find('.playlist-options-test').prepend(updated_queue_list);
 
                 History.pushState(null, title, url);
                 event.preventDefault();
