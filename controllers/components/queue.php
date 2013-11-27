@@ -215,7 +215,7 @@ Class QueueComponent extends Object
                     $albumToQueue = implode(',', $albumSongsToAdd);
                     if (!empty($albumToQueue))
                     {
-                        $albumToQueue = '[' . addslashes($albumToQueue) . ']';
+                        $albumToQueue = '[' . $albumToQueue . ']';
                     }
                 }
             }
