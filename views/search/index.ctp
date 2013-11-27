@@ -789,7 +789,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                title="<?php echo $this->getTextEncode($palbum->Title); ?>">
                                                 <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
                                             </a>
-                                            <?php  echo '<pre>'.$palbum->ReferenceID; print_r($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]); 
+                                            <?php   
                                             if ($this->Session->read("patron"))
                                             {
                                                 if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
