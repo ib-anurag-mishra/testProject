@@ -220,7 +220,8 @@
                     // Update the title
                     document.title = $data.find('.document-title:first').text();
                     try {
-                        document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+                       // document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+                       document.title = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
                     }
                     catch (Exception) {
                     }
