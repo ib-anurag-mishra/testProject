@@ -333,7 +333,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
        
             <div class="playlist-options-test">
                 <?php
-                    echo $this->Queue->getUserQueuesList($this->Session->read('patron'));
+                    print_r( $this->Queue->getUserQueuesList($this->Session->read('patron')) );
                 ?>
             </div>
     </div>
