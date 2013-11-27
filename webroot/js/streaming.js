@@ -577,10 +577,6 @@ function reportWindowClosedSongInfo (wcsobj) {
 	songDuration = wcsobj.tbpp
         songToken = wcsobj.token
         
-        if(!(plaulistId == "" || plaulistId == null || songId == "" || songId == null || songLength == "" || songLength == null || songProviderType == "" || songProviderType == null || songDuration == "" || songDuration == null || songToken == "" || songToken == null))
-        {
-            streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
-        }
-        
+        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
 	
 }
