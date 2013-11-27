@@ -376,34 +376,34 @@ class QueuesController extends AppController
             $queueList = $this->Queue->getAlbumEncodeSongsList(
                     $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type'] , $queueId );
 
-            print_r($queueList);
+          
             //adding album songs to queue
-//            $decodedAlbumSongs = json_decode($queueList, true);
-//            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($decodedAlbumSongs))
-//            {
-//                if ($this->Session->read('library_type') == 2)
-//                {
-//                    if (!empty($decodedAlbumSongs))
-//                    {
-//                        $this->QueueDetail->setDataSource('master');
-//                        $this->QueueDetail->saveAll($decodedAlbumSongs);
-//                        $this->QueueDetail->setDataSource('default');
-//                        echo "Success";
-//                        exit;
-//                    }
-//                }
-//                else    // Song is not allowed for streaming
-//                {
-//                    echo 'invalid_for_stream';
-//                    exit;
-//                }
-//            }
-//            else
-//            {
-//                echo 'error';
-//                exit;
-//            }
-//            echo $queueList;
+            $decodedAlbumSongs = json_decode($queueList, true);
+            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($decodedAlbumSongs))
+            {
+                if ($this->Session->read('library_type') == 2)
+                {
+                    if (!empty($decodedAlbumSongs))
+                    {
+                        $this->QueueDetail->setDataSource('master');
+                        $this->QueueDetail->saveAll($decodedAlbumSongs);
+                        $this->QueueDetail->setDataSource('default');
+                        echo "Success";
+                        exit;
+                    }
+                }
+                else    // Song is not allowed for streaming
+                {
+                    echo 'invalid_for_stream';
+                    exit;
+                }
+            }
+            else
+            {
+                echo 'error';
+                exit;
+            }
+            
         }
         else
         {
