@@ -17,22 +17,22 @@ class QueueHelper extends AppHelper
      * Function name : getUserQueuesList
      * Description   : This function is used to get queues list for user
      */
-    function getUserQueuesList($patron_id)
+    function getUserQueuesList($patron_id=null)
     {
-      
+      $queueList = array();
         if (!empty($patron_id))
         {
             if (!isset($this->Session->read('queues')))
             {
                 $queueInstance = ClassRegistry::init('QueueList');
                 $queueInstance->recursive = -1;
-                $queueList = array();
+                
                 $this->Session->write('queues', $queueList);
             }
         }
         else
         {
-            $queueList = $this->Session->read('queues');
+            $queueList = array();
         }
         return $queueList ;
     }
