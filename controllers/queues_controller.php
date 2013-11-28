@@ -354,8 +354,8 @@ class QueuesController extends AppController
 
         $prodID = $_POST["prodID"];
         $type = $_POST["type"];
-        $queueId= $_POST['QueueID'];
-        
+        $queueId = $_POST['QueueID'];
+
         $patronID = $this->Session->read("patron");
 
         if ($type == 'album')
@@ -365,21 +365,21 @@ class QueuesController extends AppController
 
             $albumSongs = $this->requestAction(
                     array('controller' => 'artists', 'action' => 'getAlbumSongs'), array(
-                            'pass' => array(
-                                base64_encode($albumDetails['ArtistText']),
-                                $albumDetails['ProdID'],
-                                base64_encode($albumDetails['provider_type'])
-                            )
+                'pass' => array(
+                    base64_encode($albumDetails['ArtistText']),
+                    $albumDetails['ProdID'],
+                    base64_encode($albumDetails['provider_type'])
+                )
                     )
             );
 
             $queueList = $this->Queue->getAlbumEncodeSongsList(
-                    $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type'] , $queueId );
+                    $patronID, $albumSongs[$albumDetails['ProdID']], $albumDetails['ProdID'], $albumDetails['provider_type'], $queueId);
 
-          
+
             //adding album songs to queue
             $decodedAlbumSongs = json_decode($queueList, true);
-            
+
             if ($this->Session->read('library') && $this->Session->read('patron') && !empty($decodedAlbumSongs))
             {
                 if ($this->Session->read('library_type') == 2)
@@ -404,13 +404,41 @@ class QueuesController extends AppController
                 echo 'error';
                 exit;
             }
-            
         }
-        else if($type == 'song')
+        else if ($type == 'song')
         {
-            $songDetails = $this->Common->getSongsDetails($prodID);
-            
+            $songDetails = array_pop($this->Common->getSongsDetails($prodID));
+
             print_r($songDetails);
+
+            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
+            {
+                if ($this->Session->read('library_type') == 2 && $songDetails['Country']['StreamingSalesDate'] <= date('Y-m-d') && $songDetails['Country']['StreamingStatus'] == 1)
+                {
+                    $insertArr = Array();
+                    $insertArr['queue_id'] = $_REQUEST['queueId'];
+                    $insertArr['song_prodid'] = $_REQUEST['songProdId'];
+                    $insertArr['song_providertype'] = $_REQUEST['songProviderType'];
+                    $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
+                    $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
+                    //insert into queuedetail table
+                    $this->QueueDetail->setDataSource('master');
+                    $this->QueueDetail->save($insertArr);
+                    $this->QueueDetail->setDataSource('default');
+                    echo "Success";
+                    exit;
+                }
+                else    // Song is not allowed for streaming
+                {
+                    echo 'invalid_for_stream';
+                    exit;
+                }
+            }
+            else
+            {
+                echo 'error';
+                exit;
+            }
         }
         die;
     }
