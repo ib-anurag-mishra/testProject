@@ -578,9 +578,9 @@ function reportWindowClosedSongInfo (wcsobj) {
         songToken = wcsobj.token
          
          
-         alert("songId: "+songId+"songProviderType: "+songProviderType+"plaulistId: "+plaulistId+"songLength: "+songLength+"songDuration: "+songDuration+"songToken: "+songToken);
+         alert("songId: "+songId+"songProviderType: "+songProviderType+"plaulistId: "+plaulistId+"songLength: "+songLength+"songDuration: "+songDuration+"songToken: "+songToken+"Type: "+typeof(songId));
          
-       if(!(songId=='0' || songProviderType=='' || plaulistId=='0' || songDuration=='0' || songToken=='' || songLength==''))
+       if(!(songId==='0' || songProviderType=='' || plaulistId==='0' || songDuration==='0' || songToken=='' || songLength==''))
        {           
            alert("HI");
            streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
