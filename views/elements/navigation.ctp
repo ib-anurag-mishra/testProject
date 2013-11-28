@@ -248,7 +248,7 @@ $(document).ready(function() {
                  $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
                     if( $(this).find('a').attr('id') === $('#rqPlid').val() )
                     {
-                        $(this).find('a').remove();
+                        $(this).remove();
                     }
                  });
 
