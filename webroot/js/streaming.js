@@ -577,6 +577,6 @@ function reportWindowClosedSongInfo (wcsobj) {
 	songDuration = wcsobj.tbpp
         songToken = wcsobj.token
         
-        streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
+       // streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
 	
 }
