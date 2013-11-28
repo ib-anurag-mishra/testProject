@@ -1485,7 +1485,7 @@ function addToAlbumTest(queueID, addTo)
         success: function(response)
         {
             //alert(response);
-            addToQueueResponse(response);
+            addToQueueResponse(response , type);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
@@ -1497,7 +1497,7 @@ function addToAlbumTest(queueID, addTo)
     return false;
 }
 
-function addToQueueResponse(response)
+function addToQueueResponse(response , type)
 {
     if (response.length === 6) {
         var msg = response.substring(0, 6);
@@ -1515,7 +1515,7 @@ function addToQueueResponse(response)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById("ajaxflashMessage44").style.background = "red";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding Album to Queuelist.';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding '+type+' to Queuelist.';
 
         return false;
     } else if (msg === 'error1') {
@@ -1527,7 +1527,7 @@ function addToQueueResponse(response)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is already added to Queue';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This '+type+' is already added to Queue';
     }
     else if (msg === 'invalid_for_stream')
     {
@@ -1538,7 +1538,7 @@ function addToQueueResponse(response)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'This Album is not allowed for Streaming';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This '+type+' is not allowed for Streaming';
     }
     else
     {
@@ -1551,7 +1551,7 @@ function addToQueueResponse(response)
                 document.getElementById("flash-message").setAttribute("class", "");
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added Album to Queue';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added '+type+' to Queue';
 
         }
         else
@@ -1564,7 +1564,7 @@ function addToQueueResponse(response)
 
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding Album to Queue.';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding '+type+' to Queue.';
             return false;
         }
     }
