@@ -173,6 +173,7 @@ class CacheController extends AppController {
                 $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
+                'order' => 'TRIM(Song.ArtistText) ASC',
                 'extra' => array('chk' => 1),                
                 'limit' => '60',
                 'cache' => 'no',
@@ -243,7 +244,8 @@ class CacheController extends AppController {
                         )
                     ),
                     ),
-                    'extra' => array('chk' => 1),                   
+                    'extra' => array('chk' => 1), 
+                    'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60', 'cache' => 'no','check' => 2
                 );
                 $allArtists = $this->paginate('Song');
@@ -278,7 +280,8 @@ class CacheController extends AppController {
                         )
                     ),
                     ),
-                    'extra' => array('chk' => 1),                    
+                    'extra' => array('chk' => 1),   
+                    'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60', 'cache' => 'no','check' => 2
                 );
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
