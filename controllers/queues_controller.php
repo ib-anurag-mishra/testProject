@@ -409,18 +409,19 @@ class QueuesController extends AppController
         {
             $songDetails = array_pop($this->Common->getSongsDetails($prodID));
 
-            print_r($songDetails);
+           // print_r($songDetails);
 
-            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
+            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) 
+                    && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
             {
                 if ($this->Session->read('library_type') == 2 && $songDetails['Country']['StreamingSalesDate'] <= date('Y-m-d') && $songDetails['Country']['StreamingStatus'] == 1)
                 {
                     $insertArr = Array();
-                    $insertArr['queue_id'] = $_REQUEST['queueId'];
-                    $insertArr['song_prodid'] = $_REQUEST['songProdId'];
-                    $insertArr['song_providertype'] = $_REQUEST['songProviderType'];
-                    $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
-                    $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
+                    $insertArr['queue_id'] = $queueId;
+                    $insertArr['song_prodid'] = $songDetails['Song']['ProdID'];
+                    $insertArr['song_providertype'] = $songDetails['Song']['provider_type'];
+                    $insertArr['album_prodid'] = $$songDetails['Albums']['ProdID'];
+                    $insertArr['album_providertype'] = $songDetails['Albums']['provider_type'];
                     //insert into queuedetail table
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->save($insertArr);
