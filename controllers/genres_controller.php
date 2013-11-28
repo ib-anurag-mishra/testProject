@@ -382,7 +382,7 @@ Class GenresController extends AppController
         {
             $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
         }
-        usort($tempArray, 'strcasecmp');
+        sort($tempArray,SORT_STRING);
 
         for ($i = 0; $i < count($tempArray); $i++)
         {
@@ -459,7 +459,7 @@ Class GenresController extends AppController
                         )),
                 ),
                 'extra' => array('chk' => 1),
-                'limit' => '60', 'cache' => 'no', 'check' => 2
+                'limit' => '60', 'cache' => 'yes', 'check' => 2
             );
         }
         else
@@ -478,7 +478,7 @@ Class GenresController extends AppController
                 'fields' => array('DISTINCT Song.ArtistText'),
                 'extra' => array('chk' => 1),
                 'limit' => '60',
-                'cache' => 'no',
+                'cache' => 'yes',
                 'check' => 2,
                 'all_query' => true,
                 'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
@@ -505,7 +505,7 @@ Class GenresController extends AppController
         {
             $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
         }
-        usort($tempArray, 'strcasecmp');
+        sort($tempArray,SORT_STRING);
 
         for ($i = 0; $i < count($tempArray); $i++)
         {
@@ -628,7 +628,7 @@ Class GenresController extends AppController
         {
             $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
         }
-        usort($tempArray, 'strcasecmp');
+        sort($tempArray,SORT_STRING);
 
         for ($i = 0; $i < count($tempArray); $i++)
         {
