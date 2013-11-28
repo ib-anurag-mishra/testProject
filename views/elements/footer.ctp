@@ -127,40 +127,45 @@ if ($this->Session->read("patron"))
     <?php } ?>
 <?php } ?>
 
+
 <script type="text/javascript">
 
                 $(document).ready(function() {
 
-
-
-
-
                     $("#alt").hide();
                     $("#no_flash").hide();
 
-
-
-                    //for player initialization
-                    if (swfobject !== 'undefined') {
-
-                        if (swfobject.hasFlashPlayerVersion("9.0.115"))
+                    <?php
+                    if ($this->Session->read("patron"))
+                    {
+                        if ($this->Session->read('library_type') == '2')
                         {
-                            $("#alt").show();
-                        }
-                        else
-                        {
-                            $("#no_flash").show();
-                        }
-                        
-                        var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
-                        var attributes = {id: "audioplayer"};
+                            ?>
+                                //for player initialization
+                                if (swfobject !== 'undefined') {
 
-                        swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+                                    if (swfobject.hasFlashPlayerVersion("9.0.115"))
+                                    {
+                                        $("#alt").show();
+                                    }
+                                    else
+                                    {
+                                        $("#no_flash").show();
+                                    }
+
+                                    var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
+                                    var attributes = {id: "audioplayer"};
+
+                                    swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+                                }
+                            <?php
+                        }
                     }
+                    ?>
 
                 });
 
-                //for google anlytics
+//for google anlytics
                 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
                 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 
@@ -168,7 +173,8 @@ if ($this->Session->read("patron"))
                 try {
                     var pageTracker = _gat._getTracker("UA-16162084-1");
                     pageTracker._trackPageview();
-                } catch (err) {
+                }
+                catch (err) {
                 }
 
 
@@ -180,7 +186,7 @@ if ($this->Session->read("patron"))
 <!-- Code for player -->
 
 
-<?php //if ($this->Session->read('patron') && $this->Session->read('library_type') == 2){    ?>
+<?php //if ($this->Session->read('patron') && $this->Session->read('library_type') == 2){      ?>
 
 
       <!-- <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/js/jwplayer.js"></script> -->
@@ -314,6 +320,6 @@ if ($this->Session->read("patron"))
 //                });
           });
       </script>    -->
-<?php //}    ?>
+<?php //}      ?>
 <!-- Code for player end -->
 
