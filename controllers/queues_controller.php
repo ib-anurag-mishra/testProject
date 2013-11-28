@@ -408,7 +408,7 @@ class QueuesController extends AppController
         }
         else if($type == 'song')
         {
-            $songDetails = $this->Common->getSongsDetails($$prodID);
+            $songDetails = $this->Common->getSongsDetails($prodID);
             
             print_r($songDetails);
         }
