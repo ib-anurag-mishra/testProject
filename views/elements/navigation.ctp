@@ -91,6 +91,14 @@ function renameQueue()
                 $('.rename-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
                 resetForms();
+
+                //updating the queuelist
+                 $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
+                    if( $(this).find('a').attr('id') === $('#rqPlid').val() )
+                    {
+                        $(this).find('a').attr('id').text( $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val()) );
+                    }
+                 });
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // log the error to the console
@@ -234,6 +242,14 @@ $(document).ready(function() {
                 $('.delete-queue-dialog-box').removeClass('active');
                 $('.queue-overlay').removeClass('active');
                
+                //updating the queuelist
+                 $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
+                    if( $(this).find('a').attr('id') === $('#rqPlid').val() )
+                    {
+                        $(this).find('a').attr('id').remove();
+                    }
+                 });
+
                 History.pushState(null, title, url);
                 event.preventDefault();
             },

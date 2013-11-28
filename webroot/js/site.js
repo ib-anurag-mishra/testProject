@@ -562,6 +562,9 @@ $('document').ready(function()
 
     $(document).on('click', '.my-top-100-page .add-to-playlist-button', function(e) {
         var queuelist = $(document).find('.playlist-options-test').html();
+        var oldList = $(document).find('.playlist-options-test').find('.playlist-options');
+        oldList.remove();
+        
         $(this).next('.wishlist-popover').append(queuelist);
         return false;
     });
