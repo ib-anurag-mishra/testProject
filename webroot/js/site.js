@@ -561,11 +561,24 @@ $('document').ready(function()
     });
 
     $(document).on('click', '.my-top-100-page .add-to-playlist-button', function(e) {
+        e.preventDefault();
+        
         var queuelist = $(document).find('.playlist-options-test').html();
         var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
         oldList.remove();
         
         $(this).next('.wishlist-popover').append(queuelist);
+        
+         $('.wishlist-popover').removeClass('active');
+
+        if ($(this).next('.wishlist-popover').hasClass('active')) {
+            $(this).next('.wishlist-popover').removeClass('active');
+            $(this).find('.add-to-playlist-button').css({opacity: .5});
+        } else {
+
+            $(this).next('.wishlist-popover').addClass('active');
+        }
+        
         return false;
     });
 
