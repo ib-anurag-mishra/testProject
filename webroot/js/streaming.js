@@ -578,14 +578,14 @@ function reportWindowClosedSongInfo (wcsobj) {
         songToken = wcsobj.token
        
        
-       if(songId==null || songId==undefined || songId=='')
-       {
-           
-       }
-       else
-        {
+//       if(songId==null || songId==undefined || songId=='')
+//       {
+//           
+//       }
+//       else
+//        {
             streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
-        }
+      //  }
        
         
 	
