@@ -83,14 +83,6 @@ function renameQueue()
             success: function (response) { 
                 $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
-                
-                document.getElementById('ajaxflashMessage44').innerHTML = '' ;
-                document.getElementById('ajaxflashMessage44').innerHTML = response ;
-                $('#ajaxflashMessage44').css('display','block');
-                
-                $('.rename-queue-dialog-box').removeClass('active');
-                $('.queue-overlay').removeClass('active');
-                resetForms();
 
                 //updating the queuelist
                  $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
@@ -100,6 +92,15 @@ function renameQueue()
                         $(this).find('a').text( name );
                     }
                  });
+                
+                document.getElementById('ajaxflashMessage44').innerHTML = '' ;
+                document.getElementById('ajaxflashMessage44').innerHTML = response ;
+                $('#ajaxflashMessage44').css('display','block');
+                
+                $('.rename-queue-dialog-box').removeClass('active');
+                $('.queue-overlay').removeClass('active');
+                resetForms();
+                
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // log the error to the console
