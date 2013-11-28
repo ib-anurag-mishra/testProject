@@ -420,7 +420,7 @@ class QueuesController extends AppController
                     $insertArr['queue_id'] = $queueId;
                     $insertArr['song_prodid'] = $songDetails['Song']['ProdID'];
                     $insertArr['song_providertype'] = $songDetails['Song']['provider_type'];
-                    $insertArr['album_prodid'] = $$songDetails['Albums']['ProdID'];
+                    $insertArr['album_prodid'] = $songDetails['Albums']['ProdID'];
                     $insertArr['album_providertype'] = $songDetails['Albums']['provider_type'];
                     //insert into queuedetail table
                     $this->QueueDetail->setDataSource('master');
