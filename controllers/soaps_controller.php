@@ -6956,6 +6956,7 @@ STR;
   private function setQueueSongs($arrSongs, $queueID) {
     
     $this->QueueDetail->deleteAll(array('queue_id' => $queueID), false);
+    
     if(!(empty($arrSongs))) {  
       foreach($arrSongs as $Spid){
         $Spid = trim($Spid);
@@ -6983,7 +6984,8 @@ STR;
             'fields' => array('Albums.ProdID', 'Albums.provider_type'),
             'recursive' => -1
           ));
-      
+          
+          $this->QueueDetail->create();
           $insertArr['queue_id'] = $queueID;
           $insertArr['song_prodid'] = $productDetails['Product']['ProdID'];
           $insertArr['song_providertype'] = $productDetails['Product']['provider_type'];
