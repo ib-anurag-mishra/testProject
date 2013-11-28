@@ -96,7 +96,7 @@ function renameQueue()
                  $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
                     if( $(this).find('a').attr('id') === $('#rqPlid').val() )
                     {
-                        var name = $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val()) ;
+                        var name = $('#FormRename').find('#name').val() ;
                         $(this).find('a').text( name );
                     }
                  });
