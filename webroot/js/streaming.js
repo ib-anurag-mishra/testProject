@@ -578,14 +578,11 @@ function reportWindowClosedSongInfo (wcsobj) {
         songToken = wcsobj.token
        
        
-//       if(songId==null || songId==undefined || songId=='')
-//       {
-//           
-//       }
-//       else
-//        {
-            streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
-      //  }
+       if(!(songId==null || songId==undefined || songId=='' || songProviderType==null || songProviderType==undefined || songProviderType=='' || plaulistId==null || plaulistId==undefined || plaulistId=='' || songLength==null || songLength==undefined || songLength=='' || songDuration==null || songDuration==undefined || songDuration=='' || songToken==null || songToken==undefined || songToken==''))
+       {
+           streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,23,songLength,songDuration,songToken);
+       }
+       
        
         
 	
