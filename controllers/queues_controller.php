@@ -350,7 +350,7 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
 
         $prodID = $_POST["prodID"];
         $type = $_POST["type"];
@@ -365,11 +365,11 @@ class QueuesController extends AppController
 
             $albumSongs = $this->requestAction(
                     array('controller' => 'artists', 'action' => 'getAlbumSongs'), array(
-                'pass' => array(
-                    base64_encode($albumDetails['ArtistText']),
-                    $albumDetails['ProdID'],
-                    base64_encode($albumDetails['provider_type'])
-                )
+                            'pass' => array(
+                                base64_encode($albumDetails['ArtistText']),
+                                $albumDetails['ProdID'],
+                                base64_encode($albumDetails['provider_type'])
+                            )
                     )
             );
 
@@ -406,9 +406,11 @@ class QueuesController extends AppController
             }
             
         }
-        else
+        else if($type == 'song')
         {
+            $songDetails = $this->Common->getSongsDetails($$prodID);
             
+            print_r($songDetails);
         }
         die;
     }
