@@ -54,8 +54,8 @@
                         ($this->Session->read("Auth.User.type_id") != 1 && $queueType == 'Custom'))
                 {
                     ?>
-                    <a class="rename-queue" href="javascript:void(0);" onclick="queueModifications();">Rename Queue</a>	
-                    <a class="delete-queue" href="javascript:void(0);" onclick="queueModifications();">Delete Queue</a>
+                    <a class="rename-queue" href="javascript:void(0);" onclick="queueModifications();">Rename Playlist</a>	
+                    <a class="delete-queue" href="javascript:void(0);" onclick="queueModifications();">Delete Playlist</a>
                     <?php
                 }
                 ?>
