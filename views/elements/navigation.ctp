@@ -323,7 +323,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             </div>
             <div class="create-queue-dialog-box">
                 <div class="close"></div>
-                <header>Create Queue</header>
+                <header>Create Playlist</header>
                 <form id="FormDelete" action="#" >
                     <div class="rename-form-container">
                         <label id="CreateQueueMessage"></label> 
@@ -341,7 +341,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
         
             <div class="delete-queue-dialog-box">                
                     <div class="close"></div>
-                    <header>Delete Queue?</header>
+                    <header>Delete Playlist?</header>
                    <form action="#">
                     <div class="confirm-text">
                              <p>Are you sure you want to delete '<span>Queue Name</span>'?</p>
