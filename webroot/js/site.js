@@ -666,10 +666,10 @@ $('document').ready(function()
         /* added 081413 */
 
         if ($(this).siblings('p').hasClass('active')) {
-            $(this).siblings('p').slideUp(500).removeClass('active');
+            $(this).siblings('p').slideUp(250).removeClass('active');
         } else {
-            $('.faq-container p').slideUp(500).removeClass('active');
-            $(this).siblings('p').slideDown(500).addClass('active');
+            $('.faq-container p').slideUp(250).removeClass('active');
+            $(this).siblings('p').slideDown(250).addClass('active');
         }
 
     });
