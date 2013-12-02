@@ -227,7 +227,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                 {
                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'), $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"], $nationalTopDownload[$i]["Albums"]["ProdID"], $nationalTopDownload[$i]["Albums"]["provider_type"]);
                                                     ?>
-                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                    <a class="add-to-playlist" href="#">Add To Playlist</a>
                                                     <?php
                                                 }
                                                 ?>
@@ -335,7 +335,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                             
                                                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                             ?>
-                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
                                                             <?php
                                                         }
                                                         ?>
@@ -436,7 +436,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                 <div class="wishlist-popover">                                                
                                                 <?php echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$v['albumSongs'][$v['Album']['ProdID']],$v['Album']['ProdID'],$v['Album']['provider_type']);
                                                 ?>
-                                                <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                <a class="add-to-playlist" href="#">Add To Playlist</a>
                                                 <?php
                                             
                                             ?>
