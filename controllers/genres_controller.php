@@ -334,6 +334,7 @@ Class GenresController extends AppController
                             'Genre.Genre'
                         )),
                 ),
+                'order' => 'TRIM(Song.ArtistText) ASC',
                 'extra' => array('chk' => 1),
                 'limit' => '60', 'cache' => 'yes', 'check' => 2
             );
@@ -353,6 +354,7 @@ Class GenresController extends AppController
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
                 'extra' => array('chk' => 1),
+                'order' => 'TRIM(Song.ArtistText) ASC',
                 'limit' => '60',
                 'cache' => 'yes',
                 'check' => 2,
@@ -452,6 +454,7 @@ Class GenresController extends AppController
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
+                'order' => 'TRIM(Song.ArtistText) ASC',
                 'contain' => array(
                     'Genre' => array(
                         'fields' => array(
@@ -476,6 +479,7 @@ Class GenresController extends AppController
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
+                'order' => 'TRIM(Song.ArtistText) ASC',
                 'extra' => array('chk' => 1),
                 'limit' => '60',
                 'cache' => 'yes',
@@ -573,6 +577,7 @@ Class GenresController extends AppController
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
+                'order' => 'TRIM(Song.ArtistText) ASC',
                 'contain' => array(
                     'Genre' => array(
                         'fields' => array(
@@ -597,6 +602,7 @@ Class GenresController extends AppController
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
+                'order' => 'TRIM(Song.ArtistText) ASC',
                 'extra' => array('chk' => 1),
                 'limit' => '60',
                 'cache' => 'yes',
