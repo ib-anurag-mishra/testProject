@@ -52,7 +52,7 @@
                                             <?php
                                             //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                             ?>
-                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
                                             <?php
                                         }
                                         ?>
@@ -262,7 +262,7 @@
                                         {
                                             //echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Song"]["ProdID"], $value["Song"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
                                             ?>
-                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
                                         <?php } ?>
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
