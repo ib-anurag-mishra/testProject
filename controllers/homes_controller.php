@@ -384,8 +384,8 @@ class HomesController extends AppController
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
-            if (($libDownload = Cache::read("lib".$libId)) === false){
-            
+            //if (($libDownload = Cache::read("lib".$libId)) === false){
+            if(1){
                 $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
             } 
             else
@@ -401,8 +401,8 @@ class HomesController extends AppController
 
             $ids_provider_type_album = '';
 
-                //if(1)
-            if (($libDownload = Cache::read("lib_album".$libId)) === false)
+            if(1)
+            //if (($libDownload = Cache::read("lib_album".$libId)) === false)
             {
 
                 $topDownload_albums = $this->Common->getLibraryTop10Albums($country,$libId);
@@ -445,8 +445,8 @@ class HomesController extends AppController
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-                if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-                //if(1) {
+                //if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+                if(1) {
                     $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
                 }
                 else
@@ -463,7 +463,9 @@ class HomesController extends AppController
             $country = $this->Session->read('territory');
             
             if(!empty($country)){  
-                if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+                //if (($national = Cache::read("national_us_top10_albums".$territory)) === false) 
+                if(1)
+                {
                     $ustop10Albums = $this->Common->getUsTop10Albums($territory);
                 }
                 else
