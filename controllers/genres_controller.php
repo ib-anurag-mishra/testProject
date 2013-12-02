@@ -293,6 +293,7 @@ Class GenresController extends AppController
                 $this->paginate = array(
                                 'conditions' => $gcondition,
                                 'fields' => array('DISTINCT Song.ArtistText'),
+                                'order' => 'TRIM(Song.ArtistText) ASC',
                                     'contain' => array(
                                             'Genre' => array(
                                                     'fields' => array(
@@ -315,6 +316,7 @@ Class GenresController extends AppController
                     $this->paginate = array(
                         'conditions' => $gcondition,
                         'fields' => array('DISTINCT Song.ArtistText'),
+                        'order' => 'TRIM(Song.ArtistText) ASC',
                         'extra' => array('chk' => 1),                        
                         'limit' => '60',
                         'cache' => 'yes',
@@ -407,6 +409,7 @@ Class GenresController extends AppController
                     $this->paginate = array(
                                     'conditions' => $gcondition,
                                     'fields' => array('DISTINCT Song.ArtistText'),
+                                    'order' => 'TRIM(Song.ArtistText) ASC',
                                         'contain' => array(
                                                 'Genre' => array(
                                                         'fields' => array(
@@ -429,6 +432,7 @@ Class GenresController extends AppController
                     $this->paginate = array(
                             'conditions' => $gcondition,
                             'fields' => array('DISTINCT Song.ArtistText'),
+                            'order' => 'TRIM(Song.ArtistText) ASC',
                             'extra' => array('chk' => 1),                           
                             'limit' => '60',
                             'cache' => 'yes',
@@ -522,6 +526,7 @@ Class GenresController extends AppController
                 $this->paginate = array(
                         'conditions' => $gcondition,
                         'fields' => array('DISTINCT Song.ArtistText'),
+                        'order' => 'TRIM(Song.ArtistText) ASC',
                             'contain' => array(
                                     'Genre' => array(
                                             'fields' => array(
@@ -544,6 +549,7 @@ Class GenresController extends AppController
                 $this->paginate = array(
                     'conditions' => $gcondition,
                     'fields' => array('DISTINCT Song.ArtistText'),
+                    'order' => 'TRIM(Song.ArtistText) ASC',
                     'extra' => array('chk' => 1),                            
                     'limit' => '60',
                     'cache' => 'yes',

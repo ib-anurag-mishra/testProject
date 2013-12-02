@@ -1245,6 +1245,7 @@ STR;
                 $this->paginate = array(
                     'conditions' => $gcondition,
                     'fields' => array('DISTINCT Song.ArtistText'),
+                    'order' => 'TRIM(Song.ArtistText) ASC',
                     'extra' => array('chk' => 1),                    
                     'limit' => '60',
                     'cache' => 'yes',
@@ -1283,7 +1284,8 @@ STR;
                     $this->paginate = array(
                     'conditions' => $gcondition,
                     'fields' => array('DISTINCT Song.ArtistText'),
-                    'extra' => array('chk' => 1),                    
+                    'extra' => array('chk' => 1), 
+                    'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60',
                     'cache' => 'yes',
                     'check' => 2,
@@ -1321,6 +1323,7 @@ STR;
                     $this->paginate = array(
                         'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 '),
                         'fields' => array('DISTINCT Song.ArtistText'),
+                        'order' => 'TRIM(Song.ArtistText) ASC',
                         'contain' => array(
                         'Genre' => array(
                             'fields' => array(
@@ -1356,6 +1359,7 @@ STR;
                     $this->paginate = array(
                         'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 '),
                         'fields' => array('DISTINCT Song.ArtistText'),
+                        'order' => 'TRIM(Song.ArtistText) ASC',
                         'contain' => array(
                         'Genre' => array(
                             'fields' => array(
