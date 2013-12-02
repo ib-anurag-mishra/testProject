@@ -53,7 +53,7 @@
 
                                                                                 echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                                                      ?>
-                                                                                <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                                                <a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                      </div>
                                                                 <?php } ?>
 
@@ -211,7 +211,7 @@
                                                 <div class="wishlist-popover">
                                                 <?php if( $this->Session->read('library_type') == 2 ){
                                                             echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
-                                                            <a class="add-to-playlist " href="#">Add To Queue</a>
+                                                            <a class="add-to-playlist " href="#">Add To Playlist</a>
                                                 <?php } ?>
 
 
