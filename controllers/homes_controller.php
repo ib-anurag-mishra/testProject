@@ -433,7 +433,7 @@ class HomesController extends AppController
         function us_top_10()
         {
             
-            Configure::write('debug', 2);
+           // Configure::write('debug', 2);
             
             $this->layout = 'home';  
 
@@ -453,8 +453,8 @@ class HomesController extends AppController
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-               // if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-                if(1) {
+                if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+                //if(1) {
                     $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
                 }
                 else
@@ -470,12 +470,8 @@ class HomesController extends AppController
                
             $country = $this->Session->read('territory');
             
-            if(!empty($country)){ 
-                
-                
-               // if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
-                    if(1) { 
-                    
+            if(!empty($country)){  
+                if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
                     $ustop10Albums = $this->Common->getUsTop10Albums($territory);
                 }
                 else
@@ -490,11 +486,7 @@ class HomesController extends AppController
                $country = $this->Session->read('territory');
                 
             if(!empty($country)){ 
-                
-               //if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
-                   if(1) { 
-                   
-                   
+               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
                    $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
                 }
                 else
