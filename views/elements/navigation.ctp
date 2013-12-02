@@ -731,7 +731,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
-                                                            <a href="javascript:void(0)" class="sidebar-anchor"><?php __('Freegal Queues'); ?></a>
+                                                            <a href="javascript:void(0)" class="sidebar-anchor"><?php __('Freegal Playlists'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){
                                                                     $fqueuesid = 'leftfqueues_'.$value['QueueList']['queue_id'].'_07';
@@ -742,7 +742,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                                     <?php } ?>
                                                     <li>
-                                                            <a href="javascript:void(0);" class="sidebar-anchor saved-queue"><?php __('My Queues'); ?></a>
+                                                            <a href="javascript:void(0);" class="sidebar-anchor saved-queue"><?php __('My Playlists'); ?></a>
                                                             <ul class="sidebar-sub-nav">
 
 
