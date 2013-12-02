@@ -360,7 +360,7 @@ class HomesController extends AppController
         
 	function my_lib_top_10()
 	{ 
-            Configure::write('debug', 2);
+            Configure::write('debug', 0);
             $this->layout = 'home';           
             $patId = $this->Session->read('patron');
             $country = $this->Session->read('territory');
@@ -385,8 +385,8 @@ class HomesController extends AppController
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
-           // if (($libDownload = Cache::read("lib".$libId)) === false){
-                if (1){
+            if (($libDownload = Cache::read("lib".$libId)) === false){
+              //  if (1){
             
                 $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
             } 
@@ -403,8 +403,8 @@ class HomesController extends AppController
 
             $ids_provider_type_album = '';
 
-                if(1)
-           // if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                //if(1)
+            if (($libDownload = Cache::read("lib_album".$libId)) === false)
             {
 
                 $topDownload_albums = $this->Common->getLibraryTop10Albums($country,$libId);
@@ -418,8 +418,8 @@ class HomesController extends AppController
             
 ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
             
-            if (1)
-            //if (($libDownload = Cache::read("lib_video".$libId)) === false)
+            //if (1)
+            if (($libDownload = Cache::read("lib_video".$libId)) === false)
             {
                 $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country,$libId);
             }
@@ -432,6 +432,9 @@ class HomesController extends AppController
         
         function us_top_10()
         {
+            
+            Configure::write('debug', 2);
+            
             $this->layout = 'home';  
 
             $libId = $this->Session->read('library');
@@ -450,8 +453,8 @@ class HomesController extends AppController
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-                if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-                //if(1) {
+               // if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+                if(1) {
                     $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
                 }
                 else
@@ -467,8 +470,12 @@ class HomesController extends AppController
                
             $country = $this->Session->read('territory');
             
-            if(!empty($country)){  
-                if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+            if(!empty($country)){ 
+                
+                
+               // if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+                    if(1) { 
+                    
                     $ustop10Albums = $this->Common->getUsTop10Albums($territory);
                 }
                 else
@@ -483,7 +490,11 @@ class HomesController extends AppController
                $country = $this->Session->read('territory');
                 
             if(!empty($country)){ 
-               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
+                
+               //if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
+                   if(1) { 
+                   
+                   
                    $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
                 }
                 else
