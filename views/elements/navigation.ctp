@@ -747,7 +747,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
 
                                                                     <li><a id="leftnowstreaming07" onclick="setUpperNavigation('leftnowstreaming07')" href="/queuelistdetails/now_streaming"><?php __('Now Streaming'); ?></a></li>
-                                                                    <li><a id="leftsavedqueues07" onclick="setUpperNavigation('leftsavedqueues07')" href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Saved Queues'); ?></a></li>
+                                                                    <li><a id="leftsavedqueues07" onclick="setUpperNavigation('leftsavedqueues07')" href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Saved Playlists'); ?></a></li>
                                                             </ul>
                                                     </li>
                                                     <li>
