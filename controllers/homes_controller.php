@@ -385,7 +385,8 @@ class HomesController extends AppController
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
-            if (($libDownload = Cache::read("lib".$libId)) === false){
+           // if (($libDownload = Cache::read("lib".$libId)) === false){
+                if (1){
             
                 $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
             } 
@@ -402,8 +403,8 @@ class HomesController extends AppController
 
             $ids_provider_type_album = '';
 
-                //if(1)
-            if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                if(1)
+           // if (($libDownload = Cache::read("lib_album".$libId)) === false)
             {
 
                 $topDownload_albums = $this->Common->getLibraryTop10Albums($country,$libId);
@@ -414,8 +415,11 @@ class HomesController extends AppController
             }
             $this->set('topDownload_albums',$topDownload_albums); 
 
-            ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
-            if (($libDownload = Cache::read("lib_video".$libId)) === false)
+            
+////////////////////////////////////////////////Videos///////////////////////////////////////////////////
+            
+            if (1)
+            //if (($libDownload = Cache::read("lib_video".$libId)) === false)
             {
                 $topDownload_videos_data = $this->Common->getLibraryTop10Videos($country,$libId);
             }

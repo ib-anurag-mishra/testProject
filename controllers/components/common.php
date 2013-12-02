@@ -1976,6 +1976,8 @@ STR;
                     $ids .= ',' . $v['Download']['ProdID'];
                     $ids_provider_type_album .= ',' . "(" . $v['Download']['ProdID'] . ",'" . $v['Download']['provider_type'] . "')";
                 }
+                
+                
                 if ($v['Download']['provider_type'] == 'sony')
                 {
                     $sony_ids[] = $v['Download']['ProdID'];
