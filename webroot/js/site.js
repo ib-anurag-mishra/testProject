@@ -296,7 +296,7 @@ $('document').ready(function()
     });
 
 
-    $('.wishlist-popover .playlist-options').bind('mousewheel', function(e) {
+    $('.playlist-options').bind('mousewheel', function(e) {
 		
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         
@@ -305,6 +305,11 @@ $('document').ready(function()
         return false;
 
 
+    });
+    
+    $(document).on('scroll','.playlist-options',function(){
+	    
+	   console.log('scrolled'); 
     });
     
 
