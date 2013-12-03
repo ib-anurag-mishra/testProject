@@ -303,6 +303,7 @@ $('document').ready(function()
 */
     
     $(document).on('mouseenter','.playlist-options',function(e){
+    	console.log('entered');
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
         //prevent page fom scrolling
