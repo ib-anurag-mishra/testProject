@@ -425,6 +425,9 @@ function login($library = null){
 					$insertArr['patronid'] = $patronId;
 					$insertArr['session_id'] = session_id();
 					$this->Currentpatron->save($insertArr);
+                    if($libraryArr['Library']['library_type'] == 2){
+                        $this->Session->write('showStreamPopup','yes');
+                    }
 				}
 				$date = time();
 				$values = array(0 => $date, 1 => session_id());
@@ -1515,6 +1518,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -1766,6 +1772,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -2003,6 +2012,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -2206,6 +2218,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -2433,6 +2448,9 @@ function login($library = null){
 						$insertArr['patronid'] = $patronId;
 						$insertArr['session_id'] = session_id();
 						$this->Currentpatron->save($insertArr);
+                        if($existingLibraries['0']['Library']['library_type'] == 2){
+                            $this->Session->write('showStreamPopup','yes');
+                        }
 					}
 					$date = time();
 					$values = array(0 => $date, 1 => session_id());
@@ -2669,6 +2687,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -2901,6 +2922,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -3150,6 +3174,9 @@ function login($library = null){
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
 									$this->Currentpatron->save($insertArr);
+                                    if($existingLibraries['0']['Library']['library_type'] == 2){
+                                        $this->Session->write('showStreamPopup','yes');
+                                    }
 								}
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());
@@ -3387,6 +3414,9 @@ function login($library = null){
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
 									$this->Currentpatron->save($insertArr);
+                                    if($existingLibraries['0']['Library']['library_type'] == 2){
+                                        $this->Session->write('showStreamPopup','yes');
+                                    }
 								}
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());
@@ -3643,6 +3673,9 @@ function login($library = null){
 								$insertArr['patronid'] = $patronId;
 								$insertArr['session_id'] = session_id();
 								$this->Currentpatron->save($insertArr);
+                                if($existingLibraries['0']['Library']['library_type'] == 2){
+                                    $this->Session->write('showStreamPopup','yes');
+                                }
 							}
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());
@@ -3886,6 +3919,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -4035,6 +4071,9 @@ function login($library = null){
 				$insertArr['patronid'] = $card;
 				$insertArr['session_id'] = session_id();
 				$this->Currentpatron->save($insertArr);
+                if($existingLibraries['0']['Library']['library_type'] == 2){
+                    $this->Session->write('showStreamPopup','yes');
+                }
 			}
 			$date = time();
 			$values = array(0 => $date, 1 => session_id());
@@ -4283,6 +4322,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -4539,6 +4581,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -4774,6 +4819,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -5025,6 +5073,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -5283,6 +5334,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
@@ -5529,6 +5583,9 @@ function login($library = null){
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);
+                            if($existingLibraries['0']['Library']['library_type'] == 2){
+                                $this->Session->write('showStreamPopup','yes');
+                            }
 						}
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
