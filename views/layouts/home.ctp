@@ -721,7 +721,7 @@
                                         ?>      
                             
                             <?php
-               if(($this->Session->read('showStreamPopup') && $this->Session->read('showStreamPopup') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
+               if(($this->Session->read('showStreamPopup') && $this->Session->read('showStreamPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
            ?>
 		<a class='streamApproval' href="#"></a>
 		<div style="display:none;">
