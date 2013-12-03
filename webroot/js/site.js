@@ -1729,7 +1729,6 @@ $('document').ready(function()
     /* end now streaming page */
 
     /* overlays */
-
     $(document).on('click', '.rename-queue', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
@@ -1745,13 +1744,15 @@ $('document').ready(function()
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
+    var createLinkThis;
+    
     $(document).on('click', ".create-new-queue , .create-new-queue-btn", function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.create-queue-dialog-box').addClass('active');
         $('.create-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
         $('.wishlist-popover').removeClass('active');
-
+        createLinkThis = $(this);
     });
 
     $(document).on('click', '.close,.text-close', function(e) {
