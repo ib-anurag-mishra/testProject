@@ -199,7 +199,7 @@ $ieVersion =  ieversion();
                                         <!-- <div class="wishlist-popover">
                                             <?php if( $this->Session->read('library_type') == 2 ){
                                                         echo $this->Queue->getQueuesList($this->Session->read('patron'),$wishlistResults[$i]["Song"]["ProdID"],$wishlistResults[$i]["Song"]["provider_type"],$wishlistResults[$i]["Albums"]["ProdID"],$wishlistResults[$i]["Albums"]["provider_type"]); ?>
-                                                        <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                        <a class="add-to-playlist" href="#">Add To Playlist</a>
                                             <?php } ?>
                                             <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>            
 					</div> -->
