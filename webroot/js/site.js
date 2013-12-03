@@ -309,7 +309,9 @@ $('document').ready(function()
     
 	$(document).on('mousewheel','.playlist-options',function(){
 		
-		console.log('scrolled');
+		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+		
+		return false;
 	});
     
 
