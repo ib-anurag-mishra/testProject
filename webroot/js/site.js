@@ -307,7 +307,7 @@ $('document').ready(function()
 
     });
     
-    $(document).on('scroll','.playlist-options',function(){
+    $('.wishlist-popover').on('scroll',function(){
 	    
 	   console.log('scrolled'); 
     });
