@@ -353,15 +353,7 @@ STR;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
-                    );
-                    
-                    echo '<pre>';
-                    print_r($value);
-                    
-                    echo '<br/>';
-                    print_r($data[$key]['albumSongs']);
-                    
-                    die;
+                    );                    
                 }
 
                 Cache::write("nationaltop100albums" . $country, $data);

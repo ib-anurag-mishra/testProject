@@ -115,7 +115,8 @@ class HomesController extends AppController
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
         
-
+        echo '<pre>';
+        print_r($nationalTopAlbums);
  
         $ids = '';
         $ids_provider_type = '';
