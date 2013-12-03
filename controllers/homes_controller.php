@@ -105,8 +105,7 @@ class HomesController extends AppController
         $this->set('nationalTopDownload',$nationalTopDownload);
    
 		
-	// National Top 100 Albums slider 
-       
+	// National Top 100 Albums slider        
         if (($national = Cache::read("nationaltop100albums".$territory)) === false) {
          
             $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
