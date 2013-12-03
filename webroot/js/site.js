@@ -1625,7 +1625,21 @@ $('document').ready(function()
     $(document).on('click', '.now-streaming-page .now-playing-container .add-to-wishlist-button,.queue-detail-page .now-playing-container .add-to-wishlist-button', function(e) {
         e.preventDefault();
 
-        $(this).siblings('.wishlist-popover').addClass('active');
+        var queuelist = $(document).find('.playlist-options-test').html();
+        var oldList = $(this).siblings('.wishlist-popover').find('.playlist-options');
+        oldList.remove();
+        
+        $(this).siblings('.wishlist-popover').append(queuelist);
+        
+         $('.wishlist-popover').removeClass('active');
+
+        if ($(this).siblings('.wishlist-popover').hasClass('active')) {
+            $(this).siblings('.wishlist-popover').removeClass('active');
+            $(this).find('.add-to-playlist-button').css({opacity: .5});
+        } else {
+
+            $(this).siblings('.wishlist-popover').addClass('active');
+        }
     });
 
 
