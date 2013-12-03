@@ -719,6 +719,26 @@
                                             <?php
                                         }
                                         ?>      
+                            
+                            <?php
+               if(($this->Session->read('showStreamPopup') && $this->Session->read('showStreamPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
+           ?>
+		<a class='streamApproval' href="#"></a>
+		<div style="display:none;">
+			<div id="streamApproval_div">
+                            <span id="stream_content">
+				<div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+				</div>
+				<?php echo $page->getPageContent('stream_123'); ?>
+                <br />
+				<input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
+                            </span>
+
+                        </div>
+		</div>
+	      
+          <?php } ?>
 
                                         <div id="border-background" >
                                             <div id="container">

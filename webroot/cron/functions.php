@@ -147,6 +147,7 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
             {
                 echo ucfirst($typeReport) . " Report Sucessfully sent\n";
                 fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+                sendFile($src, $dst);
                 sendReportEmail($typeReport, $reportName);
                 return true;
             }
@@ -254,12 +255,15 @@ function sendFile($src,$dst)
 		else
 		{
 			$sftp = ssh2_sftp($con);
+                        echo $src."\n";
+                        echo $dst."\n";
+                        echo $con;
 			if(!ssh2_scp_send($con, $src, $dst, 0644)){
 				echo "error\n";
 			}
 			else
 			{
-				//echo "FILE Sucessfully sent\n";
+				echo "FILE Sucessfully sent\n";
 			}
 
 		}
