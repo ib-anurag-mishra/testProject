@@ -54,7 +54,7 @@
                         ?>
                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                         <div class="wishlist-popover">
-                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
+                            <input type="hidden" id="<?= $album['Albums']['ProdID'] ?>" value="album"/>
                             <?php
                             // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
                             ?>
@@ -252,7 +252,7 @@
 
                             <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0);"></a>
                             <div class="wishlist-popover">         
-                                <input type="hidden" id="<?= $value["Song"]["ProdID"] ?>" value="song"/>
+                                <input type="hidden" id="<?= $albumSong["Song"]["ProdID"] ?>" value="song"/>
                                 <?php
                                 if (($albumSong['Country']['SalesDate'] < date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                                 {
