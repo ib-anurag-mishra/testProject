@@ -302,7 +302,7 @@ $('document').ready(function()
 
     });
     
-     $('body').on('scroll','.playlist-options',function(){
+     $(document).on('scroll','.playlist-options',function(){
 	     
 	    console.log('mouse scrolled'); 
      });
