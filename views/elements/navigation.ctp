@@ -304,7 +304,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
     <div class="queue-overlay">
             <div class="rename-queue-dialog-box">
                     <div class="close"></div>
-                    <header>Rename '<span>Queue Name</span>'</header>
+                    <header>Rename '<span>Playlist Name</span>'</header>
                     <form id="FormRename" action="#">
                     <div class="rename-form-container">
                         <label id="RenameQueueMessage"></label> 
