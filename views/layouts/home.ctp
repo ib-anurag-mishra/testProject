@@ -543,7 +543,7 @@
                     document.getElementById('dqPlid').value = document.getElementById('hid_Plid').value;
                     queueName = $('#hid_playlist_name').val();
                     $('.confirm-text span').text(queueName);
-                    $('rename-queue-dialog-box span').text(queueName);
+                    $('.rename-queue-dialog-box span').text(queueName);
                 }
             </script>
 
