@@ -39,8 +39,8 @@
                                                 if(($this->Session->read("Auth.User.type_id") == 1 && $queueType=='Default') || ($this->Session->read("Auth.User.type_id") ==1 &&  $queueType=='Custom') ||  ($this->Session->read("Auth.User.type_id") !=1 &&  $queueType=='Custom'))
                                                 {
                                                     ?>
-                                                        <a class="rename-queue" href="javascript:void(0);" onclick="queueModifications();">Rename Queue</a>	
-                					<a class="delete-queue" href="javascript:void(0);" onclick="queueModifications();">Delete Queue</a>
+                                                        <a class="rename-queue" href="javascript:void(0);" onclick="queueModifications();">Rename Playlist</a>	
+                					<a class="delete-queue" href="javascript:void(0);" onclick="queueModifications();">Delete Playlist</a>
                                                     <?php
                                                 }
                                                 
@@ -282,7 +282,7 @@
                 <?php }    
                 }else{ ?>
 
-                <h2> There are no queues currently being played. </h2>
+                <h2> There are no Playlists currently being played. </h2>
 		
                 <?php } ?>                
 

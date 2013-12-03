@@ -1142,7 +1142,7 @@ function Get_Sales_date($sales_date_array, $country)
                                         {
                                             echo $this->Queue->getQueuesList($this->Session->read('patron'), $psong->ProdID, $psong->provider_type, $psong->ReferenceID, $psong->provider_type);
                                             ?>
-                                            <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
+                                            <a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
                                         <?php } ?>
                                     <?php } ?>
                                     <?php

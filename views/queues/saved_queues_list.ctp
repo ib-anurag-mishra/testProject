@@ -69,6 +69,6 @@
     else
     {
         ?>
-        <h2>There are no Queues which has been saved till now </h1>
+        <h2>There are no Playlists which has been saved till now </h1>
         <?php } ?>
 </section>

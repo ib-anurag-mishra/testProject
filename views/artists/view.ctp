@@ -57,7 +57,7 @@
                             <?php
                             echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
                             ?>
-                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                            <a class="add-to-playlist" href="#">Add To Playlist</a>
                             <?php ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                         </div>
                         <?php
@@ -307,7 +307,7 @@
                                 {
                                     echo $this->Queue->getQueuesList($this->Session->read('patron'), $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"], $album['Album']["ProdID"], $album['Album']["provider_type"]);
                                     ?>
-                                    <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
+                                    <a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
                                 <?php } ?>
                                 <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
                                 <?php
