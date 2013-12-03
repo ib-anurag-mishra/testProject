@@ -290,6 +290,7 @@ $('document').ready(function()
         $('.playlist-options').removeClass('active');
     });
 
+/*
     $('.playlist-options').bind('mousewheel', function(e) {
 
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
@@ -299,6 +300,15 @@ $('document').ready(function()
 
 
     });
+*/
+    
+    $('.playlist-options').on('mouseenter',function(e){
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+        //prevent page fom scrolling
+        return false;    
+    });
+    
     
 
     preview.on('mousedown', function(e) {
