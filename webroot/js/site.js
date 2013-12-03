@@ -562,14 +562,14 @@ $('document').ready(function()
 
     $(document).on('click', '.add-to-playlist-button', function(e) {
         e.preventDefault();
-        
+
         var queuelist = $(document).find('.playlist-options-test').html();
         var oldList = $(this).next('.wishlist-popover').find('.playlist-options');
         oldList.remove();
-        
+
         $(this).next('.wishlist-popover').append(queuelist);
-        
-         $('.wishlist-popover').removeClass('active');
+
+        $('.wishlist-popover').removeClass('active');
 
         if ($(this).next('.wishlist-popover').hasClass('active')) {
             $(this).next('.wishlist-popover').removeClass('active');
@@ -578,7 +578,7 @@ $('document').ready(function()
 
             $(this).next('.wishlist-popover').addClass('active');
         }
-        
+
         return false;
     });
 
@@ -1628,10 +1628,10 @@ $('document').ready(function()
         var queuelist = $(document).find('.playlist-options-test').html();
         var oldList = $(this).siblings('.wishlist-popover').find('.playlist-options');
         oldList.remove();
-        
+
         $(this).siblings('.wishlist-popover').append(queuelist);
-        
-         $('.wishlist-popover').removeClass('active');
+
+        $('.wishlist-popover').removeClass('active');
 
         if ($(this).siblings('.wishlist-popover').hasClass('active')) {
             $(this).siblings('.wishlist-popover').removeClass('active');
@@ -1758,8 +1758,8 @@ $('document').ready(function()
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-  
-    
+
+
     $(document).on('click', ".create-new-queue , .create-new-queue-btn", function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');

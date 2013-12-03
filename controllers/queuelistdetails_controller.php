@@ -359,7 +359,7 @@ class QueueListDetailsController extends AppController
         }
         elseif ($this->data['QueueList']['queue_name'] == '')
         {
-            echo 'Queue Name is empty';
+            echo 'Playlist Name is empty';
             die;
         }
         else
@@ -387,7 +387,7 @@ class QueueListDetailsController extends AppController
             }
             else
             {
-                echo 'Queue Name you entered is already present. Please try different name.';
+                echo 'Playlist Name you entered is already present. Please try different name.';
             }
 
             die;

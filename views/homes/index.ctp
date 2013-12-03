@@ -222,10 +222,12 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             }
                                             ?>
                                             <div class="wishlist-popover">
+                                                <input type="hidden" id="<?= $nationalTopDownload[$i]["Song"]["ProdID"] ?>" value="song"/>
+                                                
                                                 <?php
                                                 if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
                                                 {
-                                                    echo $this->Queue->getQueuesList($this->Session->read('patron'), $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"], $nationalTopDownload[$i]["Albums"]["ProdID"], $nationalTopDownload[$i]["Albums"]["provider_type"]);
+                                                   // echo $this->Queue->getQueuesList($this->Session->read('patron'), $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"], $nationalTopDownload[$i]["Albums"]["ProdID"], $nationalTopDownload[$i]["Albums"]["provider_type"]);
                                                     ?>
                                                     <a class="add-to-playlist" href="#">Add To Playlist</a>
                                                     <?php
@@ -327,11 +329,12 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         }
                                         ?>
                                         <div class="wishlist-popover">
+                                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             <?php
                                             if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
                                             {
 
-                                                echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
+                                               // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                                 ?>
                                                 <a class="add-to-playlist" href="#">Add To Playlist</a>
                                                 <?php
@@ -439,8 +442,11 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     {
                                         ?>
                                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
-                                        <div class="wishlist-popover">                                                
-                                            <?php echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $v['albumSongs'][$v['Album']['ProdID']], $v['Album']['ProdID'], $v['Album']['provider_type']);
+                                        <div class="wishlist-popover">    
+                                            <input type="hidden" id="<?= $v['Album']['ProdID'] ?>" value="album"/>
+                                            
+                                            <?php 
+                                            //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $v['albumSongs'][$v['Album']['ProdID']], $v['Album']['ProdID'], $v['Album']['provider_type']);
                                             ?>
                                             <a class="add-to-playlist" href="#">Add To Playlist</a>
                                             <?php ?>
@@ -563,9 +569,6 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                         echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
-
-
-
                                     </div>
 
                                 <?php } ?>

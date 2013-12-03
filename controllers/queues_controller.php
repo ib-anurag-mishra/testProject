@@ -69,7 +69,7 @@ class QueuesController extends AppController
 
                 if (empty($queue_name))
                 {
-                    $this->Session->setFlash('Queue Name is empty', 'modal', array('class' => 'queue problem'));
+                    $this->Session->setFlash('Playlist Name is empty', 'modal', array('class' => 'queue problem'));
                     $this->redirect($this->referer());
                 }
                 else
@@ -80,7 +80,7 @@ class QueuesController extends AppController
                         //$this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
                         $this->QueueList->setDataSource('default');
                         $this->layout = 'ajax';
-                        echo "Queue has been Added successfully.&" . $this->QueueList->getLastInsertID() . "&" . $this->data['QueueList']['queue_name'];
+                        echo "Playlist has been Added successfully.&" . $this->QueueList->getLastInsertID() . "&" . $this->data['QueueList']['queue_name'];
                         die;
                         //$this->redirect($this->referer());						
                     }
@@ -89,7 +89,7 @@ class QueuesController extends AppController
                         //$this->Session ->setFlash('Error occured while adding queue', 'modal', array( 'class' => 'queue problem' ));
                         $this->QueueList->setDataSource('default');
                         $this->layout = 'ajax';
-                        echo "Error occured while adding queue";
+                        echo "Error occured while adding playlist";
                         //$this->redirect($this->referer());					
                     }
                 }
