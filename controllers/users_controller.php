@@ -318,7 +318,7 @@ Class UsersController extends AppController
     Desc : Logs users/patrons in to the system
    */
 
-	function login($library = null){
+function login($library = null){
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('layout_option') == 'login'){
 			$this->layout = 'login';
