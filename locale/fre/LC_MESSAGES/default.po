@@ -99,7 +99,7 @@ msgid "Added to Wishlist"
 msgstr "Ajoutée àla liste de voeux"
 
 #: \artists\view.ctp:167 \homes\index.ctp:219;336
-msgid "Add to Wishlist"
+msgid "Add To Wishlist"
 msgstr "Ajouter à la liste de voeux"
 
 #: \artists\view.ctp:182 \genres\index.ctp:156;156
@@ -178,7 +178,7 @@ msgstr ""
 "sur \"Annuler\" par la suite"
 
 #: \genres\index.ctp:142
-msgid "Add to wishlist"
+msgid "Add To wishlist"
 msgstr "Ajouter à la liste de voeux"
 
 #: \genres\index.ctp:174

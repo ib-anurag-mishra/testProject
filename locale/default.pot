@@ -92,7 +92,7 @@ msgid "Added to Wishlist"
 msgstr ""
 
 #: \artists\view.ctp:167 \homes\index.ctp:219;336
-msgid "Add to Wishlist"
+msgid "Add To Wishlist"
 msgstr ""
 
 #: \artists\view.ctp:182 \genres\index.ctp:156;156
@@ -168,7 +168,7 @@ msgid ""
 msgstr ""
 
 #: \genres\index.ctp:142
-msgid "Add to wishlist"
+msgid "Add To wishlist"
 msgstr ""
 
 #: \genres\index.ctp:174

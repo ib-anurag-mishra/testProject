@@ -96,7 +96,7 @@ msgid "Added to Wishlist"
 msgstr "Aggiunto alle Prenotazioni"
 
 #: \artists\view.ctp:167 \homes\index.ctp:219;336
-msgid "Add to Wishlist"
+msgid "Add To Wishlist"
 msgstr "Aggiungi alle Prenotazioni"
 
 #: \artists\view.ctp:182 \genres\index.ctp:156;156
@@ -174,7 +174,7 @@ msgstr ""
 "prescindere dal fatto che tu possa poi cliccare \"Cancella\" o meno. "
 
 #: \genres\index.ctp:142
-msgid "Add to wishlist"
+msgid "Add To wishlist"
 msgstr "Aggiungi alle Prenotazioni"
 
 #: \genres\index.ctp:174

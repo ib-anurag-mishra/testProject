@@ -1138,13 +1138,13 @@ STR;
 										}
 																			else{
 											$wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
-											if($wishlistInfo == 'Added to Wishlist'){
+											if($wishlistInfo == 'Added To Wishlist'){
 										?>
-												<p><?php __("Added to Wishlist");?></p>
+												<p><?php __("Added To Wishlist");?></p>
 									<?php 	}
 											else { ?>
 												<p>
-												<span class="beforeClick" id="wishlist<?php echo $psong->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $psong->ProdID; ?>","<?php echo $song->provider_type; ?>");'><?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+												<span class="beforeClick" id="wishlist<?php echo $psong->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $psong->ProdID; ?>","<?php echo $song->provider_type; ?>");'><?php __("Add To Wishlist");?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 												<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 
 												</p>

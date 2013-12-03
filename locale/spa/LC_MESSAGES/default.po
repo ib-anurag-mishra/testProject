@@ -106,7 +106,7 @@ msgid "Added to Wishlist"
 msgstr "Añadido a su Lista Deseos"
 
 #: \artists\view.ctp:167 \homes\index.ctp:219;336
-msgid "Add to Wishlist"
+msgid "Add To Wishlist"
 msgstr "Añadir a mi lista deseos"
 
 #: \artists\view.ctp:182 \genres\index.ctp:156;156
@@ -184,7 +184,7 @@ msgstr ""
 "usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
 
 #: \genres\index.ctp:142
-msgid "Add to wishlist"
+msgid "Add To wishlist"
 msgstr "Añadir a mi lista deseos"
 
 #: \genres\index.ctp:174

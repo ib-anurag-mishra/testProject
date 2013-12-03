@@ -72,13 +72,13 @@ jQuery(document).ready(function() {
 															<?php
 															} else {
 																$wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
-																if($wishlistInfo == 'Added to Wishlist') {
+																if($wishlistInfo == 'Added To Wishlist') {
 																?> 
-																	<?php __("Added to Wishlist");?>
+																	<?php __("Added To Wishlist");?>
 																<?php 
 																} else { 
 																?>
-																	<span class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+																	<span class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __("Add To Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
 																	<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
 																<?php	
 																}
