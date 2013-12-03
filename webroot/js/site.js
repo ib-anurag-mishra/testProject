@@ -302,9 +302,9 @@ $('document').ready(function()
 
     });
     
-     $('body').on('mouseenter','.playlist-options',function(){
+     $('body').on('scroll','.playlist-options',function(){
 	     
-	    console.log('mouse entered'); 
+	    console.log('mouse scrolled'); 
      });
     
 
