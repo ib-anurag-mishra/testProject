@@ -91,8 +91,8 @@ function renameQueue()
 
               
                               
-                $('#hid_playlist_name').children('option[value='+name+']').html();
-                $('#hid_description').children('option[value='+$('.rename-form-container').find('#description').val()+']').html();
+                $('#hid_playlist_name').val( name );
+                $('#hid_description').val( $('.rename-form-container').find('#description').val() );
 
                 //updating the queuelist
                  $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
