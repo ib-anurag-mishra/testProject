@@ -228,6 +228,7 @@ class QueueListDetailsController extends AppController
         }
         else        // Custom Queue
         {
+            print_r($this->params );die;
             $queue_list_array = $this->Queue->getQueueDetails($this->params['pass'][0], $territory);
             $queue_name = base64_decode($this->params['pass'][2]);
             $this->set('queue_name', $queue_name);
@@ -235,7 +236,7 @@ class QueueListDetailsController extends AppController
         }
 
 
-         print_r($queue_list_array );die;
+        // print_r($queue_list_array );die;
         //echo 456;
         //Find Total Duration
         $total_seconds = 0;
