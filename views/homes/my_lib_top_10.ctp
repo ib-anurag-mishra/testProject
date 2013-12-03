@@ -54,8 +54,9 @@
                                         ?> 
                                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                                         <div class="wishlist-popover">
+                                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             <?php
-                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
+                                           // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                             ?>
                                             <a class="add-to-playlist" href="#">Add To Playlist</a>
                                             <?php
@@ -286,6 +287,7 @@
                                     <a class="add-to-playlist-button no-ajaxy" href="#"></a>
 
                                     <div class="wishlist-popover">
+                                        <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
                                         <?php
                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                         {
