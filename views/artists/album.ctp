@@ -150,8 +150,11 @@
                         <li>
                             <div class="album-container">
                                 <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
+                                <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
                                 <img src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>" width="162" height="162" alt="">
-                                <?php
+                                </a> 
+                                    
+                                    <?php
                                 if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
                                 {
                                     echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
