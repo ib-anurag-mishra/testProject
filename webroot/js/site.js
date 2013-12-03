@@ -63,18 +63,7 @@ $('.top-videos-scrollable .video-thumb-container .lazy').lazyload({
 /* end lazyload initalizations */
 
 
-$.fn.bindScrollHandler = function(){
-	
-	$(this).on('scroll',function(){
-		
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        
 
-        //prevent page fom scrolling
-        //return false;		
-	});
-	
-}
 
 $('document').ready(function()
 {
@@ -307,7 +296,7 @@ $('document').ready(function()
     });
 
 
-    $('.playlist-options').bind('mousewheel', function(e) {
+    $('.wishlist-popover .playlist-options').bind('mousewheel', function(e) {
 		
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         
@@ -319,7 +308,7 @@ $('document').ready(function()
     });
     
 
-    $('.playlist-options').bindScrollHandler();
+   
 
 
     
