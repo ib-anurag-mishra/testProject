@@ -343,11 +343,13 @@ STR;
             {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
+            
             if (!empty($data))
             {
 
                 foreach ($data as $key => $value)
                 {
+                    print_r($value);
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
