@@ -1,5 +1,6 @@
-<?php echo $session->flash(); 
-ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is closed
+<?php
+echo $session->flash();
+ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 ?>
 <section class="news">
     <div class="top-100">
@@ -98,26 +99,25 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                             {
                                                 if ('T' == $nationalTopDownload[$i]['Song']['Advisory'])
                                                 {
-                                                       $song_title =   $nationalTopDownload[$i]['Song']['SongTitle'].'(Explicit)';
+                                                    $song_title = $nationalTopDownload[$i]['Song']['SongTitle'] . '(Explicit)';
                                                 }
-                                                else 
+                                                else
                                                 {
-                                                       $song_title =   $nationalTopDownload[$i]['Song']['SongTitle'];
+                                                    $song_title = $nationalTopDownload[$i]['Song']['SongTitle'];
                                                 }
-                                                                           
-                                                    $filePath = shell_exec('perl files/tokengen_streaming '. $nationalTopDownload[$i]['Full_Files']['CdnPath']."/".$nationalTopDownload[$i]['Full_Files']['SaveAsName']);
 
-                                                    if(!empty($filePath))
-                                                     {
-                                                        $songPath  = explode(':',$filePath);
-                                                        $streamUrl =  trim($songPath[1]);
-                                                        $nationalTopDownload[$i]['streamUrl'] = $streamUrl;
-                                                        $nationalTopDownload[$i]['totalseconds']  = $this->Queue->getSeconds($nationalTopDownload[$i]['Song']['FullLength_Duration']); 
-                                                     }
-                                                     
-                                                     echo $this->Queue->getStreamNowLabel($nationalTopDownload[$i]['streamUrl'],$song_title,$nationalTopDownload[$i]['Song']['ArtistText'],$nationalTopDownload[$i]['totalseconds'],$nationalTopDownload[$i]['Song']['ProdID'],$nationalTopDownload[$i]['Song']['provider_type']);
-                                                
-                                             } //echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("' . $nationalTopDownload[$i]['streamUrl'] . '", "' . $song_title . '","' . $nationalTopDownload[$i]['Song']['ArtistText'] . '",' . $nationalTopDownload[$i]['totalseconds'] . ',"' . $nationalTopDownload[$i]['Song']['ProdID'] . '","' . $nationalTopDownload[$i]['Song']['provider_type'] . '");'));
+                                                $filePath = shell_exec('perl files/tokengen_streaming ' . $nationalTopDownload[$i]['Full_Files']['CdnPath'] . "/" . $nationalTopDownload[$i]['Full_Files']['SaveAsName']);
+
+                                                if (!empty($filePath))
+                                                {
+                                                    $songPath = explode(':', $filePath);
+                                                    $streamUrl = trim($songPath[1]);
+                                                    $nationalTopDownload[$i]['streamUrl'] = $streamUrl;
+                                                    $nationalTopDownload[$i]['totalseconds'] = $this->Queue->getSeconds($nationalTopDownload[$i]['Song']['FullLength_Duration']);
+                                                }
+
+                                                echo $this->Queue->getStreamNowLabel($nationalTopDownload[$i]['streamUrl'], $song_title, $nationalTopDownload[$i]['Song']['ArtistText'], $nationalTopDownload[$i]['totalseconds'], $nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                            } //echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("' . $nationalTopDownload[$i]['streamUrl'] . '", "' . $song_title . '","' . $nationalTopDownload[$i]['Song']['ArtistText'] . '",' . $nationalTopDownload[$i]['totalseconds'] . ',"' . $nationalTopDownload[$i]['Song']['ProdID'] . '","' . $nationalTopDownload[$i]['Song']['provider_type'] . '");'));
                                             else if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
                                                 echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $nationalTopDownload[$i]['Song']['ProdID'] . ', "' . base64_encode($nationalTopDownload[$i]['Song']['provider_type']) . '", "' . $this->webroot . '");'));
@@ -138,7 +138,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                                     $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                                     //$downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                                    $downloadsUsed=0;
+                                                    $downloadsUsed = 0;
                                                     if ($downloadsUsed > 0)
                                                     {
                                                         $nationalTopDownload[$i]['Song']['status'] = 'avail';
@@ -215,12 +215,12 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                         if ($this->Session->read("patron"))
                                         {
                                             if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
-                                                {
-                                            ?> 
-                                                    <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
-                                            <?php
-                                                }
-                                             ?>
+                                            {
+                                                ?> 
+                                                <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                <?php
+                                            }
+                                            ?>
                                             <div class="wishlist-popover">
                                                 <?php
                                                 if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
@@ -239,7 +239,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                                 ?>
                                                 <!--  <div class="share clearfix">
                                                   <p>Share via</p>
-                                                 <span id="divButtons_<?php //echo $i;     ?>""></span> 
+                                                 <span id="divButtons_<?php //echo $i;         ?>""></span> 
                                                   </div> -->
                                                 <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                             </div>
@@ -296,89 +296,96 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                 </ul>
             </div>
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-              <ul style="width:27100px;">
-					<?php
-                                       
-					 $count  =   1;           
-				if(count($nationalTopAlbumsDownload) > 0) {
-                                        foreach($nationalTopAlbumsDownload as $key => $value){
-                                            
-                                           //hide song if library block the explicit content
-                                        if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
-                                            continue;
-                                        } 
+                <ul style="width:27100px;">
+                    <?php
+                    $count = 1;
+                    if (count($nationalTopAlbumsDownload) > 0)
+                    {
+                        foreach ($nationalTopAlbumsDownload as $key => $value)
+                        {
 
-					?>					
-					<li>
-						<div class="album-container">							
-                                                        <?php echo $html->link($html->image($value['songAlbumImage'],array("height" => "250", "width" => "250")),
-										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
-										array('class'=>'first','escape'=>false))?>
-							<div class="top-100-ranking"><?php echo $count; ?></div>
+                            //hide song if library block the explicit content
+                            if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
+                            {
+                                continue;
+                            }
+                            ?>					
+                            <li>
+                                <div class="album-container">							
+                                    <?php
+                                    echo $html->link($html->image($value['songAlbumImage'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false))
+                                    ?>
+                                    <div class="top-100-ranking"><?php echo $count; ?></div>
+                                    <?php
+                                    if ($this->Session->read("patron"))
+                                    {
+                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                        {
+                                            echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
+                                            ?> 
+                                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                            <?php
+                                        }
+                                        ?>
+                                        <div class="wishlist-popover">
+                                            <?php
+                                            if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                            {
+
+                                                echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
+                                                ?>
+                                                <a class="add-to-playlist" href="#">Add To Playlist</a>
                                                 <?php
-                                                if ($this->Session->read("patron"))
-                                                {
-                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
-                                                        {
-                                                            echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
-                                                        
-                                                    ?> 
-                                                    <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
-                                                    <?php
-                                                        }
-                                                     ?>
-                                                    <div class="wishlist-popover">
-                                                        <?php
-                                                         
-                                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
-                                                        {
-                                                            
-                                                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
-                                                            ?>
-                                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                        
-                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
-                                                    </div>
-                                                <?php }
-                                                       else
-                                                       {
-                                                           ?>
-                                                              <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a> 
-                                                           <?php
-                                                       }
-?>
-						</div>
-						<div class="album-title">							
-                                                        <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                        <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Albums']['AlbumTitle'])>20)
-                                                                echo $this->getValidText($this->getTextEncode(substr($value['Albums']['AlbumTitle'],0,20)))."..."; 
-                                                                else echo $value['Albums']['AlbumTitle'];
-                                                         ?>
-                                                    </a><?php if('T' == $value['Albums']['Advisory']) { ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
-						</div>
-						<div class="artist-name">							
-                                                    <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
-                                                    <?php 
-                                                        if(strlen($value['Song']['Artist'])>32)
-                                                        echo $this->getValidText($this->getTextEncode(substr($value['Song']['Artist'],0,32)))."..."; 
-                                                        else echo $this->getValidText($this->getTextEncode($value['Song']['Artist']));
-                                                     ?>
-                                                   </a>
-						</div>
-					</li>
-					<?php
-                                                $count++;
-					}
-                                    }else{
+                                            }
+                                            ?>
 
-                                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                        </div>
+                                        <?php
                                     }
-					?>
-				</ul>  
+                                    else
+                                    {
+                                        ?>
+                                        <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a> 
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="album-title">							
+                                    <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
+                                        <?php
+                                        //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                        if (strlen($value['Albums']['AlbumTitle']) > 20)
+                                            echo $this->getValidText($this->getTextEncode(substr($value['Albums']['AlbumTitle'], 0, 20))) . "...";
+                                        else
+                                            echo $value['Albums']['AlbumTitle'];
+                                        ?>
+                                    </a><?php
+                                    if ('T' == $value['Albums']['Advisory'])
+                                    {
+                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                                </div>
+                                <div class="artist-name">							
+                                    <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Song']['Genre']) ?>">
+                                        <?php
+                                        if (strlen($value['Song']['Artist']) > 32)
+                                            echo $this->getValidText($this->getTextEncode(substr($value['Song']['Artist'], 0, 32))) . "...";
+                                        else
+                                            echo $this->getValidText($this->getTextEncode($value['Song']['Artist']));
+                                        ?>
+                                    </a>
+                                </div>
+                            </li>
+                            <?php
+                            $count++;
+                        }
+                    }else
+                    {
+
+                        echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
+                    }
+                    ?>
+                </ul>  
             </div>
         </div> <!-- end .grids -->
 
@@ -420,46 +427,43 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
 
                                 <a href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $html->image($v['featuredImage'], array("height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'])); ?></a>
 
-                                    <?php
-                                    if ($this->Session->read("patron"))
+                                <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                    if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
                                     {
-                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
-                                            {
-                                                echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']]);
-                                            }
-                                        ?> 
-                                            <?php
-
-                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
-                                            {?>
-                                                <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
-                                                <div class="wishlist-popover">                                                
-                                                <?php echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$v['albumSongs'][$v['Album']['ProdID']],$v['Album']['ProdID'],$v['Album']['provider_type']);
-                                                ?>
-                                                <a class="add-to-playlist" href="#">Add To Playlist</a>
-                                                <?php
-                                            
+                                        echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']]);
+                                    }
+                                    ?> 
+                                    <?php
+                                    if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
+                                    {
+                                        ?>
+                                        <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                        <div class="wishlist-popover">                                                
+                                            <?php echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $v['albumSongs'][$v['Album']['ProdID']], $v['Album']['ProdID'], $v['Album']['provider_type']);
                                             ?>
+                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                            <?php ?>
 
                                             <?php
                                             //$wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-
                                             //echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                             ?>
 
                                             <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
-                                             </div>                                            
-                                          <?php  }
-                                          
-                                          ?>
-
+                                        </div>                                            
                                     <?php }
-                                           else
-                                           {
-                                               ?>
-                                                  <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login");?></a> 
-                                               <?php
-                                           }?>
+                                    ?>
+
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a> 
+                                <?php }
+                                ?>
                             </div>
                             <div class="album-title">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a>
@@ -702,7 +706,7 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                                         echo $value['Video']['Artist'];
                                     ?></a>
 
-                                                                                                                    <!--	<a href="artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Video']['Genre']) ?>">
+                                                                                                                                    <!--	<a href="artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Video']['Genre']) ?>">
                                 <?php
                                 if (strlen($value['Video']['Artist']) > 20)
                                     echo substr($value['Video']['Artist'], 0, 20) . "...";
@@ -777,9 +781,9 @@ ini_set( "session.cookie_lifetime", "0" ); // 0 means "until the browser is clos
                             ?>		</div>									
                             </div>
                             
-                            <div id="detailsNews<?php //echo $value['News']['id'];      ?>" style="display:none" class="post-excerpt">
-                            <?php //echo $newsText;    ?>
-                             <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php //echo $value['News']['id'];      ?>')">- See Less</a>
+                            <div id="detailsNews<?php //echo $value['News']['id'];         ?>" style="display:none" class="post-excerpt">
+                            <?php //echo $newsText;      ?>
+                             <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php //echo $value['News']['id'];          ?>')">- See Less</a>
                             </div> -->
 
 

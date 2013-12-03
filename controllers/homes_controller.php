@@ -71,7 +71,7 @@ class HomesController extends AppController
      *  
      */
     function index() {
-
+         Configure::write('debug', 2);
         //check the server port and redirect to index page
         if($_SERVER['SERVER_PORT'] == 443){
                 $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
