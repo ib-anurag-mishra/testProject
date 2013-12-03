@@ -316,7 +316,7 @@ Class StreamingComponent extends Object
                     exit;
                 }else{
                      //return the final result array
-                    return array(0,'You have reached your streaming limit for the day',$remainingTimeDuration, 7,$timerCallTime,$this->timerCallDuration);
+                    return array(0,'You have reached your streaming limit for the day.',$remainingTimeDuration, 7,$timerCallTime,$this->timerCallDuration);
                     exit;
                 }        
                 
@@ -391,7 +391,7 @@ Class StreamingComponent extends Object
                 return array(1,'successfully able to streaming this song.', 1);
             }else{
                 $this->log($channel." : Rejected streaming request for patron:".$patId.";libid:".$libId.";User:".$uid.";IP:".$ip.";songDureation:".$userStreamedTime.";consumedTime:".$consumedTime.";updatedDate:".$updatedDate." as the patron limit is over to stream this song",'streaming');
-                return array(0,'You have reached your streaming limit for the day', 2);
+                return array(0,'You have reached your streaming limit for the day.', 2);
             }                
             
         } else {
