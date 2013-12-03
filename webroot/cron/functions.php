@@ -147,6 +147,7 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
             {
                 echo ucfirst($typeReport) . " Report Sucessfully sent\n";
                 fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+                sendFile($src, $dst);
                 sendReportEmail($typeReport, $reportName);
                 return true;
             }

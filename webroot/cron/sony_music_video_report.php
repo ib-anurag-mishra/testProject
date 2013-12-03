@@ -35,8 +35,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-10-14';
-$currentDate = date( "Y-m-d", time());
+$currentDate = '2013-12-02';
+//$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -368,7 +368,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    /*$sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -399,7 +399,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             die(" Query failed: ". $sql. " Error: " .mysql_error());
                         }
                         // }
-                    }
+                    }*/
                 }
             }
 
@@ -733,7 +733,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    /*$sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -763,7 +763,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             sendalert("Query failed: ".$sql);
                             die("Query failed: ". $sql. " Error: " .mysql_error());
                         }
-                    }
+                    }*/
                 }   
             }
         }
