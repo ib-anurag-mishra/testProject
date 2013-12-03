@@ -307,10 +307,10 @@ $('document').ready(function()
 
     });
     
-    $('.wishlist-popover').on('scroll',function(){
-	    
-	   console.log('scrolled'); 
-    });
+	$(document).on('mousewheel','.playlist-options',function(){
+		
+		console.log('scrolled');
+	});
     
 
    
