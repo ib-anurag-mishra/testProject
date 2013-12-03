@@ -360,6 +360,8 @@ STR;
                     
                     echo '<br/>';
                     print_r($data[$key]['albumSongs']);
+                    
+                    die;
                 }
 
                 Cache::write("nationaltop100albums" . $country, $data);
