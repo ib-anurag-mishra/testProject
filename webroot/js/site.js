@@ -195,7 +195,7 @@ $('document').ready(function()
 
 
     
-    $(document).on('scroll','.playlist-options',function(e){
+    $(document).on('scroll','.news .top-100 #top-100-songs-grid .song-cover-container .wishlist-popover .playlist-options',function(e){
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         //prevent page fom scrolling
         return false;
