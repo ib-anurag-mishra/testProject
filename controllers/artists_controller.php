@@ -1004,7 +1004,8 @@ Class ArtistsController extends AppController
 	 Desc : For getting songs related to an Album
 	*/
 	function getAlbumSongs($id=null,$album=null, $provider=null)
-	{		
+	{
+		
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
                     $id = $this -> params['pass'][0];
@@ -1257,7 +1258,6 @@ Class ArtistsController extends AppController
                        
                         
 		}
-               
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
@@ -1268,7 +1268,8 @@ Class ArtistsController extends AppController
 		$pre = '';
 		$res = array();
                 
-              
+               
+                
         return $albumSongs;       
                 
 }
