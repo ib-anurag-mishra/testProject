@@ -1257,7 +1257,7 @@ Class ArtistsController extends AppController
                        
                         
 		}
-                print_r($albumData);
+               
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);

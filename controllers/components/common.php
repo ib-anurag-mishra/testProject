@@ -350,12 +350,12 @@ STR;
                 foreach ($data as $key => $value)
                 {
                     print_r($value);
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
-                    $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
-                    $data[$key]['songAlbumImage'] = $songAlbumImage;
-                    $data[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
-                    );                    
+//                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+//                    $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
+//                    $data[$key]['songAlbumImage'] = $songAlbumImage;
+//                    $data[$key]['albumSongs'] = $this->requestAction(
+//                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
+//                    );                    
                 }
 
                 Cache::write("nationaltop100albums" . $country, $data);
