@@ -293,7 +293,8 @@ $('document').ready(function()
 
     $('.playlist-options').bind('mousewheel', function(e) {
 		
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+        //$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+        $(this).parent('.wishlist-popover').scrollTop($(this).parent('.wishlist-popover').scrollTop() - e.originalEvent.wheelDeltaY)
 
         //prevent page fom scrolling
         return false;
