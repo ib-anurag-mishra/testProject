@@ -140,7 +140,7 @@ class CacheController extends AppController {
                 'extra' => array('chk' => 1),
                 'order' => 'TRIM(Song.ArtistText) ASC',
                 'limit' => '60',
-                'cache' => 'no',
+                'cache' => 'yes',
                 'check' => 2,
                 'all_query'=> true,                
                 'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
@@ -176,7 +176,7 @@ class CacheController extends AppController {
                 'order' => 'TRIM(Song.ArtistText) ASC',
                 'extra' => array('chk' => 1),                
                 'limit' => '60',
-                'cache' => 'no',
+                'cache' => 'yes',
                 'check' => 2,
                 'all_query'=> true,                
                 'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
@@ -246,7 +246,7 @@ class CacheController extends AppController {
                     ),
                     'extra' => array('chk' => 1), 
                     'order' => 'TRIM(Song.ArtistText) ASC',
-                    'limit' => '60', 'cache' => 'no','check' => 2
+                    'limit' => '60', 'cache' => 'yes','check' => 2
                 );
                 $allArtists = $this->paginate('Song');
                 $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
@@ -282,7 +282,7 @@ class CacheController extends AppController {
                     ),
                     'extra' => array('chk' => 1),   
                     'order' => 'TRIM(Song.ArtistText) ASC',
-                    'limit' => '60', 'cache' => 'no','check' => 2
+                    'limit' => '60', 'cache' => 'yes','check' => 2
                 );
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $allArtists = $this->paginate('Song');
