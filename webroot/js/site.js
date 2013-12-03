@@ -194,6 +194,13 @@ $('document').ready(function()
 
 
 
+	$('.playlist-options').bind('mousewheel', function(e) {
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+        //prevent page fom scrolling
+        return false;
+
+    });
+
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
