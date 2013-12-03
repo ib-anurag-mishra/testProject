@@ -300,13 +300,7 @@ $('document').ready(function()
 
     });
     
-    $(document).on('mouseover mouseout','.playlist-options',function(e){
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
-        //prevent page fom scrolling
-        return false;    
-    
-    });
     preview.on('mousedown', function(e) {
         e.preventDefault();
 
