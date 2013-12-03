@@ -1,4 +1,7 @@
 <script type="text/javascript">
+
+var createLinkThis;
+
 $(document).ready(function() {
      $("#FormRegisterConcert").submit(function() {
      var frm = $('#FormRegisterConcert');

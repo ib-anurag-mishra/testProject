@@ -1744,7 +1744,7 @@ $('document').ready(function()
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-    var createLinkThis;
+  
     
     $(document).on('click', ".create-new-queue , .create-new-queue-btn", function(e) {
         e.preventDefault();
