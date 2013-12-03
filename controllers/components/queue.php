@@ -118,6 +118,10 @@ Class QueueComponent extends Object
             )
                 )
         );
+        
+        echo "<pre>";
+        print_r($queueDetail);
+        
         return $queueDetail;
     }
 
