@@ -54,8 +54,9 @@
                         ?>
                         <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
                         <div class="wishlist-popover">
+                            <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                             <?php
-                            echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
+                            // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
                             ?>
                             <a class="add-to-playlist" href="#">Add To Playlist</a>
                             <?php ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
@@ -197,7 +198,7 @@
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "class" => "preview", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $album_key . $key, "onClick" => 'stopThis(this, "' . $album_key . $key . '");'));
                             }
                             $class = 'logged_in';
-                            
+
                             $cs = '';
                             if (($albumSong['Country']['SalesDate'] > date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                             {
@@ -208,34 +209,41 @@
 
 
 
-                        <div class="song <?php echo $class; echo $cs ; ?>"><?php
-                            if (strlen($albumSong['Song']['SongTitle']) >= 30)
-                            {
-                                echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
-                            }
-                            else
-                            {
-                                echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '</a>';
-                            }
-                            if ($albumSong['Song']['Advisory'] == 'T')
-                            {
-                                echo '<span class="explicit"> (Explicit)</span>';
-                            }
-                            ?></div>
-                        <div class="artist"><a href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>" title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>"><?php
-                                if (strlen($albumSong['Song']['Artist']) >= 11)
-                                {
-                                    if (strlen($albumSong['Song']['Artist']) >= 60)
-                                    {
-                                        $albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60) . '...';
-                                    }
-                                    echo $this->getTextEncode(substr($albumSong['Song']['Artist'], 0, 22));
-                                }
-                                else
-                                {
-                                    echo $this->getTextEncode($albumSong['Song']['Artist']);
-                                }
-                                ?></a></div>
+                        <div class="song <?php echo $class;
+                echo $cs;
+                        ?>"><?php
+                                 if (strlen($albumSong['Song']['SongTitle']) >= 30)
+                                 {
+                                     echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
+                                 }
+                                 else
+                                 {
+                                     echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '</a>';
+                                 }
+                                 if ($albumSong['Song']['Advisory'] == 'T')
+                                 {
+                                     echo '<span class="explicit"> (Explicit)</span>';
+                                 }
+                                 ?></div>
+                        <div class="artist">
+                            <a href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>" 
+                               title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>">
+                                   <?php
+                                   if (strlen($albumSong['Song']['Artist']) >= 11)
+                                   {
+                                       if (strlen($albumSong['Song']['Artist']) >= 60)
+                                       {
+                                           $albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60) . '...';
+                                       }
+                                       echo $this->getTextEncode(substr($albumSong['Song']['Artist'], 0, 22));
+                                   }
+                                   else
+                                   {
+                                       echo $this->getTextEncode($albumSong['Song']['Artist']);
+                                   }
+                                   ?>
+                            </a>
+                        </div>
                         <div class="time"><?php echo $this->Song->getSongDurationTime($albumSong['Song']['FullLength_Duration']); ?></div>
                         <?php
                         if ($this->Session->read('patron'))
@@ -243,11 +251,13 @@
                             ?>
 
                             <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0);"></a>
-                            <div class="wishlist-popover">                                                                        
+                            <div class="wishlist-popover">         
+                                <input type="hidden" id="<?= $value["Song"]["ProdID"] ?>" value="song"/>
                                 <?php
-                                if (($albumSong['Country']['SalesDate'] <  date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
+                                if (($albumSong['Country']['SalesDate'] < date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                                 {
                                     $productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'], $albumSong["Song"]['provider_type']);
+
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {
                                         $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
@@ -305,17 +315,19 @@
                                 <?php
                                 if ($streamingFlag == 1)
                                 {
-                                    echo $this->Queue->getQueuesList($this->Session->read('patron'), $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"], $album['Album']["ProdID"], $album['Album']["provider_type"]);
+                                    //echo $this->Queue->getQueuesList($this->Session->read('patron'), $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"], $album['Album']["ProdID"], $album['Album']["provider_type"]);
                                     ?>
                                     <a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
-                                <?php } ?>
+                                    <?php
+                                }
+                                ?>
                                 <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
                                 <?php
                                 $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 
                                 echo $wishlist->getWishListMarkup($wishlistInfo, $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"]);
                                 ?>
-                                <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
+                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
                             </div> 
                             <?php
                         }
@@ -346,7 +358,7 @@
                         }
                         ?>
                     </div>
-                <?php } ?>    
+    <?php } ?>    
 
 
             </section>
