@@ -43,6 +43,9 @@ Class QueueComponent extends Object
 
     function getQueueDetails($queueID, $territory = '')
     {
+        
+        echo "queueID: ".$queueID;
+        echo "territory: ".$territory;
         $queueDetailList = ClassRegistry::init('QueueDetail');
 
         $queueDetail = $queueDetailList->find('all', array(
@@ -111,13 +114,15 @@ Class QueueComponent extends Object
                 array(
                     array('QueueList.status' => 1),
                     array('QueueDetail.queue_id' => $queueID)
+                ),
+                'or' => array(array('and' => array('Countries.StreamingStatus' => 1, 'Countries.StreamingSalesDate <=' => date('Y-m-d')))
+                    , array('and' => array('Countries.DownloadStatus' => 1))
                 )
             )
                 )
         );
         
-        echo "<pre>";
-        print_r($queueDetail);
+        
         
         return $queueDetail;
     }
