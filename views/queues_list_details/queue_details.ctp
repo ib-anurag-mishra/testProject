@@ -144,6 +144,7 @@
                             </div>
                             <div class="time"><?php echo $this->Song->getSongDurationTime($value['Songs']['FullLength_Duration']); ?></div>
                             <div class="wishlist-popover <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
+                                <input type="hidden" id="<?= $value['Songs']['ProdID'] ?>" value="song"/>
 
                                 <?php
                                 //check if this song is allowed for download
@@ -205,7 +206,7 @@
                                    if ($this->Session->read('library_type') == 2 &&
                                            $value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1)
                                    {
-                                       echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Songs"]["ProdID"], $value["Songs"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
+                                      // echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Songs"]["ProdID"], $value["Songs"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
                                        ?>
                                     <a class="add-to-playlist" href="#">Add To Playlist</a>
                                 <?php } ?>
@@ -218,8 +219,8 @@
                                 <!--<a class="remove-song" href="#">Remove Song</a> -->
                                 <span class="top-100-download-now-button">
                                     <?php
-                                    if (($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Default') || 
-                                            ($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Custom') || 
+                                    if (($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Default') ||
+                                            ($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Custom') ||
                                             ($this->Session->read("Auth.User.type_id") != 1 && $queueType == 'Custom'))
                                     {
                                         ?>
