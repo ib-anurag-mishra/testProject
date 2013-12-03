@@ -43,9 +43,6 @@ Class QueueComponent extends Object
 
     function getQueueDetails($queueID, $territory = '')
     {
-        
-        echo "queueID: ".$queueID;
-        echo "territory: ".$territory;
         $queueDetailList = ClassRegistry::init('QueueDetail');
 
         $queueDetail = $queueDetailList->find('all', array(
@@ -121,9 +118,6 @@ Class QueueComponent extends Object
             )
                 )
         );
-        
-        
-        
         return $queueDetail;
     }
 
