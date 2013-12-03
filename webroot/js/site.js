@@ -195,11 +195,7 @@ $('document').ready(function()
 
 
     
-    $(document).on('scroll','.news .top-100 #top-100-songs-grid .song-cover-container .wishlist-popover .playlist-options',function(e){
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        //prevent page fom scrolling
-        return false;
-    });
+
 
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
@@ -302,6 +298,14 @@ $('document').ready(function()
         return false;
 
 
+    });
+    
+    $(document).on('mouseover mouseout','.playlist-options',function(e){
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+
+        //prevent page fom scrolling
+        return false;    
+    
     });
     preview.on('mousedown', function(e) {
         e.preventDefault();
