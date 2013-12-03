@@ -302,7 +302,7 @@ $('document').ready(function()
 
     });
     
-     $('.playlist-options').on('mouseenter',function(){
+     $('body').on('mouseenter','.playlist-options',function(){
 	     
 	    console.log('mouse entered'); 
      });
