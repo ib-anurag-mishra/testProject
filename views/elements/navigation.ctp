@@ -176,8 +176,10 @@ function createQueue(){
                 $('.queue-overlay').removeClass('active');
                  resetForms();
                  
+                 if(createLinkThis !== null){
                  //adding the current song / album to newly create playlist
                  addToAlbumTest( album_data[1], this );
+                 }
 
                  var updated_queue_list = '<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('+album_data[1]+', this );" >' +album_data[2] + '</a></li>';
                  $(document).find('.playlist-options-test').find('.playlist-options').find('ul li:eq(1)').prepend(updated_queue_list);

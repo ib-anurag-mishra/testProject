@@ -1766,7 +1766,14 @@ $('document').ready(function()
         $('.create-queue-dialog-box').addClass('active');
         $('.create-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
         $('.wishlist-popover').removeClass('active');
-        createLinkThis = $(this);
+        if(!$(this).parent().has('header'))
+            {
+                createLinkThis = $(this);
+            }
+        else
+            {
+                createLinkThis = null ;
+            }
     });
 
     $(document).on('click', '.close,.text-close', function(e) {
