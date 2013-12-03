@@ -302,7 +302,7 @@ $('document').ready(function()
     });
 */
     
-    $('.playlist-options').on('mouseenter',function(e){
+    $(document).on('mouseenter','.playlist-options',function(e){
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
         //prevent page fom scrolling
