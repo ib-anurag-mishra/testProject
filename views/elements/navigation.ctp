@@ -89,7 +89,7 @@ function renameQueue()
 
                 var name = $('.rename-form-container').find('#name').val();
 
-              
+                $('.rename-form-container').find('header').find('span').text( name );
                               
                 $('#hid_playlist_name').val( name );
                 $('#hid_description').val( $('.rename-form-container').find('#description').val() );
