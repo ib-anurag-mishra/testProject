@@ -194,7 +194,7 @@ $('document').ready(function()
 
 
 
-	$('.playlist-options').bind('mousewheel', function(e) {
+	$('.news .top-100 #top-100-songs-grid .song-cover-container .wishlist-popover .playlist-options').bind('mousewheel', function(e) {
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         //prevent page fom scrolling
         return false;
