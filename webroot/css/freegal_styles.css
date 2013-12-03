@@ -383,6 +383,7 @@ div.paging span a, div.paging a {
 }
 
 .top-video-login-button{
+	display: block;
     background: #fff;
     font-size: 12px;
     font-weight: bold;
