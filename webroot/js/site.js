@@ -292,7 +292,7 @@ $('document').ready(function()
 
 
     $('.playlist-options').bind('mousewheel', function(e) {
-		console.log('scrolling');
+		
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
         //prevent page fom scrolling
@@ -301,7 +301,15 @@ $('document').ready(function()
 
     });
     
+    $('.wishlist-popover').bind('mousewheel', function(e) {
+		
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
+        //prevent page fom scrolling
+        return false;
+
+
+    });
 
     
 
