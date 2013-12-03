@@ -87,16 +87,17 @@ function renameQueue()
                 $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
 
-                $('.rename-form-container').find('header').('span').text( $('.rename-form-container').find('#name').val() );
+                var name = $('.rename-form-container').find('#name').val();
+
+                $('.rename-form-container').find('header').('span').text( name );
                               
-                $('#hid_playlist_name').children('option[value='+$('.rename-form-container').find('#name').val()+']').html();
+                $('#hid_playlist_name').children('option[value='+name+']').html();
                 $('#hid_description').children('option[value='+$('.rename-form-container').find('#description').val()+']').html();
 
                 //updating the queuelist
                  $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
                     if( $(this).find('a').attr('id') === $('#rqPlid').val() )
                     {
-                        var name = $('.rename-form-container').find('#name').val();
                         $(this).find('a').text( name );
                     }
                  });
