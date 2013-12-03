@@ -367,7 +367,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $trailer .= "0"; // Total Quantity Returned
                     fwrite($file, $trailer);
                     fclose($file);
-
+sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt");
                     /*$sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
@@ -732,7 +732,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $trailer .= "0"; // Total Quantity Returned
                     fwrite($file, $trailer);
                     fclose($file);
-
+sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt");
                     /*$sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
