@@ -301,15 +301,7 @@ $('document').ready(function()
 
     });
     
-    $('.wishlist-popover').bind('mousewheel', function(e) {
-		
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 
-        //prevent page fom scrolling
-        return false;
-
-
-    });
 
     
 
