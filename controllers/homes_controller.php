@@ -71,7 +71,7 @@ class HomesController extends AppController
      *  
      */
     function index() {
-         Configure::write('debug', 2);
+        
         //check the server port and redirect to index page
         if($_SERVER['SERVER_PORT'] == 443){
                 $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
@@ -114,10 +114,7 @@ class HomesController extends AppController
             $nationalTopAlbums = Cache::read("nationaltop100albums".$territory);                
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
-        
-        echo '<pre>';
-        print_r($nationalTopAlbums);
- 
+       
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start

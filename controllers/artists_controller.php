@@ -1005,7 +1005,7 @@ Class ArtistsController extends AppController
 	*/
 	function getAlbumSongs($id=null,$album=null, $provider=null)
 	{
-		
+		 Configure::write('debug', 2);
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
                     $id = $this -> params['pass'][0];
@@ -1269,7 +1269,8 @@ Class ArtistsController extends AppController
 		$res = array();
                 
                
-                
+                echo '<pre>';
+                print_r($albumSongs);
         return $albumSongs;       
                 
 }
