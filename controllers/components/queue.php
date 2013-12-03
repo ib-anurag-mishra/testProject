@@ -69,14 +69,7 @@ Class QueueComponent extends Object
                     'alias' => 'Albums',
                     'foreignKey' => false,
                     'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),
-                ),
-                array(
-                    'type' => 'INNER',
-                    'table' => strtolower($territory) . '_countries',
-                    'alias' => 'Countries',
-                    'foreignKey' => false,
-                    'conditions' => array('QueueDetail.song_prodid = Countries.ProdID', 'QueueDetail.song_providertype = Countries.provider_type',),
-                ),
+                ),                
                 array(
                     'type' => 'INNER',
                     'table' => 'PRODUCT',
@@ -112,12 +105,12 @@ Class QueueComponent extends Object
                     array('QueueList.status' => 1),
                     array('QueueDetail.queue_id' => $queueID)
                 ),
-                'or' => array(array('and' => array('Countries.StreamingStatus' => 1, 'Countries.StreamingSalesDate <=' => date('Y-m-d')))
-                    , array('and' => array('Countries.DownloadStatus' => 1))
-                )
+                
             )
                 )
         );
+        
+        print_r($queueDetail);
         return $queueDetail;
     }
 
