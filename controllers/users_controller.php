@@ -1346,6 +1346,8 @@ function login($library = null){
         Desc : For saving the notification informaiton using ajax call from the home.ctp popup
     */
         function saveStreampopup(){
+            echo "here";
+            die;
             Configure::write('debug', 2);
            
             $this->layout = false;
