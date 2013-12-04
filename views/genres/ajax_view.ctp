@@ -19,9 +19,14 @@ var preValue= 1;
                             url: '/genres/ajax_view_pagination/page:'+ajaxartistPage+'/<?=base64_encode($genre); ?>'+'/<?=$selectedAlpha?>',
                             data: data,  // post data
                             success: function(newitems) { 
-                                ajaxartistPage++; 
-                                $('#artist_loader').hide();                      
-                                $('#artistlistrecord').append(newitems);  
+                                if(newitems){
+                                    ajaxartistPage++; 
+                                    $('#artist_loader').hide();                      
+                                    $('#artistlistrecord').append(newitems);  
+                                }else{
+                                    break;
+                                }
+                                
 
                             },
                             async:   false,
