@@ -82,7 +82,14 @@
                 <?php $setLang = ($this->Session->read('Config.language') == 'en') ? 'en' : 'es'; ?>                    
                 var languageSet = '<?php echo $setLang; ?>';
                 var webroot = '<?php echo $this->webroot; ?>';
-                          
+                function sleep(milliseconds) {
+                    var start = new Date().getTime();
+                    for (var i = 0; i < 1e7; i++) {
+                        if ((new Date().getTime() - start) > milliseconds) {
+                            break;
+                        }
+                    }
+                }          
                 function validateEmail(email) {
                     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return re.test(email);
@@ -416,14 +423,7 @@
                         if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1))
                         {
                             ?>
-                                function sleep(milliseconds) {
-                                    var start = new Date().getTime();
-                                    for (var i = 0; i < 1e7; i++) {
-                                        if ((new Date().getTime() - start) > milliseconds) {
-                                            break;
-                                        }
-                                    }
-                                }
+                                
 
                                 $(".notificationApproval")
                                             .colorbox(
