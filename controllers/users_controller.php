@@ -462,6 +462,7 @@ function login($library = null){
 				}
 				$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));
                 $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+                print_r($isApproved); die;
                 //echo "Setting Stream popup session";
                 $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);                               
                 //echo "Stream popup session set"; die;
