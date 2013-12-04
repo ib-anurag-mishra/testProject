@@ -87,6 +87,8 @@
                     $i = 0;                    
                     foreach ($queue_list_array as $key => $value)
                     {
+                        echo "<pre>"; print_r($value[$key]['Songs']);
+                        
                         if(empty($value[$key]['Songs'])) continue;
                         
                         $i++;
