@@ -722,7 +722,7 @@
                                         ?>      
                             
                             <?php
-               if(($this->Session->read('showStreamPopup') && $this->Session->read('showStreamPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){ 
+               if(($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){ 
            ?>
 		<a class='streamApproval' href="#"></a>
 		<div style="display:none;">
