@@ -275,12 +275,17 @@ class QueueListDetailsController extends AppController
         
         if(count($queue_list_array)==0)
         {
-               $queue_list_array = $this->Queue->getOnlyQueueDetails($this->params['pass'][0]);                   
+               $queue_list_array = $this->Queue->getOnlyQueueDetails($this->params['pass'][0]); 
+               $queue_songs_count = 0;
+        }
+        else
+        {
+               $queue_songs_count =  count($queue_list_array);
         }
                               
         $this->set('queue_list_array', $queue_list_array);
         $this->set('queue_id', $this->params['pass'][0]);
-        $this->set('queue_songs_count', count($queue_list_array));
+        $this->set('queue_songs_count', $queue_songs_count);
         $this->set('total_time', $total_minutes . ":" . $total_seconds);
     }
 
