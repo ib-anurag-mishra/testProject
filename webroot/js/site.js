@@ -764,12 +764,12 @@ $('document').ready(function()
     });
 
 	var totalVSLiWidth = 0;
-	$('.artist-page .video-scrollable ul li').each(function(){
+	$('.artist-page .videos-scrollable ul li').each(function(){
 		totalVSLiWidth = totalVSLiWidth + $(this).outerWidth(true);
 		
 	});
 	
-	$('.artist-page .video-scrollable ul').css({width:totalVSLiWidth});
+	$('.artist-page .videos-scrollable ul').css({width:totalVSLiWidth});
 	
     $(document).on('click', '.artist-page .tracklist-scrollable .tracklist .preview', function(e) {
 
