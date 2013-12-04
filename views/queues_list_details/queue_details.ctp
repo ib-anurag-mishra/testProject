@@ -84,12 +84,10 @@
                 <div class="row-container">
                     <?php
                     $playListData = array();
-                    $i = 0;      echo "<pre>"; print_r($queue_list_array);              
+                    $i = 0;                
                     foreach ($queue_list_array as $key => $value)
-                    {
-                        echo "<pre>"; print_r($value);
-                        
-                        if(empty($value[$key]['Songs'])) continue;
+                    {   
+                        if(!isset($value['Songs'])) continue;
                         
                         $i++;
                         if (($this->Session->read('block') == 'yes') && ($value['Songs']['Advisory'] == 'T'))
