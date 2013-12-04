@@ -1361,6 +1361,8 @@ function login($library = null){
                 $currentPatronData = $this->Currentpatron->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
                 if(count($currentPatronData) > 0) {
                     $this->Currentpatron->setDataSource('master');
+                        print_r($currentPatronData);
+                        die;
                         $currentPatronData['stream_popup'] = 'yes';
                         $this->Currentpatron->set($currentPatronData);
                         $this->Currentpatron->save();   
