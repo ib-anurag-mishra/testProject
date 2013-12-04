@@ -512,7 +512,7 @@
                                     var data = {pid: pid, lid: lid};
                                     jQuery.ajax({
                                         type: "post", // Request method: post, get
-                                        url: webroot + "users/saveStreampopup", // URL to request
+                                        url: webroot + "users/savestreampopup", // URL to request
                                         data: data, // postdata
                                         async:false,
                                         success: function(response) {
