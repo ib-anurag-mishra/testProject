@@ -192,7 +192,12 @@ function createQueue(){
 
                     $.ajax({
                          type: "post",
-                         url: webroot+'queues/createQueue',
+                         url: webroot+'queues/ajaxSavedQueuesList',
+                          success: function (response) { 
+                            $(document).find('.playlists-shadow-container').append(response);
+
+                            $(document).find('.playlists-shadow-container').find('.loader').remove();
+                          }
                     });
                 }
 
