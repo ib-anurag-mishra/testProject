@@ -769,7 +769,7 @@ $('document').ready(function()
 		
 	});
 	
-	$('.artist-page .videos-scrollable ul').css({width:totalVSLiWidth});
+	$('.artist-page .videos-scrollable ul').css({width:totalVSLiWidth+5});
 	
     $(document).on('click', '.artist-page .tracklist-scrollable .tracklist .preview', function(e) {
 
