@@ -229,6 +229,7 @@ class QueueListDetailsController extends AppController
         else        // Custom Queue
         {
             $queue_list_array = $this->Queue->getQueueDetails($this->params['pass'][0], $territory);
+            echo "Count: ".count($queue_list_array); echo '<pre>'; print_r($queue_list_array);
             $queue_name = base64_decode($this->params['pass'][2]);
             $this->set('queue_name', $queue_name);
             $this->set('queueType', 'Custom');
