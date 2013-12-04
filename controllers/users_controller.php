@@ -1350,13 +1350,8 @@ function login($library = null){
             $this->layout = false;
             $this->autoRender = false;
             
-            echo "here";
-            die;
-            
             if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) && $_REQUEST['lid']!=''  && $_REQUEST['pid']!='') 
             {
-                echo "here";
-                die;
                 $patronId = $_REQUEST['pid'];
                 $libaryID = $_REQUEST['lid'];
                 
