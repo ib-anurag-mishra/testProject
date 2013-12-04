@@ -1793,7 +1793,7 @@ $('document').ready(function()
         $('.create-queue-dialog-box').addClass('active');
         $('.create-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
         $('.wishlist-popover').removeClass('active');
-        if(!$(this).parent().has('header'))
+        if(!$(this).parent().hasClass('clearfix'))
             {
                 createLinkThis = $(this);
             }
