@@ -85,6 +85,7 @@
                     <?php
                     $playListData = array();
                     $i = 0;
+                    echo "<pre>"; print_r($queue_list_array);
                     foreach ($queue_list_array as $key => $value)
                     {
                         $i++;
