@@ -324,7 +324,7 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
             $this->Song->Behaviors->attach('Containable');
-            $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1 GROUP BY Song.ArtistText');
+            $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1');
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
@@ -615,11 +615,7 @@ Class GenresController extends AppController
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
 
-
-        //echo $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];             
-        // echo $_REQUEST['npage'] .'<='.$this->params['paging']['Song']['pageCount'];         
-
-
+     
         $allArtistsNew = $allArtists;
         for ($i = 0; $i < count($allArtistsNew); $i++)
         {
@@ -640,9 +636,7 @@ Class GenresController extends AppController
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
-        //if($this->params['paging']['Song']['pageCount'] <= $_REQUEST['npage']){
-        //$allArtists = array();
-        //}
+        
 
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);

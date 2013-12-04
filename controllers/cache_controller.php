@@ -118,6 +118,7 @@ class CacheController extends AppController {
      * Function Description : This function is used to getArtistText.
      */
     function getArtistText($territory){
+        
         //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
         try {
             $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
@@ -151,16 +152,16 @@ class CacheController extends AppController {
 
                 $alphabet = chr($j);
                 if($alphabet == '[') {
-                $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
+                    $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
                 }
                 elseif($j == 92) {
-                $condition = "";
+                    $condition = "";
                 }
                 elseif($alphabet != '') {
-                $condition = array('Song.ArtistText LIKE' => $alphabet.'%');
+                    $condition = array('Song.ArtistText LIKE' => $alphabet.'%');
                 }
                 else {
-                $condition = "";
+                    $condition = "";
                 }
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -171,19 +172,20 @@ class CacheController extends AppController {
                 $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 ');
 
                 $this->paginate = array(
-                'conditions' => $gcondition,
-                'fields' => array('DISTINCT Song.ArtistText'),
-                'order' => 'TRIM(Song.ArtistText) ASC',
-                'extra' => array('chk' => 1),                
-                'limit' => '60',
-                'cache' => 'yes',
-                'check' => 2,
-                'all_query'=> true,                
-                'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+                    'conditions' => $gcondition,
+                    'fields' => array('DISTINCT Song.ArtistText'),
+                    'order' => 'TRIM(Song.ArtistText) ASC',
+                    'extra' => array('chk' => 1),                
+                    'limit' => '60',
+                    'cache' => 'yes',
+                    'check' => 2,
+                    'all_query'=> true,                
+                    'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
                 );
                 $allArtists = $this->paginate('Song');
                 $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                 $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
+                
             }
     
 
