@@ -19,7 +19,7 @@
   <div id="witti">
   
     <div id="header">
-      <a href="#" class="logo"><span>Admin Area</span></a>
+      <a href="javascript:void(0)" class="logo"><span>Admin Area</span></a>
       <p class="userinfo"><strong></strong></p>
       <div class="cleaner"></div>
     </div><!-- header -->

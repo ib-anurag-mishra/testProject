@@ -71,8 +71,8 @@ if(count($featuredVideos) > 0){ ?>
                                     <?php
                                     }
                                     ?>
-                                    <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
-                                    <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                    <!-- <a class="featured-video-download-now-button" href="javascript:void(0)"><?php echo __('Download Now'); ?></a> -->
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                     <div class="wishlist-popover">
                                     <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
@@ -149,8 +149,8 @@ foreach($topVideoDownloads as $key => $topDownload)
                                     if($this->Session->read('patron'))
                                     {
                            ?>
-                         <!--  <a class="top-video-download-now-button" href="#">Download Now</a> -->
-                           <a class="add-to-playlist-button no-ajaxy" href="#"></a> 
+                         <!--  <a class="top-video-download-now-button" href="javascript:void(0)">Download Now</a> -->
+                           <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a> 
                            <?php
                                     }
                                     else

@@ -124,7 +124,7 @@
 	<![endif]-->
 	<div id="audioPixel"><div id="audioflash"></div></div>
 	<?php $session->flash(); ?>
-	<a class='upgradeFlash' href="#"></a>
+	<a class='upgradeFlash' href="javascript:void(0);"></a>
 	<div style="display:none;">
 		<div id="upgradeFlash_div">   
 			This site requires Flash player version 9 or more to play the sample audio files.
@@ -135,7 +135,7 @@
 	<?php
 	if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 	{ ?>
-		<a class='termsApproval' href="#"></a>
+		<a class='termsApproval' href="javascript:void(0);"></a>
 		<div style="display:none;">
 			<div id="termsApproval_div">
 				<div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">

@@ -165,7 +165,7 @@ $ieVersion =  ieversion();
 
                                             ?>
 					</div>
-					<div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']); ?>" href="#">
+					<div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']); ?>" href="javascript:void(0)">
                                         <?php 
 						if (strlen($wishlistResults[$i]['wishlists']['track_title']) >= 15) {
                                                     
@@ -278,9 +278,9 @@ $ieVersion =  ieversion();
                         $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
                         ?>
                         <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
-						<!-- <a class="preview" href="#"></a> -->
+						<!-- <a class="preview" href="javascript:void(0)"></a> -->
 					</div>
-					<div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="#">
+					<div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="javascript:void(0)">
                     <?php 
 						if (strlen($wishlistResultsVideo['WishlistVideo']['track_title']) >= 15) {
 							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .substr($wishlistResultsVideo['Download']['track_title'], 0, 15) . '...</a>';
@@ -289,8 +289,8 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                                         </a></div>
-					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['Video']['Title'])) ;?>" href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
+					<!--<a class="add-to-wishlist-button" href="javascript:void(0)"></a>-->
+					<div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['Video']['Title'])) ;?>" href="javascript:void(0)"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
 					<div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['WishlistVideo']['artist'])) ;?>" href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 15) {

@@ -154,7 +154,7 @@ $ieVersion =  ieversion();
                         
                         ?>
 					</div>
-					<div class="song-title"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="#">
+					<div class="song-title"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="javascript:void(0)">
                     <?php 
 						if (strlen($downloadResult['Download']['track_title']) >= 19) {
 							echo '<a title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 19) . '...</a>';
@@ -256,7 +256,7 @@ $ieVersion =  ieversion();
                         <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
 						<!-- <a class="preview" href="#"></a> -->
 					</div>
-					<div class="song-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="#">
+					<div class="song-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="javascript:void(0)">
                     <?php 
 						if (strlen($videoDownloadResult['Videodownload']['track_title']) >= 22) {
 							echo '<a title="'.htmlentities($videoDownloadResult['Videodownload']['track_title']).'">' .substr($videoDownloadResult['Videodownload']['track_title'], 0, 22) . '...</a>';
@@ -266,7 +266,7 @@ $ieVersion =  ieversion();
 					?><?php if('T' == $videoDownloadResult['Video']['Advisory']) { ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
                                         </a></div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
-					<div class="album-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Video']['Title']); ?>" href="#">
+					<div class="album-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Video']['Title']); ?>" href="javascript:void(0)">
                                              <?php 
 						if (strlen($videoDownloadResult['Video']['Title']) >= 22) {
 							echo '<a title="'.htmlentities($videoDownloadResult['Video']['Title']).'">' .substr($videoDownloadResult['Video']['Title'], 0, 22) . '...</a>';

@@ -209,7 +209,7 @@ function Get_Sales_date($sales_date_array, $country)
                 else
                 {
                     ?>
-                    <a	href="#" class="active">All Music</a>
+                    <a	href="javascript:void(0)" class="active">All Music</a>
                     <?php
                 }
                 ?>
@@ -226,7 +226,7 @@ function Get_Sales_date($sales_date_array, $country)
                 else
                 {
                     ?>
-                    <a href="#" class="active">Albums</a>
+                    <a href="javascript:void(0)" class="active">Albums</a>
                     <?php
                 }
                 ?>
@@ -243,7 +243,7 @@ function Get_Sales_date($sales_date_array, $country)
                 else
                 {
                     ?>
-                    <a href="#" class="active">Artists</a>
+                    <a href="javascript:void(0)" class="active">Artists</a>
                     <?php
                 }
                 ?>
@@ -260,7 +260,7 @@ function Get_Sales_date($sales_date_array, $country)
                 else
                 {
                     ?>
-                    <a href="#" class="active">Composers</a>
+                    <a href="javascript:void(0)" class="active">Composers</a>
                     <?php
                 }
                 ?>
@@ -277,7 +277,7 @@ function Get_Sales_date($sales_date_array, $country)
                 else
                 {
                     ?>
-                    <a href="#" class="active">Genres</a>
+                    <a href="javascript:void(0)" class="active">Genres</a>
                     <?php
                 }
                 ?>
@@ -294,7 +294,7 @@ function Get_Sales_date($sales_date_array, $country)
                 else
                 {
                     ?>
-                    <a href="#" class="active">Videos</a>
+                    <a href="javascript:void(0)" class="active">Videos</a>
                     <?php
                 }
                 ?>
@@ -311,7 +311,7 @@ function Get_Sales_date($sales_date_array, $country)
                 else
                 {
                     ?>
-                    <a href="#" class="active">Songs</a>
+                    <a href="javascript:void(0)" class="active">Songs</a>
                     <?php
                 }
                 ?>
@@ -414,8 +414,8 @@ function Get_Sales_date($sales_date_array, $country)
                                                     ?> 
                                                 </div>
                                                 <div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>" ><?php echo $album_title; ?> <?php echo $explicit; ?></a></div>
-                                                <div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
-                                                <div class="album-label">Label: <span><a href="#"><?php echo $album_label; ?></a></span></div>
+                                                <div class="album-genre">Genre: <span><a href="javascript:void(0)"><?php echo $album_genre; ?></a></span></div>
+                                                <div class="album-label">Label: <span><a href="javascript:void(0)"><?php echo $album_label; ?></a></span></div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 2) == 0)
@@ -803,7 +803,7 @@ function Get_Sales_date($sales_date_array, $country)
                                             <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
                                                title="<?php echo $this->getTextEncode($palbum->Title); ?>">
                                                 <?php echo $album_title; ?></a></div>
-                                        <div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
+                                        <div class="album-genre">Genre: <span><a href="javascript:void(0)"><?php echo $album_genre; ?></a></span></div>
                                         <div class="album-label"><?php echo $album_label_str; ?></span></div>
                                     </li>
 
@@ -1124,7 +1124,7 @@ function Get_Sales_date($sales_date_array, $country)
                                 if ($this->Session->read("patron"))
                                 {
                                     ?>
-                                    <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                     <?php
                                 }
                                 ?>
@@ -1347,7 +1347,7 @@ else
                         if ($this->Session->read("patron"))
                         {
                             ?>
-                            <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                            <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                             <?php
                         }
                         ?>
@@ -1373,7 +1373,7 @@ else
                                 <img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
                         </div>
                         -->
-                        <div class="album"><a href="#" title="<?php echo $this->getTextEncode($psong->Title); ?>" ><?php echo truncate_text($this->getTextEncode($psong->Title), 25, $this); ?></a></div>
+                        <div class="album"><a href="javascript:void(0)" title="<?php echo $this->getTextEncode($psong->Title); ?>" ><?php echo truncate_text($this->getTextEncode($psong->Title), 25, $this); ?></a></div>
                         <?php
                         //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                         //$image = Configure::read('App.Music_Path') . $imageUrl;

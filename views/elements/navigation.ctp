@@ -441,8 +441,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/adele.jpg" alt="adele">
 								</div>
 								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">21</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Adele</a></p>
+									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)">21</a></span><span class="song-title"><a href="javascript:void(0)"></a></span></p>
+									<p class="artist"><a href="javascript:void(0)">Adele</a></p>
 								</div>
 							</li>
 							<li>
@@ -450,8 +450,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/pitbull.jpg" alt="pitbull">
 								</div>
 								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Mr. Worldwide</a></span></p>
-									<p class="artist"><a href="#">Pitbull</a></p>
+									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">Mr. Worldwide</a></span></p>
+									<p class="artist"><a href="javascript:void(0)">Pitbull</a></p>
 								</div>
 							</li>
 							<li>
@@ -459,8 +459,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/carrie-underwood.jpg" alt="carrie-underwood">
 								</div>
 								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Before He Cheats</a></span></p>
-									<p class="artist"><a href="#">Carrie Underwood</a></p>
+									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">Before He Cheats</a></span></p>
+									<p class="artist"><a href="javascript:void(0)">Carrie Underwood</a></p>
 								</div>
 							</li>
 							<li>
@@ -468,8 +468,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/kelly-clarkson.jpg" alt="kelly-clarkson">
 								</div>
 								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">All I Ever Wanted</a></span></p>
-									<p class="artist"><a href="#">Kelly Clarkson</a></p>
+									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">All I Ever Wanted</a></span></p>
+									<p class="artist"><a href="javascript:void(0)">Kelly Clarkson</a></p>
 								</div>
 							</li>
 							<li>
@@ -477,8 +477,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/michael-jackson.jpg" alt="michael-jackson">
 								</div>
 								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="#">Thriller</a></span><span class="song-title"><a href="#"></a></span></p>
-									<p class="artist"><a href="#">Michael Jackson</a></p>
+									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)">Thriller</a></span><span class="song-title"><a href="javascript:void(0)"></a></span></p>
+									<p class="artist"><a href="javascript:void(0)">Michael Jackson</a></p>
 								</div>
 							</li>
 						</ul>
@@ -585,7 +585,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     
 					<div class="small-divider"></div>
 					<div class="tooltip">
-						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
+						<a href="javascript:void(0)"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
 					</div>
                                         <div class="account-options-menu">                                            
                                             

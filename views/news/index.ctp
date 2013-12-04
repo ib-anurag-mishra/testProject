@@ -82,13 +82,13 @@ $(".adjust").toggle(
               <?php
               if(strlen($newsText) > strpos($newsText, "</p>")+4)
               {
-                ?><a href="#" onClick="showhide('detail', '<?php echo $newx['News']['id']; ?>')">+ See more</a><?php
+                ?><a href="javascript:void(0)" onClick="showhide('detail', '<?php echo $newx['News']['id']; ?>')">+ See more</a><?php
               }
               ?>
 						</div>
             <div id="detailsNews<?php echo $newx['News']['id']; ?>" style="display:none">
 							<?php echo $newsText; ?>
-              <a href="#" onClick="showhide('short', '<?php echo $newx['News']['id']; ?>')">- See Less</a>
+              <a href="javascript:void(0)" onClick="showhide('short', '<?php echo $newx['News']['id']; ?>')">- See Less</a>
 						</div>
 					</div>
 				</td>

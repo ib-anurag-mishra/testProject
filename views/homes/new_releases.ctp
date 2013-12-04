@@ -48,14 +48,14 @@
                                 {
                                     echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                     ?>
-                                    <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
 
                                     <div class="wishlist-popover">
                                         <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                         <?php
                                         //  echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'),$value['albumSongs'][$value['Albums']['ProdID']],$value['Albums']['ProdID'],$value['Albums']['provider_type']);
                                         ?>
-                                        <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                        <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                     </div>
                                 <?php } ?>
 
@@ -139,7 +139,7 @@
         if ($this->Session->read("patron"))
         {
             ?> 
-            <!-- <a href="#" class="preview"></a>  -->
+            <!-- <a href="javascript:void(0)" class="preview"></a>  -->
             <?php
             if ($value['Country']['SalesDate'] <= date('Y-m-d'))
             {
@@ -239,7 +239,7 @@
         if ($this->Session->read("patron"))
         {
             ?> 
-            <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+            <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
 
             <div class="wishlist-popover">
                 <input type="hidden" id="<?= $value['Song']['ProdID'] ?>" value="song"/>
@@ -249,7 +249,7 @@
                 {
                     //  echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); 
                     ?>
-                    <a class="add-to-playlist " href="#">Add To Playlist</a>
+                    <a class="add-to-playlist " href="javascript:void(0)">Add To Playlist</a>
                 <?php } ?>
 
 
@@ -331,7 +331,7 @@
                         <div class="top-10-ranking"><?php echo $count; ?></div>
 
                         <?php //if($this->Session->read("patron")){   ?> 														
-                        <!--<a href="#" class="preview"></a> -->
+                        <!--<a href="javascript:void(0)" class="preview"></a> -->
                         <?php //}  ?>
 
 
@@ -417,12 +417,12 @@
 
 
 
-                        <!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
+                        <!-- <a class="top-10-download-now-button" href="javascript:void(0)">Download Now</a> -->
                         <?php
                         if ($this->Session->read("patron"))
                         {
                             ?> 
-                            <a class="add-to-playlist-button no-ajaxy" href="#"></a>
+                            <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                             <div class="wishlist-popover">
                                 <?php
                                 $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);

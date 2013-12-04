@@ -157,7 +157,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           } else {
             ?>
-            <a	href="#" style="color:#000">All Music</a>
+            <a	href="javascript:void(0)" style="color:#000">All Music</a>
             <?php
           }
           ?>
@@ -170,7 +170,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           } else {
             ?>
-          <a	href="#" style="color:#000">Albums</a>
+          <a	href="javascript:void(0)" style="color:#000">Albums</a>
             <?php
           }
           ?>
@@ -183,7 +183,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           } else {
             ?>
-          <a	href="#" style="color:#000">Artists</a>
+          <a	href="javascript:void(0)" style="color:#000">Artists</a>
             <?php
           }
           ?>
@@ -195,7 +195,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           } else {
             ?>
-          <a	href="#" style="color:#000">Composers</a>
+          <a	href="javascript:void(0)" style="color:#000">Composers</a>
             <?php
           }
           ?>
@@ -207,7 +207,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           } else {
             ?>
-          <a	href="#" style="color:#000">Genres</a>
+          <a	href="javascript:void(0)" style="color:#000">Genres</a>
             <?php
           }
           ?>
@@ -220,7 +220,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           } else {
             ?>
-          <a	href="#" style="color:#000">Label</a>
+          <a	href="javascript:void(0)" style="color:#000">Label</a>
             <?php
           }
           ?>
@@ -233,7 +233,7 @@ function Get_Sales_date($sales_date_array, $country){
             <?php
           } else {
             ?>
-          <a	href="#" style="color:#000">Songs</a>
+          <a	href="javascript:void(0)" style="color:#000">Songs</a>
             <?php
           }
           ?>
@@ -253,10 +253,10 @@ if('' != $keyword){
 	if(($type == 'all' )){
 			echo $str =<<<STR
 			<div	id="hide_blocks">
-				<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide</a>
+				<a href="javascript:void(0)" onclick="javascript:advanced_search_show_hide('hide_div')">Hide</a>
 			</div>
 			<div	id="show_blocks" >
-				<a href="#" onclick="javascript:advanced_search_show_hide('show_div')">Show</a>
+				<a href="javascript:void(0)" onclick="javascript:advanced_search_show_hide('show_div')">Show</a>
 			</div>
 STR;
 		}

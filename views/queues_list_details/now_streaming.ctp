@@ -102,7 +102,7 @@
                                             ?>
 						<div class="song-title"><?php 
                                                 echo $value['Songs']['SongTitle']?></div>
-						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
+						<a class="add-to-wishlist-button no-ajaxy" href="javascript:void(0)"></a>
                                                 <?php
                                                 if (strlen($value['Songs']['ArtistText']) >= 30 ) {
                                                         $artistText = $this->getTextEncode(substr($value['Songs']['ArtistText'], 0, 30)) . "..";
@@ -213,7 +213,7 @@
                                             ?>
 						<div class="song-title"><?php 
                                                 echo $value['Song']['SongTitle']?></div>
-						<a class="add-to-wishlist-button no-ajaxy" href="#"></a>
+						<a class="add-to-wishlist-button no-ajaxy" href="javascript:void(0)"></a>
                                                 <?php
                                                 if (strlen($value['Song']['ArtistText']) >= 30 ) {
                                                         $artistText = $this->getTextEncode(substr($value['Song']['ArtistText'], 0, 30)) . "..";

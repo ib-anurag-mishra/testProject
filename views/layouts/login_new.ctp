@@ -114,7 +114,7 @@ jQuery(document).ready(function() {
 		?>
 		<div class="main-holder">
 			<div class="main-frame">
-      	<h1 class="logo"><a href="#">freegal music</a></h1>
+      	<h1 class="logo"><a href="javascript:void(0)">freegal music</a></h1>
 				<div class="section">
           <a target="_blank" href="http://itunes.apple.com/us/app/freegal-music/id508036345?ls=1&mt=8" class="btn-iphone"><img src="/img/iphone.png" alt="image description" width="199" height="385" /></a>
 					<a target="_blank" href="https://play.google.com/store/apps/details?id=com.libraryideas.freegalmusic&feature=nav_result#?t=W251bGwsMSwyLDNd" class="btn-samsung"><img src="/img/samsung.png" alt="image description" width="197" height="385" /></a>

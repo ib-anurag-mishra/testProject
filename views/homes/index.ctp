@@ -217,7 +217,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
                                             {
                                                 ?> 
-                                                <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                                <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                                 <?php
                                             }
                                             ?>
@@ -229,7 +229,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                 {
                                                    // echo $this->Queue->getQueuesList($this->Session->read('patron'), $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"], $nationalTopDownload[$i]["Albums"]["ProdID"], $nationalTopDownload[$i]["Albums"]["provider_type"]);
                                                     ?>
-                                                    <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                                    <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                                     <?php
                                                 }
                                                 ?>
@@ -324,7 +324,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         {
                                             echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                             ?> 
-                                            <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                            <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                             <?php
                                         }
                                         ?>
@@ -336,7 +336,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
                                                // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                                 ?>
-                                                <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                                <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                                 <?php
                                             }
                                             ?>
@@ -441,14 +441,14 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
                                     {
                                         ?>
-                                        <a class="add-to-playlist-button no-ajaxy" href="#" ></a>
+                                        <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                         <div class="wishlist-popover">    
                                             <input type="hidden" id="<?= $v['Album']['ProdID'] ?>" value="album"/>
                                             
                                             <?php 
                                             //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $v['albumSongs'][$v['Album']['ProdID']], $v['Album']['ProdID'], $v['Album']['provider_type']);
                                             ?>
-                                            <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                            <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                             <?php ?>
 
                                             <?php
@@ -560,7 +560,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 if ($this->Session->read("patron"))
                                 {
                                     ?> 													
-                                    <a class="add-to-playlist-button no-ajaxy" href="#">
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)">
 
                                     </a>
                                     <div class="wishlist-popover"> 
@@ -658,7 +658,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 if ($this->Session->read("patron"))
                                 {
                                     ?> 
-                                    <a class="add-to-playlist-button no-ajaxy" href="#">
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)">
 
                                     </a>
                                     <div class="wishlist-popover">	

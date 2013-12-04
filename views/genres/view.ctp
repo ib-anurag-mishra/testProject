@@ -152,7 +152,7 @@ $totalRows = count($genresAll);
             <div class="genre-list">
                 <ul>
                     <li>
-                        <a class="genre_list_item_all <?php echo ($genre == 'All') ? selected : '' ?>" href="#" data-genre="All Artists" id="genre_list_item_0" 
+                        <a class="genre_list_item_all <?php echo ($genre == 'All') ? selected : '' ?>" href="javascript:void(0)" data-genre="All Artists" id="genre_list_item_0" 
                            onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/', '0', '<?php echo addslashes('All'); ?>')">
                                <?php echo __('All Artists'); ?>
                         </a>

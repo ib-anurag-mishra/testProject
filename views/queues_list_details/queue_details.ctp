@@ -208,15 +208,15 @@
                                    {
                                       // echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Songs"]["ProdID"], $value["Songs"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
                                        ?>
-                                    <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                    <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                 <?php } ?>
-                                <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+                                <!-- <a class="add-to-wishlist" href="javascript:void(0)">Add To Wishlist</a> -->
                                 <?php
                                 $wishlistInfo = $wishlist->getWishlistData($value["Songs"]["ProdID"]);
 
                                 echo $wishlist->getWishListMarkup($wishlistInfo, $value["Songs"]["ProdID"], $value["Songs"]["provider_type"]);
                                 ?>
-                                <!--<a class="remove-song" href="#">Remove Song</a> -->
+                                <!--<a class="remove-song" href="javascript:void(0)">Remove Song</a> -->
                                 <span class="top-100-download-now-button">
                                     <?php
                                     if (($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Default') ||
