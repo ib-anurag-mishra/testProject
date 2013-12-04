@@ -1831,7 +1831,7 @@ $('document').ready(function()
         $(this).addClass('selected');
     });
 
-
+alert($('li.most-popular').position());
     var most_popular_position = $('li.most-popular').position();
     var most_popular_width = $('li.most-popular').outerWidth();
 
