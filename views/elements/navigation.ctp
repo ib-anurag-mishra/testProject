@@ -185,6 +185,15 @@ function createQueue(){
                 {
                     $(document).find('.playlists-shadow-container')
                     .children().remove();
+                    
+                    var loading_div = "<div class='loader'>";
+                    loading_div += "</div>";
+                    $(document).find('.playlists-shadow-container').append(loading_div);
+
+                    $.ajax({
+                         type: "post",
+                         url: webroot+'queues/createQueue',
+                    });
                 }
 
                  var updated_queue_list = '<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('+album_data[1]+', this );" >' +album_data[2] + '</a></li>';

@@ -455,7 +455,7 @@ class QueuesController extends AppController
         $this->layout = 'ajax';
         $queueData = $this->Queue->getQueueList($patron_id);
         $this->set('queueData', $queueData);
-        echo $this->render('savedQueuesList');
+        echo $this->render();
     }
 
 }
