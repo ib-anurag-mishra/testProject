@@ -722,6 +722,7 @@
                                         ?>      
                             
                             <?php
+                            echo $this->Session->read('streamPopupShow'); die;
                if(($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){ 
                    echo "In the Condition"; die;
            ?>
