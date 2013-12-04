@@ -183,8 +183,7 @@ function createQueue(){
                  }
                 else
                 {
-                    $(document).find('.playlists-shadow-container')
-                    .children().remove();
+                    $(document).find('.playlists-shadow-container').find('.playlists-container').remove();
                     
                     var loading_div = "<div class='loader'>";
                     loading_div += "</div>";
