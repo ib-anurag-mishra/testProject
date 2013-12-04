@@ -1657,6 +1657,12 @@ $('document').ready(function()
         return false;
     });
     
+    $(document).on('mouseenter','.playlist-options',function(){
+	    
+		$('.queue-detail-page .playlist-scrollable').unbind('mousewheel');
+	    
+    });
+    
 
     $(document).on('click', '.now-streaming-page .now-playing-container .add-to-wishlist-button,.queue-detail-page .now-playing-container .add-to-wishlist-button', function(e) {
         e.preventDefault();
