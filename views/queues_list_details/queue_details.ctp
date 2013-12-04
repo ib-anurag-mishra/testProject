@@ -87,7 +87,7 @@
                     $i = 0;                    
                     foreach ($queue_list_array as $key => $value)
                     {
-                        if(!isset($value[$key]['Songs'])) continue;
+                        if(empty($value[$key]['Songs'])) continue;
                         
                         $i++;
                         if (($this->Session->read('block') == 'yes') && ($value['Songs']['Advisory'] == 'T'))
