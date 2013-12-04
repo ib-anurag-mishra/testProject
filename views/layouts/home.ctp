@@ -723,6 +723,7 @@
                             
                             <?php
                if(($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){ 
+                   echo "In the Condition"; die;
            ?>
 		<a class='streamApproval' href="#"></a>
 		<div style="display:none;">
