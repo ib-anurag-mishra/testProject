@@ -504,7 +504,13 @@
                                                 noEscape: true, href: "#streamApproval_div", 
                                                 onOpen: function() {                                                 
                                                     $(document).unbind("keydown.cbox_close");
-                                    }});        
+                                    }}); 
+                                
+                                 $("#colorboxOKBtn").click(function() {
+                                    var pid = <?= $this->Session->read('patron') ?>;
+                                    var lid = <?= $this->Session->read('library') ?>;
+                                    var data = {pid: pid, lid: lid};
+                                    });
                             <?php
                             }
                         ?>
@@ -740,6 +746,7 @@
                             <?php
                if(($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){ 
            ?>
+                            <style>#cboxClose{display:none !important;}</style>
 		<a class='streamApproval' href="#"></a>
 		<div style="display:none;">
 			<div id="streamApproval_div">
@@ -749,7 +756,7 @@
 				</div>
 				<?php /* echo $page->getPageContent('stream_123'); */?>
                 <br />
-				<input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
+				<center><input type="button" value="OK" id="colorboxOKBtn"></center>
                             </span>
 
                         </div>
