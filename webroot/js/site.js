@@ -307,7 +307,12 @@ $('document').ready(function()
 
     });
     
-
+	$(document).on('mousewheel','.playlist-options',function(e){
+		
+		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+		
+		return false;
+	});
 	
 
 	
@@ -1882,14 +1887,6 @@ $('document').ready(function()
     if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0) {
         resetNavigation();
     }
-    
-    
-	$(document).on('mousewheel','.playlist-options',function(e){
-		
-		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-		
-		return false;
-	});
 
 
 });
