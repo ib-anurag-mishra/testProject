@@ -1346,14 +1346,15 @@ function login($library = null){
         Desc : For saving the notification informaiton using ajax call from the home.ctp popup
     */
         function saveStreampopup(){
+            Configure::write('debug', 2);
+            $this->layout = false;
+            $this->autoRender = false;
+            
             echo "here";
             die;
-            Configure::write('debug', 2);
-           
-            $this->layout = false;
             
-            if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) 
-                    && $_REQUEST['lid']!=''  && $_REQUEST['pid']!=''){
+            if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) && $_REQUEST['lid']!=''  && $_REQUEST['pid']!='') 
+            {
                 echo "here";
                 die;
                 $patronId = $_REQUEST['pid'];
