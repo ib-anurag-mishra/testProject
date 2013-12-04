@@ -1352,6 +1352,9 @@ function login($library = null){
             
             if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) && $_REQUEST['lid']!=''  && $_REQUEST['pid']!='') 
             {
+                echo 'success';
+                exit;
+                
                 $patronId = $_REQUEST['pid'];
                 $libaryID = $_REQUEST['lid'];
                 
