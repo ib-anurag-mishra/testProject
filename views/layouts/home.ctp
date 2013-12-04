@@ -750,7 +750,7 @@
 				</div>
 				<?php /* echo $page->getPageContent('stream_123'); */?>
                 <br />
-				<input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
+				<center><input type="button" value="OK" id="colorboxOKBtn"></center>
                             </span>
 
                         </div>
