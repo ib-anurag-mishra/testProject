@@ -78,9 +78,14 @@
                             url: link, // URL to request
                             data: data, // post data
                             success: function(newitems) {
-                                artistPage++;
-                                $('#artist_loader').hide();
-                                $('#artistlistrecord').append(newitems);
+                                if(newitems){
+                                    artistPage++;
+                                    $('#artist_loader').hide();
+                                    $('#artistlistrecord').append(newitems);  
+                                }else{
+                                     $('#artist_loader').hide(); 
+                                     return;
+                                }                                
                             },
                             async: true,
                             error: function(XMLHttpRequest, textStatus, errorThrown) {
