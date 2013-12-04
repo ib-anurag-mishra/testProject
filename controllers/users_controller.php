@@ -1355,18 +1355,18 @@ function login($library = null){
                 $patronId = $_REQUEST['pid'];
                 $libaryID = $_REQUEST['lid'];
                 
-                $this->CurrentPatron->setDataSource('master');
+                $this->Currentpatron->setDataSource('master');
                 
                 //check if record is already exist for this patron and library
-                $currentPatronData = $this->CurrentPatron->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
+                $currentPatronData = $this->Currentpatron->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
                 if(count($currentPatronData) > 0) {
                     echo 'success';
                     exit;
                 
-                    $this->CurrentPatron->setDataSource('master');
+                    $this->Currentpatron->setDataSource('master');
                         $currentPatronData['stream_popup'] = 'yes';
-                        $this->CurrentPatron->set($currentPatronData);
-                        $this->NotificationSubscriptions->save();   
+                        $this->Currentpatron->set($currentPatronData);
+                        $this->Currentpatron->save();   
                         $this->Session->write('streamPopupShow','yes');
                 
                    }
