@@ -1360,9 +1360,6 @@ function login($library = null){
                 //check if record is already exist for this patron and library
                 $currentPatronData = $this->Currentpatron->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
                 if(count($currentPatronData) > 0) {
-                    echo 'success';
-                    exit;
-                
                     $this->Currentpatron->setDataSource('master');
                         $currentPatronData['stream_popup'] = 'yes';
                         $this->Currentpatron->set($currentPatronData);
