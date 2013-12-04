@@ -451,6 +451,8 @@ function login($library = null){
                                 }else{
                                     $this->Session->write("showNotificationPopup", 'no');                               
                                 }
+                                
+                                
                            
 				$this->Session->write("patron", $patronId);
 				$this->Session->write("patronEmail", $this->Session->read('Auth.User.email'));
@@ -459,8 +461,9 @@ function login($library = null){
 					$this->Session->write("consortium", $this->Session->read('Auth.User.consortium'));
 				}
 				$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));
-				$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-				$this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
+                $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+                $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);                               
+                $this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
 				if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 					$this->Session->write('Config.language', $libraryArr['Library']['library_language']);
 				}
