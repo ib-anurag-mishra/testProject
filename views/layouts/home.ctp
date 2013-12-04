@@ -510,7 +510,19 @@
                                     var pid = <?= $this->Session->read('patron') ?>;
                                     var lid = <?= $this->Session->read('library') ?>;
                                     var data = {pid: pid, lid: lid};
+                                    jQuery.ajax({
+                                        type: "post", // Request method: post, get
+                                        url: webroot + "users/saveStreampopup", // URL to request
+                                        data: data, // postdata
+                                        async:false,
+                                        success: function(response) {
+                                            sleep(2000);
+                                            $.fn.colorbox.close();
+                                        },
+                                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                        }
                                     });
+                                });
                             <?php
                             }
                         ?>
