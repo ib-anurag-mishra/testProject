@@ -87,11 +87,15 @@ function renameQueue()
                 $('.col-container').find('.queue-name').text($('.rename-form-container').find('#name').val());
                 $('.breadcrumbs').find('a:first').next().text($('.rename-form-container').find('#name').val());
 
+                var name = $('.rename-form-container').find('#name').val();
+                              
+                $('#hid_playlist_name').val( name );
+                $('#hid_description').val( $('.rename-form-container').find('#description').val() );
+
                 //updating the queuelist
                  $(document).find('.playlist-options-test').find('.playlist-options').find('li').each(function(){
                     if( $(this).find('a').attr('id') === $('#rqPlid').val() )
                     {
-                        var name = $('.rename-form-container').find('#name').val();
                         $(this).find('a').text( name );
                     }
                  });
@@ -172,8 +176,10 @@ function createQueue(){
                 $('.queue-overlay').removeClass('active');
                  resetForms();
                  
+                 if(createLinkThis !== null){
                  //adding the current song / album to newly create playlist
                  addToAlbumTest( album_data[1], this );
+                 }
 
                  var updated_queue_list = '<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('+album_data[1]+', this );" >' +album_data[2] + '</a></li>';
                  $(document).find('.playlist-options-test').find('.playlist-options').find('ul li:eq(1)').prepend(updated_queue_list);

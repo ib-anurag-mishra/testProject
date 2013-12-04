@@ -383,18 +383,22 @@ div.paging span a, div.paging a {
 }
 
 .top-video-login-button{
+	display: block;
     background: #fff;
     font-size: 12px;
     font-weight: bold;
-    height: 25px;
-    left: 100px;   
+    /* height: 25px; */
+    height: auto;
+    /* left: 100px;  */
+    left: 94px;  
     padding: 6px;
     position: relative;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
     top: -29px;
-    width: 124px;
+   /*  width: 124px; */
+   	width: 50px;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     opacity: 0;
  

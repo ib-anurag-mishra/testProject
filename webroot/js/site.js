@@ -62,6 +62,9 @@ $('.top-videos-scrollable .video-thumb-container .lazy').lazyload({
 
 /* end lazyload initalizations */
 
+
+
+
 $('document').ready(function()
 {
     var doc_height = $(document).height();
@@ -163,6 +166,8 @@ $('document').ready(function()
 
         }
     });
+    
+    
 
 
     $('.tooltip a').hover(
@@ -192,6 +197,9 @@ $('document').ready(function()
 
     });
 
+
+
+    
 
 
     $('.add-to-playlist').on('mouseenter', function() {
@@ -287,15 +295,34 @@ $('document').ready(function()
         $('.playlist-options').removeClass('active');
     });
 
-    $('.playlist-options').bind('mousewheel', function(e) {
 
+    $('.playlist-options').bind('mousewheel', function(e) {
+		
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+        
 
         //prevent page fom scrolling
         return false;
 
 
     });
+    
+	$(document).on('mousewheel','.playlist-options',function(e){
+		
+		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+		
+		return false;
+	});
+    
+
+   
+
+
+    
+
+    
+    
+
     preview.on('mousedown', function(e) {
         e.preventDefault();
 
@@ -1766,7 +1793,14 @@ $('document').ready(function()
         $('.create-queue-dialog-box').addClass('active');
         $('.create-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
         $('.wishlist-popover').removeClass('active');
-        createLinkThis = $(this);
+        if(!$(this).parent().has('header'))
+            {
+                createLinkThis = $(this);
+            }
+        else
+            {
+                createLinkThis = null ;
+            }
     });
 
     $(document).on('click', '.close,.text-close', function(e) {
