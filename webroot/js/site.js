@@ -310,7 +310,7 @@ $('document').ready(function()
 	$(document).on('mousewheel','.playlist-options',function(e){
 		
 		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-		
+		console.log('scrolled');
 		return false;
 	});
 	
