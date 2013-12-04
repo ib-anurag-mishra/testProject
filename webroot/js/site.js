@@ -313,7 +313,13 @@ $('document').ready(function()
 		
 		return false;
 	});
-    
+	
+	
+    $(document).on('mouseenter','.playlist-options',function(e){
+		
+
+		console.log('mouse entered');
+	});
 	
    
 
