@@ -740,6 +740,7 @@
                             <?php
                if(($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){ 
            ?>
+                            <style>#cboxClose{display:none !important;}</style>
 		<a class='streamApproval' href="#"></a>
 		<div style="display:none;">
 			<div id="streamApproval_div">
