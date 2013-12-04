@@ -4,9 +4,7 @@
     <?php
     if (!empty($queueData))
     {
-        ?>
-        <div class="playlists-shadow-container">
-            <div class="playlists-scrollable">
+        ?>      
                 <div class="playlists-container">
                     <div class="row clearfix">
                         <?php
@@ -48,9 +46,7 @@
                         }
                         ?>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div>           
         <?php
     }
     else
