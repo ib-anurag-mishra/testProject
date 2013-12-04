@@ -1175,7 +1175,7 @@ STR;
             $sobj = new SongDataType;
             $sobj->ProdID                = (int)$this->getProductAutoID($val['ProdID'], $val['provider_type']);
             $sobj->ProductID             = (string)$val['ProductID'];
-            $sobj->ReferenceID           = (int)$val['ReferenceID'];
+            $sobj->ReferenceID           = (int)$this->getProductAutoID($val['ReferenceID'], $val['provider_type']);
             $sobj->Title                 = $this->getTextUTF((string)$val['Title']);
             $sobj->SongTitle             = $this->getTextUTF((string)$val['SongTitle']);
             $sobj->ArtistText            = $this->getTextUTF((string)$val['ArtistText']);

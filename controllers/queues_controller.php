@@ -443,6 +443,21 @@ class QueuesController extends AppController
         }
         die;
     }
+    
+    
+    /**
+     * function name : queueList
+     * Description   : This function is used to retrieve all the queues created by an individual
+     */
+    function ajaxSavedQueuesList()
+    {
+        Configure::write('debug', 2);
+        $patron_id = $this->Session->read("patron");
+        $this->layout = 'ajax';
+        $queueData = $this->Queue->getQueueList($patron_id);
+        $this->set('queueData', $queueData);
+        echo $this->render();
+    }
 
 }
 
