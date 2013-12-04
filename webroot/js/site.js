@@ -307,19 +307,9 @@ $('document').ready(function()
 
     });
     
-	$(document).on('mousewheel','.playlist-options',function(e){
-		
-		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-		
-		return false;
-	});
+
 	
-	$(document).on('mousewheel','.queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .wishlist-popover .playlist-options',function(e){
-		
-		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-		console.log('scrolled');
-		return false;
-	});
+
 	
 	
 	
@@ -1892,6 +1882,14 @@ $('document').ready(function()
     if (ReadycurrentPageState.toLowerCase().indexOf("videos/details") >= 0) {
         resetNavigation();
     }
+    
+    
+	$(document).on('mousewheel','.playlist-options',function(e){
+		
+		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+		
+		return false;
+	});
 
 
 });
