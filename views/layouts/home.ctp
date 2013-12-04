@@ -504,7 +504,13 @@
                                                 noEscape: true, href: "#streamApproval_div", 
                                                 onOpen: function() {                                                 
                                                     $(document).unbind("keydown.cbox_close");
-                                    }});        
+                                    }}); 
+                                
+                                 $("#colorboxOKBtn").click(function() {
+                                    var pid = <?= $this->Session->read('patron') ?>;
+                                    var lid = <?= $this->Session->read('library') ?>;
+                                    var data = {pid: pid, lid: lid};
+                                    });
                             <?php
                             }
                         ?>
