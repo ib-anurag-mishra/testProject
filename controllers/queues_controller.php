@@ -451,6 +451,7 @@ class QueuesController extends AppController
      */
     function ajaxSavedQueuesList()
     {
+        Configure::write('debug', 2);
         $patron_id = $this->Session->read("patron");
         $this->layout = 'ajax';
         $queueData = $this->Queue->getQueueList($patron_id);
