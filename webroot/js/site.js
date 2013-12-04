@@ -1831,14 +1831,15 @@ $('document').ready(function()
         $(this).addClass('selected');
     });
 
-alert($('li.most-popular').position());
-    var most_popular_position = $('li.most-popular').position();
-    var most_popular_width = $('li.most-popular').outerWidth();
 
-    $('.most-popular-sub-nav').css('left', most_popular_position.left);
-    $('.most-popular-sub-nav').css('width', most_popular_width);
+    if($('li.most-popular').position() != 'undefined'){
+        var most_popular_position = $('li.most-popular').position();
+        var most_popular_width = $('li.most-popular').outerWidth();
 
+        $('.most-popular-sub-nav').css('left', most_popular_position.left);
+        $('.most-popular-sub-nav').css('width', most_popular_width);
 
+    }
     function computeVisibleHeight($t) {
         var top = $t.position().top;
         var windowHeight = $(window).height();
