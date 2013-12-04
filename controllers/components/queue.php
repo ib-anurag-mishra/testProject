@@ -129,7 +129,7 @@ Class QueueComponent extends Object
          $queueInstance->recursive = -1;
             $queueList = $queueInstance->find('all', array('conditions' => array('queue_id' => $queueID, 'status' => 1),
                 'fields' => array('QueueList.queue_id', 'QueueList.queue_name', 'QueueList.description')));
-        return $queueDetail;
+        return $queueList;
     }
     
 
