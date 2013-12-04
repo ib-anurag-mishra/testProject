@@ -84,10 +84,10 @@
                 <div class="row-container">
                     <?php
                     $playListData = array();
-                    $i = 0;                    
+                    $i = 0;      echo "<pre>"; print_r($queue_list_array);              
                     foreach ($queue_list_array as $key => $value)
                     {
-                        echo "<pre>"; print_r($value[$key]['Songs']);
+                        echo "<pre>"; print_r($value);
                         
                         if(empty($value[$key]['Songs'])) continue;
                         
