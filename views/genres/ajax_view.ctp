@@ -24,7 +24,8 @@ var preValue= 1;
                                     $('#artist_loader').hide();                      
                                     $('#artistlistrecord').append(newitems);  
                                 }else{
-                                    break;
+                                    $('#artist_loader').hide(); 
+                                    return;
                                 }
                                 
 

@@ -83,7 +83,8 @@
                                     $('#artist_loader').hide();
                                     $('#artistlistrecord').append(newitems);  
                                 }else{
-                                    break;
+                                     $('#artist_loader').hide(); 
+                                     return;
                                 }                                
                             },
                             async: true,
