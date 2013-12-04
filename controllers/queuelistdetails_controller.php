@@ -228,7 +228,7 @@ class QueueListDetailsController extends AppController
         }
         else        // Custom Queue
         {
-            $queue_list_array = $this->Queue->getQueueDetails($this->params['pass'][0], $territory);
+            $queue_list_array = $this->Queue->getQueueDetails($this->params['pass'][0], $territory);            
             $queue_name = base64_decode($this->params['pass'][2]);
             $this->set('queue_name', $queue_name);
             $this->set('queueType', 'Custom');
@@ -272,6 +272,13 @@ class QueueListDetailsController extends AppController
         {
             $this->set('default_queue', $this->params['pass'][1]);
         }
+        
+        if(count($queue_list_array)==0)
+        {
+               $queue_list_array = $this->Queue->getOnlyQueueDetails($this->params['pass'][0]);                   
+        }
+        
+        
       
         $queue_list_array[0]["QueueList"]["queue_name"] = empty($queue_list_array[0]["QueueList"]["queue_name"])?base64_decode($this->params['pass'][2]):$queue_list_array[0]["QueueList"]["queue_name"];  
         $this->set('queue_list_array', $queue_list_array);
