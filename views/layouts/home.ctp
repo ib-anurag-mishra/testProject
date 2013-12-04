@@ -493,7 +493,21 @@
                             <?php
                         }
                         ?>
-                       
+                        <?php
+                        if(($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes')){ 
+                        ?>
+                        $(".streamApproval")
+                                            .colorbox(
+                                            {
+                                                width: "50%", inline: true, open: true, 
+                                                overlayClose: false, opacity: .5, 
+                                                noEscape: true, href: "#streamApproval_div", 
+                                                onOpen: function() {                                                 
+                                                    $(document).unbind("keydown.cbox_close");
+                                    }});        
+                            <?php
+                            }
+                        ?>
                         
                 });
 
@@ -745,7 +759,7 @@
 
                                         <div id="border-background" >
                                             <div id="container">
-                                                <?php echo $this->element('header'); ?>
+                                                <?php  ?>
                                                 <div id="content">
                                                     <?php
                                                     if ($this->Session->read('library') && $this->Session->read('library') != '')
