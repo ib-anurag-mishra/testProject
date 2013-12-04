@@ -275,8 +275,7 @@ class QueueListDetailsController extends AppController
         
         if(count($queue_list_array)==0)
         {
-               $queueDetails = $this->Queue->getOnlyQueueDetails($this->params['pass'][0]);    
-               echo "<pre>"; print_r($queueDetails);
+               $queue_list_array = $this->Queue->getOnlyQueueDetails($this->params['pass'][0]);                   
         }
         
         
