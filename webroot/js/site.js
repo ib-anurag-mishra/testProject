@@ -1649,18 +1649,14 @@ $('document').ready(function()
         $('.queue-options').removeClass('active');
     });
 
-    $('.now-streaming-page .playlist-scrollable').bind('mousewheel', function(e) {
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        //prevent page fom scrolling
-        return false;
-    });
-    /*
+
+    
     $('.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable').bind('mousewheel', function(e) {
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         //prevent page fom scrolling
         return false;
     });
-    */
+    
 
     $(document).on('click', '.now-streaming-page .now-playing-container .add-to-wishlist-button,.queue-detail-page .now-playing-container .add-to-wishlist-button', function(e) {
         e.preventDefault();
