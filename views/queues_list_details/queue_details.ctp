@@ -127,6 +127,25 @@
                                 echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle']));
                                 ?>
                             </div>
+
+                            <a class="add-to-wishlist-button no-ajaxy" href='javascript:void(0);'></a>
+                            <div class="album-title">
+                                <a href="/artists/view/<?php echo base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
+                                    <?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>
+                                </a>                                                
+                            </div>
+
+                            <div class="artist-name">
+
+                                <?php
+                                $artistText = (strlen($value['Songs']['ArtistText']) >= 30) ? $this->getTextEncode(substr($value['Songs']['ArtistText'], 0, 30)) . ".." : $this->getTextEncode($value['Songs']['ArtistText']);
+                                ?>  
+
+                                <a href="/artists/album/<?= base64_encode($value['Songs']['ArtistText']); ?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']); ?>">
+                                    <?php echo $this->getValidText($this->getTextEncode($artistText)); ?>
+                                </a>                                                
+                            </div>
+
                         </div>
                         <?php
                     }
