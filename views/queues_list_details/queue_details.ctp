@@ -142,7 +142,7 @@
                                         $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
-                                        if ($albumSong['Song']['status'] != 'avail')
+                                        if ( $value['Songs']['status'] != 'avail')
                                         {
                                             ?>
                                             <form method="Post" id="form<?php echo $value["Songs"]["ProdID"]; ?>" action="/homes/userDownload">
@@ -158,8 +158,14 @@
                                                     <![endif]-->
                                                 </span>
 
-                                                <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait.."); ?>
-                                                        <span id="wishlist_loader_<?php echo $value["Songs"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif'); ?></span> </a> </span>
+                                                <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;">
+                                                    <a  class="add-to-wishlist"  >
+                                                    <?php __("Please Wait.."); ?>
+                                                        <span id="wishlist_loader_<?php echo $value["Songs"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;">
+                                                            <?php echo $html->image('ajax-loader_black.gif'); ?>
+                                                        </span> 
+                                                    </a> 
+                                                </span>
 
                                             </form>
                                             <?php
@@ -176,7 +182,18 @@
                                         <?php
                                     }
                                 }
-                                ?>
+                                else
+                                {
+                                    ?>
+                                    <a class="add-to-wishlist" title='<?php __("Coming Soon"); ?> ( <?php
+                                    if (isset($value['Countries']['SalesDate']))
+                                    {
+                                        echo date("F d Y", strtotime($value['Countries']['SalesDate']));
+                                    }
+                                    ?> )' href="javascript:void(0)"><?php __('Coming Soon'); ?></a>
+                                       <?php
+                                   }
+                                   ?>
                             </div>
 
 
