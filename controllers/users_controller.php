@@ -71,36 +71,36 @@ Class UsersController extends AppController
                         
 			if(!empty($library_data))
 			{
-                            	if($this->Session->read('loginchk') == '' && $this->Session->read('patron')== '')
-				{
-                                    
-                                    if($_SERVER['REQUEST_URI'] == '/users/redirection_manager'){
-                                        if($library_data['Library']['library_authentication_method'] == 'referral_url')
-					{
-						$referral = explode(",",$library_data['Library']['library_domain_name']);
-                                                $this->Cookie->write('referer', $referral[0], false);
-                                                setcookie('referer',$referral[0],3600,'/','freegalmusic.com');
-						$this->redirect($referral[0]);
-					}
-                                        else if($library_data['Library']['library_authentication_method'] == 'ezproxy')
-                                        {
-                                            $this->redirect($library_data['Library']['library_ezproxy_referral']);
-                                        }
-					else
-					{
-						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
-						//$this->redirect(array('controller' => 'users', 'action' => $action));
-                                                $this->Session->write("layout_option", 'login');
-                                                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
-					}
-                                    } else {
-                                        $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
+                            if($this->Session->read('loginchk') == '' && $this->Session->read('patron')== '')
+                            {
+
+                                if($_SERVER['REQUEST_URI'] == '/users/redirection_manager'){
+                                    if($library_data['Library']['library_authentication_method'] == 'referral_url')
+                                    {
+                                            $referral = explode(",",$library_data['Library']['library_domain_name']);
+                                            $this->Cookie->write('referer', $referral[0], false);
+                                            setcookie('referer',$referral[0],3600,'/','freegalmusic.com');
+                                            $this->redirect($referral[0]);
                                     }
-				}
-				else
-				{
-					$this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
-				}
+                                    else if($library_data['Library']['library_authentication_method'] == 'ezproxy')
+                                    {
+                                        $this->redirect($library_data['Library']['library_ezproxy_referral']);
+                                    }
+                                    else
+                                    {
+                                            $action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
+                                            //$this->redirect(array('controller' => 'users', 'action' => $action));
+                                            $this->Session->write("layout_option", 'login');
+                                            $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
+                                    }
+                                } else {
+                                    $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
+                                }
+                            }
+                            else
+                            {
+                                    $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
+                            }
 			}
 			else
 			{

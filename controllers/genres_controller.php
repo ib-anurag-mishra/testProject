@@ -318,8 +318,7 @@ Class GenresController extends AppController
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
         if ($genre != 'All')
-        {
-
+        {           
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -341,7 +340,7 @@ Class GenresController extends AppController
         }
         else
         {
-
+            //this run
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('hasOne' => array('Genre')));
@@ -446,6 +445,7 @@ Class GenresController extends AppController
         if ($genre != 'All')
         {
 
+   //this one
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -468,7 +468,7 @@ Class GenresController extends AppController
         else
         {
 
-            $this->Song->unbindModel(array('hasOne' => array('Participant')));
+           $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('hasOne' => array('Genre')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -525,13 +525,7 @@ Class GenresController extends AppController
     {
 
         $this->layout = 'ajax';
-        //error_reporting(1);
-        //ini_set('display_errors',1);
-        //$totalPageCountNo =$totalPageCountNo+1;
-        //if(trim($totalPageCountNo) > trim($_REQUEST['npage']) ){
-        //  die;
-        //}
-
+        
         if ($Genre == '')
         {
             $Genre = "QWxs";
@@ -567,7 +561,7 @@ Class GenresController extends AppController
         if ($genre != 'All')
         {
 
-
+            //this one 
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -586,7 +580,8 @@ Class GenresController extends AppController
                 ),
                 'extra' => array('chk' => 1),
                 'limit' => '60', 'cache' => 'yes', 'check' => 2,
-            );
+            );            
+            
         }
         else
         {
