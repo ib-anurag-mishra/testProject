@@ -1174,7 +1174,7 @@ STR;
             //if ( !empty($country ) && ( $territory == "US" ) ) {   
 
 
-            $sql = "SELECT Distinct Albums.AlbumTitle, Song.ProdID,Song.ReferenceID,Song.provider_type,
+          echo  $sql = "SELECT Distinct Albums.AlbumTitle, Song.ProdID,Song.ReferenceID,Song.provider_type,
                 FROM Songs AS Song
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                 LEFT JOIN Albums as Albums on Albums.ProdID=Songs.ReferenceID
