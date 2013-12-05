@@ -295,6 +295,8 @@ $this->log(" home index.ctp start", "siteSpeed");
                             <?php
                             $k++;
                         }
+                        $this->log("index.ctp video start", "siteSpeed");   
+
                     }
                     ?>	
                 </ul>
@@ -388,6 +390,7 @@ $this->log(" home index.ctp start", "siteSpeed");
 
                         echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                     }
+                     $this->log("index.ctp video end", "siteSpeed");   
                     ?>
                 </ul>  
             </div>
@@ -401,6 +404,7 @@ $this->log(" home index.ctp start", "siteSpeed");
         <div class="featured-grid horiz-scroll">
             <ul style="width:3690px;">
                 <?php
+                 $this->log("index.ctp featuredArtists start", "siteSpeed");   
                 foreach ($featuredArtists as $k => $v)
                 {
 
@@ -485,6 +489,7 @@ $this->log(" home index.ctp start", "siteSpeed");
 
                     <?php
                 }
+                $this->log("index.ctp featuredArtists end", "siteSpeed");   
                 ?>	
 
 
@@ -515,6 +520,7 @@ $this->log(" home index.ctp start", "siteSpeed");
         <div id="coming-soon-singles-grid" class="horiz-scroll active">
             <ul class="clearfix">
                 <?php
+                $this->log("index.ctp commingsoon song start", "siteSpeed");   
                 $total_songs = count($coming_soon_rs);
                 $sr_no = 0;
 
@@ -623,6 +629,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                     <?php
                     $sr_no++;
                 }
+                $this->log("index.ctp commingsoon song end", "siteSpeed"); 
                 ?>
 
             </ul>
@@ -632,6 +639,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                 <?php
                 $total_videos = count($coming_soon_videos);
                 $sr_no = 0;
+                $this->log("index.ctp commingsoon videos start", "siteSpeed"); 
                 foreach ($coming_soon_videos as $key => $value)
                 {
 
@@ -728,6 +736,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                     <?php
                     $sr_no++;
                 }
+                 $this->log("index.ctp commingsoon videos end", "siteSpeed"); 
                 ?>
 
             </ul>
