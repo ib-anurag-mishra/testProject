@@ -30,7 +30,7 @@ var preValue= 1;
                                 
 
                             },
-                            async:   false,
+                            async:   true,
                             error:function (XMLHttpRequest, textStatus, errorThrown) { 
                                 //alert('No artist list available')
                             }

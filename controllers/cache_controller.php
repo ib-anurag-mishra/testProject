@@ -87,30 +87,31 @@ class CacheController extends AppController {
      */    
     function runCache(){
         set_time_limit(0);
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
+       
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){
-            $this->Common->getGenres($territory);
-            $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
-            $this->Common->getNationalTop100Albums($territory);
-            $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-            $this->Common->getUsTop10Albums($territory);
-            $this->Common->getUsTop10Videos($territory);
-            $this->Common->getNewReleaseAlbums($territory);
-            $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
+//            $this->Common->getGenres($territory);
+//            $this->Common->getNationalTop100($territory);
+//            $this->Common->getFeaturedVideos($territory);
+//            $this->Common->getTopVideoDownloads($territory);
+//            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
+//            $this->Common->getNationalTop100Albums($territory);
+//            $this->Common->getComingSoonSongs($territory);
+//            $this->Common->getComingSoonVideos($territory);
+//            $this->Common->getUsTop10Songs($territory);
+//            $this->Common->getUsTop10Albums($territory);
+//            $this->Common->getUsTop10Videos($territory);
+//            $this->Common->getNewReleaseAlbums($territory);
+//            $this->Common->getNewReleaseVideos($territory);
+//            $this->Common->getFeaturedArtists($territory);
+//            $this->Common->getDifferentGenreData($territory);
             $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);    
+            //$this->Common->getDefaultQueues($territory);    
         }
-       $this->Common->setLibraryTopTenCache();
-       $this->Common->setVideoCacheVar();    
-       $this->setAppMyMusicVideoList();       
+      // $this->Common->setLibraryTopTenCache();
+      // $this->Common->setVideoCacheVar();    
+      // $this->setAppMyMusicVideoList();       
     }
     
     /*
@@ -133,7 +134,7 @@ class CacheController extends AppController {
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
             $this->Song->Behaviors->attach('Containable');
             $this->Song->recursive = 0;
-            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 ');
+            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
 
             $this->paginate = array(
                 'conditions' => $gcondition,
@@ -146,6 +147,8 @@ class CacheController extends AppController {
                 'all_query'=> true,                
                 'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
             );
+            
+           
             $allArtists = $this->paginate('Song');
 
             for($j = 65;$j < 93;$j++){
@@ -238,7 +241,7 @@ class CacheController extends AppController {
                 $this->Song->recursive = 0;
                 $this->paginate = array(
                     'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 '),
-                    'fields' => array('DISTINCT Song.ArtistText'),
+                    'fields' => array('DISTINCT Song.ArtistText1'),
                     'contain' => array(
                     'Genre' => array(
                         'fields' => array(
@@ -251,6 +254,7 @@ class CacheController extends AppController {
                     'limit' => '60', 'cache' => 'yes','check' => 2
                 );
                 $allArtists = $this->paginate('Song');
+                die;
                 $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
                 $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
                 for($k = 65;$k < 93;$k++){
