@@ -82,6 +82,20 @@
             <div class="playlist-scrollable">
                 <div class="row-container">
                     <?php
+                    $playListData = array();
+                    $i = 0; 
+                    foreach ($queue_list_array as $key => $value)
+                    { 
+                        if(!isset($value['Songs'])) continue;
+                        if (($this->Session->read('block') == 'yes') && ($value['Songs']['Advisory'] == 'T'))
+                        {
+                            continue;
+                        }
+                        
+                        $i++;
+                    }
+                    ?>
+                    <?php
                     if (!empty($playListData))
                     {
                         ?>    
@@ -101,13 +115,6 @@
             </div>
         </div>
     </div>
-    <?php /* }
-      else
-      {
-      ?>
-
-      <!--  <h2> There are no songs associated with this queue </h2> -->
-
-      <?php } */ ?>
+   
 </section>
 
