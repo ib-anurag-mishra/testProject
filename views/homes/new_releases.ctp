@@ -20,6 +20,7 @@
                 $arr_all_albums =   array();
                 foreach ($new_releases_albums as $key => $value)
                 {
+                    if($count==101) break;
                     if(in_array($value['Albums']['AlbumTitle'], $arr_all_albums))
                     {
                        continue;
@@ -28,6 +29,7 @@
                     {
                         $arr_all_albums[$key] = $value['Albums']['AlbumTitle'];
                     }
+                    
                     
                     
                     //hide song if library block the explicit content
