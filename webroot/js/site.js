@@ -842,42 +842,17 @@ $('document').ready(function()
 
     /* genres page */
     
-    /*
-    $('.genre-list').bind('mousewheel', function(e) {
-
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        //prevent page fom scrolling
-        return false;
-
-    });
-
-    $('.alphabetical-filter').bind('mousewheel', function(e) {
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        //prevent page fom scrolling
-        return false;
-
-    });
-
-    $('.artist-list').bind('mousewheel', function(e) {
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        //prevent page fom scrolling
-        return false;
-
-    });
-
-    $('.album-list').bind('mousewheel', function(e) {
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-        //prevent page fom scrolling
-        return false;
-
-    });
     
-    */
+
+    
+   
     
     $('.genre-list').bindMouseWheel();
     $('.alphabetical-filter').bindMouseWheel();
 	$('.artist-list').bindMouseWheel();
 	$('.album-list').bindMouseWheel();
+	
+	/* end genres page */
 
     $(document).on('click', '.tracklist .preview', function(e) {
         e.preventDefault();
