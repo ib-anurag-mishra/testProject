@@ -464,7 +464,9 @@ function login($library = null){
                 $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
                 //print_r($isApproved); die;
                 //echo "Setting Stream popup session";
-                $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);                               
+                if($libraryArr['Library']['library_type'] == 2){
+                    $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);                               
+                }
                 //echo "Stream popup session set"; die;
                 $this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
 				if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
@@ -1358,17 +1360,16 @@ function login($library = null){
                 $this->Currentpatron->setDataSource('master');
                 
                 //check if record is already exist for this patron and library
-                $currentPatronData = $this->Currentpatron->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
+                $currentPatronData = $this->Currentpatron->find('first', array('conditions' => array('libid' => $libaryID,'patronid' => $patronId)));
                 if(count($currentPatronData) > 0) {
-                    $this->Currentpatron->setDataSource('master');
-                        $currentPatronData['stream_popup'] = 'yes';
-                        $this->Currentpatron->set($currentPatronData);
+                        $this->Currentpatron->setDataSource('master');
+                        $currentPatronData['Currentpatron']['stream_popup'] = 'yes';
+                        $this->Currentpatron->set($currentPatronData['Currentpatron']);
                         $this->Currentpatron->save();   
                         $this->Session->write('streamPopupShow','yes');
-                
-                   }
-                // echo 'success';
-                // exit;           
+                }
+                //echo 'success';
+                //exit;           
             }
         }
    
