@@ -1,3 +1,26 @@
+(function($){
+	
+    $.fn.bindMouseWheel = function () {
+        
+        return this.each(function(){
+            
+            $(this).bind('mousewheel', function(e) {
+            
+                $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+                //prevent page fom scrolling
+                return false;
+
+            }); 
+            
+        });
+        
+        
+        
+    };	
+	
+	
+}(jQuery));
+
 
 
 $('.most-downloaded-videos-grid .lazy').lazyload({
@@ -818,6 +841,8 @@ $('document').ready(function()
 
 
     /* genres page */
+    
+    /*
     $('.genre-list').bind('mousewheel', function(e) {
 
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
@@ -846,6 +871,13 @@ $('document').ready(function()
         return false;
 
     });
+    
+    */
+    
+    $('.genre-list').bindMouseWheel();
+    $('.alphabetical-filter').bindMouseWheel();
+	$('.artist-list').bindMouseWheel();
+	$('.album-list').bindMouseWheel();
 
     $(document).on('click', '.tracklist .preview', function(e) {
         e.preventDefault();
