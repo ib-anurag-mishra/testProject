@@ -322,13 +322,14 @@ $('document').ready(function()
 
     
     $('.playlist-options').bindMouseWheel();
-    
+    /*
 	$(document).on('mousewheel','.playlist-options',function(e){
 		
 		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 		
 		return false;
 	});
+	*/
 	
 
 	
