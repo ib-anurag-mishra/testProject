@@ -1,6 +1,8 @@
 <?php
 echo $session->flash();
 ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
+
+$this->log(" home index.ctp start", "siteSpeed");   
 ?>
 <section class="news">
     <div class="top-100">
@@ -816,5 +818,5 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         </div>
 
 
-
+<?php echo $this->log(" home index.ctp End", "siteSpeed");  ?>
 </section> <!-- end .news -->	

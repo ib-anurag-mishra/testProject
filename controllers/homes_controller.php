@@ -72,6 +72,7 @@ class HomesController extends AppController
      */
     function index() {
         
+        $this->log("Second Home Index", "siteSpeed");
         //check the server port and redirect to index page
         if($_SERVER['SERVER_PORT'] == 443){
                 $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
@@ -104,7 +105,7 @@ class HomesController extends AppController
         }
         $this->set('nationalTopDownload',$nationalTopDownload);
    
-		
+	$this->log("100 song completed", "siteSpeed");	
 	// National Top 100 Albums slider        
         if (($national = Cache::read("nationaltop100albums".$territory)) === false) {
          
@@ -114,7 +115,10 @@ class HomesController extends AppController
             $nationalTopAlbums = Cache::read("nationaltop100albums".$territory);                
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
-       
+        
+        
+        $this->log(" 100 albums completed", "siteSpeed");
+        
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
@@ -154,6 +158,7 @@ class HomesController extends AppController
                // echo "<br>Query3: ".$this->News->lastQuery();
         }
         $this->set('news',$news_rs);
+        $this->log(" news completed", "siteSpeed");
 		
         /*
                         Code OF NEWS Section --- END
@@ -174,7 +179,7 @@ class HomesController extends AppController
            $coming_soon_rs = Cache::read("coming_soon_songs".$territory);                    
         }
         $this->set('coming_soon_rs', $coming_soon_rs); 
-                
+        $this->log(" comming soon songs completed", "siteSpeed");        
                 // Videos
         if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false){
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
@@ -183,7 +188,7 @@ class HomesController extends AppController
         {                  
             $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
         }
-
+        $this->log(" comming soon videos completed", "siteSpeed");   
         $this->set('coming_soon_videos', $coming_soon_videos);
             
         /*
