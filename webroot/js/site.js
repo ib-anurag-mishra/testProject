@@ -3,14 +3,22 @@
     $.fn.bindMouseWheel = function () {
         
         return this.each(function(){
-            
+            /*
             $(this).bind('mousewheel', function(e) {
             
                 $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
                 //prevent page fom scrolling
                 return false;
 
-            }); 
+            });
+            */
+            
+            $(document).on('mousewheel',$(this),function(e) {
+                $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+                //prevent page fom scrolling
+                return false;	            
+	            
+            });
             
         });
         
@@ -323,13 +331,15 @@ $('document').ready(function()
     
     $('.playlist-options').bindMouseWheel();
     
+    /*
+    
 	$(document).on('mousewheel','.playlist-options',function(e){
 		
 		$(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
 		
 		return false;
 	});
-	
+	*/
 	
 
 	
