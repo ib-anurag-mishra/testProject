@@ -87,12 +87,10 @@ $(document).ready(function() {
 
         $(this).qtip({
             position: {
-                at: 'top left', //target
-                my: 'bottom right' //tooltip
-
-
+                at: 'left bottom', //target
+                my: 'left top' //tooltip
             },
-            overwrite: false,
+            overwrite: true,
             show: {
                 event: event.type,
                 ready: true
