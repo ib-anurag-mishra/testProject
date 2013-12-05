@@ -198,6 +198,7 @@ class QueueListDetailsController extends AppController
 
     function queue_details()
     {
+        ini_set('max_execution_time', 300);
         Configure::write('debug', 0);
         $this->layout = 'home';
         $libId = $this->Session->read('library');
