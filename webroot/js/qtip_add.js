@@ -88,11 +88,11 @@ $(document).ready(function() {
         $(this).qtip({
             position: {
                 at: 'top left', //target
-                my: 'bottom left' //tooltip
+                my: 'bottom right' //tooltip
 
 
             },
-            overwrite: true,
+            overwrite: false,
             show: {
                 event: event.type,
                 ready: true
