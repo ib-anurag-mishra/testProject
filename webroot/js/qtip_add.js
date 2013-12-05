@@ -95,7 +95,28 @@ $(document).ready(function() {
 	});
 		
 
+$(document).on('mouseover','.genres-page .album-title a[title]',function(event){
+	
+		$(this).qtip({
+			position: {
+				at: 'top left', //target
+				my: 'bottom right' //tooltip
+				
 
+			},
+
+			overwrite: false,
+			
+			show: {
+				
+				event: event.type,
+				ready:true
+			}			
+			
+			
+		});
+	
+	});
 
 
  
