@@ -43,12 +43,12 @@ class QueueListDetailsController extends AppController
                 {
                     if ($this->QueueDetail->deleteAll(array('id' => $_POST["Pdid"]), false))
                     {
-                        $this->Session->setFlash('Song has been deleted successfully from queue', 'modal', array('class' => 'queue success'));
+                        $this->Session->setFlash('Song has been deleted successfully from playlist', 'modal', array('class' => 'queue success'));
                         $this->redirect($this->referer());
                     }
                     else
                     {
-                        $this->Session->setFlash('Error occured while deleting song from queue', 'modal', array('class' => 'queue problem'));
+                        $this->Session->setFlash('Error occured while deleting song from playlist', 'modal', array('class' => 'queue problem'));
                         $this->redirect($this->referer());
                     }
                 }
@@ -63,7 +63,7 @@ class QueueListDetailsController extends AppController
                     {
                         //$this->Session->setFlash('Queue has been renamed successfully', 'modal', array('class' => 'queue success'));
                         $this->layout = 'ajax';
-                                echo 'Queue has been renamed successfully';
+                                echo 'Playlist has been renamed successfully';
                                 die;
                     }
                     else
@@ -71,7 +71,7 @@ class QueueListDetailsController extends AppController
 //                        $this->Session->setFlash('Error occured while renaming queue', 'modal', array('class' => 'queue problem'));
 //                        $this->redirect($this->referer());
                         $this->layout = 'ajax';
-                                echo 'Error occured while renaming queue';
+                                echo 'Error occured while renaming playlist';
                                 die;
                     }
                 }
@@ -85,12 +85,12 @@ class QueueListDetailsController extends AppController
 
                     if ((true === $delqueueDetail) && (true === $delqueue))
                     {
-                        $this->Session->setFlash('Queue has been deleted successfully', 'modal', array('class' => 'queue success'));
+                        $this->Session->setFlash('Playlist has been deleted successfully', 'modal', array('class' => 'queue success'));
                         $this->redirect('/queues/savedQueuesList/' . $this->Session->read('patron'));
                     }
                     else
                     {
-                        $this->Session->setFlash('Error occured while deleteing queue', 'modal', array('class' => 'queue problem'));
+                        $this->Session->setFlash('Error occured while deleteing playlist', 'modal', array('class' => 'queue problem'));
                         $this->redirect($this->referer());
                     }
                 }
