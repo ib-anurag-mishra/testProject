@@ -17,10 +17,11 @@
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
                 $count = 1;
-
+                $arr_all_albums =   array();
                 foreach ($new_releases_albums as $key => $value)
                 {
-                    echo "<pre>"; print_r($value);
+                    $arr_all_albums[$key] = $value['Albums']['AlbumTitle'];
+                    
                     //hide song if library block the explicit content
                     if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
                     {
@@ -99,7 +100,7 @@
                     </li>
                     <?php
                     $count++;
-                }
+                } echo "<pre>"; print_r($arr_all_albums);
                 ?>
             </ul>
         </div>
