@@ -1208,7 +1208,7 @@ STR;
 
 
             $data = array();
-            $sql_album_new_release = <<<STR
+           echo $sql_album_new_release = <<<STR
 SELECT 
 Song.ProdID,
 Song.ReferenceID,
