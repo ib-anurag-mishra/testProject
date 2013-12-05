@@ -147,7 +147,7 @@ class SoapsController extends AppController {
                           $obj->LibraryAuthenticationMethod = $identifier;
 
                           $auth_url = trim(strtolower($library['Library']['mobile_auth']));
-                          if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
+                          if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === stripos($auth_url, '=pin')) && ('' != $auth_url) ) {
                             $obj->LibraryAuthenticationNum = 1;
                           } else {
                             $obj->LibraryAuthenticationNum = 0;
@@ -234,7 +234,7 @@ class SoapsController extends AppController {
           $obj->LibraryAuthenticationMethod = $identifier;
 
           $auth_url = trim(strtolower($library['Library']['mobile_auth']));
-          if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
+          if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === stripos($auth_url, '=pin')) && ('' != $auth_url) ) {
             $obj->LibraryAuthenticationNum = 1;
           } else {
             $obj->LibraryAuthenticationNum = 0;
@@ -3412,7 +3412,7 @@ STR;
           $checkValidXml = null;
           $checkValidXml = simplexml_load_string($resp);
         
-          if($checkValidXml) {
+          if( isset($checkValidXml->Status) ) {
 
             if( ( isset($checkValidXml->Status) && ('' != $checkValidXml->Status) ) &&  ( isset($checkValidXml->LibraryCard) && ('' != $checkValidXml->LibraryCard) ) ) {
 				
@@ -3449,7 +3449,7 @@ STR;
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
         
-        if(false === strpos(strtolower($resp), 'ok')) {
+        if(false === stripos(strtolower($resp), 'ok')) {
           $response_msg = 'Login Failed';
           return $this->createsAuthenticationResponseDataObject(false, $response_msg);
         } else {
