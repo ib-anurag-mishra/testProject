@@ -1174,11 +1174,12 @@ STR;
             //if ( !empty($country ) && ( $territory == "US" ) ) {   
 
 
-          echo  $sql = "SELECT Distinct Albums.AlbumTitle, Song.ProdID,Song.ReferenceID,Song.provider_type,
+          echo  $sql = "SELECT  Song.ProdID,Song.ReferenceID,Song.provider_type,
                 FROM Songs AS Song
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                 LEFT JOIN Albums as Albums on Albums.ProdID=Songs.ReferenceID
-                WHERE  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                   
+                WHERE  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())   
+                group by Albums.AlbumTitle
                 ORDER BY Country.SalesDate DESC LIMIT 10000";
 
 
@@ -1210,8 +1211,7 @@ STR;
 
             $data = array();
             $sql_album_new_release = <<<STR
-SELECT 
-distinct Albums.AlbumTitle,    
+SELECT   
 Song.ProdID,
 Song.ReferenceID,
 Song.Title,
@@ -1224,6 +1224,7 @@ Song.Sample_Duration,
 Song.FullLength_Duration,
 Song.provider_type,
 Albums.ProdID,
+Albums.AlbumTitle, 
 Genre.Genre,
 Country.Territory,
 Country.SalesDate,
