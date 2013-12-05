@@ -83,19 +83,42 @@
                 <div class="row-container">
                     <?php
                     $playListData = array();
-                    $i = 0; 
+                    $i = 0;
                     foreach ($queue_list_array as $key => $value)
-                    { 
-                        if(!isset($value['Songs'])) continue;
+                    {
+                        if (!isset($value['Songs']))
+                            continue;
                         if (($this->Session->read('block') == 'yes') && ($value['Songs']['Advisory'] == 'T'))
                         {
                             continue;
                         }
-                        
+
                         $i++;
+                        ?>
+                        <div class="row clearfix<?php echo $i; ?>">
+                            <?php
+                            if ('T' == $value['Songs']['Advisory'])
+                            {
+                                if (strlen($value['Songs']['SongTitle']) >= 20)
+                                {
+                                    $value['Songs']['SongTitle'] = $this->getTextEncode(substr($value['Songs']['SongTitle'], 0, 20)) . "..";
+                                }
+                                $value['Songs']['SongTitle'] .='(Explicit)';
+                            }
+                            ?>
+                        </div>
+                        <?php
                     }
                     ?>
                     <?php
+                    if (!empty($value['streamUrl']) || !empty($value['Songs']['SongTitle']))
+                    {
+                        $playItem = array('playlistId' => $queue_id, 'songId' => $value["Songs"]["ProdID"], 'providerType' => $value["Songs"]["provider_type"], 'label' => $value['Songs']['SongTitle'], 'songTitle' => $value['Songs']['SongTitle'], 'artistName' => $value['Songs']['ArtistText'], 'songLength' => $total_duration, 'data' => $value['streamUrl']);
+                        $jsonPlayItem = json_encode($playItem);
+                        $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+                        $playListData[] = $jsonPlayItem;
+                    }
+
                     if (!empty($playListData))
                     {
                         ?>    
@@ -115,6 +138,6 @@
             </div>
         </div>
     </div>
-   
+
 </section>
 
