@@ -517,7 +517,6 @@
                                         data: data, // postdata
                                         async:false,
                                         success: function(response) {
-                                            alert(response);
                                             sleep(2000);
                                             $.fn.colorbox.close();
                                         },
