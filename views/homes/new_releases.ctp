@@ -20,7 +20,15 @@
                 $arr_all_albums =   array();
                 foreach ($new_releases_albums as $key => $value)
                 {
-                    $arr_all_albums[$key] = $value['Albums']['AlbumTitle'];
+                    if(in_array($value['Albums']['AlbumTitle'], $arr_all_albums))
+                    {
+                       continue;
+                    }
+                    else
+                    {
+                        $arr_all_albums[$key] = $value['Albums']['AlbumTitle'];
+                    }
+                    
                     
                     //hide song if library block the explicit content
                     if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
@@ -100,7 +108,7 @@
                     </li>
                     <?php
                     $count++;
-                } echo "<pre>"; print_r($arr_all_albums);
+                } 
                 ?>
             </ul>
         </div>
