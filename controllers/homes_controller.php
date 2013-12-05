@@ -116,6 +116,7 @@ class HomesController extends AppController
         }
         $this->set('nationalTopAlbumsDownload',$nationalTopAlbums);
         
+        
         $this->log(" 100 albums completed", "siteSpeed");
         
         $ids = '';
