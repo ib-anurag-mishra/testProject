@@ -210,6 +210,23 @@
 
                                 echo $wishlist->getWishListMarkup($wishlistInfo, $value["Songs"]["ProdID"], $value["Songs"]["provider_type"]);
                                 ?>
+                                <span class="top-100-download-now-button">
+                                    <?php
+                                    if (($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Default') ||
+                                            ($this->Session->read("Auth.User.type_id") == 1 && $queueType == 'Custom') ||
+                                            ($this->Session->read("Auth.User.type_id") != 1 && $queueType == 'Custom'))
+                                    {
+                                        ?>
+                                        <span class="beforeClick" id="song_<?php echo $value["Songs"]["ProdID"]; ?>">
+                                            <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"]; ?>,<?php echo $i; ?>)">
+                                                <label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song'); ?></label>
+                                            </a>
+                                        </span>
+                                        <?php
+                                    }
+                                    ?>
+                                    <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                </span>
                             </div>
 
 
