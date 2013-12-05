@@ -105,7 +105,7 @@ $(document).ready(function() {
                 at: 'left', //target
                 my: 'bottom right' //tooltip
             },
-            overwrite: false,
+            overwrite: true,
             show: {
                 event: event.type,
                 ready: true
