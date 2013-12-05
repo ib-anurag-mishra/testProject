@@ -1242,7 +1242,7 @@ LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID)
 INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
 INNER JOIN File ON (Albums.FileID = File.FileID) 
 WHERE ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
-group by Albums.AlbumTitle
+group by Song.ReferenceID, Albums.AlbumTitle
 ORDER BY Country.SalesDate DESC
 LIMIT 100
 STR;
