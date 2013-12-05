@@ -1,6 +1,6 @@
 <?php
 
-Configure::write('debug', 0);
+Configure::write('debug', 0); 
 
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
