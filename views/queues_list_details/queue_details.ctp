@@ -142,7 +142,7 @@
                                         $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
-                                        if ( $value['Songs']['status'] != 'avail')
+                                        if ($value['Songs']['status'] != 'avail')
                                         {
                                             ?>
                                             <form method="Post" id="form<?php echo $value["Songs"]["ProdID"]; ?>" action="/homes/userDownload">
@@ -151,7 +151,10 @@
 
                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Songs"]["ProdID"]; ?>">
                                                     <![if !IE]>
-                                                    <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+                                                    <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>"
+                                                       onclick='return wishlistDownloadOthers("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
+                                                           <?php __('Download Now'); ?>
+                                                    </a>
                                                     <![endif]>
                                                     <!--[if IE]>
                                                             <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download Now'); ?></a>
@@ -160,7 +163,7 @@
 
                                                 <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;">
                                                     <a  class="add-to-wishlist"  >
-                                                    <?php __("Please Wait.."); ?>
+                                                        <?php __("Please Wait.."); ?>
                                                         <span id="wishlist_loader_<?php echo $value["Songs"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;">
                                                             <?php echo $html->image('ajax-loader_black.gif'); ?>
                                                         </span> 
@@ -194,6 +197,19 @@
                                        <?php
                                    }
                                    ?>
+                                   <?php
+                                   if ($this->Session->read('library_type') == 2 &&
+                                           $value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1)
+                                   {
+                                       ?>
+                                    <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+                                    <?php
+                                }
+
+                                $wishlistInfo = $wishlist->getWishlistData($value["Songs"]["ProdID"]);
+
+                                echo $wishlist->getWishListMarkup($wishlistInfo, $value["Songs"]["ProdID"], $value["Songs"]["provider_type"]);
+                                ?>
                             </div>
 
 
