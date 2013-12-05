@@ -77,11 +77,26 @@
             <div class="artist-filter-button">Artist</div>
             <div class="time-filter-button">Time</div>
         </nav>
-        
+
         <div class="playlist-shadow-container">
             <div class="playlist-scrollable">
                 <div class="row-container">
-                       
+                    <?php
+                    if (!empty($playListData))
+                    {
+                        ?>    
+                        <div id="playlist_data" style="display:none;">
+                            <?php
+                            $playList = implode(',', $playListData);
+                            if (!empty($playList))
+                            {
+                                echo '[' . ($playList) . ']';
+                            }
+                            ?>
+                        </div>
+                        <?php
+                    }
+                    ?>    
                 </div>
             </div>
         </div>
