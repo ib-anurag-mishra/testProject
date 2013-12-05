@@ -429,8 +429,8 @@
                                             .colorbox(
                                             {
                                                 width: "50%", inline: true, open: true, 
-                                                overlayClose: false, opacity: .5, 
-                                                noEscape: true, href: "#notificationApproval_div", 
+                                                overlayClose: false, opacity: .5,
+                                                escKey:false, noEscape: true, href: "#notificationApproval_div", 
                                                 onOpen: function() {                                                 
                                                     $(document).unbind("keydown.cbox_close");
                                     }});
@@ -502,7 +502,7 @@
                                             {
                                                 width: "50%", inline: true, open: true, 
                                                 overlayClose: false, opacity: .5, 
-                                                noEscape: true, href: "#streamApproval_div", 
+                                                escKey:false, noEscape: true, href: "#streamApproval_div", 
                                                 onOpen: function() {                                                 
                                                     $(document).unbind("keydown.cbox_close");
                                     }}); 
@@ -517,7 +517,6 @@
                                         data: data, // postdata
                                         async:false,
                                         success: function(response) {
-                                            alert(response);
                                             sleep(2000);
                                             $.fn.colorbox.close();
                                         },
@@ -768,7 +767,7 @@
 				<div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
 					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
 				</div>
-				<?php /* echo $page->getPageContent('stream_123'); */?>
+				<?php echo $page->getPageContent('stream_123'); ?>
                 <br />
 				<center><input type="button" value="OK" id="colorboxOKBtn"></center>
                             </span>
