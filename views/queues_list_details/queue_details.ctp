@@ -105,14 +105,28 @@
                                 }
                                 $value['Songs']['SongTitle'] .='(Explicit)';
                             }
-                            
+
                             $duration = explode(':', $value['Songs']['FullLength_Duration']);
                             $duration_in_secs = $duration[0] * 60;
                             $total_duration = $duration_in_secs + $duration[1];
                             echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $key, "onClick" => 'loadSong("' . $value['streamUrl'] . '", "' . base64_encode($value['Songs']['SongTitle']) . '","' . base64_encode($value['Songs']['ArtistText']) . '",' . $total_duration . ',"' . $value['Songs']['ProdID'] . '","' . $value['Songs']['provider_type'] . '",' . $queue_id . ');'));
                             echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $key));
                             echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $key, "onClick" => 'stopThis(this, "' . $key . '");'));
+
+                            if (!empty($value['Songs']['ProdID']))
+                            {
+                                ?>
+                                <div id="play_item_<?php echo $i; ?>"style="display:none;">
+                                    <?php echo $value['Songs']['ProdID'] . ',' . $value['Songs']['provider_type']; ?>
+                                </div>
+                                <?php
+                            }
                             ?>
+                            <div class="song-title">
+                                <?php
+                                echo $this->getValidText($this->getTextEncode($value['Songs']['SongTitle']));
+                                ?>
+                            </div>
                         </div>
                         <?php
                     }
