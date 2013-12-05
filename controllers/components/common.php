@@ -1174,10 +1174,11 @@ STR;
             //if ( !empty($country ) && ( $territory == "US" ) ) {   
 
 
-            $sql = "SELECT Song.ProdID,Song.ReferenceID,Song.provider_type
+          echo  $sql = "SELECT Distinct Albums.AlbumTitle, Song.ProdID,Song.ReferenceID,Song.provider_type,
                 FROM Songs AS Song
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                WHERE  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
+                LEFT JOIN Albums as Albums on Albums.ProdID=Songs.ReferenceID
+                WHERE  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                   
                 ORDER BY Country.SalesDate DESC LIMIT 10000";
 
 
@@ -1210,6 +1211,7 @@ STR;
             $data = array();
             $sql_album_new_release = <<<STR
 SELECT 
+distinct Albums.AlbumTitle,    
 Song.ProdID,
 Song.ReferenceID,
 Song.Title,
@@ -1221,7 +1223,6 @@ Song.Advisory,
 Song.Sample_Duration,
 Song.FullLength_Duration,
 Song.provider_type,
-Albums.AlbumTitle,
 Albums.ProdID,
 Genre.Genre,
 Country.Territory,
@@ -1242,7 +1243,7 @@ LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID)
 INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
 INNER JOIN File ON (Albums.FileID = File.FileID) 
 WHERE ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
-group by Albums.AlbumTitle, Song.ReferenceID
+group by Song.ReferenceID
 ORDER BY Country.SalesDate DESC
 LIMIT 100
 STR;

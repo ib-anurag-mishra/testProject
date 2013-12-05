@@ -3492,7 +3492,7 @@ STR;
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
                
-            //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false){
+           // if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false){
             if(1){
             
                 $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
