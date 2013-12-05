@@ -103,7 +103,7 @@ $(document).ready(function() {
 
         $(this).qtip({
             position: {
-                at: 'top right', //target
+                at: 'left top', //target
                 my: 'bottom right' //tooltip
 
 
