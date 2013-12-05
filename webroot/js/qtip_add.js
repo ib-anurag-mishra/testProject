@@ -96,25 +96,20 @@ $(document).ready(function() {
                 ready: true
             }
         });
-
     });
 
     $(document).on('mouseover', '.genres-page .tracklist-container .tracklist .song span[title]', function(event) {
 
         $(this).qtip({
             position: {
-                at: 'top left', //target
+                at: 'left', //target
                 my: 'bottom right' //tooltip
-
-
             },
             overwrite: false,
             show: {
                 event: event.type,
                 ready: true
             }
-
-
         });
 
     });
@@ -132,6 +127,6 @@ $(document).ready(function() {
                 ready: true
             }
         });
-
     });
+    
 });
