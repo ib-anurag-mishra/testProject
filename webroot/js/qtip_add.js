@@ -99,6 +99,39 @@ $(document).ready(function() {
 
     });
 
+    $(document).on('mouseover', '.genres-page .tracklist-container .tracklist .song span[title]', function(event) {
+
+        $(this).qtip({
+            position: {
+                at: 'top right', //target
+                my: 'bottom right' //tooltip
 
 
+            },
+            overwrite: false,
+            show: {
+                event: event.type,
+                ready: true
+            }
+
+
+        });
+
+    });
+
+    $(document).on('mouseover', '.genres-page .tracklist-container .tracklist .artist a[title]', function(event) {
+
+        $(this).qtip({
+            position: {
+                at: 'left top', //target
+                my: 'bottom right' //tooltip
+            },
+            overwrite: true,
+            show: {
+                event: event.type,
+                ready: true
+            }
+        });
+
+    });
 });
