@@ -53,13 +53,12 @@
                                             //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                             ?>
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-                                            <?php
-                                        }
-                                        ?>
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
 
-
-                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
-                                    </div>
                                     <?php
                                 }
                                 else
@@ -73,13 +72,13 @@
                             <div class="album-title">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Albums']['AlbumTitle'])); ?>" 
                                    href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
-                                    <?php
-                                    //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                    if (strlen($value['Albums']['AlbumTitle']) > 20)
-                                        echo substr($value['Albums']['AlbumTitle'], 0, 20) . "...";
-                                    else
-                                        echo $value['Albums']['AlbumTitle'];
-                                    ?>
+                                       <?php
+                                       //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                       if (strlen($value['Albums']['AlbumTitle']) > 20)
+                                           echo substr($value['Albums']['AlbumTitle'], 0, 20) . "...";
+                                       else
+                                           echo $value['Albums']['AlbumTitle'];
+                                       ?>
                                 </a><?php
                                 if ('T' == $value['Albums']['Advisory'])
                                 {
@@ -256,7 +255,7 @@
 
                                     <div class="wishlist-popover">
                                         <input type="hidden" id="<?= $value["Song"]["ProdID"] ?>" value="song"/>
-                                        
+
                                         <?php
                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                         {
