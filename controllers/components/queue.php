@@ -33,6 +33,9 @@ Class QueueComponent extends Object
                 'order' => 'QueueList.created DESC',
                 'limit' => 100
             ));
+            
+            //echo "<pre>"; print_r($queueData);
+            
         }
         else
         {

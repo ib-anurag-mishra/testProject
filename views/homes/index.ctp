@@ -136,6 +136,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
                                                 $productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                                
                                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                                 {
                                                     $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
@@ -151,7 +152,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                     {
                                                         $nationalTopDownload[$i]['Song']['status'] = 'not';
                                                     }
-                                                    if ($nationalTopDownload[$i]['Song']['status'] != 'avail')
+                                                    if ($nationalTopDownload[$i]['Song']['st$nationalTopDownloadatus'] != 'avail')
                                                     {
                                                         ?>
                                                         <span class="top-100-download-now-button">
@@ -239,9 +240,9 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                 ?>
 
                                                 <?php
-                                               // $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
+                                                $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
 
-                                                //echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
+                                                echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
                                                 ?>
                                                 <!--  <div class="share clearfix">
                                                   <p>Share via</p>
