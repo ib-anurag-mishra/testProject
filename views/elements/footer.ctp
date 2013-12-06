@@ -152,15 +152,17 @@ if ($this->Session->read("patron"))
                                     {
                                         $("#no_flash").show();
                                     }
-
-                                    var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
-                                    var attributes = {id: "audioplayer"};
-
-                                    swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
                                 }
                             <?php
-                        }
-                    }
+                        }?>
+
+                        var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
+                        var attributes = {id: "audioplayer"};
+
+                        swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+                        
+                        
+                    <?php }
                     ?>
 
                 });
