@@ -147,9 +147,11 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                         $downloadVariArr = $this->Session->read('downloadVariArray');
                                                         if(!empty($downloadVariArr)){
                                                             $checkDownloadVar =  $nationalTopDownload[$i]['Song']['ProdID'].'~'.$nationalTopDownload[$i]['Song']['provider_type'];                                                   
-                                                            $downloadVariArr = $this->Session->read('downloadVariArray');
+                                                            
                                                             if (in_array($checkDownloadVar, $downloadVariArr)) {                                                               
                                                                 $downloadsUsed=1;
+                                                            }else{
+                                                                 $downloadsUsed=0;
                                                             }
                                                         }else{
                                                            $downloadsUsed = 0;
@@ -168,6 +170,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                     {
                                                         $nationalTopDownload[$i]['Song']['status'] = 'not';
                                                     }
+                                                    
                                                     if ($nationalTopDownload[$i]['Song']['status'] != 'avail')
                                                     {
                                                         ?>
