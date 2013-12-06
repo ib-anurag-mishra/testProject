@@ -34,10 +34,7 @@
                         ?>					
                         <li>
                             <div class="album-container">
-                                    <!-- <a href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['ProdID']); ?>">
-                                    <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
-                                    </a> -->
-
+                                  
                                 <?php
                                 echo $html->link($html->image($value['album_img'], array("height" => "250", "width" => "250")),
                                         array('controller' => 'artists', 'action' => 'view', 
