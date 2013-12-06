@@ -260,14 +260,7 @@
                         }
                     }
                     ?>
-                    <?php
-                    if (!empty($value['streamUrl']) || !empty($value['Songs']['SongTitle']))
-                    {
-                        $playItem = array('playlistId' => $queue_id, 'songId' => $value["Songs"]["ProdID"], 'providerType' => $value["Songs"]["provider_type"], 'label' => $value['Songs']['SongTitle'], 'songTitle' => $value['Songs']['SongTitle'], 'artistName' => $value['Songs']['ArtistText'], 'songLength' => $total_duration, 'data' => $value['streamUrl']);
-                        $jsonPlayItem = json_encode($playItem);
-                        $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
-                        $playListData[] = $jsonPlayItem;
-                    }
+                    <?php                    
 
                     if (!empty($playListData))
                     {
