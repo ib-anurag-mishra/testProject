@@ -45,7 +45,7 @@ Class QueueComponent extends Object
     function getQueueListCountUnique($arr_songs)
     {
         $temp_songs =   array();
-        
+        echo 123456;
         foreach($arr_songs as $key=>$value)
         {
             if(in_array($value['song_prodid'], $temp_songs))
