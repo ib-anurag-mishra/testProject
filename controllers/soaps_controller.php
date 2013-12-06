@@ -33,6 +33,9 @@ class SoapsController extends AppController {
   private $uri = 'http://www.freegalmusic.com/';
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
+  private $CDN_HOST = 'libraryideas.ingest.cdn.level3.net';
+  private $CDN_USER = 'libraryideas';
+  private $CDN_PASS = 't837dgkZU6xCMnc';
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail', 'Featuredartist', 'File_mp4'); 
@@ -7008,6 +7011,7 @@ STR;
    */  
   private function getStreamngURL($ProdID, $provider_type) {
   
+    // fetches mp4 data
     $FileData = array();
     $FileData = $this->Song->find('first', array(
       'fields' => array('f4.FileiD', 'f4.SaveAsName', 'f4.CdnPath'),
@@ -7023,33 +7027,22 @@ STR;
       'conditions' => array('ProdID' => $ProdID, 'provider_type' => $provider_type ),
       'recursive' => -1
     ));
-    
-    
-    if(empty($FileData)) {
-      //send mp3
-      $data = $this->Song->find('first', array(
-        'fields' => array('f.FileiD', 'f.SaveAsName', 'f.CdnPath'),  
-        'joins' => array(
-          array(
-            'table' => 'File',
-            'alias' => 'f',
-            'type' => 'inner',
-            'foreignKey' => false,
-            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID' => $ProdID, 'Song.provider_type' => $provider_type )
-          )
-        ),
-        'recursive' => -1,
-      ));
-	
-      $CdnPath = $data['f']['CdnPath'];
-      $SaveAsName = $data['f']['SaveAsName'];
 
-      return Configure::read('App.Music_Path'). shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
+    if(empty($FileData)) {
+      //sends mp3
+      return $this->sendMp3Url($ProdID, $provider_type);
 
     }else{
-      //send mp4
-      //return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
-	return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
+            
+      if(true === $this->validateMp4FileExist($FileData['f4']['SaveAsName'], $FileData['f4']['CdnPath'])) {
+        //creates mp4
+        return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['CdnPath'].' '.$FileData['f4']['SaveAsName']);
+        //return Configure::read('App.App_Streaming_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen_hls '.$FileData['f4']['SaveAsName'].' '.$FileData['f4']['CdnPath']); 
+      }else{
+        //sends mp3
+        return $this->sendMp3Url($ProdID, $provider_type);
+      }
+            
     }
 
   }
@@ -7071,7 +7064,61 @@ STR;
         
   }
   
- 
+  /**
+   * Function Name : sendMp3Url
+   * Desc : Returns mp3 url for streaming
+   * @param int ProdID
+   * @param string provider_type
+   * @return string
+   */
+   
+  private function sendMp3Url($ProdID, $provider_type)  {
+    
+    $data = $this->Song->find('first', array(
+      'fields' => array('f.FileiD', 'f.SaveAsName', 'f.CdnPath'),  
+      'joins' => array(
+        array(
+          'table' => 'File',
+          'alias' => 'f',
+          'type' => 'inner',
+          'foreignKey' => false,
+          'conditions'=> array( 'f.FileID = Song.FullLength_FIleID', 'Song.ProdID' => $ProdID, 'Song.provider_type' => $provider_type )
+        )
+      ),
+      'recursive' => -1,
+    ));
+	
+    return Configure::read('App.Music_Path'). shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $data['f']['CdnPath'] . "/" . $data['f']['SaveAsName']);
+  }
+
+  /**
+   * Function Name : validateMp4FileExist
+   * Desc : Returns mp3 url for streaming
+   * @param int ProdID
+   * @param string provider_type
+   * @return string
+   */
+   
+  private function validateMp4FileExist($SaveAsName, $CdnPath)  {
+
+    $connection = ssh2_connect($this->CDN_HOST, 22);
+    ssh2_auth_password($connection, $this->CDN_USER, $this->CDN_PASS);
+    $filePath = '/published/'.$SaveAsName.'/'.$CdnPath;
+    //$filePath = '/published/000/000/000/000/004/519/20/RoseFalcon_LooksAreEverything_G010001640168b_1_2-256K_44S_2C_cbr1x.mp4';
+
+    $sftp = ssh2_sftp($connection);
+    $statinfo = null;
+    $statinfo = ssh2_sftp_stat($sftp, $filePath);
+
+    if(!(empty($statinfo))){
+      //if file exist return true
+      return true;
+    } else {
+      //if file not exist return false
+      return false;
+    }
+  
+  }
   
   
 }

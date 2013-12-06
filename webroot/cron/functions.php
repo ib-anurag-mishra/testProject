@@ -241,6 +241,7 @@ function sendFile($src,$dst)
 	$SFTP_PORT = SFTP_PORT;
 	$SFTP_USER = SFTP_USER;
 	$SFTP_PASS = SFTP_PASS;
+	$CdnPath = '/published/freegalmusic_reports/sony_reports/';
 	
 	if(!($con = ssh2_connect($SFTP_HOST,$SFTP_PORT)))
 	{
@@ -255,10 +256,10 @@ function sendFile($src,$dst)
 		else
 		{
 			$sftp = ssh2_sftp($con);
-                        echo $src."\n";
+                        /*echo $src."\n";
                         echo $dst."\n";
-                        echo $con;
-			if(!ssh2_scp_send($con, $src, $dst, 0644)){
+                        echo $con;*/
+			if(!ssh2_scp_send($con, $src, $CdnPath.$dst, 0644)){
 				echo "error\n";
 			}
 			else

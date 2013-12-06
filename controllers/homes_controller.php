@@ -372,7 +372,7 @@ class HomesController extends AppController
         
 	function my_lib_top_10()
 	{ 
-            Configure::write('debug', 2);
+            Configure::write('debug', 0);
             $this->layout = 'home';           
             $patId = $this->Session->read('patron');
             $country = $this->Session->read('territory');
@@ -398,7 +398,7 @@ class HomesController extends AppController
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
             if (($libDownload = Cache::read("lib".$libId)) === false){
-              //  if (1){
+            //    if (1){
             
                 $topDownload_songs = $this->Common->getLibraryTopTenSongs($country,$libId);
             } 

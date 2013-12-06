@@ -1,7 +1,7 @@
 <?php
 class AppController extends Controller
 {
-	var $components = array( 'Session', 'RequestHandler','Cookie', 'Acl');
+	var $components = array( 'Session', 'RequestHandler','Cookie', 'Acl', 'DebugKit.Toolbar');
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download','Queue', 'Streaming');
 	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country');
         var $view = 'Dataencode';

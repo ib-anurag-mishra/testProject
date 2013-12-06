@@ -300,7 +300,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
+                                    $sales .= ("2.60" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
                                 $sales .= "0#*#"; // Charity Amount
@@ -367,8 +367,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $trailer .= "0"; // Total Quantity Returned
                     fwrite($file, $trailer);
                     fclose($file);
-sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt");
-                    /*$sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+
+                    $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt', 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -399,7 +399,7 @@ sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$li
                             die(" Query failed: ". $sql. " Error: " .mysql_error());
                         }
                         // }
-                    }*/
+                    }
                 }
             }
 
@@ -663,7 +663,7 @@ sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$li
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
+                                    $sales .= ("2.60" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
                                 $sales .= "0#*#"; // Charity Amount
@@ -732,8 +732,8 @@ sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$li
                     $trailer .= "0"; // Total Quantity Returned
                     fwrite($file, $trailer);
                     fclose($file);
-sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt");
-                    /*$sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+
+                    $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. "_SFV.txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$count."_".$country. "_SFV.txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -763,7 +763,7 @@ sendFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$li
                             sendalert("Query failed: ".$sql);
                             die("Query failed: ". $sql. " Error: " .mysql_error());
                         }
-                    }*/
+                    }
                 }   
             }
         }

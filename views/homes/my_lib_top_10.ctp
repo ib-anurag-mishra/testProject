@@ -34,12 +34,13 @@
                         ?>					
                         <li>
                             <div class="album-container">
-                                  
+                                    <!-- <a href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['ProdID']); ?>">
+                                    <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
+                                    </a> -->
+
                                 <?php
-                                echo $html->link($html->image($value['album_img'], array("height" => "250", "width" => "250")),
-                                        array('controller' => 'artists', 'action' => 'view', 
-                                            base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])),
-                                        array('class' => 'first', 'escape' => false))
+                                echo $html->link($html->image($value['album_img'], array("height" => "250", "width" => "250")), array('controller' => 'artists', 'action' => 'view',
+                                    base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false))
                                 ?>
                                 <div class="top-10-ranking"><?php echo $count; ?></div>
                                 <?php
@@ -53,15 +54,16 @@
                                         <div class="wishlist-popover">
                                             <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             <?php
-                                           // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
+                                            // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                             ?>
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-                                            <?php
-                                        }
-                                        ?>
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
 
-                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
-                                    </div>
+
                                     <?php
                                 }
                                 else
@@ -288,7 +290,7 @@
                                         <?php
                                         if ($this->Session->read('library_type') == 2 && $value['Country']['StreamingSalesDate'] <= date('Y-m-d') && $value['Country']['StreamingStatus'] == 1)
                                         {
-                                           // echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Song"]["ProdID"], $value["Song"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
+                                            // echo $this->Queue->getQueuesList($this->Session->read('patron'), $value["Song"]["ProdID"], $value["Song"]["provider_type"], $value["Albums"]["ProdID"], $value["Albums"]["provider_type"]);
                                             ?>
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                         <?php } ?>
@@ -302,7 +304,7 @@
                                         echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
                                     </div>
-        <?php } ?>
+                                <?php } ?>
 
                             </div>
                             <div class="album-title">
@@ -315,9 +317,9 @@
                                         echo $value['Song']['SongTitle'];
                                     ?>
                                 </a><?php
-                        if ('T' == $value['Song']['Advisory'])
-                        {
-                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                                if ('T' == $value['Song']['Advisory'])
+                                {
+                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                             </div>
                             <div class="artist-name">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Song']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Song']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
@@ -482,21 +484,21 @@
 
 
                                 <!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
-                                    <?php
-                                    if ($this->Session->read('patron'))
-                                    {
-                                        ?>
+                                <?php
+                                if ($this->Session->read('patron'))
+                                {
+                                    ?>
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
                                     <div class="wishlist-popover">
 
-                                    <?php
-                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
-                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-                                    echo $this->Queue->getSocialNetworkinglinksMarkup();
-                                    ?>
+                                        <?php
+                                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
+                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
+                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                        ?>
 
                                     </div>
-                                    <?php } ?>
+                                <?php } ?>
                             </div>
                             <div class="album-title">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['VideoTitle'])); ?>" href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
@@ -508,18 +510,18 @@
                                         echo $value['Video']['VideoTitle'];
                                     ?>
                                 </a><?php
-                                    if ('T' == $value['Video']['Advisory'])
-                                    {
-                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
+                                if ('T' == $value['Video']['Advisory'])
+                                {
+                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>
                             </div>
                             <div class="artist-name">
                                 <a title="<?php echo $this->getValidText($this->getTextEncode($value['Video']['Artist'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>">
-        <?php
-        if (strlen($value['Video']['Artist']) > 32)
-            echo substr($value['Video']['Artist'], 0, 32) . "...";
-        else
-            echo $value['Video']['Artist'];
-        ?>
+                                    <?php
+                                    if (strlen($value['Video']['Artist']) > 32)
+                                        echo substr($value['Video']['Artist'], 0, 32) . "...";
+                                    else
+                                        echo $value['Video']['Artist'];
+                                    ?>
                                 </a>
                             </div>
                         </li>
