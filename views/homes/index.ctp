@@ -152,7 +152,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                     {
                                                         $nationalTopDownload[$i]['Song']['status'] = 'not';
                                                     }
-                                                    if ($nationalTopDownload[$i]['Song']['st$nationalTopDownloadatus'] != 'avail')
+                                                    if ($nationalTopDownload[$i]['Song']['status'] != 'avail')
                                                     {
                                                         ?>
                                                         <span class="top-100-download-now-button">

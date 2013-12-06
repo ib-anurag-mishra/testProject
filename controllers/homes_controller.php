@@ -203,6 +203,7 @@ class HomesController extends AppController
         foreach($downloadResults as $key => $downloadResult){
             $downloadVariArray[] = $downloadResult['Download']['ProdID'].'~'.$downloadResult['Download']['provider_type'];
         }
+        $downloadVariArray= array_unique($downloadVariArray);
         $this->Session->write('downloadVariArray', $downloadVariArray );
         //print_r($this->Session->read('downloadVariArray'));
     }
