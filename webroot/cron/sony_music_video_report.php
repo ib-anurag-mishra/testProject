@@ -35,8 +35,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-10-14';
-$currentDate = date( "Y-m-d", time());
+$currentDate = '2013-12-02';
+//$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -300,7 +300,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
+                                    $sales .= ("2.60" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
                                 $sales .= "0#*#"; // Charity Amount
@@ -663,7 +663,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
                                     $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
+                                    $sales .= ("2.60" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
                                 $sales .= "0#*#"; // Charity Amount
