@@ -57,7 +57,7 @@ Class QueueComponent extends Object
                 $temp_songs[$key] = $value['song_prodid'];
             }
         }
-        
+        echo "<pre>"; print_r($temp_songs);
         return count($temp_songs);
     }
 
