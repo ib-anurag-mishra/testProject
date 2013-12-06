@@ -42,9 +42,11 @@ $this->log(" home index.ctp start", "siteSpeed");
 
 
                     <?php
+                     $this->log("index.ctp National Top 100 song start", "siteSpeed");   
                     if (is_array($nationalTopDownload) && count($nationalTopDownload) > 0)
                     {
-                        ?>
+                        
+                    ?>
 
                         <?php
                         $libId = $this->Session->read('library');
@@ -295,7 +297,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                             <?php
                             $k++;
                         }
-                        $this->log("index.ctp video start", "siteSpeed");   
+                        $this->log("index.ctp National Top 100 song end", "siteSpeed");      
 
                     }
                     ?>	
@@ -304,6 +306,7 @@ $this->log(" home index.ctp start", "siteSpeed");
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
                 <ul style="width:27100px;">
                     <?php
+                     $this->log("index.ctp National Top 100 album start", "siteSpeed"); 
                     $count = 1;
                     if (count($nationalTopAlbumsDownload) > 0)
                     {
@@ -390,7 +393,7 @@ $this->log(" home index.ctp start", "siteSpeed");
 
                         echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                     }
-                     $this->log("index.ctp video end", "siteSpeed");   
+                      $this->log("index.ctp National Top 100 album end", "siteSpeed"); 
                     ?>
                 </ul>  
             </div>
@@ -464,7 +467,8 @@ $this->log(" home index.ctp start", "siteSpeed");
 
                                             <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
                                         </div>                                            
-                                    <?php }
+                                    <?php
+                                    }
                                     ?>
 
                                     <?php
@@ -473,7 +477,8 @@ $this->log(" home index.ctp start", "siteSpeed");
                                 {
                                     ?>
                                     <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a> 
-                                <?php }
+                                <?php 
+                                }
                                 ?>
                             </div>
                             <div class="album-title">
@@ -759,6 +764,7 @@ $this->log(" home index.ctp start", "siteSpeed");
         <div id="whats-happening-grid" class="horiz-scroll">
             <ul class="clearfix" style="width:4400px;">
                 <?php
+                $this->log("index.ctp news start", "siteSpeed");
                 $count = 1;
                 foreach ($news as $key => $value)
                 {
@@ -819,6 +825,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                         break;
                     $count++;
                 }
+                 $this->log("index.ctp news end", "siteSpeed");
                 ?>
             </ul>
 
