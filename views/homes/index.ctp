@@ -131,7 +131,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                                         }
 
 
-                                        if (!$this->Session->read('patron'))
+                                        if ($this->Session->read('patron'))
                                         {
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
