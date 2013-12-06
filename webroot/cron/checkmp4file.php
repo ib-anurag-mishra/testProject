@@ -39,9 +39,8 @@ class Streaming {
   var $PODUCTION_DB_HOST = '192.168.100.114';
   var $PODUCTION_DB_USER = 'freegal_prod';
   var $PODUCTION_DB_PASS = '}e47^B1EO9hD';
-  var $PODUCTION_SONY_DB   = 'sony';
   var $PODUCTION_FREEGAL_DB   = 'freegal';
-  var $PODUCTION_ORCHARD_DB   = 'theorchard';
+ 
   
   
   var $SFTP_HOST = 'libraryideas.ingest.cdn.level3.net';
@@ -53,11 +52,11 @@ class Streaming {
   
   
   
-  var $LIVE = '0'; //1-live,0-stage
+  var $LIVE = '1'; //1-live,0-stage
   
   
 
-  var $EnableShortLogs = 0;
+  var $EnableShortLogs = 1;
 
   var $ShortLogsString = '';
   var $ShortLogsFileObj;
