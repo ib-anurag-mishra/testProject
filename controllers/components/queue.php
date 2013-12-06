@@ -40,28 +40,7 @@ Class QueueComponent extends Object
         }
         return $queueData;
     }
-    
-    
-    function getQueueListCountUnique($arr_songs)
-    {
-        $temp_songs =   array();
-        echo 123456;
-        foreach($arr_songs as $key=>$value)
-        {
-            if(in_array($value['song_prodid'], $temp_songs))
-            {
-               continue;
-            }
-            else
-            {
-                $temp_songs[$key] = $value['song_prodid'];
-            }
-        }
-        echo "<pre>"; print_r($temp_songs);
-        return count($temp_songs);
-    }
 
-    
     function getQueueDetails($queueID, $territory = '')
     {
         $queueDetailList = ClassRegistry::init('QueueDetail');

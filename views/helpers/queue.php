@@ -84,6 +84,26 @@ EOD;
         $str.= '</ul></div>';
         return $str;
     }
+    
+    
+     function getQueueListCountUnique($arr_songs)
+    {
+        $temp_songs =   array();
+        
+        foreach($arr_songs as $key=>$value)
+        {
+            if(in_array($value['song_prodid'], $temp_songs))
+            {
+               continue;
+            }
+            else
+            {
+                $temp_songs[$key] = $value['song_prodid'];
+            }
+        }
+        
+        return count($temp_songs);
+    }
 
     /*
       function name  : getQueuesListAlbums
