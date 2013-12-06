@@ -65,9 +65,9 @@ class Streaming {
   
   var $Instance = null;
   var $ProcessedRowsCount = 1;
-  var $ChunkSize = 1000;       //default set 1000
+  var $ChunkSize = 5;       //default set 1000
   var $LimitIndex = 0;         //default set 0
-  var $LimitCount = 100000;    //default set 100000
+  var $LimitCount = 10;    //default set 100000
   
 
 
