@@ -135,8 +135,8 @@ $this->log(" home index.ctp start", "siteSpeed");
                                         {
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
-                                                $productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
-                                                
+                                                //$productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                                $productInfo = array();
                                                 $libraryDownload='0';
                                                 $patronDownload='0';
                                                 if ($libraryDownload == '1' && $patronDownload == '1')
