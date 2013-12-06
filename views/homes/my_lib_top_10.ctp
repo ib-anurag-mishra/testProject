@@ -46,7 +46,8 @@
                                 <?php
                                 if ($this->Session->read("patron"))
                                 {
-                                    if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                    //if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                        if(1)
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
                                         ?> 
