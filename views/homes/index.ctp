@@ -143,16 +143,20 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                                     $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));                                                    
                                                     
-                                                    if($this->Session->read('downloadVariArray') ){                                                        
-                                                         $checkDownloadVar =  $nationalTopDownload[$i]['Song']['ProdID'].'~'.$nationalTopDownload[$i]['Song']['provider_type'];                                                   
-                                                         $downloadVariArr = $this->Session->read('downloadVariArray');
-                                                         if (in_array($checkDownloadVar, $downloadVariArr)) {
-                                                            $nationalTopDownload[$i]['Song']['status'] = 'avail';
-                                                         }
-                                                        
+                                                    if($this->Session->read('downloadVariArray') ){ 
+                                                        $downloadVariArr = $this->Session->read('downloadVariArray');
+                                                        if(!empty($downloadVariArr)){
+                                                            $checkDownloadVar =  $nationalTopDownload[$i]['Song']['ProdID'].'~'.$nationalTopDownload[$i]['Song']['provider_type'];                                                   
+                                                            $downloadVariArr = $this->Session->read('downloadVariArray');
+                                                            if (in_array($checkDownloadVar, $downloadVariArr)) {
+                                                                echo $checkDownloadVar;
+                                                                $nationalTopDownload[$i]['Song']['status'] = 'avail';
+                                                            }
+                                                        }else{
+                                                           $downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                        }                                                        
                                                     }else{
                                                         $downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-
                                                     }
                                                     
                                                  
