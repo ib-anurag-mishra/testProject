@@ -42,7 +42,7 @@ $this->log(" home index.ctp start", "siteSpeed");
 
 
                     <?php
-                     $this->log("index.ctp National Top 100 song start", "siteSpeed");   
+                    $this->log("index.ctp National Top 100 song start", "siteSpeed");   
                     if (is_array($nationalTopDownload) && count($nationalTopDownload) > 0)
                     {
                         
@@ -119,10 +119,8 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                     $nationalTopDownload[$i]['streamUrl'] = $streamUrl;
                                                     $nationalTopDownload[$i]['totalseconds'] = $this->Queue->getSeconds($nationalTopDownload[$i]['Song']['FullLength_Duration']);
                                                 }
-$this->log("index.ctp National Top 100 song stream now start", "siteSpeed");
+
                                                 echo $this->Queue->getStreamNowLabel($nationalTopDownload[$i]['streamUrl'], $song_title, $nationalTopDownload[$i]['Song']['ArtistText'], $nationalTopDownload[$i]['totalseconds'], $nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
-$this->log("index.ctp National Top 100 song stream now end", "siteSpeed");                  
-                                                
                                             } //echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("' . $nationalTopDownload[$i]['streamUrl'] . '", "' . $song_title . '","' . $nationalTopDownload[$i]['Song']['ArtistText'] . '",' . $nationalTopDownload[$i]['totalseconds'] . ',"' . $nationalTopDownload[$i]['Song']['ProdID'] . '","' . $nationalTopDownload[$i]['Song']['provider_type'] . '");'));
                                             else if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
@@ -137,9 +135,7 @@ $this->log("index.ctp National Top 100 song stream now end", "siteSpeed");
                                         {
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
-                                                $this->log("index.ctp National Top 100 song download now start", "siteSpeed");    
                                                 $productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
-                                                $this->log("index.ctp National Top 100 song download now end", "siteSpeed"); 
                                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                                 {
                                                     $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
@@ -243,12 +239,9 @@ $this->log("index.ctp National Top 100 song stream now end", "siteSpeed");
                                                 ?>
 
                                                 <?php
-                                                $this->log("index.ctp National Top 100 song wishlist now start", "siteSpeed"); 
-                                                $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
+                                               // $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
 
-                                                echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
-                                                
-                                                $this->log("index.ctp National Top 100 song wishlist now end", "siteSpeed"); 
+                                                //echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
                                                 ?>
                                                 <!--  <div class="share clearfix">
                                                   <p>Share via</p>
