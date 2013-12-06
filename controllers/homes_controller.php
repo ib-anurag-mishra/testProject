@@ -204,7 +204,7 @@ class HomesController extends AppController
             $downloadVariArray[] = $downloadResult['Download']['ProdID'].'~'.$downloadResult['Download']['provider_type'];
         }
         $this->Session->write('downloadVariArray', $downloadVariArray );
-        print_r($this->Session->read('downloadVariArray'));
+        //print_r($this->Session->read('downloadVariArray'));
     }
 
     //this is just for streaming component test
