@@ -144,6 +144,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                     $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));                                                    
                                                     
                                                     if($this->Session->read('downloadVariArray') ){
+                                                        print_r($this->Session->read('downloadVariArray'));
                                                          $checkDownloadVar =  $nationalTopDownload[$i]['Song']['ProdID'].'~'.$nationalTopDownload[$i]['Song']['provider_type'];                                                   
                                                          $downloadVariArr = $this->Session->read('downloadVariArray');
                                                          if (in_array($checkDownloadVar, $downloadVariArr)) {
