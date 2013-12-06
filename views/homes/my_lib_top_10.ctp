@@ -22,7 +22,8 @@
                 {
                     foreach ($topDownload_albums as $key => $value)
                     {
-
+                        echo "<pre>";print_r($value);
+                        
                         //hide song if library block the explicit content
                         if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
                         {
