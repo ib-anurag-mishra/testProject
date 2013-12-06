@@ -99,7 +99,7 @@
                         }
                     };
                 }
-                console.log(url);
+                //console.log(url);
 
                 History.pushState(null, title, url);
                 event.preventDefault();
