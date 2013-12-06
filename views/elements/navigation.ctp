@@ -446,7 +446,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 								<option value="song">Songs</option>
 								<option value="video">Videos</option>
 							</select>
-							<input type="text" id="search-text" name="q" value="<?php echo $keyword; ?>" />							
+							<input type="text" id="search-text" name="q" value="" />							
                             <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
 						</form>
 						<!-- onclick="document.getElementById('HomeSearchForm').submit()" -->
@@ -628,6 +628,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     $mostPopularCss = "";
                     $genreCss = "regular";
                     $faqCss = "regular";
+		    $newReleaseCss="";
 
                     if($_SERVER['REQUEST_URI'] == '/homes/index' || $_SERVER['REQUEST_URI'] == '/index'  || $_SERVER['REQUEST_URI'] == '/')
                     {
