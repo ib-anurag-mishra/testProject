@@ -88,6 +88,8 @@ class Streaming {
             or die('Could not connect to mysql server for freegal db of live.' );
           mysql_select_db($this->PODUCTION_FREEGAL_DB, $this->freegalDBConnectionObj) 
             or die('Could not select database.'); 
+          echo 'sucess';
+          die;
      } else {         
          
           // connect to  stage                     
