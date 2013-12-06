@@ -68,10 +68,11 @@
             {
                 if ($this->Session->read('library_type') == '2')
                 {  ?>      
-                    <script type="text/javascript" src="/js/swfobject.js"></script>
-       <?php    }    
-
-            } 
+                    
+       <?php    }    ?>
+        
+                <script type="text/javascript" src="/js/swfobject.js"></script>
+            <?php } 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
         {
             $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
