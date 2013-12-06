@@ -26,64 +26,12 @@
 
 
 
-$('.most-downloaded-videos-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('.most-downloaded-videos-grid')
-});
-
-$('.most-viewed-videos-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('.most-viewed-videos-grid')
-});
-
-$('.videos-recommended-for-you-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('.videos-recommended-for-you-grid')
-
-});
-
-$('#top-100-songs-list-view .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#top-100-songs-list-view')
-
-});
-
-$('#top-100-videos-list-view .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#top-100-videos-list-view')
-
-});
-
-$('.featured-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('.featured-grid')
-});
 
 
 
 
-$('#whats-happening-grid .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#whats-happening-grid')
-});
-
-$('#detailsNews .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('#detailsNews')
-});
 
 
-$('.more-videos-scrollable .video-thumb-container .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('.more-videos-scrollable')
-
-});
-
-$('.top-videos-scrollable .video-thumb-container .lazy').lazyload({
-    effect: 'fadeIn',
-    container: $('.top-videos-scrollable')
-
-});
 
 
 /* end lazyload initalizations */
