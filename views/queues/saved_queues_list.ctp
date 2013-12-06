@@ -52,7 +52,7 @@
                                     if (!empty($value['QueueDetail']))
                                     {
                                         ?>
-                                        <div class="playlist-length"><?php echo count($value['QueueDetail']); ?> Songs</div>
+                                        <div class="playlist-length"><?php echo $this->Queue->getQueueListCountUnique($value['QueueDetail']); ?> Songs</div>
                                     <?php } ?>
                                 </div>
                             </div>
