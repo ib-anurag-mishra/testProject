@@ -143,7 +143,7 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                                     $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));                                                    
                                                     
-                                                    if($this->Session->read('downloadVariArray') && !empty($this->Session->read('downloadVariArray'))){
+                                                    if($this->Session->read('downloadVariArray') ){
                                                          $checkDownloadVar =  $nationalTopDownload[$i]['Song']['ProdID'].'~'.$nationalTopDownload[$i]['Song']['provider_type'];                                                   
                                                          $downloadVariArr = $this->Session->read('downloadVariArray');
                                                          if (in_array($checkDownloadVar, $downloadVariArr)) {
