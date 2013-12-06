@@ -283,8 +283,7 @@ class QueueListDetailsController extends AppController
         {
                $queue_songs_count =  count($queue_list_array);
         }
-        
-        echo "<pre>"; print_r($queue_list_array);
+                              
         $this->set('queue_list_array', $queue_list_array);
         $this->set('queue_id', $this->params['pass'][0]);
         $this->set('queue_songs_count', $queue_songs_count);
