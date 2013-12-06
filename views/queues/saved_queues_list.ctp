@@ -49,11 +49,10 @@
                                         </a>
                                     <?php } ?>
                                     <?php
-                                    if (!empty($value['QueueDetail']))
-                                    {
+                                    
                                         ?>
                                         <div class="playlist-length"><?php echo $this->Queue->getQueueListCountUnique($value['QueueDetail']);  ?> Songs</div>
-                                    <?php } ?>
+                                    <?php  ?>
                                 </div>
                             </div>
                             <?php
