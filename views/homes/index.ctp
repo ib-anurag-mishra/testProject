@@ -148,9 +148,8 @@ $this->log(" home index.ctp start", "siteSpeed");
                                                         if(!empty($downloadVariArr)){
                                                             $checkDownloadVar =  $nationalTopDownload[$i]['Song']['ProdID'].'~'.$nationalTopDownload[$i]['Song']['provider_type'];                                                   
                                                             $downloadVariArr = $this->Session->read('downloadVariArray');
-                                                            if (in_array($checkDownloadVar, $downloadVariArr)) {
-                                                                echo $checkDownloadVar;
-                                                                $nationalTopDownload[$i]['Song']['status'] = 'avail';
+                                                            if (in_array($checkDownloadVar, $downloadVariArr)) {                                                               
+                                                                $downloadsUsed=1;
                                                             }
                                                         }else{
                                                            $downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
