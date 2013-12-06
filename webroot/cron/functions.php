@@ -255,9 +255,9 @@ function sendFile($src,$dst)
 		else
 		{
 			$sftp = ssh2_sftp($con);
-                        echo $src."\n";
+                        /*echo $src."\n";
                         echo $dst."\n";
-                        echo $con;
+                        echo $con;*/
 			if(!ssh2_scp_send($con, $src, $dst, 0644)){
 				echo "error\n";
 			}
