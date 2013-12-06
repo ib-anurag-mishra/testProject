@@ -122,7 +122,7 @@
                     State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
-			/*
+			
             $.ajax({
                 url: webroot + 'users/isPatronLogin',
                 type: "post",
@@ -134,7 +134,7 @@
                             event.preventDefault();
                         }
             });
-            */
+            
             // Set Loading
             var loading_div = "<div class='loader'>";
             loading_div += "</div>";
