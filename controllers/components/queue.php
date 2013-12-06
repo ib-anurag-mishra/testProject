@@ -34,7 +34,7 @@ Class QueueComponent extends Object
                 'limit' => 100
             ));
             
-            echo "<pre>"; print_r($queueData);
+            //echo "<pre>"; print_r($queueData);
             
         }
         else
