@@ -117,16 +117,18 @@ class CacheController extends AppController {
     /*
      * Function Name : getArtistText
      * Function Description : This function is used to getArtistText.
+     * all this function query must be same as queries written in the Genere code.
      */
     function getArtistText($territory){
         
         //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
         try {
+            
             $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
             $country = $territory;
             
-           
+            //This code is running for all artist            
             $condition = "";
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -135,7 +137,7 @@ class CacheController extends AppController {
             $this->Song->Behaviors->attach('Containable');
             $this->Song->recursive = 0;
             $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
-
+            
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
@@ -150,7 +152,7 @@ class CacheController extends AppController {
             
            
             $allArtists = $this->paginate('Song');
-
+            //this code is running for every alphabets
             for($j = 65;$j < 93;$j++){
 
                 $alphabet = chr($j);
@@ -205,7 +207,7 @@ class CacheController extends AppController {
                 )
             );
             
-            
+            //run for all Genre
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
            
@@ -230,7 +232,7 @@ class CacheController extends AppController {
             ));
            
            
-
+            
             foreach($genreAll as $genreRow){
                 
                 $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
@@ -322,9 +324,9 @@ class CacheController extends AppController {
 
             } catch(Exception $e) {
 
-            $this->log("Artist Pagenation Mesg : ".$e->getMessage(), "cache");
-            $this->log("Artist Pagenation      :   $country $alphabet $genre", "cache");
-            $this->log("Artist Pagenation Query: ".$this->Song->lastQuery(), "cache");
+                $this->log("Artist Pagenation Mesg : ".$e->getMessage(), "cache");
+                $this->log("Artist Pagenation      :   $country $alphabet $genre", "cache");
+                $this->log("Artist Pagenation Query: ".$this->Song->lastQuery(), "cache");
 
             }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
