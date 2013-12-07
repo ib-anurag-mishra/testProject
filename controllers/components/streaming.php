@@ -493,7 +493,7 @@ Class StreamingComponent extends Object
                 'alias' => 'Country',
                 'type' => 'INNER',
                 'conditions' => array(
-                    'Country.ProdID = Song.ProdID',
+                    'Country.ProdID = Song.ProdID1',
                     'Country.provider_type = Song.provider_type',
                 )
             )
