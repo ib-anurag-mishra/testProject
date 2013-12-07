@@ -25,7 +25,7 @@ class VideosController extends AppController
 
     function index()
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
 
         $this->layout = 'home';
 
@@ -74,9 +74,7 @@ class VideosController extends AppController
 
 
             $featuredVideos = $this->Album->query($featuredVideosSql);
-
-            echo $this->Album->lastQuery();
-            
+           
             if (!empty($featuredVideos))
             {
                 foreach ($featuredVideos as $key => $featureVideo)

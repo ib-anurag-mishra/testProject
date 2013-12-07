@@ -10,14 +10,12 @@
                 <?php
                 $total_videos = count($featuredVideos);
                 $sr_no = 0;
-                echo "<pre>";
-                
+                              
                 if ($total_videos > 0)
                 {
                     foreach ($featuredVideos as $key => $featureVideo)
                     {
-                        print_r($featureVideo);
-                        
+                                             
                         //hide song if library block the explicit content
                         if (($this->Session->read('block') == 'yes') && isset($featureVideo["FeaturedVideo"]['Advisory']) && ($featureVideo["FeaturedVideo"]['Advisory'] == 'T'))
                         {
@@ -48,7 +46,7 @@
                                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                             //$downloadsUsed = $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'], $featureVideo['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
-                                            if ($downloadsUsed > 0)
+                                            if ($featureVideo[0][totalProds] > 0)
                                             {
                                                 $featureVideo['Video']['status'] = 'avail';
                                             }
