@@ -3,7 +3,13 @@
     <section class="featured-videos">
         <header class="clearfix">
             <h3><?php echo __('Featured Videos', true); ?></h3>
-        </header>        
+        </header>      
+        
+        <section id="featured-video-grid" class="horiz-scroll">
+            <ul class="clearfix">
+                
+            </ul>
+        </section>
     </section><!-- end .featured-videos -->
 
 
