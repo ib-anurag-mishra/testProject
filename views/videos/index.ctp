@@ -252,51 +252,25 @@
                                                 </form>	
                                                 <?php
                                             }
-                                            else
+                                             else
                                             {
                                                 ?>
-                                                <a class="featured-video-download-now-button " href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                <a class="featured-video-download-now-button " href='/homes/my_history'>
+                                                    <label class="dload" style="width:120px;cursor:pointer;" 
+                                                           title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?>
+                                                    </label>
+                                                </a>
                                                 <?php
                                             }
+                                            
                                         }
                                         else
                                         {
                                             ?>
-
-
-
-                                            <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
-                                                <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"]; ?>" />
-                                                <input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
-
-                                                <span class="beforeClick" id="download_video_<?php echo $topDownload["Video"]["ProdID"]; ?>">
-                                                    <![if !IE]>
-                                                    <a class="no-ajaxy" href="javascript:void(0);" 
-                                                       title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" 
-                                                       onclick='return wishlistVideoDownloadOthers("<?php echo $topDownload['Video']['ProdID']; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $topDownload['Video']['provider_type']; ?>");'>
-                                                        <label class="top-10-download-now-button"><?php __('Download Now'); ?></label>
-                                                    </a>
-                                                    <![endif]>
-                                                    <!--[if IE]>
-                                                            <label class="top-10-download-now-button">
-                                                                <a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE('<?php echo $topDownload['Video']['ProdID']; ?>','0','<?php echo $topDownload['Video']['provider_type']; ?>');" 
-                                                                href="<?php echo trim($finalVideoUrl); ?>">
-                                                    <?php __('Download Now'); ?></a>
-                                                            </label>
-                                                    <![endif]-->
-                                                </span>
-                                                <span class="afterClick" id="vdownloading_<?php echo $topDownload["Video"]["ProdID"]; ?>" 
-                                                      style="display:none;">
-                                                          <?php __('Please Wait...&nbsp&nbsp'); ?>
-                                                </span>
-                                                <span id="vdownload_loader_<?php echo $topDownload["Video"]["ProdID"]; ?>" 
-                                                      style="display:none;float:right;">
-                                                          <?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?>
-                                                </span>
-
-                                            </form>	
+                                            <a class="featured-video-download-now-button " href="javascript:void(0);"><?php __("Limit Met"); ?></a> 
                                             <?php
                                         }
+                                       
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $topDownload["Video"]["ProdID"], $featureVideo["Video"]["provider_type"]);
                                         echo $this->Queue->getSocialNetworkinglinksMarkup();
