@@ -25,7 +25,7 @@ class VideosController extends AppController
 
     function index()
     {
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
 
         $this->layout = 'home';
 
