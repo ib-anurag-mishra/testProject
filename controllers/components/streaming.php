@@ -493,7 +493,7 @@ Class StreamingComponent extends Object
                 'alias' => 'Country',
                 'type' => 'INNER',
                 'conditions' => array(
-                    'Country.ProdID = Song.ProdID1',
+                    'Country.ProdID = Song.ProdID',
                     'Country.provider_type = Song.provider_type',
                 )
             )
@@ -510,6 +510,7 @@ Class StreamingComponent extends Object
         if(isset($song['Song']['FullLength_Duration']) && $libraryTerritory){      
             $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);          
             if(isset($secondsValue) && is_numeric($secondsValue)){
+                echo $secondsValue; die;
                 return $secondsValue;
             }else{
                 
