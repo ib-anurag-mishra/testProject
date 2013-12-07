@@ -95,8 +95,7 @@ class VideosController extends AppController
 
 
         //	Cache::delete("top_download_videos".$territory);
-        //if (Cache::read("top_download_videos" . $territory) === false)
-                if(1)
+        if (Cache::read("top_download_videos" . $territory) === false)               
         {
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory, 
                 File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` ,
