@@ -9,7 +9,8 @@
             <ul class="clearfix">
                 <?php
                 $total_videos = count($featuredVideos);
-
+                $sr_no = 0 ;
+                        
                 if ($total_videos > 0)
                 {
                     foreach ($featuredVideos as $key => $featureVideo)
@@ -149,6 +150,7 @@
                                 ?> 
                             </li> 
                             <?php
+                            $sr_no++;
                         }
                     }
                 }
@@ -173,6 +175,8 @@
             <ul class="clearfix">
                 <?php
                 $total_videos = count($topVideoDownloads);
+                $sr_no = 0 ;
+                
                 if ($total_videos > 0)
                 {
                     foreach ($topVideoDownloads as $key => $topDownload)
@@ -324,6 +328,7 @@
                                 ?> 
                             </li> 
                             <?php
+                            $sr_no++;
                         }
                     }
                 }
