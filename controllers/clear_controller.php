@@ -14,7 +14,7 @@ class ClearController extends AppController {
   
     
   function cachekey($key){
-  Configure::write('debug', 2);
+  //Configure::write('debug', 2);
 
     if(!empty($key)){
       $this->autoRender = false;

@@ -1262,7 +1262,7 @@ STR;
     function admin_librarytimezone(){
         
              
-        Configure::write('debug', 2);        
+        //Configure::write('debug', 2);        
         
         if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
@@ -1302,7 +1302,7 @@ STR;
     */
     function admin_removelibrarytimezone($id = NULL){
         
-        Configure::write('debug', 2);  
+        //Configure::write('debug', 2);  
         $this->layout = false;
                 
         //redirect if user not set
@@ -1328,7 +1328,7 @@ STR;
     */
     function admin_librarytimezoneform($action = NULL,$id = NULL) {
         
-        Configure::write('debug', 2);     
+        //Configure::write('debug', 2);     
                 
         //redirect if user not set
         if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
