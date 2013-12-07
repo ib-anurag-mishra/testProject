@@ -65,7 +65,9 @@ class VideosController extends AppController
                                     LEFT JOIN File as File on File.FileID = Video.Image_FileID 
                                     LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
                                     WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW() ";
-
+                                   
+            echo "<pre>";print_r($featuredVideosSql);
+                        
             $featuredVideos = $this->Album->query($featuredVideosSql);
 
             if (!empty($featuredVideos))
@@ -91,7 +93,14 @@ class VideosController extends AppController
         //	Cache::delete("top_download_videos".$territory);
         if (Cache::read("top_download_videos" . $territory) === false)
         {
-            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `Country`.`SalesDate` <= NOW() AND Video.DownloadStatus = '1' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
+            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory, 
+                File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` 
+                FROM videodownloads as Videodownloads 
+                LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
+                LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) 
+                LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
+                WHERE `Country`.`SalesDate` <= NOW() AND Video.DownloadStatus = '1' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
+                echo "<pre>";print_r($featuredVideosSql);
             $topDownloads = $this->Album->query($topDownloadSQL);
             if (!empty($topDownloads))
             {
