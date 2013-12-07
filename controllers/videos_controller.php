@@ -55,11 +55,17 @@ class VideosController extends AppController
         }
 
         // Cache::delete("featured_videos".$territory);
-        if (Cache::read("featured_videos" . $territory) === false)
+        //if (Cache::read("featured_videos" . $territory) === false)
+        if(1)
         {
             $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`ProdID`,`Video`.`Image_FileID`, 
                                     `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, Video.Advisory, `File`.`CdnPath`, `File`.`SourceURL`, 
-                                    `File`.`SaveAsName`,`Country`.`SalesDate` 
+                                    `File`.`SaveAsName`,`Country`.`SalesDate` ,
+                                    
+                                    (SELECT COUNT(*) FROM videodownloads AS Download 
+                                        WHERE ProdID=`FeaturedVideo`.`ProdID` AND provider_type=`Video`.`provider_type` AND patron_id=$patId AND library_id=$libId 
+                                        AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."') AS totalProds
+        
                                     FROM featured_videos as FeaturedVideo 
                                     LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID and FeaturedVideo.provider_type = Video.provider_type 
                                     LEFT JOIN File as File on File.FileID = Video.Image_FileID 

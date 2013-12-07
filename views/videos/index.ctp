@@ -10,11 +10,14 @@
                 <?php
                 $total_videos = count($featuredVideos);
                 $sr_no = 0;
-
+                echo "<pre>";
+                
                 if ($total_videos > 0)
                 {
                     foreach ($featuredVideos as $key => $featureVideo)
                     {
+                        print_r($featureVideo);
+                        
                         //hide song if library block the explicit content
                         if (($this->Session->read('block') == 'yes') && isset($featureVideo["FeaturedVideo"]['Advisory']) && ($featureVideo["FeaturedVideo"]['Advisory'] == 'T'))
                         {
@@ -43,7 +46,7 @@
                                             $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                             $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
                                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-                                            $downloadsUsed = $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'], $featureVideo['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            //$downloadsUsed = $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'], $featureVideo['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
                                             if ($downloadsUsed > 0)
                                             {
