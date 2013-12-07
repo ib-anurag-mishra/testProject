@@ -19,8 +19,14 @@
                         {
                             continue;
                         }
-                        ?>
-                        <li>
+
+                        if ($sr_no % 2 == 0)
+                        {
+                            ?>
+                            <li> 
+                                <?php
+                            }
+                            ?>
                             <div class="featured-video-detail">
                                 <div class="video-thumbnail-container">
                                     <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>">
@@ -41,8 +47,7 @@
                                             if ($downloadsUsed > 0)
                                             {
                                                 $featureVideo['Video']['status'] = 'avail';
-                                                
-                                                  ?>
+                                                ?>
                                                 <a class="featured-video-download-now-button " href='/homes/my_history'>
                                                     <label class="dload" style="width:120px;cursor:pointer;" 
                                                            title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'>
@@ -50,12 +55,10 @@
                                                     </label>
                                                 </a>
                                                 <?php
-                                                
                                             }
                                             else
                                             {
                                                 $featureVideo['Video']['status'] = 'not';
-                                                
                                                 ?>
                                                 <span class="featured-video-download-now-button ">
                                                     <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
@@ -140,8 +143,13 @@
                                     </a>
                                 </div>
                             </div>                            
-                        </li>
-                        <?php
+                            <?php
+                            if ($sr_no % 2 == 1 || $sr_no == ($total_videos - 1))
+                            {
+                                ?> 
+                            </li> 
+                            <?php
+                        }
                     }
                 }
                 ?>
@@ -169,8 +177,14 @@
                 {
                     foreach ($topVideoDownloads as $key => $topDownload)
                     {
-                        ?>
-                        <li> 
+
+                        if ($sr_no % 2 == 0)
+                        {
+                            ?>
+                            <li> 
+                                <?php
+                            }
+                            ?>
                             <div class="video-cover-container">
                                 <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
                                     <img alt="" src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" />
@@ -304,11 +318,16 @@
                                        <?php echo $this->getTextEncode($topDownload['Video']['ArtistText']); ?>
                                 </a>
                             </div>
-                        <li> 
+                            <?php
+                            if ($sr_no % 2 == 1 || $sr_no == ($total_videos - 1))
+                            {
+                                ?> 
+                            </li> 
                             <?php
                         }
                     }
-                    ?>
+                }
+                ?>
             </ul>
         </div>
 
