@@ -17,6 +17,7 @@
         <div class="album-scrollable horiz-scroll">
             <ul style="width:2700px;">
                 <?php
+                $this->log("My Lib Top 10 -- Album START", "siteSpeed");
                 $count = 1;
                 if (count($topDownload_albums) > 0)
                 {
@@ -107,6 +108,7 @@
 
                     echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                 }
+                $this->log("My Lib Top 10 -- Album END", "siteSpeed");
                 ?>
             </ul>
         </div>
@@ -116,6 +118,7 @@
         <div class="songs-scrollable horiz-scroll">
             <ul style="width:2700px;">
                 <?php
+                $this->log("My Lib Top 10 -- Songs START", "siteSpeed");
                 $count = 1;
                 if (count($top_10_songs) > 0)
                 {
@@ -341,6 +344,7 @@
 
                     echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                 }
+                $this->log("My Lib Top 10 -- Songs END", "siteSpeed");
                 ?>
 
 
@@ -353,6 +357,7 @@
         <div class="videos-scrollable horiz-scroll">
             <ul style="width:4430px;">
                 <?php
+                $this->log("My Lib Top 10 -- Video START", "siteSpeed");
                 $count = 1;
 
                 if (count($topDownload_videos_data) > 0)
@@ -534,6 +539,8 @@
 
                     echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
                 }
+                 $this->log("My Lib Top 10 -- Video END", "siteSpeed");
+                
                 ?>
 
 
