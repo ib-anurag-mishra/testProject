@@ -102,7 +102,7 @@ class VideosController extends AppController
                 File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` ,
                                     
                 (SELECT COUNT(*) FROM videodownloads AS Download 
-                    WHERE ProdID=`FeaturedVideo`.`ProdID` AND provider_type=`Video`.`provider_type` AND patron_id=$patId AND library_id=$libId 
+                    WHERE ProdID=`Videodownloads`.`ProdID` AND provider_type=`Video`.`provider_type` AND patron_id=$patId AND library_id=$libId 
                     AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."') AS totalProds
                         
                 FROM videodownloads as Videodownloads 
