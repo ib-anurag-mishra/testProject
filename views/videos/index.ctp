@@ -9,7 +9,6 @@
             <ul class="clearfix">
                 <?php
                 $total_videos = count($featuredVideos);
-                $sr_no = 0;
 
                 if ($total_videos > 0)
                 {
@@ -82,6 +81,60 @@
         <header class="clearfix">
             <h3><?php echo __('Top Videos', true); ?></h3>
         </header>
+
+        <div class="video-top-genres-grid horiz-scroll" style="margin-top:26px;">
+            <ul class="clearfix">
+                <?php
+                $total_videos = count($topVideoDownloads);
+                if ($total_videos > 0)
+                {
+                    foreach ($topVideoDownloads as $key => $topDownload)
+                    {
+                        ?>
+                        <div class="video-cover-container">
+                        </div>
+
+                        <div class="video-title">
+                            <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['VideoTitle'])); ?>" 
+                               href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
+
+                                <?php
+                                if (strlen($topDownload['Video']['VideoTitle']) >= 20)
+                                {
+                                    $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 20) . '...';
+                                }
+                                ?>
+                                <?php echo $this->getTextEncode($topDownload['Video']['VideoTitle']); ?>
+                            </a> 
+                            <?php
+                            if (isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory'])
+                            {
+                                ?> 
+                                <span style="color: red;display: inline;"> (Explicit)</span> 
+                                <?php
+                            }
+                            ?>
+                        </div>
+
+                        <div class="video-name">
+                            <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['ArtistText'])); ?>" 
+                               href="/artists/album/<?php echo base64_encode($topDownload['Video']['ArtistText']); ?>">
+                                   <?php
+                                   if (strlen($topDownload['Video']['ArtistText']) >= 20)
+                                   {
+                                       $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 20) . '...';
+                                   }
+                                   ?>
+                                   <?php echo $this->getTextEncode($topDownload['Video']['ArtistText']); ?>
+                            </a>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </ul>
+        </div>
+
     </section> <!-- end .video-top-genres -->
 
 </section>
