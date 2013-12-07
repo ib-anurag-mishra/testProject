@@ -131,12 +131,12 @@ $('document').ready(function()
 
     $('#featured-video-grid .lazy').lazyload({
         effect: 'fadeIn',
-        container: $('#coming-soon-videos-grid')
+        container: $('#featured-video-grid .lazy')
     });
 
     $('.video-top-genres-grid .lazy').lazyload({
         effect: 'fadeIn',
-        container: $('#coming-soon-videos-grid')
+        container: $('.video-top-genres-grid')
     });
 
 
