@@ -93,6 +93,36 @@
                         ?>
                         <li> 
                             <div class="video-cover-container">
+                                <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
+                                    <img alt="" src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" />
+                                </a>
+
+                                <?php
+                                if ($patId)
+                                {
+                                    ?>                                  
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a> 
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <a class="top-video-login-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
+                                    <?php
+                                }
+                                ?>
+                                <div class="wishlist-popover">
+                                    <?php
+                                    if ($patId)
+                                    {
+                                        
+                                       
+                                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
+                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $topDownload["Video"]["ProdID"], $featureVideo["Video"]["provider_type"]);
+                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                    }
+                                    ?>
+                                </div>
                             </div>
 
                             <div class="video-title">
