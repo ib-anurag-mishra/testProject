@@ -31,7 +31,7 @@
                             <div class="featured-video-detail">
                                 <div class="video-thumbnail-container">
                                     <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>">
-                                        <img src="<?php echo $featureVideo['videoImage']; ?>" data-original="" width="275" height="162" alt="" />
+                                        <img src="<?php echo $featureVideo['videoImage']; ?>" class="lazy" data-original="" width="275" height="162" alt="" />
                                     </a>
 
                                     <?php
@@ -191,7 +191,7 @@
                             ?>
                             <div class="video-cover-container">
                                 <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
-                                    <img alt="" src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" />
+                                    <img alt="" class="lazy" src="<?php echo $topDownload['videoImage']; ?>" data-original="" width="163" height="97" />
                                 </a>
 
                                 <?php

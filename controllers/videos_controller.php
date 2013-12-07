@@ -26,7 +26,7 @@ class VideosController extends AppController
     function index()
     {
         Configure::write('debug', 0);
-        
+
         $this->layout = 'home';
 
         $libId = $this->Session->read('library');
@@ -65,9 +65,8 @@ class VideosController extends AppController
                                     LEFT JOIN File as File on File.FileID = Video.Image_FileID 
                                     LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
                                     WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW() ";
-                                   
-            echo "<pre>";print_r($featuredVideosSql);
-                        
+
+
             $featuredVideos = $this->Album->query($featuredVideosSql);
 
             if (!empty($featuredVideos))
@@ -85,11 +84,11 @@ class VideosController extends AppController
         {
             $featuredVideos = Cache::read("featured_videos" . $territory);
         }
-        
+
         $this->set('featuredVideos', $featuredVideos);
-        
-        
-        
+
+
+
         //	Cache::delete("top_download_videos".$territory);
         if (Cache::read("top_download_videos" . $territory) === false)
         {
@@ -100,7 +99,7 @@ class VideosController extends AppController
                 LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) 
                 LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
                 WHERE `Country`.`SalesDate` <= NOW() AND Video.DownloadStatus = '1' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
-                echo "<pre>";print_r($featuredVideosSql);
+
             $topDownloads = $this->Album->query($topDownloadSQL);
             if (!empty($topDownloads))
             {
@@ -116,9 +115,9 @@ class VideosController extends AppController
         }
         else
         {
-            $topDownloads = Cache::read("top_download_videos" . $territory) ;
+            $topDownloads = Cache::read("top_download_videos" . $territory);
         }
-        
+
         $this->set('topVideoDownloads', $topDownloads);
     }
 
