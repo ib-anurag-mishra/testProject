@@ -91,47 +91,49 @@
                     foreach ($topVideoDownloads as $key => $topDownload)
                     {
                         ?>
-                        <div class="video-cover-container">
-                        </div>
+                        <li> 
+                            <div class="video-cover-container">
+                            </div>
 
-                        <div class="video-title">
-                            <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['VideoTitle'])); ?>" 
-                               href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
+                            <div class="video-title">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['VideoTitle'])); ?>" 
+                                   href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>">
 
+                                    <?php
+                                    if (strlen($topDownload['Video']['VideoTitle']) >= 20)
+                                    {
+                                        $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 20) . '...';
+                                    }
+                                    ?>
+                                    <?php echo $this->getTextEncode($topDownload['Video']['VideoTitle']); ?>
+                                </a> 
                                 <?php
-                                if (strlen($topDownload['Video']['VideoTitle']) >= 20)
+                                if (isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory'])
                                 {
-                                    $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 20) . '...';
+                                    ?> 
+                                    <span style="color: red;display: inline;"> (Explicit)</span> 
+                                    <?php
                                 }
                                 ?>
-                                <?php echo $this->getTextEncode($topDownload['Video']['VideoTitle']); ?>
-                            </a> 
-                            <?php
-                            if (isset($topDownload['Video']['Advisory']) && 'T' == $topDownload['Video']['Advisory'])
-                            {
-                                ?> 
-                                <span style="color: red;display: inline;"> (Explicit)</span> 
-                                <?php
-                            }
-                            ?>
-                        </div>
+                            </div>
 
-                        <div class="video-name">
-                            <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['ArtistText'])); ?>" 
-                               href="/artists/album/<?php echo base64_encode($topDownload['Video']['ArtistText']); ?>">
-                                   <?php
-                                   if (strlen($topDownload['Video']['ArtistText']) >= 20)
-                                   {
-                                       $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 20) . '...';
-                                   }
-                                   ?>
-                                   <?php echo $this->getTextEncode($topDownload['Video']['ArtistText']); ?>
-                            </a>
-                        </div>
-                        <?php
+                            <div class="video-name">
+                                <a title="<?php echo $this->getValidText($this->getTextEncode($topDownload['Video']['ArtistText'])); ?>" 
+                                   href="/artists/album/<?php echo base64_encode($topDownload['Video']['ArtistText']); ?>">
+                                       <?php
+                                       if (strlen($topDownload['Video']['ArtistText']) >= 20)
+                                       {
+                                           $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 20) . '...';
+                                       }
+                                       ?>
+                                       <?php echo $this->getTextEncode($topDownload['Video']['ArtistText']); ?>
+                                </a>
+                            </div>
+                        <li> 
+                            <?php
+                        }
                     }
-                }
-                ?>
+                    ?>
             </ul>
         </div>
 
