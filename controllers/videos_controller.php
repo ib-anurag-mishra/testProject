@@ -99,7 +99,12 @@ class VideosController extends AppController
         if (Cache::read("top_download_videos" . $territory) === false)
         {
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory, 
-                File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` 
+                File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` ,
+                                    
+                (SELECT COUNT(*) FROM videodownloads AS Download 
+                    WHERE ProdID=`FeaturedVideo`.`ProdID` AND provider_type=`Video`.`provider_type` AND patron_id=$patId AND library_id=$libId 
+                    AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."') AS totalProds
+                        
                 FROM videodownloads as Videodownloads 
                 LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
                 LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) 

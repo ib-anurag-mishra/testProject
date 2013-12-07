@@ -46,7 +46,7 @@
                                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                             //$downloadsUsed = $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'], $featureVideo['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
-                                            if ($featureVideo[0][totalProds] > 0)
+                                            if ($featureVideo[0]['totalProds'] > 0)
                                             {
                                                 $featureVideo['Video']['status'] = 'avail';
                                             }
@@ -222,8 +222,8 @@
                                             $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                             $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
                                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-                                            $downloadsUsed = $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'], $topDownload['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                            if ($downloadsUsed > 0)
+                                            //$downloadsUsed = $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'], $topDownload['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            if ($topDownload[0][['totalProds']] > 0)
                                             {
                                                 $topDownload['Video']['status'] = 'avail';
                                             }
