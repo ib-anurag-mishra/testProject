@@ -116,7 +116,30 @@
                                     if ($patId)
                                     {
                                         
-                                       
+                                       if ($libraryDownload == '1' && $patronDownload == '1')
+                                        {
+                                           $productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"], $topDownload["Video"]["provider_type"]);
+                                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+                                            $downloadsUsed = $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'], $topDownload['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            if ($downloadsUsed > 0)
+                                            {
+                                                $topDownload['Video']['status'] = 'avail';
+                                            }
+                                            else
+                                            {
+                                                $topDownload['Video']['status'] = 'not';
+                                            }
+                                       }
+                                       else
+                                        {
+                                            ?>
+                                            <a class="featured-video-download-now-button " href="javascript:void(0);">
+                                                <?php __("Limit Met"); ?>
+                                            </a> 
+                                            <?php
+                                        }
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $topDownload["Video"]["ProdID"], $featureVideo["Video"]["provider_type"]);
                                         echo $this->Queue->getSocialNetworkinglinksMarkup();
