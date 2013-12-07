@@ -64,7 +64,7 @@ class VideosController extends AppController
                                     
                                     (SELECT COUNT(*) FROM videodownloads AS Download 
                                         WHERE ProdID=`FeaturedVideo`.`ProdID` AND provider_type=`Video`.`provider_type` AND patron_id=$patId AND library_id=$libId 
-                                        AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."') AS totalProds
+                                        AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."') AS `FeaturedVideo`.totalProds
         
                                     FROM featured_videos as FeaturedVideo 
                                     LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID and FeaturedVideo.provider_type = Video.provider_type 
