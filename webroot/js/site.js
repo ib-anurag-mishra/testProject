@@ -111,8 +111,7 @@ $('document').ready(function()
 
     $('#top-100-songs-grid .lazy').lazyload({
         effect: 'fadeIn',
-        container: $('#top-100-songs-grid'),
-        skip_invisible: false
+        container: $('#top-100-songs-grid')
     });
 
     $('#top-100-videos-grid .lazy').lazyload({
