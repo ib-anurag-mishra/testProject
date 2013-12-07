@@ -510,7 +510,6 @@ Class StreamingComponent extends Object
         if(isset($song['Song']['FullLength_Duration']) && $libraryTerritory){      
             $secondsValue = $this->getSeconds($song['Song']['FullLength_Duration']);          
             if(isset($secondsValue) && is_numeric($secondsValue)){
-                echo $secondsValue; die;
                 return $secondsValue;
             }else{
                 
