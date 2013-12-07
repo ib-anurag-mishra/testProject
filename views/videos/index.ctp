@@ -223,7 +223,7 @@
                                             $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
                                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                             //$downloadsUsed = $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'], $topDownload['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                            if ($topDownload[0][['totalProds']] > 0)
+                                            if ($topDownload[0]['totalProds'] > 0)
                                             {
                                                 $topDownload['Video']['status'] = 'avail';
                                             }
