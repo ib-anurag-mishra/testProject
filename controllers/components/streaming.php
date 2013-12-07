@@ -582,7 +582,7 @@ Class StreamingComponent extends Object
     */
     function getSeconds($durationString){        
         
-       if(isset($durationString) && $durationString!=0){
+       if(isset($durationString)){
            sscanf($durationString, "%d:%d", $minutes, $seconds);
            $time_seconds = $minutes * 60 + $seconds;          
            return $time_seconds;
