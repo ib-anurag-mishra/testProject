@@ -218,9 +218,6 @@ STR;
     {
         set_time_limit(0);
 
-        Cache::write("testvariables102", 'xyz');
-
-
         $countryPrefix = $this->getCountryPrefix($territory);
         $country = $territory;
         if (!empty($country))
