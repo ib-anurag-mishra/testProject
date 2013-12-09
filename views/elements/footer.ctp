@@ -322,6 +322,9 @@ if ($this->Session->read("patron"))
 //                });
           });
       </script>    -->
-<?php //}      ?>
+<?php //} 
+  ?>
+
+<?php mysql_close();  ?>
 <!-- Code for player end -->
 
