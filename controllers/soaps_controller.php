@@ -1912,15 +1912,15 @@ STR;
     
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libID),
-      'fields' => array('test_library_type'),
+      'fields' => array('library_type'),
       'recursive' => -1
       )
     );
 
     if(1 != $innerCall){
-      return $this->createsUserTypeResponseObject($libraryDetails['Library']['test_library_type']);
+      return $this->createsUserTypeResponseObject($libraryDetails['Library']['library_type']);
     }else{
-      return $libraryDetails['Library']['test_library_type'];
+      return $libraryDetails['Library']['library_type'];
     }
     
 
