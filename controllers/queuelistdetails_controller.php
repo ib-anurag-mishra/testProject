@@ -119,6 +119,9 @@ class QueueListDetailsController extends AppController
                     echo "error";
                     exit;
                 }
+                
+                $this->QueueDetail->setDataSource('default');
+                $this->QueueList->setDataSource('default');
             }
             else    // Song cannot be deleted
             {
