@@ -1370,7 +1370,7 @@ STR;
         $albumInstance = ClassRegistry::init('Album');
         //Added caching functionality for new release videos           
         $country = $territory;
-        if (!empty($country) && ( $territory == "US" ))
+        if (!empty($country))
         {
 
             $data = array();
