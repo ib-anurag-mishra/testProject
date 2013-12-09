@@ -797,7 +797,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>
                                            <?php                                                                                             
 
-                                                    if($this->Session->read("lId")==602 || $this->Session->read("lId")==85 || $this->Session->read("lId")==486)                                                   
+                                                   /* if($this->Session->read("lId")==602 || $this->Session->read("lId")==85 || $this->Session->read("lId")==486)                                                   
                                                     {                                                         
                                                         ?>    
                                                              <div class="announcements">
@@ -842,7 +842,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         <?php
                                                     }
                                                     else    // For other Libraries
-                                                    {
+                                                    {   */
                                                         $temp_text  =   strip_tags($announcment_value);
                                                         
                                                         if($temp_text!="")
@@ -863,7 +863,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 </div>
                                             
                                                         <?php
-                                                    }
+                                                 //  }
                                                     
                                             ?>
                                             <?php } ?>
