@@ -15,6 +15,7 @@ class WishlistHelper extends AppHelper {
         $patronId = $this->Session->read('patron');  
         $wishlistVariArray = array();
         
+        
         //create common structure for add to wishlist functionality
         //first check if session variable not set
         if(!$this->Session->read('wishlistVariArray') ){
