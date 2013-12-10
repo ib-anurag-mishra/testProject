@@ -19,7 +19,7 @@ class VideodownloadHelper extends AppHelper
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videodownloadInstance->recursive = -1;
 
-        if (!$this->Session->check('videodownloadCountArray'))
+        if ($this->Session->check('videodownloadCountArray'))
         {
             $videodownloadCountArray = $this->Session->read('videodownloadCountArray');
             if (isset($videodownloadCountArray[$prodId]) && $videodownloadCountArray[$prodId]['provider_type'] == $provider_type)
