@@ -154,7 +154,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                             $downloadVariArray[] = $downloadResult['Download']['ProdID'].'~'.$downloadResult['Download']['provider_type'];
                                                         }
                                                         $downloadVariArray= @array_unique($downloadVariArray);
-                                                        $this->Session->write('downloadVariArray', $downloadVariArray ); 
+                                                       // $this->Session->write('downloadVariArray', $downloadVariArray ); 
                                                         
                                                         $downloadsUsed = $this->Download->getDownloadResults($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
                                                      }
