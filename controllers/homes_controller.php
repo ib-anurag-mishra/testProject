@@ -1552,7 +1552,9 @@ STR;
 				$updateArr['consortium'] = $this->Session->read('consortium');
 			}
 			$updateArr['is_approved'] = 'yes';
+                        $this->Currentpatron->setDataSource('master');
 			$this->Currentpatron->save($updateArr);
+                        $this->Currentpatron->setDataSource('default');
 			$this->Session->write('approved', 'yes');
 		}
 		echo "Success";
@@ -1598,9 +1600,11 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()){
 		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 		elseif(count($findData) > 0){
 		    $this->Page->id = $this->data['Home']['id'];
@@ -1608,12 +1612,14 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		    else {
 			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 	    }
 	    $this->set('formAction', 'admin_aboutusform');
@@ -1674,9 +1680,11 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()){
 		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 		elseif(count($findData) > 0){
 		    $this->Page->id = $this->data['Home']['id'];
@@ -1684,12 +1692,14 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		    else {
 			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 	    }
 	    $this->set('formAction', 'admin_termsform');
@@ -1750,9 +1760,11 @@ STR;
 				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 				$pageData['Page']['language'] = $this->data['Home']['language'];
 				$this->Page->set($pageData['Page']);
+                                $this->Page->setDataSource('master');
 				if($this->Page->save()){
 				  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 				}
+                                $this->Page->setDataSource('default');
 			}
 			elseif(count($findData) > 0){
 				$this->Page->id = $this->data['Home']['id'];
@@ -1760,12 +1772,14 @@ STR;
 				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 				$pageData['Page']['language'] = $this->data['Home']['language'];
 				$this->Page->set($pageData['Page']);
+                                $this->Page->setDataSource('master');
 				if($this->Page->save()) {
 				$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 				}
 				else {
 				$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
 				}
+                                $this->Page->setDataSource('default');
 			}
 			}
 			$this->set('formAction', 'admin_loginform');
@@ -1826,9 +1840,11 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()){
 		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 		elseif(count($findData) > 0){
 		    $this->Page->id = $this->data['Home']['id'];
@@ -1836,12 +1852,14 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		    else {
 			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 	    }
 	    $this -> set( 'formAction', 'admin_wishlistform');
@@ -1903,9 +1921,11 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()){
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 		elseif(count($findData) > 0){
 		    $this->Page->id = $this->data['Home']['id'];
@@ -1913,12 +1933,14 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		    else {
 			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
 		    }
+                    $this->Page->setDataSource('default');
 		}
 	    }
 	    $this -> set( 'formAction', 'admin_limitsform');
@@ -2013,7 +2035,9 @@ STR;
 			if(count($patronDetails) > 0) {
 			$updateTime = date( "Y-m-d H:i:s", time()-60 );
 			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
+                        $this->Currentpatron->setDataSource('master');
 			$this->Currentpatron->saveField('modified',$updateTime, false);
+                        $this->Currentpatron->setDataSource('default');
 			}
 			$this->Session->destroy();
 			$this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
@@ -2154,10 +2178,12 @@ STR;
                 $this->data['User']['type_id'] = '5';
                 $this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);
                 $this->User->set($this->data['User']);
+                $this->User->setDataSource('master');
                 if($this->User->save()){
                     $this->_sendForgotPasswordMail($this->User->id, $temp_password);
                     $this->Session->setFlash("An email with your new password has been sent to your email account.");
                 }
+                $this->User->setDataSource('default');
                 $this->redirect($this->webroot.'homes/forgot_password');
             }
         }
@@ -2673,15 +2699,19 @@ STR;
 
         $downloadStatus = $latestdownloadStatus = 0;          
         //save to downloads table
+        $this->Download->setDataSource('master');
         if($this->Download->save($insertArr)){
           $downloadStatus = 1;  
           $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+          $this->Download->setDataSource('default');
           $siteConfigData = $this->Album->query($siteConfigSQL);
           $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
           if($maintainLatestDownload){
+              $this->LatestDownload->setDataSource('master');
             if($this->LatestDownload->save($insertArr)){
               $latestdownloadStatus = 1;
             }
+            $this->LatestDownload->setDataSource('default');
           }
           
           //add the download songs in the session array
@@ -2696,7 +2726,8 @@ STR;
           $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
           $this->Library->query($sql);
           $this->Library->setDataSource('default');
-        }      
+        }
+        $this->Download->setDataSource('default');
       
         
       
@@ -2904,22 +2935,27 @@ STR;
 
         $downloadStatus = $latestdownloadStatus = 0;          
         //save to downloads table
+        $this->Videodownload->setDataSource('master');
         if($this->Videodownload->save($insertArr)){
+          $this->Videodownload->setDataSource('default');  
           $downloadStatus = 1;  
           $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
           $siteConfigData = $this->Album->query($siteConfigSQL);
           $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
           if($maintainLatestDownload){
+              $this->LatestVideodownload->setDataSource('master');
             if($this->LatestVideodownload->save($insertArr)){
               $latestdownloadStatus = 1;
             }
+            $this->LatestVideodownload->setDataSource('default');
           }
           //update library table
           $this->Library->setDataSource('master');
           $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
           $this->Library->query($sql);
           $this->Library->setDataSource('default');
-        }      
+        }
+        $this->Videodownload->setDataSource('default');
       
         
       
@@ -3059,6 +3095,7 @@ STR;
 		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
 		    $pageData['Page']['language'] = $this->data['Home']['language'];
 		    $this->Page->set($pageData['Page']);
+                    $this->Page->setDataSource('master');
 		    if($this->Page->save()){
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
@@ -3076,6 +3113,7 @@ STR;
 			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
 		    }
 		}
+                $this->Page->setDataSource('default');
 	    }
 	    $this -> set( 'formAction', 'admin_historyform');
 	    $this -> set( 'formHeader', 'Manage History Page Text' );
@@ -3216,6 +3254,7 @@ STR;
 			$data['Language']['id'] = '';
 			$data['Language']['short_name'] = $this->data['Homes']['short_name'];
 			$data['Language']['full_name'] = $this->data['Homes']['full_name'];
+                        $this->Language->setDataSource('master');
 		    if($this->Language->save($data['Language'])){
 				$this->Session->setFlash('Your Language has been saved.', 'modal', array('class' => 'modal success'));
 				$this->redirect('/admin/homes/language');
@@ -3224,6 +3263,7 @@ STR;
 				$this->Session->setFlash('Your Language has not been saved.', 'modal', array('class' => 'modal failure'));
 				$this->redirect('/admin/homes/language');
 			}
+                        $this->Language->setDataSource('default');
 			$this->set('languages', $this->Language->find('all'));
 		}
 		else {
@@ -3243,9 +3283,11 @@ STR;
         if(trim($languageID) != "" && is_numeric($languageID)) {
 			$this->Language->id = $languageID;
 		    $this->Language->set(array('status' => 'active'));
+                    $this->Language->setDataSource('master');
 		    if($this->Language->save()) {
 				$this->Session ->setFlash( 'Language activated successfully!', 'modal', array( 'class' => 'modal success' ) );
 			}
+                    $this->Language->setDataSource('default');    
             $this->autoRender = false;
             $this->redirect('/admin/homes/language');
         }
@@ -3266,9 +3308,11 @@ STR;
         if(trim($languageID) != "" && is_numeric($languageID)) {
 			$this->Language->id = $languageID;
 		    $this->Language->set(array('status' => 'inactive'));
+                    $this->Language->setDataSource('master');
 		    if($this->Language->save()) {
 				$this->Session ->setFlash( 'Language deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
 			}
+                    $this->Language->setDataSource('default');    
             $this->autoRender = false;
             $this->redirect('/admin/homes/language');
         }
