@@ -385,6 +385,10 @@ class VideosController extends AppController
             $this->log($log_data, $log_name);
 
             $this->Library->setDataSource('default');
+            
+            //updating session for VideoDown load status
+            $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
+            
             if (is_numeric($return))
             {
                 header("Content-Type: application/force-download");

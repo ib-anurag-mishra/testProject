@@ -2717,14 +2717,14 @@ STR;
 
     
     
-    function getVideodownloadStatus( $libId, $patID, $startDate, $endDate)
+    function getVideodownloadStatus( $libId, $patID, $startDate, $endDate , $update = false)
     { 
         $videodownloadCountArray = array();
 
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videodownloadInstance->recursive = -1;
 
-        if (!$this->Session->check('videodownloadCountArray'))
+        if (!$this->Session->check('videodownloadCountArray') || $update)
         {
             $videodownloadCount = $videodownloadInstance->find(
                     'all', array(
