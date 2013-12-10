@@ -2020,11 +2020,11 @@ STR;
 			$libraryId = $this->Session->read('library');
 			$patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
 			if(count($patronDetails) > 0) {
-			$updateTime = date( "Y-m-d H:i:s", time()-60 );
-			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
-                        $this->Currentpatron->setDataSource('master');
-			$this->Currentpatron->saveField('modified',$updateTime, false);
-                        $this->Currentpatron->setDataSource('default');
+                            $updateTime = date( "Y-m-d H:i:s", time()-60 );
+                            $this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
+                            $this->Currentpatron->setDataSource('master');
+                            $this->Currentpatron->saveField('modified',$updateTime, false);
+                            $this->Currentpatron->setDataSource('default');
 			}
 			$this->Session->destroy();
 			$this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
@@ -2220,8 +2220,15 @@ STR;
 
                 //insert into wishlist table
                 $this->Wishlist->save($insertArr); 
-                $this->Wishlist->setDataSource('default');
-
+                $this->Wishlist->setDataSource('default');               
+                
+                
+                //add the wishlist songs in the session array
+                if($this->Session->read('wishlistVariArray') ){
+                    $wishlistVariArray = $this->Session->read('wishlistVariArray');
+                    $wishlistVariArray[] = $prodId;
+                    $this->Session->write('wishlistVariArray', $wishlistVariArray);
+                }
                 echo "Success";
                 exit;
 
