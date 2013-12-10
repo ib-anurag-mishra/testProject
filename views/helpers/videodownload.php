@@ -14,7 +14,7 @@ class VideodownloadHelper extends AppHelper {
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videodownloadInstance->recursive = -1;
         
-        if(!$this->Session->read('videodownloadCount') ){
+        if(!$this->Session->read('videodownloadCountArray') ){
              $videodownloadCount = $videodownloadInstance->find(
                      'all',
                      array(
@@ -34,9 +34,21 @@ class VideodownloadHelper extends AppHelper {
                 );
             }
             
+            $this->Session->write('videodownloadCountArray', $videodownloadCountArray );
+            
+        }
+        else
+        {
+            
+            $videodownloadCountArray = $this->Session->read('videodownloadCountArray') ;
         }
        
-        return $videodownloadCountArray;
+        if( isset($videodownloadCountArray[$prodId]) &&  $videodownloadCountArray[$prodId]['provider_type'] == $provider_type )
+        {
+            return $videodownloadCountArray[$prodId]['totalProds'];
+        }
+        
+        return 0 ;
     }
 }
 
