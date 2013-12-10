@@ -129,17 +129,15 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                                             }
                                         }
-
-                                       
-                                       echo "<pre>" ;                                      
-                                       print_r($nationalTopDownload[$i]);die;
                                         
                                         if ($this->Session->read('patron'))
                                         {
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
                                                 $productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
-                                              
+                                                echo "<pre>" ;                                      
+                                       print_r($productInfo[0]);die;
+                                       
                                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                                 {
                                                     $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
