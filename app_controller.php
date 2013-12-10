@@ -114,7 +114,7 @@ class AppController extends Controller
                     //first check if session variable not set
                     if(!$this->Session->read('wishlistVariArray') ){
 
-                        $wishlistDetails = $wishlistInstance->find('all', array(
+                        $wishlistDetails = $this->Wishlist->find('all', array(
                         'conditions' => array('library_id' => $this->Session->read('library'),'patron_id' => $this->Session->read('patron')),
                         'fields' => array('ProdID')
                         ));            
