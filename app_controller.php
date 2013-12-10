@@ -147,10 +147,6 @@ class AppController extends Controller
                     
                 }
                 
-                print_r($this->Session->read('downloadVariArray'));
-                print_r($this->Session->read('wishlistVariArray'));
-                
-                
                 
 	}
 	
