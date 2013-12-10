@@ -32,7 +32,8 @@ class WishlistHelper extends AppHelper {
             
         }else{
             $wishlistVariArray = $this->Session->read('wishlistVariArray');            
-        } 
+        }
+        //print_r($wishlistVariArray);
         //comman code for check wishlist add
         if(!empty($wishlistVariArray)){
             if (in_array($id, $wishlistVariArray)) {                                                               
