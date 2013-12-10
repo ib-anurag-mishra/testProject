@@ -1173,6 +1173,7 @@ function login($library = null){
                                 $this->Session->setFlash('Account information has been save successfully!');
                                 $this->redirect($this->webroot.'users/my_account');
                             }
+                            $this->NotificationSubscriptions->setDataSource('default');
                         }                        
                     }
                 }
@@ -1233,6 +1234,7 @@ function login($library = null){
 
                         if($this->NotificationSubscriptions->save()){                                
                             $this->Session->setFlash('Notification information has been updated successfully!');
+                            $this->NotificationSubscriptions->setDataSource('default');
                             $this->redirect($this->webroot.'users/manage_notification');
                         }  
                        
@@ -1250,13 +1252,15 @@ function login($library = null){
                         
                         if($this->NotificationSubscriptions->save()){                                
                             $this->Session->setFlash('Notification information has been saved successfully!');
+                            $this->NotificationSubscriptions->setDataSource('default');
                             $this->redirect($this->webroot.'users/manage_notification');
                         }                       
                    }                    
                     
                }else{
-                   
+                   $this->NotificationSubscriptions->setDataSource('master');
                    $this->NotificationSubscriptions->deleteAll(array('library_id' => $libaryID,'patron_id' => $patronId));
+                   $this->NotificationSubscriptions->setDataSource('default');
                    $this->Session->setFlash('Notification information has been removed successfully!');
                    $this->redirect($this->webroot.'users/manage_notification'); 
                    
@@ -1320,7 +1324,8 @@ function login($library = null){
                        'email_id' => $notificatinEmail                       
                         ));
                         $this->NotificationSubscriptions->setDataSource('master');
-                        $this->NotificationSubscriptions->save();   
+                        $this->NotificationSubscriptions->save(); 
+                        $this->NotificationSubscriptions->setDataSource('default');
                         $this->Session->write('showNotificationPopup','yes');
                 
                    }else{
@@ -1334,9 +1339,11 @@ function login($library = null){
 
                         $this->NotificationSubscriptions->setDataSource('master');
                         $this->NotificationSubscriptions->save();
+                        $this->NotificationSubscriptions->setDataSource('default');
                         $this->Session->write('showNotificationPopup','yes');
                         
                    }
+                   $this->NotificationSubscriptions->setDataSource('default');
                       
                 echo 'success';
                 exit;           
@@ -1368,6 +1375,7 @@ function login($library = null){
                         $this->Currentpatron->save();   
                         $this->Session->write('streamPopupShow','yes');
                 }
+                $this->Currentpatron->setDataSource('default');
                 //echo 'success';
                 //exit;           
             }
