@@ -2718,7 +2718,8 @@ STR;
     
     
     function getVideodownloadStatus( $libId, $patID, $startDate, $endDate)
-    { $videodownloadCountArray = array();
+    { 
+        $videodownloadCountArray = array();
 
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videodownloadInstance->recursive = -1;

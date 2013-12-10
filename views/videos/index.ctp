@@ -42,8 +42,8 @@ if(count($featuredVideos) > 0){ ?>
                                         
                                         $downloadsUsed =  $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'],$featureVideo['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                         
-                                           echo $this->element('sql_dump');
-                                        echo '<pre>'; print_r($downloadsUsed);die;
+                                        
+                                        echo '<pre>'; print_r($this->Session->read('videodownloadCountArray'));die;
                                         
                                         
                                         if($downloadsUsed > 0){
