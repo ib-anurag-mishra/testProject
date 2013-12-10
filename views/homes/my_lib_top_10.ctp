@@ -194,7 +194,17 @@
                                             $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                             $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                             $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
-                                            $downloadsUsed = $this->Download->getDownloadfind($value['Song']['ProdID'], $value['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                                                        
+                                            if($this->Session->read('downloadVariArray'))
+                                            {
+                                                $downloadsUsed = $this->Download->getDownloadResults($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                            } 
+                                            else
+                                            {
+                                                $downloadsUsed = $this->Download->getDownloadfind($value['Song']['ProdID'], $value['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            }
+                                            
+                                            
                                             if ($downloadsUsed > 0)
                                             {
                                                 $value['Song']['status'] = 'avail';
