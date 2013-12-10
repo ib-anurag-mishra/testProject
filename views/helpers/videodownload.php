@@ -6,6 +6,7 @@
  */
 class VideodownloadHelper extends AppHelper {
     var $uses = array('Videodownload');
+    var $helpers = array('Session');	
     
     function getVideodownloadfind($prodId,$provider_type,$libId,$patID,$startDate,$endDate) {
         $videodownloadCountArray = array();
