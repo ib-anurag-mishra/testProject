@@ -341,9 +341,11 @@ STR;
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
+                    if ($this->Session->read('library_type') == 2){
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
                     );
+                    }
                 }
 
                 Cache::write("nationaltop100albums" . $country, $data);
@@ -999,9 +1001,11 @@ STR;
                     $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['album_img'] = $album_img;
+                    if ($this->Session->read('library_type') == 2){
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
                     );
+                    }
                 }
                 Cache::delete("national_us_top10_albums" . $country);
                 Cache::write("national_us_top10_albums" . $country, $data);
@@ -1248,9 +1252,11 @@ STR;
                     $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['albumImage'] = $album_img;
+                    if ($this->Session->read('library_type') == 2){
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
                     );
+                    }
                 }
                 Cache::delete("new_releases_albums" . $country);
                 Cache::write("new_releases_albums" . $country, $data);
@@ -1534,9 +1540,11 @@ STR;
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
                 $featured[$k]['featuredImage'] = $image;
+                if ($this->Session->read('library_type') == 2){
                 $featured[$k]['albumSongs'] = $this->requestAction(
                         array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type'])))
                 );
+                }
             }
             Cache::delete("featured" . $territory);
             Cache::write("featured" . $territory, $featured);
