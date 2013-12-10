@@ -107,6 +107,8 @@ class VideosController extends AppController
         {
             $topDownloads = Cache::read("top_download_videos" . $territory) ;
         }
+        
+        $this->set('topVideoDownloads',  $topDownloads);
     }
 
     /**
