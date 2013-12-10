@@ -170,6 +170,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                                         $downloadsUsed =  $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'],$topDownload['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                        echo $this->element('sql_dump');
                                         echo '<pre>'; print_r($downloadsUsed);die;
                                         if($downloadsUsed > 0){
                                           $topDownload['Video']['status'] = 'avail';
