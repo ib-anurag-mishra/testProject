@@ -13,17 +13,37 @@ class WishlistHelper extends AppHelper {
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');  
-        $wishlistDetails = $wishlistInstance->find('all', array(
-            'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id),
+        
+        //create common structure for add to wishlist functionality
+        //first check if session variable not set
+        if(!$this->Session->read('wishlistVariArray') ){
+            
+            $wishlistDetails = $wishlistInstance->find('all', array(
+            'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),
             'fields' => array('ProdID')
             ));
-             
-        if(count($wishlistDetails) != 0) {
-            return "Added To Wishlist";
-        }
-        else {
+            
+            $wishlistVariArray = array();
+            foreach($wishlistDetails as $key => $wishlistDetails){
+                $wishlistVariArray[] = $downloadResult['Wishlist']['ProdID'];
+            }
+            $wishlistVariArray= @array_unique($downloadVariArray);
+            $this->Session->write('wishlistVariArray', $wishlistVariArray );
+            
+        }else{
+            $wishlistVariArray = $this->Session->read('wishlistVariArray');            
+        } 
+        //comman code for check wishlist add
+        if(!empty($wishlistVariArray)){
+            if (in_array($id, $wishlistVariArray)) {                                                               
+                return "Added To Wishlist";
+            }else{
+                    return "Add To Wishlist";
+            }
+        }else{
             return "Add To Wishlist";
-        }
+        }   
+        
     }
     
     function getWishListMarkup($wishlistInfo,$song_ProdId,$song_Provider_Type){
