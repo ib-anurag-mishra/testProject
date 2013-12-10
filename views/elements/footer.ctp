@@ -167,8 +167,9 @@ if ($this->Session->read("patron"))
 
                 });
 
-//for google anlytics
-                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                //for google anlytics
+
+               /* var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
                 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 
 
@@ -177,7 +178,24 @@ if ($this->Session->read("patron"))
                     pageTracker._trackPageview();
                 }
                 catch (err) {
-                }
+                }*/
+
+             try 
+            {
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-16162084-1']);
+                _gaq.push(['_trackPageview']);
+            }
+            catch (err) 
+            {
+                console.log("google anlytics error: "+err);
+            }
+
+              (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+              })();
 
 
 
