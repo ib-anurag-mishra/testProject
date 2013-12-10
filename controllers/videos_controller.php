@@ -59,18 +59,7 @@ class VideosController extends AppController
         {
             $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`ProdID`,`Video`.`Image_FileID`, 
                                     `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, Video.Advisory, `File`.`CdnPath`, `File`.`SourceURL`, 
-                                    `File`.`SaveAsName`,`Country`.`SalesDate` ";
-                                    
-            
-                                    if(!empty($patId))
-                                    {
-            
-                                    $featuredVideosSql .= ",(SELECT COUNT(*) FROM videodownloads AS Download 
-                                        WHERE ProdID=`FeaturedVideo`.`ProdID` AND provider_type=`Video`.`provider_type` AND patron_id=$patId AND library_id=$libId 
-                                        AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."') AS totalProds";
-                                    }
-        
-                                    $featuredVideosSql .= " FROM featured_videos as FeaturedVideo 
+                                    `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo 
                                     LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID and FeaturedVideo.provider_type = Video.provider_type 
                                     LEFT JOIN File as File on File.FileID = Video.Image_FileID 
                                     LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
@@ -103,16 +92,7 @@ class VideosController extends AppController
         if (Cache::read("top_download_videos" . $territory) === false)               
         {
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory, 
-                File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate`";
-                                    
-            if(!empty($patId))
-            {    
-                $topDownloadSQL .= ", (SELECT COUNT(*) FROM videodownloads AS Download 
-                        WHERE ProdID=`Videodownloads`.`ProdID` AND provider_type=`Video`.`provider_type` AND patron_id=$patId AND library_id=$libId 
-                        AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."') AS totalProds";
-            }
-
-              $topDownloadSQL .=      "FROM videodownloads as Videodownloads 
+                File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads 
                     LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
                     LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) 
                     LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
