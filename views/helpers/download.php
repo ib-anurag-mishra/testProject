@@ -6,6 +6,7 @@
  */
 class DownloadHelper extends AppHelper {
     var $uses = array('Download');
+    var $helpers = array('Session');
     
     function getDownloadDetails($libId,$patId) {
         $downloadInstance = ClassRegistry::init('Download');
