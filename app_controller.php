@@ -134,7 +134,7 @@ class AppController extends Controller
 
                     if(!$this->Session->read('downloadVariArray'))
                     {            
-                            $downloadResults =  $this->Download->find('all',array('joins'=>array(array('table' => 'Songs','alias' => 'Song','type' => 'LEFT','conditions' => array('Download.ProdID = Song.ProdID','Download.provider_type = Song.provider_type')),array('table' => $territoryTableName,'alias' => 'Country','type' => 'INNER','conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')),array('table' => 'Albums','alias' => 'Album','type' => 'LEFT','conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Album.FileID = File.FileID')),array('table' => 'File','alias' => 'Full_Files','type' => 'LEFT','conditions' => array('Song.FullLength_FileID = Full_Files.FileID'))),'group' => 'Download.id','conditions' => array('library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Download.ProdID1','Download.provider_type')));
+                            $downloadResults =  $this->Download->find('all',array('joins'=>array(array('table' => 'Songs','alias' => 'Song','type' => 'LEFT','conditions' => array('Download.ProdID = Song.ProdID','Download.provider_type = Song.provider_type')),array('table' => $territoryTableName,'alias' => 'Country','type' => 'INNER','conditions' => array('Country.ProdID = Song.ProdID','Country.provider_type = Song.provider_type')),array('table' => 'Albums','alias' => 'Album','type' => 'LEFT','conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Album.FileID = File.FileID')),array('table' => 'File','alias' => 'Full_Files','type' => 'LEFT','conditions' => array('Song.FullLength_FileID = Full_Files.FileID'))),'group' => 'Download.id','conditions' => array('library_id' => $this->Session->read("lId"),'patron_id' => $this->Session->read("patron"),'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Download.ProdID','Download.provider_type')));
                             
                             $downloadVariArray = array();
                             foreach($downloadResults as $key => $downloadResult){
@@ -146,10 +146,6 @@ class AppController extends Controller
                    
                     
                 }
-                
-                print_r($this->Session->read('downloadVariArray'));
-                print_r($this->Session->read('wishlistVariArray'));
-                
                 
                 
 	}
