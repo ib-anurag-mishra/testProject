@@ -26,11 +26,17 @@ class VideodownloadHelper extends AppHelper {
                              'created BETWEEN ? AND ?' => array($startDate, $endDate)
                              )
                          ));
-          //   foreach($videodownloadCount)
+            foreach($videodownloadCount as $key => $value )
+            {
+                $videodownloadCountArray[ $value['Videodownload']['ProdID'] ] = array(
+                    'provider_type' => $value['Videodownload']['provider_type'],
+                    'totalProds'    => $value[0]['totalProds']
+                );
+            }
             
         }
        
-        return $videodownloadCount;
+        return $videodownloadCountArray;
     }
 }
 
