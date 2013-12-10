@@ -135,7 +135,10 @@ Class DownloadsComponent extends Object
     
     function getDownloadResults(){
         
-           $downloadInstance = ClassRegistry::init('Download');
+            $downloadInstance = ClassRegistry::init('Download');
+            $countryPrefix = $this->Session->read('multiple_countries');
+            $countryTableName = $countryPrefix .'countries';
+            $downloadResults = Array();
             
            if(!$this->Session->read('downloadVariArray'))
            {            

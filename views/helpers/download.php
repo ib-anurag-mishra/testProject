@@ -35,6 +35,9 @@ class DownloadHelper extends AppHelper {
     function getDownloadResults($prodID, $providerType)
     { 
             $downloadInstance = ClassRegistry::init('Download');
+            $countryPrefix = $this->Session->read('multiple_countries');
+            $countryTableName = $countryPrefix .'countries';
+            $downloadResults = Array();
             
              if($this->Session->read('downloadVariArray'))
              { 
