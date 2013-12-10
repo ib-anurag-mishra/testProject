@@ -384,10 +384,11 @@ class VideosController extends AppController
             //writes in log
             $this->log($log_data, $log_name);
 
-            $this->Library->setDataSource('default');
-            
-            //updating session for VideoDown load status
+             //updating session for VideoDown load status
             $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
+            
+            $this->Library->setDataSource('default');           
+           
             
             if (is_numeric($return))
             {

@@ -26,12 +26,8 @@ class QueueHelper extends AppHelper
                 $queueInstance = ClassRegistry::init('QueueList');
                 $queueInstance->recursive = -1;
                 $queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id, 'status' => 1), 'fields' => array('QueueList.queue_id', 'QueueList.queue_name'), 'order' => 'QueueList.created DESC'));
-                $this->Session->write('queuelist', $queueList);
-            }
-            else
-            {
-                $queueList = $this->Session->read('queuelist');
-            }
+                
+            }           
         }
 
 
