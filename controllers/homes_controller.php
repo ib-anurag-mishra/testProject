@@ -195,7 +195,9 @@ class HomesController extends AppController
         * Code For Coming Soon --- END
         */  
         
-
+        $countryPrefix = $this->Session->read('multiple_countries');
+        $countryTableName = $countryPrefix .'countries';
+        $downloadResults = Array();
         
         $downloadResults    =   $this->Download->getDownloadResults();
        
