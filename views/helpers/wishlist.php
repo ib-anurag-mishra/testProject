@@ -13,6 +13,7 @@ class WishlistHelper extends AppHelper {
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');  
+        $wishlistVariArray = array();
         
         //create common structure for add to wishlist functionality
         //first check if session variable not set
@@ -21,13 +22,12 @@ class WishlistHelper extends AppHelper {
             $wishlistDetails = $wishlistInstance->find('all', array(
             'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),
             'fields' => array('ProdID')
-            ));
+            ));            
             
-            $wishlistVariArray = array();
             foreach($wishlistDetails as $key => $wishlistDetails){
-                $wishlistVariArray[] = $downloadResult['Wishlist']['ProdID'];
+                $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
             }
-            $wishlistVariArray= @array_unique($downloadVariArray);
+            $wishlistVariArray= @array_unique($wishlistVariArray);
             $this->Session->write('wishlistVariArray', $wishlistVariArray );
             
         }else{
