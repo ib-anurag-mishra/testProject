@@ -34,7 +34,7 @@ class VideodownloadHelper extends AppHelper {
             }
         }
        
-        return $videodownloadCountArray;
+        return $videodownloadCount;
     }
 }
 
