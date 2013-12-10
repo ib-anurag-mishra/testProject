@@ -19,7 +19,7 @@ class VideodownloadHelper extends AppHelper {
                      'all',
                      array(
                          'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
-                         'conditions' => array('ProdID' => $prodId,
+                         'conditions' => array(
                              'provider_type' => $provider_type,
                              'library_id' => $libId,
                              'patron_id' => $patID,
@@ -28,10 +28,7 @@ class VideodownloadHelper extends AppHelper {
                              )
                          ));
              
-             
-              foreach($videodownloadCount as $key => $videoDetails){
-                $videodownloadCountArray[] = $videoDetails[0][0];
-            }
+            
         }
        
         return $videodownloadCount;
