@@ -20,30 +20,31 @@ class WishlistHelper extends AppHelper {
         if(!$this->Session->read('wishlistVariArray') ){
             
             $wishlistDetails = $wishlistInstance->find('all', array(
-            'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),
+            'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id),
             'fields' => array('ProdID')
-            ));            
+            ));
             
-            foreach($wishlistDetails as $key => $wishlistDetails){
-                $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
+            if(count($wishlistDetails) != 0) {
+                return "Added to Wishlist";
             }
+            else {
+                return "Add to wishlist";
+            }
+        }else{
+            $wishlistVariArray = $this->Session->read('wishlistVariArray');  
             $wishlistVariArray= @array_unique($wishlistVariArray);
-            $this->Session->write('wishlistVariArray', $wishlistVariArray );
-            
-        }else{
-            $wishlistVariArray = $this->Session->read('wishlistVariArray');            
-        }
-        //print_r($wishlistVariArray);
-        //comman code for check wishlist add
-        if(!empty($wishlistVariArray)){
-            if (in_array($id, $wishlistVariArray)) {                                                               
-                return "Added To Wishlist";
+            //print_r($wishlistVariArray);
+            //comman code for check wishlist add
+            if(!empty($wishlistVariArray)){
+                if (in_array($id, $wishlistVariArray)) {                                                               
+                    return "Added To Wishlist";
+                }else{
+                        return "Add To Wishlist";
+                }
             }else{
-                    return "Add To Wishlist";
-            }
-        }else{
-            return "Add To Wishlist";
-        }   
+                return "Add To Wishlist";
+            } 
+        } 
         
     }
     
