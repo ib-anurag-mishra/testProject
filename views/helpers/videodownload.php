@@ -1,55 +1,41 @@
 <?php
+
 /*
-	 File Name : videodownload.php
-	 File Description : helper file for getting download details
-	 Author : m68interactive
+  File Name : videodownload.php
+  File Description : helper file for getting download details
+  Author : m68interactive
  */
-class VideodownloadHelper extends AppHelper {
+
+class VideodownloadHelper extends AppHelper
+{
+
     var $uses = array('Videodownload');
-    var $helpers = array('Session');	
-    
-    function getVideodownloadfind($prodId,$provider_type,$libId,$patID,$startDate,$endDate) {
+    var $helpers = array('Session');
+
+    function getVideodownloadfind($prodId, $provider_type, $libId, $patID, $startDate, $endDate)
+    {
         $videodownloadCountArray = array();
-        
+
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videodownloadInstance->recursive = -1;
-        
-        if(!$this->Session->read('videodownloadCountArray') ){
-             $videodownloadCount = $videodownloadInstance->find(
-                     'all',
-                     array(
-                         'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
-                         'conditions' => array(
-                             'library_id' => $libId,
-                             'patron_id' => $patID,
-                             'history < 2',
-                             'created BETWEEN ? AND ?' => array($startDate, $endDate)
-                             )
-                         ));
-            foreach($videodownloadCount as $key => $value )
+
+        if (!$this->Session->check('videodownloadCountArray'))
+        {
+            $videodownloadCountArray = $this->Session->read('videodownloadCountArray');
+            if (isset($videodownloadCountArray[$prodId]) && $videodownloadCountArray[$prodId]['provider_type'] == $provider_type)
             {
-                $videodownloadCountArray[ $value['Videodownload']['ProdID'] ] = array(
-                    'provider_type' => $value['Videodownload']['provider_type'],
-                    'totalProds'    => $value[0]['totalProds']
-                );
+                return $videodownloadCountArray[$prodId]['totalProds'];
             }
-            
-            $this->Session->write('videodownloadCountArray', $videodownloadCountArray );
-            
+
+            return 0;
         }
         else
         {
-            
-            $videodownloadCountArray = $this->Session->read('videodownloadCountArray') ;
+            return 0;
         }
-       
-        if( isset($videodownloadCountArray[$prodId]) &&  $videodownloadCountArray[$prodId]['provider_type'] == $provider_type )
-        {
-            return $videodownloadCountArray[$prodId]['totalProds'];
-        }
-        
-        return 0 ;
+      
     }
+
 }
 
 ?>

@@ -2715,6 +2715,37 @@ STR;
         return $albumInstance->query($album_songs);
     }
 
+    
+    
+    function getVideodownloadStatus( $libId, $patID, $startDate, $endDate)
+    { $videodownloadCountArray = array();
+
+        $videodownloadInstance = ClassRegistry::init('Videodownload');
+        $videodownloadInstance->recursive = -1;
+
+        if (!$this->Session->check('videodownloadCountArray'))
+        {
+            $videodownloadCount = $videodownloadInstance->find(
+                    'all', array(
+                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+                'conditions' => array(
+                    'library_id' => $libId,
+                    'patron_id' => $patID,
+                    'history < 2',
+                    'created BETWEEN ? AND ?' => array($startDate, $endDate)
+                ),
+                'group' => 'ProdID',
+            ));
+            foreach ($videodownloadCount as $key => $value)
+            {
+                $videodownloadCountArray[$value['Videodownload']['ProdID']] = array(
+                    'provider_type' => $value['Videodownload']['provider_type'],
+                    'totalProds' => $value[0]['totalProds']
+                );
+            }
+             $this->Session->write('videodownloadCountArray', $videodownloadCountArray);
+        }
+    }
 }
 
 ?>

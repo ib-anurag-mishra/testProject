@@ -109,6 +109,8 @@ class VideosController extends AppController
         }
         
         $this->set('topVideoDownloads',  $topDownloads);
+        
+        $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
     }
 
     /**
