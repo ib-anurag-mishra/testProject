@@ -130,14 +130,15 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             }
                                         }
 
-                                        echo "<pre>";
-                                        print_r($nationalTopDownload);
+                                       
+                                       
                                         
                                         if ($this->Session->read('patron'))
                                         {
                                             if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
                                                 $productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                                 echo "<pre>";
                                                 print_r($productInfo);
                                                 die;
                                                 
