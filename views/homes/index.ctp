@@ -132,16 +132,13 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         
                                         if ($this->Session->read('patron'))
                                         {
-                                            //if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
-                                                if(1)
+                                            if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {
-                                                $productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
-                                                echo "<pre>" ;                                      
-                                       print_r($productInfo[0]);die;
-                                       
+                                                //$productInfo = $song->getDownloadData($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                             
                                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                                 {
-                                                    $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                                    $songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Full_Files']['CdnPath'] . "/" . $nationalTopDownload[$i]['Full_Files']['SaveAsName']);
                                                     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                                     $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));                                                    
                                                     
