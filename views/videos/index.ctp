@@ -41,10 +41,7 @@ if(count($featuredVideos) > 0){ ?>
                                         
                                         
                                         $downloadsUsed =  $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'],$featureVideo['Video']['provider_type'],$libId,$patId,Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                        
-                                        
-                                        echo '<pre>'; print_r($this->Session->read('videodownloadCountArray'));die;
-                                        
+                                       
                                         
                                         if($downloadsUsed > 0){
                                           $featureVideo['Video']['status'] = 'avail';
