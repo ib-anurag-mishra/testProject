@@ -20,14 +20,13 @@ class VideodownloadHelper extends AppHelper {
                      array(
                          'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
                          'conditions' => array(
-                             'provider_type' => $provider_type,
                              'library_id' => $libId,
                              'patron_id' => $patID,
                              'history < 2',
                              'created BETWEEN ? AND ?' => array($startDate, $endDate)
                              )
                          ));
-             
+          //   foreach($videodownloadCount)
             
         }
        
