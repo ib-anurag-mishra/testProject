@@ -163,6 +163,7 @@ class AppController extends Controller
                 $wishlistVariArray = @array_unique($wishlistVariArray);
                 $this->Session->write('wishlistVideoArray', $wishlistVariArray);
             }
+            
            // print_r($this->Session->read('wishlistVideoArray'));
             
             
