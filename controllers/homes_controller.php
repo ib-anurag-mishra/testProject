@@ -2492,7 +2492,7 @@ STR;
         Configure::write('debug', 0);
         $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
-           $deleteSongId = $_REQUEST['delete'];
+           $deleteSongId = trim($_REQUEST['delete']);
            $this->Wishlist->setDataSource('master');
            if($this->Wishlist->delete($deleteSongId)) { 
                $this->Wishlist->setDataSource('default');               
@@ -2501,7 +2501,8 @@ STR;
                    print_r($wishlistVariArray);
                    if(!empty($wishlistVariArray)){
                        foreach($wishlistVariArray as $key=>$value){
-                           if($value===$deleteSongId){
+                           if($value==$deleteSongId){
+                               echo $wishlistVariArray[$key];
                                unset($wishlistVariArray[$key]);
                                break;
                            }                           
