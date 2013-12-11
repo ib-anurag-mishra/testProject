@@ -137,7 +137,7 @@ class AppController extends Controller
                         'fields' => array('ProdID')
                         ));            
                         
-                        print_r($this->Session->read('wishlistVariArray') );
+                        print_r($wishlistDetails );
 
 //                        foreach($wishlistDetails as $key => $wishlistDetails){
 //                            $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
