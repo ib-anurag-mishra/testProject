@@ -25,7 +25,7 @@ class VideosController extends AppController
 
     function index()
     {
-       Configure::write('debug', 2);
+       Configure::write('debug', 0);
        
         $this->layout = 'home';
 
@@ -55,8 +55,7 @@ class VideosController extends AppController
         }
 
         // Cache::delete("featured_videos".$territory);
-        //if (($featuredVideos = Cache::read("featured_videos" . $territory)) === false)
-                if(1)
+        if (($featuredVideos = Cache::read("featured_videos" . $territory)) === false)
         {
             $featuredVideosSql = "SELECT 
                                     `FeaturedVideo`.`id`,
@@ -102,8 +101,7 @@ class VideosController extends AppController
         
         
        //Cache::delete("top_download_videos".$territory);
-        //if ( ($topDownloads = Cache::read("top_download_videos" . $territory)) === false)
-                if(1)
+        if ( ($topDownloads = Cache::read("top_download_videos" . $territory)) === false)       
         {
             $topDownloadSQL = "SELECT 
                                     Videodownloads.ProdID, 
