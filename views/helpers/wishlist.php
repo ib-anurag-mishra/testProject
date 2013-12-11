@@ -25,6 +25,7 @@ class WishlistHelper extends AppHelper {
             'fields' => array('ProdID')
             ));
             
+            
             if(count($wishlistDetails) != 0) {
                 return "Added to Wishlist";
             }
