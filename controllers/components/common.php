@@ -2724,7 +2724,8 @@ STR;
         $videodownloadInstance = ClassRegistry::init('Videodownload');
         $videodownloadInstance->recursive = -1;
 
-        if (!$this->Session->check('videodownloadCountArray') || $update)
+        //if (!$this->Session->check('videodownloadCountArray') || $update)
+            if(1)
         {
             $videodownloadCount = $videodownloadInstance->find(
                     'all', array(
