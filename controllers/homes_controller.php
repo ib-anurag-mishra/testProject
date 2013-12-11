@@ -3570,7 +3570,7 @@ STR;
         
         function new_releases() 
         {
-             Configure::write('debug', 0);
+             Configure::write('debug', 2);
              
             $this->layout = 'home';
             
