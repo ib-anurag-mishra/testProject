@@ -758,7 +758,7 @@ function addToWishlistVideo(prodId, providerType)
                 $('.beforeClick').show();
                 $('.afterClick').hide();
                 
-                alert(languageSet);
+               // alert(languageSet);
                 if (languageSet === 'en') 
                 {
                     document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
