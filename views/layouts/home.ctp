@@ -793,5 +793,5 @@
                                                 <br class="clr">
                                             </div>
                                             <?php echo $this->element('footer');   ?>
-                                            <?php $this->element('sql_dump'); ?>
+                                            
                                         </div>
