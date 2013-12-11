@@ -85,7 +85,7 @@ if(count($featuredVideos) > 0){ ?>
                                     <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                     ?>
                                     </div>
                                 <?php
@@ -220,7 +220,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                                 <?php
                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
                                     echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$topDownload["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                    //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                 
                                 <?php
                                 } 

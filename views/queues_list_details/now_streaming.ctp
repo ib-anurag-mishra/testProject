@@ -153,7 +153,7 @@
                                                         <span class="beforeClick" id="song_<?php echo $value["Songs"]["ProdID"]; ?>">
                                                         <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
-                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 						</div>
 					</div>
 					<?php 
@@ -269,7 +269,7 @@
                                                         <a  href="JavaScript:void(0);" onclick="JavaScript:removeSong(<?php echo $value["QueueDetail"]["id"];?>)"><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
                                                         </form>
-                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 						</div>
 					</div>
 					<?php 

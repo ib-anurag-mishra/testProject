@@ -225,7 +225,7 @@
                                         <?php
                                     }
                                     ?>
-                                    <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                    <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                 </span>
                             </div>
 

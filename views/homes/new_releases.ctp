@@ -454,7 +454,7 @@
                                 <?php
                                 $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
                                 echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value['Video']["ProdID"], $value['Video']["provider_type"]);
-                                echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                 ?>  
                             </div>
                         <?php } ?>

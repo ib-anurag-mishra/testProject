@@ -53,7 +53,7 @@
                                             //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
                                             ?>
                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                         </div>
                                         <?php
                                     }
@@ -277,7 +277,7 @@
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
-                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
                                     </div>
                                 <?php } ?>
@@ -454,7 +454,7 @@
                                         <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
                                     </div>
                                 <?php } ?>
