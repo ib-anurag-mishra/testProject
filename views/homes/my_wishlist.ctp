@@ -169,7 +169,7 @@ $ieVersion =  ieversion();
                                         <?php 
 						if (strlen($wishlistResults[$i]['wishlists']['track_title']) >= 15) {
                                                     
-							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['track_title'])).'">' .substr($this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']), 0, 15) . '...</a>';
+							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['track_title'])).'">' .$this->getTextEncode(substr($wishlistResults[$i]['wishlists']['track_title'], 0, 15)) . '...</a>';
 						} else {
 							echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
 					 	}
@@ -178,7 +178,7 @@ $ieVersion =  ieversion();
 					<div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['album'])); ?>" href="/artists/view/<?=base64_encode($wishlistResults[$i]['Song']['ArtistText']);?>/<?= $wishlistResults[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($wishlistResults[$i]['Song']['provider_type']);?>">
                                          <?php
 						if (strlen($wishlistResults[$i]['wishlists']['album']) >= 15) {
-							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['album'])).'">' .substr($this->getTextEncode($wishlistResults[$i]['wishlists']['album']), 0, 15) . '...</a>';
+							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['album'])).'">' .$this->getTextEncode(substr($wishlistResults[$i]['wishlists']['album'], 0, 15)) . '...</a>';
 						} else {
 							echo $this->getTextEncode($wishlistResults[$i]['wishlists']['album']);
 						}
@@ -188,7 +188,7 @@ $ieVersion =  ieversion();
 					<div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['artist'])); ?>" href="/artists/album/<?= base64_encode($wishlistResults[$i]['Song']['ArtistText']); ?>">
                                          <?php
 						if (strlen($wishlistResults[$i]['wishlists']['artist']) >= 15) {
-							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['artist'])).'">' .substr($this->getTextEncode($wishlistResults[$i]['wishlists']['artist']), 0, 15) . '...</a>';
+							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['artist'])).'">' .$this->getTextEncode(substr($wishlistResults[$i]['wishlists']['artist'], 0, 15)) . '...</a>';
 						} else {
 							$ArtistName = $wishlistResults[$i]['wishlists']['artist'];
 							echo $this->getTextEncode($ArtistName);
@@ -283,7 +283,7 @@ $ieVersion =  ieversion();
 					<div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="javascript:void(0)">
                     <?php 
 						if (strlen($wishlistResultsVideo['WishlistVideo']['track_title']) >= 15) {
-							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .substr($this->getTextEncode($wishlistResultsVideo['Download']['track_title']), 0, 15) . '...</a>';
+							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .$this->getTextEncode(substr($wishlistResultsVideo['WishlistVideo']['track_title'], 0, 15)) . '...</a>';
 						} else {
 							echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); 
 					 	}
@@ -294,7 +294,7 @@ $ieVersion =  ieversion();
 					<div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['WishlistVideo']['artist'])) ;?>" href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 15) {
-							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .substr($this->getTextEncode($wishlistResultsVideo['WishlistVideo']['artist']), 0, 15) . '...</a>';							
+							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .$this->getTextEncode(substr($wishlistResultsVideo['WishlistVideo']['artist'], 0, 15)) . '...</a>';							
 						} else {
 							$ArtistName = $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['artist']);
 							echo $ArtistName;
