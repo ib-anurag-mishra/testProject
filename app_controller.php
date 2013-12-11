@@ -3,7 +3,7 @@ class AppController extends Controller
 {
 	var $components = array( 'Session', 'RequestHandler','Cookie', 'Acl','Common');
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download','Queue', 'Streaming');
-	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country', 'Wishlist', 'Download');
+	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country', 'Wishlist', 'WishlistVideo', 'Download');
         var $view = 'Dataencode';
 	
 	function beforeFilter()
