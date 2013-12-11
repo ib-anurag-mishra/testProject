@@ -2504,7 +2504,7 @@ STR;
                    if(!empty($wishlistVariArray)){
                        foreach($wishlistVariArray as $key=>$value){                           
                            if($value !=$temp[1]){
-                               $wishlistarryTemp = $wishlistVariArray[$key];                               
+                               $wishlistarryTemp[] = $wishlistVariArray[$key];                               
                            }                           
                        }
                        $this->Session->write('wishlistVariArray', $wishlistarryTemp );
