@@ -260,14 +260,6 @@
                         // ^ we use the full url here as that is what reinvigorate supports
                     }
 
-                    var delay = 2; // 5 second delay
-                    var now = new Date();
-                    var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
-
-                    while (now < desiredTime) {
-                        now = new Date(); // update the current time
-                    }
-
                     //$body.removeClass('loader');
                     $.getScript(webroot + 'css/styles.css');
                     $.getScript(webroot + 'css/freegal_styles.css');
@@ -275,7 +267,7 @@
                     $.getScript(webroot + 'js/freegal.js');
                     $.getScript(webroot + 'js/site.js');
 
-                    $.getScript(webroot + 'js/audioPlayer.js');
+                    //$.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(webroot + 'js/recent-downloads.js');
                     $.getScript(webroot + 'js/search-results.js');
 
