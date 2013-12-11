@@ -171,6 +171,8 @@ foreach($topVideoDownloads as $key => $topDownload)
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
+                                        echo "<pre>"; print_r($topDownload);die;
+                                        
                                         $productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
                                         $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
