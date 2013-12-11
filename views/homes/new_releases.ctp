@@ -14,7 +14,7 @@
         <div class="album-scrollable horiz-scroll">
             <ul style="width:27000px;">
                 <?php
-                $this->log("New Release -- Album START", "siteSpeed");
+                //$this->log("New Release -- Album START", "siteSpeed");
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
                 $count = 1;
@@ -112,7 +112,7 @@
                     <?php
                     $count++;
                 }
-                $this->log("New Release -- Album STOP", "siteSpeed");
+                //$this->log("New Release -- Album STOP", "siteSpeed");
                 ?>
             </ul>
         </div>
@@ -328,7 +328,7 @@
     <div class="videos-scrollable horiz-scroll">
         <ul style="width:44100px;">
             <?php
-            $this->log("New Release -- Video START", "siteSpeed");
+            //$this->log("New Release -- Video START", "siteSpeed");
             $count = 1;
 
             //for($d=1;$d<$count;$d++) {
@@ -369,13 +369,11 @@
 
                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                 {
-                                    $this->log("New Release -- BEFORE", "siteSpeed");
                                     $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                     $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
                                     $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                     $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
                                     $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-                                    $this->log("New Release -- AFTER", "siteSpeed");
                                     if ($downloadsUsed > 0)
                                     {
                                         $value['Video']['status'] = 'avail';
@@ -489,7 +487,7 @@
                 <?php
                 $count++;
             }
-            $this->log("New Release -- Video STOP", "siteSpeed");
+            //$this->log("New Release -- Video STOP", "siteSpeed");
             ?>
 
 
