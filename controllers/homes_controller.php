@@ -365,7 +365,7 @@ class HomesController extends AppController
         
 	function my_lib_top_10()
 	{ 
-            Configure::write('debug', 0);
+            Configure::write('debug', 2);
             $this->layout = 'home';           
             $patId = $this->Session->read('patron');
             $country = $this->Session->read('territory');

@@ -1,3 +1,5 @@
+<?php echo $this->element('sql_dump');?>
+
 <section class="videos">
 
 
@@ -33,9 +35,11 @@ if(count($featuredVideos) > 0){ ?>
                                 <?php
                                 if($this->Session->read('patron')) {
 
-                                    if($libraryDownload == '1' && $patronDownload == '1') {
-                                        $productInfo = $mvideo->getDownloadData($featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-                                        $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+                                    if($libraryDownload == '1' && $patronDownload == '1') 
+                                        {
+                                                                             
+                                        //$productInfo = $mvideo->getDownloadData($featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                        $videoUrl = shell_exec('perl files/tokengen '  . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SaveAsName']);                                                
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                                         
@@ -169,7 +173,12 @@ foreach($topVideoDownloads as $key => $topDownload)
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
+                                        
+                                        echo "<pre>"; print_r($topDownload);
                                         $productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
+                                        
+                                        echo "<pre>"; print_r($productInfo);die;
+                                        
                                         $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
@@ -270,4 +279,3 @@ foreach($topVideoDownloads as $key => $topDownload)
 
 </section> <!-- end .videos -->
 
-<?php echo $this->element('sql_dump'); ?>
