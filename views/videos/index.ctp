@@ -273,3 +273,5 @@ foreach($topVideoDownloads as $key => $topDownload)
 
 
 </section> <!-- end .videos -->
+
+<?php $this->element('sql')?>
