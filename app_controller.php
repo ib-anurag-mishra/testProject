@@ -126,7 +126,7 @@ class AppController extends Controller
                         $this->Session->write('wishlistVariArray', $wishlistVariArray );
 
                     }
-                    //print_r($this->Session->read('wishlistVariArray') );
+                    print_r($this->Session->read('wishlistVariArray') );
                     
                     
                     
