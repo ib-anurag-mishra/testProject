@@ -2501,6 +2501,7 @@ STR;
                    print_r($wishlistVariArray);
                    if(!empty($wishlistVariArray)){
                        foreach($wishlistVariArray as $key=>$value){
+                           echo $value;
                            if($value==$deleteSongId){
                                echo $wishlistVariArray[$key];
                                unset($wishlistVariArray[$key]);
