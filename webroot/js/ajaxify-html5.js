@@ -154,7 +154,7 @@
                 url: url,
                 success: function(data, textStatus, jqXHR) {
 
-                    $('.loader').fadeOut(100);
+                    $('.loader').fadeOut(50);
                     $('.content').remove('.loader');
 
 
