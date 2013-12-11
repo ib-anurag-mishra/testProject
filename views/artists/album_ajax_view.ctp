@@ -21,7 +21,7 @@
                                                             ?>
                                                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
                                                           
-                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                                     </div>
                             <?php
                                     }
@@ -219,7 +219,7 @@
 
                                                                             echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
                                                                          ?>
-                                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
+                                                                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
                                                                        </div> 
                                                                        <?php }else{
                                                                          ?>
