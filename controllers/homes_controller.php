@@ -3570,6 +3570,8 @@ STR;
         
         function new_releases() 
         {
+             Configure::write('debug', 0);
+             
             $this->layout = 'home';
             
             //fetch the session variables
