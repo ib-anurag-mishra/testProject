@@ -375,10 +375,11 @@ STR;
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for featured videos
         $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, 
-            `Video`.`provider_type`,`Video`.`Advisory`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` 
+            `Video`.`provider_type`,`Video`.`Advisory`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`, Video_file.SaveAsName,`Country`.`SalesDate` 
             FROM featured_videos as FeaturedVideo 
             LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID  and FeaturedVideo.provider_type = Video.provider_type 
             LEFT JOIN File as File on File.FileID = Video.Image_FileID 
+            LEFT JOIN File as Video_file on (Video_file.FileID = Video.FullLength_FileID)
             LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
                 WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
 
@@ -421,10 +422,11 @@ STR;
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for top video downloads
         $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, Video.Advisory,File.CdnPath, 
-            File.SourceURL, File.SaveAsName , COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` 
+            File.SourceURL, File.SaveAsName ,  Video_file.SaveAsName, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` 
             FROM videodownloads as Videodownloads 
             LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
             LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) 
+            LEFT JOIN File as Video_file on (Video_file.FileID = Video.FullLength_FileID)
             LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
                 WHERE `Country`.`SalesDate` <= NOW() AND Video.DownloadStatus = '1' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
 
