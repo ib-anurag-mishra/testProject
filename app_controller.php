@@ -64,7 +64,7 @@ class AppController extends Controller
                 $this->Session->write("territory", $country);
                 $this->Session->write("lId", 1);
                 $this->Session->write("library", 1);
-                $this->Session->write("library_type", $libraryData['Library']['test_library_type']);
+                //$this->Session->write("library_type", $libraryData['Library']['test_library_type']);
                 $this->Session->write("block", (($libraryData['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }elseif($this->Session->read("patron") != "" && $this->Session->read("library") !=""){
                 $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => $this->Session->read("library")), 'fields' => array('test_library_type','library_type'), 'recursive' => -1));
