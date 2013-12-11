@@ -112,7 +112,7 @@
                     <?php
                     $count++;
                 }
-                $this->log("New Release -- Album START", "siteSpeed");
+                $this->log("New Release -- Album STOP", "siteSpeed");
                 ?>
             </ul>
         </div>
@@ -328,7 +328,7 @@
     <div class="videos-scrollable horiz-scroll">
         <ul style="width:44100px;">
             <?php
-            $this->log("New Release -- Album START", "siteSpeed");
+            $this->log("New Release -- Video START", "siteSpeed");
             $count = 1;
 
             //for($d=1;$d<$count;$d++) {
@@ -487,7 +487,7 @@
                 <?php
                 $count++;
             }
-            $this->log("New Release -- Album START", "siteSpeed");
+            $this->log("New Release -- Video STOP", "siteSpeed");
             ?>
 
 
