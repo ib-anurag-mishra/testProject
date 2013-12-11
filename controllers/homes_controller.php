@@ -3598,7 +3598,9 @@ STR;
                 $coming_soon_videos = Cache::read("new_releases_videos".$territory);
             }
 
-            $this->set('new_releases_videos', $coming_soon_videos);           
+            $this->set('new_releases_videos', $coming_soon_videos);    
+            
+            print_r($coming_soon_videos);
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
                
@@ -3613,6 +3615,7 @@ STR;
             }
 
             $this->set('new_releases_albums', $new_releases_albums_rs); 
+            print_r($new_releases_albums_rs);
        }
        
        
