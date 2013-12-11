@@ -353,3 +353,4 @@ $ieVersion =  ieversion();
 		</div>
 
 	</section>
+<?php $this->element('sql_dump'); ?>

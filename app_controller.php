@@ -136,12 +136,14 @@ class AppController extends Controller
                         'conditions' => array('library_id' => $this->Session->read('library'),'patron_id' => $this->Session->read('patron')),
                         'fields' => array('ProdID')
                         ));            
+                        
+                        print_r($this->Session->read('wishlistVariArray') );
 
-                        foreach($wishlistDetails as $key => $wishlistDetails){
-                            $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
-                        }
-                        $wishlistVariArray= @array_unique($wishlistVariArray);
-                        $this->Session->write('wishlistVariArray', $wishlistVariArray );
+//                        foreach($wishlistDetails as $key => $wishlistDetails){
+//                            $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
+//                        }
+//                        $wishlistVariArray= @array_unique($wishlistVariArray);
+//                        $this->Session->write('wishlistVariArray', $wishlistVariArray );
 
                     }
                     print_r($this->Session->read('wishlistVariArray') );
