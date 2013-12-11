@@ -36,25 +36,27 @@
 
         echo $javascript->link(
                 array(
-                    'jquery-1.10.2.min',
-                    'modernizr.custom',
-                    /* 'lazyload', */
-//                    'lazyload.1.9.1',                    
-                    'jquery.colorbox',
-                    'jquery.cycle.all',
-                    'jquery.autocomplete',
-                    'jquery.history',
-                    'ajaxify-html5',
-                    'site',
-                    'audioPlayer',
-                    'freegal',
-                    'recent-downloads',
-                    'search-results',
-                    /* 'qtip', */
-                    'qtip.2.1.1.min',
-                    'qtip_add'
+//                    'jquery-1.10.2.min',
+//                    'modernizr.custom',
+//                    /* 'lazyload', */
+//                    'lazyload.1.9.1',
+//                    'jquery.colorbox',
+//                    'jquery.cycle.all',
+//                    'jquery.autocomplete',
+//                    'jquery.history',
+//                    'ajaxify-html5',
+//                    'site',
+//                    'audioPlayer',
+//                    'freegal',
+//                    'recent-downloads',
+//                    'search-results',
+//                    /* 'qtip', */
+//                    'qtip.2.1.1.min',
+//                    'qtip_add'
                 )
         );
+        
+        
         ?>
 
         <?php
