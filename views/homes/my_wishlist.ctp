@@ -169,7 +169,7 @@ $ieVersion =  ieversion();
                                         <?php 
 						if (strlen($wishlistResults[$i]['wishlists']['track_title']) >= 15) {
                                                     
-							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['track_title'])).'">' .$this->getTextEncode(substr($wishlistResults[$i]['wishlists']['track_title'], 0, 15)) . '...</a>';
+							echo '<a title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['track_title'])).'">' .substr($wishlistResults[$i]['wishlists']['track_title'], 0, 15) . '...</a>';
 						} else {
 							echo $this->getTextEncode($wishlistResults[$i]['wishlists']['track_title']);
 					 	}
