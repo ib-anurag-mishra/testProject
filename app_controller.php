@@ -10,7 +10,7 @@ class AppController extends Controller
 
     function beforeFilter()
     {
-        $this->log("App Controller -- START", "siteSpeed");
+        //$this->log("App Controller -- START", "siteSpeed");
         ini_set('session.cookie_domain', env('HTTP_BASE'));
         Configure::write('Session.checkAgent', false);
         Configure::write('Session.ini', array('session.cookie_secure' => false, 'session.referer_check' => false));
@@ -185,7 +185,7 @@ class AppController extends Controller
             }
         }
 
-        $this->log("App Controller -- END", "siteSpeed");
+       // $this->log("App Controller -- END", "siteSpeed");
     }
 
     function checkOnlinePatron()
