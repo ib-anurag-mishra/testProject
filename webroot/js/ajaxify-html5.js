@@ -268,10 +268,10 @@
                     $.getScript(webroot + 'js/site.js');
 
                     //$.getScript(webroot + 'js/audioPlayer.js');
-                    $.getScript(webroot + 'js/recent-downloads.js');
-                    $.getScript(webroot + 'js/search-results.js');
+                    //$.getScript(webroot + 'js/recent-downloads.js');
+                    //$.getScript(webroot + 'js/search-results.js');
 
-                    $('.loader').fadeOut(500);
+                    $('.loader').fadeOut(100);
                     $('.content').remove('.loader');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
