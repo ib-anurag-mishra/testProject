@@ -119,7 +119,7 @@ class HomesController extends AppController
         if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
         {
 
-            $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
+           // $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
         }
         else
         {
