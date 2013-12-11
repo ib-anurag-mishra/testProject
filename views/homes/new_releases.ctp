@@ -21,6 +21,7 @@
                 $arr_all_albums =   array();
                 foreach ($new_releases_albums as $key => $value)
                 {
+                    print_r($value);die;
                     if($count==101) break;
                     if(in_array($value['Albums']['AlbumTitle'], $arr_all_albums))
                     {
