@@ -860,3 +860,5 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         </div>
 
 </section> <!-- end .news -->	
+
+<?php echo $this->element('sql_dump'); ?>

@@ -75,7 +75,8 @@ class HomesController extends AppController
     function index()
     {
 
-
+        Configure::write('debug', 2);
+        
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443)
         {
@@ -221,7 +222,7 @@ class HomesController extends AppController
     //this is just for streaming component test
     function checkStreamingComponent()
     {
-        Configure::write('debug', 0);
+//        Configure::write('debug', 0);
 
 //         $query='select * from streaming_histories where id="3007"';
 //         $obj = mysql_query($query);
