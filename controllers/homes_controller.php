@@ -2496,21 +2496,19 @@ STR;
            $deleteSongId = $temp[0];
            $this->Wishlist->setDataSource('master');
            if($this->Wishlist->delete($deleteSongId)) { 
-               $this->Wishlist->setDataSource('default');               
+               $this->Wishlist->setDataSource('default');
+               $wishlistarryTemp = array();
                if($this->Session->read('wishlistVariArray') ){
                    $wishlistVariArray = $this->Session->read('wishlistVariArray');
                    print_r($wishlistVariArray);
                    if(!empty($wishlistVariArray)){
-                       foreach($wishlistVariArray as $key=>$value){
-                           echo $value;
-                           if($value==$temp[1]){
-                               echo $wishlistVariArray[$key];
-                               unset($wishlistVariArray[$key]);
-                               break;
+                       foreach($wishlistVariArray as $key=>$value){                           
+                           if($value !=$temp[1]){
+                               $wishlistarryTemp = $wishlistVariArray[$key];                               
                            }                           
                        }
-                       $this->Session->write('wishlistVariArray', $wishlistVariArray );
-                       print_r($wishlistVariArray);
+                       $this->Session->write('wishlistVariArray', $wishlistarryTemp );
+                       print_r($this->Session->read('wishlistVariArray'));
                    }
                }   
                echo  1;                
