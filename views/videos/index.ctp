@@ -174,10 +174,10 @@ foreach($topVideoDownloads as $key => $topDownload)
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
                                       
-                                        $productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
+                                        //$productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
                                     
                                         
-                                        $videoUrl = shell_exec('perl files/tokengen '  . $topDownload["File"]['CdnPath']."/".$productInfo['Video_file']['SaveAsName']);                                                
+                                        $videoUrl = shell_exec('perl files/tokengen '  . $topDownload["File"]['CdnPath']."/".$topDownload['Video_file']['SaveAsName']);                                                
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                                        
