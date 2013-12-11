@@ -324,6 +324,5 @@ if ($this->Session->read("patron"))
 <?php //} 
   ?>
 
-<?php mysql_close();  ?>
 <!-- Code for player end -->
 
