@@ -25,6 +25,8 @@ class VideosController extends AppController
 
     function index()
     {
+       Configure::write('debug', 2);
+       
         $this->layout = 'home';
 
         $libId = $this->Session->read('library');
