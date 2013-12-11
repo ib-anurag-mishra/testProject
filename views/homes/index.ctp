@@ -228,13 +228,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         <?php
                                         if ($this->Session->read("patron"))
                                         {
-                                            if ($this->Session->read('library_type') == 2 && $nationalTopDownload[$i]['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopDownload[$i]['Country']['StreamingStatus'] == 1)
-                                            {
+                                            
                                                 ?> 
                                                 <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
-                                                <?php
-                                            }
-                                            ?>
+                                                
                                             <div class="wishlist-popover">
                                                 <input type="hidden" id="<?= $nationalTopDownload[$i]["Song"]["ProdID"] ?>" value="song"/>
                                                 
@@ -251,12 +248,14 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                 <?php
                                                 
                                                 $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
-                                                echo $wishlistInfo;
-                                                
-
+                                              
                                                 echo $wishlist->getWishListMarkup($wishlistInfo, $nationalTopDownload[$i]["Song"]["ProdID"], $nationalTopDownload[$i]["Song"]["provider_type"]);
                                                 ?>
                                         
+                                                    
+                                                    
+                                                    
+                              
                                                 <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                             </div>
                                         <?php } ?>
