@@ -68,8 +68,7 @@ class VideosController extends AppController
                                     `Video`.`provider_type`, 
                                     Video.Advisory, 
                                     `File`.`CdnPath`, 
-                                    `File`.`SourceURL`, 
-                                    `File`.`SaveAsName`,
+                                    `File`.`SourceURL`,
                                     Video_file.SaveAsName,
                                     `Country`.`SalesDate` 
                                     FROM featured_videos as FeaturedVideo 
@@ -113,8 +112,8 @@ class VideosController extends AppController
                                     Video.VideoTitle, 
                                     Video.ArtistText, 
                                     Video.Advisory, 
-                                    File.CdnPath, File.SourceURL, 
-                                    File.SaveAsName,
+                                    File.CdnPath, 
+                                    File.SourceURL,
                                     Video_file.SaveAsName,
                                     COUNT(DISTINCT(Videodownloads.id)) AS COUNT, 
                                     `Country`.`SalesDate` 
