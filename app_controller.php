@@ -126,7 +126,7 @@ class AppController extends Controller
                         $this->Session->write('wishlistVariArray', $wishlistVariArray );
 
                     }
-                    
+                    print_r($this->Session->read('wishlistVariArray') );
                     //for downloaded the songs                    
                     $territoryPrefixTemp = strtolower($this->Session->read('territory'))."_";
                     $territoryTableName = $territoryPrefixTemp .'countries';
@@ -146,8 +146,6 @@ class AppController extends Controller
                    
                     
                 }
-                
-                
 	}
 	
 	function checkOnlinePatron()
