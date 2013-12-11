@@ -20,6 +20,7 @@ class WishlistHelper extends AppHelper {
         //first check if session variable not set
         if(!$this->Session->read('wishlistVariArray') ){
             
+          echo 147;
             $wishlistDetails = $wishlistInstance->find('all', array(
             'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id),
             'fields' => array('ProdID')
@@ -32,6 +33,7 @@ class WishlistHelper extends AppHelper {
                 return "Add to wishlist";
             }
         }else{
+            echo 148;
             $wishlistVariArray = $this->Session->read('wishlistVariArray');  
             $wishlistVariArray= @array_unique($wishlistVariArray);
             //print_r($wishlistVariArray);
