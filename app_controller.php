@@ -1,7 +1,7 @@
 <?php
 class AppController extends Controller
 {
-	var $components = array( 'Session', 'RequestHandler','Cookie', 'Acl');
+	var $components = array( 'Session', 'RequestHandler','Cookie', 'Acl','Common');
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download','Queue', 'Streaming');
 	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country', 'Wishlist', 'Download');
         var $view = 'Dataencode';
@@ -126,7 +126,25 @@ class AppController extends Controller
                         $this->Session->write('wishlistVariArray', $wishlistVariArray );
 
                     }
-                    //print_r($this->Session->read('wishlistVariArray') );
+                    
+                    
+                    //create common structure for add to wishlist functionality
+                    //first check if session variable not set
+                    if(!$this->Session->read('wishlistVideoArray') ){
+
+                        $wishlistDetails = $this->WishlistVideo->find('all', array(
+                        'conditions' => array('library_id' => $this->Session->read('library'),'patron_id' => $this->Session->read('patron')),
+                        'fields' => array('ProdID')
+                        ));            
+
+                        foreach($wishlistDetails as $key => $wishlistDetails){
+                            $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
+                        }
+                        $wishlistVariArray= @array_unique($wishlistVariArray);
+                        $this->Session->write('wishlistVariArray', $wishlistVariArray );
+
+                    }
+                    print_r($this->Session->read('wishlistVariArray') );
                     
                     
                     
