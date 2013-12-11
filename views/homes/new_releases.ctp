@@ -14,6 +14,7 @@
         <div class="album-scrollable horiz-scroll">
             <ul style="width:27000px;">
                 <?php
+                $this->log("New Release -- Album START", "siteSpeed");
                 $libId = $this->Session->read('library');
                 $patId = $this->Session->read('patron');
                 $count = 1;
@@ -110,7 +111,8 @@
                     </li>
                     <?php
                     $count++;
-                } 
+                }
+                $this->log("New Release -- Album START", "siteSpeed");
                 ?>
             </ul>
         </div>
@@ -326,6 +328,7 @@
     <div class="videos-scrollable horiz-scroll">
         <ul style="width:44100px;">
             <?php
+            $this->log("New Release -- Album START", "siteSpeed");
             $count = 1;
 
             //for($d=1;$d<$count;$d++) {
@@ -484,6 +487,7 @@
                 <?php
                 $count++;
             }
+            $this->log("New Release -- Album START", "siteSpeed");
             ?>
 
 
