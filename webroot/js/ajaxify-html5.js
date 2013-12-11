@@ -122,7 +122,7 @@
                     State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
-			
+
             $.ajax({
                 url: webroot + 'users/isPatronLogin',
                 type: "post",
@@ -134,7 +134,7 @@
                             event.preventDefault();
                         }
             });
-            
+
             // Set Loading
             var loading_div = "<div class='loader'>";
             loading_div += "</div>";
@@ -153,6 +153,11 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
+
+                    $('.loader').fadeOut(100);
+                    $('.content').remove('.loader');
+
+
                     // Prepare
                     var
                             $data = $(documentHtml(data)),
@@ -221,8 +226,8 @@
                     // Update the title
                     document.title = $data.find('.document-title:first').text();
                     try {
-                       // document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
-                       document.title = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+                        // document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
+                        document.title = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
                     }
                     catch (Exception) {
                     }
@@ -261,8 +266,8 @@
                     }
 
                     //$body.removeClass('loader');
-                    $.getScript(webroot + 'css/styles.css');
-                    $.getScript(webroot + 'css/freegal_styles.css');
+                    //$.getScript(webroot + 'css/styles.css');
+                    //$.getScript(webroot + 'css/freegal_styles.css');
 
                     $.getScript(webroot + 'js/freegal.js');
                     $.getScript(webroot + 'js/site.js');
@@ -271,8 +276,7 @@
                     //$.getScript(webroot + 'js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
 
-                    $('.loader').fadeOut(100);
-                    $('.content').remove('.loader');
+
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
