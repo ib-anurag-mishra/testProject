@@ -5,12 +5,12 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.views.elements
@@ -38,7 +38,7 @@ if (isset($debugKitInHistoryMode)) {
 			echo $toolbar->table($queryLog, $headers, array('title' => 'SQL Log ' . $dbName));
 		 ?>
 		<h4><?php __d('debug_kit', 'Query Explain:'); ?></h4>
-		<div id="sql-log-explain-query">
+		<div id="sql-log-explain-<?php echo $dbName ?>">
 			<a id="debug-kit-explain-<?php echo $dbName ?>"> </a>
 			<p><?php __d('debug_kit', 'Click an "Explain" link above, to see the query explanation.'); ?></p>
 		</div>
@@ -67,19 +67,23 @@ DEBUGKIT.sqlLog = function () {
 			var handleButton = function (event) {
 				event.preventDefault();
 				var data = {};
+				var dbName = 'default';
 				var inputs = this.form.getElementsByTagName('input');
 				var i = inputs.length;
 				while (i--) {
 					var input = inputs[i];
 					if (input.name) {
 						data[input.name] = input.value;
+						if (input.name.indexOf('[ds]') != -1) {
+							dbName = input.value;
+						}
 					}
 				}
 
 				var fetch = new Request({
 					method: 'POST',
 					onComplete : function (response) {
-						var targetEl = document.getElementById('sql-log-explain-query');
+						var targetEl = document.getElementById('sql-log-explain-' + dbName);
 						targetEl.innerHTML = response.response.text;
 					},
 					onFail : function () {
