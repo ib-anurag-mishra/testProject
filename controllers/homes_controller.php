@@ -2495,7 +2495,21 @@ STR;
            $deleteSongId = $_REQUEST['delete'];
            $this->Wishlist->setDataSource('master');
            if($this->Wishlist->delete($deleteSongId)) { 
-               $this->Wishlist->setDataSource('default');
+               $this->Wishlist->setDataSource('default');               
+               if($this->Session->read('wishlistVariArray') ){
+                   $wishlistVariArray = $this->Session->read('wishlistVariArray');
+                   print_r($wishlistVariArray);
+                   if(!empty($wishlistVariArray)){
+                       foreach($wishlistVariArray as $key=>$value){
+                           if($value===$deleteSongId){
+                               unset($wishlistVariArray[$key]);
+                               break;
+                           }                           
+                       }
+                       $this->Session->write('wishlistVariArray', $wishlistVariArray );
+                       print_r($wishlistVariArray);
+                   }
+               }   
                echo  1;                
            }            
            $this->Wishlist->setDataSource('default');
@@ -2518,6 +2532,7 @@ STR;
            $this->WishlistVideo->setDataSource('master');
            if($this->WishlistVideo->delete($deleteSongId)) { 
                $this->WishlistVideo->setDataSource('default');
+                              
                echo 1;                
            }            
            $this->WishlistVideo->setDataSource('default');
