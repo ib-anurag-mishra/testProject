@@ -144,7 +144,6 @@ class AppController extends Controller
             //first check if session variable not set
             if (!$this->Session->read('wishlistVideoArray'))
             {
-
                 $wishlistDetails = $this->WishlistVideo->find('all', array(
                     'conditions' => array('library_id' => $this->Session->read('library'), 'patron_id' => $this->Session->read('patron')),
                     'fields' => array('ProdID')
@@ -157,10 +156,10 @@ class AppController extends Controller
                 $wishlistVariArray = @array_unique($wishlistVariArray);
                 $this->Session->write('wishlistVideoArray', $wishlistVariArray);
             }
-            print_r($this->Session->read('wishlistVideoArray'));
-
-
-
+           // print_r($this->Session->read('wishlistVideoArray'));
+            
+            
+            
 
             if (!$this->Session->read('downloadVariArray'))
             {

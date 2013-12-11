@@ -2494,9 +2494,11 @@ STR;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
             $temp = explode('-' , trim($_REQUEST['delete']));
            $deleteSongId = $temp[0];
+           
            $this->Wishlist->setDataSource('master');
            if($this->Wishlist->delete($deleteSongId)) { 
                $this->Wishlist->setDataSource('default');
+               
                $wishlistarryTemp = array();
                if($this->Session->read('wishlistVariArray') ){
                    $wishlistVariArray = $this->Session->read('wishlistVariArray');
@@ -2529,11 +2531,27 @@ STR;
         Configure::write('debug', 0);
         $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
-           $deleteSongId = $_REQUEST['delete'];
+             $temp = explode('-' , trim($_REQUEST['delete']));
+           $deleteSongId = $temp[0];
            $this->WishlistVideo->setDataSource('master');
            if($this->WishlistVideo->delete($deleteSongId)) { 
                $this->WishlistVideo->setDataSource('default');
                               
+                 $wishlistarryTemp = array();
+               if($this->Session->check('wishlistVideoArray') ){
+                   $wishlistVariArray = $this->Session->read('wishlistVideoArray');
+                   print_r($wishlistVariArray);
+                   if(!empty($wishlistVariArray)){
+                       foreach($wishlistVariArray as $key=>$value){                           
+                           if($value !=$temp[1]){
+                               $wishlistarryTemp[] = $wishlistVariArray[$key];                               
+                           }                           
+                       }
+                       $this->Session->write('wishlistVideoArray', $wishlistarryTemp );
+                       print_r($this->Session->read('wishlistVideoArray'));
+                   }
+               }   
+               
                echo 1;                
            }            
            $this->WishlistVideo->setDataSource('default');
