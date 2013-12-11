@@ -214,7 +214,7 @@ class HomesController extends AppController
          * Code For Coming Soon --- END
          */
 
-
+        print_r( $this->element('sql_dump') );
 
         //print_r($this->Session->read('downloadVariArray'));
     }
