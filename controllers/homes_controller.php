@@ -2287,6 +2287,16 @@ STR;
                 //insert into wishlist table
                 $this->WishlistVideo->save($insertArr);           
                 $this->WishlistVideo->setDataSource('default');
+                
+                
+                //add the wishlist videos ProdID in the session array
+                if($this->Session->read('wishlistVideoArray') ){
+                    $wishlistVideoArray = $this->Session->read('wishlistVideoArray');
+                    $wishlistVideoArray[] = $prodId;
+                    $this->Session->write('wishlistVideoArray', $wishlistVideoArray);
+                }
+                
+                
                 echo "Success";
                 exit;
 
@@ -2540,7 +2550,7 @@ STR;
                  $wishlistarryTemp = array();
                if($this->Session->check('wishlistVideoArray') ){
                    $wishlistVariArray = $this->Session->read('wishlistVideoArray');
-                   print_r($wishlistVariArray);
+                  // print_r($wishlistVariArray);
                    if(!empty($wishlistVariArray)){
                        foreach($wishlistVariArray as $key=>$value){                           
                            if($value !=$temp[1]){
@@ -2548,7 +2558,7 @@ STR;
                            }                           
                        }
                        $this->Session->write('wishlistVideoArray', $wishlistarryTemp );
-                       print_r($this->Session->read('wishlistVideoArray'));
+                    //   print_r($this->Session->read('wishlistVideoArray'));
                    }
                }   
                
