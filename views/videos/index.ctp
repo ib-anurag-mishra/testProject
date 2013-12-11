@@ -271,5 +271,3 @@ foreach($topVideoDownloads as $key => $topDownload)
 
 
 </section> <!-- end .videos -->
-
-<?php echo $this->element('sql_dump'); ?>
