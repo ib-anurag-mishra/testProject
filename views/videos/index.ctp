@@ -177,7 +177,7 @@ foreach($topVideoDownloads as $key => $topDownload)
                                         $productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
                                     
                                         
-                                        $videoUrl = shell_exec('perl files/tokengen '  . $topDownload["Video"]['CdnPath']."/".$productInfo['Video_file']['SaveAsName']);                                                
+                                        $videoUrl = shell_exec('perl files/tokengen '  . $topDownload["File"]['CdnPath']."/".$productInfo['Video_file']['SaveAsName']);                                                
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                                        
