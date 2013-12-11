@@ -736,7 +736,7 @@ function addToWishlistVideo(prodId, providerType)
         url: webroot + "homes/addToWishlistVideo", // URL to request
         data: data, // post data
         success: function(response) {
-            alert(response);
+           // alert(response);
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
@@ -762,6 +762,7 @@ function addToWishlistVideo(prodId, providerType)
                 if (languageSet === 'en') 
                 {
                     document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                    alert(document.getElementById('video_wishlist' + prodId).innerHTML);
                     return false ;
                 } 
                 else 
