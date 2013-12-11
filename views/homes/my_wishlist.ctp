@@ -283,20 +283,20 @@ $ieVersion =  ieversion();
 					<div class="song-title"><a title="<?php echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); ?>" href="javascript:void(0)">
                     <?php 
 						if (strlen($wishlistResultsVideo['WishlistVideo']['track_title']) >= 15) {
-							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .substr($wishlistResultsVideo['Download']['track_title'], 0, 15) . '...</a>';
+							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .$this->getTextEncode(substr($wishlistResultsVideo['Download']['track_title'], 0, 15)) . '...</a>';
 						} else {
-							echo $wishlistResultsVideo['WishlistVideo']['track_title']; 
+							echo $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['track_title']); 
 					 	}
 					?>
                                         </a></div>
 					<!--<a class="add-to-wishlist-button" href="javascript:void(0)"></a>-->
-					<div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['Video']['Title'])) ;?>" href="javascript:void(0)"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
+					<div class="album-title"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['Video']['Title'])) ;?>" href="javascript:void(0)"><?php echo $this->getTextEncode(substr($wishlistResultsVideo['Video']['Title'],0,15));  ?>...</a></div>
 					<div class="artist-name"><a title="<?php echo $this->getTextEncode(htmlentities($wishlistResultsVideo['WishlistVideo']['artist'])) ;?>" href="/artists/album/<?= base64_encode($wishlistResultsVideo['Video']['ArtistText']); ?>">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 15) {
-							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .substr($wishlistResultsVideo['WishlistVideo']['artist'], 0, 15) . '...</a>';							
+							echo '<a title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .$this->getTextEncode(substr($wishlistResultsVideo['WishlistVideo']['artist'], 0, 15)) . '...</a>';							
 						} else {
-							$ArtistName = $wishlistResultsVideo['WishlistVideo']['artist'];
+							$ArtistName = $this->getTextEncode($wishlistResultsVideo['WishlistVideo']['artist']);
 							echo $ArtistName;
 						}
 						
