@@ -171,9 +171,12 @@ foreach($topVideoDownloads as $key => $topDownload)
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
-                                        echo "<pre>"; print_r($topDownload);die;
                                         
+                                        echo "<pre>"; print_r($topDownload);
                                         $productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
+                                        
+                                        echo "<pre>"; print_r($productInfo);die;
+                                        
                                         $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
