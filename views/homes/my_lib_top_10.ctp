@@ -1,4 +1,3 @@
-<?php echo $this->element('sql_dump');?>
 <section class="my-top-100-page">
 
     <div class="breadcrumbs">
@@ -558,7 +557,5 @@
             </ul>
         </div>
 
-        
-        
     </div>
 </section>
