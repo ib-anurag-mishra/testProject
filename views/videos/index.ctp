@@ -35,11 +35,9 @@ if(count($featuredVideos) > 0){ ?>
 
                                     if($libraryDownload == '1' && $patronDownload == '1') 
                                         {
-                                        echo "<pre>";
-                                        print_r($featureVideo);die;
-                                        
-                                        $productInfo = $mvideo->getDownloadData($featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-                                        $videoUrl = shell_exec('perl files/tokengen '  . $featureVideo['Full_Files']['CdnPath']."/".$featureVideo['Full_Files']['SaveAsName']);                                                
+                                                                             
+                                        //$productInfo = $mvideo->getDownloadData($featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                        $videoUrl = shell_exec('perl files/tokengen '  . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SaveAsName']);                                                
                                         $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                                         
