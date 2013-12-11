@@ -4,12 +4,7 @@
 	 File Description : View page for wishlist information
 	 Author : m68interactive
  */
-
-echo $javascript->link(
-                array('recent-downloads')
-         );
 ?>
-
 <?php
 
 $setLang = 'en';

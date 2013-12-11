@@ -273,7 +273,7 @@
                     $.getScript(webroot + 'js/site.js');
 
                     //$.getScript(webroot + 'js/audioPlayer.js');
-//                   /$.getScript(webroot + 'js/recent-downloads.js');
+                   $.getScript(webroot + 'js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
 
 

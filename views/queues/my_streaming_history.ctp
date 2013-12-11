@@ -15,12 +15,6 @@ function ieversion()
     }
 }
 $ieVersion =  ieversion();
-
-
-echo $javascript->link(
-                array('recent-downloads')
-         );
-
 ?>
 
 <!-- new HTML -->
