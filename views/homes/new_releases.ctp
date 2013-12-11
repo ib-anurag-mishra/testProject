@@ -120,7 +120,7 @@
             <div class="songs-scrollable horiz-scroll">
                     <ul style="width:27000px;">
     <?php
-    $count = 1;
+   /* $count = 1;
 
 
     //for($d=1;$d<$count;$d++) {
@@ -313,7 +313,7 @@
 
     <?php
     $count++;
-}
+} */
 ?>
 
 
