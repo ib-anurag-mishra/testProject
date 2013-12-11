@@ -2499,7 +2499,7 @@ STR;
     */
     function removeWishlistSong() {
         
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
         $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
             $temp = explode('-' , trim($_REQUEST['delete']));
@@ -2511,16 +2511,14 @@ STR;
                
                $wishlistarryTemp = array();
                if($this->Session->read('wishlistVariArray') ){
-                   $wishlistVariArray = $this->Session->read('wishlistVariArray');
-                   print_r($wishlistVariArray);
+                   $wishlistVariArray = $this->Session->read('wishlistVariArray');                  
                    if(!empty($wishlistVariArray)){
                        foreach($wishlistVariArray as $key=>$value){                           
                            if($value !=$temp[1]){
                                $wishlistarryTemp[] = $wishlistVariArray[$key];                               
                            }                           
                        }
-                       $this->Session->write('wishlistVariArray', $wishlistarryTemp );
-                       print_r($this->Session->read('wishlistVariArray'));
+                       $this->Session->write('wishlistVariArray', $wishlistarryTemp );                       
                    }
                }   
                echo  1;                
