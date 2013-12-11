@@ -761,7 +761,6 @@ function addToWishlistVideo(prodId, providerType)
                // alert(languageSet);
                 if (languageSet === 'en') 
                 {
-                    alert(prodId);
                     document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
                     return false ;
                 } 
