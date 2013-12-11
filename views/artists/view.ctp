@@ -59,7 +59,7 @@
                             // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
                             ?>
                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-                            <?php ?><?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                            <?php ?><?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                         </div>
                         <?php
                     }
@@ -327,7 +327,7 @@
 
                                 echo $wishlist->getWishListMarkup($wishlistInfo, $albumSong["Song"]["ProdID"], $albumSong["Song"]["provider_type"]);
                                 ?>
-                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
+                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
                             </div> 
                             <?php
                         }

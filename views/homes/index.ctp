@@ -257,7 +257,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                     
                                                     
                               
-                                                <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -374,7 +374,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             }
                                             ?>
 
-                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                         </div>
                                         <?php
                                     }
@@ -491,7 +491,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             //echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
                                             ?>
 
-                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
+                                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
                                         </div>                                            
                                     <?php
                                     }
@@ -606,7 +606,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         <?php
                                         $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $value["Song"]["ProdID"], $value["Song"]["provider_type"]);
-                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
                                     </div>
 
@@ -706,7 +706,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         <?php
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-                                        echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                        //echo $this->Queue->getSocialNetworkinglinksMarkup();
                                         ?>
 
 

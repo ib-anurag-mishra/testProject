@@ -193,9 +193,9 @@ $ieVersion =  ieversion();
                                         if($this->Session->read('library_type') == '2'){
                                             echo $this->Queue->getQueuesList($this->Session->read('patron'),$downloadResult["Song"]["ProdID"],$downloadResult["Song"]["provider_type"],$downloadResult["Album"]["ProdID"],$downloadResult["Album"]["provider_type"]); ?>
                                             <a class="add-to-playlist" href="#">Add To Playlist</a>
-                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                         <?php } else {
-                                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); 
+                                                    //echo $this->Queue->getSocialNetworkinglinksMarkup(); 
                                               }
                                         ?>
 					</div> -->
