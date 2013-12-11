@@ -1,4 +1,4 @@
-<?php echo $this->element('sql_dump');?>
+<?php //echo $this->element('sql_dump');?>
 
 <section class="videos">
 

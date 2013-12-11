@@ -77,7 +77,7 @@ class VideosController extends AppController
                                     LEFT JOIN File as Video_file on (Video_file.FileID = Video.FullLength_FileID)
                                     LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
                                     WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW() ";
-            print_r($featuredVideosSql);
+            //print_r($featuredVideosSql);
             
             $featuredVideos = $this->Album->query($featuredVideosSql);
 
@@ -123,7 +123,7 @@ class VideosController extends AppController
                             LEFT JOIN File as Video_file on (Video_file.FileID = Video.FullLength_FileID) 
                             LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) 
                                 WHERE `Country`.`SalesDate` <= NOW() AND Video.DownloadStatus = '1' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 100";
-                        print_r($topDownloadSQL);
+               //         print_r($topDownloadSQL);
             $topDownloads = $this->Album->query($topDownloadSQL);
             
             if (!empty($topDownloads))
