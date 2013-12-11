@@ -736,42 +736,49 @@ function addToWishlistVideo(prodId, providerType)
         url: webroot + "homes/addToWishlistVideo", // URL to request
         data: data, // post data
         success: function(response) {
-            //alert(response);
+            alert(response);
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
-
                 document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
-
                 //alert("You can not add more songs to your wishlist.");
                 location.reload();
                 return false;
-            } else if (msg === 'error1') {
-
+            }
+            else if (msg === 'error1')
+            {
                 document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Already Added</a>';
+                return false ;
+            }
+
+
+            var msg = response.substring(0, 7);
+            if (msg === 'Success')
+            {
+                $('.beforeClick').show();
+                $('.afterClick').hide();
+                
+               // alert(languageSet);
+                if (languageSet === 'en') 
+                {
+                    document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                    return false ;
+                } 
+                else 
+                {
+                    document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
+                    return false;
+                }
+                //document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
             }
             else
             {
-                var msg = response.substring(0, 7);
-                if (msg === 'Success')
-                {
-                    $('.beforeClick').show();
-                    $('.afterClick').hide();
-                    if (languageSet === 'en') {
-                        document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-                    } else {
-                        document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
-                    }
-                    //document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-                }
-                else
-                {
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
-                    //alert("You have been logged out from the system. Please login again.");
-                    location.reload();
-                    return false;
-                }
+                document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
+                //alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
             }
+
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
         }
@@ -1477,13 +1484,13 @@ function addToAlbumTest(queueID, addTo)
 {
     var type = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
     var ProdID = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
-    
-    if( (typeof type === 'undefined') && (typeof ProdID === 'undefined'))
-        {         
-            type = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
-            ProdID = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
-        }
-        
+
+    if ((typeof type === 'undefined') && (typeof ProdID === 'undefined'))
+    {
+        type = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
+        ProdID = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
+    }
+
     $.ajax({
         type: "post",
         data: {'prodID': ProdID, 'type': type, 'QueueID': queueID},
@@ -1491,7 +1498,7 @@ function addToAlbumTest(queueID, addTo)
         success: function(response)
         {
             //alert(response);
-            addToQueueResponse(response , type);
+            addToQueueResponse(response, type);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             // log the error to the console
@@ -1503,7 +1510,7 @@ function addToAlbumTest(queueID, addTo)
     return false;
 }
 
-function addToQueueResponse(response , type)
+function addToQueueResponse(response, type)
 {
     if (response.length === 6) {
         var msg = response.substring(0, 6);
@@ -1521,7 +1528,7 @@ function addToQueueResponse(response , type)
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
         document.getElementById("ajaxflashMessage44").style.background = "red";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding '+type+' to Playlist.';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding ' + type + ' to Playlist.';
 
         return false;
     } else if (msg === 'error1') {
@@ -1533,7 +1540,7 @@ function addToQueueResponse(response , type)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'This '+type+' is already added to Playlist';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is already added to Playlist';
     }
     else if (msg === 'invalid_for_stream')
     {
@@ -1544,7 +1551,7 @@ function addToQueueResponse(response , type)
         }
 
         document.getElementById("ajaxflashMessage44").style.display = "block";
-        document.getElementById('ajaxflashMessage44').innerHTML = 'This '+type+' is not allowed for Streaming';
+        document.getElementById('ajaxflashMessage44').innerHTML = 'This ' + type + ' is not allowed for Streaming';
     }
     else
     {
@@ -1557,7 +1564,7 @@ function addToQueueResponse(response , type)
                 document.getElementById("flash-message").setAttribute("class", "");
             }
             document.getElementById("ajaxflashMessage44").style.display = "block";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added '+type+' to Playlist';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added ' + type + ' to Playlist';
 
         }
         else
@@ -1570,7 +1577,7 @@ function addToQueueResponse(response , type)
 
             document.getElementById("ajaxflashMessage44").style.display = "block";
             document.getElementById("ajaxflashMessage44").style.background = "red";
-            document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding '+type+' to Playlist.';
+            document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding ' + type + ' to Playlist.';
             return false;
         }
     }

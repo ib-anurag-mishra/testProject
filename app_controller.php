@@ -3,14 +3,14 @@
 class AppController extends Controller
 {
 
-    var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common');
+    var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common','DebugKit.Toolbar'); 
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
     var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download');
     var $view = 'Dataencode';
 
     function beforeFilter()
     {
-        //$this->log("App Controller -- START", "siteSpeed");
+        $this->log("App Controller -- START", "siteSpeed");
         ini_set('session.cookie_domain', env('HTTP_BASE'));
         Configure::write('Session.checkAgent', false);
         Configure::write('Session.ini', array('session.cookie_secure' => false, 'session.referer_check' => false));

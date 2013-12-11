@@ -155,7 +155,8 @@ class VideosController extends AppController
     {
 
         //settings
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
+        
         $this->layout = false;
 
         //set required params
