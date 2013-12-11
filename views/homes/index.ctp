@@ -145,9 +145,12 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                      if($this->Session->read('downloadVariArray'))
                                                      {
                                                          $downloadsUsed = $this->Download->getDownloadResults($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
-                                                     }                                                     
-                                                    
-                                                    
+                                                     }
+                                                     else
+                                                     {
+                                                         $downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                     }
+                                                     
                                                  
                                                     if ($downloadsUsed > 0)
                                                     {
