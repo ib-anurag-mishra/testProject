@@ -23,6 +23,17 @@ function ieversion()
 
 $ieVersion = ieversion();
 ?>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    
+    $('#UserSendNewsLetterCheck').click(function(){
+       alert($('#UserSendNewsLetterCheck:checked').val()); 
+    });
+});
+</script>
+
 <section class="my-account-page">
     <div class="breadCrumb">
         <?php
@@ -82,11 +93,4 @@ $ieVersion = ieversion();
     ?>
 </section>
 
-<script type="text/javascript">
-$(document).ready(function(){
-    
-    $('#UserSendNewsLetterCheck').click(function(){
-       alert($('#UserSendNewsLetterCheck:checked').val()); 
-    });
-});
-</script>
+
