@@ -2448,7 +2448,7 @@ $(document).ready(function() {
     $('#UserSendNewsLetterCheck').click(function() {
         alert($('#UserSendNewsLetterCheck:checked').val());
 
-        var isChecked = $('#UserSendNewsLetterCheck:checked').val() ? true : false;
+        var isChecked = $('#UserSendNewsLetterCheck:checked').attr('value') ? true : false;
 
         if (isChecked) {
             $('#show_newsletterboxField').show();
