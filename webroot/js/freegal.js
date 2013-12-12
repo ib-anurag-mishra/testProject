@@ -2207,6 +2207,7 @@ $(document).ready(function() {
 
     $('.my-wishlist-page .my-wishlist-filter-container div.filter').on('click', function(e) {
 
+        e.preventDefault();
         if ($(this).hasClass('date-filter-button')) {
             $('#sortForm #sort').val('date');
         } else if ($(this).hasClass('song-filter-button')) {
@@ -2242,6 +2243,8 @@ $(document).ready(function() {
     });
 
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
+        e.preventDefault();
+        
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
