@@ -2239,7 +2239,7 @@ $(document).ready(function() {
 
         }
 
-        $('#sortForm').submit();
+        //$('#sortForm').submit();
     });
 
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
