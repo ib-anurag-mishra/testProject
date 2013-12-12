@@ -49,7 +49,7 @@ class AppController extends Controller
                 $this->Session->write("library_auth_method_name", $libraryIDArray['Library']['library_authentication_method']);
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
                 $this->Session->write("library", $libraryIDArray['Library']['id']);
-                $this->Session->write("library_type", $libraryIDArray['Library']['test_library_type']);
+                $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
                 $this->Session->write("block", (($libraryIDArray['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }
         }
@@ -71,7 +71,7 @@ class AppController extends Controller
                 $lib_type = $this->Session->read("library_type");
                 if(empty($lib_type))
                 {
-                        $this->Session->write("library_type", $libraryIDArray['Library']['test_library_type']);
+                        $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
                 }
             }
         }
