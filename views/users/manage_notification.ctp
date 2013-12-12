@@ -76,50 +76,47 @@ $ieVersion = ieversion();
         </div>
 
 
-        <?php
-        /* }
 
-          if(isset($notificationShow) && $notificationShow == 1){ */
-        ?>
-        <script>
-                        $(document).ready(function() {
-                         
-                            $('#UserSendNewsLetterCheck').click(function() {
-                                var isChecked = $('#UserSendNewsLetterCheck:checked').val() ? true : false;
-                                if (isChecked) {
-                                    $('#show_newsletterboxField').show();
-                                    $('#UserSendNewsLetterCheck').attr('value', '1');
-                                } else {
-                                    $('#show_newsletterboxField').hide();
-                                    $('#UserSendNewsLetterCheck').attr('value', 0);
-                                }
-                            });
-
-                        });
-
-
-                        function checkEmailValue() {
-
-
-                            if (!$('#UserNewsletterEmail').val()) {
-                                alert('Please enter the valid notification email address.');
-                                return false;
-                            }
-                            if (!validateEmail($('#UserNewsletterEmail').val())) {
-                                alert('Please enter the valid notification email address.');
-                                return false;
-                            }
-                            return true;
-                        }
-
-
-
-                        function validateEmail(email) {
-                            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                            return re.test(email);
-                        }
-        </script>
         <?php
     }
     ?>
 </section>
+
+<script>
+                    $(document).ready(function() {
+
+                        $('#UserSendNewsLetterCheck').click(function() {
+                            var isChecked = $('#UserSendNewsLetterCheck:checked').val() ? true : false;
+                            if (isChecked) {
+                                $('#show_newsletterboxField').show();
+                                $('#UserSendNewsLetterCheck').attr('value', '1');
+                            } else {
+                                $('#show_newsletterboxField').hide();
+                                $('#UserSendNewsLetterCheck').attr('value', '0');
+                            }
+                        });
+
+                    });
+
+
+                    function checkEmailValue() {
+
+
+                        if (!$('#UserNewsletterEmail').val()) {
+                            alert('Please enter the valid notification email address.');
+                            return false;
+                        }
+                        if (!validateEmail($('#UserNewsletterEmail').val())) {
+                            alert('Please enter the valid notification email address.');
+                            return false;
+                        }
+                        return true;
+                    }
+
+
+
+                    function validateEmail(email) {
+                        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                        return re.test(email);
+                    }
+</script>
