@@ -736,7 +736,7 @@ function addToWishlistVideo(prodId, providerType)
         url: webroot + "homes/addToWishlistVideo", // URL to request
         data: data, // post data
         success: function(response) {
-            alert(response);
+            //alert(response);
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
