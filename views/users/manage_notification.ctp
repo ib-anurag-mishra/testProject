@@ -83,7 +83,8 @@ $ieVersion =  ieversion();
     $(function() {
         <?php 
         
-        if($notificationAlreadySave === 'true'){
+        if($notificationAlreadySave === true)
+        {
             ?>
                 $('#show_newsletterboxField').show();  
                 <?php
