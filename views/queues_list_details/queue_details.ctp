@@ -86,6 +86,9 @@
                     $i = 0;
                     foreach ($queue_list_array as $key => $value)
                     {
+                        echo "<pre>";
+                                                print_r($value);
+                                                
                         if (!isset($value['Songs']))
                             continue;
                         if (($this->Session->read('block') == 'yes') && ($value['Songs']['Advisory'] == 'T'))
@@ -137,6 +140,9 @@
                                 if (($value['Countries']['SalesDate'] <= date('Y-m-d') ) && ($value['Countries']['DownloadStatus'] == 1))
                                 {
                                     $productInfo = $song->getDownloadData($value["Songs"]['ProdID'], $value["Songs"]['provider_type']);
+                                    print_r($productInfo);
+                                    die;
+                                    
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {
                                         $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
