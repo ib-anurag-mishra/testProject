@@ -82,17 +82,8 @@ $ieVersion = ieversion();
           if(isset($notificationShow) && $notificationShow == 1){ */
         ?>
         <script>
-                        $(function() {
-                            var alreadySaved = '<?= $notificationAlreadySave; ?>';
-
-                            if (alreadySaved === true)
-                            {
-                                $('#show_newsletterboxField').show();
-                            }
-
-
-
-
+                        $(document).ready(function() {
+                         
                             $('#UserSendNewsLetterCheck').click(function() {
                                 var isChecked = $('#UserSendNewsLetterCheck:checked').val() ? true : false;
                                 if (isChecked) {
