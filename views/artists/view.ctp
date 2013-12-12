@@ -132,9 +132,7 @@
                 <?php
                 $i = 1;
                 foreach ($albumSongs[$album['Album']['ProdID']] as $key => $albumSong):
-                    
-                    echo "<pre>";
-                    print_r($albumSong);                    
+                             
                     //hide song if library block the explicit content
                     if (($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] == 'T'))
                     {
@@ -258,14 +256,11 @@
                                 <?php
                                 if (($albumSong['Country']['SalesDate'] < date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                                 {
-                                    $productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'], $albumSong["Song"]['provider_type']);
-                                    echo "<pre>";
-                                    print_r($productInfo);
-                                    die ;
-                    
+                                    //$productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'], $albumSong["Song"]['provider_type']);
+                                                     
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {
-                                        $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                        $songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath'] . "/" . $albumSong['Full_Files']['SaveAsName']);
                                         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                         if ($albumSong['Song']['status'] != 'avail')
