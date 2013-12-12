@@ -2446,15 +2446,15 @@ $(document).ready(function() {
     /********* manage notification code js **********/
 
     $('#UserSendNewsLetterCheck').click(function() {
-        alert($('#UserSendNewsLetterCheck:checked').val());
+        //alert($('#UserSendNewsLetterCheck:checked').val());
 
-        var isChecked = $('#UserSendNewsLetterCheck:checked').attr('value') ? true : false;
+        var isChecked = $('#UserSendNewsLetterCheck:checked').is(':checked');
 
         if (isChecked) {
-            $('#show_newsletterboxField').show();
+            $('#show_newsletterboxField').hide();
             $('#UserSendNewsLetterCheck').attr('value', '1');
         } else {
-            $('#show_newsletterboxField').hide();
+            $('#show_newsletterboxField').show();
             $('#UserSendNewsLetterCheck').attr('value', '0');
         }
 
