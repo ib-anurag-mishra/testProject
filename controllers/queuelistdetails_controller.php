@@ -276,6 +276,10 @@ class QueueListDetailsController extends AppController
         {
             $this->set('default_queue', $this->params['pass'][1]);
         }
+        else
+        {
+            $this->set('default_queue', $this->params['pass'][1]);
+        }
         
         if(count($queue_list_array)==0)
         {
