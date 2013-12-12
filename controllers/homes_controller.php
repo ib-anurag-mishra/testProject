@@ -660,7 +660,7 @@ STR;
 
     function autoComplete()
     {
-        Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $country = $this->Session->read('territory');
         $searchKey = '';
         if (isset($_REQUEST['q']) && $_REQUEST['q'] != '')
@@ -1291,7 +1291,7 @@ STR;
 
     function userDownload()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $this->layout = false;
         $prodId = $_POST['ProdID'];
         $provider = $_POST['ProviderType'];
@@ -1668,7 +1668,7 @@ STR;
 
     function checkPatron()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $this->layout = false;
         $libid = $_REQUEST['libid'];
         $patronid = $_REQUEST['patronid'];
@@ -1704,7 +1704,7 @@ STR;
 
     function approvePatron()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $this->layout = false;
         $libid = $_REQUEST['libid'];
         $patronid = base64_decode($_REQUEST['patronid']);
@@ -2385,7 +2385,7 @@ STR;
 
     function _sendForgotPasswordMail($id, $password)
     {
-        Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $this->Email->template = 'email/forgotPasswordEmail';
         $this->User->recursive = -1;
         $Patron = $this->User->read(null, $id);
@@ -2487,7 +2487,7 @@ STR;
     function addToWishlist()
     {
 
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']))
         {
 
@@ -2824,7 +2824,7 @@ STR;
     function removeWishlistSong()
     {
 
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         $this->layout = false;
         if (isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete'] != '')
         {
@@ -2868,7 +2868,7 @@ STR;
     function removeWishlistVideo()
     {
 
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $this->layout = false;
         if (isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete'] != '')
         {
@@ -2913,7 +2913,7 @@ STR;
 
     function wishlistDownload()
     {
-        Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $this->layout = false;
 
         $libId = $this->Session->read('library');
@@ -3183,7 +3183,7 @@ STR;
 
     function wishlistVideoDownload()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $this->layout = false;
 
         $libId = $this->Session->read('library');
@@ -3444,7 +3444,7 @@ STR;
 
     function historyDownload()
     {
-        Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $this->layout = false;
 
         $id = $_REQUEST['id'];
@@ -3478,7 +3478,7 @@ STR;
 
     function historyDownloadVideo()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $this->layout = false;
 
         $id = $_REQUEST['id'];
@@ -3605,7 +3605,7 @@ STR;
 
     function music_box()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $this->layout = false;
         $callType = $_POST['type'];
         if ($callType == 'top')
@@ -3700,7 +3700,7 @@ STR;
     function language()
     {
 
-        Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $this->layout = false;
         $language = $_POST['lang'];
         $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -3841,7 +3841,7 @@ STR;
 
     function convertString()
     {
-        Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $this->layout = false;
         $str = $_POST['str'];
         echo sha1($str);
@@ -3851,7 +3851,7 @@ STR;
     //Used to get Sample Song url
     function userSample()
     {
-        Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $this->layout = false;
         $prodId = $_POST['prodId'];
         $pt = base64_decode($_POST['pt']);
@@ -4064,7 +4064,7 @@ STR;
 
     function new_releases()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
 
         $this->layout = 'home';
 
