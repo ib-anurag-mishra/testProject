@@ -5,23 +5,21 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.tests.views.helpers
  * @since         DebugKit 0.1
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
-$path = App::pluginPath('DebugKit');
-
 App::import('Helper', 'DebugKit.FirePhpToolbar');
 App::import('Core', array('View', 'Controller'));
-require_once $path . 'tests' . DS . 'cases' . DS . 'test_objects.php';
+App::import('File', 'TestFireCake', false, Configure::read('pluginPaths'), 'test_objects.php');
 
 FireCake::getInstance('TestFireCake');
 
@@ -38,7 +36,7 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar =& new ToolbarHelper(array('output' => 'DebugKit.FirePhpToolbar'));
 		$this->Toolbar->FirePhpToolbar =& new FirePhpToolbarHelper();
 
-		$this->Controller =& new Controller();
+		$this->Controller =& ClassRegistry::init('Controller');
 		if (isset($this->_debug)) {
 			Configure::write('debug', $this->_debug);
 		}
@@ -49,13 +47,12 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	function startCase() {
-		$this->_viewPaths = App::build('views');
-		App::build(array(
-			'views' => array(
+		$this->_viewPaths = Configure::read('viewPaths');
+		Configure::write('viewPaths', array(
 			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
 			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
 			ROOT . DS . LIBS . 'view' . DS
-		)), true);
+		));
 		$this->_debug = Configure::read('debug');
 		$this->firecake =& FireCake::getInstance();
 	}
@@ -147,3 +144,4 @@ class FirePhpToolbarHelperTestCase extends CakeTestCase {
 		Router::reload();
 	}
 }
+?>

@@ -5,12 +5,12 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.controllers.components
@@ -31,21 +31,18 @@ class ToolbarComponent extends Object {
 		'forceEnable' => false,
 		'autoRun' => true
 	);
-
 /**
  * Controller instance reference
  *
  * @var object
  */
 	var $controller;
-
 /**
  * Components used by DebugToolbar
  *
  * @var array
  */
 	var $components = array('RequestHandler', 'Session');
-
 /**
  * The default panels the toolbar uses.
  * which panels are used can be configured when attaching the component
@@ -53,14 +50,12 @@ class ToolbarComponent extends Object {
  * @var array
  */
 	var $_defaultPanels = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables');
-
 /**
  * Loaded panel objects.
  *
  * @var array
  */
 	var $panels = array();
-
 /**
  * javascript files component will be using
  *
@@ -69,21 +64,18 @@ class ToolbarComponent extends Object {
 	var $javascript = array(
 		'behavior' => '/debug_kit/js/js_debug_toolbar'
 	);
-
 /**
  * CacheKey used for the cache file.
  *
  * @var string
  **/
 	var $cacheKey = 'toolbar_cache';
-
 /**
  * Duration of the debug kit history cache
  *
  * @var string
  **/
 	var $cacheDuration = '+4 hours';
-
 /**
  * initialize
  *
@@ -104,7 +96,7 @@ class ToolbarComponent extends Object {
 		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 
-		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component initialization', true));
+		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Component intitailization', true));
 		DebugKitDebugger::startTimer('componentInit', __d('debug_kit', 'Component initialization and startup', true));
 
 		$panels = $this->_defaultPanels;
@@ -124,7 +116,6 @@ class ToolbarComponent extends Object {
 		$this->controller =& $controller;
 		return false;
 	}
-
 /**
  * Go through user panels and remove default panels as indicated.
  *
@@ -146,7 +137,6 @@ class ToolbarComponent extends Object {
 		}
 		return $panels;
 	}
-
 /**
  * Component Startup
  *
@@ -180,7 +170,6 @@ class ToolbarComponent extends Object {
 		DebugKitDebugger::startTimer('controllerAction', __d('debug_kit', 'Controller action', true));
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller action start', true));
 	}
-
 /**
  * beforeRedirect callback
  *
@@ -194,7 +183,6 @@ class ToolbarComponent extends Object {
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
 	}
-
 /**
  * beforeRender callback
  *
@@ -203,9 +191,6 @@ class ToolbarComponent extends Object {
  * @return void
  **/
 	function beforeRender(&$controller) {
-		if (!class_exists('DebugKitDebugger')) {
-			return null;
-		}
 		DebugKitDebugger::stopTimer('controllerAction');
 		$vars = $this->_gatherVars($controller);
 		$this->_saveState($controller, $vars);
@@ -214,7 +199,6 @@ class ToolbarComponent extends Object {
 		DebugKitDebugger::startTimer('controllerRender', __d('debug_kit', 'Render Controller Action', true));
 		DebugKitDebugger::setMemoryPoint(__d('debug_kit', 'Controller render start', true));
 	}
-
 /**
  * Load a toolbar state from cache
  *
@@ -228,7 +212,6 @@ class ToolbarComponent extends Object {
 		}
 		return array();
 	}
-
 /**
  * Create the cache config for the history
  *
@@ -245,7 +228,6 @@ class ToolbarComponent extends Object {
 			Cache::config('default');
 		}
 	}
-
 /**
  * collects the panel contents
  *
@@ -271,7 +253,6 @@ class ToolbarComponent extends Object {
 		}
 		return $vars;
 	}
-
 /**
  * Load Panels used in the debug toolbar
  *
@@ -285,10 +266,11 @@ class ToolbarComponent extends Object {
 				trigger_error(sprintf(__d('debug_kit', 'Could not load DebugToolbar panel %s', true), $panel), E_USER_WARNING);
 				continue;
 			}
-			list($plugin, $className) = pluginSplit($className);
+			if (strpos($className, '.') !== false) {
+				list($plugin, $className) = explode('.', $className);
+			}
 			$panelObj =& new $className($settings);
 			if (is_subclass_of($panelObj, 'DebugPanel') || is_subclass_of($panelObj, 'debugpanel')) {
-				list(, $panel) = pluginSplit($panel);
 				$this->panels[$panel] =& $panelObj;
 			}
 		}
@@ -303,8 +285,7 @@ class ToolbarComponent extends Object {
  */
 	function _makeViewClass($baseClassName) {
 		if (!class_exists('DoppelGangerView')) {
-			$parent = strtolower($baseClassName) === 'view' ? false : true;
-			App::import('View', $baseClassName, $parent);
+			App::import('View', $baseClassName);
 			if (strpos($baseClassName, '.') !== false) {
 				list($plugin, $baseClassName) = explode('.', $baseClassName);
 			}
@@ -315,7 +296,6 @@ class ToolbarComponent extends Object {
 			$this->_eval($class);
 		}
 	}
-
 /**
  * Method wrapper for eval() for testing uses.
  *
@@ -324,7 +304,6 @@ class ToolbarComponent extends Object {
 	function _eval($code) {
 		eval($code);
 	}
-
 /**
  * Save the current state of the toolbar varibles to the cache file.
  *
@@ -365,23 +344,12 @@ class DebugPanel extends Object {
  * @var string
  */
 	var $plugin = null;
-
 /**
- * Defines the title for displaying on the toolbar. If null, the class name will be used.
- * Overriding this allows you to define a custom name in the toolbar.
+ * Defines the title for displaying on the toolbar.
  *
  * @var string
  */
 	var $title = null;
-
-/**
- * Provide a custom element name for this panel.  If null, the underscored version of the class
- * name will be used.
- *
- * @var string
- */
-	var $elementName = null;
-
 /**
  * startup the panel
  *
@@ -391,7 +359,6 @@ class DebugPanel extends Object {
  * @return void
  **/
 	function startup(&$controller) { }
-
 /**
  * Prepare output vars before Controller Rendering.
  *
@@ -409,16 +376,13 @@ class DebugPanel extends Object {
  * @package       cake.debug_kit.panels
  **/
 class HistoryPanel extends DebugPanel {
-
 	var $plugin = 'debug_kit';
-
 /**
  * Number of history elements to keep
  *
  * @var string
  **/
 	var $history = 5;
-
 /**
  * Constructor
  *
@@ -430,7 +394,6 @@ class HistoryPanel extends DebugPanel {
 			$this->history = $settings['history'];
 		}
 	}
-
 /**
  * beforeRender callback function
  *
@@ -474,9 +437,7 @@ class HistoryPanel extends DebugPanel {
  * @package       cake.debug_kit.panels
  **/
 class VariablesPanel extends DebugPanel {
-
 	var $plugin = 'debug_kit';
-
 /**
  * beforeRender callback
  *
@@ -495,9 +456,7 @@ class VariablesPanel extends DebugPanel {
  * @package       cake.debug_kit.panels
  **/
 class SessionPanel extends DebugPanel {
-
 	var $plugin = 'debug_kit';
-
 /**
  * beforeRender callback
  *
@@ -519,9 +478,7 @@ class SessionPanel extends DebugPanel {
  * @package       cake.debug_kit.panels
  **/
 class RequestPanel extends DebugPanel {
-
 	var $plugin = 'debug_kit';
-
 /**
  * beforeRender callback - grabs request params
  *
@@ -547,9 +504,7 @@ class RequestPanel extends DebugPanel {
  * @package       cake.debug_kit.panels
  **/
 class TimerPanel extends DebugPanel {
-
 	var $plugin = 'debug_kit';
-	
 /**
  * startup - add in necessary helpers
  *
@@ -573,9 +528,7 @@ class TimerPanel extends DebugPanel {
  * @package       cake.debug_kit.panels
  **/
 class SqlLogPanel extends DebugPanel {
-
 	var $plugin = 'debug_kit';
-
 /**
  * Minimum number of Rows Per Millisecond that must be returned by a query before an explain
  * is done.
@@ -583,7 +536,6 @@ class SqlLogPanel extends DebugPanel {
  * @var int
  **/
 	var $slowRate = 20;
-
 /**
  * Gets the connection names that should have logs + dumps generated.
  *
@@ -599,24 +551,14 @@ class SqlLogPanel extends DebugPanel {
 
 		$dbConfigs = ConnectionManager::sourceList();
 		foreach ($dbConfigs as $configName) {
-			$driver = null;
 			$db =& ConnectionManager::getDataSource($configName);
-			if (
-				(empty($db->config['driver']) && empty($db->config['datasource'])) ||
-				!$db->isInterfaceSupported('getLog')
-			) {
-				continue;
+			if (!isset($db->config['driver'])) {
+				return false;
 			}
-
-			if (isset($db->config['driver'])) {
-				$driver = $db->config['driver'];
-			}
-			if (empty($driver) && isset($db->config['datasource'])) {
-				$driver = $db->config['datasource'];
-			}
+			$driver = $db->config['driver'];
 			$explain = false;
 			$isExplainable = ($driver === 'mysql' || $driver === 'mysqli' || $driver === 'postgres');
-			if ($isExplainable) {
+			if ($isExplainable && $db->isInterfaceSupported('getLog')) {
 				$explain = true;
 			}
 			$connections[$configName] = $explain;
@@ -631,70 +573,78 @@ class SqlLogPanel extends DebugPanel {
  * @package       cake.debug_kit.panels
  */
 class LogPanel extends DebugPanel {
-
 	var $plugin = 'debug_kit';
-
 /**
- * Constructor - sets up the log listener.
+ * Log files to scan
+ *
+ * @var array
+ */
+	var $logFiles = array('error.log', 'debug.log');
+/**
+ * startup
  *
  * @return void
- */
-	function __construct($settings) {
-		parent::__construct();
+ **/
+	function startup(&$controller) {
 		if (!class_exists('CakeLog')) {
 			App::import('Core', 'CakeLog');
 		}
-		$existing = CakeLog::configured();
-		if (empty($existing)) {
-			CakeLog::config('default', array(
-				'engine' => 'FileLog'
-			));
-		}
-		CakeLog::config('debug_kit_log_panel', array(
-			'engine' => 'DebugKitLogListener',
-			'panel' => $this
-		));
 	}
-
 /**
  * beforeRender Callback
  *
  * @return array
  **/
 	function beforeRender(&$controller) {
-		$logs = $this->logger->logs;
-		return $logs;
-	}
-}
-
-/**
- * A CakeLog listener which saves having to munge files or other configured loggers.
- *
- * @package debug_kit.components
- */
-class DebugKitLogListener {
-
-	var $logs = array();
-
-/**
- * Makes the reverse link needed to get the logs later.
- *
- * @return void
- */
-	function DebugKitLogListener($options) {
-		$options['panel']->logger =& $this;
-	}
-
-/**
- * Captures log messages in memory
- *
- * @return void
- */
-	function write($type, $message) {
-		if (!isset($this->logs[$type])) {
-			$this->logs[$type] = array();
+		$this->startTime = DebugKitDebugger::requestStartTime();
+		$this->currentTime = DebugKitDebugger::requestTime();
+		$out = array();
+		foreach ($this->logFiles as $log) {
+			$file = LOGS . $log;
+			if (!file_exists($file)) {
+				continue;
+			}
+			$out[$log] = $this->_parseFile($file);
 		}
-		$this->logs[$type][] = array(date('Y-m-d H:i:s'), $message);
+		return $out;
+	}
+/**
+ * parse a log file and find the relevant entries
+ *
+ * @param string $filename Name of file to read
+ * @access protected
+ * @return array
+ */
+	function _parseFile($filename) {
+		$fh = fopen($filename, 'r');
+		$timePattern = '/^(\d{4}-\d{2}\-\d{2}\s\d{1,2}\:\d{1,2}\:\d{1,2})\s(.*)/';
+
+		$out = array();
+		$entry = '';
+		$done = false;
+
+		while (!feof($fh)) {
+			$line = fgets($fh);
+			if (preg_match($timePattern, $line, $matches)) {
+				if (strtotime($matches[1]) < $this->startTime) {
+					continue;
+				}
+				$out[] = $matches[1];
+				$out[] = $matches[2];
+			} elseif (count($out) - 1 > 0) {
+				$currentIndex = count($out) - 1;
+				while (!feof($fh)) {
+					$line = fgets($fh);
+					if (preg_match($timePattern, $line)) {
+						break;
+					}
+					$out[$currentIndex] .= $line;
+				}
+			}
+		}
+		fclose($fh);
+		return $out;
 	}
 }
 
+?>

@@ -5,12 +5,12 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.tests.views
@@ -39,7 +39,7 @@ class DebugViewTestCase extends CakeTestCase {
 	function startTest() {
 		Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 		Router::parse('/');
-		$this->Controller =& new Controller();
+		$this->Controller =& ClassRegistry::init('Controller');
 		$this->View =& new DebugView($this->Controller, false);
 		$this->_debug = Configure::read('debug');
 		$this->_paths = array();
@@ -86,13 +86,7 @@ class DebugViewTestCase extends CakeTestCase {
  **/
 	function testElementTimers() {
 		$result = $this->View->element('test_element');
-		$expected = <<<TEXT
-<!-- Starting to render - test_element -->
-this is the test element
-<!-- Finished - test_element -->
-
-TEXT;
-		$this->assertEqual($result, $expected);
+		$this->assertPattern('/^this is the test element$/', $result);
 
 		$result = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($result['render_test_element.ctp']));
@@ -146,12 +140,13 @@ TEXT;
  * @return void
  **/
 	function testProperReturnUnderRequestAction() {
-		$testapp = App::pluginPath('DebugKit') . 'tests' . DS . 'test_app' . DS . 'views' . DS;
-		App::build(array('views' => array($testapp)));
+		$plugins = App::path('plugins');
+		$views = App::path('views');
+		$testapp = $plugins[1] . 'debug_kit' . DS . 'tests' . DS . 'test_app' . DS . 'views' . DS;
+		array_unshift($views, $testapp);
+		App::build(array('views' => $views), true);
 
 		$this->View->set('test', 'I have been rendered.');
-		$this->View->action = 'request_action_render';
-		$this->View->name = 'DebugKitTest';
 		$this->View->viewPath = 'debug_kit_test';
 		$this->View->layout = false;
 		$result = $this->View->render('request_action_render');
@@ -159,3 +154,4 @@ TEXT;
 		$this->assertEqual($result, 'I have been rendered.');
 	}
 }
+?>

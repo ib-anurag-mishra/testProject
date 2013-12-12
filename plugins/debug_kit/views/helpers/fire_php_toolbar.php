@@ -7,12 +7,12 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.views.helpers
@@ -74,9 +74,6 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 		if (isset($options['title'])) {
 			$title = $options['title'];
 		}
-		foreach ($rows as $i => $row) {
-			$rows[$i] = array_values($row);
-		}
 		array_unshift($rows, $headers);
 		FireCake::table($title, $rows);
 	}
@@ -97,3 +94,4 @@ class FirePhpToolbarHelper extends ToolbarHelper {
 		FireCake::groupEnd();
 	}
 }
+?>
