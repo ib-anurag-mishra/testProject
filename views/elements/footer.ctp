@@ -171,6 +171,7 @@ if ($this->Session->read("patron"))
 
                 var _gaq = _gaq || [];
                 _gaq.push(['_setAccount', 'UA-16162084-1']);
+                _gaq.push(['_setDomainName', 'freegalmusic.com']);
                 _gaq.push(['_trackPageview']);
 
                 (function() {
