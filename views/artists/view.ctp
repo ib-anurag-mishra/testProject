@@ -134,9 +134,7 @@
                 foreach ($albumSongs[$album['Album']['ProdID']] as $key => $albumSong):
                     
                     echo "<pre>";
-                    print_r($albumSong);
-                    die;
-                    
+                    print_r($albumSong);                    
                     //hide song if library block the explicit content
                     if (($this->Session->read('block') == 'yes') && ($albumSong['Song']['Advisory'] == 'T'))
                     {
@@ -261,7 +259,10 @@
                                 if (($albumSong['Country']['SalesDate'] < date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                                 {
                                     $productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'], $albumSong["Song"]['provider_type']);
-
+                                    echo "<pre>";
+                                    print_r($productInfo);
+                                    die ;
+                    
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {
                                         $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
