@@ -781,6 +781,8 @@ function addToWishlistVideo(prodId, providerType)
 
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+            return false ;
         }
     });
     return false;
