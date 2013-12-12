@@ -748,7 +748,7 @@ function addToWishlistVideo(prodId, providerType)
             else if (msg === 'error1')
             {
                 document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Already Added</a>';
-                return false ;
+                return false;
             }
 
 
@@ -757,14 +757,14 @@ function addToWishlistVideo(prodId, providerType)
             {
                 $('.beforeClick').show();
                 $('.afterClick').hide();
-                
-               // alert(languageSet);
-                if (languageSet === 'en') 
+
+                // alert(languageSet);
+                if (languageSet === 'en')
                 {
                     document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-                    return false ;
-                } 
-                else 
+                    return false;
+                }
+                else
                 {
                     document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
                     return false;
@@ -782,7 +782,7 @@ function addToWishlistVideo(prodId, providerType)
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(textStatus);
-            return false ;
+            return false;
         }
     });
     return false;
@@ -2442,11 +2442,22 @@ $(document).ready(function() {
         $('.my-video-wishlist-shadow-container').hide();
         $('.my-wishlist-shadow-container').show();
     });
-    
+
     /********* manage notification code js **********/
-     
-    $('#UserSendNewsLetterCheck').click(function(){
-       alert($('#UserSendNewsLetterCheck:checked').val()); 
+
+    $('#UserSendNewsLetterCheck').click(function() {
+        alert($('#UserSendNewsLetterCheck:checked').val());
+
+        var isChecked = $('#UserSendNewsLetterCheck:checked').val() ? true : false;
+
+        if (isChecked) {
+            $('#show_newsletterboxField').show();
+            $('#UserSendNewsLetterCheck').attr('value', '1');
+        } else {
+            $('#show_newsletterboxField').hide();
+            $('#UserSendNewsLetterCheck').attr('value', '0');
+        }
+
     });
 });
 
