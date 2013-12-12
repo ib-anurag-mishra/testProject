@@ -24,12 +24,12 @@ $nva = sprintf("%4d%02d%02d%02d%02d%02d", $year+1900,$mon+1,$mday,$hour,$min,$se
 #$uri = "/$file?nvb=$nvb&nva=$nva";
 $start_path = "/libraryideas";
 #$music_file = "$file?nvb=$nvb&nva=$nva";
-$music_file =  "$file?";
+$music_file =  "$file";
 $full_path = "$start_path/$music_file";
 
 $hash = ComputeHash($gen, $key, $full_path, \$error); # Compute the hash code
 
-$final_uri = "$start_path/mp3:$music_file&token=$hash";	# Append the hash code
+$final_uri = "$start_path/mp3:$music_file?token=$hash";	# Append the hash code
 
 print $final_uri . "\n";
 
