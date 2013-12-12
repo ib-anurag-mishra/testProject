@@ -625,7 +625,7 @@ STR;
 
     function details()
     {
-        Configure::write('default' , 2);
+        //Configure::write('default' , 0);
         
         $this->layout = 'home';
         $libId = $this->Session->read('library');
