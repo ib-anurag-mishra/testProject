@@ -2442,6 +2442,12 @@ $(document).ready(function() {
         $('.my-video-wishlist-shadow-container').hide();
         $('.my-wishlist-shadow-container').show();
     });
+    
+    /********* manage notification code js **********/
+     
+    $('#UserSendNewsLetterCheck').click(function(){
+       alert($('#UserSendNewsLetterCheck:checked').val()); 
+    });
 });
 
 
