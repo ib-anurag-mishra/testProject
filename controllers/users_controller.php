@@ -1,4 +1,4 @@
-m<?php
+<?php
  /*
  File Name : users_controller.php
  File Description : Controller page for the  login functionality.
