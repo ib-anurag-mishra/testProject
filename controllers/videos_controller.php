@@ -625,6 +625,8 @@ STR;
 
     function details()
     {
+        Configure::write('default' , 2);
+        
         $this->layout = 'home';
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -647,16 +649,27 @@ STR;
 
             $prefix = strtolower($this->Session->read('territory')) . '_';
             $VideosSql =
-                    "SELECT Video.ProdID,Video.Advisory, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
-            Sample_Files.SaveAsName,
-            Full_Files.CdnPath,
-            Full_Files.SaveAsName,
-            File.CdnPath,
-            File.SourceURL,
-            File.SaveAsName,
-            Sample_Files.FileID,
-            Country.Territory,
-            Country.SalesDate
+                    "SELECT 
+                            Video.ProdID,
+                            Video.Advisory, 
+                            Video.ReferenceID,  
+                            Video.VideoTitle, 
+                            Video.ArtistText, 
+                            Video.FullLength_Duration, 
+                            Video.CreatedOn, 
+                            Video.Image_FileID, 
+                            Video.provider_type, 
+                            Video.Genre,  
+                            Sample_Files.CdnPath,
+                            Sample_Files.SaveAsName,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
+                            Sample_Files.FileID,
+                            Country.Territory,
+                            Country.SalesDate
             FROM video as Video
             LEFT JOIN 
             {$prefix}countries As Country ON (Video.ProdID = Country.ProdID AND Video.provider_type = Country.provider_type)

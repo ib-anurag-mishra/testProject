@@ -114,7 +114,7 @@
 					if(!empty($MoreVideosData)){
 						foreach($MoreVideosData as $key => $value)
 						{		
-
+                                                    echo '<pre>'; print_r($value);
                                                    
                                                     //hide video if library block the explicit content
                                                     if(($this->Session->read('block') == 'yes') && ($value['Video']['Advisory'] =='T')) {
@@ -134,6 +134,8 @@
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
                                                                 $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"],$value["Video"]["provider_type"]);
+                                                                print_r($productInfo);die;
+                                                                
                                                                 $videoUrl = shell_exec('perl files/tokengen '  . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                                                                 $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                                                                 $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
