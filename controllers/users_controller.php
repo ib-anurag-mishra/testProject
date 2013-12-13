@@ -2819,7 +2819,7 @@ function login($library = null){
    */
 
    function indlogin($library = null){
-       echo "here"; die;
+       
        
        
         //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
