@@ -1,3 +1,7 @@
+<?php
+echo "Userlogin : ".$this->Session->read('userlogin')."<br/>";
+echo "StreamPopUpShow : ".$this->Session->read('streamPopupShow')."<br/>";
+?>
 <!DOCTYPE html>
 <html>
 
