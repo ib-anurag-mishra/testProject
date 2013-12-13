@@ -127,7 +127,7 @@ class AppController extends Controller
         {
             $this->set('register_concert_id', '');
         } */
-
+/*
         // Code for Register Concert  -- END
         //common funcitonality for the user wishlist items which are already added
         if (($this->Session->read("patron") != '') && ($this->Session->read("lId") != ''))
@@ -151,7 +151,7 @@ class AppController extends Controller
                 $this->Session->write('wishlistVariArray', $wishlistVariArray);
             }
 
-/*
+
             //create common structure for add to wishlist functionality
             //first check if session variable not set
             if (!$this->Session->read('wishlistVideoArray'))
