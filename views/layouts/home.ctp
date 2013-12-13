@@ -88,7 +88,7 @@
 
             <?php } ?>
 
-            <script type="text/javascript" src="/js/swfobject.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
             <?php
         }
         if ($this->Session->read('library') && $this->Session->read('library') != '')
