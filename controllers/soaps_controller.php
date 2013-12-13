@@ -6244,13 +6244,14 @@ STR;
 
 
     $queryVar   = $searchText;
-    $typeVar    = 'album';
-    (0 == $startFrom) ? $startFrom = 1 : $startFrom = $startFrom;   
+    $typeVar    = 'album'; 
     $limit      = $recordCount;
-    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+        
     $mobileExplicitStatus = $this->getSearchLibraryExplicitStatus($libraryId);
-    
-    $Albumlist = $this->Solr->groupSearch($queryVar, $typeVar, $startFrom, $recordCount, $mobileExplicitStatus, $library_terriotry);
+
+    $Albumlist = $this->Solr->groupSearch($queryVar, $typeVar, $page, $limit, $mobileExplicitStatus, $library_terriotry);
+ 
       
     foreach($Albumlist AS $key => $val){
 
@@ -6942,7 +6943,7 @@ STR;
     $this->Download->recursive = -1;
     $downloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 
-
+    $this->Videodownload->recursive = -1;
     $videoDownloadCount = $this->Videodownload->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
     $videoDownloadCount = $videoDownloadCount *2;
     return $downloadCount + $videoDownloadCount;
