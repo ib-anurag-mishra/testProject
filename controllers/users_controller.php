@@ -465,7 +465,8 @@ function login($library = null){
                 //print_r($isApproved); die;
                 //echo "Setting Stream popup session";
 		if($libraryArr['Library']['library_type'] == 2){
-		    $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);                               
+		    $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
+		    $this->Session->write("userlogin", true);
                 }
                 //echo "Stream popup session set"; die;
                 $this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
@@ -3000,8 +3001,9 @@ function login($library = null){
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-						if($existingLibraries['0']['Library']['library_type'] == 2){
+						if($existingLibraries['0']['Library']['library_type'] == 2) {
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
+							$this->Session->write("userlogin", false);
 						}
 						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);

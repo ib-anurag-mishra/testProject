@@ -755,6 +755,8 @@
         ?>      
 
         <?php
+        $userLogin = $this->Session->read("userlogin");
+        if($userLogin) {
         if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
             ?>
@@ -774,7 +776,30 @@
                 </div>
             </div>
 
-        <?php } ?>
+        <?php }
+        } else {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
+            ?>
+            <style>#cboxClose{display:none !important;}</style>
+            <a class='streamApproval' href="#"></a>
+            <div style="display:none;">
+                <div id="streamApproval_div">
+                    <span id="stream_content">
+                        <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                            <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                        </div>
+                        <?php echo $page->getPageContent('stream_123'); ?>
+                        <br />
+                        <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                    </span>
+
+                </div>
+            </div>
+
+        <?php }
+        }
+        ?>
 
         <div id="border-background" >
             <div id="container">
