@@ -793,3 +793,4 @@
             <?php echo $this->element('footer'); ?>
 
         </div>
+    </body>    
