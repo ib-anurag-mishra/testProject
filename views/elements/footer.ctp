@@ -325,6 +325,6 @@ if ($this->Session->read("patron"))
 <?php //} 
 
   ?>
-<?php /* echo $this->element('sql_dump'); */ ?>
+<?php  echo $this->element('sql_dump');  ?>
 <!-- Code for player end -->
 
