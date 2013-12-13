@@ -3022,7 +3022,8 @@ function login($library = null){
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-						echo $existingLibraries['0']['Library']['library_type']; die;
+						echo $existingLibraries['0']['Library']['library_type'];
+						die;
 						if($existingLibraries['0']['Library']['library_type'] == 2) {
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", false);
