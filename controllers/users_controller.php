@@ -2821,7 +2821,7 @@ function login($library = null){
    function indlogin($library = null){
        
        
-       
+   echo 147;die;    
         //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
     if($library){            
         $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
