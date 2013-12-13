@@ -1,3 +1,7 @@
+<?php
+echo "Userlogin : ".$this->Session->read('userlogin')."<br/>";
+echo "StreamPopUpShow : ".$this->Session->read('streamPopupShow')."<br/>";
+?>
 <!DOCTYPE html>
 <html>
 
@@ -492,6 +496,8 @@
     }
     ?>
     <?php
+    $userLogin = $this->Session->read("userlogin");
+    if($userLogin == 'yes') {
     if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
     {
         ?>
@@ -523,6 +529,40 @@
                             });
                         });
         <?php
+    }
+    } else {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
+        ?>
+                        $(".streamApproval")
+                                .colorbox(
+                                {
+                                    width: "50%", inline: true, open: true,
+                                    overlayClose: false, opacity: .5,
+                                    escKey: false, noEscape: true, href: "#streamApproval_div",
+                                    onOpen: function() {
+                                        $(document).unbind("keydown.cbox_close");
+                                    }});
+
+                        $("#colorboxOKBtn").click(function() {
+                            var pid = <?= $this->Session->read('patron') ?>;
+                            var lid = <?= $this->Session->read('library') ?>;
+                            var data = {pid: pid, lid: lid};
+                            jQuery.ajax({
+                                type: "post", // Request method: post, get
+                                url: webroot + "users/savestreampopup", // URL to request
+                                data: data, // postdata
+                                async: false,
+                                success: function(response) {
+                                    sleep(2000);
+                                    $.fn.colorbox.close();
+                                },
+                                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                }
+                            });
+                        });
+        <?php
+        }
     }
     ?>
 
@@ -755,6 +795,8 @@
         ?>      
 
         <?php
+        $userLogin = $this->Session->read("userlogin");
+        if($userLogin == 'yes') {
         if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
             ?>
@@ -774,7 +816,30 @@
                 </div>
             </div>
 
-        <?php } ?>
+        <?php }
+        } else {
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
+            ?>
+            <style>#cboxClose{display:none !important;}</style>
+            <a class='streamApproval' href="#"></a>
+            <div style="display:none;">
+                <div id="streamApproval_div">
+                    <span id="stream_content">
+                        <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                            <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                        </div>
+                        <?php echo $page->getPageContent('stream_123'); ?>
+                        <br />
+                        <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                    </span>
+
+                </div>
+            </div>
+
+        <?php }
+        }
+        ?>
 
         <div id="border-background" >
             <div id="container">

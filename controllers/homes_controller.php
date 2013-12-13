@@ -154,27 +154,57 @@ class HomesController extends AppController
         {
             $this->Session->write('Config.language', 'en');
         }
+        
+        
+        
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
-        //echo "<br>Query1: ".$this->News->lastQuery();
-
-
-        if ($news_count != 0)
-        {
-            $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%"),
+    
+        //create the cache variable name
+        $newCacheVarName = "news_".$this->Session->read('Config.language')."_".$this->Session->read('territory');
+        
+        if(($this->Session->read('territory')=='US') && ($this->Session->read('Config.language')=='en')){
+            
+            if (($newsInfo = Cache::read($newCacheVarName)) === false)
+            {
+                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%")),
                 'order' => 'News.created DESC',
                 'limit' => '10'
-            ));
-            //  echo "<br>Query2: ".$this->News->lastQuery();
+                )); 
+                Cache::write($newCacheVarName,$news_rs);
+            }
+            else
+            {
+                //get all the information from the cache for news
+                $news_rs = Cache::read($newCacheVarName);
+            }
+            
+        }else{
+            
+            if ($news_count != 0)
+            {   
+
+                $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%"),
+                    'order' => 'News.created DESC',
+                    'limit' => '10'
+                ));            
+            }
+            else
+            {
+
+                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
+                    'order' => 'News.created DESC',
+                    'limit' => '10'
+                ));            
+            }
+                     
         }
-        else
-        {
-            $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
-                'order' => 'News.created DESC',
-                'limit' => '10'
-            ));
-            // echo "<br>Query3: ".$this->News->lastQuery();
-        }
+        
+        
         $this->set('news', $news_rs);
+        
+        
+        
+        
 
 
         /*

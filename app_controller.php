@@ -93,8 +93,8 @@ class AppController extends Controller
         $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
         $this->set('username', $this->Session->read('Auth.User.username'));
         $this->set('genresMenu', $this->Category->find('all', array('cache' => 'no')));
-        $this->set('featuredArtistMenu', $this->Featuredartist->getallartists());
-        $this->set('newArtistMenu', $this->Newartist->getallnewartists());
+//        $this->set('featuredArtistMenu', $this->Featuredartist->getallartists());
+//        $this->set('newArtistMenu', $this->Newartist->getallnewartists());
         $this->set('cdnPath', Configure::read('App.CDN'));
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Last-Modified: ' . gmdate('D, d M Y H:i:S') . ' GMT');
@@ -127,7 +127,7 @@ class AppController extends Controller
         {
             $this->set('register_concert_id', '');
         } */
-
+/*
         // Code for Register Concert  -- END
         //common funcitonality for the user wishlist items which are already added
         if (($this->Session->read("patron") != '') && ($this->Session->read("lId") != ''))
@@ -169,10 +169,13 @@ class AppController extends Controller
                 $this->Session->write('wishlistVideoArray', $wishlistVariArray);
             }
             
+     */       
+            
+            
            // print_r($this->Session->read('wishlistVideoArray'));
             
             
-            
+           /* 
 
             if (!$this->Session->read('downloadVariArray'))
             {
@@ -191,12 +194,15 @@ class AppController extends Controller
                 $downloadVariArray = @array_unique($downloadVariArray);
                 $this->Session->write('downloadVariArray', $downloadVariArray);
             }
+             
+            
 
             if ($this->Session->check('videodownloadCountArray'))
             {
                 $this->Common->getVideodownloadStatus($this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
             }
         }
+       */ 
 
        // $this->log("App Controller -- END", "siteSpeed");
     }
