@@ -323,7 +323,8 @@ if ($this->Session->read("patron"))
           });
       </script>    -->
 <?php //} 
-  ?>
 
+  ?>
+<?php /* echo $this->element('sql_dump'); */ ?>
 <!-- Code for player end -->
 

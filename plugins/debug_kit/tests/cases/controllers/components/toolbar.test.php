@@ -5,12 +5,12 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.tests.controllers.components
@@ -126,21 +126,14 @@ class DebugToolbarTestCase extends CakeTestCase {
  **/
 	function testLoadPluginPanels() {
 		$this->Controller->Toolbar->loadPanels(array('plugin.test'));
-		$this->assertTrue(is_a($this->Controller->Toolbar->panels['test'], 'TestPanel'));
+		$this->assertTrue(is_a($this->Controller->Toolbar->panels['plugin.test'], 'TestPanel'));
 	}
 /**
  * test generating a DoppelGangerView with a pluginView.
  *
- * If $this->Controller->Toolbar->startup() has been previously called,
- * DoppelGangerView class has already been defined.
- *
  * @return void
  **/
 	function testPluginViewParsing() {
-		if (class_exists('DoppelGangerView')) {
-			$this->skipIf(true, 'Class DoppelGangerView already defined, skipping %s');
-			return;
-		}
 		App::import('Vendor', 'DebugKit.DebugKitDebugger');
 		$this->Controller->Toolbar->evalTest = true;
 		$this->Controller->view = 'Plugin.OtherView';
@@ -191,7 +184,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$timers = DebugKitDebugger::getTimers();
 		$this->assertTrue(isset($timers['componentInit']));
 		$memory = DebugKitDebugger::getMemoryPoints();
-		$this->assertTrue(isset($memory['Component initialization']));
+		$this->assertTrue(isset($memory['Component intitailization']));
 	}
 /**
  * test initialize w/ custom panels and defaults
@@ -209,14 +202,12 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$expected = array('history', 'session', 'request', 'sqlLog', 'timer', 'log', 'variables', 'test');
 		$this->assertEqual($expected, array_keys($this->Controller->Toolbar->panels));
 	}
-
 /**
  * test syntax for removing panels
  *
  * @return void
  **/
 	function testInitializeRemovingPanels() {
-		unset($this->Controller->Toolbar);
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array('panels' => array('session' => false, 'history' => false, 'test'))
 		);
@@ -247,7 +238,6 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testForceEnable() {
-		unset($this->Controller->Toolbar);
 		$_debug = Configure::read('debug');
 		Configure::write('debug', 0);
 		$this->Controller->components = array('DebugKit.Toolbar' => array('forceEnable' => true));
@@ -421,6 +411,11 @@ class DebugToolbarTestCase extends CakeTestCase {
  * @return void
  **/
 	function testLogPanel() {
+		sleep(1);
+		$this->Controller->log('This is a log I made this request');
+		$this->Controller->log('This is the second  log I made this request');
+		$this->Controller->log('This time in the debug log!', LOG_DEBUG);
+
 		$this->Controller->components = array(
 			'DebugKit.Toolbar' => array(
 				'panels' => array('log', 'session', 'history' => false, 'variables' => false, 'sqlLog' => false,
@@ -429,22 +424,16 @@ class DebugToolbarTestCase extends CakeTestCase {
 		);
 		$this->Controller->Component->init($this->Controller);
 		$this->Controller->Component->initialize($this->Controller);
-
-		sleep(1);
-		$this->Controller->log('This is a log I made this request');
-		$this->Controller->log('This is the second  log I made this request');
-		$this->Controller->log('This time in the debug log!', LOG_DEBUG);
-		
 		$this->Controller->Component->startup($this->Controller);
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
 
 		$this->assertEqual(count($result['content']), 2);
-		$this->assertEqual(count($result['content']['error']), 2);
-		$this->assertEqual(count($result['content']['debug']), 1);
+		$this->assertEqual(count($result['content']['error.log']), 4);
+		$this->assertEqual(count($result['content']['debug.log']), 2);
 
-		$this->assertEqual(trim($result['content']['debug'][0][1]), 'This time in the debug log!');
-		$this->assertEqual(trim($result['content']['error'][0][1]), 'This is a log I made this request');
+		$this->assertEqual(trim($result['content']['debug.log'][1]), 'Debug: This time in the debug log!');
+		$this->assertEqual(trim($result['content']['error.log'][1]), 'Error: This is a log I made this request');
 
 		$data = array(
 			'Post' => array(
@@ -460,27 +449,9 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->Controller->log($data);
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->viewVars['debugToolbarPanels']['log'];
-		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']['error'][2][1]);
-		$this->assertPattern('/\[Comment\] => Array/', $result['content']['error'][2][1]);
+		$this->assertPattern('/\[created\] => 2009-11-07 23:23:23/', $result['content']['error.log'][5]);
+		$this->assertPattern('/\[Comment\] => Array/', $result['content']['error.log'][5]);
 	}
-
-/**
- * test that creating the log panel creates the default file logger if none
- * are configured.  This stops DebugKit from mucking with the default auto-magic log config
- *
- * @return void
- */
-	function testLogPanelConstructCreatingDefaultLogConfiguration() {
-		CakeLog::drop('default');
-		CakeLog::drop('debug_kit_log_panel');
-
-		$panel =& new LogPanel(array());
-		$configured = CakeLog::configured();
-
-		$this->assertTrue(in_array('default', $configured));
-		$this->assertTrue(in_array('debug_kit_log_panel', $configured));
-	}
-
 /**
  * Test that history state urls set prefix = null and admin = null so generated urls do not
  * adopt these params.
@@ -545,6 +516,7 @@ class DebugToolbarTestCase extends CakeTestCase {
 			),
 			'plugins' => $this->_paths['plugins']
 		));
+		Router::reload();
 
 		$result = $this->Controller->requestAction('/debug_kit_test/request_action_return', array('return'));
 		$this->assertEqual($result, 'I am some value from requestAction.');
@@ -577,3 +549,4 @@ class DebugToolbarTestCase extends CakeTestCase {
 		$this->assertTrue(isset($result['content']['threshold']));
 	}
 }
+?>

@@ -7,12 +7,12 @@
  *
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.views.helpers
@@ -78,7 +78,7 @@ DEBUGKIT.Util.Element = {
 	removeClass: function (element, className) {
 		if (DEBUGKIT.Util.isArray(element)) {
 			DEBUGKIT.Util.Collection.apply(element, function (element) {
-				DEBUGKIT.Util.Element.removeClass(element, className);
+				Element.removeClass(element, className);
 			});
 		}
 		if (!element.className) {
@@ -254,7 +254,7 @@ DEBUGKIT.Util.Event = function () {
 
 			if (document.all && !window.opera) {
 				//Define a "blank" external JavaScript tag
-				document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="javascript:void(0)"><\/script>');
+				document.write('<script type="text/javascript" id="__domreadywatcher" defer="defer" src="://"><\/script>');
 				var contentloadtag = document.getElementById("__domreadywatcher");
 				contentloadtag.onreadystatechange = function (){
 					if (this.readyState == "complete") {
@@ -412,6 +412,7 @@ DEBUGKIT.Util.Request = function (options) {
 			data = this.serialize(data);
 		}
 		if (data) {
+			this.transport.setRequestHeader('Content-Length', data.length);
 			this.transport.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		}
 		this.onRequest();
@@ -576,7 +577,6 @@ DEBUGKIT.toolbar = function () {
 				return false;
 			}
 			this.makePanelDraggable(panel);
-			this.makePanelMinMax(panel);
 
 			var self = this;
 			Event.addEvent(panel.button, 'click', function (event) {
@@ -601,7 +601,7 @@ DEBUGKIT.toolbar = function () {
 					return;
 				}
 				var newHeight = currentElement._startHeight + (event.pageY - currentElement._startY);
-				Element.height(currentElement.parentNode, newHeight);
+				Element.height(Element.getPrevious(currentElement), newHeight);
 			}
 
 			// handle the mouseup event, remove the other listeners so the panel
@@ -616,7 +616,7 @@ DEBUGKIT.toolbar = function () {
 				event.preventDefault();
 				currentElement = this;
 				this._startY = event.pageY;
-				this._startHeight = parseInt(Element.height(currentElement.parentNode));
+				this._startHeight = parseInt(Element.height(Element.getPrevious(currentElement)));
 
 				// attach to document so mouse doesn't have to stay precisely on the 'handle'
 				Event.addEvent(document, 'mousemove', mouseMoveHandler);
@@ -626,36 +626,6 @@ DEBUGKIT.toolbar = function () {
 			Collection.apply(panel.content.childNodes, function (element) {
 				if (Element.nodeName(element, 'DIV') && Element.hasClass(element, 'panel-resize-handle')) {
 					Event.addEvent(element, 'mousedown', mouseDownHandler);
-				}
-			});
-		},
-		
-		// make the maximize button work on the panels.
-		makePanelMinMax: function (panel) {
-			var _oldHeight;
-	
-			var maximize = function (event) {
-				event.preventDefault();
-				if (!_oldHeight) {
-					_oldHeight = this.parentNode.offsetHeight;
-				}
-				var windowHeight = window.innerHeight;
-				var panelHeight = windowHeight - this.parentNode.offsetTop;
-				Element.height(this.parentNode, panelHeight);
-			};
-			
-			var minimize = function (event) {
-				event.preventDefault();
-				Element.height(this.parentNode, _oldHeight);
-				_oldHeight = null;
-			};
-
-			Collection.apply(panel.content.getElementsByTagName('A'), function (element) {
-				if (Element.hasClass(element, 'panel-maximize')) {
-					Event.addEvent(element, 'click', maximize);
-				}
-				if (Element.hasClass(element, 'panel-minimize')) {
-					Event.addEvent(element, 'click', minimize);
 				}
 			});
 		},
