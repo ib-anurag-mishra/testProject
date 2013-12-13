@@ -10,7 +10,7 @@ class AppController extends Controller
 
     function beforeFilter()
     {
-        $this->log("App Controller -- START", "siteSpeed");
+       // $this->log("App Controller -- START", "siteSpeed");
         ini_set('session.cookie_domain', env('HTTP_BASE'));
         Configure::write('Session.checkAgent', false);
         Configure::write('Session.ini', array('session.cookie_secure' => false, 'session.referer_check' => false));
@@ -110,9 +110,14 @@ class AppController extends Controller
         //print_r($announcment_rs);
         $this->set('announcment_value', $announcment_rs[0]['pages']['page_content']);
         //$announcment_rs[0]['pages']['page_content'];
+        
+        /*
+         * Below Code of Register Concert is Commented as per Request
+         */
+        
         // Code for Register Concert  -- START
 
-        if (($this->Session->read("patron") != '') && ($this->Session->read("lId") != ''))
+     /*   if (($this->Session->read("patron") != '') && ($this->Session->read("lId") != ''))
         {
             $concert_query = "SELECT * from register_concerts WHERE library_card = '" . $this->Session->read("patron") . "' and library_id=" . $this->Session->read("lId");
             $concert_rs = $this->Album->query($concert_query);
@@ -121,7 +126,7 @@ class AppController extends Controller
         else
         {
             $this->set('register_concert_id', '');
-        }
+        } */
 
         // Code for Register Concert  -- END
         //common funcitonality for the user wishlist items which are already added
