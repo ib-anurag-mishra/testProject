@@ -1,5 +1,5 @@
 <?php
-    echo $userLogin;
+    echo $this->Session->read("userlogin");
     echo $this->Session->read('streamPopupShow');
 ?>
 <!DOCTYPE html>
