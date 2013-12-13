@@ -130,12 +130,12 @@ class CacheController extends AppController {
                 'order' => 'News.created DESC',
                 'limit' => '10'
                 ));
-        $newCacheVarName = "news_en_".$territory;
+        $newCacheVarName = "news_en".$territory;
         Cache::write($newCacheVarName,$news_rs);
         
         
-        $this->log("cache wrritten for  news_en_".$territory, "cache");
-        echo $territory;
+        $this->log("cache wrritten for".  $newCacheVarName, "cache");
+        echo $newCacheVarName;
         die;
     }
     
