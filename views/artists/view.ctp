@@ -1,7 +1,9 @@
 
 <section class="albums-page">
     <section class="album-detail-container clearfix">
-        <div class="breadcrumbs"><span><?php
+        <div class="breadcrumbs">
+            <span>
+                <?php
                 $genre_text_conversion = array(
                     "Children's Music" => "Children's",
                     "Classic" => "Soundtracks",
@@ -36,7 +38,9 @@
                 $html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
                 $html->addCrumb($this->getTextEncode($albumData[0]['Album']['AlbumTitle']), '/artists/view/' . str_replace('/', '@', base64_encode($artistName)) . '/' . $album . '/' . base64_encode($albumData[0]['Album']['provider_type']));
                 echo $html->getCrumbs(' > ', __('Home', true), '/homes');
-                ?></span></div>
+                ?>
+            </span>
+        </div>
 
         <?php
         // echo "<pre>"; print_r($albumData);
@@ -59,7 +63,7 @@
                             // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
                             ?>
                             <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
-                            <?php ?><?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                            <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                         </div>
                         <?php
                     }
@@ -85,26 +89,40 @@
 
 
 
-                <div class="album-genre"><?php echo __('Genre') . ": "; ?><span><?php
+                <div class="album-genre">
+                    <?php echo __('Genre') . ": "; ?>
+                    <span>
+                        <?php
                         echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre'])), array("title" => $this->getTextEncode($album['Genre']['Genre'])));
                         if ($album['Album']['Advisory'] == 'T')
                         {
                             echo '<br />';
                             echo '<font class="explicit"> (Explicit)</font>';
                         }
-                        ?></span></div>
-                <div class="album-label"><?php echo __('Label') . ": "; ?><span><?php
+                        ?>
+                    </span>
+                </div>
+                
+                <div class="album-label">
+                    <?php echo __('Label') . ": "; ?>
+                    <span>
+                        <?php
                         if ($album['Album']['Label'] != '')
                         {
                             echo $this->getTextEncode($album['Album']['Label']);
                         }
-                        ?></span></div>
-                <div class="release-detail"><?php
+                        ?>
+                    </span>
+                </div>
+                
+                <div class="release-detail">
+                    <?php
                     if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown')
                     {
                         echo $this->getTextEncode($album['Album']['Copyright']);
                     }
-                    ?></div>
+                    ?>
+                </div>
 
             </section>
             <section class="tracklist-container">
