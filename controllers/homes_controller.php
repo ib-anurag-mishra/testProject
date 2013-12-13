@@ -164,7 +164,7 @@ class HomesController extends AppController
 
         if ($news_count != 0)
         {   
-            echo 1;
+            
             $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%"),
                 'order' => 'News.created DESC',
                 'limit' => '10'
@@ -172,7 +172,7 @@ class HomesController extends AppController
         }
         else
         {
-            echo 2;
+            
             $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
                 'order' => 'News.created DESC',
                 'limit' => '10'
