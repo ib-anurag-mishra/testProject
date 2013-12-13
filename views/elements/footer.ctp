@@ -159,7 +159,7 @@ if ($this->Session->read("patron"))
                         var params = {allowscriptaccess: "always", menu: "false", bgcolor: "000000"};
                         var attributes = {id: "audioplayer"};
 
-                        swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+                        swfobject.embedSWF("<?php echo Configure::read('App.Script') ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
                         
                         
                     <?php }
