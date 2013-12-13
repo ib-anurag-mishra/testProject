@@ -497,7 +497,7 @@ echo "StreamPopUpShow : ".$this->Session->read('streamPopupShow')."<br/>";
     ?>
     <?php
     $userLogin = $this->Session->read("userlogin");
-    if($userLogin) {
+    if($userLogin == 'yes') {
     if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
     {
         ?>
@@ -796,7 +796,7 @@ echo "StreamPopUpShow : ".$this->Session->read('streamPopupShow')."<br/>";
 
         <?php
         $userLogin = $this->Session->read("userlogin");
-        if($userLogin) {
+        if($userLogin == 'yes') {
         if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
             ?>
