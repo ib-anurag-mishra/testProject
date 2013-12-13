@@ -2936,7 +2936,6 @@ function login($library = null){
 														)
 													 );
 				}
-				print_r($existingLibraries); die;
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/indlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
