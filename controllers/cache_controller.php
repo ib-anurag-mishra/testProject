@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -91,27 +91,48 @@ class CacheController extends AppController {
        
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){
-            $this->Common->getGenres($territory);
-            $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
-            $this->Common->getNationalTop100Albums($territory);
-            $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-            $this->Common->getUsTop10Albums($territory);
-            $this->Common->getUsTop10Videos($territory);
-            $this->Common->getNewReleaseAlbums($territory);
-            $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
-            $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);    
+            
+            if($territory == 'US'){
+                $this->setNewsCache($territory);
+            }            
+//            $this->Common->getGenres($territory);
+//            $this->Common->getNationalTop100($territory);
+//            $this->Common->getFeaturedVideos($territory);
+//            $this->Common->getTopVideoDownloads($territory);
+//            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
+//            $this->Common->getNationalTop100Albums($territory);
+//            $this->Common->getComingSoonSongs($territory);
+//            $this->Common->getComingSoonVideos($territory);
+//            $this->Common->getUsTop10Songs($territory);
+//            $this->Common->getUsTop10Albums($territory);
+//            $this->Common->getUsTop10Videos($territory);
+//            $this->Common->getNewReleaseAlbums($territory);
+//            $this->Common->getNewReleaseVideos($territory);
+//            $this->Common->getFeaturedArtists($territory);
+//            $this->Common->getDifferentGenreData($territory);
+//            $this->getArtistText($territory);
+//            $this->Common->getDefaultQueues($territory);    
         }
-       $this->Common->setLibraryTopTenCache();
-       $this->Common->setVideoCacheVar();    
-       $this->setAppMyMusicVideoList();       
+//       $this->Common->setLibraryTopTenCache();
+//       $this->Common->setVideoCacheVar();    
+//       $this->setAppMyMusicVideoList(); 
+       
+    }
+    
+     /*
+     * Function Name : setNewsCache
+     * Function Description : This function is used to set News Cache.
+     * all this function query must be same as queries written in home controller for news.
+     */
+    function setNewsCache($territory){
+        
+        $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$territory."%")),
+                'order' => 'News.created DESC',
+                'limit' => '10'
+                ));
+        $newCacheVarName = "news_en_".$territory;
+        Cache::write($newCacheVarName,$news_rs);
+        
     }
     
     /*
