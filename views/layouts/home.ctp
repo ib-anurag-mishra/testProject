@@ -1,6 +1,6 @@
 <?php
     echo $userLogin;
-    echo $this->Session->read('streamPopupShow'); die;
+    echo $this->Session->read('streamPopupShow');
 ?>
 <!DOCTYPE html>
 <html>
