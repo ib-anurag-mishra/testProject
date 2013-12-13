@@ -2,6 +2,7 @@
 
 var createLinkThis;
 
+/*
 $(document).ready(function() {
      $("#FormRegisterConcert").submit(function() {
      var frm = $('#FormRegisterConcert');
@@ -35,7 +36,7 @@ $(document).ready(function() {
  
         return false;
     });
-});
+}); */
 
 $(document).ready(function() {
      $("#FormRename").submit(function() {
