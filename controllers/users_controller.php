@@ -2936,6 +2936,7 @@ function login($library = null){
 														)
 													 );
 				}
+				print_r($existingLibraries); die;
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/indlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -3022,7 +3023,6 @@ function login($library = null){
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-						print_r($isApproved); die;
 						if($existingLibraries['0']['Library']['library_type'] == 2) {
 							$this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);
 							$this->Session->write("userlogin", false);
