@@ -464,7 +464,7 @@ function login($library = null){
                 $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
                 //print_r($isApproved); die;
                 //echo "Setting Stream popup session";
-                if($libraryArr['Library']['test_library_type'] == 2){
+                if($libraryArr['Library']['library_type'] == 2){
                     $this->Session->write("streamPopupShow", $isApproved['Currentpatron']['stream_popup']);                               
                 }
                 //echo "Stream popup session set"; die;
