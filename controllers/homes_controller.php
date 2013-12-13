@@ -197,8 +197,7 @@ class HomesController extends AppController
                 ));            
             }
                      
-        }
-        
+        }        
         
         $this->set('news', $news_rs);
         

@@ -136,6 +136,7 @@ class CacheController extends AppController {
         
         $this->log("cache wrritten for".  $newCacheVarName, "cache");
         echo $newCacheVarName;
+        print_r(Cache::read($newCacheVarName,$news_rs));
         die;
     }
     
