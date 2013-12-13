@@ -1,6 +1,6 @@
 <?php
-echo $this->Session->read('userlogin');
-echo $this->Session->read('streamPopupShow');
+echo "Userlogin : ".$this->Session->read('userlogin')."<br/>";
+echo "StreamPopUpShow : ".$this->Session->read('streamPopupShow')."<br/>";
 ?>
 <!DOCTYPE html>
 <html>
