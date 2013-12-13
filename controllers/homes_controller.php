@@ -154,27 +154,35 @@ class HomesController extends AppController
         {
             $this->Session->write('Config.language', 'en');
         }
+        
+        
+        
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
         //echo "<br>Query1: ".$this->News->lastQuery();
 
+       
 
         if ($news_count != 0)
-        {
+        {   
+            echo 1;
             $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%"),
                 'order' => 'News.created DESC',
                 'limit' => '10'
-            ));
-            //  echo "<br>Query2: ".$this->News->lastQuery();
+            ));            
         }
         else
         {
+            echo 2;
             $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
                 'order' => 'News.created DESC',
                 'limit' => '10'
-            ));
-            // echo "<br>Query3: ".$this->News->lastQuery();
+            ));            
         }
         $this->set('news', $news_rs);
+        
+        
+        
+        
 
 
         /*
