@@ -40,7 +40,9 @@
         
         <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/freegal_styles.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/jquery.autocomplete.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/colorbox.css" />        
+	<link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/colorbox.css" /> 
+        
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
 
         <?php
         /*echo $this->Html->css(
