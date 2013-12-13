@@ -206,7 +206,7 @@
             
 ?> 
                 </head>
-                <body class="<?php echo $body_class; ?>">
+                <body>
                     <!--[if lt IE 8]>
                     <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
                     <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
@@ -312,3 +312,5 @@
                                                         </body>
                                                         </html>
                                                         */?>
+
+                                        </body>
