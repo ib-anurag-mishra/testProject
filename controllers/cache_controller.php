@@ -135,7 +135,8 @@ class CacheController extends AppController {
         
         
         $this->log("cache wrritten for  news_en_".$territory, "cache");
-        
+        echo $territory;
+        die;
     }
     
     /*
