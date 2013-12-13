@@ -194,7 +194,7 @@ class AppController extends Controller
                 $downloadVariArray = @array_unique($downloadVariArray);
                 $this->Session->write('downloadVariArray', $downloadVariArray);
             }
-             */
+             
             
 
             if ($this->Session->check('videodownloadCountArray'))
@@ -202,7 +202,7 @@ class AppController extends Controller
                 $this->Common->getVideodownloadStatus($this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
             }
         }
-        
+       */ 
 
        // $this->log("App Controller -- END", "siteSpeed");
     }
