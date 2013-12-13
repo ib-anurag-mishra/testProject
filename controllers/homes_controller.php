@@ -160,7 +160,7 @@ class HomesController extends AppController
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
     
         //create the cache variable name
-        $newCacheVarName = "news_".$this->Session->read('Config.language')."_".$this->Session->read('territory');
+        $newCacheVarName = "news".$this->Session->read('Config.language').$this->Session->read('territory');
         
         if(($this->Session->read('territory')=='US') && ($this->Session->read('Config.language')=='en')){
             
