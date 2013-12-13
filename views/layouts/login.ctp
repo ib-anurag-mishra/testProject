@@ -308,7 +308,7 @@
                                                             <?php echo $this->element('footer'); ?>
                                                             
                                                         </div>
-														<?php /*
+													
                                                         </body>
                                                         </html>
-                                                        */?>
+                                                      
