@@ -91,6 +91,10 @@ class CacheController extends AppController {
        
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){
+            
+            if($territory == 'US'){
+                $this->setNewsCache($territory);
+            } 
             $this->Common->getGenres($territory);
             $this->Common->getNationalTop100($territory);
             $this->Common->getFeaturedVideos($territory);
@@ -112,6 +116,24 @@ class CacheController extends AppController {
        $this->Common->setLibraryTopTenCache();
        $this->Common->setVideoCacheVar();    
        $this->setAppMyMusicVideoList();       
+    }
+    
+    /*
+     * Function Name : setNewsCache
+     * Function Description : This function is used to set News Cache.
+     * all this function query must be same as queries written in home controller for news.
+     */
+    function setNewsCache($territory){
+        
+        $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$territory."%")),
+                'order' => 'News.created DESC',
+                'limit' => '10'
+                ));
+        $newCacheVarName = "newsUSEN";
+        Cache::write($newCacheVarName,$news_rs);        
+        
+        $this->log("cache wrritten for ".  $newCacheVarName, "cache");        
+        
     }
     
     /*
