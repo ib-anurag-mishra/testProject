@@ -176,7 +176,7 @@ class HomesController extends AppController
             }
             else
             {
-            echo 147;    
+           
             //get all the information from the cache for news
                 $news_rs = Cache::read($newCacheVarName);
             }
