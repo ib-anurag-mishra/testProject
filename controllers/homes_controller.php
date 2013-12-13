@@ -166,6 +166,8 @@ class HomesController extends AppController
             
             if (($newsInfo = Cache::read($newCacheVarName)) === false)
             {
+               
+                 echo 347;   
                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%")),
                 'order' => 'News.created DESC',
                 'limit' => '10'
