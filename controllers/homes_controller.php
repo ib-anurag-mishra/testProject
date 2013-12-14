@@ -177,9 +177,7 @@ class HomesController extends AppController
                 //get all the information from the cache for news
                 $news_rs = Cache::read($newCacheVarName);
             }            
-        }
-        print_r($news_rs);
-        die;
+        }       
         
         $this->set('news', $news_rs);
         
