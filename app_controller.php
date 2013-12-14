@@ -210,8 +210,11 @@ class AppController extends Controller
         {
             //download count
             $downloadCount =  $this->Common->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
+            echo "<pre>";
             print_r($downloadCount);
             $this->Session->write('downloadCount' , $downloadCount);
+            print_r($this->Session->read('downloadCount'));
+            die;
         }
     }
 
