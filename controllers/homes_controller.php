@@ -3193,7 +3193,8 @@ STR;
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
-
+            $this->Session->write('downloadCount' , $downloadsUsed);
+            
             echo "suces|" . $downloadsUsed;
             exit;
         }
@@ -3454,7 +3455,9 @@ STR;
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
-
+            
+            $this->Session->write('downloadCount' , $downloadsUsed);
+            
             echo "suces|" . $downloadsUsed;
             exit;
         }

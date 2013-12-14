@@ -319,11 +319,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             
         $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
         if($session->read('downloadCount'))
-        {
+        {            
             $downloadCount = $session->read('downloadCount');
         }
         else
         {
+            echo "2";
             $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
         }
 
