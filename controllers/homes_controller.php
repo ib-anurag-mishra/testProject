@@ -178,7 +178,8 @@ class HomesController extends AppController
                 $news_rs = Cache::read($newCacheVarName);
             }            
         }
-        
+        print_r($news_rs);
+        die;
         
         $this->set('news', $news_rs);
         
