@@ -225,6 +225,7 @@ class AppController extends Controller
         //if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != date('Y-m-d' , $this->Session->read('counterStartDate')))
         echo date('Y-m-d' , strtotime(Configure::read('App.curWeekStartDate')) );
         echo '<br/>';
+        die;
 //                if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != '2013-12-16')
 //        {
 //            $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
