@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -92,30 +92,30 @@ class CacheController extends AppController {
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){
             
-            if($territory == 'US'){
-                $this->setNewsCache($territory);
-            }            
-            $this->Common->getGenres($territory);
-            $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
-            $this->Common->getNationalTop100Albums($territory);
-            $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-            $this->Common->getUsTop10Albums($territory);
-            $this->Common->getUsTop10Videos($territory);
-            $this->Common->getNewReleaseAlbums($territory);
-            $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
-            $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);    
+            $this->setNewsCache($territory);
+          
+           
+//            $this->Common->getGenres($territory);
+//            $this->Common->getNationalTop100($territory);
+//            $this->Common->getFeaturedVideos($territory);
+//            $this->Common->getTopVideoDownloads($territory);
+//            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
+//            $this->Common->getNationalTop100Albums($territory);
+//            $this->Common->getComingSoonSongs($territory);
+//            $this->Common->getComingSoonVideos($territory);
+//            $this->Common->getUsTop10Songs($territory);
+//            $this->Common->getUsTop10Albums($territory);
+//            $this->Common->getUsTop10Videos($territory);
+//            $this->Common->getNewReleaseAlbums($territory);
+//            $this->Common->getNewReleaseVideos($territory);
+//            $this->Common->getFeaturedArtists($territory);
+//            $this->Common->getDifferentGenreData($territory);
+//            $this->getArtistText($territory);
+//            $this->Common->getDefaultQueues($territory);    
         }
-       $this->Common->setLibraryTopTenCache();
-       $this->Common->setVideoCacheVar();    
-       $this->setAppMyMusicVideoList();        
+//       $this->Common->setLibraryTopTenCache();
+//       $this->Common->setVideoCacheVar();    
+//       $this->setAppMyMusicVideoList();        
     }
     
      /*
@@ -125,14 +125,37 @@ class CacheController extends AppController {
      */
     function setNewsCache($territory){
         
-        $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$territory."%")),
+         $lengRs = $this->Language->find('all', array('conditions' => array('status' => 'active'),'fields' => 'short_name'));
+         
+         print_r($lengRs);
+         die;
+         foreach($lengRs as $perLeg => $lengRow) {
+             $lenguage = trim($lengRow['Language']['short_name']);
+             
+             $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $lenguage))));
+
+             if($news_count != 0){
+                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $lenguage, 'place LIKE' => "%".$territory."%")),
                 'order' => 'News.created DESC',
                 'limit' => '10'
                 ));
-        $newCacheVarName = "newsUSEN";
-        Cache::write($newCacheVarName,$news_rs);        
-        
-        $this->log("cache wrritten for ".  $newCacheVarName, "cache");        
+                 
+                $newCacheVarName = "news".$territory.$lenguage;
+                
+                
+             }else{
+                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$territory."%")),
+                'order' => 'News.created DESC',
+                'limit' => '10'
+                ));
+                 
+                $newCacheVarName = "news".$territory."en";
+                
+             }           
+             
+            Cache::write($newCacheVarName,$news_rs);
+            $this->log("cache wrritten for ".  $newCacheVarName, "cache"); 
+         }     
         
     }
     
