@@ -568,7 +568,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     }
                                                 //  Hidden variable to be used in site.js for alerting user before video download
                                         
-                                                    if(($downloadCount+1)<$libraryInfo['Library']['library_user_download_limit'])
+                                                    if(($session->read('downloadCount')+1)<$libraryInfo['Library']['library_user_download_limit'])
                                                     {
                                                         ?>
                                                             <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="1" />
