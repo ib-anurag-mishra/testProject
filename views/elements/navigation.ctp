@@ -324,7 +324,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
         }
         else
         {
-            echo "2";
             $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
         }
 
