@@ -513,7 +513,7 @@ function login($library = null){
                 
                 if($this->Session->check('downloadCount'))
                 {
-                    $this->Session->delete('downloadCount'));
+                    $this->Session->delete('downloadCount');
                 }
                 
 		$patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
