@@ -3440,6 +3440,8 @@ STR;
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
             
             $this->Session->write('downloadCount' , $downloadsUsed);
+             //updating session for VideoDown load status
+            $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
             
             echo "suces|" . $downloadsUsed;
             exit;
