@@ -219,12 +219,8 @@ class AppController extends Controller
         }
         
         //reset counter if week change
-        //echo $this->Session->read('counterStartDate') ;
-        //echo Configure::read('App.curWeekStartDate') ;
-        //if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != date('Y-m-d' , $this->Session->read('counterStartDate')))
-   
-        
-             if( date('Y-m-d' , strtotime(Configure::read('App.curWeekStartDate'))) != date('Y-m-d' , strtotime('2013-12-16')))
+        //if( date('Y-m-d' , strtotime(Configure::read('App.curWeekStartDate'))) != date('Y-m-d' , strtotime('2013-12-16')))
+        if( date('Y-m-d' , strtotime(Configure::read('App.curWeekStartDate'))) != date('Y-m-d' , strtotime($this->Session->read('counterStartDate'))))
         {
             $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
             $this->Session->write('downloadCount', $downloadCount);
