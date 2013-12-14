@@ -212,7 +212,7 @@ class AppController extends Controller
         {
             //download count
 
-            $this->Session->write('counterStartDate', Configure::read('App.curWeekStartDate'));
+            $this->Session->write('counterStartDate', date('Y-m-d' ,Configure::read('App.curWeekStartDate')) );
 
             $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
             $this->Session->write('downloadCount', $downloadCount);
@@ -221,6 +221,13 @@ class AppController extends Controller
         //reset counter if week change
         echo $this->Session->read('counterStartDate') ;
         echo Configure::read('App.curWeekStartDate') ;
+        
+        //if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != date('Y-m-d' , $this->Session->read('counterStartDate')))
+                if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != date('Y-m-d' , '2013-12-16'))
+        {
+            $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
+            $this->Session->write('downloadCount', $downloadCount);
+        }
     }
 
     function checkOnlinePatron()
