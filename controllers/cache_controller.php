@@ -150,8 +150,8 @@ class CacheController extends AppController {
                  
                 $newCacheVarName = "news".$territory."en";
                 
-             }           
-             print_r($news_rs);die;
+             }         
+             
             Cache::write($newCacheVarName,$news_rs);
             $this->log("cache wrritten for ".  $newCacheVarName, "cache"); 
          }     
