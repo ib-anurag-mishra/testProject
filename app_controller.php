@@ -205,6 +205,13 @@ class AppController extends Controller
        */ 
 
        // $this->log("App Controller -- END", "siteSpeed");
+        
+        if(!$this->Session->check('downloadCount'))
+        {
+            //download count
+            $downloadCount =  $this->Download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
+            $this->Session->write('downloadCount' , $downloadCount);
+        }
     }
 
     function checkOnlinePatron()
