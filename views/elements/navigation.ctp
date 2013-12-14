@@ -527,7 +527,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             ?>
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?></div>
                                         </div>
-					<div class="play-count"><span id='downloads_used'><?php echo $this->Session->read('downloadCount'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
+					<div class="play-count"><span id='downloads_used'><?php echo $session->read('downloadCount'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
 
                                              if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)

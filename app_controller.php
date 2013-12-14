@@ -206,15 +206,11 @@ class AppController extends Controller
 
        // $this->log("App Controller -- END", "siteSpeed");
         
-        if(1)
+        if(!$this->Session->check('downloadCount'))
         {
             //download count
             $downloadCount =  $this->Common->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
-            echo "<pre>";
-            print_r($downloadCount);
             $this->Session->write('downloadCount' , $downloadCount);
-            print_r($this->Session->read('downloadCount'));
-            die;
         }
     }
 
