@@ -223,11 +223,12 @@ class AppController extends Controller
         echo Configure::read('App.curWeekStartDate') ;
         
         //if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != date('Y-m-d' , $this->Session->read('counterStartDate')))
-                if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != '2013-12-16')
-        {
-            $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
-            $this->Session->write('downloadCount', $downloadCount);
-        }
+        echo date('Y-m-d' , Configure::read('App.curWeekStartDate')) ;
+//                if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != '2013-12-16')
+//        {
+//            $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
+//            $this->Session->write('downloadCount', $downloadCount);
+//        }
     }
 
     function checkOnlinePatron()
