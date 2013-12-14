@@ -316,7 +316,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                 </ul>
             </div>
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-                <ul style="width:27100px;">
+<!--                <ul style="width:27100px;">
                     <?php
                      //$this->log("index.ctp National Top 100 album start", "siteSpeed"); 
                     $count = 1;
@@ -423,7 +423,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     }
                      // $this->log("index.ctp National Top 100 album end", "siteSpeed"); 
                     ?>
-                </ul>  
+                </ul>  -->
             </div>
         </div> <!-- end .grids -->
 
