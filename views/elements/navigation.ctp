@@ -318,16 +318,25 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
             
         $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
-	$downloadCount = $session->read('downloadCount');
-	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
-		$width = 125;
-	}elseif($libraryInfo['Library']['library_unlimited'] == "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
-		$width = 140;
-	}elseif($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] != "user_account"){
-		$width = 140;
-	}else{
-		$width = 166;
-	}
+        if($session->read('downloadCount'))
+        {
+            $downloadCount = $session->read('downloadCount');
+        }
+        else
+        {
+            $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
+        }
+
+
+            if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
+                    $width = 125;
+            }elseif($libraryInfo['Library']['library_unlimited'] == "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
+                    $width = 140;
+            }elseif($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] != "user_account"){
+                    $width = 140;
+            }else{
+                    $width = 166;
+            }
 }
 
          
