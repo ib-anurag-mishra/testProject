@@ -157,9 +157,7 @@ class HomesController extends AppController
         
         
         
-        
-        $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
-    
+        $news_rs = array();    
         //create the cache variable name
         $newCacheVarName = "news".$this->Session->read('territory').$this->Session->read('Config.language');
         
@@ -180,15 +178,7 @@ class HomesController extends AppController
                 $news_rs = Cache::read($newCacheVarName);
             }            
         }
-        //if news count is 0 or
-        if ($news_count == 0 || ( isset($news_rs) && empty($news_rs)))
-        {   
-
-            $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
-                'order' => 'News.created DESC',
-                'limit' => '10'
-            ));           
-        }
+        
         
         $this->set('news', $news_rs);
         
