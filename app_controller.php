@@ -219,8 +219,8 @@ class AppController extends Controller
         }
         
         //reset counter if week change
-        echo $this->Session->read('counterStartDate') ;
-        echo Configure::read('App.curWeekStartDate') ;
+        //echo $this->Session->read('counterStartDate') ;
+       // echo Configure::read('App.curWeekStartDate') ;
         
         //if( date('Y-m-d' , Configure::read('App.curWeekStartDate')) != date('Y-m-d' , $this->Session->read('counterStartDate')))
         echo date('Y-m-d' , Configure::read('App.curWeekStartDate')) ;
