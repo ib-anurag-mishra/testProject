@@ -530,8 +530,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
 
-                                                if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
-                                               {                                                    
+                                             if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+                                               { 
+                                                     $streamTime = 'UNLIMITED';
+
+                                               }else if($this->Session->read('library_type')==2){
+
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
                                                     $todaysDate         =   date("Y-m-d");                                                    
                                                     
@@ -555,11 +559,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     } 
 
                                                      $streamTime =   gmdate("H:i:s", $streamTime);
-
-                                               }
-                                               else if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1)
-                                               { 
-                                                     $streamTime = 'UNLIMITED';
                                                }   
                                         ?>
                                                 <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryInfo['Library']['library_unlimited']; ?></span>
