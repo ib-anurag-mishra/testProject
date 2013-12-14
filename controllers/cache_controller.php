@@ -127,8 +127,7 @@ class CacheController extends AppController {
         
          $lengRs = $this->Language->find('all', array('conditions' => array('status' => 'active'),'fields' => 'short_name'));
          
-         print_r($lengRs);
-         die;
+         
          foreach($lengRs as $perLeg => $lengRow) {
              $lenguage = trim($lengRow['Language']['short_name']);
              
@@ -152,7 +151,7 @@ class CacheController extends AppController {
                 $newCacheVarName = "news".$territory."en";
                 
              }           
-             
+             print_r($news_rs);die;
             Cache::write($newCacheVarName,$news_rs);
             $this->log("cache wrritten for ".  $newCacheVarName, "cache"); 
          }     
