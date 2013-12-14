@@ -170,9 +170,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                                 <input type="hidden" name="ProviderType" value="<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>" />
                                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
                                                                     <![if !IE]>
-                                                                    <a href='javascript:void(0);' 
-                                                                       class="add-to-wishlist no-ajaxy top-10-download-now-button" 
-                                                                       title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+                                                                    <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
                                                                     <![endif]>
                                                                     <!--[if IE]>
                                                                            <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download Now'); ?></a>
@@ -316,7 +314,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                 </ul>
             </div>
             <div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-<!--                <ul style="width:27100px;">
+                <ul style="width:27100px;">
                     <?php
                      //$this->log("index.ctp National Top 100 album start", "siteSpeed"); 
                     $count = 1;
@@ -423,7 +421,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     }
                      // $this->log("index.ctp National Top 100 album end", "siteSpeed"); 
                     ?>
-                </ul>  -->
+                </ul>  
             </div>
         </div> <!-- end .grids -->
 
