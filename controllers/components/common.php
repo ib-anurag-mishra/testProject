@@ -2781,6 +2781,7 @@ STR;
         $videoDownloadCount = $videoDownloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
         $videoDownloadCount = $videoDownloadCount *2;
         $downloadCount = $downloadCount + $videoDownloadCount;
+       
         return $downloadCount;
     }
 }
