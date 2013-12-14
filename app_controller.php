@@ -1,5 +1,4 @@
 <?php
-
 class AppController extends Controller
 {
 
@@ -129,102 +128,91 @@ class AppController extends Controller
           {
           $this->set('register_concert_id', '');
           } */
-        /*
+        
           // Code for Register Concert  -- END
           //common funcitonality for the user wishlist items which are already added
           if (($this->Session->read("patron") != '') && ($this->Session->read("lId") != ''))
           {
 
-          //create common structure for add to wishlist functionality
-          //first check if session variable not set
-          if (!$this->Session->read('wishlistVariArray'))
-          {
+            //create common structure for add to wishlist functionality
+            //first check if session variable not set
+            if (!$this->Session->read('wishlistVariArray'))
+            {
 
-          $wishlistDetails = $this->Wishlist->find('all', array(
-          'conditions' => array('library_id' => $this->Session->read('library'), 'patron_id' => $this->Session->read('patron')),
-          'fields' => array('ProdID')
-          ));
+                $wishlistDetails = $this->Wishlist->find('all', array(
+                'conditions' => array('library_id' => $this->Session->read('library'), 'patron_id' => $this->Session->read('patron')),
+                'fields' => array('ProdID')
+                ));
 
-          foreach ($wishlistDetails as $key => $wishlistDetails)
-          {
-          $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
+                foreach ($wishlistDetails as $key => $wishlistDetails)
+                {
+                    $wishlistVariArray[] = $wishlistDetails['Wishlist']['ProdID'];
+                }
+                $wishlistVariArray = @array_unique($wishlistVariArray);
+                $this->Session->write('wishlistVariArray', $wishlistVariArray);
+            }
+
+
+            //create common structure for add to wishlist functionality
+            //first check if session variable not set
+            if (!$this->Session->read('wishlistVideoArray'))
+            {
+                $wishlistDetails = $this->WishlistVideo->find('all', array(
+                'conditions' => array('library_id' => $this->Session->read('library'), 'patron_id' => $this->Session->read('patron')),
+                'fields' => array('ProdID')
+                ));
+
+                foreach ($wishlistDetails as $key => $wishlistDetails)
+                {
+                    $wishlistVariArray[] = $wishlistDetails['WishlistVideo']['ProdID'];
+                }
+                $wishlistVariArray = @array_unique($wishlistVariArray);
+                $this->Session->write('wishlistVideoArray', $wishlistVariArray);
+            }            
+
+            if (!$this->Session->read('downloadVariArray'))
+            {
+                //for downloaded songs
+                $territoryPrefixTemp = strtolower($this->Session->read('territory')) . "_";
+                $territoryTableName = $territoryPrefixTemp . 'countries';
+
+                $downloadResults = Array();
+                $downloadResults = $this->Download->find('all', array('joins' => array(array('table' => 'Songs', 'alias' => 'Song', 'type' => 'LEFT', 'conditions' => array('Download.ProdID = Song.ProdID', 'Download.provider_type = Song.provider_type')), array('table' => $territoryTableName, 'alias' => 'Country', 'type' => 'INNER', 'conditions' => array('Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type')), array('table' => 'Albums', 'alias' => 'Album', 'type' => 'LEFT', 'conditions' => array('Song.ReferenceID = Album.ProdID', 'Song.provider_type = Album.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Album.FileID = File.FileID')), array('table' => 'File', 'alias' => 'Full_Files', 'type' => 'LEFT', 'conditions' => array('Song.FullLength_FileID = Full_Files.FileID'))), 'group' => 'Download.id', 'conditions' => array('library_id' => $this->Session->read("lId"), 'patron_id' => $this->Session->read("patron"), 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'fields' => array('Download.ProdID', 'Download.provider_type')));
+
+                $downloadVariArray = array();
+                foreach ($downloadResults as $key => $downloadResult)
+                {
+                    $downloadVariArray[] = $downloadResult['Download']['ProdID'] . '~' . $downloadResult['Download']['provider_type'];
+                }
+                $downloadVariArray = @array_unique($downloadVariArray);
+                $this->Session->write('downloadVariArray', $downloadVariArray);
+            }
+
+
+
+            if ($this->Session->check('videodownloadCountArray'))
+            {
+                $this->Common->getVideodownloadStatus($this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+            }
           }
-          $wishlistVariArray = @array_unique($wishlistVariArray);
-          $this->Session->write('wishlistVariArray', $wishlistVariArray);
-          }
+         
 
+            //add the login for download count one time
+            if (!$this->Session->check('downloadCount') && $this->Session->check('patron'))
+            {
+                //download count
+                $this->Session->write('counterStartDate', date('Y-m-d' ,Configure::read('App.curWeekStartDate')) );
+                //fetch the download count value first time
+                $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
+                $this->Session->write('downloadCount', $downloadCount);
+            }
 
-          //create common structure for add to wishlist functionality
-          //first check if session variable not set
-          if (!$this->Session->read('wishlistVideoArray'))
-          {
-          $wishlistDetails = $this->WishlistVideo->find('all', array(
-          'conditions' => array('library_id' => $this->Session->read('library'), 'patron_id' => $this->Session->read('patron')),
-          'fields' => array('ProdID')
-          ));
-
-          foreach ($wishlistDetails as $key => $wishlistDetails)
-          {
-          $wishlistVariArray[] = $wishlistDetails['WishlistVideo']['ProdID'];
-          }
-          $wishlistVariArray = @array_unique($wishlistVariArray);
-          $this->Session->write('wishlistVideoArray', $wishlistVariArray);
-          }
-
-         */
-
-
-        // print_r($this->Session->read('wishlistVideoArray'));
-
-
-        /*
-
-          if (!$this->Session->read('downloadVariArray'))
-          {
-          //for downloaded songs
-          $territoryPrefixTemp = strtolower($this->Session->read('territory')) . "_";
-          $territoryTableName = $territoryPrefixTemp . 'countries';
-
-          $downloadResults = Array();
-          $downloadResults = $this->Download->find('all', array('joins' => array(array('table' => 'Songs', 'alias' => 'Song', 'type' => 'LEFT', 'conditions' => array('Download.ProdID = Song.ProdID', 'Download.provider_type = Song.provider_type')), array('table' => $territoryTableName, 'alias' => 'Country', 'type' => 'INNER', 'conditions' => array('Country.ProdID = Song.ProdID', 'Country.provider_type = Song.provider_type')), array('table' => 'Albums', 'alias' => 'Album', 'type' => 'LEFT', 'conditions' => array('Song.ReferenceID = Album.ProdID', 'Song.provider_type = Album.provider_type')), array('table' => 'File', 'alias' => 'File', 'type' => 'LEFT', 'conditions' => array('Album.FileID = File.FileID')), array('table' => 'File', 'alias' => 'Full_Files', 'type' => 'LEFT', 'conditions' => array('Song.FullLength_FileID = Full_Files.FileID'))), 'group' => 'Download.id', 'conditions' => array('library_id' => $this->Session->read("lId"), 'patron_id' => $this->Session->read("patron"), 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'fields' => array('Download.ProdID', 'Download.provider_type')));
-
-          $downloadVariArray = array();
-          foreach ($downloadResults as $key => $downloadResult)
-          {
-          $downloadVariArray[] = $downloadResult['Download']['ProdID'] . '~' . $downloadResult['Download']['provider_type'];
-          }
-          $downloadVariArray = @array_unique($downloadVariArray);
-          $this->Session->write('downloadVariArray', $downloadVariArray);
-          }
-
-
-
-          if ($this->Session->check('videodownloadCountArray'))
-          {
-          $this->Common->getVideodownloadStatus($this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-          }
-          }
-         */
-
-        // $this->log("App Controller -- END", "siteSpeed");
-
-        if (!$this->Session->check('downloadCount') && $this->Session->check('patron'))
-        {
-            //download count
-
-            $this->Session->write('counterStartDate', date('Y-m-d' ,Configure::read('App.curWeekStartDate')) );
-
-            $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
-            $this->Session->write('downloadCount', $downloadCount);
-        }
-        
-        //reset counter if week change
-        //if( date('Y-m-d' , strtotime(Configure::read('App.curWeekStartDate'))) != date('Y-m-d' , strtotime('2013-12-16')))
-        if( date('Y-m-d' , strtotime(Configure::read('App.curWeekStartDate'))) != date('Y-m-d' , strtotime($this->Session->read('counterStartDate'))))
-        {
-            $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
-            $this->Session->write('downloadCount', $downloadCount);
-        }
+            //reset counter if week change        
+            if( date('Y-m-d' , strtotime(Configure::read('App.curWeekStartDate'))) != date('Y-m-d' , strtotime($this->Session->read('counterStartDate'))))
+            {
+                $downloadCount = $this->Common->getDownloadDetails($this->Session->read('library'), $this->Session->read('patron'));
+                $this->Session->write('downloadCount', $downloadCount);
+            }
     }
 
     function checkOnlinePatron()
