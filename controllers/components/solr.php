@@ -60,6 +60,7 @@ class SolrComponent extends Object {
 
     function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false, $mobileExplicitStatus=0) {
         $query = '';
+	$provider_query = '';
         $docs = array();
         $cond = " AND DownloadStatus:1";
 
