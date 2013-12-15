@@ -562,7 +562,7 @@
                                     }});
 
                         $("#colorboxOKBtn").click(function() {
-                            var pid = <?= $this->Session->read('patron') ?>;
+                            var pid = '<?= $this->Session->read('patron') ?>';
                             var lid = <?= $this->Session->read('library') ?>;
                             var data = {pid: pid, lid: lid};
                             jQuery.ajax({
