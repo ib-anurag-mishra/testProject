@@ -119,13 +119,17 @@ class AppController extends Controller
             Cache::write("announcementCache",$announcment_rs);
         }
         else
-        {           
-            echo 147;
+        {         
             //get announcement from the cache
             $announcment_rs = Cache::read("announcementCache");
         }
         
-        $this->set('announcment_value', $announcment_rs[0]['pages']['page_content']);
+        if(isset($announcment_rs[0]['pages']['page_content'])){
+            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
+        }else{
+            $announcmentValue = '';
+        }        
+        $this->set('announcment_value', $announcmentValue);
         
         
         
