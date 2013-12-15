@@ -269,7 +269,14 @@
                     //$.getScript(webroot + 'css/styles.css');
                     //$.getScript(webroot + 'css/freegal_styles.css');
                     var scriptPath = document.getElementById('Scripts_Path').value;
-                    $.getScript(scriptPath + '/js/freegal.js');
+                    $.getScript(scriptPath + '/js/freegal.js',function( data, textStatus, jqxhr ) {
+                                console.log( data ); // Data returned
+                                console.log( textStatus ); // Success
+                                console.log( jqxhr.status ); // 200
+                                console.log( "Load was performed." );
+                                });
+                    
+                    
                     $.getScript(scriptPath + '/js/site.js');
 
                     //$.getScript(webroot + 'js/audioPlayer.js');
