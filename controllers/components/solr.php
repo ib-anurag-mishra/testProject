@@ -34,6 +34,8 @@ class SolrComponent extends Object {
      * @var SolrClient
      */
     var $total = null;
+    
+    var $timeoutSeconds = 10;
 
     function initialize($config = array(), $config2 = array()) {
         $settings = array_merge((array) $config, self::$_defaults);
@@ -41,7 +43,7 @@ class SolrComponent extends Object {
         App::import("Vendor", "solr", array('file' => "Apache" . DS . "Solr" . DS . "Service.php"));
         self::$solr = new Apache_Solr_Service($settings['server'], $settings['port'], $settings['solrpath']);
         //var_dump($solr);
-        if (!self::$solr->ping(60)) {
+        if (!self::$solr->ping($timeoutSeconds)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
@@ -49,7 +51,7 @@ class SolrComponent extends Object {
 
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
 
-        if (!self::$solr2->ping(60)) {
+        if (!self::$solr2->ping($timeoutSeconds)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
