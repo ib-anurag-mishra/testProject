@@ -127,8 +127,7 @@ class CacheController extends AppController {
     function setAnnouncementCache(){
         $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
         $announcment_rs = $this->Album->query($announcment_query);
-        Cache::write("announcementCache",$announcment_rs);
-        die;
+        Cache::write("announcementCache",$announcment_rs);        
     }
     
     /*
