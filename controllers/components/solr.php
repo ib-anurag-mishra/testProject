@@ -34,6 +34,8 @@ class SolrComponent extends Object {
      * @var SolrClient
      */
     var $total = null;
+    
+    var $timeoutSeconds = 10;
 
     function initialize($config = array(), $config2 = array()) {
         $settings = array_merge((array) $config, self::$_defaults);
@@ -41,7 +43,7 @@ class SolrComponent extends Object {
         App::import("Vendor", "solr", array('file' => "Apache" . DS . "Solr" . DS . "Service.php"));
         self::$solr = new Apache_Solr_Service($settings['server'], $settings['port'], $settings['solrpath']);
         //var_dump($solr);
-        if (!self::$solr->ping(60)) {
+        if (!self::$solr->ping($timeoutSeconds)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
@@ -49,7 +51,7 @@ class SolrComponent extends Object {
 
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
 
-        if (!self::$solr2->ping(60)) {
+        if (!self::$solr2->ping($timeoutSeconds)) {
             //echo "Not Connected";
             //die;
             throw new SolrException();
@@ -76,8 +78,25 @@ class SolrComponent extends Object {
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
-                self::initialize(null);
+                $connectedToSolr = false;
+                $retryCount = 1;
+                while (!$connectedToSolr &&  $retryCount < 3) {
+                    try {
+                        self::initialize(null);
+                        $connectedToSolr = true;
+                    }
+                    catch(Exception $e) {
+                        
+                    }
+                    ++$retryCount; 
+                }
+                
+                if(!$connectedToSolr) {
+                    $this->log('Unable to Coonect to Solr','error');
+                    die;
+                }    
             }
+            
             if ($perfect == false) {
                 switch ($type) {
                     case 'song':
