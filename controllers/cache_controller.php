@@ -115,7 +115,20 @@ class CacheController extends AppController {
         }
        $this->Common->setLibraryTopTenCache();
        $this->Common->setVideoCacheVar();    
-       $this->setAppMyMusicVideoList();       
+       $this->setAppMyMusicVideoList(); 
+       $this->setAnnouncementCache();
+    }
+    
+    /*
+     * Function Name : setAnnouncementCache
+     * Function Description : This function is used to set announcment Cache.
+     * all this function query must be same as queries written in app controller for announcement.
+     */
+    function setAnnouncementCache(){
+        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+        $announcment_rs = $this->Album->query($announcment_query);
+        Cache::write("announcementCache",$announcment_rs);
+        die;
     }
     
     /*

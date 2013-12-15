@@ -104,12 +104,28 @@ class AppController extends Controller
         //$this->checkOnlinePatron();
 
 
-        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
-        $announcment_rs = $this->Album->query($announcment_query);
-        //echo "<pre>";
-        //print_r($announcment_rs);
-        $this->set('announcment_value', $announcment_rs[0]['pages']['page_content']);
-        //$announcment_rs[0]['pages']['page_content'];
+         // add announcement in the cache
+        if (($announceInfo = Cache::read("announcementCache")) === false)
+        {
+            $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+            $announcment_rs = $this->Album->query($announcment_query);
+            Cache::write("announcementCache",$announcment_rs);
+        }
+        else
+        {         
+            //get announcement from the cache
+            $announcment_rs = Cache::read("announcementCache");
+        }
+        
+        if(isset($announcment_rs[0]['pages']['page_content'])){
+            $announcmentValue = $announcment_rs[0]['pages']['page_content'];
+        }else{
+            $announcmentValue = '';
+        }        
+        $this->set('announcment_value', $announcmentValue);
+        
+        
+        
         
         /*
          * Below Code of Register Concert is Commented as per Request
