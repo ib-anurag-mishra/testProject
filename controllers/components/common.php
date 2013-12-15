@@ -689,6 +689,10 @@ STR;
     {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
+        
+        if(!empty($countryPrefix))
+        {
+        
         $albumInstance = ClassRegistry::init('Video');
         // Added caching functionality for coming soon videos
         $sql_coming_soon_v = <<<STR
@@ -748,7 +752,15 @@ STR;
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
         //End Caching functionality for coming soon songs
+        
+        }
+        else
+        {
+             $coming_soon_rv = '';
+        }
+        
         return $coming_soon_rv;
+        
     }
 
     /*
