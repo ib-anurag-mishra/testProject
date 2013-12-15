@@ -1704,7 +1704,7 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             
-            if(!empty(trim($val_provider_type)))
+            if(!empty($val_provider_type))
             {
                 $albumData = $this->paginate('Album'); //getting the Albums for the artist
             }
