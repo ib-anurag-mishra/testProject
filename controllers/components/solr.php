@@ -76,8 +76,25 @@ class SolrComponent extends Object {
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
-                self::initialize(null);
+                $connectedToSolr = false;
+                $retryCount = 1;
+                while (!$connectedToSolr &&  $retryCount < 3) {
+                    try {
+                        self::initialize(null);
+                        $connectedToSolr = true;
+                    }
+                    catch(Exception $e) {
+                        
+                    }
+                    ++$retryCount; 
+                }
+                
+                if(!$connectedToSolr) {
+                    $this->log('Unable to Coonect to Solr','error');
+                    die;
+                }    
             }
+            
             if ($perfect == false) {
                 switch ($type) {
                     case 'song':
