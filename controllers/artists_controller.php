@@ -1703,7 +1703,11 @@ Class ArtistsController extends AppController
             }
             $this->Album->recursive = 2;
             $albumData = array();
-            $albumData = $this->paginate('Album'); //getting the Albums for the artist
+            
+            if(!empty(trim($val_provider_type)))
+            {
+                $albumData = $this->paginate('Album'); //getting the Albums for the artist
+            }
             //$this->set('count_albums',count($albumData));   
                  
             foreach ($albumData as $key => $value) 
