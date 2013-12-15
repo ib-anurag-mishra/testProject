@@ -281,7 +281,7 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
                     return false;
-                },
+                }
             }); // end ajax
 
         }); // end onStateChange
