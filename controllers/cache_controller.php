@@ -92,7 +92,7 @@ class CacheController extends AppController {
         $territoriesList = $this->Common->getTerritories();       
         foreach($territoriesList as $territory){            
             
-            $this->setAnnouncementCache($territory);
+            
             $this->setNewsCache($territory);
             $this->Common->getGenres($territory);
             $this->Common->getNationalTop100($territory);
@@ -115,7 +115,8 @@ class CacheController extends AppController {
         }
        $this->Common->setLibraryTopTenCache();
        $this->Common->setVideoCacheVar();    
-       $this->setAppMyMusicVideoList();        
+       $this->setAppMyMusicVideoList();
+       $this->setAnnouncementCache();
     }
     
     /*
@@ -127,7 +128,7 @@ class CacheController extends AppController {
         $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
         $announcment_rs = $this->Album->query($announcment_query);
         Cache::write("announcementCache",$announcment_rs);
-        die;
+   
     }
     
      /*
