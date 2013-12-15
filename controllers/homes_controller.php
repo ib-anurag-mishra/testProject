@@ -157,54 +157,37 @@ class HomesController extends AppController
         
         
         
-        $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
-    
+        $news_rs = array();    
         //create the cache variable name
-        $newCacheVarName = "news".$this->Session->read('Config.language').$this->Session->read('territory');
+        $newCacheVarName = "news".$this->Session->read('territory').$this->Session->read('Config.language');
         
-        if(($this->Session->read('territory')=='US') && ($this->Session->read('Config.language')=='en')){
-            
+        //first check lenguage and territory set or not        
+        if($this->Session->read('territory') && $this->Session->read('Config.language')){            
             if (($newsInfo = Cache::read($newCacheVarName)) === false)
             {
-               
-                 echo 347;   
-                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%")),
+                //if cache not set then run the queries
+                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")),
                 'order' => 'News.created DESC',
                 'limit' => '10'
                 )); 
                 Cache::write($newCacheVarName,$news_rs);
             }
             else
-            {
-           
-            //get all the information from the cache for news
+            {           
+                //get all the information from the cache for news
                 $news_rs = Cache::read($newCacheVarName);
-            }
-            
-        }else{
-            
-            echo 111;
-            
-            if ($news_count != 0)
-            {   
-
-                $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%"),
-                    'order' => 'News.created DESC',
-                    'limit' => '10'
-                ));            
-            }
-            else
-            {
-
-                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
-                    'order' => 'News.created DESC',
-                    'limit' => '10'
-                ));            
-            }
-                     
-        }        
+            }            
+        }       
         
         $this->set('news', $news_rs);
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -3193,7 +3176,8 @@ STR;
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
-
+            $this->Session->write('downloadCount' , $downloadsUsed);
+            
             echo "suces|" . $downloadsUsed;
             exit;
         }
@@ -3454,7 +3438,11 @@ STR;
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
-
+            
+            $this->Session->write('downloadCount' , $downloadsUsed);
+             //updating session for VideoDown load status
+            $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
+            
             echo "suces|" . $downloadsUsed;
             exit;
         }

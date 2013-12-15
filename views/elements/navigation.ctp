@@ -318,16 +318,25 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
             
         $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
-	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
-	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
-		$width = 125;
-	}elseif($libraryInfo['Library']['library_unlimited'] == "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
-		$width = 140;
-	}elseif($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] != "user_account"){
-		$width = 140;
-	}else{
-		$width = 166;
-	}
+        if($session->read('downloadCount'))
+        {            
+            $downloadCount = $session->read('downloadCount');
+        }
+        else
+        {
+            $downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
+        }
+
+
+            if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
+                    $width = 125;
+            }elseif($libraryInfo['Library']['library_unlimited'] == "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
+                    $width = 140;
+            }elseif($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] != "user_account"){
+                    $width = 140;
+            }else{
+                    $width = 166;
+            }
 }
 
          
@@ -527,11 +536,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             ?>
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?></div>
                                         </div>
-					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
+					<div class="play-count"><span id='downloads_used'><?= $session->read('downloadCount'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
 
-                                                if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==0)
-                                               {                                                    
+                                             if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+                                               { 
+                                                     $streamTime = 'UNLIMITED';
+
+                                               }else if($this->Session->read('library_type')==2){
+
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
                                                     $todaysDate         =   date("Y-m-d");                                                    
                                                     
@@ -555,11 +568,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     } 
 
                                                      $streamTime =   gmdate("H:i:s", $streamTime);
-
-                                               }
-                                               else if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1)
-                                               { 
-                                                     $streamTime = 'UNLIMITED';
                                                }   
                                         ?>
                                                 <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryInfo['Library']['library_unlimited']; ?></span>
@@ -569,7 +577,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     }
                                                 //  Hidden variable to be used in site.js for alerting user before video download
                                         
-                                                    if(($downloadCount+1)<$libraryInfo['Library']['library_user_download_limit'])
+                                                    if(($session->read('downloadCount')+1)<$libraryInfo['Library']['library_user_download_limit'])
                                                     {
                                                         ?>
                                                             <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="1" />

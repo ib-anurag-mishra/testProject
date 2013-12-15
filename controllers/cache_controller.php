@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -90,11 +90,10 @@ class CacheController extends AppController {
         //Configure::write('debug', 2);
        
         $territoriesList = $this->Common->getTerritories();       
-        foreach($territoriesList as $territory){
+        foreach($territoriesList as $territory){            
             
-            if($territory == 'US'){
-                $this->setNewsCache($territory);
-            }            
+            $this->setAnnouncementCache($territory);
+            $this->setNewsCache($territory);
             $this->Common->getGenres($territory);
             $this->Common->getNationalTop100($territory);
             $this->Common->getFeaturedVideos($territory);
@@ -111,11 +110,24 @@ class CacheController extends AppController {
             $this->Common->getFeaturedArtists($territory);
             $this->Common->getDifferentGenreData($territory);
             $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);    
+            $this->Common->getDefaultQueues($territory);
+             
         }
        $this->Common->setLibraryTopTenCache();
        $this->Common->setVideoCacheVar();    
        $this->setAppMyMusicVideoList();        
+    }
+    
+    /*
+     * Function Name : setAnnouncementCache
+     * Function Description : This function is used to set announcment Cache.
+     * all this function query must be same as queries written in app controller for announcement.
+     */
+    function setAnnouncementCache(){
+        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+        $announcment_rs = $this->Album->query($announcment_query);
+        Cache::write("announcementCache",$announcment_rs);
+        die;
     }
     
      /*
@@ -125,14 +137,36 @@ class CacheController extends AppController {
      */
     function setNewsCache($territory){
         
-        $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$territory."%")),
+         $lengRs = $this->Language->find('all', array('conditions' => array('status' => 'active'),'fields' => 'short_name'));
+         
+         
+         foreach($lengRs as $perLeg => $lengRow) {
+             $lenguage = trim($lengRow['Language']['short_name']);
+             
+             $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $lenguage))));
+
+             if($news_count != 0){
+                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $lenguage, 'place LIKE' => "%".$territory."%")),
                 'order' => 'News.created DESC',
                 'limit' => '10'
                 ));
-        $newCacheVarName = "newsUSEN";
-        Cache::write($newCacheVarName,$news_rs);        
-        
-        $this->log("cache wrritten for ".  $newCacheVarName, "cache");        
+                 
+                $newCacheVarName = "news".$territory.$lenguage;
+                
+                
+             }else{
+                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$territory."%")),
+                'order' => 'News.created DESC',
+                'limit' => '10'
+                ));
+                 
+                $newCacheVarName = "news".$territory."en";
+                
+             }         
+             
+            Cache::write($newCacheVarName,$news_rs);           
+            $this->log("cache wrritten for ".  $newCacheVarName, "cache"); 
+         }     
         
     }
     

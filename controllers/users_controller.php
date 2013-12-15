@@ -510,8 +510,15 @@ function login($library = null){
 		$patronId = $this->Session->read('patron');
 		$libraryId = $this->Session->read('library');
                 $this->Cookie->delete('redirecting');
+                
+                if($this->Session->check('downloadCount'))
+                {
+                    $this->Session->delete('downloadCount');
+                }
+                
 		$patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
-		if(count($patronDetails) > 0){
+		if(count($patronDetails) > 0)
+                    {
 			$updateTime = date( "Y-m-d H:i:s", time()-60 );
 			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
 			$this->Currentpatron->saveField('modified',$updateTime, false);
@@ -717,7 +724,7 @@ function login($library = null){
 		}else{
                         $this->Session->destroy();
 			$this->redirect($this->Auth->logout());
-		}
+		}                                
 	}
 
    /*
