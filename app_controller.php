@@ -105,11 +105,30 @@ class AppController extends Controller
         //$this->checkOnlinePatron();
 
 
-        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
-        $announcment_rs = $this->Album->query($announcment_query);
-        //echo "<pre>";
-        //print_r($announcment_rs);
+        //$announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+        //$announcment_rs = $this->Album->query($announcment_query);
+       
+       
+        
+        
+        // add announcement in the cache
+        if (($announceInfo = Cache::read("announcementCache")) === false)
+        {
+            $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+            $announcment_rs = $this->Album->query($announcment_query);
+            Cache::write("announcementCache",$announcment_rs);
+        }
+        else
+        {           
+            //get announcement from the cache
+            $announcment_rs = Cache::read("announcementCache");
+        }
+        
         $this->set('announcment_value', $announcment_rs[0]['pages']['page_content']);
+        
+        
+        
+        
         //$announcment_rs[0]['pages']['page_content'];
 
         /*
