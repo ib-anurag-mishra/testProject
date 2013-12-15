@@ -695,7 +695,12 @@ STR;
             $this->log("Empty countryPrefix: ".$territory, "siteSpeed");
             die;
         }
+        else
+        {
+            die;
+        }
         
+        die;
         $albumInstance = ClassRegistry::init('Video');
         // Added caching functionality for coming soon videos
         $sql_coming_soon_v = <<<STR
