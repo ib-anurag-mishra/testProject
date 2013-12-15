@@ -4,7 +4,7 @@
     include 'functions.php';
     $memcache = new Memcache;
     $memcache->addServer('10.178.4.51', 11211);
-    $url = "http://www.freegaldev.com/cache/runCache";
+    $url = "http://10.181.59.64/cache/runCache";
     print $url;
     $ch=curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
