@@ -120,6 +120,7 @@ class AppController extends Controller
         }
         else
         {           
+            echo 147;
             //get announcement from the cache
             $announcment_rs = Cache::read("announcementCache");
         }
