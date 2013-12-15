@@ -692,7 +692,7 @@ STR;
         
         if(empty($countryPrefix))
         {
-            $this->log("Empty countryPrefix: ".$countryPrefix, "siteSpeed");
+            $this->log("Empty countryPrefix: ".$territory, "siteSpeed");
             die;
         }
         
