@@ -304,6 +304,7 @@
                                                                     </section>
                                                                 </div>
                                                                 <br class="clr">
+                                                                <input type="hidden" value="<?php echo Configure::read('App.Script');   ?>" id="Scripts_Path" />    
                                                             </div>
                                                             <?php echo $this->element('footer'); ?>
                                                             
