@@ -37,16 +37,20 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>   
+        
+        <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/freegal_styles.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/jquery.autocomplete.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/colorbox.css" />
 
         <?php
-        echo $this->Html->css(
+       /* echo $this->Html->css(
                 array(
                     'freegal_styles',
                     'jquery.autocomplete',
                     'colorbox',
                 )
-        );
+        );*/
 
 
 /*
