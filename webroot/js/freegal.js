@@ -860,7 +860,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
-                window.location = downloadUsedArr[2];
+                window.location = unescape(downloadUsedArr[2]);
 
                 $('.afterClick').hide();
                 $('.beforeClick').show();
@@ -2135,6 +2135,8 @@ function showHideGrid(varType) {
 
                 top_100_songs_grid.removeClass('active');
                 top_100_videos_grid.addClass('active');
+                
+                return false ;
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
