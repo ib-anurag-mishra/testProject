@@ -4156,7 +4156,6 @@ STR;
         }
         $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
 
-        exit;
     }
 
 }
