@@ -268,12 +268,12 @@
                     //$body.removeClass('loader');
                     //$.getScript(webroot + 'css/styles.css');
                     //$.getScript(webroot + 'css/freegal_styles.css');
-
-                    $.getScript(webroot + 'js/freegal.js');
-                    $.getScript(webroot + 'js/site.js');
+                    var scriptPath = document.getElementById('Scripts_Path').value;
+                    $.getScript(scriptPath + '/js/freegal.js');
+                    $.getScript(scriptPath + '/js/site.js');
 
                     //$.getScript(webroot + 'js/audioPlayer.js');
-                   $.getScript(webroot + 'js/recent-downloads.js');
+                   $.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
 
 
@@ -281,7 +281,7 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
                     return false;
-                },
+                }
             }); // end ajax
 
         }); // end onStateChange

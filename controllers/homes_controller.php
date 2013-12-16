@@ -56,7 +56,7 @@ class HomesController extends AppController
         }
         else                                          //  Before Login
         {
-            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms');
+            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms', 'getNationalTopAlbums');
         }
 
         $this->Cookie->name = 'baker_id';
@@ -76,7 +76,6 @@ class HomesController extends AppController
     {
 
         //Configure::write('debug', 3);
-        
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443)
         {
@@ -116,17 +115,17 @@ class HomesController extends AppController
 
 
         // National Top 100 Albums slider        
-        if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
-        {
-
-            $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
-        }
-        else
-        {
-
-            $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
-        }
-        $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
+//        if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
+//        {
+//
+//            $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
+//        }
+//        else
+//        {
+//
+//            $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
+//        }
+//        $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
 
 
 
@@ -154,44 +153,45 @@ class HomesController extends AppController
         {
             $this->Session->write('Config.language', 'en');
         }
-        
-        
-        
-        $news_rs = array();    
+
+
+
+        $news_rs = array();
         //create the cache variable name
-        $newCacheVarName = "news".$this->Session->read('territory').$this->Session->read('Config.language');
-        
+        $newCacheVarName = "news" . $this->Session->read('territory') . $this->Session->read('Config.language');
+
         //first check lenguage and territory set or not        
-        if($this->Session->read('territory') && $this->Session->read('Config.language')){            
+        if ($this->Session->read('territory') && $this->Session->read('Config.language'))
+        {
             if (($newsInfo = Cache::read($newCacheVarName)) === false)
             {
                 //if cache not set then run the queries
-                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")),
-                'order' => 'News.created DESC',
-                'limit' => '10'
-                )); 
-                Cache::write($newCacheVarName,$news_rs);
+                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
+                    'order' => 'News.created DESC',
+                    'limit' => '10'
+                ));
+                Cache::write($newCacheVarName, $news_rs);
             }
             else
-            {           
+            {
                 //get all the information from the cache for news
                 $news_rs = Cache::read($newCacheVarName);
-            }            
-        }       
-        
+            }
+        }
+
         $this->set('news', $news_rs);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         /*
@@ -232,7 +232,6 @@ class HomesController extends AppController
          */
 
         //print_r( $this->element('sql_dump') );
-
         //print_r($this->Session->read('downloadVariArray'));
     }
 
@@ -240,7 +239,6 @@ class HomesController extends AppController
     function checkStreamingComponent()
     {
 //        Configure::write('debug', 0);
-
 //         $query='select * from streaming_histories where id="3007"';
 //         $obj = mysql_query($query);
 //         
@@ -677,7 +675,7 @@ STR;
 
     function autoComplete()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $country = $this->Session->read('territory');
         $searchKey = '';
         if (isset($_REQUEST['q']) && $_REQUEST['q'] != '')
@@ -2402,7 +2400,7 @@ STR;
 
     function _sendForgotPasswordMail($id, $password)
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->Email->template = 'email/forgotPasswordEmail';
         $this->User->recursive = -1;
         $Patron = $this->User->read(null, $id);
@@ -2931,11 +2929,21 @@ STR;
     function wishlistDownload()
     {
        // Configure::write('debug', 0);
-        $this->layout = false;
+        $this->layout = false; 
 
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_REQUEST['prodId'];
+        $CdnPath = $_REQUEST['CdnPath'];
+        $SaveAsName = $_REQUEST['SaveAsName'];
+        
+        
+        $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
+        $finalURL = urlencode($finalSongUrlArr[0]).urlencode($finalSongUrlArr[1]).urlencode($finalSongUrlArr[2]);
+        
+        
         $downloadsDetail = array();
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
@@ -3178,7 +3186,7 @@ STR;
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
             $this->Session->write('downloadCount' , $downloadsUsed);
             
-            echo "suces|" . $downloadsUsed;
+            echo "suces|" . $downloadsUsed. "|".$finalURL;
             exit;
         }
         else
@@ -3438,11 +3446,11 @@ STR;
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
-            
-            $this->Session->write('downloadCount' , $downloadsUsed);
-             //updating session for VideoDown load status
-            $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
-            
+
+            $this->Session->write('downloadCount', $downloadsUsed);
+            //updating session for VideoDown load status
+            $this->Common->getVideodownloadStatus($libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'), true);
+
             echo "suces|" . $downloadsUsed;
             exit;
         }
@@ -3466,7 +3474,7 @@ STR;
 
     function historyDownload()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
 
         $id = $_REQUEST['id'];
@@ -3722,7 +3730,7 @@ STR;
     function language()
     {
 
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $language = $_POST['lang'];
         $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -3863,7 +3871,7 @@ STR;
 
     function convertString()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $str = $_POST['str'];
         echo sha1($str);
@@ -3873,7 +3881,7 @@ STR;
     //Used to get Sample Song url
     function userSample()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $prodId = $_POST['prodId'];
         $pt = base64_decode($_POST['pt']);
@@ -4134,6 +4142,30 @@ STR;
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
+    }
+
+    function getNationalTopAlbums()
+    {
+        Configure::write('debug', 2);
+        $this->layout = 'ajax';
+        
+        // Local Top Downloads functionality    
+        $territory = $this->Session->read('territory');
+        
+        
+        // National Top 100 Albums slider        
+        if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
+        {
+
+            $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
+        }
+        else
+        {
+
+            $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
+        }
+        $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
+
     }
 
 }

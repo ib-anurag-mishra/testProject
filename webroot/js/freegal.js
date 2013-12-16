@@ -1115,17 +1115,17 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 }
 
 
-function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, downloadUrl3, provider)
+function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
 {
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
     document.getElementById('wishlist_song_' + prodId).style.display = 'none';
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
-    var finalURL = downloadUrl1;
-    finalURL += downloadUrl2;
-    finalURL += downloadUrl3;
-    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
+//    var finalURL = downloadUrl1;
+//    finalURL += downloadUrl2;
+//    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
     id = prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
@@ -1151,7 +1151,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                location.href = unescape(finalURL);
+                location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
             }
@@ -2109,6 +2109,29 @@ function showHideGrid(varType) {
         videosIDVal.addClass('active');
         top_100_songs_grid.removeClass('active');
         top_100_videos_grid.addClass('active');
+
+        $.ajax({
+            type: "post",
+            url: webroot + 'homes/getNationalTopAlbums',
+            success: function(response) {
+                $("#top-100-videos-grid").find('ul').remove();
+                $("#top-100-videos-grid").append(response);
+
+                //binding again js mouse enter and mouse leave event
+                $.getScript( '/js/site.js');
+            
+
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                console.log(
+                        "The following error occured: " +
+                        textStatus, errorThrown
+                        );
+            }
+        });
+
+        return false;
     }
 }
 
@@ -2244,7 +2267,7 @@ $(document).ready(function() {
 
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
         e.preventDefault();
-        
+
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
