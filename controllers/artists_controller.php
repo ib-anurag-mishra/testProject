@@ -815,13 +815,13 @@ Class ArtistsController extends AppController
 		$albumData = array();
                 if($val_provider_type!=''){
                     $albumData = $this->paginate('Album'); //getting the Albums for the artist
-                }
-                
-                $albumData[0]['albumSongs'] = $this->requestAction(
-                        array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                        array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
-                );
-                
+               
+
+                    $albumData[0]['albumSongs'] = $this->requestAction(
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                            array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+                    );
+                 }
                 
 		$albumSongs = array();
 		if(!empty($albumData))
@@ -998,7 +998,12 @@ Class ArtistsController extends AppController
                 
                 
 	    $this->set('albumSongs',$albumSongs);
-            $this->set("genre", $albumData['0']['Genre']['Genre']);
+            if(isset($albumData['0']['Genre']['Genre'])){
+                $this->set("genre", $albumData['0']['Genre']['Genre']);
+            }else{
+                
+            }
+            $this->set("genre", '');
 	}
 
 
