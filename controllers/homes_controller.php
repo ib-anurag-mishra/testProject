@@ -4139,10 +4139,10 @@ STR;
     
     function getNationalTopAlbums()
     {
-        $this->layout = 'ajax';
+       $this->layout = 'ajax';
         
         
-        
+        die;
     }
 }
 
