@@ -67,13 +67,19 @@ class AppController extends Controller
                 //$this->Session->write("library_type", $libraryData['Library']['test_library_type']);
                 $this->Session->write("block", (($libraryData['Library']['library_block_explicit_content'] == '1') ? 'yes' : 'no'));
             }elseif($this->Session->read("patron") != "" && $this->Session->read("library") !=""){
-                $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => $this->Session->read("library")), 'fields' => array('test_library_type','library_type'), 'recursive' => -1));
+                $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => $this->Session->read("library")), 'fields' => array('library_territory','test_library_type','library_type'), 'recursive' => -1));
+                $country = $libraryData['Library']['library_territory'];
                 $lib_type = $this->Session->read("library_type");
                 if(empty($lib_type))
                 {
-                        $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
+                    $this->Session->write("library_type", $libraryData['Library']['library_type']);
                 }
-            }
+            }            
+            
+            if($country == 'IT')
+            {
+                $this->Session->write("library_type", '1');          
+            }            
         }
         if ((Cache::read('maintainLatestDownload')) === false)
         {
@@ -213,6 +219,8 @@ class AppController extends Controller
                 $this->Common->getVideodownloadStatus($this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
             }
         }
+        
+        $this->Session->write("library_type", $libraryData['Library']['library_type']);
 
        // $this->log("App Controller -- END", "siteSpeed");
     }
