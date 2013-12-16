@@ -2128,6 +2128,8 @@ function showHideGrid(varType) {
 //                var scriptPath = document.getElementById('Scripts_Path').value;
 //                    $.getScript(scriptPath + '/js/site.js');
                 $.getScript( '/js/site.js');
+                
+                $("#top-100-videos-grid").find('.loader').remove();
                 return false;
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -2138,9 +2140,6 @@ function showHideGrid(varType) {
                         );
             }
         });
-
-
-        $("#top-100-videos-grid").find('.loader').remove();
 
         songsIDVal.removeClass('active');
         videosIDVal.addClass('active');

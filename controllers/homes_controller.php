@@ -4149,7 +4149,7 @@ STR;
 
     function getNationalTopAlbums()
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         $this->layout = 'ajax';
         
         // Local Top Downloads functionality    
