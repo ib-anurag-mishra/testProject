@@ -2126,17 +2126,8 @@ function showHideGrid(varType) {
                 //binding again js mouse enter and mouse leave event
 //                var scriptPath = document.getElementById('Scripts_Path').value;
 //                    $.getScript(scriptPath + '/js/freegal.js');
-
-                $.getScript('/js/site.js');
-                $("#top-100-videos-grid").find('.loader').remove();
-
-                songsIDVal.removeClass('active');
-                videosIDVal.addClass('active');
-
-                top_100_songs_grid.removeClass('active');
-                top_100_videos_grid.addClass('active');
-                
-                return false ;
+                $.getScript( '/js/freegal.js');
+                return false;
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
@@ -2147,6 +2138,14 @@ function showHideGrid(varType) {
             }
         });
 
+
+        $("#top-100-videos-grid").find('.loader').remove();
+
+        songsIDVal.removeClass('active');
+        videosIDVal.addClass('active');
+
+        top_100_songs_grid.removeClass('active');
+        top_100_videos_grid.addClass('active');
         return false;
     }
 }
