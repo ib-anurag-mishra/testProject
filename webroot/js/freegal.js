@@ -859,8 +859,10 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             {
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
-                
+                //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
+                //window.location = unescape(downloadUsedArr[2]);
+                location.href = unescape(downloadUsedArr[2]);
+
                 $('.afterClick').hide();
                 $('.beforeClick').show();
 
@@ -868,7 +870,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-
+                return false;
             }
             else
             {
@@ -1122,6 +1124,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 
 function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
 {
+    console.log('wishlistDownloadOthers called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -2114,12 +2117,6 @@ function showHideGrid(varType) {
         var loading_div = "<div class='loader'></div>";
         $("#top-100-videos-grid").append(loading_div);
 
-        songsIDVal.removeClass('active');
-        videosIDVal.addClass('active');
-
-        top_100_songs_grid.removeClass('active');
-        top_100_videos_grid.addClass('active');
-
         $.ajax({
             type: "post",
             url: webroot + 'homes/getNationalTopAlbums',
@@ -2129,11 +2126,11 @@ function showHideGrid(varType) {
 
                 //binding again js mouse enter and mouse leave event
 //                var scriptPath = document.getElementById('Scripts_Path').value;
-//                    $.getScript(scriptPath + '/js/freegal.js');
-
-                $.getScript('/js/site.js');
-
+//                    $.getScript(scriptPath + '/js/site.js');
+                $.getScript( '/js/site.js');
+                
                 $("#top-100-videos-grid").find('.loader').remove();
+                return false;
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
@@ -2144,6 +2141,11 @@ function showHideGrid(varType) {
             }
         });
 
+        songsIDVal.removeClass('active');
+        videosIDVal.addClass('active');
+
+        top_100_songs_grid.removeClass('active');
+        top_100_videos_grid.addClass('active');
         return false;
     }
 }
