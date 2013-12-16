@@ -4138,6 +4138,11 @@ STR;
     {
         Configure::write('debug', 2);
         $this->layout = 'ajax';
+        
+        // Local Top Downloads functionality    
+        $territory = $this->Session->read('territory');
+        
+        
         // National Top 100 Albums slider        
         if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
         {
