@@ -15,10 +15,19 @@
             <li>
                 <div class="album-container">							
                     <?php
-                    
-                    $lazyClass = '';
-                    $srcImg = $value['songAlbumImage'];
-                    $dataoriginal = '';
+                    if ($count <= 10)
+                    {
+                        $lazyClass = '';
+                        $srcImg = $value['songAlbumImage'];
+                        $dataoriginal = '';
+                    }
+                    else                //  Apply Lazy Class for images other than first 10.
+                    {
+                        $lazyClass = 'lazy';
+                        $srcImg = $this->webroot . 'app/webroot/img/lazy-placeholder.gif';
+                        $dataoriginal = $value['songAlbumImage'];
+                    }
+
 
                     echo $html->link($html->image($srcImg, array("height" => "250", "width" => "250", "class" => $lazyClass, "data-original" => $dataoriginal)), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false))
                     ?>
