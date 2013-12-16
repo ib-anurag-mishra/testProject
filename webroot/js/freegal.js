@@ -2118,7 +2118,7 @@ function showHideGrid(varType) {
                 $("#top-100-videos-grid").append(response);
 
                 //binding again js mouse enter and mouse leave event
-                $.getScript(scriptPath + '/js/site.js');
+                $.getScript( '/js/site.js');
             
 
             },
