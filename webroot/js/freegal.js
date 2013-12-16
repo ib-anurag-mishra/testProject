@@ -840,7 +840,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
     document.getElementById('downloading_' + prodId).style.display = 'block';
     document.getElementById('wishlist_song_' + prodId).style.display = 'none';
-    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider+ "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
     id = prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
@@ -856,6 +856,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             }
             else if (msg === 'suces')
             {
+                $(this).attr('href').val(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
                 var downloadUsedArr = response.split('|');
@@ -864,7 +865,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-               location.href= downloadUsedArr[2];
+                
             }
             else
             {
@@ -2112,7 +2113,7 @@ function showHideGrid(varType) {
 
         songsIDVal.removeClass('active');
         videosIDVal.addClass('active');
-        
+
         top_100_songs_grid.removeClass('active');
         top_100_videos_grid.addClass('active');
 
