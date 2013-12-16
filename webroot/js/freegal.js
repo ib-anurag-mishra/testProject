@@ -2118,20 +2118,8 @@ function showHideGrid(varType) {
                 $("#top-100-videos-grid").append(response);
 
                 //binding again js mouse enter and mouse leave event
-                $('.video-cover-container').on('mouseleave', function() {
-                    $(this).find('.add-to-playlist-button').css({opacity: 0});
-                    $(this).find('.top-100-download-now-button').css({opacity: 0});
-                    $(this).find('.preview').css({opacity: 0});
-                    $(this).find('.top-video-login-button').css({opacity: 0});
-                    $(this).find('.album-preview').css({opacity: 0});
-                });
-                $('.album-container').on('mouseleave', function() {
-                    $('.preview').css({opacity: 0});
-                    $('.album-preview').css({opacity: 0});
-                    $(this).find('.add-to-playlist-button').css({opacity: 0});
-                    $(this).find('.top-100-download-now-button').css({opacity: 0});
-                    $(this).find('.top-10-download-now-button').css({opacity: 0});
-                });
+                $.getScript(scriptPath + '/js/site.js');
+            
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
