@@ -858,8 +858,8 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             {
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-
-                $('#song_download_' + prodId).attr('href').val(downloadUsedArr[2]);
+                document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
+                
                 $('.afterClick').hide();
                 $('.beforeClick').show();
 
