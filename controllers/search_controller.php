@@ -652,7 +652,7 @@ class SearchController extends AppController
       // each indiviual filter call
       $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'album', 18, '1');
       $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'artist', 18, '1');
-      $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'composer', 18, '1');
+      $arr_data[]  = $this->Solr->getnData($queryVar, 'composer', 18, '1');
       $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'genre', 18, '1');
       $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1');
       $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'song', 18, '1');
@@ -864,7 +864,7 @@ class SearchController extends AppController
                 }
 
                 //sort ain decending order of match result count
-                krsort($arr_result);
+                @krsort($arr_result);
 
                 //get 3 elements of each filter
                 $arr_show = $arr_result;
