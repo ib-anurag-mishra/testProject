@@ -132,6 +132,8 @@ class HomesController extends AppController
 
         $ids = '';
         $ids_provider_type = '';
+        /*
+        
         //featured artist slideshow code start
         //if(1){
         if (($artists = Cache::read("featured" . $country)) === false)
@@ -143,6 +145,13 @@ class HomesController extends AppController
             //fetched all the information from the cache
             $featured = Cache::read("featured" . $country);
         }
+        
+        */
+        
+        $featured = $this->Common->getFeaturedArtistsTest($territory);
+        
+        
+        
         $this->set('featuredArtists', $featured);
 
         /*
