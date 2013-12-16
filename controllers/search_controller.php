@@ -211,7 +211,7 @@ class SearchController extends AppController
                 {
                     case 'album':
                         $limit = 24;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'album');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
 
@@ -245,7 +245,7 @@ class SearchController extends AppController
 
                     case 'genre':
                         $limit = 30;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'genre');
                         $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
                         //print_r($genres); die;
                         $this->set('genres', $genres);
@@ -253,21 +253,21 @@ class SearchController extends AppController
 
                     case 'label':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'label');
                         $labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
                         $this->set('labels', $labels);
                         break;
 
                     case 'artist':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'artist');
                         $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
                         $this->set('artists', $artists);
                         break;
 
                     case 'composer':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'composer');
                         $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
                         $this->set('composers', $composers);
                         break;
@@ -864,7 +864,7 @@ class SearchController extends AppController
                 }
 
                 //sort ain decending order of match result count
-                krsort($arr_result);
+                @krsort($arr_result);
 
                 //get 3 elements of each filter
                 $arr_show = $arr_result;
