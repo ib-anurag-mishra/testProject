@@ -835,6 +835,7 @@ function addToWishlist_top(prodId, providerType)
 
 function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
 {
+    console.log('wishlistDownloadIE called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
@@ -858,8 +859,8 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             {
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-
-                $('#song_download_' + prodId).attr('href').val(downloadUsedArr[2]);
+                document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
+                
                 $('.afterClick').hide();
                 $('.beforeClick').show();
 
