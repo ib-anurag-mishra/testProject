@@ -2901,8 +2901,7 @@ STR;
 //        $this->log("cache written for featured artists for $territory", 'debug');
 //        $this->log("cache written for featured artists for: $territory", "cache");
         
-        print_r($featured);
-        die;
+        
         return $featured;
     }
 }
