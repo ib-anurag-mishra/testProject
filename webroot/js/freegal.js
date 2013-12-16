@@ -856,7 +856,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             }
             else if (msg === 'suces')
             {
-                $('#wishlist_song_' + prodId).find('a').next().attr('href').val(downloadUsedArr[2]);
+                $('#song_download_' + prodId).attr('href').val(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
                 var downloadUsedArr = response.split('|');
