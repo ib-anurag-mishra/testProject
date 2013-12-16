@@ -813,7 +813,7 @@ Class ArtistsController extends AppController
 		}
 		$this->Album->recursive = 2;
 		$albumData = array();
-                if($val_provider_type!=''){
+                if($val_provider_type!==''){
                     $albumData = $this->paginate('Album'); //getting the Albums for the artist
                
 
@@ -822,7 +822,7 @@ Class ArtistsController extends AppController
                             array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
                     );
                  }
-                
+               
 		$albumSongs = array();
 		if(!empty($albumData))
 		{
@@ -986,6 +986,7 @@ Class ArtistsController extends AppController
                             } 
                     }
             }
+            
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);

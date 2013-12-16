@@ -43,7 +43,7 @@
         </div>
 
         <?php
-        // echo "<pre>"; print_r($albumData);
+         
 if (count($albumData) > 0){
         foreach ($albumData as $album_key => $album):
             ?>
