@@ -1115,17 +1115,17 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 }
 
 
-function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, downloadUrl3, provider)
+function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
 {
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
     document.getElementById('wishlist_song_' + prodId).style.display = 'none';
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
-    var finalURL = downloadUrl1;
-    finalURL += downloadUrl2;
-    finalURL += downloadUrl3;
-    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
+//    var finalURL = downloadUrl1;
+//    finalURL += downloadUrl2;
+//    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
     id = prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
@@ -1151,7 +1151,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                location.href = unescape(finalURL);
+                location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
             }

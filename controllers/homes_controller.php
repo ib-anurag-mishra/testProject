@@ -3199,15 +3199,23 @@ STR;
 
     function wishlistVideoDownload()
     {
-        //Configure::write('debug', 0);
+       // Configure::write('debug', 0);
         $this->layout = false;
 
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_REQUEST['prodId'];
+        $CdnPath = $_REQUEST['CdnPath'];
+        $SaveAsName = $_REQUEST['SaveAsName'];
+        
+        $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
+        $finalURL = urlencode($finalSongUrlArr[0])+urlencode($finalSongUrlArr[1])+urlencode($finalSongUrlArr[2]);
+        
         $downloadsDetail = array();
-        $libraryDownload = $this->Downloadsvideos->checkLibraryDownloadVideos($libId);
-        $patronDownload = $this->Downloadsvideos->checkPatronDownloadVideos($patId, $libId);
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
 
         //check for download availability
         if ($libraryDownload != '1' || $patronDownload != '1')
@@ -3220,15 +3228,15 @@ STR;
         $provider = $_REQUEST['provider'];
 
         //get details for this song
-        $trackDetails = $this->Video->getVideoData($prodId, $provider);
+        $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
         $insertArr['ProdID'] = $prodId;
-        $insertArr['artist'] = $trackDetails['0']['Video']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Video']['VideoTitle'];
-        $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
+        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
+        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         $insertArr['provider_type'] = $provider;
 
         /**
@@ -3243,9 +3251,7 @@ STR;
         if ($checkValidation == 1)
         {
 
-            $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
-
-
+            $validationResult = $this->Downloads->validateDownload($prodId, $provider);
 
             /**
               records download component request & response
@@ -3264,6 +3270,7 @@ STR;
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
+
         //$user = $this->Auth->user();
         $user = $this->Session->read('Auth.User.id');
         if (empty($user))
@@ -3385,30 +3392,39 @@ STR;
 
             $downloadStatus = $latestdownloadStatus = 0;
             //save to downloads table
-            $this->Videodownload->setDataSource('master');
-            if ($this->Videodownload->save($insertArr))
+            $this->Download->setDataSource('master');
+            if ($this->Download->save($insertArr))
             {
-                $this->Videodownload->setDataSource('default');
                 $downloadStatus = 1;
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                $this->Download->setDataSource('default');
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
                 if ($maintainLatestDownload)
                 {
-                    $this->LatestVideodownload->setDataSource('master');
-                    if ($this->LatestVideodownload->save($insertArr))
+                    $this->LatestDownload->setDataSource('master');
+                    if ($this->LatestDownload->save($insertArr))
                     {
                         $latestdownloadStatus = 1;
                     }
-                    $this->LatestVideodownload->setDataSource('default');
+                    $this->LatestDownload->setDataSource('default');
                 }
+
+                //add the download songs in the session array
+                if ($this->Session->read('downloadVariArray'))
+                {
+                    $downloadVariArray = $this->Session->read('downloadVariArray');
+                    $downloadVariArray[] = $prodId . '~' . $provider;
+                    $this->Session->write('downloadVariArray', $downloadVariArray);
+                }
+
                 //update library table
                 $this->Library->setDataSource('master');
                 $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
                 $this->Library->query($sql);
                 $this->Library->setDataSource('default');
             }
-            $this->Videodownload->setDataSource('default');
+            $this->Download->setDataSource('default');
 
 
 
@@ -3423,11 +3439,12 @@ STR;
 
             $this->log($log_data, $log_name);
 
+
             if ($id > 0)
             {
                 //delete from wishlist table
-                $deleteVideoId = $id;
-                $this->WishlistVideo->delete($deleteVideoId);
+                $deleteSongId = $id;
+                $this->Wishlist->delete($deleteSongId);
                 //get no of downloads for this week
             }
 
@@ -3436,12 +3453,9 @@ STR;
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
-
-            $this->Session->write('downloadCount', $downloadsUsed);
-            //updating session for VideoDown load status
-            $this->Common->getVideodownloadStatus($libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'), true);
-
-            echo "suces|" . $downloadsUsed;
+            $this->Session->write('downloadCount' , $downloadsUsed);
+            
+            echo "suces|" . $downloadsUsed. "|".$finalURL;
             exit;
         }
         else
