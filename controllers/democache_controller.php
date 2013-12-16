@@ -107,7 +107,8 @@ class DemocacheController extends AppController {
 //            $this->Common->getUsTop10Videos($territory);
 //            $this->Common->getNewReleaseAlbums($territory);
 //            $this->Common->getNewReleaseVideos($territory);
-              $this->Common->getFeaturedArtistsTest($territory);
+              print_r($this->Common->getFeaturedArtistsTest($territory));
+              die;
 //            $this->Common->getDifferentGenreData($territory);
 //            $this->getArtistText($territory);
 //            $this->Common->getDefaultQueues($territory);
