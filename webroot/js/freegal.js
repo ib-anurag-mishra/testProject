@@ -2125,8 +2125,8 @@ function showHideGrid(varType) {
 
                 //binding again js mouse enter and mouse leave event
 //                var scriptPath = document.getElementById('Scripts_Path').value;
-//                    $.getScript(scriptPath + '/js/freegal.js');
-                $.getScript( '/js/freegal.js');
+//                    $.getScript(scriptPath + '/js/site.js');
+                $.getScript( '/js/site.js');
                 return false;
             },
             error: function(jqXHR, textStatus, errorThrown) {

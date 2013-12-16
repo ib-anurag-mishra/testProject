@@ -319,7 +319,7 @@ $('document').ready(function()
         $(this).removeClass('active');
     });
 
-    top_100_songs_grid.addClass('active');
+//    top_100_songs_grid.addClass('active');
     grid_view_button.addClass('active');
     grids.addClass('active');
 
