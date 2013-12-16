@@ -2109,6 +2109,24 @@ function showHideGrid(varType) {
         videosIDVal.addClass('active');
         top_100_songs_grid.removeClass('active');
         top_100_videos_grid.addClass('active');
+
+        $.ajax({
+            type: "post",
+            url: webroot + 'homes/getNationalTopAlbums',
+            success:function(response) {
+                $("#top-100-videos-grid").find('ul').remove();
+                $("#top-100-videos-grid").append(response);
+                    },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                console.log(
+                        "The following error occured: " +
+                        textStatus, errorThrown
+                        );
+            }
+        });
+        
+        return false ;
     }
 }
 
@@ -2244,7 +2262,7 @@ $(document).ready(function() {
 
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
         e.preventDefault();
-        
+
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
