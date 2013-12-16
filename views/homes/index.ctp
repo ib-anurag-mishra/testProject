@@ -138,9 +138,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                              
                                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                                 {
-                                                    $songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Full_Files']['CdnPath'] . "/" . $nationalTopDownload[$i]['Full_Files']['SaveAsName']);
+                                                   /* $songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Full_Files']['CdnPath'] . "/" . $nationalTopDownload[$i]['Full_Files']['SaveAsName']);
                                                     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-                                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));                                                    
+                                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));  */                                                  
                                                     
                                                      if($this->Session->read('downloadVariArray'))
                                                      {
@@ -170,7 +170,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                                 <input type="hidden" name="ProviderType" value="<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>" />
                                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
                                                                     <![if !IE]>
-                                                                    <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+                                                                    <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0", "<?php echo $nationalTopDownload[$i]['Full_Files']['CdnPath'] ; ?>", "<?php echo $nationalTopDownload[$i]['Full_Files']['SaveAsName']; ?>",  "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
                                                                     <![endif]>
                                                                     <!--[if IE]>
                                                                            <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download Now'); ?></a>
@@ -188,7 +188,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                         <a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></a>
                                                         <?php
                                                     }
-                                                }
+                                                    
+                                                 }
                                                 else
                                                 {
                                                     ?>
