@@ -1122,6 +1122,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 
 function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
 {
+    console.log('wishlistDownloadOthers called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
