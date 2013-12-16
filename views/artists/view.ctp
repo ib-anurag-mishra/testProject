@@ -43,8 +43,8 @@
         </div>
 
         <?php
-        // echo "<pre>"; print_r($albumData);
-
+         
+if (count($albumData) > 0){
         foreach ($albumData as $album_key => $album):
             ?>
             <section class="album-detail">
@@ -382,6 +382,9 @@
             </section>
             <?php
         endforeach;
+}else{
+    echo '<span>Sorry,there are no more details available.</span>';
+}
         ?>			
     </section>
 </section>
