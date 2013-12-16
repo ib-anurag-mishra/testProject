@@ -861,7 +861,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
                 window.location = downloadUsedArr[2];
-                
+
                 $('.afterClick').hide();
                 $('.beforeClick').show();
 
@@ -2116,12 +2116,6 @@ function showHideGrid(varType) {
         var loading_div = "<div class='loader'></div>";
         $("#top-100-videos-grid").append(loading_div);
 
-        songsIDVal.removeClass('active');
-        videosIDVal.addClass('active');
-
-        top_100_songs_grid.removeClass('active');
-        top_100_videos_grid.addClass('active');
-
         $.ajax({
             type: "post",
             url: webroot + 'homes/getNationalTopAlbums',
@@ -2134,8 +2128,13 @@ function showHideGrid(varType) {
 //                    $.getScript(scriptPath + '/js/freegal.js');
 
                 $.getScript('/js/site.js');
-
                 $("#top-100-videos-grid").find('.loader').remove();
+
+                songsIDVal.removeClass('active');
+                videosIDVal.addClass('active');
+
+                top_100_songs_grid.removeClass('active');
+                top_100_videos_grid.addClass('active');
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
