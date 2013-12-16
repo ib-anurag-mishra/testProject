@@ -2792,7 +2792,6 @@ STR;
 
     function getFeaturedArtistsTest($territory)
     {
-        
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Album');
