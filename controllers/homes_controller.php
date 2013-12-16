@@ -143,6 +143,7 @@ class HomesController extends AppController
             //fetched all the information from the cache
             $featured = Cache::read("featured" . $country);
         }
+        print_r($featured);die;
         $this->set('featuredArtists', $featured);
 
         /*
