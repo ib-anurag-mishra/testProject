@@ -2929,7 +2929,7 @@ STR;
     function wishlistDownload()
     {
        // Configure::write('debug', 0);
-        $this->layout = false;
+        $this->layout = false; 
 
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
