@@ -859,7 +859,8 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             {
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
+                //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
+                window.location = downloadUsedArr[2];
                 
                 $('.afterClick').hide();
                 $('.beforeClick').show();
@@ -868,7 +869,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-
+                return false;
             }
             else
             {
