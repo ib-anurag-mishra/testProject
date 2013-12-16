@@ -24,6 +24,14 @@
             <div class="queue-duration">
                 Duration: <?php echo $total_time; ?>
             </div>
+            <?php
+            if ($queue_songs_count > 0)
+            {
+                ?>
+                <div class="play-queue-btn" ></div>
+                <?php
+            }
+            ?>
             <input type="hidden" id="hid_Plid" value="<?php echo $queue_id; ?>" />
             <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["QueueList"]["queue_name"]; ?>" />
             <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"]; ?>" />
@@ -38,14 +46,7 @@
                     ?>
                     <div class="gear-icon no-ajaxy"></div>
                 <?php } ?>
-                <?php
-                if ($queue_songs_count > 0)
-                {
-                    ?>
-                    <div class="play-queue-btn" ></div>
-                    <?php
-                }
-                ?>
+
             </div>
             <div class="queue-options">
                 <?php
@@ -140,9 +141,10 @@
                                    
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {
-                                        $songUrl = shell_exec('perl files/tokengen ' . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
-                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+//                                        $songUrl = shell_exec('perl files/tokengen ' . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
+//                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+//                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+                                       
                                         if ($value['Songs']['status'] != 'avail')
                                         {
                                             ?>
@@ -152,13 +154,18 @@
 
                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Songs"]["ProdID"]; ?>">
                                                     <![if !IE]>
-                                                    <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>"
-                                                       onclick='return wishlistDownloadOthers("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
+                                                    <a href='javascript:void(0);' class="add-to-wishlist" 
+                                                       title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>"
+                                                       onclick='return wishlistDownloadOthers("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo urlencode($value['SongFile']['SCdnPath']); ?>", "<?php echo urlencode($value['SongFile']['SSaveAsName']); ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
                                                            <?php __('Download Now'); ?>
                                                     </a>
                                                     <![endif]>
                                                     <!--[if IE]>
-                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download Now'); ?></a>
+                                                            <a id="song_download_<?php echo $value["Song"]["ProdID"]; ?>" 
+                                                                title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                                onclick='wishlistDownloadIE("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>", "<?php echo urlencode($value['SongFile']['SCdnPath']); ?>", "<?php echo urlencode($value['SongFile']['SSaveAsName']); ?>");' href="#">
+                                                                <?php __('Download Now'); ?>
+                                                            </a>
                                                     <![endif]-->
                                                 </span>
 

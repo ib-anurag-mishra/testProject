@@ -2935,6 +2935,7 @@ STR;
 
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
+        
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
