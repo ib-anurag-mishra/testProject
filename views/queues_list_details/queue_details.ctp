@@ -24,6 +24,14 @@
             <div class="queue-duration">
                 Duration: <?php echo $total_time; ?>
             </div>
+            <?php
+            if ($queue_songs_count > 0)
+            {
+                ?>
+                <div class="play-queue-btn" ></div>
+                <?php
+            }
+            ?>
             <input type="hidden" id="hid_Plid" value="<?php echo $queue_id; ?>" />
             <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["QueueList"]["queue_name"]; ?>" />
             <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"]; ?>" />
@@ -38,14 +46,7 @@
                     ?>
                     <div class="gear-icon no-ajaxy"></div>
                 <?php } ?>
-                <?php
-                if ($queue_songs_count > 0)
-                {
-                    ?>
-                    <div class="play-queue-btn" ></div>
-                    <?php
-                }
-                ?>
+
             </div>
             <div class="queue-options">
                 <?php
