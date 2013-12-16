@@ -271,10 +271,16 @@ $ieVersion = ieversion();
                                             {
                                                 ?>
                                                 <![if !IE]>
-                                                <a href='javascript:void(0);' title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthers("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>");'><?php __('Download'); ?></a>
+                                                <a href='javascript:void(0);' 
+                                                   title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                   onclick='return wishlistDownloadOthers("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['CdnPath']); ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['SaveAsName']); ?>", "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>");'><?php __('Download'); ?></a>
                                                 <![endif]>
                                                 <!--[if IE]>
-                                                        <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>" , "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download'); ?></a>
+                                                        <a  id="song_download_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>"  
+                                                            title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                            onclick='wishlistDownloadIE("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>" , "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['CdnPath']); ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['SaveAsName']); ?>");' 
+                                                            href="#">
+                                                           <?php __('Download'); ?></a>
                                                 <![endif]-->	
                                                 <?php
                                             }
