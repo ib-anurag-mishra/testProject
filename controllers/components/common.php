@@ -2784,6 +2784,125 @@ STR;
        
         return $downloadCount;
     }
+    
+    /*
+     * Function Name : getFeaturedArtistsTest
+     * Function Description : This function is used to getFeaturedArtists for testing.
+     */
+
+    function getFeaturedArtistsTest($territory)
+    {
+        set_time_limit(0);
+        $countryPrefix = $this->getCountryPrefix($territory);
+        $albumInstance = ClassRegistry::init('Album');
+        $featured = array();
+        $ids = '';
+        $ids_provider_type = '';
+        $featuredInstance = ClassRegistry::init('Featuredartist');
+        $featured = $featuredInstance->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'), 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
+        foreach ($featured as $k => $v)
+        {
+            if ($v['Featuredartist']['album'] != 0)
+            {
+                if (empty($ids))
+                {
+                    $ids .= $v['Featuredartist']['album'];
+                    $ids_provider_type .= "(" . $v['Featuredartist']['album'] . ",'" . $v['Featuredartist']['provider_type'] . "')";
+                }
+                else
+                {
+                    $ids .= ',' . $v['Featuredartist']['album'];
+                    $ids_provider_type .= ',' . "(" . $v['Featuredartist']['album'] . ",'" . $v['Featuredartist']['provider_type'] . "')";
+                }
+            }
+        }
+
+        if ((count($featured) < 1) || ($featured === false))
+        {
+            $this->log("featured artist data is not available for" . $territory, "cache");
+        }
+
+        if ($ids != '')
+        {
+            $albumInstance->recursive = 2;
+            $featured = $albumInstance->find('all', array(
+                'joins' => array(
+                    array(
+                        'type' => 'INNER',
+                        'table' => 'featuredartists',
+                        'alias' => 'fa',
+                        'conditions' => array('Album.ProdID = fa.album')
+                    )
+                ),
+                'conditions' => array(
+                    'and' => array(
+                        array(
+                            "(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")"
+                        ),
+                    ), "1 = 1 GROUP BY Album.ProdID"
+                ),
+                'fields' => array(
+                    'Album.ProdID',
+                    'Album.Title',
+                    'Album.ArtistText',
+                    'Album.AlbumTitle',
+                    'Album.Artist',
+                    'Album.ArtistURL',
+                    'Album.Label',
+                    'Album.Copyright',
+                    'Album.provider_type'
+                ),
+                'contain' => array(
+                    'Genre' => array(
+                        'fields' => array(
+                            'Genre.Genre'
+                        )
+                    ),
+                    'Files' => array(
+                        'fields' => array(
+                            'Files.CdnPath',
+                            'Files.SaveAsName',
+                            'Files.SourceURL'
+                        ),
+                    )
+                ),
+                'order' => 'fa.id DESC',
+                'limit' => 20
+                    )
+            );
+        }
+        else
+        {
+            $featured = array();
+        }
+
+        if (empty($featured))
+        {
+           // Cache::write("featured" . $territory, Cache::read("featured" . $territory));
+        }
+        else
+        {
+            foreach ($featured as $k => $v)
+            {
+                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
+                $image = Configure::read('App.Music_Path') . $albumArtwork;
+                $featured[$k]['featuredImage'] = $image;
+                if ($this->Session->read('library_type') == 2)
+                {
+                    $featured[$k]['albumSongs'] = $this->requestAction(
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type'])))
+                    );
+                }
+            }
+//            Cache::delete("featured" . $territory);
+//            Cache::write("featured" . $territory, $featured);
+        }
+//        $this->log("cache written for featured artists for $territory", 'debug');
+//        $this->log("cache written for featured artists for: $territory", "cache");
+        
+        
+        return $featured;
+    }
 }
 
 ?>
