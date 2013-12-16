@@ -2937,13 +2937,17 @@ STR;
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
         
-        echo "<pre>"; print_r($_REQUEST); die;
+         
         
         
         $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
         $finalURL = urlencode($finalSongUrlArr[0])+urlencode($finalSongUrlArr[1])+urlencode($finalSongUrlArr[2]);
+        echo "finalSongUrl: ".$finalSongUrl;
+        echo "<pre>"; print_r($finalSongUrlArr);
+        echo "<pre>"; print_r($finalURL);
+        die;
         
         $downloadsDetail = array();
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
