@@ -166,7 +166,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                                     <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" 
                                                                        title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" 
                                                                        onclick='return wishlistDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0", "<?php echo $nationalTopDownload[$i]['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopDownload[$i]['Full_Files']['SaveAsName']; ?>", "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'>
-                                                                           <?php __('Download Now'); ?></a>
+                                                                        <?php __('Download Now'); ?></a>
                                                                     <![endif]>
                                                                     <!--[if IE]>
                                                                            <a id="song_download_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" 
@@ -314,7 +314,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             </div>
         </div> <!-- end .grids -->
     </div>
-    
+
     <div class="featured">
         <header>
             <h3>Featured Albums</h3>
@@ -416,7 +416,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             </ul>
         </div>
     </div><!-- end .featured -->
-    
+
     <div class="coming-soon">
         <header class="clearfix">
             <h3>Coming Soon</h3>
@@ -639,7 +639,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         echo $value['Video']['Artist'];
                                     ?></a>
 
-                                                                                                                                                                        <!--	<a href="artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Video']['Genre']) ?>">
+                                                                                                                                                                                    <!--	<a href="artists/album/<?php echo str_replace('/', '@', base64_encode($value['Video']['ArtistText'])); ?>/<?= base64_encode($value['Video']['Genre']) ?>">
                                 <?php
                                 if (strlen($value['Video']['Artist']) > 20)
                                     echo substr($value['Video']['Artist'], 0, 20) . "...";
@@ -708,9 +708,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             ?>		</div>									
                             </div>
                             
-                            <div id="detailsNews<?php //echo $value['News']['id'];                 ?>" style="display:none" class="post-excerpt">
+                            <div id="detailsNews<?php //echo $value['News']['id'];                    ?>" style="display:none" class="post-excerpt">
                             <?php //echo $newsText;      ?>
-                             <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php //echo $value['News']['id'];                  ?>')">- See Less</a>
+                             <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php //echo $value['News']['id'];                     ?>')">- See Less</a>
                             </div> -->
 
 

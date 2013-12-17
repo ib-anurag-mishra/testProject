@@ -931,12 +931,12 @@ function wishlistVideoDownloadIE(prodId, id, provider)
 }
 
 
-function historyDownload(id, libID, patronID)
+function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
 {
     $('.beforeClick').hide();
     $('.afterClick').show();
     //document.getElementById('download_loader_'+id).style.display = 'block';
-    var data = "libid=" + libID + "&patronid=" + patronID + "&id=" + id;
+    var data = "libid=" + libID + "&patronid=" + patronID + "&id=" + id + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "homes/historyDownload", // URL to request
@@ -952,6 +952,8 @@ function historyDownload(id, libID, patronID)
             else if (msg === 'suces')
             {
                 var count = response.substring(0, 1);
+                 var downloadUsedArr = response.split('|');
+                 
                 if (count === 2) {
                     if (languageSet === 'en') {
                         document.getElementById('download_song_' + id).innerHTML = 'Limit Met';
@@ -959,6 +961,7 @@ function historyDownload(id, libID, patronID)
                         document.getElementById('download_song_' + id).innerHTML = 'Límite Excedido';
                     }
                 }
+                location.href = unescape(downloadUsedArr[2]);
                 //document.getElementById('download_loader_'+id).style.display = 'none';
                 $('.afterClick').hide();
                 $('.beforeClick').show();
