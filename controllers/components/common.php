@@ -688,6 +688,7 @@ STR;
     function getComingSoonVideos($territory)
     {
         set_time_limit(0);
+        
         $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Video');
         // Added caching functionality for coming soon videos
@@ -724,7 +725,7 @@ STR;
     LIMIT 20
 STR;
 
-        $coming_soon_rv = $albumInstance->query($sql_coming_soon_v);
+       $coming_soon_rv = $albumInstance->query($sql_coming_soon_v);
         $this->log("coming soon videos $territory", "cachequery");
         $this->log($sql_coming_soon_v, "cachequery");
 
@@ -748,6 +749,10 @@ STR;
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
         //End Caching functionality for coming soon songs
+        
+        $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
+        print_r($coming_soon_rv);
+        die;
         return $coming_soon_rv;
     }
 
