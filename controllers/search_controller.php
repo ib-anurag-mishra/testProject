@@ -185,7 +185,9 @@ class SearchController extends AppController
                   $this->redirect();
                   } */
             }
-
+            
+            echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');
             foreach ($songs as $key => $song)
             {
                 $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
@@ -198,9 +200,11 @@ class SearchController extends AppController
                     $songs[$key]->status = 'not';
                 }
             }
+            echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');
 
             $this->set('songs', $songs);
-            //print_r($songs);
+            // print_r($songs);
             // Added code for all functionality
             // print_r($songs);
 
@@ -512,7 +516,7 @@ class SearchController extends AppController
                 {
                     case 'album':
                         $limit = 24;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'album');
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
                         /* $queryArr = null;
                           $albumData = array();
@@ -530,7 +534,7 @@ class SearchController extends AppController
 
                     case 'genre':
                         $limit = 30;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'genre');
                         $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
                         //print_r($genres); die;
                         $this->set('genres', $genres);
@@ -538,21 +542,21 @@ class SearchController extends AppController
 
                     case 'label':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'label');
                         $labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
                         $this->set('labels', $labels);
                         break;
 
                     case 'artist':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'artist');
                         $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
                         $this->set('artists', $artists);
                         break;
 
                     case 'composer':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'composer');
                         $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
                         $this->set('composers', $composers);
                         break;
