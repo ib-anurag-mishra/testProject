@@ -2124,6 +2124,8 @@ function showHideGrid(varType) {
         top_100_songs_grid.removeClass('active');
         top_100_videos_grid.addClass('active');
 
+
+        $("#top-100-videos-grid").find('.loader').fadeOut(100);
         $("#top-100-videos-grid").find('.loader').remove();
     }
 }
