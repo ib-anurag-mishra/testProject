@@ -46,7 +46,11 @@ class SolrComponent extends Object {
         if (!self::$solr->ping($this->timeoutSeconds)) {
             //echo "Not Connected";
             //die;
-            throw new SolrException();
+            try{
+                throw new SolrException();
+            } catch(Exception $e){
+                $this->log('Unable to Coonect to Solr from initialize function','error');
+            }
         }
 
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
@@ -54,7 +58,11 @@ class SolrComponent extends Object {
         if (!self::$solr2->ping($this->timeoutSeconds)) {
             //echo "Not Connected";
             //die;
-            throw new SolrException();
+            try{
+                throw new SolrException();
+            } catch(Exception $e){
+                $this->log('Unable to Coonect to Solr from initialize function','error');
+            }
         }
     }
 
@@ -805,7 +813,18 @@ class SolrComponent extends Object {
         $char = substr($keyword, 0, 1);
         if (!empty($country)) {
             if (!isset(self::$solr)) {
-                self::initialize(null);
+                $connectedToSolr = false;
+                $retryCount = 1;
+                while (!$connectedToSolr &&  $retryCount < 3) {
+                    try {
+                        self::initialize(null);
+                        $connectedToSolr = true;
+                    }
+                    catch(Exception $e) {
+                        
+                    }
+                    ++$retryCount; 
+                }
             }
             //echo '/'.$type.'/';
             if ($type != 'all') {
