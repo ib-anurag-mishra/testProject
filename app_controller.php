@@ -220,7 +220,7 @@ class AppController extends Controller
             }
         }
         
-        $this->Session->write("library_type", $libraryData['Library']['library_type']);
+        //$this->Session->write("library_type", $libraryData['Library']['library_type']);
 
        // $this->log("App Controller -- END", "siteSpeed");
     }
