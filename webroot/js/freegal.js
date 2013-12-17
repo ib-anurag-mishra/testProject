@@ -2128,6 +2128,7 @@ function showHideGrid(varType) {
 //                var scriptPath = document.getElementById('Scripts_Path').value;
 //                    $.getScript(scriptPath + '/js/site.js');
                 $.getScript( '/js/site.js');
+                $.getScript(webroot + 'css/styles.css');
                 
                 $("#top-100-videos-grid").find('.loader').remove();
                 return false;
