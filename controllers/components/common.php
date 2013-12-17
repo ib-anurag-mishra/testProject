@@ -742,8 +742,7 @@ STR;
         }
         else
         {
-            $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
-            print_r($coming_soon_rv);
+            $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);            
             Cache::write("coming_soon_videos" . $territory, $coming_soon_rv);
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
         }
