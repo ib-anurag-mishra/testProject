@@ -144,11 +144,6 @@ class SearchController extends AppController
             $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
             $docs = array();
 
-            $patId = $this->Session->read('patron');
-            $libId = $this->Session->read('library');
-            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-            $docs = array();
             $total = 0;
             $limit = 10;
 
@@ -474,18 +469,14 @@ class SearchController extends AppController
             //Added code for log search data
             $insertArr[] = $this->searchrecords($typeVar, $queryVar);
             $this->Searchrecord->saveAll($insertArr);
+
             //End Added code for log search data
             $patId = $this->Session->read('patron');
             $libId = $this->Session->read('library');
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
             $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
             $docs = array();
-
-            $patId = $this->Session->read('patron');
-            $libId = $this->Session->read('library');
-            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-            $docs = array();
+            
             $total = 0;
             $limit = 10;
 
@@ -512,13 +503,15 @@ class SearchController extends AppController
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
+/*
             if ($total != 0)
             {
-                /* if($page > $totalPages){
+             if($page > $totalPages){
                   $page = $totalPages;
                   $this->redirect();
-                  } */
+                  } 
             }
+*/
 
             foreach ($songs as $key => $song)
             {
