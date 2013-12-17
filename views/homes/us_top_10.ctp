@@ -176,22 +176,22 @@
 
                                         if ($libraryDownload == '1' && $patronDownload == '1')
                                         {
-//                                            $productInfo = $song->getDownloadData($value['Song']['ProdID'], $value['Song']['provider_type']);
+                                            $productInfo = $song->getDownloadData($value['Song']['ProdID'], $value['Song']['provider_type']);
 //                                            $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
 //                                            $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 //                                            $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
 
-                                            
-                                            if($this->Session->read('downloadVariArray'))
+
+                                            if ($this->Session->read('downloadVariArray'))
                                             {
                                                 $downloadsUsed = $this->Download->getDownloadResults($value['Song']['ProdID'], $value['Song']['provider_type']);
-                                            } 
+                                            }
                                             else
                                             {
                                                 $downloadsUsed = $this->Download->getDownloadfind($value['Song']['ProdID'], $value['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                             }
-                                            
-                                            
+
+
                                             if ($downloadsUsed > 0)
                                             {
                                                 $value['Song']['status'] = 'avail';
@@ -212,10 +212,10 @@
                                                         <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" 
                                                            title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" 
                                                            onclick='return wishlistDownloadOthers("<?php echo $value["Song"]['ProdID']; ?>", "0", "<?php echo ($productInfo[0]['Full_Files']['CdnPath']); ?>", "<?php echo ($productInfo[0]['Full_Files']['SaveAsName']); ?>", "<?php echo $value["Song"]["provider_type"]; ?>");'>
-                                                               <?php __('Download Now'); ?></a>
+                                                            <?php __('Download Now'); ?></a>
                                                         <![endif]>
                                                         <!--[if IE]>
-                                                               <a       id="song_download_<?php echo $value["Song"]["ProdID"] ; ?>" 
+                                                               <a       id="song_download_<?php echo $value["Song"]["ProdID"]; ?>" 
                                                                         class="no-ajaxy top-10-download-now-button" 
                                                                         title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
                                                                         onclick='wishlistDownloadIE("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo ($productInfo[0]['Full_Files']['CdnPath']); ?>", "<?php echo ($productInfo[0]['Full_Files']['SaveAsName']); ?>");' 

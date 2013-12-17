@@ -137,7 +137,7 @@
                                 //check if this song is allowed for download
                                 if (($value['Countries']['SalesDate'] <= date('Y-m-d') ) && ($value['Countries']['DownloadStatus'] == 1))
                                 {
-                                    //$productInfo = $song->getDownloadData($value["Songs"]['ProdID'], $value["Songs"]['provider_type']);
+                                    $productInfo = $song->getDownloadData($value["Songs"]['ProdID'], $value["Songs"]['provider_type']);
                                    
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {

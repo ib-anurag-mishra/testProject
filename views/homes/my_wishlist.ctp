@@ -260,9 +260,9 @@ $ieVersion = ieversion();
                                 $productInfo = $song->getDownloadData($wishlistResults[$i]['wishlists']['ProdID'], $wishlistResults[$i]['wishlists']['provider_type']);
                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                 {
-                                    $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-                                    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+//                                    $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+//                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                     ?>
                                     <p>
                                         <span class="beforeClick" id="wishlist_song_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>">
