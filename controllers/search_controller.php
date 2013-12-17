@@ -186,8 +186,8 @@ class SearchController extends AppController
                   } */
             }
             
-            echo "Microtime : ".microtime();
-            echo "Time : ".date('h:m:s');
+            /*echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');*/
             $songArray = array();
             foreach ($songs as $key => $song)
             {
@@ -224,12 +224,12 @@ class SearchController extends AppController
                 if($set == 0){
                     $songs[$key]->status = 'not';
                 }
-                echo "<br/>";
+                /*echo "<br/>";
                 echo $songs[$key]->status;
-                echo "<br/>";
+                echo "<br/>";*/
             }
-            echo "Microtime : ".microtime();
-            echo "Time : ".date('h:m:s');
+            /*echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');*/
 
             $this->set('songs', $songs);
             // print_r($songs);
