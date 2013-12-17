@@ -209,6 +209,7 @@ class SearchController extends AppController
             
             foreach($songs as $key => $song){
                 $set = 0;
+                print_r($downloadsUsed);
                 foreach($downloadsUsed as $downloadKey => $downloadData){
                     // print_r($downloadData);
                     if ($downloadData['Download']['ProdID'] == $song->ProdID )
