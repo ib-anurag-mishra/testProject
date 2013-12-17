@@ -188,9 +188,11 @@ class SearchController extends AppController
             
             echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');
+            $songArray = array();
             foreach ($songs as $key => $song)
             {
-                $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                $songArray[] = $song->ProdID;
+                /*$downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
                 echo $this->Download->lastQuery(); die;
                 if (count($downloadsUsed) > 0)
                 {
@@ -199,8 +201,11 @@ class SearchController extends AppController
                 else
                 {
                     $songs[$key]->status = 'not';
-                }
+                }*/
             }
+            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.impode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+            echo $this->Download->lastQuery(); die;
+            
             echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');
 
