@@ -203,7 +203,7 @@ class SearchController extends AppController
                     $songs[$key]->status = 'not';
                 }*/
             }
-            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.impode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
             echo $this->Download->lastQuery(); die;
             
             echo "Microtime : ".microtime();
