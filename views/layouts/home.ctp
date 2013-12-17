@@ -32,7 +32,7 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
-<!--        <script type="text/javascript" src="<?php //echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
+<!--        <script type="text/javascript" src="<?php //echo Configure::read('App.Script')    ?>/js/freegal.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
@@ -47,33 +47,33 @@
                 )
         );
 
-         echo $javascript->link(
-                array('freegal')
-                 );
-
-/*
         echo $javascript->link(
-                array(
-                    'jquery-1.10.2.min',
-                    'modernizr.custom',
-                    // 'lazyload', 
-                    'lazyload.1.9.1',
-                    'jquery.colorbox',
-                    'jquery.cycle.all',
-                    'jquery.autocomplete',
-                    'jquery.history',
-                    'ajaxify-html5',
-                    'site',
-                    'audioPlayer',
-                    'freegal',
-                    'recent-downloads',
-                    'search-results',
-                     //'qtip', 
-                    'qtip.2.1.1.min',
-                    'qtip_add'
-                )
+                array('freegal')
         );
-        */
+
+        /*
+          echo $javascript->link(
+          array(
+          'jquery-1.10.2.min',
+          'modernizr.custom',
+          // 'lazyload',
+          'lazyload.1.9.1',
+          'jquery.colorbox',
+          'jquery.cycle.all',
+          'jquery.autocomplete',
+          'jquery.history',
+          'ajaxify-html5',
+          'site',
+          'audioPlayer',
+          'freegal',
+          'recent-downloads',
+          'search-results',
+          //'qtip',
+          'qtip.2.1.1.min',
+          'qtip_add'
+          )
+          );
+         */
         ?>
 
         <?php
@@ -512,71 +512,74 @@
     ?>
     <?php
     $userLogin = $this->Session->read("userlogin");
-    if($userLogin == 'yes') {
-    if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+    if ($userLogin == 'yes')
     {
-        ?>
-                        $(".streamApproval")
-                                .colorbox(
-                                {
-                                    width: "50%", inline: true, open: true,
-                                    overlayClose: false, opacity: .5,
-                                    escKey: false, noEscape: true, href: "#streamApproval_div",
-                                    onOpen: function() {
-                                        $(document).unbind("keydown.cbox_close");
-                                    }});
+        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        {
+            ?>
+                            $(".streamApproval")
+                                    .colorbox(
+                                    {
+                                        width: "50%", inline: true, open: true,
+                                        overlayClose: false, opacity: .5,
+                                        escKey: false, noEscape: true, href: "#streamApproval_div",
+                                        onOpen: function() {
+                                            $(document).unbind("keydown.cbox_close");
+                                        }});
 
-                        $("#colorboxOKBtn").click(function() {
-                            var pid = <?= $this->Session->read('patron') ?>;
-                            var lid = <?= $this->Session->read('library') ?>;
-                            var data = {pid: pid, lid: lid};
-                            jQuery.ajax({
-                                type: "post", // Request method: post, get
-                                url: webroot + "users/savestreampopup", // URL to request
-                                data: data, // postdata
-                                async: false,
-                                success: function(response) {
-                                    sleep(2000);
-                                    $.fn.colorbox.close();
-                                },
-                                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                }
+                            $("#colorboxOKBtn").click(function() {
+                                var pid = <?= $this->Session->read('patron') ?>;
+                                var lid = <?= $this->Session->read('library') ?>;
+                                var data = {pid: pid, lid: lid};
+                                jQuery.ajax({
+                                    type: "post", // Request method: post, get
+                                    url: webroot + "users/savestreampopup", // URL to request
+                                    data: data, // postdata
+                                    async: false,
+                                    success: function(response) {
+                                        sleep(2000);
+                                        $.fn.colorbox.close();
+                                    },
+                                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                    }
+                                });
                             });
-                        });
-        <?php
+            <?php
+        }
     }
-    } else {
+    else
+    {
         if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
         {
-        ?>
-                        $(".streamApproval")
-                                .colorbox(
-                                {
-                                    width: "50%", inline: true, open: true,
-                                    overlayClose: false, opacity: .5,
-                                    escKey: false, noEscape: true, href: "#streamApproval_div",
-                                    onOpen: function() {
-                                        $(document).unbind("keydown.cbox_close");
-                                    }});
+            ?>
+                            $(".streamApproval")
+                                    .colorbox(
+                                    {
+                                        width: "50%", inline: true, open: true,
+                                        overlayClose: false, opacity: .5,
+                                        escKey: false, noEscape: true, href: "#streamApproval_div",
+                                        onOpen: function() {
+                                            $(document).unbind("keydown.cbox_close");
+                                        }});
 
-                        $("#colorboxOKBtn").click(function() {
-                            var pid = <?= $this->Session->read('patron') ?>;
-                            var lid = <?= $this->Session->read('library') ?>;
-                            var data = {pid: pid, lid: lid};
-                            jQuery.ajax({
-                                type: "post", // Request method: post, get
-                                url: webroot + "users/savestreampopup", // URL to request
-                                data: data, // postdata
-                                async: false,
-                                success: function(response) {
-                                    sleep(2000);
-                                    $.fn.colorbox.close();
-                                },
-                                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                }
+                            $("#colorboxOKBtn").click(function() {
+                                var pid = <?= $this->Session->read('patron') ?>;
+                                var lid = <?= $this->Session->read('library') ?>;
+                                var data = {pid: pid, lid: lid};
+                                jQuery.ajax({
+                                    type: "post", // Request method: post, get
+                                    url: webroot + "users/savestreampopup", // URL to request
+                                    data: data, // postdata
+                                    async: false,
+                                    success: function(response) {
+                                        sleep(2000);
+                                        $.fn.colorbox.close();
+                                    },
+                                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                    }
+                                });
                             });
-                        });
-        <?php
+            <?php
         }
     }
     ?>
@@ -649,9 +652,17 @@
             #newly_added a.first { display: block }
 
 
+            .player {
 
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                height: 100px;
+                overflow: hidden;
+
+
+            }
         </style>
-
 
 
         <noscript>
@@ -811,48 +822,53 @@
 
         <?php
         $userLogin = $this->Session->read("userlogin");
-        if($userLogin == 'yes') {
-        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+        if ($userLogin == 'yes')
         {
-            ?>
-            <style>#cboxClose{display:none !important;}</style>
-            <a class='streamApproval' href="#"></a>
-            <div style="display:none;">
-                <div id="streamApproval_div">
-                    <span id="stream_content">
-                        <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
-                            <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-                        </div>
-                        <?php echo $page->getPageContent('stream_123'); ?>
-                        <br />
-                        <center><input type="button" value="OK" id="colorboxOKBtn"></center>
-                    </span>
+            if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'yes') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+            {
+                ?>
+                <style>#cboxClose{display:none !important;}</style>
+                <a class='streamApproval' href="#"></a>
+                <div style="display:none;">
+                    <div id="streamApproval_div">
+                        <span id="stream_content">
+                            <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                            </div>
+                            <?php echo $page->getPageContent('stream_123'); ?>
+                            <br />
+                            <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                        </span>
 
+                    </div>
                 </div>
-            </div>
 
-        <?php }
-        } else {
-        if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+                <?php
+            }
+        }
+        else
         {
-            ?>
-            <style>#cboxClose{display:none !important;}</style>
-            <a class='streamApproval' href="#"></a>
-            <div style="display:none;">
-                <div id="streamApproval_div">
-                    <span id="stream_content">
-                        <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
-                            <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-                        </div>
-                        <?php echo $page->getPageContent('stream_123'); ?>
-                        <br />
-                        <center><input type="button" value="OK" id="colorboxOKBtn"></center>
-                    </span>
+            if (($this->Session->read('streamPopupShow') && $this->Session->read('streamPopupShow') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes'))
+            {
+                ?>
+                <style>#cboxClose{display:none !important;}</style>
+                <a class='streamApproval' href="#"></a>
+                <div style="display:none;">
+                    <div id="streamApproval_div">
+                        <span id="stream_content">
+                            <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                            </div>
+                            <?php echo $page->getPageContent('stream_123'); ?>
+                            <br />
+                            <center><input type="button" value="OK" id="colorboxOKBtn"></center>
+                        </span>
 
+                    </div>
                 </div>
-            </div>
 
-        <?php }
+                <?php
+            }
         }
         ?>
 
@@ -869,10 +885,11 @@
                     ?>
                 </div>
                 <br class="clr">
-                <input type="hidden" value="<?php echo Configure::read('App.Script');   ?>" id="Scripts_Path" />
+                <input type="hidden" value="<?php echo Configure::read('App.Script'); ?>" id="Scripts_Path" />
             </div>
-            <?php echo $this->element('footer'); ?>
-
         </div>
+        <?php echo $this->element('footer'); ?>
+
+
     </body>
 </html>
