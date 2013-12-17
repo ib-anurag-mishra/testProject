@@ -191,6 +191,7 @@ class SearchController extends AppController
             foreach ($songs as $key => $song)
             {
                 $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                echo $this->Download->lastQuery();
                 if (count($downloadsUsed) > 0)
                 {
                     $songs[$key]->status = 'avail';
