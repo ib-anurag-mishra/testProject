@@ -210,7 +210,7 @@ class SearchController extends AppController
             foreach($songs as $key => $song){
                 $set = 0;
                 foreach($downloadsUsed as $downloadKey => $downloadData){
-                    print_r($downloadData);
+                    // print_r($downloadData);
                     if ($downloadsData['Download']['ProdID'] == $song->ProdID )
                     {
                         $songs[$key]->status = 'avail';
@@ -224,6 +224,9 @@ class SearchController extends AppController
                 if($set == 0){
                     $songs[$key]->status = 'not';
                 }
+                echo "<br/>";
+                echo $songs[$key]->status;
+                echo "<br/>";
             }
             echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');
