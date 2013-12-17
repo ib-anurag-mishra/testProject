@@ -2112,47 +2112,19 @@ function showHideGrid(varType) {
         songsIDVal.addClass('active');
         top_100_videos_grid.removeClass('active');
         top_100_songs_grid.addClass('active');
-    } 
-    else 
+    }
+    else
     {
-        if (!$("#top-100-videos-grid").find('ul').length)
-        {
-            var loading_div = "<div class='loader'></div>";
-            $("#top-100-videos-grid").append(loading_div);
+        var loading_div = "<div class='loader'></div>";
+        $("#top-100-videos-grid").append(loading_div);
 
-            $.ajax({
-                type: "post",
-                url: webroot + 'homes/getNationalTopAlbums',
-                success: function(response) {
-
-                    $("#top-100-videos-grid").append(response);
-
-                    //binding again js mouse enter and mouse leave event
-//                var scriptPath = document.getElementById('Scripts_Path').value;
-//                    $.getScript(scriptPath + '/js/site.js');
-                    $.getScript('/js/site.js');
-                    $.getScript(webroot + 'css/styles.css');
-
-                    $("#top-100-videos-grid").find('.loader').remove();
-                    return false;
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // log the error to the console
-                    console.log(
-                            "The following error occured: " +
-                            textStatus, errorThrown
-                            );
-                }
-            });
-
-        }
         songsIDVal.removeClass('active');
         videosIDVal.addClass('active');
 
         top_100_songs_grid.removeClass('active');
         top_100_videos_grid.addClass('active');
-        return false;
-        
+
+        $("#top-100-videos-grid").find('.loader').remove();
     }
 }
 
