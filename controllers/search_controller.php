@@ -185,10 +185,15 @@ class SearchController extends AppController
                   $this->redirect();
                   } */
             }
-
+            
+            /*echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');*/
+            $songArray = array();
             foreach ($songs as $key => $song)
             {
-                $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                $songArray[] = $song->ProdID;
+                /*$downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                //echo $this->Download->lastQuery(); die;
                 if (count($downloadsUsed) > 0)
                 {
                     $songs[$key]->status = 'avail';
@@ -196,11 +201,38 @@ class SearchController extends AppController
                 else
                 {
                     $songs[$key]->status = 'not';
-                }
+                }*/
             }
+            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+            
+            //echo $this->Download->lastQuery(); die;
+            
+            foreach($songs as $key => $song){
+                $set = 0;
+                foreach($downloadsUsed as $downloadKey => $downloadData){
+                    // print_r($downloadData);
+                    if ($downloadData['Download']['ProdID'] == $song->ProdID )
+                    {
+                        $songs[$key]->status = 'avail';
+                        $set = 1;
+                    }
+                    /*else
+                    {
+                        $songs[$key]->status = 'not';
+                    }*/
+                }
+                if($set == 0){
+                    $songs[$key]->status = 'not';
+                }
+                /*echo "<br/>";
+                echo $songs[$key]->status;
+                echo "<br/>";*/
+            }
+            /*echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');*/
 
             $this->set('songs', $songs);
-            //print_r($songs);
+            // print_r($songs);
             // Added code for all functionality
             // print_r($songs);
 
@@ -211,7 +243,7 @@ class SearchController extends AppController
                 {
                     case 'album':
                         $limit = 24;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'album');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
 
@@ -245,7 +277,7 @@ class SearchController extends AppController
 
                     case 'genre':
                         $limit = 30;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'genre');
                         $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
                         //print_r($genres); die;
                         $this->set('genres', $genres);
@@ -253,21 +285,21 @@ class SearchController extends AppController
 
                     case 'label':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'label');
                         $labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
                         $this->set('labels', $labels);
                         break;
 
                     case 'artist':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'artist');
                         $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
                         $this->set('artists', $artists);
                         break;
 
                     case 'composer':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
+                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'composer');
                         $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
                         $this->set('composers', $composers);
                         break;
