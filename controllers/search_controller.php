@@ -203,13 +203,10 @@ class SearchController extends AppController
                     $songs[$key]->status = 'not';
                 }*/
             }
-            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-            
-            echo $this->Download->lastQuery(); die;
+            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
             
             foreach($songs as $key => $song){
                 $set = 0;
-                print_r($downloadsUsed);
                 foreach($downloadsUsed as $downloadKey => $downloadData){
                     // print_r($downloadData);
                     if ($downloadData['Download']['ProdID'] == $song->ProdID )
@@ -226,9 +223,9 @@ class SearchController extends AppController
                 if($set == 0){
                     $songs[$key]->status = 'not';
                 }
-                echo "<br/>";
+                /*echo "<br/>";
                 echo $songs[$key]->status;
-                echo "<br/>";
+                echo "<br/>";*/
             }
             /*echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');*/
