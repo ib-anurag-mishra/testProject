@@ -186,8 +186,8 @@ class SearchController extends AppController
                   } */
             }
             
-            echo "Microtime : ".microtime();
-            echo "Time : ".date('h:m:s');
+            /*echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');*/
             $songArray = array();
             foreach ($songs as $key => $song)
             {
@@ -208,20 +208,28 @@ class SearchController extends AppController
             //echo $this->Download->lastQuery(); die;
             
             foreach($songs as $key => $song){
+                $set = 0;
                 foreach($downloadsUsed as $downloadKey => $downloadData){
-                    print_r($downloadData); die;
-                    /*if (count($downloadsUsed) as ))
+                    // print_r($downloadData);
+                    if ($downloadData['Download']['ProdID'] == $song->ProdID )
                     {
                         $songs[$key]->status = 'avail';
+                        $set = 1;
                     }
-                    else
+                    /*else
                     {
                         $songs[$key]->status = 'not';
                     }*/
                 }
+                if($set == 0){
+                    $songs[$key]->status = 'not';
+                }
+                /*echo "<br/>";
+                echo $songs[$key]->status;
+                echo "<br/>";*/
             }
-            echo "Microtime : ".microtime();
-            echo "Time : ".date('h:m:s');
+            /*echo "Microtime : ".microtime();
+            echo "Time : ".date('h:m:s');*/
 
             $this->set('songs', $songs);
             // print_r($songs);
