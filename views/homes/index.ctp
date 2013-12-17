@@ -138,20 +138,20 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                              
                                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                                 {
-                                                    $songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Full_Files']['CdnPath'] . "/" . $nationalTopDownload[$i]['Full_Files']['SaveAsName']);
-                                                    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-                                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));                                                    
-                                                    
-                                                     if($this->Session->read('downloadVariArray'))
-                                                     {
-                                                         $downloadsUsed = $this->Download->getDownloadResults($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
-                                                     }
-                                                     else
-                                                     {
-                                                         $downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                                     }
-                                                     
-                                                 
+                                                    /* $songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Full_Files']['CdnPath'] . "/" . $nationalTopDownload[$i]['Full_Files']['SaveAsName']);
+                                                      $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+                                                      $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3)); */
+
+                                                    if ($this->Session->read('downloadVariArray'))
+                                                    {
+                                                        $downloadsUsed = $this->Download->getDownloadResults($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                                    }
+                                                    else
+                                                    {
+                                                        $downloadsUsed = $this->Download->getDownloadfind($nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                    }
+
+
                                                     if ($downloadsUsed > 0)
                                                     {
                                                         $nationalTopDownload[$i]['Song']['status'] = 'avail';
@@ -160,7 +160,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                     {
                                                         $nationalTopDownload[$i]['Song']['status'] = 'not';
                                                     }
-                                                    
+
                                                     if ($nationalTopDownload[$i]['Song']['status'] != 'avail')
                                                     {
                                                         ?>
@@ -170,10 +170,17 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                                 <input type="hidden" name="ProviderType" value="<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>" />
                                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
                                                                     <![if !IE]>
-                                                                    <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+                                                                    <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" 
+                                                                       title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" 
+                                                                       onclick='return wishlistDownloadOthersHome("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0", "<?php echo $nationalTopDownload[$i]['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopDownload[$i]['Full_Files']['SaveAsName']; ?>", "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'>
+                                                                        <?php __('Download Now'); ?></a>
                                                                     <![endif]>
                                                                     <!--[if IE]>
-                                                                           <a class="no-ajaxy top-10-download-now-button" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download Now'); ?></a>
+                                                                           <a id="song_download_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" 
+                                                                                class="no-ajaxy top-10-download-now-button" 
+                                                                                title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                                                onclick='wishlistDownloadIEHome("<?php echo $nationalTopDownload[$i]["Song"]['ProdID']; ?>", "0" , "<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>", "<?php echo $nationalTopDownload[$i]['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopDownload[$i]['Full_Files']['SaveAsName']; ?>");' 
+                                                                                href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                                     <![endif]-->
                                                                 </span>
                                                                 <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait.."); ?>

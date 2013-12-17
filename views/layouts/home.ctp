@@ -33,7 +33,7 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>
+        <!--<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
@@ -53,29 +53,13 @@
         );*/
 
 
-/*
+
         echo $javascript->link(
-                array(
-                    'jquery-1.10.2.min',
-                    'modernizr.custom',
-                    // 'lazyload', 
-                    'lazyload.1.9.1',
-                    'jquery.colorbox',
-                    'jquery.cycle.all',
-                    'jquery.autocomplete',
-                    'jquery.history',
-                    'ajaxify-html5',
-                    'site',
-                    'audioPlayer',
+                array(                    
                     'freegal',
-                    'recent-downloads',
-                    'search-results',
-                    // 'qtip', 
-                    'qtip.2.1.1.min',
-                    'qtip_add'
                 )
         );
-        */
+        
         ?>
 
         <?php
