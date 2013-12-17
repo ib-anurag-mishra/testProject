@@ -986,9 +986,13 @@ class ServicesController extends AppController {
 					$this ->Session->write("block", 'no');
 				}
 				if(isset($nopin)){
-					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3], $this->params['pass']['5']));
+                                   $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/artists/view/'.$this->params['pass'][4].'/'.$this->params['pass'][3].'/'.$this->params['pass']['5']); 
+                                   exit;                                     
+					//$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3], $this->params['pass']['5']));
 				}else{
-					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][5], $this->params['pass'][4], $this->params['pass']['6']));				
+					//$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][5], $this->params['pass'][4], $this->params['pass']['6']));				
+                                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/artists/view/'.$this->params['pass'][5].'/'.$this->params['pass'][4].'/'.$this->params['pass']['6']); 
+                                    exit;
 				}
 			}
 		}
