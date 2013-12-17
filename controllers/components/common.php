@@ -752,6 +752,7 @@ STR;
       
         $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);       
         return $coming_soon_rv;
+        
     }
 
     /*
