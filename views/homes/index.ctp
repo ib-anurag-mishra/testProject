@@ -427,7 +427,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         <div class="featured-grid horiz-scroll">
             <ul style="width:3690px;">
                 <?php
-// $this->log("index.ctp featuredArtists start", "siteSpeed");   
+                // $this->log("index.ctp featuredArtists start", "siteSpeed");   
                 foreach ($featuredArtists as $k => $v)
                 {
 

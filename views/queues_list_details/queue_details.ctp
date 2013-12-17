@@ -163,7 +163,8 @@
                                                     <!--[if IE]>
                                                             <a id="song_download_<?php echo $value["Song"]["ProdID"]; ?>" 
                                                                 title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
-                                                                onclick='wishlistDownloadIE("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>", "<?php echo urlencode($value['SongFile']['SCdnPath']); ?>", "<?php echo urlencode($value['SongFile']['SSaveAsName']); ?>");' href="#">
+                                                                onclick='wishlistDownloadIE("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>", "<?php echo urlencode($value['SongFile']['SCdnPath']); ?>", "<?php echo urlencode($value['SongFile']['SSaveAsName']); ?>");' 
+                                                                href="javascript:void(0);">
                                                                 <?php __('Download Now'); ?>
                                                             </a>
                                                     <![endif]-->

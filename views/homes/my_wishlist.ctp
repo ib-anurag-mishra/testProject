@@ -279,7 +279,7 @@ $ieVersion = ieversion();
                                                         <a  id="song_download_<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>"  
                                                             title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
                                                             onclick='wishlistDownloadIE("<?php echo $wishlistResults[$i]['wishlists']['ProdID']; ?>", "<?php echo $wishlistResults[$i]['wishlists']['id']; ?>" , "<?php echo $wishlistResults[$i]['wishlists']["provider_type"]; ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['CdnPath']); ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['SaveAsName']); ?>");' 
-                                                            href="#">
+                                                            href="javascript:void(0);">
                                                            <?php __('Download'); ?></a>
                                                 <![endif]-->	
                                                 <?php

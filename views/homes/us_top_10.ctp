@@ -219,7 +219,7 @@
                                                                         class="no-ajaxy top-10-download-now-button" 
                                                                         title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
                                                                         onclick='wishlistDownloadIE("<?php echo $value["Song"]['ProdID']; ?>", "0" , "<?php echo $value["Song"]["provider_type"]; ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['CdnPath']); ?>", "<?php echo urlencode($productInfo[0]['Full_Files']['SaveAsName']); ?>");' 
-                                                                        href="<?php echo trim($finalSongUrl); ?>"><?php __('Download Now'); ?></a>
+                                                                        href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                         <![endif]-->
                                                     </span>
                                                     <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait.."); ?>
