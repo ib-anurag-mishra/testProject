@@ -2115,7 +2115,7 @@ function showHideGrid(varType) {
     } 
     else 
     {
-        if ($("#top-100-videos-grid").find('ul').length)
+        if (!$("#top-100-videos-grid").find('ul').length)
         {
             var loading_div = "<div class='loader'></div>";
             $("#top-100-videos-grid").append(loading_div);
