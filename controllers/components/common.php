@@ -749,10 +749,8 @@ STR;
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
         //End Caching functionality for coming soon songs
-        echo "coming_soon_videos" . $territory;
-        $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
-        print_r($coming_soon_rv);
-        die;
+      
+        $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);       
         return $coming_soon_rv;
     }
 
