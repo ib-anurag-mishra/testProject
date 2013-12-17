@@ -688,7 +688,8 @@ STR;
     function getComingSoonVideos($territory)
     {
         set_time_limit(0);
-        $countryPrefix = $this->getCountryPrefix($territory);
+        echo '<br>';
+        echo $countryPrefix = $this->getCountryPrefix($territory);
         $albumInstance = ClassRegistry::init('Video');
         // Added caching functionality for coming soon videos
         $sql_coming_soon_v = <<<STR
