@@ -737,7 +737,7 @@ STR;
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $coming_soon_rv[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
-            Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
+            Cache::write("coming_soon_videos" . $territory, $coming_soon_rv);
             $this->log("cache written for coming soon videos for $territory", "cache");
         }
         else
