@@ -880,7 +880,7 @@ function wishlistDownloadIE(prodId, id, provider)
 
 function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
 {
-    console.log('wishlistDownloadIE called');
+    //console.log('wishlistDownloadIE called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
