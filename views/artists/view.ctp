@@ -290,7 +290,8 @@ if (count($albumData) > 0){
 
                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
                                                     <![if !IE]>
-                                                    <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo $albumSong['Full_Files']['CdnPath']; ?>", "<?php echo $albumSong['Full_Files']['SaveAsName']; ?>", "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
+                                                    <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" 
+                                                       onclick='return wishlistDownloadOthers("<?php echo $albumSong["Song"]['ProdID']; ?>", "0", "<?php echo $albumSong['Full_Files']['CdnPath']; ?>", "<?php echo $albumSong['Full_Files']['SaveAsName']; ?>", "<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __('Download Now'); ?></a>
                                                     <![endif]>
                                                     <!--[if IE]>
                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
