@@ -743,14 +743,15 @@ STR;
         else
         {
             $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
-            Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));
+            print_r($coming_soon_rv);
+            Cache::write("coming_soon_videos" . $territory, $coming_soon_rv);
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
         }
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
         //End Caching functionality for coming soon songs
       
-        print_r($coming_soon_rv);   die;   
+         
         return $coming_soon_rv;
         
     }
