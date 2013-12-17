@@ -215,6 +215,7 @@ class SearchController extends AppController
                     {
                         $songs[$key]->status = 'avail';
                         $set = 1;
+                        break;
                     }
                     /*else
                     {
@@ -224,9 +225,9 @@ class SearchController extends AppController
                 if($set == 0){
                     $songs[$key]->status = 'not';
                 }
-                /*echo "<br/>";
+                echo "<br/>";
                 echo $songs[$key]->status;
-                echo "<br/>";*/
+                echo "<br/>";
             }
             /*echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');*/
