@@ -976,7 +976,7 @@ function historyDownload(id, libID, patronID)
     return false;
 }
 
-function historyDownloadOthers(id, libID, patronID, downloadUrl1, downloadUrl2, downloadUrl3)
+function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
 {
     $('.beforeClick').hide();
     $('.afterClick').show();
