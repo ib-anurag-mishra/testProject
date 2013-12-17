@@ -981,10 +981,10 @@ function historyDownloadOthers(id, libID, patronID, downloadUrl1, downloadUrl2, 
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('download_loader_' + id).style.display = 'block';
-    var finalURL = downloadUrl1;
-    finalURL += downloadUrl2;
-    finalURL += downloadUrl3;
-    var data = "libid=" + libID + "&patronid=" + patronID + "&id=" + id;
+//    var finalURL = downloadUrl1;
+//    finalURL += downloadUrl2;
+//    finalURL += downloadUrl3;
+    var data = "libid=" + libID + "&patronid=" + patronID + "&id=" + id + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "homes/historyDownload", // URL to request
@@ -1001,6 +1001,7 @@ function historyDownloadOthers(id, libID, patronID, downloadUrl1, downloadUrl2, 
             else if (msg === 'suces')
             {
                 var count = response.substring(0, 1);
+                var downloadUsedArr = response.split('|');
                 if (count === 2) {
                     if (languageSet === 'en') {
                         document.getElementById('download_song_' + id).innerHTML = 'Limit Met';
@@ -1011,7 +1012,7 @@ function historyDownloadOthers(id, libID, patronID, downloadUrl1, downloadUrl2, 
                 $('.afterClick').hide();
                 $('.beforeClick').show();
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                location.href = unescape(finalURL);
+                location.href = unescape(downloadUsedArr[2]);
             }
             else
             {
