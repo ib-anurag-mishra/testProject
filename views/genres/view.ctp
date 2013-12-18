@@ -1,12 +1,6 @@
-<?php
-/*
-  File Name : index.ctp
-  File Description : View page for genre index
-  Author : m68interactive
- */
-?>    
 
-<style>
+
+<!--<style>
 
     .genre_list_item{
         cursor: pointer;
@@ -52,7 +46,7 @@
         top: 50%;
     }
 
-</style>
+</style>-->
 
 <script>
     //load the artist list when  scroll reached at the end

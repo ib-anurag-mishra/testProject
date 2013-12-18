@@ -1208,3 +1208,9 @@ img{display:block;}
 .queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .delete-btn{background:url(../img/delete-btn.png) no-repeat;width:17px;height:17px;position:absolute;right:4px;top:11px;opacity:.5;}.queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .delete-btn:hover,.queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .delete-btn.hovered{opacity:1;}
 .queue-detail-page .now-playing-container .playlist-shadow-container .playlist-scrollable .row-container .row .delete-btn:active{background:url(../img/delete-clicked.png) no-repeat;}
 .fmp_container{background:url("../img/player-bkg.jpg") repeat;}
+.genre_list_item{cursor:pointer;display:block;}
+.genre_list_item_all{cursor:pointer;display:block;}
+#mydiv{height:250px;width:250px;position:relative;background-color:gray;}
+.ajax-loader{display:block;left:50%;margin-left:147px;margin-top:85px;position:absolute;top:50%;}
+.ajax-loader1{display:block;left:50%;margin-left:115px;margin-top:85px;position:absolute;top:50%;}
+.ajax-loader2{display:block;left:50%;margin-left:398px;margin-top:3px;position:absolute;top:50%;}
