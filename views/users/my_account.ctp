@@ -56,7 +56,7 @@ $ieVersion = ieversion();
     <div class="forms-wrapper">
         <div class="account-info-wrapper">
             <h3>Account Information</h3>
-            <?php echo $this->Form->create('User', array('controller' => 'User', 'action' => 'my_account')); ?>
+            <?php echo $this->Form->create('User', array('url' => array('controller' => 'User', 'action' => 'my_account')));  ?>
             <?php
             if (isset($getData) && (count($getData) > 0))
             {
