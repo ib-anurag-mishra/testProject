@@ -24,20 +24,7 @@
 	
 }(jQuery));
 
-
-
-
-
-
-
-
-
-
-
 /* end lazyload initalizations */
-
-
-
 
 $('document').ready(function()
 {
@@ -150,9 +137,6 @@ $('document').ready(function()
         }
     });
     
-    
-
-
     $('.tooltip a').hover(
             function() {
                 plays_tooltip.show();
@@ -181,15 +165,16 @@ $('document').ready(function()
     });
 
 
-
-    
-
-
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
-
     });
+    
+    $('.add-to-playlist').on('mouseleave', function() {
+        //console.log('add to playlist entered');		
+        $('.playlist-options').removeClass('active');
+    });
+    
 
     $('.genres-page .album-detail-container').on('mouseenter', '.add-to-playlist', function() {
 
@@ -197,6 +182,14 @@ $('document').ready(function()
         $('.playlist-options').addClass('active');
 
     });
+    
+     $('.genres-page .album-detail-container').on('mouseleave', '.add-to-playlist', function() {
+
+        //console.log('add to playlist entered');
+        $('.playlist-options').removeClass('active');
+
+    });
+    
 
     //album-page js
     $('.albums-page .album-detail-container').on('mouseenter', '.album-cover-image', function() {

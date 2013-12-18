@@ -6,13 +6,13 @@
         <?php
         echo $this->Html->charset();
         //echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
-       
+
         echo $this->Html->meta('icon');
-        
-         if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
-         {
-             header('X-UA-Compatible: IE=edge,chrome=1');
-         }
+
+        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
+        {
+            header('X-UA-Compatible: IE=edge,chrome=1');
+        }
         ?>
 
         <title>
@@ -36,9 +36,9 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>
+<!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
-<!--        <script type="text/javascript" src="<?php //echo Configure::read('App.Script')    ?>/js/freegal.js"></script>-->
+<!--        <script type="text/javascript" src="<?php //echo Configure::read('App.Script')     ?>/js/freegal.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
@@ -54,7 +54,10 @@
         );
 
         echo $javascript->link(
-                array('freegal')
+                array(
+                    'freegal',
+                    'site'
+                )
         );
 
         /*
@@ -893,10 +896,10 @@
                 <br class="clr">
                 <input type="hidden" value="<?php echo Configure::read('App.Script'); ?>" id="Scripts_Path" />
             </div>
-       
-        <?php echo $this->element('footer'); ?>
 
-             </div>
+            <?php echo $this->element('footer'); ?>
+
+        </div>
     </div> <!-- body - background -->
-    </body>
+</body>
 </html>
