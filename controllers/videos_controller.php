@@ -823,6 +823,13 @@ STR;
 
         if (count($VideosData) > 0)
         {
+            
+            if($prefix === '_'){
+                $this->log("Empty prefix:".$prefix." in getComingSoonSongs for : ".$territory, "cache");
+                die;
+            }
+            
+            
             if ($TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']) === false)
             {
                 $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
