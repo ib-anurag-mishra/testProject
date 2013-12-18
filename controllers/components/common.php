@@ -2442,7 +2442,7 @@ STR;
     function getAllVideoByArtist($country, $decodedId)
     {
 
-
+        $decodedId = addslashes($decodedId);
         $videoInstance = ClassRegistry::init('Video');
         $preFix = strtolower($country) . "_";
 
@@ -2450,7 +2450,7 @@ STR;
         {
 
             $countryPrefix = $this->Session->read('multiple_countries');
-           echo  $sql_us_10_v = <<<STR
+             $sql_us_10_v = <<<STR
                 SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
@@ -2499,7 +2499,7 @@ STR;
                 ORDER BY Country.SalesDate desc  
 STR;
 
-          die;  //echo $sql_national_100_v; die;
+            //echo $sql_national_100_v; die;
             $artistVideoList = $videoInstance->query($sql_us_10_v);
             foreach ($artistVideoList as $key => $value)
             {
