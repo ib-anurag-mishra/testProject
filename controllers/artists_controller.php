@@ -1742,6 +1742,8 @@ Class ArtistsController extends AppController
             if(!empty($country)){
                 if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) {
                    
+                    echo 147;die;
+                    
                     $artistVideoList = $this->Common->getAllVideoByArtist($country,$decodedId);
                     
                     Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);  
