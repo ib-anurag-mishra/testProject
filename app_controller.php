@@ -112,8 +112,7 @@ class AppController extends Controller
         
         
         // add announcement in the cache
-        //if (($announceInfo = Cache::read("announcementCache")) === false)
-                if(1)
+        if (($announceInfo = Cache::read("announcementCache")) === false)                
         {
             $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
             $announcment_rs = $this->Album->query($announcment_query);
