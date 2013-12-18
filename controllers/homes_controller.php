@@ -104,7 +104,6 @@ class HomesController extends AppController
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national" . $territory)) === false)
         {
-echo 147;
             $nationalTopDownload = $this->Common->getNationalTop100($territory);
         }
         else
@@ -117,12 +116,10 @@ echo 147;
         // National Top 100 Albums slider        
         if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
         {
-
             $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
         }
         else
         {
-
             $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
         }
         $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);

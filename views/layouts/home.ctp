@@ -5,8 +5,14 @@
 
         <?php
         echo $this->Html->charset();
-        echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
+        //echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
+       
         echo $this->Html->meta('icon');
+        
+         if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
+         {
+             header('X-UA-Compatible: IE=edge,chrome=1');
+         }
         ?>
 
         <title>
@@ -887,9 +893,10 @@
                 <br class="clr">
                 <input type="hidden" value="<?php echo Configure::read('App.Script'); ?>" id="Scripts_Path" />
             </div>
-        </div>
+       
         <?php echo $this->element('footer'); ?>
 
-
+             </div>
+                
     </body>
 </html>

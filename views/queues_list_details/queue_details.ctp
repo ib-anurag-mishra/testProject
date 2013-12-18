@@ -1,8 +1,5 @@
 <section class="queue-detail-page <?php echo ($default_queue != 1) ? '' : 'fq'; ?>">
-    <?php
-//    if (!empty($queue_list_array))
-//    {
-    ?>
+
     <div class="breadcrumbs">
         <?php
         $queue_type = ($queueType == 'Default') ? '1' : '0';
@@ -10,6 +7,7 @@
         echo $html->getCrumbs(' > ', __('Home', true), '/homes');
         ?>
     </div>
+    
     <div class="col-container clearfix">
         <div class="col-1">
             <img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
@@ -60,14 +58,11 @@
                     <?php
                 }
                 ?>
-                <!--<div class="share clearfix">
-                        <p>Share via</p>
-                        <a class="facebook" href="javascript:void(0);"></a>
-                        <a class="twitter" href="javascript:void(0);"></a>
-                </div> -->
+            
             </div>
         </div>
     </div>
+    
     <?php
     echo $session->flash();
     ?>

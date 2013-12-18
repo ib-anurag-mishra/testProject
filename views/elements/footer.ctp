@@ -1,4 +1,4 @@
-</div> <!-- end .content -->
+    </div> <!-- end .content -->
 
 
 </div><!-- end .content-wrapper -->
@@ -316,4 +316,3 @@ if ($this->Session->read("patron"))
   ?>
 <?php  echo $this->element('sql_dump');  ?>
 <!-- Code for player end -->
-
