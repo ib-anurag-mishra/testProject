@@ -1745,7 +1745,7 @@ Class ArtistsController extends AppController
                     
                     
                     $artistVideoList = $this->Common->getAllVideoByArtist($country,$decodedId);
-                    
+                    print_r($artistVideoList);
                     Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);  
 
                // }else{
