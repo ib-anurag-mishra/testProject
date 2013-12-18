@@ -60,7 +60,7 @@ Class DownloadsComponent extends Object
             $videoDownloadInstance->recursive = -1;
             $videoDownloadCount = $videoDownloadInstance->find(
                     'count', array(
-                'conditions' => array(
+                    'conditions' => array(
                     'library_id' => $libId,
                     'patron_id' => $patId,
                     'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))
