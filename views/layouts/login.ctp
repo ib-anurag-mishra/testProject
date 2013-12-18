@@ -295,6 +295,8 @@
                                                 <?php echo $this->element('footer'); ?>
 
                                             </div>
+    </div>
+    </div>
 
                                             </body>
                                             </html>
