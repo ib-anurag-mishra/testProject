@@ -675,7 +675,7 @@
         <?php
         if ($this->params['action'] != 'aboutus')
         {
-            echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0;url=" . $this->webroot . "homes/aboutus/js_err"), false);
+            echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0; url=" . $this->webroot . "homes/aboutus/js_err"), false);
         }
         ?>
         </noscript>
