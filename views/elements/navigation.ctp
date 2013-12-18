@@ -771,8 +771,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php if($this->Session->read('library_type') == '2') {
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
+
+                                            <h3>Streaming</h3>	
                                             <ul class="streaming sidebar-nav">
-                                                    <h3>Streaming</h3>								
+                                                    			
                                                     <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
@@ -800,7 +802,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                             </ul>
                                             <?php } ?>
-                                            <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
+                                            
+                                            <h3><?php __('My Downloads'); ?></h3>
+                                            <ul class="my-downloads sidebar-nav">
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css,"id"=>'leftmyhistory07',"onclick"=>"setUpperNavigation('leftmyhistory07')")); ?></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css,"id"=>'leftmywishlist07',"onclick"=>"setUpperNavigation('leftmywishlist07')")); ?></li>
