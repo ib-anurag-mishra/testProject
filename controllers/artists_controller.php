@@ -1740,17 +1740,17 @@ Class ArtistsController extends AppController
             $country = $this->Session->read('territory');
             
             if(!empty($country)){
-                if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) {
+               // if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) {
                    
-                    echo 147;die;
+                    
                     
                     $artistVideoList = $this->Common->getAllVideoByArtist($country,$decodedId);
                     
                     Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);  
 
-                }else{
-                        $artistVideoList = Cache::read("videolist_".$country."_".$decodedId);
-                }
+               // }else{
+                    //    $artistVideoList = Cache::read("videolist_".$country."_".$decodedId);
+               // }
               $this->set('artistVideoList',$artistVideoList);
             }
             
