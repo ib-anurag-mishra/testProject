@@ -897,6 +897,6 @@
         <?php echo $this->element('footer'); ?>
 
              </div>
-                
+    </div> <!-- body - background -->
     </body>
 </html>
