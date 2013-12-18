@@ -151,16 +151,14 @@ $ieVersion = ieversion();
                         ?>
 
                         <div class="row clearfix">
-                            <div class="date"><?php echo date("Y-m-d", strtotime($downloadResult['Download']['created'])); ?></div>
+                            <div class="date">
+                                <?php echo date("Y-m-d", strtotime($downloadResult['Download']['created'])); ?>
+                            </div>
                             <div class="small-album-container">
-
-                                <!-- <a class="preview" href="#"></a> -->
-
 
                                 <?php
                                 if ($this->Session->read('library_type') == 2 && $downloadResult['Country']['StreamingSalesDate'] <= date('Y-m-d') && $downloadResult['Country']['StreamingStatus'] == 1)
                                 {
-                                    //do the streaming work
 
                                     $filePath = shell_exec('perl files/tokengen_streaming ' . $downloadResult['Full_Files']['CdnPath'] . "/" . $downloadResult['Full_Files']['SaveAsName']);
 
@@ -193,49 +191,64 @@ $ieVersion = ieversion();
                                 }
                                 ?>
                             </div>
-                            <div class="song-title"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" href="javascript:void(0)">
-                                    <?php
-                                    if (strlen($downloadResult['Download']['track_title']) >= 19)
-                                    {
-                                        echo '<a title="' . htmlentities($downloadResult['Download']['track_title']) . '">' . substr($downloadResult['Download']['track_title'], 0, 19) . '...</a>';
-                                    }
-                                    else
-                                    {
-                                        echo $downloadResult['Download']['track_title'];
-                                    }
-                                    ?>
-                                    <?php
-                                    if ('T' == $downloadResult['Song']['Advisory'])
-                                    {
-                                        ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?></a></div>
-                            <!-- <a class="add-to-wishlist-button" href="#"></a> -->
-                            <div class="album-title"><a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title']); ?>" href="/artists/view/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']); ?>">
-                                    <?php
-                                    if (strlen($downloadResult['Song']['Title']) >= 19)
-                                    {
-                                        echo '<a title="' . htmlentities($downloadResult['Song']['Title']) . '">' . substr($downloadResult['Song']['Title'], 0, 19) . '...</a>';
-                                    }
-                                    else
-                                    {
-                                        echo $downloadResult['Song']['Title'];
-                                    }
-                                    ?>
+                            <div class="song-title">
+                                <a title="<?php echo $this->getTextEncode($downloadResult['Download']['track_title']); ?>" 
+                                   href="javascript:void(0)">
+                                       <?php
+                                       if (strlen($downloadResult['Download']['track_title']) >= 19)
+                                       {
+                                           echo substr($downloadResult['Download']['track_title'], 0, 19) . '...';
+                                       }
+                                       else
+                                       {
+                                           echo $downloadResult['Download']['track_title'];
+                                       }
 
+                                       if ('T' == $downloadResult['Song']['Advisory'])
+                                       {
+                                           ?> 
+                                        <span style="color: red;display: inline;font-size: 10px;"> 
+                                            (Explicit)
+                                        </span> 
+                                        <?php
+                                    }
+                                    ?>
+                                </a>
                             </div>
-                            <div class="artist-name"><a title="<?php echo $this->getTextEncode($downloadResult['Download']['artist']); ?>" href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>"><?php
-                                    if (strlen($downloadResult['Download']['artist']) >= 19)
-                                    {
-                                        echo '<a title="' . htmlentities($downloadResult['Download']['artist']) . '">' . substr($downloadResult['Download']['artist'], 0, 19) . '...</a>';
-                                    }
-                                    else
-                                    {
-                                        $ArtistName = $downloadResult['Download']['artist'];
-                                        echo $ArtistName;
-                                    }
-                                    ?></a></div>
+
+                            <div class="album-title">
+                                <a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title']); ?>" 
+                                   href="/artists/view/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']); ?>" >
+                                       <?php
+                                       if (strlen($downloadResult['Song']['Title']) >= 19)
+                                       {
+                                           echo substr($downloadResult['Song']['Title'], 0, 19) . '...';
+                                       }
+                                       else
+                                       {
+                                           echo $downloadResult['Song']['Title'];
+                                       }
+                                       ?>
+                                </a>
+                            </div>
+                            <div class="artist-name">
+                                <a title="<?php echo $this->getTextEncode($downloadResult['Download']['artist']); ?>" 
+                                   href="/artists/album/<?= base64_encode($downloadResult['Song']['ArtistText']); ?>" >
+                                       <?php
+                                       if (strlen($downloadResult['Download']['artist']) >= 19)
+                                       {
+                                           echo substr($downloadResult['Download']['artist'], 0, 19) . '...';
+                                       }
+                                       else
+                                       {
+                                           echo $downloadResult['Download']['artist'];
+                                       }
+                                       ?>
+                                </a>
+                            </div>
 
                             <!-- <div class="wishlist-popover">
-                      	
+                        
                             <a class="remove-song" href="#">Remove Song</a>
                             <a class="make-cover-art" href="#">Make Cover Art</a>
                             
@@ -243,9 +256,10 @@ $ieVersion = ieversion();
 //                            if ($this->Session->read('library_type') == '2')
 //                            {
 //                                echo $this->Queue->getQueuesList($this->Session->read('patron'), $downloadResult["Song"]["ProdID"], $downloadResult["Song"]["provider_type"], $downloadResult["Album"]["ProdID"], $downloadResult["Album"]["provider_type"]);
-//                                ?>
+//                                
+                            ?>
                                                 <a class="add-to-playlist" href="#">Add To Playlist</a>
-                                //<?php //echo $this->Queue->getSocialNetworkinglinksMarkup();  ?>
+                                //<?php //echo $this->Queue->getSocialNetworkinglinksMarkup();        ?>
                                 //<?php
 //                            }
 //                            else
@@ -312,14 +326,14 @@ $ieVersion = ieversion();
                                 $videoImage = shell_exec('perl files/tokengen_artwork ' . $videoDownloadResult['File']['CdnPath'] . "/" . $videoDownloadResult['File']['SourceURL']);
                                 $videoImageUrl = Configure::read('App.Music_Path') . $videoImage;
                                 ?>
-                                <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
-                                <!-- <a class="preview" href="#"></a> -->
+                                <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />                              
                             </div>
-                            <div class="song-title"><a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="javascript:void(0)">
+                            <div class="song-title">
+                                <a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['track_title']); ?>" href="javascript:void(0)">
                                     <?php
                                     if (strlen($videoDownloadResult['Videodownload']['track_title']) >= 22)
                                     {
-                                        echo '<a title="' . htmlentities($videoDownloadResult['Videodownload']['track_title']) . '">' . substr($videoDownloadResult['Videodownload']['track_title'], 0, 22) . '...</a>';
+                                        echo substr($videoDownloadResult['Videodownload']['track_title'], 0, 22) . '...';
                                     }
                                     else
                                     {
@@ -329,14 +343,15 @@ $ieVersion = ieversion();
                                     if ('T' == $videoDownloadResult['Video']['Advisory'])
                                     {
                                         ?> <span style="color: red;display: inline;font-size: 10px;"> (Explicit)</span> <?php } ?>
-                                </a></div>
-                            <!--<a class="add-to-wishlist-button" href="#"></a>-->
+                                </a>
+                            </div>
+
                             <div class="album-title">
                                 <a title="<?php echo $this->getTextEncode($videoDownloadResult['Video']['Title']); ?>" href="javascript:void(0)">
                                     <?php
                                     if (strlen($videoDownloadResult['Video']['Title']) >= 22)
                                     {
-                                        echo '<a title="' . htmlentities($videoDownloadResult['Video']['Title']) . '">' . substr($videoDownloadResult['Video']['Title'], 0, 22) . '...</a>';
+                                        echo substr($videoDownloadResult['Video']['Title'], 0, 22) . '...';
                                     }
                                     else
                                     {
@@ -345,21 +360,21 @@ $ieVersion = ieversion();
                                     ?>
                                 </a>
                             </div>
-                            
+
                             <div class="artist-name">
                                 <a title="<?php echo $this->getTextEncode($videoDownloadResult['Videodownload']['artist']); ?>" 
                                    href="/artists/album/<?= base64_encode($videoDownloadResult['Video']['ArtistText']); ?>" >
-                                    <?php
-                                    if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19)
-                                    {
-                                        echo '<a title="' . htmlentities($videoDownloadResult['Videodownload']['artist']) . '">' . substr($videoDownloadResult['Videodownload']['artist'], 0, 19) . '...</a>';
-                                    }
-                                    else
-                                    {
-                                        $ArtistName = $videoDownloadResult['Videodownload']['artist'];
-                                        echo $ArtistName;
-                                    }
-                                    ?>
+                                       <?php
+                                       if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19)
+                                       {
+                                           echo substr($videoDownloadResult['Videodownload']['artist'], 0, 19) . '...';
+                                       }
+                                       else
+                                       {
+                                           $ArtistName = $videoDownloadResult['Videodownload']['artist'];
+                                           echo $ArtistName;
+                                       }
+                                       ?>
                                 </a>
                             </div>
 
@@ -370,7 +385,7 @@ $ieVersion = ieversion();
                                     <a class="twitter" href="javascript:void(0);"></a>
                                 </div>
                             </div>
-                            
+
                             <div class="download">
                                 <p>
                                     <?php
