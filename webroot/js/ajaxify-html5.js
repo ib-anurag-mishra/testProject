@@ -208,7 +208,7 @@
 
                     if (relativeUrl === 'homes/us_top_10')
                     {
-                        $('#topmylib07').addClass('active');
+                        $('.topmylib07').addClass('active');
                         $('#topmostpopuler07').addClass('active');
                         $('#ustoplib07').addClass('active');
                     }
