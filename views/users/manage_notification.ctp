@@ -24,11 +24,13 @@ function ieversion()
 $ieVersion = ieversion();
 ?>
 <section class="my-account-page">
-    <div class="breadCrumb">
-        <?php
-        $html->addCrumb(__('Notifications', true), '/users/manage_notification');
-        echo $html->getCrumbs(' > ', __('Home', true), '/homes');
-        ?>
+    <div class="breadcrumbs">
+        <span>
+            <?php
+            $html->addCrumb(__('Notifications', true), '/users/manage_notification');
+            echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+            ?>
+        </span>
     </div>
     <br class="clr">
     <header>
@@ -48,7 +50,7 @@ $ieVersion = ieversion();
         <div class="forms-wrapper">    
             <div class="email-notification-wrapper">
                 <h3>Email Notification</h3>
-                <?php echo $this->Form->create('User', array('controller' => 'User', 'action' => 'manage_notification')); ?>
+                <?php echo $this->Form->create('User', array('url' => array('controller' => 'User', 'action' => 'manage_notification'))); ?>
                 <div>
                     <?php
                     if ($notificationAlreadySave == true)
@@ -108,9 +110,6 @@ $ieVersion = ieversion();
                             }
                             return true;
                         }
-
-
-
                         function validateEmail(email) {
                             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                             return re.test(email);
