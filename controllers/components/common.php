@@ -2442,6 +2442,7 @@ STR;
     function getAllVideoByArtist($country, $decodedId)
     {
 
+        //add the slashes in the
         $decodedId = addslashes($decodedId);
         $videoInstance = ClassRegistry::init('Video');
         $preFix = strtolower($country) . "_";
