@@ -614,6 +614,12 @@ STR;
     {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
+        
+         if(empty($countryPrefix))
+        {
+            $this->log("Empty countryPrefix in getComingSoonSongs for : ".$territory, "cache");
+            die;
+        }
         $albumInstance = ClassRegistry::init('Album');
         // Added caching functionality for coming soon songs
         $sql_coming_soon_s = <<<STR
