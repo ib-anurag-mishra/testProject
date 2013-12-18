@@ -1,4 +1,4 @@
-<style>
+<!--<style>
     .txt-my-history {
         background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/my_account.png") no-repeat scroll 0 0 transparent;
         height: 62px;
@@ -9,7 +9,7 @@
         width: 228px;
     }
 
-</style>
+</style>-->
 
 
 <?php echo $session->flash(); ?>
@@ -33,11 +33,13 @@ $ieVersion = ieversion();
 <section class="my-account-page">
 
 
-    <div class="breadCrumb">
-        <?php
-        $html->addCrumb(__('My Account', true), '/users/my_account');
-        echo $html->getCrumbs(' > ', __('Home', true), '/homes');
-        ?>
+    <div class="breadcrumbs">
+        <span>
+            <?php
+            $html->addCrumb(__('My Account', true), '/users/my_account');
+            echo $html->getCrumbs(' > ', __('Home', true), '/homes');
+            ?>
+        </span>
     </div>
     <br class="clr">
     <header>
@@ -87,10 +89,6 @@ $ieVersion = ieversion();
             }
             ?>
         </div>
-
-
-
-
 
         <?php
         if (isset($notificationShow) && $notificationShow == 1)
@@ -159,6 +157,7 @@ if ($notificationAlreadySave === 'true')
 
 
         });
+        
         function checkEmailValue() {
 
 
@@ -172,9 +171,7 @@ if ($notificationAlreadySave === 'true')
             }
             return true;
         }
-
-
-
+        
         function validateEmail(email) {
             var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
