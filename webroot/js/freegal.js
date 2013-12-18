@@ -879,6 +879,58 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
     return false;
 }
 
+function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
+{
+    //console.log('wishlistDownloadIE called');
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('wishlist_song_' + prodId).style.display = 'none';
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/wishlistDownloadHome", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                location.reload();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
+                //window.location = unescape(downloadUsedArr[2]);
+                location.href = unescape(downloadUsedArr[2]);
+
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+
+                document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('wishlist_song_' + prodId).style.display = 'block';
+                return false;
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+
 function wishlistVideoDownloadIE(prodId, id, provider)
 {
     $('.beforeClick').hide();
@@ -1136,6 +1188,60 @@ function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                location.reload();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                if (languageSet === 'en') {
+                    document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
+                } else {
+                    document.getElementById('wishlist_song_' + prodId).innerHTML = '<a href="/homes/my_history">bajaedas</a>';
+                }
+                document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('wishlist_song_' + prodId).style.display = 'block';
+                location.href = unescape(downloadUsedArr[2]);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+
+function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
+{
+    console.log('wishlistDownloadOthers called');
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('wishlist_song_' + prodId).style.display = 'none';
+    document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
+//    var finalURL = downloadUrl1;
+//    finalURL += downloadUrl2;
+//    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/wishlistDownloadHome", // URL to request
         data: data, // post data
         success: function(response) {
             var msg = response.substring(0, 5);
