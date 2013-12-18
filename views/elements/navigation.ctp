@@ -418,7 +418,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php
                                                     if($libraryInfo['Library']['library_home_url'] != "") {
                                                     ?>
-                                                        <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;"></a>
+                                                        <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;"></a>
                                                         <?php
                                                     }else{
                                                         ?>
@@ -742,7 +742,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<div class="content-wrapper clearfix">	
                             
 					<section class="left-sidebar">
-                                            <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
+                                            <h3><?php __('Browse'); ?></h3>
+
+                                            <ul class="browse sidebar-nav">
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css,"id"=>'leftmusicVideo07',"onclick"=>"setUpperNavigation('leftmusicVideo07')")); ?>
                                                     </li>                                                    
