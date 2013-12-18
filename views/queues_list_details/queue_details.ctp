@@ -141,9 +141,10 @@
                                    
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {
-                                        $songUrl = shell_exec('perl files/tokengen ' . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
-                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+//                                        $songUrl = shell_exec('perl files/tokengen ' . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
+//                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+//                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+                                        
                                         if ($value['Songs']['status'] != 'avail')
                                         {
                                             ?>
@@ -154,12 +155,12 @@
                                                 <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $value["Songs"]["ProdID"]; ?>">
                                                     <![if !IE]>
                                                     <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>"
-                                                       onclick='return wishlistDownloadOthers("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
+                                                       onclick='return wishlistDownloadOthersHome("<?php echo $value["Songs"]['ProdID']; ?>", "0", "<?php echo $value['SongFile']['SCdnPath']; ?>", "<?php echo $value['SongFile']['SSaveAsName']; ?>", "<?php echo $value["Songs"]["provider_type"]; ?>");'>
                                                            <?php __('Download Now'); ?>
                                                     </a>
                                                     <![endif]>
                                                     <!--[if IE]>
-                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download Now'); ?></a>
+                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>" "<?php echo $value['SongFile']['SCdnPath']; ?>", "<?php echo $value['SongFile']['SSaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                     <![endif]-->
                                                 </span>
 

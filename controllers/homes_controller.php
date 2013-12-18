@@ -3727,12 +3727,24 @@ STR;
 
     function historyDownload()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
 
         $id = $_REQUEST['id'];
         $libId = $_REQUEST['libid'];
         $patId = $_REQUEST['patronid'];
+        
+        $CdnPath = $_REQUEST['CdnPath'];
+        $SaveAsName = $_REQUEST['SaveAsName'];
+        
+        
+        $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
+        $finalURL = urlencode($finalSongUrlArr[0]).urlencode($finalSongUrlArr[1]).urlencode($finalSongUrlArr[2]);
+
+        
+        
         $this->Download->recursive = -1;
         $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $id, 'library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'order' => 'created DESC', 'limit' => '1'));
         $downloadCount = $downloadsUsed[0]['Download']['history'];
@@ -3745,7 +3757,7 @@ STR;
             $this->Download->setDataSource('default');
             $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $id, 'library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'order' => 'created DESC', 'limit' => '1'));
             $downloadCount = $downloadsUsed[0]['Download']['history'];
-            echo "suces|" . $downloadCount;
+            echo "suces|" . $downloadCount."|".$finalURL;
         }
         else
         {
