@@ -72,20 +72,20 @@ $ieVersion = ieversion();
             if ($sortOrder == 'asc')
             {
                 ?>    
-                <div class="artist-filter-button filter active"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
+                <div class="artist-filter-button filter active" style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
                 <?php
             }
             else
             {
                 ?>
-                <div class="artist-filter-button filter active toggled"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
+                <div class="artist-filter-button filter active toggled" style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
                 <?php
             }
         }
         else
         {
             ?>
-            <div class="artist-filter-button filter"style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
+            <div class="artist-filter-button filter" style="cursor:pointer;width:141px;"><?php echo __('Artists'); ?></div>
             <?php
         }
         if ($sort == 'album')
@@ -93,24 +93,24 @@ $ieVersion = ieversion();
             if ($sortOrder == 'asc')
             {
                 ?>    
-                <div class="album-filter-button filter active"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
+                <div class="album-filter-button filter active" style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
                 <?php
             }
             else
             {
                 ?>
-                <div class="album-filter-button filter active toggled"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
+                <div class="album-filter-button filter active toggled" style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
                 <?php
             }
         }
         else
         {
             ?>
-            <div class="album-filter-button filter"style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
+            <div class="album-filter-button filter" style="cursor:pointer;width:122px;"><?php echo __('Album'); ?></div>
             <?php
         }
         ?>  
-        <div class="artist-filter-button"style="cursor:pointer;"><?php echo __('Streaming Time'); ?> (in sec.)</div>
+        <div class="artist-filter-button" style="cursor:pointer;"><?php echo __('Streaming Time'); ?> (in sec.)</div>
 
     </nav>
     <div class="recent-downloads-shadow-container" style="display:none">
@@ -220,8 +220,7 @@ $ieVersion = ieversion();
                                     }
                                     ?></a></div>
 
-                            <!-- <div class="wishlist-popover">
-                            <!--	
+                            <!-- <div class="wishlist-popover">                         
                             <a class="remove-song" href="#">Remove Song</a>
                             <a class="make-cover-art" href="#">Make Cover Art</a>
                             */
@@ -230,7 +229,7 @@ $ieVersion = ieversion();
 //                            {
 //                                echo $this->Queue->getQueuesList($this->Session->read('patron'), $streamingArr["Song"]["ProdID"], $streamingArr["Song"]["provider_type"], $streamingArr["Album"]["ProdID"], $streamingArr["Album"]["provider_type"]);
 //                                ?>
-                                                                    <a class="add-to-playlist" href="#">Add To Playlist</a>
+                                         //                           <a class="add-to-playlist" href="#">Add To Playlist</a>
                                 //<?php //echo $this->Queue->getSocialNetworkinglinksMarkup();  ?>
                                 //<?php
 //                            }
