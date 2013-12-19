@@ -618,7 +618,12 @@ function Get_Sales_date($sales_date_array, $country)
                                                 $name = $genre->Genre;
                                                 $count = $genre->numFound;
                                                 ?>
-                                                <div class="row"><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)</a></div>
+                                                <div class="row">
+                                                    <a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" 
+                                                       title="<?php echo $this->getTextEncode($genre_name); ?>">
+                                                           <?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)
+                                                    </a>
+                                                </div>
                                                 <?php
                                                 $i++;
                                                 if (($i % 3) == 0)
@@ -1005,71 +1010,6 @@ function Get_Sales_date($sales_date_array, $country)
             <?php /*             * *******************Genre Block End****************************** */ ?>
 
 
-
-            <?php /*             * *******************Label Block Started****************************** */ ?>            
-
-            <?php
-//            if (!empty($labels))
-//            {
-//                foreach ($labels as $label)
-//                {
-//                    $tilte = urlencode($label->Label);
-//                    $label_name_text = truncate_text($this->getTextEncode($label->Label), 30, $this);
-//                    $name = $label->Label;
-//                    $count = $label->numFound;
-//                    ?>
-<!--                    <div>
-                        <a href="/search/index?q=//<?php //echo $tilte; ?>&type=label" 
-                           title="//<?php //echo $name; ?>">
-                               //<?php //echo (($name != "false") ? $label_name_text : ""); ?> 
-                            <span>(//<?php //echo $count; ?>)</span>
-                        </a>
-                    </div>-->
-                    //<?php
-//                }
-//            }
-//            else
-//            {
-//                ?>
-<!--                <div style='color:red'>//<?php // __("No Labels Found"); ?></div>  -->
-                //<?php
-//            }
-            ?>
-            <?php /*             * ****************Label Block End****************************** */ ?>
-
-
-
-            <?php /*             * ******************Video Block Started****************************** */ ?>  
-            <?php
-            if (!empty($videos))
-            {
-                foreach ($videos as $video)
-                {
-                    $tilte = urlencode($video->VideoTitle);
-                    $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
-                    $name = $this->getTextEncode($video->VideoTitle);
-                    // $count = $video->numFound;
-                    if (!empty($video_name_text))
-                    {
-                        ?>
-                        <div>
-                            <a href="/search/index?q=<?php echo $tilte; ?>&type=video" 
-                               title="<?php echo $name; ?>" >
-                                   <?php echo (($name != "false") ? $video_name_text : ""); ?>
-                            </a>
-                        </div>
-                        <?php
-                    }
-                }
-            }
-            else
-            {
-                ?>
-                <div style='color:red'><?php __("No Videos Found"); ?></div>     
-                <?php
-            }
-            ?>
-            <?php /*             * *****************Video Block End****************************** */ ?>
         </section>
         <?
     }
