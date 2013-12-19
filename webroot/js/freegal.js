@@ -835,7 +835,7 @@ function addToWishlist_top(prodId, providerType)
 
 function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
 {
-    //3;rw3X42>NhC('wishlistDownloadIE called');
+   
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
@@ -2195,6 +2195,9 @@ function showAlbumDetails(albumDetailURL) {
                     }
                 }
             });
+//             var scriptPath = document.getElementById('Scripts_Path').value;
+//                    $.getScript(scriptPath + '/js/freegal.js');
+            $.getScript('/js/freegal.js');
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             // alert('Album detail not available.');
