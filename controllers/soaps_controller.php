@@ -311,7 +311,7 @@ class SoapsController extends AppController {
       
     $mem_artistText = strtolower(str_replace(' ', '_', $artistText));
     
-    if ( (( Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory)) === false) && (Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory) === null) ) {
+    if ( (( Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory)) === false) || (Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory) === null) ) {
     
     
       if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
