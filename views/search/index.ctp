@@ -1290,7 +1290,7 @@ function Get_Sales_date($sales_date_array, $country)
                 }
                 ?>
             </div>
-            </div>
+    
 
             <div class="paging">
                 <?php
