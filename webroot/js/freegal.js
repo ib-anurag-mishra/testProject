@@ -913,7 +913,6 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                alert('wishlistDownloadIEHome called' + downloadUsedArr[2] );
                 location.href = unescape(downloadUsedArr[2]);
                 
                 return false;
@@ -1209,7 +1208,6 @@ function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                var test = unescape(downloadUsedArr[2]);
                 location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
@@ -1264,7 +1262,6 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                console.log(unescape(downloadUsedArr[2]));
                 location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
