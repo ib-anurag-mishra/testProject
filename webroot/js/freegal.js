@@ -906,7 +906,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 $('.afterClick').hide();
                 $('.beforeClick').show();
                 
-                var temp = "<a title='You have already downloaded this Song. Get it from your recent downloads' href='/homes/my_history' >Downloaded</a>";
+                var temp = "<a title='You have already downloaded this Song.Get it from your recent downloads' href='/homes/my_history' >Downloaded</a>";
                 document.getElementById('wishlist_song_' + prodId).innerHTML = temp ;
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
@@ -916,7 +916,6 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 location.href = unescape(downloadUsedArr[2]);
                 
-                return false;
             }
             else
             {
