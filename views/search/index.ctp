@@ -1139,20 +1139,16 @@ function Get_Sales_date($sales_date_array, $country)
                                         <?php
                                     }
                                     ?>
-                                    <!-- <div class="share clearfix">
-                                        <p>Share via</p>
-                                        <a class="facebook" href="#"></a>
-                                        <a class="twitter" href="#"></a>
-                                    </div> -->
+                             
                                 </div>
-                                <!--div class="cover-art">
-                                <?php
-                                //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
-                                //$image = Configure::read('App.Music_Path') . $imageUrl;
-                                ?>
-                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));                       ?>/<?php //echo $psong->ReferenceID;                       ?>/<?php //echo base64_encode($psong->provider_type);                       ?>"><img src="<?php //echo $image;                       ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
-                                </div-->
-                                <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
+                                                               
+                                <div class="album">
+                                    <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" 
+                                       title="<?php echo $this->getTextEncode($psong->Title); ?> ">
+                                           <?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?>
+                                    </a>
+                                </div>
+                                
                                 <div class="song" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
                                     <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
                                     <span>
@@ -1167,6 +1163,7 @@ function Get_Sales_date($sales_date_array, $country)
                                         </a>
                                     </span>
                                 </div>
+                                
                                 <div class="download">
                                     <?php
                                     if ($this->Session->read("patron"))
@@ -1182,22 +1179,38 @@ function Get_Sales_date($sales_date_array, $country)
                                                 if ($psong->status != 'avail')
                                                 {
                                                     ?>
-                                                    <p>
+                                              
                                                     <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload">
                                                         <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
                                                         <span class="beforeClick" id="wishlist_song_<?php echo $psong->ProdID; ?>">
                                                             <![if !IE]>
-                                                            <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'><?php __('Download'); ?></a>
+                                                            <a href='javascript:void(0);' class="add-to-wishlist" 
+                                                               title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" 
+                                                               onclick='return wishlistDownloadOthersHome("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'>
+                                                                   <?php __('Download'); ?>
+                                                            </a>
                                                             <![endif]>
                                                             <!--[if IE]>
-                                                                   <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download'); ?></a>
+                                                                   <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                                        onclick='wishlistDownloadIEHome("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' 
+                                                                        href="javascript:void(0);">
+                                                                <?php __('Download'); ?>
+                                                            </a>
                                                             <![endif]-->
                                                         </span>
-                                                        <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
-                                                        <span id="wishlist_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                                        
+                                                        <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" 
+                                                              style="display:none;float:left"><?php __("Please Wait..."); ?>
+                                                        </span>
+                                                              
+                                                        <span id="wishlist_loader_<?php echo $psong->ProdID; ?>" 
+                                                              style="display:none;float:right;">
+                                                                  <?php echo $html->image('ajax-loader_black.gif'); ?>
+                                                        </span>
+                                                        
                                                     </form>
-                                                    </p>
+                                                
                                                     <?php
                                                 }
                                                 else
