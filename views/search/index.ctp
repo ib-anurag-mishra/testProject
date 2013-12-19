@@ -1009,31 +1009,31 @@ function Get_Sales_date($sales_date_array, $country)
             <?php /*             * *******************Label Block Started****************************** */ ?>            
 
             <?php
-            if (!empty($labels))
-            {
-                foreach ($labels as $label)
-                {
-                    $tilte = urlencode($label->Label);
-                    $label_name_text = truncate_text($this->getTextEncode($label->Label), 30, $this);
-                    $name = $label->Label;
-                    $count = $label->numFound;
-                    ?>
-                    <div>
-                        <a href="/search/index?q=<?php echo $tilte; ?>&type=label" 
-                           title="<?php echo $name; ?>">
-                               <?php echo (($name != "false") ? $label_name_text : ""); ?> 
-                            <span>(<?php echo $count; ?>)</span>
+//            if (!empty($labels))
+//            {
+//                foreach ($labels as $label)
+//                {
+//                    $tilte = urlencode($label->Label);
+//                    $label_name_text = truncate_text($this->getTextEncode($label->Label), 30, $this);
+//                    $name = $label->Label;
+//                    $count = $label->numFound;
+//                    ?>
+<!--                    <div>
+                        <a href="/search/index?q=//<?php //echo $tilte; ?>&type=label" 
+                           title="//<?php //echo $name; ?>">
+                               //<?php //echo (($name != "false") ? $label_name_text : ""); ?> 
+                            <span>(//<?php //echo $count; ?>)</span>
                         </a>
-                    </div>
-                    <?php
-                }
-            }
-            else
-            {
-                ?>
-                <div style='color:red'><?php __("No Labels Found"); ?></div>  
-                <?php
-            }
+                    </div>-->
+                    //<?php
+//                }
+//            }
+//            else
+//            {
+//                ?>
+<!--                <div style='color:red'>//<?php // __("No Labels Found"); ?></div>  -->
+                //<?php
+//            }
             ?>
             <?php /*             * ****************Label Block End****************************** */ ?>
 
