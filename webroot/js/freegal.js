@@ -913,7 +913,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                alert('wishlistDownloadIEHome called');
+                alert('wishlistDownloadIEHome called' + downloadUsedArr[2] );
                 location.href = unescape(downloadUsedArr[2]);
                 
                 return false;
