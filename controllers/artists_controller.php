@@ -889,8 +889,9 @@ Class ArtistsController extends AppController
 
 						),'group' => 'Song.ProdID, Song.provider_type','order' => array('Song.sequence_number','Song.ProdID')
 						  ));
+                                echo 147;
                              }else{
-                                 
+                                 echo 159;
 				$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
 						'conditions' =>
 							array('and' =>
