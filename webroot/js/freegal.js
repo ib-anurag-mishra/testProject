@@ -1209,6 +1209,7 @@ function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
+                var test = unescape(downloadUsedArr[2]);
                 location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
