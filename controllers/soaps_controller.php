@@ -322,7 +322,7 @@ class SoapsController extends AppController {
       }
   
       $songs = $this->Song->find('all', array(
-				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
+				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
 				'conditions' => array(
           'Song.ArtistText' => $artistText ,
           "Song.Sample_FileID != ''",
@@ -339,7 +339,8 @@ class SoapsController extends AppController {
             )
           )
         ), 
-        'recursive' => 0 
+        'recursive' => 0,
+        'order'=>array('Country.SalesDate DESC')        
       ));
     
       $val = '';
@@ -388,8 +389,8 @@ class SoapsController extends AppController {
 								'Files.SourceURL'
 							),
 						)
-					), 
-          'order' => array('Country.SalesDate' => 'desc'), 
+					),
+          'order' => array('FIELD(Album.ProdID, '.$val.') ASC'), 
           'chk' => 2 
 		  ));
       
