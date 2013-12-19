@@ -242,13 +242,10 @@ body {
 	padding-bottom: 200px;
 	min-height: 800px; /* added 080313 */
 
-
-	
-	.videos,.genres-page,.saved-queues-page,.queue-detail-page {
+	.videos,.genres-page,.saved-queues-page,.queue-detail-page,.now-streaming-page {
 		
 		min-height: 1200px;
 	}
-	
 
 
 }
@@ -17538,31 +17535,6 @@ img {
 				font-size: 16px;
 				color: rgba(0,0,0,.65);
 			}
-			
-			.play-queue-btn {
-				
-/*
-				position: absolute;
-				right: 57px;
-				top:0;
-*/
-				cursor: pointer;
-				background: url(../img/queue-details/play-queue-off.png);
-				width: 137px;
-				height: 42px;
-				
-				
-				&:hover {
-					
-					background: url(../img/queue-details/play-queue-hover.png);
-				}
-				
-				&:active {
-					background: url(../img/queue-details/play-queue-clicked.png);
-					
-				}
-				
-			}
 		}
 		
 		.col-3 {
@@ -17588,7 +17560,28 @@ img {
 				position: relative;
 				width: 200px;
 				margin-top: 10px;
-
+				.play-queue-btn {
+					
+					position: absolute;
+					right: 57px;
+					top:0;
+					cursor: pointer;
+					background: url(../img/queue-details/play-queue-off.png);
+					width: 137px;
+					height: 42px;
+					
+					
+					&:hover {
+						
+						background: url(../img/queue-details/play-queue-hover.png);
+					}
+					
+					&:active {
+						background: url(../img/queue-details/play-queue-clicked.png);
+						
+					}
+					
+				}
 				
 				.gear-icon {
 					
