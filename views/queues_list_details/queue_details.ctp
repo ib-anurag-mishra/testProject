@@ -160,7 +160,7 @@
                                                     </a>
                                                     <![endif]>
                                                     <!--[if IE]>
-                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>" "<?php echo $value['SongFile']['SCdnPath']; ?>", "<?php echo $value['SongFile']['SSaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                                                            <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $value["Songs"]['ProdID']; ?>", "0" , "<?php echo $value["Songs"]["provider_type"]; ?>", "<?php echo $value['SongFile']['SCdnPath']; ?>", "<?php echo $value['SongFile']['SSaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download Now'); ?></a>
                                                     <![endif]-->
                                                 </span>
 
