@@ -1193,25 +1193,24 @@ function Get_Sales_date($sales_date_array, $country)
                                                 $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                                 $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                                 $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
-                                                
                                                 if ($psong->status != 'avail')
                                                 {
                                                     ?>
                                                     <p>
-                                                     <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload">
+                                                    <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload">
                                                         <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
                                                         <span class="beforeClick" id="wishlist_song_<?php echo $psong->ProdID; ?>">
-                                                             <![if !IE]>
-                                                                <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='return wishlistDownloadOthers("<?php echo $psong->ProdID; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $psong->provider_type; ?>");'><?php __('Download');?></a>
-                                                             <![endif]>
-                                                             <!--[if IE]>
-                                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>");' href="<?php echo trim($finalSongUrl);?>"><?php __('Download');?></a>
-                                                             <![endif]-->
+                                                            <![if !IE]>
+                                                            <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthers("<?php echo $psong->ProdID; ?>", "0", "<?php echo urlencode($finalSongUrlArr[0]); ?>", "<?php echo urlencode($finalSongUrlArr[1]); ?>", "<?php echo urlencode($finalSongUrlArr[2]); ?>", "<?php echo $psong->provider_type; ?>");'><?php __('Download'); ?></a>
+                                                            <![endif]>
+                                                            <!--[if IE]>
+                                                                   <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIE("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>");' href="<?php echo trim($finalSongUrl); ?>"><?php __('Download'); ?></a>
+                                                            <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
                                                         <span id="wishlist_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-                                                   </form>
+                                                    </form>
                                                     </p>
                                                     <?php
                                                 }
