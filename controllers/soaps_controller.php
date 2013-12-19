@@ -324,7 +324,7 @@ class SoapsController extends AppController {
       $songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
 				'conditions' => array(
-          'Song.ArtistText' => $artistText ,
+          'LOWER(Song.ArtistText)' => strtolower($artistText),
           "Song.Sample_FileID != ''",
           "Song.FullLength_FIleID != ''" ,
           'Country.Territory' => $library_territory, 
