@@ -1150,20 +1150,22 @@ function Get_Sales_date($sales_date_array, $country)
                                 //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
                                 //$image = Configure::read('App.Music_Path') . $imageUrl;
                                 ?>
-                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));                      ?>/<?php //echo $psong->ReferenceID;                      ?>/<?php //echo base64_encode($psong->provider_type);                      ?>"><img src="<?php //echo $image;                      ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
+                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));                       ?>/<?php //echo $psong->ReferenceID;                       ?>/<?php //echo base64_encode($psong->provider_type);                       ?>"><img src="<?php //echo $image;                       ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
                                 </div-->
                                 <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
                                 <div class="song" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
                                     <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                    <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
-                                        <?php
-                                        if ($psong->Advisory == 'T')
-                                        {
-                                            echo '<font class="explicit"> (Explicit)</font>';
-                                        }
-                                        //
-                                        ?>
-                                        </span>
+                                    <span>
+                                        <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>">
+                                            <?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
+                                            <?php
+                                            if ($psong->Advisory == 'T')
+                                            {
+                                                echo '<font class="explicit"> (Explicit)</font>';
+                                            }
+                                            ?>
+                                        </a>
+                                    </span>
                                 </div>
                                 <div class="download">
                                     <?php
