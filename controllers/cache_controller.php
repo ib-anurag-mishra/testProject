@@ -388,4 +388,175 @@ class CacheController extends AppController {
             }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
         }
+  
+/**
+  * Function Name : setTopArtist
+  * Function Description : This function sets top artist albums in cache, used in App only
+  */  
+        
+  function setTopArtist(){
+
+    set_time_limit(0);
+    
+    //fetch all libraries
+    $libraryDetails = $this->Library->find('all',array(
+      'fields' => array('id', 'library_territory', 'library_block_explicit_content'),
+      'conditions' => array('library_status' => 'active'),
+      'recursive' => -1
+    ));
+  
+    //loop for library
+    foreach ($libraryDetails AS $key => $libval){  
+    
+      $library_territory = $libval['Library']['library_territory'];
+      
+      if ( (( Cache::read("national".$library_territory)) !== false) && (Cache::read("national".$library_territory) !== null) ) { // checks if nationalTop100 is set
+    
+        //fetches top artist from nationTop100----Start
+        $arrTmp = $arrData = $arrFinal = $arrArtist = array();
+        $arrTmp = Cache::read("national".$library_territory);
+    
+        foreach($arrTmp AS $key => $val){
+          $arrData[] = trim($val['Song']['ArtistText']);
+        }
+
+        $arrFinal = array_count_values($arrData);
+        arsort($arrFinal, SORT_NUMERIC);
+
+        foreach($arrFinal AS $key => $val){
+          $arrArtist[] = $key;
+        }
+        //----------------------------------------End
+
+        //loop for artist
+        foreach($arrArtist AS $key => $artistText){ 
+          
+          $this->Session->write('territory', $library_territory);
+          $this->switchCpuntriesTable();          
+          
+          if(1 == $libval['Library']['library_block_explicit_content']) {
+            $cond = array('Song.Advisory' => 'F');
+          } else  {
+            $cond = "";
+          }
+          
+          //fetches albums ids
+          $songs = array();
+          $songs = $this->Song->find('all', array(
+            'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
+            'conditions' => array(
+              'Song.ArtistText' => $artistText ,
+              "Song.Sample_FileID != ''",
+              "Song.FullLength_FIleID != ''" ,
+              'Country.Territory' => $library_territory, 
+              'Country.DownloadStatus' => 1, 
+              $cond, 
+              'Song.provider_type = Country.provider_type'
+            ),
+            'contain' => array(
+              'Country' => array(
+                'fields' => array(
+                  'Country.Territory'
+                )
+              )
+            ), 
+            'recursive' => 0,
+            'order'=>array('Country.SalesDate DESC')
+          ));
+          
+          $val = '';
+          $val_provider_type = '';
+          
+          foreach($songs as $k => $v){
+            if (empty($val)) {
+              $val .= $v['Song']['ReferenceID'];
+              $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+            } else {
+              $val .= ',' . $v['Song']['ReferenceID'];
+              $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+            }
+          }
+          
+          $condition = array();
+          $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
+          
+/*           if(1 == $libval['Library']['library_block_explicit_content']) {
+            $cond = array('Album.Advisory' => 'F');
+          } else  {
+            $cond = "";
+          } */
+          
+          //fetch album details
+          $albumData = array();
+          $albumData = $this->Album->find('all',array('conditions' =>
+            array('and' =>
+              array(
+                $condition
+              ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+            ),
+            'fields' => array(
+              'Album.ProdID',
+              'Album.Title',
+              'Album.ArtistText',
+              'Album.AlbumTitle',
+              'Album.Artist',
+              'Album.ArtistURL',
+              'Album.Label',
+              'Album.Copyright',
+              'Album.Advisory',
+              'Album.provider_type'
+						),
+            'contain' => array(
+              'Genre' => array(
+                'fields' => array(
+                  'Genre.Genre'
+                  )
+                ),
+              'Files' => array(
+                'fields' => array(
+                  'Files.CdnPath' ,
+                  'Files.SaveAsName',
+                  'Files.SourceURL'
+                ),
+              )
+            ), 
+            'order' => array('FIELD(Album.ProdID, '.$val.') ASC'), 
+            'chk' => 2,
+          ));
+          
+          //sets cache 
+          if (!empty($albumData)) {
+            
+            $artistText = strtolower(str_replace(' ', '_', $artistText));
+            Cache::write("mobile_top_artist_" . $artistText . '_' . $library_territory, $albumData);
+            $this->log("mobile_top_artist_" . $artistText . '_' . $library_territory . 'set successfully', "topartist");
+
+          } else  {
+            
+            $this->log("mobile_top_artist_" . $artistText . '_' . $library_territory . 'failed', "topartist");
+          }
+            
+        }
+    
+      } else {
+        $this->log("national top 100 not set in Cache for territory " . $library_territory, "topartist");
+      }
+
+  
+    }  
+    
+  }
+
+  private function getTextUTF($text) {
+
+    $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+    return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
+  } 
+        
+        
+        
+        
+        
+        
+        
 }
