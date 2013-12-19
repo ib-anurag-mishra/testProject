@@ -445,7 +445,7 @@ class CacheController extends AppController {
           $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
             'conditions' => array(
-              'Song.ArtistText' => $artistText ,
+              'LOWER(Song.ArtistText)' => strtolower($artistText),
               "Song.Sample_FileID != ''",
               "Song.FullLength_FIleID != ''" ,
               'Country.Territory' => $library_territory, 
@@ -480,11 +480,6 @@ class CacheController extends AppController {
           $condition = array();
           $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
           
-/*           if(1 == $libval['Library']['library_block_explicit_content']) {
-            $cond = array('Album.Advisory' => 'F');
-          } else  {
-            $cond = "";
-          } */
           
           //fetch album details
           $albumData = array();

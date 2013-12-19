@@ -303,21 +303,23 @@ class SoapsController extends AppController {
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory', 'library_block_explicit_content'),
       'recursive' => -1
-      )
-    );
+    ));
 
     $library_territory = $libraryDetails['Library']['library_territory'];
-
-    $this->Session->write('territory', $library_territory);
-       
+    $this->Session->write('territory', $library_territory);   
     $this->switchCpuntriesTable();
+      
+    $mem_artistText = strtolower(str_replace(' ', '_', $artistText));
     
-    if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
-			$cond = array('Song.Advisory' => 'F');
-		}
-		else{
-			$cond = "";
-		}
+    if ( (( Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory)) === false) && (Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory) === null) ) {
+    
+    
+      if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
+        $cond = array('Song.Advisory' => 'F');
+      }
+      else{
+        $cond = "";
+      }
   
       $songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
@@ -339,22 +341,26 @@ class SoapsController extends AppController {
         ), 
         'recursive' => 0 
       ));
-
-    $val = '';
-		$val_provider_type = '';
-
-		foreach($songs as $k => $v){
-      $val .= $v['Song']['ReferenceID'].",";
-			$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
-		}
+    
+      $val = '';
+      $val_provider_type = '';
+          
+      foreach($songs as $k => $v){
+        if (empty($val)) {
+          $val .= $v['Song']['ReferenceID'];
+          $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+        } else {
+          $val .= ',' . $v['Song']['ReferenceID'];
+          $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+        }
+      }
       
-    $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
+      $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
     		
-    $albumData = $this->Album->find('all',array('conditions' =>
+      $albumData = $this->Album->find('all',array('conditions' =>
 					array('and' =>
 						array(
-							array('Album.provider_type = Country.provider_type'),
-						    $condition
+              $condition
 						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
@@ -375,11 +381,6 @@ class SoapsController extends AppController {
 								'Genre.Genre'
 								)
 							),
-						'Country' => array(
-							'fields' => array(
-								'Country.Territory'
-								)
-							),
 						'Files' => array(
 							'fields' => array(
 								'Files.CdnPath' ,
@@ -387,35 +388,48 @@ class SoapsController extends AppController {
 								'Files.SourceURL'
 							),
 						)
-					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2, 'limit' => $startFrom . ', ' . $recordCount 
-				));
+					), 
+          'order' => array('Country.SalesDate' => 'desc'), 
+          'chk' => 2 
+		  ));
       
-            
-
+      if(empty($albumData)) {
+        
+        throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
+      } else {
+        
+        Cache::write('mobile_top_artist_' . $mem_artistText . '_' . $library_territory, $albumData);
+      }
+    } 
     
-          
+    $albumData = Cache::read('mobile_top_artist_' . $mem_artistText . '_' . $library_territory);
+    
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
     }
+      
+      
+    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
 
-    foreach($albumData AS $key => $val) {
+          $obj = new AlbumDataByArtistType;
 
-        $obj = new AlbumDataByArtistType;
+          $obj->ProdID         = $this->getProductAutoID($albumData[$cnt]['Album']['ProdID'], $albumData[$cnt]['Album']['provider_type']);
+          $obj->Genre          = $this->getTextUTF($albumData[$cnt]['Genre']['Genre']);
+          $obj->AlbumTitle     = $this->getTextUTF($albumData[$cnt]['Album']['AlbumTitle']);
+          $obj->Title          = $this->getTextUTF($albumData[$cnt]['Album']['Title']);
+          $obj->Label          = $this->getTextUTF($albumData[$cnt]['Album']['Label']);
 
-        $obj->ProdID         = $this->getProductAutoID($val['Album']['ProdID'], $val['Album']['provider_type']);
-        $obj->Genre          = $this->getTextUTF($val['Genre']['Genre']);
-        $obj->AlbumTitle     = $this->getTextUTF($val['Album']['AlbumTitle']);
-        $obj->Title          = $this->getTextUTF($val['Album']['Title']);
-        $obj->Label          = $this->getTextUTF($val['Album']['Label']);
+          $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $albumData[$cnt]['Files']['CdnPath']."/".$albumData[$cnt]['Files']['SourceURL']);
+          $fileURL = Configure::read('App.Music_Path').$fileURL;
+          $obj->FileURL = $fileURL;
 
-        $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Files']['CdnPath']."/".$val['Files']['SourceURL']);
-        $fileURL = Configure::read('App.Music_Path').$fileURL;
-        $obj->FileURL = $fileURL;
+          if('T' == $albumData[$cnt]['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
+          
+          $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'AlbumDataByArtistType');
 
-        if('T' == $val['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
-        
-        $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'AlbumDataByArtistType');
     }
+    
+    
     
     return new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfAlbumDataByArtistType');
 
