@@ -1030,7 +1030,7 @@ function Get_Sales_date($sales_date_array, $country)
                 <span class="download">Download</span>
             </section>
 
-<div class="tracklist-shadow-container">
+            <div class="tracklist-shadow-container">
                 <div class="tracklist-scrollable">
                     <?php
                     if (!empty($songs))
@@ -1150,7 +1150,7 @@ function Get_Sales_date($sales_date_array, $country)
                                 //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
                                 //$image = Configure::read('App.Music_Path') . $imageUrl;
                                 ?>
-                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));                 ?>/<?php //echo $psong->ReferenceID;                 ?>/<?php //echo base64_encode($psong->provider_type);                 ?>"><img src="<?php //echo $image;                 ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
+                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));                      ?>/<?php //echo $psong->ReferenceID;                      ?>/<?php //echo base64_encode($psong->provider_type);                      ?>"><img src="<?php //echo $image;                      ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
                                 </div-->
                                 <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
                                 <div class="song" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
@@ -1291,6 +1291,212 @@ function Get_Sales_date($sales_date_array, $country)
                 ?>
             </div>
 
+        </section>
+        <?php
+    }
+    else
+    {
+        ?>
+        <!-- for the videos -->
+        <section class="tracklist-container">
+            <section class="video-tracklist-header clearfix">
+                <span class="artist">Artist</span>
+                <span class="album">Album</span>
+                <span class="video-filter-button">Video</span>
+                <span class="download">Download</span>
+            </section>
+
+            <div class="video-tracklist-shadow-container">
+                <div class="tracklist-scrollable">
+                    <?php
+                    $b = 1;
+                    foreach ($songs as $psong)
+                    {
+                        ?>	
+                        <div class="tracklist">
+                            <?php
+                            if ($this->Session->read("patron"))
+                            {
+                                $style = '';
+                                $styleSong = '';
+                            }
+                            else
+                            {
+                                $style = 'style="left:10px"';
+                                $styleSong = "style='left:440px'";
+                            }
+                            ?>
+                            <div class="artist" <?php echo $style; ?> >
+                                <?php
+                                echo $html->link(str_replace('"', '', $this->getTextEncode(truncate_text($psong->ArtistText, 20, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText)));
+                                ?>
+                            </div>
+
+                            <?php
+                            if ($this->Session->read("patron"))
+                            {
+                                ?>
+                                <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+                                <?php
+                            }
+                            ?>
+                            <div class="wishlist-popover">	
+                                <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($psong->ProdID);
+                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $psong->ProdID, $psong->provider_type);
+                                    ?>
+                                    <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+                                    <?php
+                                }
+                                ?>                                
+                            </div>
+
+                            <!--
+                                <div class="cover-art">
+                                        <img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
+                                </div>
+                            -->
+                            <div class="album">
+                                <a href="javascript:void(0)" title="<?php echo $this->getTextEncode($psong->Title); ?>" >
+                                    <?php echo truncate_text($this->getTextEncode($psong->Title), 25, $this); ?>
+                                </a>
+                            </div>
+
+                            <?php
+                            //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
+                            //$image = Configure::read('App.Music_Path') . $imageUrl;
+                            ?>
+
+                            <div class="song" <?php echo $styleSong; ?>>                          
+                                <a href="/videos/details/<?php echo $psong->ProdID; ?>" 
+                                   title="<?php echo $this->getTextEncode($psong->Title); ?>">
+                                       <?php echo $this->getTextEncode($psong->VideoTitle); ?>
+                                </a>
+                            </div>
+
+                            <div class="download">
+                                <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                    $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
+                                    if ($sales_date <= date('Y-m-d'))
+                                    {
+                                        $productInfo = $mvideo->getDownloadData($psong->ProdID, $psong->provider_type);
+                                        $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                        $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+                                        $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+                                        if ($libraryDownload == '1' && $patronDownload == '1')
+                                        {
+                                            if ($psong->status != 'avail')
+                                            {
+                                                ?>
+                                                <p>
+                                                <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
+                                                    <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
+                                                    <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
+                                                    <span class="beforeClick" id="download_video_<?php echo $psong->ProdID; ?>">
+                                                        <![if !IE]>
+                                                        <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up two of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistVideoDownloadOthers("<?php echo $psong->ProdID; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $psong->provider_type; ?>");'><?php __('Download'); ?></a>
+                                                        <![endif]>
+                                                        <!--[if IE]>
+                                                               <a title="IMPORTANT: Please note that once you press `Download Now` you have used up two of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistVideoDownloadIE("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>");' href="<?php echo trim($finalVideoUrl); ?>"><?php __('Download'); ?></a>
+                                                        <![endif]-->
+                                                    </span>
+                                                    <span class="afterClick" id="vdownloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
+                                                    <span id="vdownload_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                                </form>
+                                                </p>
+                                                <?php
+                                            }
+                                            else
+                                            {
+                                                ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __("Downloaded"); ?></a><?php
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if ($libraryDownload != '1')
+                                            {
+                                                $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                                                $wishlistCount = $wishlist->getWishlistCount();
+                                                if ($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount)
+                                                {
+                                                    ?>
+                                                    <p><?php __("Limit Met"); ?></p>
+                                                    <?php
+                                                }
+                                                else
+                                                {
+                                                    $wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
+                                                    if ($wishlistInfo == 'Added To Wishlist')
+                                                    {
+                                                        ?>
+                                                        <p><?php __("Added To Wishlist"); ?></p>
+                                                        <?php
+                                                    }
+                                                    else
+                                                    {
+                                                        ?>
+                                                        <p>
+                                                            <span class="beforeClick" id="wishlist<?php echo $psong->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $psong->ProdID; ?>", "<?php echo $song->provider_type; ?>");'><?php __("Add To Wishlist"); ?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                                            <span class="afterClick" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
+
+                                                        </p>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                <p><?php __("Limit Met"); ?></p>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <span title='<?php __("Coming Soon"); ?> ( <?php echo date("F d Y", strtotime($sales_date)); ?> )'><?php __("Coming Soon"); ?></span>
+                                        <?php
+                                    }
+                                }
+                                else
+                                {
+                                    $checklib = substr($_SERVER['HTTP_HOST'], 0, strpos($_SERVER['HTTP_HOST'], '.'));
+                                    if ($checklib != 'www' && $checklib != 'freegal' && $checklib != '50')
+                                    {
+                                        echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'), array('class' => 'btn'));
+                                    }
+                                    else
+                                    {
+                                        echo $this->Html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'), array('class' => 'btn'));
+                                    }
+                                }
+                                ?>
+                            </div>
+
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <div class="paging">
+                <?php
+                if (isset($type))
+                {
+                    $keyword = "?q=" . $keyword . "&type=" . $type;
+                }
+                ?>
+                <?php
+                $keyword = $keyword . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 7, $keyword);
+                ?>
+            </div>
         </section>
         <?php
     }
