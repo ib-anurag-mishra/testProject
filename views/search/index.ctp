@@ -1030,17 +1030,16 @@ function Get_Sales_date($sales_date_array, $country)
                 <span class="download">Download</span>
             </section>
 
-
-            <div class="tracklist-shadow-container">
+<div class="tracklist-shadow-container">
                 <div class="tracklist-scrollable">
                     <?php
                     if (!empty($songs))
                     {
                         $i = 1;
                         $country = $this->Session->read('territory');
-
                         foreach ($songs as $psong)
                         {
+
                             $downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus, $psong->TerritorySalesDate, $this->Session->read('territory'));
                             $StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus, $psong->TerritoryStreamingSalesDate, $this->Session->read('territory'));
 
@@ -1050,8 +1049,9 @@ function Get_Sales_date($sales_date_array, $country)
                                 continue;
                             }
                             ?>
-
                             <div class="tracklist">
+                                <!--<a href="#" class="preview"></a>-->
+
                                 <?php
                                 if ($this->Session->read('library_type') == 2)
                                 {
@@ -1066,8 +1066,10 @@ function Get_Sales_date($sales_date_array, $country)
                                         $psong->totalseconds = $this->Queue->getSeconds($psong->FullLength_Duration);
                                     }
                                 }
+                                ?>
 
 
+                                <?php
                                 if ($this->Session->read("patron"))
                                 {
                                     if ($this->Session->read('library_type') == 2 && ($StreamFlag === 1))
@@ -1090,7 +1092,6 @@ function Get_Sales_date($sales_date_array, $country)
                                     }
                                 }
 
-
                                 if ($this->Session->read("patron"))
                                 {
                                     $style = '';
@@ -1102,13 +1103,7 @@ function Get_Sales_date($sales_date_array, $country)
                                     $styleSong = "style='left:570px'";
                                 }
                                 ?>
-
-                                <div class="artist" <?php echo $style; ?> >
-                                    <?php
-                                    echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText)));
-                                    ?>
-                                </div>
-
+                                <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></div>
                                 <?php
                                 if ($this->Session->read("patron"))
                                 {
@@ -1117,14 +1112,11 @@ function Get_Sales_date($sales_date_array, $country)
                                     <?php
                                 }
                                 ?>
-                                <div class="composer">
-                                    <a style="text-decoration:none;" 
-                                       title='<?php echo str_replace('"', '', $this->getTextEncode($psong->Composer)); ?>'>
-                                           <?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?>
-                                    </a>
-                                </div>
+                                <div class="composer"><a style="text-decoration:none;" title='<?php echo str_replace('"', '', $this->getTextEncode($psong->Composer)); ?>'><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
+
 
                                 <div class="wishlist-popover">	
+
                                     <?php
                                     if ($this->Session->read("patron") && $this->Session->read('library_type') == 2)
                                     {
@@ -1135,40 +1127,44 @@ function Get_Sales_date($sales_date_array, $country)
                                             echo $this->Queue->getQueuesList($this->Session->read('patron'), $psong->ProdID, $psong->provider_type, $psong->ReferenceID, $psong->provider_type);
                                             ?>
                                             <a class="add-to-playlist" href="javascript:void(0);">Add To Playlist</a>
-                                            <?php
-                                        }
-                                    }
-
+                                        <?php } ?>
+                                    <?php } ?>
+                                    <?php
                                     if ($this->Session->read("patron"))
                                     {
                                         $wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
                                         echo $wishlist->getWishListMarkup($wishlistInfo, $psong->ProdID, $psong->provider_type);
+                                        ?>
+                                        <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+                                        <?php
                                     }
                                     ?>
+                                    <!-- <div class="share clearfix">
+                                        <p>Share via</p>
+                                        <a class="facebook" href="#"></a>
+                                        <a class="twitter" href="#"></a>
+                                    </div> -->
                                 </div>
-
-                                <div class="album">
-                                    <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" 
-                                       title="<?php echo $this->getTextEncode($psong->Title); ?>" >
-                                           <?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?>
-                                    </a>
-                                </div>
-
+                                <!--div class="cover-art">
+                                <?php
+                                //$imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
+                                //$image = Configure::read('App.Music_Path') . $imageUrl;
+                                ?>
+                                    <a href="/artists/view/<?php //echo str_replace('/', '@', base64_encode($psong->ArtistText));                 ?>/<?php //echo $psong->ReferenceID;                 ?>/<?php //echo base64_encode($psong->provider_type);                 ?>"><img src="<?php //echo $image;                 ?>" width="27" height="27" /></a> <?php /* alt="<?php echo $psong->SongTitle; ?>" */ ?>
+                                </div-->
+                                <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
                                 <div class="song" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
                                     <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                    <span>
-                                        <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>">
-                                            <?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
-                                            <?php
-                                            if ($psong->Advisory == 'T')
-                                            {
-                                                echo '<font class="explicit"> (Explicit)</font>';
-                                            }
-                                            ?>
-                                        </a>
-                                    </span>
+                                    <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
+                                        <?php
+                                        if ($psong->Advisory == 'T')
+                                        {
+                                            echo '<font class="explicit"> (Explicit)</font>';
+                                        }
+                                        //
+                                        ?>
+                                        </span>
                                 </div>
-
                                 <div class="download">
                                     <?php
                                     if ($this->Session->read("patron"))
@@ -1196,20 +1192,15 @@ function Get_Sales_date($sales_date_array, $country)
                                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download'); ?></a>
                                                             <![endif]-->
                                                         </span>
-                                                        <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left">
-                                                            <?php __("Please Wait..."); ?></span>
-                                                        <span id="wishlist_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;">
-                                                            <?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                                        <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
+                                                        <span id="wishlist_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                                                     </form>
                                                     </p>
                                                     <?php
                                                 }
                                                 else
                                                 {
-                                                    ?>
-                                                    <a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'>
-                                                        <?php __("Downloaded"); ?></a>
-                                                    <?php
+                                                    ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __("Downloaded"); ?></a><?php
                                                 }
                                             }
                                             else
@@ -1237,14 +1228,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                         {
                                                             ?>
                                                             <p>
-                                                                <span class="beforeClick" id="wishlist<?php echo $psong->ProdID; ?>">
-                                                                    <a href='javascript:void(0);' 
-                                                                       onclick='Javascript: addToWishlist("<?php echo $psong->ProdID; ?>", "<?php echo $song->provider_type; ?>");'>
-                                                                        <?php __("Add To Wishlist"); ?></a>
-                                                                </span>
-                                                                <span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;">
-                                                                    <?php echo $html->image('ajax-loader_black.gif'); ?>
-                                                                </span>
+                                                                <span class="beforeClick" id="wishlist<?php echo $psong->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $psong->ProdID; ?>", "<?php echo $song->provider_type; ?>");'><?php __("Add To Wishlist"); ?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                                                                 <span class="afterClick" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
 
                                                             </p>
@@ -1282,15 +1266,17 @@ function Get_Sales_date($sales_date_array, $country)
                                     ?>
                                 </div>
 
+
+
+
                             </div>
-                        </div>
-                        <?php
-                        $i++;
+                            <?php
+                            $i++;
+                        }
                     }
-                }
-                ?>
+                    ?>
+                </div>
             </div>
-    
 
             <div class="paging">
                 <?php
