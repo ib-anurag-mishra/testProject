@@ -10,7 +10,7 @@
     
     <div class="col-container clearfix">
         <div class="col-1">
-            <img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" />
+            <img src="/app/webroot/img/queue-details/generic-album-cover.jpg" width="155" height="155" alt="" />
         </div>
         <div class="col-2">
             <div class="queue-name">
@@ -112,7 +112,7 @@
                             if (!empty($value['Songs']['ProdID']))
                             {
                                 ?>
-                                <div id="play_item_<?php echo $i; ?>"style="display:none;">
+                                <div id="play_item_<?php echo $i; ?>" style="display:none;">
                                     <?php echo $value['Songs']['ProdID'] . ',' . $value['Songs']['provider_type']; ?>
                                 </div>
                                 <?php
