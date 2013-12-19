@@ -410,7 +410,7 @@ class SoapsController extends AppController {
       
       
     for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-
+      if(!(empty($albumData[$cnt]))) {
           $obj = new AlbumDataByArtistType;
 
           $obj->ProdID         = $this->getProductAutoID($albumData[$cnt]['Album']['ProdID'], $albumData[$cnt]['Album']['provider_type']);
@@ -426,7 +426,7 @@ class SoapsController extends AppController {
           if('T' == $albumData[$cnt]['Album']['Advisory']) { $obj->AlbumTitle = $obj->AlbumTitle.' (Explicit)'; $obj->Title = $obj->Title.' (Explicit)'; }
           
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'AlbumDataByArtistType');
-
+      }
     }
     
     
