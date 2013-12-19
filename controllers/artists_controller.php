@@ -1646,7 +1646,7 @@ Class ArtistsController extends AppController
 
 
             $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
-
+             
             $this->layout = 'home';
             $this->set('artisttext',base64_decode($id));
             $this->set('genre',base64_decode($album));
@@ -1703,7 +1703,7 @@ Class ArtistsController extends AppController
                                     ),'order'=>array('FIELD(Album.ProdID, '.$val.') ASC'), 'cache' => 'yes', 'chk' => 2
                             );
             
-                      
+                  
             if($this->Session->read('block') == 'yes') {
                 
                                
@@ -1738,12 +1738,14 @@ Class ArtistsController extends AppController
             }
             $decodedId = trim(base64_decode($id));
             $country = $this->Session->read('territory');
-            
+           
             if(!empty($country)){
                 if ( ((Cache::read("videolist_".$country."_".$decodedId)) === false)  || (Cache::read("videolist_".$country."_".$decodedId) === null) ) {
                    
-                    $artistVideoList = $this->Common->getAllVideoByArtist($country,$decodedId);
                     
+                    
+                    $artistVideoList = $this->Common->getAllVideoByArtist($country,$decodedId);
+                   
                     Cache::write("videolist_".$country."_".$decodedId, $artistVideoList);  
 
                 }else{
