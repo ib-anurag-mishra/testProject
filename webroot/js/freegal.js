@@ -781,7 +781,7 @@ function addToWishlistVideo(prodId, providerType)
 
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(textStatus);
+            //console.log(textStatus);
             return false;
         }
     });
@@ -835,7 +835,7 @@ function addToWishlist_top(prodId, providerType)
 
 function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
 {
-    console.log('wishlistDownloadIE called');
+    //console.log('wishlistDownloadIE called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
@@ -881,7 +881,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
 
 function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
 {
-    //console.log('wishlistDownloadIE called');
+    ////console.log('wishlistDownloadIE called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
@@ -1174,7 +1174,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 
 function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
 {
-    console.log('wishlistDownloadOthers called');
+    //console.log('wishlistDownloadOthers called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -1228,7 +1228,7 @@ function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
 
 function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
 {
-    console.log('wishlistDownloadOthers called');
+    //console.log('wishlistDownloadOthers called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -1615,8 +1615,8 @@ function addToAlbumTest(queueID, addTo)
             addToQueueResponse(response, type);
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            // log the error to the console
-            console.log(
+            // log the error to the //console
+            //console.log(
                     "The following error occured: " +
                     textStatus, errorThrown);
         }
@@ -2002,7 +2002,7 @@ function removeSong(pdId, divId) {
 
 
 function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType, playlistId) {
-    console.log('load song contains');
+    //console.log('load song contains');
     playlistId = (playlistId === undefined) ? 0 : playlistId;
     var newSong = [
         {
@@ -2017,7 +2017,7 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
         }
     ];
 
-    //console.log(newSong);
+    ////console.log(newSong);
     pushSongs(newSong);
 
 }
@@ -2241,8 +2241,8 @@ function showHideGrid(varType) {
                     return false;
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    // log the error to the console
-                    console.log(
+                    // log the error to the //console
+                    //console.log(
                             "The following error occured: " +
                             textStatus, errorThrown
                             );
