@@ -131,6 +131,7 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 			{
 				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
 				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+                                sendFile($src, $dst);
 				sendReportEmail($typeReport, $dst);
 				return true;
 			}
@@ -213,7 +214,8 @@ function sendFile($src,$dst)
 	$SFTP_PORT = SFTP_PORT;
 	$SFTP_USER = SFTP_USER;
 	$SFTP_PASS = SFTP_PASS;
-	
+	$CdnPath = '/published/freegalmusic_reports/ioda_reports/';
+        
 	if(!($con = ssh2_connect($SFTP_HOST,$SFTP_PORT)))
 	{
 		echo "Not Able to Establish Connection\n";
@@ -227,7 +229,7 @@ function sendFile($src,$dst)
 		else
 		{
 			$sftp = ssh2_sftp($con);
-			if(!ssh2_scp_send($con, $src, $dst, 0644)){
+			if(!ssh2_scp_send($con, $src, $CdnPath.$dst, 0644)){
 				echo "error\n";
 			}
 			else
