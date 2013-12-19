@@ -190,9 +190,10 @@ class SearchController extends AppController
             }*/
             
             $downloadVariArr = $this->Session->read('downloadVariArray');
-            print_r($downloadVariArr); die;
+            print_r($downloadVariArr);
             foreach($songs as $key => $song){
                 $checkDownloadVar =  $songs->ProdID.'~'.$songs->provider_type;
+                echo $checkDownloadVar."<br/>";
                 if (in_array($checkDownloadVar, $downloadVariArr)) 
                 {
                     $songs[$key]->status = 'avail';    
@@ -202,7 +203,8 @@ class SearchController extends AppController
                     $songs[$key]->status = 'not';
                 }
             }
-            
+            print_r($songs);
+            die;
             /*echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');*/
 
