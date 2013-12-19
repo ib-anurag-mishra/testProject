@@ -192,7 +192,7 @@ class SearchController extends AppController
             $downloadVariArr = $this->Session->read('downloadVariArray');
             print_r($downloadVariArr);
             foreach($songs as $key => $song){
-                $checkDownloadVar =  $songs->ProdID.'~'.$songs->provider_type;
+                $checkDownloadVar =  $song->ProdID.'~'.$song->provider_type;
                 echo $checkDownloadVar."<br/>";
                 if (in_array($checkDownloadVar, $downloadVariArr)) 
                 {
