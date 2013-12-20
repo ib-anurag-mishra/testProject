@@ -166,11 +166,12 @@ class SearchController extends AppController
            
             /*echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');*/
-            $songArray = array();
+            /*$songArray = array();
             foreach ($songs as $key => $song)
             {
                 $songArray[] = $song->ProdID;
             }
+            
             $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
             
             foreach($songs as $key => $song){
@@ -184,6 +185,19 @@ class SearchController extends AppController
                     }
                 }
                 if($set == 0){
+                    $songs[$key]->status = 'not';
+                }
+            }*/
+            
+            $downloadVariArr = $this->Session->read('downloadVariArray');
+            foreach($songs as $key => $song){
+                $checkDownloadVar =  $song->ProdID.'~'.$song->provider_type;
+                if (in_array($checkDownloadVar, $downloadVariArr)) 
+                {
+                    $songs[$key]->status = 'avail';    
+                }
+                else
+                {
                     $songs[$key]->status = 'not';
                 }
             }
