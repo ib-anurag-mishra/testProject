@@ -956,7 +956,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -973,7 +973,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+                //location.reload();
                 return false;
             }
         },
@@ -999,7 +999,7 @@ function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your have already downloaded this song twice.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1051,7 +1051,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
             {
                 alert("Your download limit has exceeded.");
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1098,7 +1098,7 @@ function historyDownloadVideo(id, libID, patronID)
             if (msg === 'error')
             {
                 alert("Your have already downloaded this song twice.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1147,7 +1147,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
             {
                 alert("Your download limit has exceeded.");
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
