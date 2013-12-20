@@ -915,10 +915,10 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 
-                var a = document.getElementById('song_download_' + prodId);
-                a.href = unescape(downloadUsedArr[2]);
-                //window.location = unescape(downloadUsedArr[2]);
-                
+//                var a = document.getElementById('song_download_' + prodId);
+//                a.href = unescape(downloadUsedArr[2]);
+                toDownload( unescape(downloadUsedArr[2])) ;
+                return false ;
             }
             else
             {
@@ -931,6 +931,11 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
         }
     });
     return false;
+}
+
+function toDownload(urlToDownload )
+{
+    window.location = urlToDownload;
 }
 
 function wishlistVideoDownloadIE(prodId, id, provider)
