@@ -851,7 +851,7 @@ function wishlistDownloadIE(prodId, id, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+              //  location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -868,7 +868,7 @@ function wishlistDownloadIE(prodId, id, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+               // location.reload();
                 return false;
             }
         },
@@ -897,7 +897,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -920,7 +920,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+                //location.reload();
                 return false;
             }
         },
@@ -1045,7 +1045,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
             {
                 alert("Your download limit has exceeded.");
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                location.reload();
+              //  location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1067,7 +1067,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+               // location.reload();
                 return false;
             }
         },
@@ -1194,7 +1194,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1216,7 +1216,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+               // location.reload();
                 return false;
             }
         },
@@ -1248,7 +1248,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+               // location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1270,7 +1270,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+                //location.reload();
                 return false;
             }
         },
