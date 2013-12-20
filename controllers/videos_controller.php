@@ -826,8 +826,8 @@ STR;
             }
             
             
-//            if ($TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']) === false)
-//            {
+            if ($TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']) === false)
+            {
                echo $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID,Video.Advisory, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
                             `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
                             LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
@@ -842,11 +842,11 @@ STR;
                     $TopVideoGenreData[$key]['videoImage'] = $videoImage;
                 }
                 Cache::write("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre'], $TopVideoGenreData);
-//            }
-//            else
-//            {
-//                $TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']);
-//            }
+            }
+            else
+            {
+                $TopVideoGenreData = Cache::read("top_videos_genre_" . $territory . '_' . $VideosData[0]['Video']['Genre']);
+            }
             //echo "<pre>"; print_r($TopVideoGenreData); die;
         }
         else
