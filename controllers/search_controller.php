@@ -383,11 +383,12 @@ class SearchController extends AppController
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'album', 18, '1');
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'artist', 18, '1');
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'composer', 18, '1');
-                $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'genre', 18, '1');
-                $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1');
+                $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'genre', 18, '1'); // to be confirmed to remove
+                $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1'); // to be confirmed to remove
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'song', 18, '1');
 
                 // formats array
+                print_r($arr_data); die;
                 foreach ($arr_data as $key1 => $val1)
                 {
                     foreach ($val1 as $key2 => $val2)
