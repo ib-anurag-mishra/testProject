@@ -914,7 +914,10 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                window.location = unescape(downloadUsedArr[2]);
+                
+                var a = document.getElementById('song_download_' + prodId);
+                a.href = unescape(downloadUsedArr[2]);
+                //window.location = unescape(downloadUsedArr[2]);
                 
             }
             else
