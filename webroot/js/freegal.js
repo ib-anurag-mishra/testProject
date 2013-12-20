@@ -852,7 +852,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+               // location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -869,7 +869,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+               // location.reload();
                 return false;
             }
         },
@@ -900,7 +900,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -916,16 +916,14 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 
                 var downloadUsedArr = response.split('|');
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                
-//                var a = document.getElementById('song_download_' + prodId);
-//                a.href = unescape(downloadUsedArr[2]);
+              
                 toDownload( unescape(downloadUsedArr[2])) ;
                 return false ;
             }
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+                //.reload();
                 return false;
             }
         },
@@ -1203,7 +1201,7 @@ function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1225,7 +1223,7 @@ function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+                //location.reload();
                 return false;
             }
         },
@@ -1257,7 +1255,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+               // location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1279,7 +1277,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                location.reload();
+               // location.reload();
                 return false;
             }
         },
