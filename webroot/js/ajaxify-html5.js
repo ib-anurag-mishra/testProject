@@ -208,7 +208,7 @@
 
                     if (relativeUrl === 'homes/us_top_10')
                     {
-                        $('#topmylib07').addClass('active');
+                        $('.topmylib07').addClass('active');
                         $('#topmostpopuler07').addClass('active');
                         $('#ustoplib07').addClass('active');
                     }
@@ -268,13 +268,13 @@
                     //$body.removeClass('loader');
                     //$.getScript(webroot + 'css/styles.css');
                     //$.getScript(webroot + 'css/freegal_styles.css');
-
                     var scriptPath = document.getElementById('Scripts_Path').value;
                     $.getScript(scriptPath + '/js/freegal.js');
                     $.getScript(scriptPath + '/js/site.js');
 
                     //$.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(scriptPath + '/js/recent-downloads.js');
+                    //$.getScript(webroot + 'js/search-results.js');
 
 
                 },
