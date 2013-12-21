@@ -52,7 +52,7 @@
                     'jquery.autocomplete',
                     'colorbox',
                 )
-        );*/
+        );
 
 
 
