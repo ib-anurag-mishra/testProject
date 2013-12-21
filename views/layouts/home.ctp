@@ -5,8 +5,14 @@
 
         <?php
         echo $this->Html->charset();
-        echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
+        //echo $this->Html->meta(array('http-equiv' => "X-UA-Compatible", 'content' => "IE=edge,chrome=1"));
+
         echo $this->Html->meta('icon');
+
+        if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
+        {
+            header('X-UA-Compatible: IE=edge,chrome=1');
+        }
         ?>
 
         <title>
@@ -31,20 +37,16 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>
+<!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
         <!--<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>   
-        
-        <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/freegal_styles.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/jquery.autocomplete.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.Script') ?>/css/colorbox.css" />
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
 
         <?php
-       /* echo $this->Html->css(
+        echo $this->Html->css(
                 array(
                     'freegal_styles',
                     'jquery.autocomplete',
@@ -57,6 +59,7 @@
         echo $javascript->link(
                 array(                    
                     'freegal',
+                    'site'
                 )
         );
         
@@ -113,7 +116,7 @@
                     var newsRelease07 = $('#newsRelease07');
                     var genre07 = $('#genre07');
                     var faq07 = $('#faq07');
-                    var topmylib07 = $('#topmylib07');
+                    var topmylib07 = $('.topmylib07');
                     var topustop07 = $('#topustop07');
                     var topmostpopuler07 = $('#topmostpopuler07');
 
@@ -635,7 +638,16 @@
             #newly_added a.first { display: block }
 
 
+            .player {
 
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                height: 100px;
+                overflow: hidden;
+
+
+            }
         </style>
 
 
@@ -644,7 +656,7 @@
         <?php
         if ($this->params['action'] != 'aboutus')
         {
-            echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err"), false);
+            echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0; url=" . $this->webroot . "homes/aboutus/js_err"), false);
         }
         ?>
         </noscript>
@@ -860,5 +872,6 @@
             <?php echo $this->element('footer'); ?>
 
         </div>
-    </body>
+    </div> <!-- body - background -->
+</body>
 </html>
