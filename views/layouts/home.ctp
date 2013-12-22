@@ -58,7 +58,7 @@
 
         echo $javascript->link(
                 array(                    
-                    'freegal','ajaxify-html5.js', 'site?num=100000'
+                    'freegal','ajaxify-html5.js', 'site.js?num=100000'
                 )
         );
         
