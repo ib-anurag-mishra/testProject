@@ -1,4 +1,4 @@
-w<section class="my-top-100-page">
+<section class="my-top-100-page">
 
     <div class="breadcrumbs">
         <?php
