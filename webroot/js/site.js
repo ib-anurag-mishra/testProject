@@ -164,7 +164,7 @@ $('document').ready(function()
 
     });
 
-
+	/*
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
         //$('.playlist-options').addClass('active');
@@ -174,6 +174,7 @@ $('document').ready(function()
         //console.log('add to playlist entered');		
         //$('.playlist-options').removeClass('active');
     });
+    */
     
     $(document).on('mouseenter','.add-to-playlist',function(){
 	    
