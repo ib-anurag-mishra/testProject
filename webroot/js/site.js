@@ -589,6 +589,7 @@ $('document').ready(function()
 
         //$('.wishlist-popover').removeClass('active');
 
+		/*
         if ($(this).next('.wishlist-popover').hasClass('active')) {
             $(this).next('.wishlist-popover').removeClass('active');
             $(this).find('.add-to-playlist-button').css({opacity: .5});
@@ -596,6 +597,7 @@ $('document').ready(function()
 
             $(this).next('.wishlist-popover').addClass('active');
         }
+        */
 
         return false;
     });
