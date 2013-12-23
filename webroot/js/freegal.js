@@ -833,15 +833,14 @@ function addToWishlist_top(prodId, providerType)
     return false;
 }
 
-function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
+function wishlistDownloadIE(prodId, id, provider)
 {
-    //console.log('wishlistDownloadIE called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
     document.getElementById('downloading_' + prodId).style.display = 'block';
     document.getElementById('wishlist_song_' + prodId).style.display = 'none';
-    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
     id = prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
@@ -852,7 +851,7 @@ function wishlistDownloadIE(prodId, id, provider, CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-               // location.reload();
+              //  location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1180,18 +1179,17 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 }
 
 
-function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
+function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, downloadUrl3, provider)
 {
-    console.log('wishlistDownloadOthers called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
     document.getElementById('wishlist_song_' + prodId).style.display = 'none';
     document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
-//    var finalURL = downloadUrl1;
-//    finalURL += downloadUrl2;
-//    finalURL += downloadUrl3;
-    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
+    var finalURL = downloadUrl1;
+    finalURL += downloadUrl2;
+    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
     id = prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
@@ -1217,14 +1215,14 @@ function wishlistDownloadOthers(prodId, id, CdnPath, SaveAsName, provider)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                location.href = unescape(downloadUsedArr[2]);
+                location.href = unescape(finalURL);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
             }
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                //location.reload();
+               // location.reload();
                 return false;
             }
         },
