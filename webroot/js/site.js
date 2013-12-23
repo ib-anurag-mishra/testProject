@@ -167,12 +167,17 @@ $('document').ready(function()
 
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
-        $('.playlist-options').addClass('active');
+        //$('.playlist-options').addClass('active');
     });
     
     $('.add-to-playlist').on('mouseleave', function() {
         //console.log('add to playlist entered');		
         //$('.playlist-options').removeClass('active');
+    });
+    
+    $(document).on('mouseenter','.add-to-playlist',function(){
+	    
+	    $('.playlist-options').addClass('active');
     });
     
     $(document).on('mouseleave','.wishlist-popover',function() {
