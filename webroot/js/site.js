@@ -199,12 +199,12 @@ $('document').ready(function()
         }
     });
     */
-
+	/*
     $('.playlist-options').on('mouseleave', function() {
 
         $('.playlist-options').removeClass('active');
     });
-    
+    */
     
 
     
