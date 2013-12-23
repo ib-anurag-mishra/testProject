@@ -1181,7 +1181,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 
 function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, downloadUrl3, provider)
 {
-    alert("prodId:"+prodId+"id: "+id+"downloadUrl1: "+downloadUrl1+"downloadUrl2: "+downloadUrl2+"downloadUrl3: "+downloadUrl3+"provider: "+provider);
+    //alert("prodId:"+prodId+"id: "+id+"downloadUrl1: "+downloadUrl1+"downloadUrl2: "+downloadUrl2+"downloadUrl3: "+downloadUrl3+"provider: "+provider);
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
