@@ -165,7 +165,7 @@ $('document').ready(function()
     });
 
 	
-    $('.add-to-playlist').on('mouseenter', function() {
+    $(document).on('mouseenter','.add-to-playlist', function() {
         //console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
         console.log('entered');
@@ -178,7 +178,7 @@ $('document').ready(function()
     });
 	*/
 	
-	$('.add-to-playlist').on('mouseleave', function() {
+	$(document).on('mouseleave', '.add-to-playlist',function() {
 		console.log('leave');
     });
     
