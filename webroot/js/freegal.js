@@ -1181,6 +1181,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 
 function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, downloadUrl3, provider)
 {
+    alert("prodId:"+prodId+"id: "+id+"downloadUrl1: "+downloadUrl1+"downloadUrl2: "+downloadUrl2+"downloadUrl3: "+downloadUrl3+"provider: "+provider);
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -1200,7 +1201,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1222,7 +1223,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-               // location.reload();
+                location.reload();
                 return false;
             }
         },
