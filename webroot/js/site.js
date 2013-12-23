@@ -170,9 +170,16 @@ $('document').ready(function()
         $('.playlist-options').addClass('active');
     });
     
+/*
     $('.add-to-playlist').on('mouseleave', function() {
         //console.log('add to playlist entered');		
         $('.playlist-options').removeClass('active');
+    });
+*/
+    
+    $('.wishlist-popover').on('mouseleave',function(){
+	    
+	    $('.playlist-options').removeClass('active');
     });
     
     
