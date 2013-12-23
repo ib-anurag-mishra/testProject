@@ -372,7 +372,7 @@ $('document').ready(function()
     // $(document).ready($('.preview').css({opacity: 0}));
 
 
-
+	/*
     $(document).on('hover', '.wishlist-popover > a', function(e) {
 
         e.preventDefault();
@@ -382,6 +382,7 @@ $('document').ready(function()
             $('.playlist-options').removeClass('active');
         }
     });
+    */
 
     $(document).on('scroll', function() {
 
