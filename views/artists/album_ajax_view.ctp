@@ -190,7 +190,7 @@
                                                                                                                 <!--[if IE]>
                                                                                                                        <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
                                                                                                                         onclick='wishlistDownloadIEHome("<?php echo $albumSong["Song"]['ProdID']; ?>", "0" , "<?php echo $albumSong["Song"]["provider_type"]; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath'];?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName'];?>");' 
-                                                                                                                        href="<?php echo trim($finalSongUrl);?>">
+                                                                                                                        href="javascript:void(0);">
                                                                                                                             <?php __('Download Now');?></a>
                                                                                                                 <![endif]-->
                                                                                                             </span>
