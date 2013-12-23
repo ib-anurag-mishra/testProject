@@ -892,37 +892,35 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistDownloadHome", // URL to request
         data: data, // post data
-        async:false,
-        
         success: function(response) {
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
             {
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
+                //window.location = unescape(downloadUsedArr[2]);
+                location.href = unescape(downloadUsedArr[2]);
+
                 $('.afterClick').hide();
                 $('.beforeClick').show();
-                
-                var temp = "<a title='You have already downloaded this Song.Get it from your recent downloads' href='/homes/my_history' >Downloaded</a>";
-                document.getElementById('wishlist_song_' + prodId).innerHTML = temp ;
+
+                document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                
-                var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-              
-                toDownload( unescape(downloadUsedArr[2])) ;
-                return false ;
+                return false;
             }
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                //.reload();
+                location.reload();
                 return false;
             }
         },
@@ -932,11 +930,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
     return false;
 }
 
-function toDownload(urlToDownload )
-{
-    window.location.href = urlToDownload;
-    return false ;
-}
+
 
 function wishlistVideoDownloadIE(prodId, id, provider)
 {
@@ -956,7 +950,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -973,7 +967,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-                //location.reload();
+                location.reload();
                 return false;
             }
         },
@@ -999,7 +993,7 @@ function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your have already downloaded this song twice.");
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1051,7 +1045,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
             {
                 alert("Your download limit has exceeded.");
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1098,7 +1092,7 @@ function historyDownloadVideo(id, libID, patronID)
             if (msg === 'error')
             {
                 alert("Your have already downloaded this song twice.");
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1147,7 +1141,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
             {
                 alert("Your download limit has exceeded.");
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1181,7 +1175,6 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
 
 function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, downloadUrl3, provider)
 {
-    //alert("prodId:"+prodId+"id: "+id+"downloadUrl1: "+downloadUrl1+"downloadUrl2: "+downloadUrl2+"downloadUrl3: "+downloadUrl3+"provider: "+provider);
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -1190,7 +1183,6 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
     var finalURL = downloadUrl1;
     finalURL += downloadUrl2;
     finalURL += downloadUrl3;
-    
     var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
     id = prodId;
     jQuery.ajax({
@@ -1202,7 +1194,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                //location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1217,8 +1209,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                location.href = unescape(finalURL);             
-                   
+                location.href = unescape(finalURL);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
             }
@@ -1257,7 +1248,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-               // location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1279,7 +1270,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-               // location.reload();
+                location.reload();
                 return false;
             }
         },
@@ -1288,6 +1279,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
     });
     return false;
 }
+
 
 function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, downloadUrl3, provider)
 {
@@ -2225,47 +2217,11 @@ function showHideGrid(varType) {
         songsIDVal.addClass('active');
         top_100_videos_grid.removeClass('active');
         top_100_songs_grid.addClass('active');
-    } 
-    else 
-    {
-        if (!$("#top-100-videos-grid").find('ul').length)
-        {
-            var loading_div = "<div class='loader'></div>";
-            $("#top-100-videos-grid").append(loading_div);
-
-            $.ajax({
-                type: "post",
-                url: webroot + 'homes/getNationalTopAlbums',
-                success: function(response) {
-
-                    $("#top-100-videos-grid").append(response);
-
-                    //binding again js mouse enter and mouse leave event
-//                var scriptPath = document.getElementById('Scripts_Path').value;
-//                    $.getScript(scriptPath + '/js/site.js');
-                    $.getScript('/js/site.js');
-                    $.getScript(webroot + 'css/styles.css');
-
-                    $("#top-100-videos-grid").find('.loader').remove();
-                    return false;
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // log the error to the console
-                    console.log(
-                            "The following error occured: " +
-                            textStatus, errorThrown
-                            );
-                }
-            });
-
-        }
+    } else {
         songsIDVal.removeClass('active');
         videosIDVal.addClass('active');
-
         top_100_songs_grid.removeClass('active');
         top_100_videos_grid.addClass('active');
-        return false;
-        
     }
 }
 
@@ -2401,7 +2357,7 @@ $(document).ready(function() {
 
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
         e.preventDefault();
-
+        
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
@@ -2747,4 +2703,3 @@ $(document).ready(function() {
 //                    }
 
 // After removal of '#' & '#.' the below statements are exceuted
-
