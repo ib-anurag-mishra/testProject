@@ -587,7 +587,7 @@ $('document').ready(function()
 
         $(this).next('.wishlist-popover').append(queuelist);
 
-        $('.wishlist-popover').removeClass('active');
+        //$('.wishlist-popover').removeClass('active');
 
         if ($(this).next('.wishlist-popover').hasClass('active')) {
             $(this).next('.wishlist-popover').removeClass('active');
