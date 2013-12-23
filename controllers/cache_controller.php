@@ -580,7 +580,7 @@ class CacheController extends AppController {
         // for each row
         $resp = $this->requestAction('/Soaps/loginByWebservice/'.$val['AuthenticationToken']['authtype'].'/'.$val['AuthenticationToken']['email'].'/'.$val['AuthenticationToken']['password'].'/'.$val['AuthenticationToken']['card'].'/'. $val['AuthenticationToken']['pin'].'/'.$val['AuthenticationToken']['last_name'].'/'.$val['AuthenticationToken']['library_id'].'/'.$val['AuthenticationToken']['agent'].'/1');
 
-        $log_data .= 'Response : '.$resp.PHP_EOL;
+        $log_data .= 'Response : '.$resp->enc_value->enc_value->response.' AuthToken : '.$resp->enc_value->enc_value->authentication_token.' Patron : '.$resp->enc_value->enc_value->patron_id.PHP_EOL;
 
         //echo '<pre>'; print_r($resp); echo '</pre>';
 
