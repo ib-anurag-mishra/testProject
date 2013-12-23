@@ -80,7 +80,7 @@ function userDownloadIE(prodId)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'incld')
@@ -175,7 +175,7 @@ function userDownloadOthers(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'incld')
@@ -244,7 +244,7 @@ function userDownloadIE_top(prodId)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'incld')
@@ -328,7 +328,7 @@ function userDownloadOthers_top(prodId, downloadUrl1, downloadUrl2, downloadUrl3
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'incld')
@@ -397,7 +397,7 @@ function userDownloadIE_toptab(prodId)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'incld')
@@ -469,7 +469,7 @@ function userDownloadOthers_toptab(prodId, downloadUrl1, downloadUrl2, downloadU
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'incld')
@@ -542,7 +542,7 @@ function userDownloadOthers_safari(prodId, downloadUrl1, downloadUrl2, downloadU
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'incld')
@@ -714,7 +714,7 @@ function addToWishlist(prodId, providerType)
                 {
                     document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
                     //alert("You have been logged out from the system. Please login again.");
-                    //location.reload();
+                    location.reload();
                     return false;
                 }
             }
@@ -851,7 +851,7 @@ function wishlistDownloadIE(prodId, id, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -897,7 +897,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -906,7 +906,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
                 //window.location = unescape(downloadUsedArr[2]);
-                location.href = unescape(downloadUsedArr[2]);
+                //location.href = unescape(downloadUsedArr[2]);
 
                 $('.afterClick').hide();
                 $('.beforeClick').show();
@@ -915,6 +915,9 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
+                
+                toDownload( unescape(downloadUsedArr[2]) ) ;
+                
                 return false;
             }
             else
@@ -930,7 +933,10 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
     return false;
 }
 
-
+function toDownload( urlToDownload )
+{
+    window.location.href = urlToDownload;
+}
 
 function wishlistVideoDownloadIE(prodId, id, provider)
 {
@@ -950,7 +956,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -993,7 +999,7 @@ function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
             if (msg === 'error')
             {
                 alert("Your have already downloaded this song twice.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1045,7 +1051,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
             {
                 alert("Your download limit has exceeded.");
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1092,7 +1098,7 @@ function historyDownloadVideo(id, libID, patronID)
             if (msg === 'error')
             {
                 alert("Your have already downloaded this song twice.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1141,7 +1147,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
             {
                 alert("Your download limit has exceeded.");
                 document.getElementById('download_loader_' + id).style.display = 'none';
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1194,7 +1200,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1248,7 +1254,7 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1303,7 +1309,7 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
