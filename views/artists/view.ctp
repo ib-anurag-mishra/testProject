@@ -272,7 +272,7 @@ if (count($albumData) > 0){
                             <div class="wishlist-popover">         
                                 <input type="hidden" id="<?= $albumSong["Song"]["ProdID"] ?>" value="song"/>
                                 <?php
-                                if (($albumSong['Country']['SalesDate'] < date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
+                                if (($albumSong['Country']['SalesDate'] <= date('Y-m-d') ) && ($albumSong['Country']['DownloadStatus'] == 1))
                                 {
                                     $productInfo = $song->getDownloadData($albumSong["Song"]['ProdID'], $albumSong["Song"]['provider_type']);
                                                      
