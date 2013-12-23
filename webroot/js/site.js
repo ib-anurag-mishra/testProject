@@ -175,7 +175,7 @@ $('document').ready(function()
         //$('.playlist-options').removeClass('active');
     });
     
-    $('.wishlist-popover').on('mouseleave',function() {
+    $(document).on('mouseleave','.wishlist-popover',function() {
 	    
 	   $(this).removeClass('active'); 
     });
