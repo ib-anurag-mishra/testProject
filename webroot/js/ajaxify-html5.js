@@ -4,8 +4,7 @@
 (function(window, undefined) {
 
     // Prepare our Variables
-    var
-            scriptPath = document.getElementById('Scripts_Path').value;
+    var            
             History = window.History,
             $ = window.jQuery,
             document = window.document;
@@ -120,6 +119,7 @@
         $window.bind('statechange', function(event) {
             // Prepare Variables
             var
+                    scriptPath = document.getElementById('Scripts_Path').value;
                     State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');

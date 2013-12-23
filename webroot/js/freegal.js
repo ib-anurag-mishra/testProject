@@ -2175,7 +2175,7 @@ function showAlbumDetails(albumDetailURL) {
 
 
             $('#album_details_container').html(response);
-            $('#album_details_container').ajaxify();
+            //$('#album_details_container').ajaxify();
             $('a[title]').qtip({
                 position: {
                     corner: {
