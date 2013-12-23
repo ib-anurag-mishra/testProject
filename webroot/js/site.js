@@ -177,7 +177,25 @@ $('document').ready(function()
     });
 	*/
     
+	$(document).on('mouseleave', '.wishlist-popover', function() {
 
+        $(this).removeClass('active');
+
+
+    });
+    
+    $('.add-to-wishlist').on('mouseenter', function() {
+
+        if ($('.playlist-options').hasClass('active')) {
+
+            $('.playlist-options').removeClass('active');
+        }
+    });
+
+    $('.playlist-options').on('mouseleave', function() {
+
+        $('.playlist-options').removeClass('active');
+    });
     
     
 
@@ -260,18 +278,7 @@ $('document').ready(function()
         }
     });
 
-    $('.add-to-wishlist').on('mouseenter', function() {
 
-        if ($('.playlist-options').hasClass('active')) {
-
-            $('.playlist-options').removeClass('active');
-        }
-    });
-
-    $('.playlist-options').on('mouseleave', function() {
-
-        $('.playlist-options').removeClass('active');
-    });
 
     $('.genres-page .album-detail-container').on('mouseleave', '.playlist-options', function() {
 
@@ -354,12 +361,7 @@ $('document').ready(function()
 
     // $(document).ready($('.preview').css({opacity: 0}));
 
-    $(document).on('mouseleave', '.wishlist-popover', function() {
 
-        $(this).removeClass('active');
-
-
-    });
 
     $(document).on('hover', '.wishlist-popover > a', function(e) {
 
