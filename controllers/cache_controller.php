@@ -548,7 +548,61 @@ class CacheController extends AppController {
     return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
   } 
         
-        
+
+/**
+  * Function Name : cronBlockCards
+  * Function Description : This function is run as daily cron to validate all login patrons in App.
+  */        
+   
+  function cronBlockCards(){
+
+    $log_name = 'block_card_app_log_'.date('Y_m_d_i_s');
+
+    //fetch table records
+    $records = $this->AuthenticationToken->find('all', array( 'conditions' => array( "authtype != '' " ) ) );
+
+    //echo '<pre>'; print_r($records); echo '</pre>';
+
+    foreach($records as $val){
+
+        if(empty($val['AuthenticationToken']['email']))         { $val['AuthenticationToken']['email'] = ' ';           }
+        if(empty($val['AuthenticationToken']['password']))      { $val['AuthenticationToken']['password'] = ' ';        }
+        if(empty($val['AuthenticationToken']['card']))          { $val['AuthenticationToken']['card'] = ' ';            }
+        if(empty($val['AuthenticationToken']['pin']))           { $val['AuthenticationToken']['pin'] = ' ';             }
+        if(empty($val['AuthenticationToken']['last_name']))     { $val['AuthenticationToken']['last_name'] = ' ';       }
+        if(empty($val['AuthenticationToken']['library_id']))    { $val['AuthenticationToken']['library_id'] = ' ';      }
+        if(empty($val['AuthenticationToken']['agent']))         { $val['AuthenticationToken']['agent'] = ' ';           }
+
+        $log_data = PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") Start----------------".PHP_EOL;
+
+        $log_data .= 'Input : '.'/Soaps/loginByWebservice/'.$val['AuthenticationToken']['authtype'].'/'.$val['AuthenticationToken']['email'].'/'.$val['AuthenticationToken']['password'].'/'.$val['AuthenticationToken']['card'].'/'. $val['AuthenticationToken']['pin'].'/'.$val['AuthenticationToken']['last_name'].'/'.$val['AuthenticationToken']['library_id'].'/'.$val['AuthenticationToken']['agent'].'/1'.PHP_EOL;
+
+        // for each row
+        $resp = $this->requestAction('/Soaps/loginByWebservice/'.$val['AuthenticationToken']['authtype'].'/'.$val['AuthenticationToken']['email'].'/'.$val['AuthenticationToken']['password'].'/'.$val['AuthenticationToken']['card'].'/'. $val['AuthenticationToken']['pin'].'/'.$val['AuthenticationToken']['last_name'].'/'.$val['AuthenticationToken']['library_id'].'/'.$val['AuthenticationToken']['agent'].'/1');
+
+        $log_data .= 'Response : '.$resp.PHP_EOL;
+
+        //echo '<pre>'; print_r($resp); echo '</pre>';
+
+        // deletes patron row as login fails
+        if( '1' != $resp->enc_value->enc_value->response ) {
+
+          $status = $this->AuthenticationToken->deleteAll(array('id' => $val['AuthenticationToken']['id']));
+          $log_data .= 'DeleteStatus : '.$status.PHP_EOL;
+        }
+
+        $log_data .= PHP_EOL."----------Request (".$val['AuthenticationToken']['id'].") End----------------".PHP_EOL;
+
+        $this->log($log_data, $log_name);
+
+
+
+    }
+
+    exit('End');
+    //$resp = $this->requestAction('/Soaps/loginByWebservice/authtype/email/password/card/pin/last_name/library_id/agent');
+
+  }        
         
         
         
