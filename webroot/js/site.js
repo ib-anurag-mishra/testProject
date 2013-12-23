@@ -168,6 +168,7 @@ $('document').ready(function()
     $('.add-to-playlist').on('mouseenter', function() {
         //console.log('add to playlist entered');		
         $('.playlist-options').addClass('active');
+        console.log('entered');
     });
     
 	/*
@@ -176,6 +177,10 @@ $('document').ready(function()
         $('.playlist-options').removeClass('active');
     });
 	*/
+	
+	$('.add-to-playlist').on('mouseleave', function() {
+		console.log('leave');
+    });
     
 	$(document).on('mouseleave', '.wishlist-popover', function() {
 
