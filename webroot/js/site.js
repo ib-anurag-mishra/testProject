@@ -189,6 +189,8 @@ $('document').ready(function()
 
     });
     
+    /*
+    
     $('.add-to-wishlist').on('mouseenter', function() {
 
         if ($('.playlist-options').hasClass('active')) {
@@ -196,6 +198,7 @@ $('document').ready(function()
             $('.playlist-options').removeClass('active');
         }
     });
+    */
 
     $('.playlist-options').on('mouseleave', function() {
 
