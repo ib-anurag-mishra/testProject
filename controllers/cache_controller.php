@@ -559,7 +559,14 @@ class CacheController extends AppController {
     $log_name = 'block_card_app_log_'.date('Y_m_d_i_s');
 
     //fetch table records
-    $records = $this->AuthenticationToken->find('all', array( 'conditions' => array( "authtype != '' " ) ) );
+    $records = $this->AuthenticationToken->find('all', array( 
+      'conditions' => array( 
+        "authtype != '' " ,
+        'library_id' => '1124' ,
+        'patron_id' => '09773814' ,
+        
+      ), 
+    ));
 
     //echo '<pre>'; print_r($records); echo '</pre>';
 
