@@ -269,9 +269,9 @@
                     //$.getScript(webroot + 'css/styles.css');
                     //$.getScript(webroot + 'css/freegal_styles.css');
                     var scriptPath = document.getElementById('Scripts_Path').value;
-                    $.getScript(scriptPath + '/js/freegal.js');
+                    //$.getScript(scriptPath + '/js/freegal.js');
                     $.getScript(scriptPath + '/js/site.js');
-
+                    $.getScript(webroot + 'js/freegal.js');
                     //$.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
