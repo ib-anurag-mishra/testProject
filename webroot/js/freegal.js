@@ -851,7 +851,7 @@ function wishlistDownloadIE(prodId, id, provider)
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-              //  location.reload();
+                location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -868,7 +868,7 @@ function wishlistDownloadIE(prodId, id, provider)
             else
             {
                 alert("You have been logged out from the system. Please login again.");
-               // location.reload();
+                location.reload();
                 return false;
             }
         },
