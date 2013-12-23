@@ -2009,7 +2009,7 @@ function removeSong(pdId, divId) {
 
 
 function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType, playlistId) {
-    console.log('load song contains');
+    //console.log('load song contains');
     playlistId = (playlistId === undefined) ? 0 : playlistId;
     var newSong = [
         {
