@@ -122,10 +122,13 @@
                 $count = 1;
                 if (count($top_10_songs) > 0)
                 {
+                    echo "<pre>";
+                        print_r($value);
+                        exit;
                     //for($d=1;$d<$count;$d++) {
                     foreach ($top_10_songs as $key => $value)
-                    {
-                       //hide song if library block the explicit content
+                    {                        
+                        //hide song if library block the explicit content
                         if (($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] == 'T'))
                         {
                             continue;
