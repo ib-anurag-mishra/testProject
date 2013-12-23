@@ -902,22 +902,19 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
             }
             else if (msg === 'suces')
             {
-                var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                //document.getElementById('song_download_' + prodId).href = downloadUsedArr[2];
-                //window.location = unescape(downloadUsedArr[2]);
-                //location.href = unescape(downloadUsedArr[2]);
-
                 $('.afterClick').hide();
                 $('.beforeClick').show();
-
-                document.getElementById('wishlist_song_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history">Downloaded</a>';
+                
+                var temp = "<a title='You have already downloaded this Song.Get it from your recent downloads' href='/homes/my_history' >Downloaded</a>";
+                document.getElementById('wishlist_song_' + prodId).innerHTML = temp ;
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
                 
-                toDownload( unescape(downloadUsedArr[2]) ) ;
-                
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+              
+                toDownload( unescape(downloadUsedArr[2])) ;
                 return false;
             }
             else
