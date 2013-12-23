@@ -1191,8 +1191,6 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
     finalURL += downloadUrl2;
     finalURL += downloadUrl3;
     
-    consol.log(finalURL);
-    
     var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
     id = prodId;
     jQuery.ajax({
@@ -1204,7 +1202,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
             if (msg === 'error')
             {
                 alert("Your download limit has exceeded.");
-                location.reload();
+                //location.reload();
                 return false;
             }
             else if (msg === 'suces')
@@ -1219,8 +1217,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
-                location.href = unescape(finalURL);
-                   consol.log(finalURL);
+                location.href = unescape(finalURL);             
                    
                 $('.afterClick').hide();
                 $('.beforeClick').show();
