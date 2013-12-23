@@ -935,8 +935,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
 
 function toDownload( urlToDownload )
 {
-    window.location.href = urlToDownload;
-    return false ;
+    window.location.href = urlToDownload
 }
 
 function wishlistVideoDownloadIE(prodId, id, provider)
