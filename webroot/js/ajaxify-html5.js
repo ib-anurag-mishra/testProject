@@ -5,6 +5,7 @@
 
     // Prepare our Variables
     var
+            scriptPath = document.getElementById('Scripts_Path').value;
             History = window.History,
             $ = window.jQuery,
             document = window.document;
@@ -268,7 +269,7 @@
                     //$body.removeClass('loader');
                     //$.getScript(webroot + 'css/styles.css');
                     //$.getScript(webroot + 'css/freegal_styles.css');
-                    var scriptPath = document.getElementById('Scripts_Path').value;
+                    
                     //$.getScript(scriptPath + '/js/freegal.js');
                     $.getScript(scriptPath + '/js/site.js');
                     $.getScript(webroot + 'js/freegal.js');
