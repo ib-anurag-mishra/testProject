@@ -126,7 +126,8 @@
                     foreach ($top_10_songs as $key => $value)
                     {
 
-
+                        print_r($value);
+                        exit;
 
                         //hide song if library block the explicit content
                         if (($this->Session->read('block') == 'yes') && ($value['Song']['Advisory'] == 'T'))
@@ -145,7 +146,8 @@
 
                             <div class="song-container">
                                 <a href="/artists/view/<?= base64_encode($value['Song']['ArtistText']); ?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']); ?>">
-                                    <img class="lazy"  src="<?php echo $value['songs_img']; ?>" alt="<?php echo $this->getValidText($value['Song']['Artist'] . ' - ' . $value['Song']['SongTitle']); ?>" width="250" height="250" />                                                        
+                                    <img class="lazy"  src="<?php echo $value['songs_img']; ?>" alt="<?php echo $this->getValidText($value['Song']['Artist'] . ' - ' . $value['Song']['SongTitle']); ?>" 
+                                         width="250" height="250" />                                                        
                                 </a>
                                 <div class="top-10-ranking"><?php echo $count; ?></div>
 
