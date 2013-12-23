@@ -905,17 +905,18 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
             {
                 $('.afterClick').hide();
                 $('.beforeClick').show();
-                
-                var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];              
-                toDownload( unescape(downloadUsedArr[2])) ;
-                
+                               
                 document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
                 
                 var temp = "<a title='You have already downloaded this Song.Get it from your recent downloads' href='/homes/my_history' >Downloaded</a>";
                 document.getElementById('wishlist_song_' + prodId).innerHTML = temp ;
+                
+                
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];              
+                toDownload( unescape(downloadUsedArr[2])) ;
                 
                 return false;
             }
