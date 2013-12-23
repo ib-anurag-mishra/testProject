@@ -172,7 +172,12 @@ $('document').ready(function()
     
     $('.add-to-playlist').on('mouseleave', function() {
         //console.log('add to playlist entered');		
-        $('.playlist-options').removeClass('active');
+        //$('.playlist-options').removeClass('active');
+    });
+    
+    $('.wishlist-popover').on('mouseleave',function() {
+	    
+	   $(this).removeClass('active'); 
     });
     
 
