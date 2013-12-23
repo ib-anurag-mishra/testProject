@@ -182,12 +182,14 @@ $('document').ready(function()
 		console.log('leave');
     });
     
+/*
 	$(document).on('mouseleave', '.wishlist-popover', function() {
 
         $(this).removeClass('active');
 
 
     });
+*/
     
     /*
     
