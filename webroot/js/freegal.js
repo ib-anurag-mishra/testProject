@@ -1189,6 +1189,9 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
     var finalURL = downloadUrl1;
     finalURL += downloadUrl2;
     finalURL += downloadUrl3;
+    
+    consol.log(finalURL);
+    
     var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider;
     id = prodId;
     jQuery.ajax({
@@ -1216,6 +1219,8 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
                 document.getElementById('downloading_' + prodId).style.display = 'none';
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
                 location.href = unescape(finalURL);
+                   consol.log(finalURL);
+                   
                 $('.afterClick').hide();
                 $('.beforeClick').show();
             }
