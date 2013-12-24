@@ -217,7 +217,7 @@ class QueuesController extends AppController
                 array('belongsTo' => array('User'), 'hasMany' => array('QueueDetail'))
         );
 
-        if (((Cache::read('defaultqueuelist'.$territory)) === false) || (Cache::read('defaultqueuelist'.$territory) === null))
+        if (((Cache::read('defaultqueuelist')) === false) || (Cache::read('defaultqueuelist') === null))
         {
             $queueData = $this->QueueList->find('all', array(
                 'conditions' => $cond,
@@ -225,11 +225,11 @@ class QueuesController extends AppController
                 'order' => 'QueueList.created DESC',
                 'limit' => 100
             ));
-            Cache::write("defaultqueuelist".$territory, $queueData);
+            Cache::write("defaultqueuelist", $queueData);
         }
         else
         {
-            $queueData = Cache::read("defaultqueuelist".$territory);
+            $queueData = Cache::read("defaultqueuelist");
         }
         return $queueData;
     }
