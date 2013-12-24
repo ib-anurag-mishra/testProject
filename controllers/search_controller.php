@@ -276,13 +276,13 @@ class SearchController extends AppController
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 $queryArr = null;
-                $albumData = array();
+                /*$albumData = array();
                 $albumsCheck = array_keys($albums);
                 for ($i = 0; $i <= count($albumsCheck) - 1; $i++)
                 {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
-                }
+                }*/
                 
                 
                 $arr_albumStream    =   array();
