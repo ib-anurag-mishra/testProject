@@ -446,16 +446,20 @@ class SolrComponent extends Object {
     function getFacetSearchTotal($keyword, $type='song') {
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = " AND DownloadStatus:1";
-
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
-                $cond .= " AND AAdvisory:F";
-            }
-        }
-        $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
+            
+            // $cond = " AND DownloadStatus:1";
+            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+
+            if ($this->Session->read('block') == 'yes') {
+                $cond .= " AND Advisory:F";
+                if($type != 'video'){
+                    $cond .= " AND AAdvisory:F";
+                }
+            }
+            
+            $searchkeyword = strtolower($this->escapeSpace($keyword));
+        
             if (!isset(self::$solr)) {
                 $connectedToSolr = false;
                 $retryCount = 1;
@@ -567,24 +571,26 @@ class SolrComponent extends Object {
         if((empty($country))){
           $country = $this->Session->read('territory');
         }
-      
-        $cond = " AND DownloadStatus:1";
         
-        if(1 == $mobileExplicitStatus){
-          $cond .= " AND Advisory:F";
-        }else{        
-          if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
-              $cond .= " AND AAdvisory:F";
-            }
-          }            
-        }
-        
-        
-
-        $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
+      
+            // $cond = " AND DownloadStatus:1";
+            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+
+            if(1 == $mobileExplicitStatus){
+                $cond .= " AND Advisory:F";
+            }
+            else
+            {        
+                if ($this->Session->read('block') == 'yes') {
+                    $cond .= " AND Advisory:F";
+                    if($type != 'video'){
+                        $cond .= " AND AAdvisory:F";
+                    }
+                }            
+            }
+            $searchkeyword = strtolower($this->escapeSpace($keyword));
+            
             if (!isset(self::$solr)) {
                 $connectedToSolr = false;
                 $retryCount = 1;
