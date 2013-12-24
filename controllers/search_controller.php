@@ -208,7 +208,7 @@ class SearchController extends AppController
                 {
                     case 'album':
                         $limit = 24;
-                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'album');
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
                         //echo "here1 : ".date('d-m-Y h:i:s');
@@ -233,7 +233,7 @@ class SearchController extends AppController
 
                     case 'genre':
                         $limit = 30;
-                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'genre');
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
                         $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
                         //print_r($genres); die;
                         $this->set('genres', $genres);
@@ -241,21 +241,21 @@ class SearchController extends AppController
 
                     case 'label':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'label');
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
                         $labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
                         $this->set('labels', $labels);
                         break;
 
                     case 'artist':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'artist');
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
                         $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
                         $this->set('artists', $artists);
                         break;
 
                     case 'composer':
                         $limit = 18;
-                        $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'composer');
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
                         $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
                         $this->set('composers', $composers);
                         break;
