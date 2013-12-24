@@ -46,10 +46,14 @@ class SolrComponent extends Object {
         
         self::$solr = new Apache_Solr_Service($settings['server'], $settings['port'], $settings['solrpath']);
         
-        if (!self::$solr->ping($this->timeoutSeconds)) {
-            try{
+        if (!self::$solr->ping($this->timeoutSeconds))
+        {
+            try
+            {
                 throw new SolrException();
-            } catch(Exception $e){
+            }
+            catch(Exception $e)
+            {
                 $this->log('Unable to Connect to Solr from initialize function','error');
             }
         }
@@ -57,9 +61,12 @@ class SolrComponent extends Object {
         self::$solr2 = new Apache_Solr_Service($settings2['server'], $settings2['port'], $settings2['solrpath']);
 
         if (!self::$solr2->ping($this->timeoutSeconds)) {
-            try{
+            try
+            {
                 throw new SolrException();
-            } catch(Exception $e){
+            }
+            catch(Exception $e)
+            {
                 $this->log('Unable to Connect to Solr from initialize function','error');
             }
         }
@@ -72,8 +79,8 @@ class SolrComponent extends Object {
         $docs = array();
         if (!empty($country))
         {
-            // $cond = " AND DownloadStatus:1";
-            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            $cond = " AND DownloadStatus:1";
+            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
         
             if(1 == $mobileExplicitStatus)
             {
@@ -326,8 +333,8 @@ class SolrComponent extends Object {
         $query = '';
         $country = $this->Session->read('territory');
         if (!empty($country)) {
-            // $cond = " AND DownloadStatus:1";
-            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            $cond = " AND DownloadStatus:1";
+            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
         
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
@@ -448,8 +455,8 @@ class SolrComponent extends Object {
         $country = $this->Session->read('territory');
         if (!empty($country)) {
             
-            // $cond = " AND DownloadStatus:1";
-            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            $cond = " AND DownloadStatus:1";
+            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
 
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
@@ -563,21 +570,25 @@ class SolrComponent extends Object {
         }
     }
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null) {
+    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null)
+    {
     
         set_time_limit(0);
         $query = '';
         
-        if((empty($country))){
-          $country = $this->Session->read('territory');
+        if((empty($country)))
+        {
+            $country = $this->Session->read('territory');
         }
         
-        if (!empty($country)) {
+        if (!empty($country))
+        {
       
-            // $cond = " AND DownloadStatus:1";
-            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            $cond = " AND DownloadStatus:1";
+            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
 
-            if(1 == $mobileExplicitStatus){
+            if(1 == $mobileExplicitStatus)
+            {
                 $cond .= " AND Advisory:F";
             }
             else
@@ -715,41 +726,53 @@ class SolrComponent extends Object {
         }
     }
 
-    function getGroupSearchTotal($keyword, $type='song') {
+    function getGroupSearchTotal($keyword, $type='song')
+    {
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = " AND DownloadStatus:1";
-
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
-                $cond .= " AND AAdvisory:F";
+        if (!empty($country))
+        {
+            
+            $cond = " AND DownloadStatus:1";
+            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            
+            if ($this->Session->read('block') == 'yes')
+            {
+                $cond .= " AND Advisory:F";
+                if($type != 'video'){
+                    $cond .= " AND AAdvisory:F";
+                }
             }
-        }
-
-        $searchkeyword = strtolower($this->escapeSpace($keyword));
-        if (!empty($country)) {
-            if (!isset(self::$solr)) {
+            
+            $searchkeyword = strtolower($this->escapeSpace($keyword));
+            
+            if (!isset(self::$solr))
+            {
                 $connectedToSolr = false;
                 $retryCount = 1;
-                while (!$connectedToSolr &&  $retryCount < 3) {
-                    try {
+                while (!$connectedToSolr &&  $retryCount < 3)
+                {
+                    try
+                    {
                         self::initialize(null);
                         $connectedToSolr = true;
                     }
-                    catch(Exception $e) {
+                    catch(Exception $e)
+                    {
                         
                     }
                     ++$retryCount; 
                 }
                 
-                if(!$connectedToSolr) {
+                if(!$connectedToSolr)
+                {
                     $this->log('Unable to Connect to Solr','error');
                     die;
                 }
             }
 
-            switch ($type) {
+            switch ($type)
+            {
                 case 'song':
                     $query = $searchkeyword;
                     $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
@@ -794,9 +817,12 @@ class SolrComponent extends Object {
 
             $query = $query . ' AND Territory:' . $country . $cond;
 
-            if ($page == 1) {
+            if ($page == 1)
+            {
                 $start = 0;
-            } else {
+            }
+            else
+            {
                 $start = (($page - 1) * $limit);
             }
 
@@ -808,53 +834,76 @@ class SolrComponent extends Object {
                 'group.query' => $query,
             );
 
-            if ($type != 'video') {
+            if ($type != 'video')
+            {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
-                if ($response->getHttpStatus() == 200) {
-                    if (!empty($response->grouped->$query->doclist->numFound)) {
+                if ($response->getHttpStatus() == 200)
+                {
+                    if (!empty($response->grouped->$query->doclist->numFound))
+                    {
                         return count($response->grouped->$query->doclist->docs);
-                    } else {
+                    }
+                    else
+                    {
                         return array();
                     }
-                } else {
-                    return array();
                 }
-                return array();
-            } else {
-                $response = self::$solr2->search($query, $start, $limit, $additionalParams);
-                if ($response->getHttpStatus() == 200) {
-                    if (!empty($response->grouped->$query->doclist->numFound)) {
-                        return count($response->grouped->$query->doclist->docs);
-                    } else {
-                        return array();
-                    }
-                } else {
+                else
+                {
                     return array();
                 }
                 return array();
             }
-        } else {
+            else
+            {
+                $response = self::$solr2->search($query, $start, $limit, $additionalParams);
+                if ($response->getHttpStatus() == 200)
+                {
+                    if (!empty($response->grouped->$query->doclist->numFound))
+                    {
+                        return count($response->grouped->$query->doclist->docs);
+                    }
+                    else
+                    {
+                        return array();
+                    }
+                }
+                else
+                {
+                    return array();
+                }
+                return array();
+            }
+        }
+        else
+        {
             return array();
         }
     }
 
-    function getAutoCompleteData($keyword, $type, $limit=10, $allmusic=0) {
+    function getAutoCompleteData($keyword, $type, $limit=10, $allmusic=0)
+    {
 
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = " AND DownloadStatus:1";
+        
+        if (!empty($country))
+        {
+            
+            $cond = " AND DownloadStatus:1";
+            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
 
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
-                $cond .= " AND AAdvisory:F";
+            if ($this->Session->read('block') == 'yes') {
+                $cond .= " AND Advisory:F";
+                if($type != 'video'){
+                    $cond .= " AND AAdvisory:F";
+                }
             }
-        }
         
-        $searchkeyword = strtolower($this->escapeSpace($keyword));
-        $char = substr($keyword, 0, 1);
+            $searchkeyword = strtolower($this->escapeSpace($keyword));
+            $char = substr($keyword, 0, 1);
         
-        if (!empty($country)) {
+        
             
             if (!isset(self::$solr)) {
                 $connectedToSolr = false;
@@ -990,29 +1039,37 @@ class SolrComponent extends Object {
         
         $country = $this->Session->read('territory');
         
-        $cond = " AND DownloadStatus:1";
-
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-        }
+        if (!empty($country))
+        {
+            $cond = " AND DownloadStatus:1";
+            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+    
+            if ($this->Session->read('block') == 'yes') {
+                $cond .= " AND Advisory:F";
+            }
         
-        $query = $query . ' AND Territory:' . $country . $cond;
-        
-        $response = self::$solr->search($query, 0, $limit);
-        if ($response->getHttpStatus() == 200) {
-            if ($response->response->numFound > 0) {
-                foreach ($response->response->docs as $doc) {
-                    $docs[] = $doc;
+            $query = $query . ' AND Territory:' . $country . $cond;
+            
+            $response = self::$solr->search($query, 0, $limit);
+            if ($response->getHttpStatus() == 200) {
+                if ($response->response->numFound > 0) {
+                    foreach ($response->response->docs as $doc) {
+                        $docs[] = $doc;
+                    }
+                } else {
+                    return array();
                 }
-            } else {
+            }
+            else
+            {
                 return array();
             }
+            return $docs;
         }
         else
         {
             return array();
         }
-        return $docs;
     }
 
     function escapeSpace($keyword) {
