@@ -211,7 +211,7 @@ class SearchController extends AppController
                         $totalFacetCount = $this->Solr->getGroupSearchTotal($queryVar, 'album');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
-
+                        echo "here"; exit;
                         // echo "Group Search for Albums Ended at ".time();
                         
                           $arr_albumStream    =   array();
