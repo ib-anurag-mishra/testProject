@@ -1,6 +1,4 @@
 <?php
-echo "Hello";
-exit;
 /*
   File Name : advance_search.ctp
   File Description : View page for advance search
@@ -358,7 +356,7 @@ function Get_Sales_date($sales_date_array, $country)
 
                                                 if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL']))
                                                 {
-                                                    // $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
+                                                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                                                     $image = Configure::read('App.Music_Path') . $albumArtwork;
                                                 }
                                                 else
