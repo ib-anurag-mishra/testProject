@@ -2543,13 +2543,13 @@ STR;
         //freegal Query Cache set
         if ((count($queueData) < 1) || ($queueData === false))
         {
-            Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
+            Cache::write("defaultqueuelist".$territory, Cache::read("defaultqueuelist".$territory));
             $this->log("Freegal Defaut Queues returns null ", "cache");
         }
         else
         {
-            Cache::delete("defaultqueuelist");
-            Cache::write("defaultqueuelist", $queueData);
+            Cache::delete("defaultqueuelist".$territory);
+            Cache::write("defaultqueuelist".$territory, $queueData);
 
             //library top 10 cache set
             $this->log("Freegal Defaut Queues cache set", "cache");

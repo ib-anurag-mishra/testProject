@@ -210,13 +210,14 @@ class QueuesController extends AppController
     function getDefaultQueues()
     {
         $cond = array('queue_type' => 1, 'status' => '1');
+        $territory = $this->Session->read('territory');
 
         // Unbinded User model
         $this->QueueList->unbindModel(
                 array('belongsTo' => array('User'), 'hasMany' => array('QueueDetail'))
         );
 
-        if (((Cache::read('defaultqueuelist')) === false) || (Cache::read('defaultqueuelist') === null))
+        if (((Cache::read('defaultqueuelist'.$territory)) === false) || (Cache::read('defaultqueuelist'.$territory) === null))
         {
             $queueData = $this->QueueList->find('all', array(
                 'conditions' => $cond,
@@ -224,11 +225,11 @@ class QueuesController extends AppController
                 'order' => 'QueueList.created DESC',
                 'limit' => 100
             ));
-            Cache::write("defaultqueuelist", $queueData);
+            Cache::write("defaultqueuelist".$territory, $queueData);
         }
         else
         {
-            $queueData = Cache::read("defaultqueuelist");
+            $queueData = Cache::read("defaultqueuelist".$territory);
         }
         return $queueData;
     }
