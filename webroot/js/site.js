@@ -354,12 +354,12 @@ $('document').ready(function()
 
     // $(document).ready($('.preview').css({opacity: 0}));
 
-    $(document).on('mouseleave', '.wishlist-popover', function() {
+/*    $(document).on('mouseleave', '.wishlist-popover', function() {
 
         $(this).removeClass('active');
 
 
-    });
+    });*/
 
     $(document).on('hover', '.wishlist-popover > a', function(e) {
 
