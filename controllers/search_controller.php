@@ -231,14 +231,14 @@ class SearchController extends AppController
                         
                           $arr_albumStream    =   array();
                             
-                        foreach ($albums as $objKey=>$objAlbum) 
+                        /*foreach ($albums as $objKey=>$objAlbum) 
                         {                                                       
                             $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
                                            array('controller' => 'artists', 'action' => 'getAlbumSongs'),
                                            array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
                                    );
                             
-                        }
+                        }*/
                       //  echo "<pre>"; print_r($albums);
                         $this->set('albumData', $albums);
                         $this->set('arr_albumStream', $arr_albumStream);
