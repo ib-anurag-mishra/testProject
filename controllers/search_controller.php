@@ -124,6 +124,7 @@ class SearchController extends AppController
             $insertArr[] = $this->searchrecords($typeVar, $queryVar);
             $this->Searchrecord->saveAll($insertArr);
             //End Added code for log search data
+            
             $patId = $this->Session->read('patron');
             $libId = $this->Session->read('library');
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -155,7 +156,7 @@ class SearchController extends AppController
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-            //print_r($songs); die; 
+            
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
@@ -169,44 +170,28 @@ class SearchController extends AppController
             
             /*echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');*/
+            
             $songArray = array();
             foreach ($songs as $key => $song)
             {
                 $songArray[] = $song->ProdID;
-                /*$downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                //echo $this->Download->lastQuery(); die;
-                if (count($downloadsUsed) > 0)
-                {
-                    $songs[$key]->status = 'avail';
-                }
-                else
-                {
-                    $songs[$key]->status = 'not';
-                }*/
             }
+            
             $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
             
             foreach($songs as $key => $song){
                 $set = 0;
                 foreach($downloadsUsed as $downloadKey => $downloadData){
-                    // print_r($downloadData);
                     if ($downloadData['Download']['ProdID'] == $song->ProdID )
                     {
                         $songs[$key]->status = 'avail';
                         $set = 1;
                         break;
                     }
-                    /*else
-                    {
-                        $songs[$key]->status = 'not';
-                    }*/
                 }
                 if($set == 0){
                     $songs[$key]->status = 'not';
                 }
-                /*echo "<br/>";
-                echo $songs[$key]->status;
-                echo "<br/>";*/
             }
             /*echo "Microtime : ".microtime();
             echo "Time : ".date('h:m:s');*/
@@ -231,14 +216,14 @@ class SearchController extends AppController
                         
                           $arr_albumStream    =   array();
                             
-                        /*foreach ($albums as $objKey=>$objAlbum) 
+                        foreach ($albums as $objKey=>$objAlbum) 
                         {                                                       
                             $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
                                            array('controller' => 'artists', 'action' => 'getAlbumSongs'),
                                            array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
                                    );
                             
-                        }*/
+                        }
                       //  echo "<pre>"; print_r($albums);
                         $this->set('albumData', $albums);
                         $this->set('arr_albumStream', $arr_albumStream);
