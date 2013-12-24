@@ -228,16 +228,6 @@ class SearchController extends AppController
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
 
                         // echo "Group Search for Albums Ended at ".time();
-                        /* $queryArr = null;
-                          $albumData = array();
-                          $albumsCheck = array_keys($albums);
-                          for($i=0; $i<=count($albumsCheck) -1; $i++)
-                          {
-                          $queryArr = $this->Solr->query('Title:"'.utf8_decode(str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'),$albumsCheck[$i])).'"', 1);
-                          $albumData[] = $queryArr[0];
-                          }
-                          $this->set('albums', $albums);
-                          $this->set('albumData',$albumData); */
                         
                           $arr_albumStream    =   array();
                             
@@ -298,20 +288,10 @@ class SearchController extends AppController
             else
             {
 
-                //$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
-                // print_r($albums); die;
                 $queryArr = null;
-                /*$albumData = array();
-                $albumsCheck = array_keys($albums);
-                for ($i = 0; $i <= count($albumsCheck) - 1; $i++)
-                {
-                    $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
-                    $albumData[] = $queryArr[0];
-                }*/
-                
                 
                 $arr_albumStream    =   array();
                             
