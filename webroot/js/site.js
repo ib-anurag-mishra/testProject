@@ -268,7 +268,7 @@ $('document').ready(function()
         }
     });
 
-    $('.playlist-options').on('mouseleave', function() {
+    /*$('.playlist-options').on('mouseleave', function() {
 
         $('.playlist-options').removeClass('active');
     });
@@ -276,7 +276,7 @@ $('document').ready(function()
     $('.genres-page .album-detail-container').on('mouseleave', '.playlist-options', function() {
 
         $('.playlist-options').removeClass('active');
-    });
+    }); */
 
 
 
