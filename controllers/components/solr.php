@@ -70,26 +70,30 @@ class SolrComponent extends Object {
         $query = '';
 	$provider_query = '';
         $docs = array();
-        $cond = " AND DownloadStatus:1";
-        
-        if(1 == $mobileExplicitStatus){
-          $cond .= " AND Advisory:F";
-        }
-        else
-        {
-            if ($this->Session->read('block') == 'yes') {
-                $cond .= " AND Advisory:F";
-                if($type != 'video')
-                {
-                    $cond .= " AND AAdvisory:F";
-                }
-            }
-        }
-        
-        $searchkeyword = strtolower($this->escapeSpace($keyword));
-        
         if (!empty($country))
         {
+            // $cond = " AND DownloadStatus:1";
+            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+        
+            if(1 == $mobileExplicitStatus)
+            {
+              $cond .= " AND Advisory:F";
+            }
+            else
+            {
+                if ($this->Session->read('block') == 'yes')
+                {
+                    $cond .= " AND Advisory:F";
+                    if($type != 'video')
+                    {
+                        $cond .= " AND AAdvisory:F";
+                    }
+                }
+            }
+        
+            $searchkeyword = strtolower($this->escapeSpace($keyword));
+        
+        
             if (!isset(self::$solr))
             {
                 $connectedToSolr = false;
@@ -321,18 +325,37 @@ class SolrComponent extends Object {
     function facetSearch($keyword, $type='song', $page=1, $limit = 5) {
         $query = '';
         $country = $this->Session->read('territory');
-        $cond = " AND DownloadStatus:1";
-        if ($this->Session->read('block') == 'yes') {
-            $cond .= " AND Advisory:F";
-            if($type != 'video'){
-                $cond .= " AND AAdvisory:F";
-            }
-        }
-
-        $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
+            // $cond = " AND DownloadStatus:1";
+            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+        
+            if ($this->Session->read('block') == 'yes') {
+                $cond .= " AND Advisory:F";
+                if($type != 'video'){
+                    $cond .= " AND AAdvisory:F";
+                }
+            }
+
+            $searchkeyword = strtolower($this->escapeSpace($keyword));
+        
             if (!isset(self::$solr)) {
-                self::initialize(null);
+                $connectedToSolr = false;
+                $retryCount = 1;
+                while (!$connectedToSolr &&  $retryCount < 3) {
+                    try {
+                        self::initialize(null);
+                        $connectedToSolr = true;
+                    }
+                    catch(Exception $e) {
+                        
+                    }
+                    ++$retryCount; 
+                }
+                
+                if(!$connectedToSolr) {
+                    $this->log('Unable to Connect to Solr','error');
+                    die;
+                }
             }
 
             switch ($type) {
@@ -413,7 +436,9 @@ class SolrComponent extends Object {
                 }
                 return array();
             }
-        } else {
+        }
+        else
+        {
             return array();
         }
     }
@@ -432,7 +457,23 @@ class SolrComponent extends Object {
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
-                self::initialize(null);
+                $connectedToSolr = false;
+                $retryCount = 1;
+                while (!$connectedToSolr &&  $retryCount < 3) {
+                    try {
+                        self::initialize(null);
+                        $connectedToSolr = true;
+                    }
+                    catch(Exception $e) {
+                        
+                    }
+                    ++$retryCount; 
+                }
+                
+                if(!$connectedToSolr) {
+                    $this->log('Unable to Connect to Solr','error');
+                    die;
+                }
             }
 
             switch ($type) {
@@ -545,7 +586,23 @@ class SolrComponent extends Object {
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
-                self::initialize(null);
+                $connectedToSolr = false;
+                $retryCount = 1;
+                while (!$connectedToSolr &&  $retryCount < 3) {
+                    try {
+                        self::initialize(null);
+                        $connectedToSolr = true;
+                    }
+                    catch(Exception $e) {
+                        
+                    }
+                    ++$retryCount; 
+                }
+                
+                if(!$connectedToSolr) {
+                    $this->log('Unable to Connect to Solr','error');
+                    die;
+                }
             }
 
             switch ($type) {
@@ -667,7 +724,23 @@ class SolrComponent extends Object {
         $searchkeyword = strtolower($this->escapeSpace($keyword));
         if (!empty($country)) {
             if (!isset(self::$solr)) {
-                self::initialize(null);
+                $connectedToSolr = false;
+                $retryCount = 1;
+                while (!$connectedToSolr &&  $retryCount < 3) {
+                    try {
+                        self::initialize(null);
+                        $connectedToSolr = true;
+                    }
+                    catch(Exception $e) {
+                        
+                    }
+                    ++$retryCount; 
+                }
+                
+                if(!$connectedToSolr) {
+                    $this->log('Unable to Connect to Solr','error');
+                    die;
+                }
             }
 
             switch ($type) {
@@ -790,6 +863,11 @@ class SolrComponent extends Object {
                     }
                     ++$retryCount; 
                 }
+                
+                if(!$connectedToSolr) {
+                    $this->log('Unable to Connect to Solr','error');
+                    die;
+                }
             }
             
             if ($type != 'all') {
@@ -894,7 +972,9 @@ class SolrComponent extends Object {
             } else {
                 
             }
-        } else {
+        }
+        else
+        {
             return array();
         }
     }
@@ -921,7 +1001,9 @@ class SolrComponent extends Object {
             } else {
                 return array();
             }
-        } else {
+        }
+        else
+        {
             return array();
         }
         return $docs;
