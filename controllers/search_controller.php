@@ -22,20 +22,6 @@ class SearchController extends AppController
     {
         parent::beforeFilter();
         $this->Auth->allow('index', 'autocomplete');
-        /* if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
-          $validPatron = $this->ValidatePatron->validatepatron();
-          if($validPatron == '0') {
-          $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-          }
-          else if($validPatron == '2') {
-          $this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-          $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-          }
-          }
-          $this->Cookie->name = 'baker_id';
-          $this->Cookie->time = 3600; // or '1 hour'
-          $this->Cookie->path = '/';
-          $this->Cookie->domain = 'freegalmusic.com'; */
     }
 
     function index($page = 1, $facetPage = 1)
@@ -318,13 +304,13 @@ class SearchController extends AppController
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 // print_r($albums); die;
                 $queryArr = null;
-                $albumData = array();
+                /*$albumData = array();
                 $albumsCheck = array_keys($albums);
                 for ($i = 0; $i <= count($albumsCheck) - 1; $i++)
                 {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
-                }
+                }*/
                 
                 
                 $arr_albumStream    =   array();
