@@ -1235,17 +1235,17 @@ Class ArtistsController extends AppController
 //						$albumSongs[$k][$key]['Song']['status'] = 'not';
 //					}
                                         
-                            if($this->Session->read('library_type')==2)
-                           {
-                               $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
-                               if(!empty($filePath))
-                                {
-                                   $songPath = explode(':',$filePath);
-                                   $streamUrl =  trim($songPath[1]);
-                                   $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
-                                   $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
-                                } 
-                           }   
+                            //if($this->Session->read('library_type')==2)
+                           //{
+                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
+                            if(!empty($filePath))
+                             {
+                                $songPath = explode(':',$filePath);
+                                $streamUrl =  trim($songPath[1]);
+                                $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
+                                $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
+                             } 
+                           //}   
                            
                            
                             unset($albumSongs[$k][$key]['Song']['DownloadStatus']);
