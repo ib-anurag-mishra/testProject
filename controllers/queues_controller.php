@@ -226,12 +226,10 @@ class QueuesController extends AppController
                 'limit' => 100
             ));
             Cache::write("defaultqueuelist".$territory, $queueData);
-            echo "in";
         }
         else
         {
             $queueData = Cache::read("defaultqueuelist".$territory);
-            echo "out";
         }
         return $queueData;
     }
