@@ -1,4 +1,6 @@
 <?php
+echo "Hello";
+exit;
 /*
   File Name : advance_search.ctp
   File Description : View page for advance search
