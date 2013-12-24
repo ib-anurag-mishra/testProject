@@ -54,7 +54,7 @@ class SolrComponent extends Object {
             }
             catch(Exception $e)
             {
-                $this->log('Unable to Connect to Solr from initialize function','error');
+                $this->log('Unable to Connect to Solr from initialize function','search');
             }
         }
 
@@ -67,7 +67,7 @@ class SolrComponent extends Object {
             }
             catch(Exception $e)
             {
-                $this->log('Unable to Connect to Solr from initialize function','error');
+                $this->log('Unable to Connect to Solr from initialize function','search');
             }
         }
         
@@ -117,7 +117,7 @@ class SolrComponent extends Object {
                 }
                 
                 if(!$connectedToSolr) {
-                    $this->log('Unable to Connect to Solr','error');
+                    $this->log('Unable to Connect to Solr','search');
                     die;
                 }    
             }
@@ -325,6 +325,7 @@ class SolrComponent extends Object {
         }
         else
         {
+            $this->log('Country was not set in the search function for keyword : '.$keyword,'search');
             return array();
         }
     }
@@ -332,7 +333,8 @@ class SolrComponent extends Object {
     function facetSearch($keyword, $type='song', $page=1, $limit = 5) {
         $query = '';
         $country = $this->Session->read('territory');
-        if (!empty($country)) {
+        if (!empty($country)) 
+        {
             $cond = " AND DownloadStatus:1";
             //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
         
@@ -360,7 +362,7 @@ class SolrComponent extends Object {
                 }
                 
                 if(!$connectedToSolr) {
-                    $this->log('Unable to Connect to Solr','error');
+                    $this->log('Unable to Connect to Solr','search');
                     die;
                 }
             }
@@ -446,6 +448,7 @@ class SolrComponent extends Object {
         }
         else
         {
+            $this->log('Country was not set in the facet search function for keyword : '.$keyword,'search');
             return array();
         }
     }
@@ -482,7 +485,7 @@ class SolrComponent extends Object {
                 }
                 
                 if(!$connectedToSolr) {
-                    $this->log('Unable to Connect to Solr','error');
+                    $this->log('Unable to Connect to Solr','search');
                     die;
                 }
             }
@@ -566,6 +569,7 @@ class SolrComponent extends Object {
                 return array();
             }
         } else {
+            $this->log('Country was not set in the facet search total function for keyword : '.$keyword,'search');
             return array();
         }
     }
@@ -617,7 +621,7 @@ class SolrComponent extends Object {
                 }
                 
                 if(!$connectedToSolr) {
-                    $this->log('Unable to Connect to Solr','error');
+                    $this->log('Unable to Connect to Solr','search');
                     die;
                 }
             }
@@ -722,6 +726,7 @@ class SolrComponent extends Object {
                 return array();
             }
         } else {
+            $this->log('Country was not set in the group search function for keyword : '.$keyword,'search');
             return array();
         }
     }
@@ -766,7 +771,7 @@ class SolrComponent extends Object {
                 
                 if(!$connectedToSolr)
                 {
-                    $this->log('Unable to Connect to Solr','error');
+                    $this->log('Unable to Connect to Solr','search');
                     die;
                 }
             }
@@ -877,6 +882,7 @@ class SolrComponent extends Object {
         }
         else
         {
+            $this->log('Country was not set in the group search total function for keyword : '.$keyword,'search');
             return array();
         }
     }
@@ -920,7 +926,7 @@ class SolrComponent extends Object {
                 }
                 
                 if(!$connectedToSolr) {
-                    $this->log('Unable to Connect to Solr','error');
+                    $this->log('Unable to Connect to Solr','search');
                     die;
                 }
             }
@@ -1030,6 +1036,7 @@ class SolrComponent extends Object {
         }
         else
         {
+            $this->log('Country was not set in the get autocomplete data function for keyword : '.$keyword,'search');
             return array();
         }
     }
@@ -1068,6 +1075,7 @@ class SolrComponent extends Object {
         }
         else
         {
+            $this->log('Country was not set in the query function for query : '.$query,'search');
             return array();
         }
     }
