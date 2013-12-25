@@ -1290,9 +1290,13 @@ Class ArtistsController extends AppController
 
         function getAlbumData(){
             Configure::write('debug', 0);
-            if(!empty($_POST('artisttext')) && !empty($_POST('referenceId')) && !empty($_POST('providerType'))){
+            
+            $artistText = $_POST('artisttext');
+            $referenceId = $_POST('referenceId');
+            $providerType = $_POST('providerType');
+            if(!empty($artistText) && !empty($referenceId) && !empty($providerType)){
                 
-               $albumSongs =  $this->getAlbumSongs($_POST('artisttext'),$_POST('referenceId'),$_POST('providerType'));
+               $albumSongs =  $this->getAlbumSongs($artistText,$referenceId,$providerType);
                 if (!empty($albumSongs))
                 {
                     foreach ($albumSongs as $value)
