@@ -2054,7 +2054,6 @@ function loadAlbumData(artistName,referenceId,providerType){
             }else if(response.error){
                 console.log(response.error);
             }
-            exit;
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log('Ajax call to get album songs has been failed');
