@@ -2035,6 +2035,26 @@ function loadAlbumSong(albumSongs) {
     }
 }
 
+
+function loadAlbumData(artistName,referenceId,providerType){
+    
+    var data = "artisttext=" + artistName+ "&referenceId=" + referenceId + "&providerType=" + providerType;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "artists/getAlbumData", // URL to request
+        data: data, // post data
+        success: function(response) {
+            alert(response);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    });
+    return false;
+    
+    
+}
+
 function base64_decode(data) {
     // http://kevin.vanzonneveld.net
     // +   original by: Tyler Akins (http://rumkin.com)

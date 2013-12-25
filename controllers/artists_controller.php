@@ -19,7 +19,7 @@ Class ArtistsController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view','test','album','album_ajax','album_ajax_view','admin_getAlbums','admin_getAutoArtist','getAlbumSongs');
+		$this->Auth->allowedActions = array('view','test','album','album_ajax','album_ajax_view','admin_getAlbums','admin_getAutoArtist','getAlbumSongs','getAlbumData');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
@@ -1281,6 +1281,53 @@ Class ArtistsController extends AppController
         return $albumSongs;       
                 
 }
+
+            /*
+             * Function Name : getAlbumData
+             * Description   : This function is used to get songs related to an album
+             * 
+             */
+
+        function getAlbumData(){
+            Configure::write('debug', 0);
+            if(!empty($_POST('artisttext')) && !empty($_POST('referenceId')) && !empty($_POST('providerType'))){
+                
+               $albumSongs =  $this->getAlbumSongs($_POST('artisttext'),$_POST('referenceId'),$_POST('providerType'));
+                if (!empty($albumSongs))
+                {
+                    foreach ($albumSongs as $value)
+                    {
+                        if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle']))
+                        {
+
+                            if ($value["Song"]["Advisory"] == 'T')
+                            {
+                                $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
+                            }
+
+                            $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                            $jsonPlayItem = json_encode($playItem);
+                            $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+                            $playListData[] = $jsonPlayItem;
+                        }
+                    }
+                }
+                if (!empty($playListData))
+                {
+                    $playList = implode(',', $playListData);
+                    if (!empty($playList))
+                    {
+                        $playList = base64_encode('[' . $playList . ']');
+                    }
+                }
+                
+                echo "success".$playList;
+                exit;
+            }else{
+                echo "error".$playList;
+                exit;
+            }
+        }
 
 
 
