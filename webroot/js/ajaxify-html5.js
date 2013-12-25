@@ -271,7 +271,7 @@
                     //$.getScript(webroot + 'css/freegal_styles.css');
                     
                     //$.getScript(scriptPath + '/js/freegal.js');
-                    $.getScript(scriptPath + '/js/site.js');
+                    $.getScript(webroot + 'js/site.js');
                     $.getScript(webroot + 'js/freegal.js');
                     //$.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(scriptPath + '/js/recent-downloads.js');
