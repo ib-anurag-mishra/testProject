@@ -169,8 +169,8 @@ $('document').ready(function()
     });
 
 
-    $('.playlist-options').on('mouseleave', function(){
-        $(this).removeClass('active');
+    $('.wishlist-popover').on('mouseleave', '.playlist-options', function(){
+        $('.playlist-options').removeClass('active');
     });
 
 
