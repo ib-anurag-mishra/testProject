@@ -1323,10 +1323,11 @@ Class ArtistsController extends AppController
                     }
                 }
                 
-                echo "success".$playList;
+                $successData = array('success' => $playList);
+                echo $successData;
                 exit;
             }else{
-                echo "error".$playList;
+                echo "error";
                 exit;
             }
         }

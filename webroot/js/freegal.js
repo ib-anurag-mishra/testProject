@@ -2044,7 +2044,7 @@ function loadAlbumData(artistName,referenceId,providerType){
         url: webroot + "artists/getAlbumData", // URL to request
         data: data, // post data
         success: function(response) {
-            alert(response);
+            alert(response['success']+response.success);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
 
