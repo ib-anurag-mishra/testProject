@@ -282,14 +282,14 @@ class SearchController extends AppController
                 
                 $arr_albumStream    =   array();
                             
-                foreach ($albums as $objKey=>$objAlbum) 
-                {                                                       
-                    $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
-                                   array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                   array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
-                           );
-
-                }
+//                foreach ($albums as $objKey=>$objAlbum) 
+//                {                                                       
+//                    $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
+//                                   array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                   array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
+//                           );
+//
+//                }
 
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
