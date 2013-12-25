@@ -1331,10 +1331,11 @@ Class ArtistsController extends AppController
                 }
                 
                 $successData = array('success' => $playList);
-                echo $successData;
+                echo json_encode($successData);
                 exit;
             }else{
-                echo "error";
+                $errorData = array('error' => 'Required parameters are missing');
+                echo json_encode($errorData);
                 exit;
             }
         }

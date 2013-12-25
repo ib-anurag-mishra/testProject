@@ -2043,11 +2043,21 @@ function loadAlbumData(artistName,referenceId,providerType){
         type: "post", // Request method: post, get
         url: webroot + "artists/getAlbumData", // URL to request
         data: data, // post data
+        dataType: "json", 
         success: function(response) {
-            alert(response['success']+response.success);
+            if(response.success){
+                playlist = base64_decode(response.success);
+                playlist = JSON.parse(playlist);
+                if (playlist.length) {
+                    pushSongs(playlist);
+                }
+            }else if(response.error){
+                console.log(response.error);
+            }
+            exit;
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-
+            console.log('Ajax call to get album songs has been failed');
         }
     });
     return false;
