@@ -169,7 +169,9 @@ $('document').ready(function()
     });
 
 
-
+    $('.playlist-options').on('mouseleave', function(){
+        $(this).removeClass('active');
+    });
 
 
 
