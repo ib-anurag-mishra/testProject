@@ -1306,15 +1306,15 @@ Class ArtistsController extends AppController
                 {
                     foreach ($albumSongs as $value)
                     {
-                        if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle']))
+                        if (!empty($value[0]['streamUrl']) || !empty($value[0]['Song']['SongTitle']))
                         {
 
-                            if ($value["Song"]["Advisory"] == 'T')
+                            if ($value[0]["Song"]["Advisory"] == 'T')
                             {
-                                $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
+                                $value[0]["Song"]["SongTitle"] = $value[0]["Song"]["SongTitle"] . ' (Explicit)';
                             }
 
-                            $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                            $playItem = array('playlistId' => 0, 'songId' => $value[0]["Song"]["ProdID"], 'providerType' => $value[0]["Song"]["provider_type"], 'label' => $value[0]['Song']['SongTitle'], 'songTitle' => $value[0]['Song']['SongTitle'], 'artistName' => $value[0]['Song']['ArtistText'], 'songLength' => $value[0]['totalseconds'], 'data' => $value[0]['streamUrl']);
                             $jsonPlayItem = json_encode($playItem);
                             $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
                             $playListData[] = $jsonPlayItem;
