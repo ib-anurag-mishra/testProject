@@ -1300,7 +1300,7 @@ Class ArtistsController extends AppController
 
         function getAlbumData(){
             Configure::write('debug', 0);
-            $albumSongs = json_decode($_POST['albumtData']);
+            $albumSongs = json_decode(base64_decode($_POST['albumtData']));
             if(!empty($albumSongs)){
                 if (!empty($albumSongs))
                 {

@@ -217,7 +217,7 @@ EOD;
 
     function getAlbumStreamLabel($albumSongs)
     {
-        $albumSongs = json_encode($albumSongs);
+        $albumSongs = base64_encode(json_encode($albumSongs));
         $str = <<<EOD
        <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
 EOD;
