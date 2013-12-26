@@ -221,8 +221,8 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
     
-    $('.genres-page .tracklist').on('mouseleave', function(){
-         $(this).find('.wishlist-popover').removeClass('active');
+    $('.genres-page .album-detail-container .tracklist-container .tracklist').on('mouseleave', function(){
+         $(this).find('.wishlist-popoverr').removeClass('active');
     });
 
     $('.news .featured .featured-grid .featured-album-detail').on('mouseenter', '.album-cover-container', function() {
