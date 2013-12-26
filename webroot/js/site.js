@@ -223,7 +223,7 @@ $('document').ready(function()
     
     $('.genres-page .album-detail-container .tracklist-container .tracklist').on('mouseleave', function(){
          $(this).find('.wishlist-popover').removeClass('active');
-    })
+    });
 
     $('.news .featured .featured-grid .featured-album-detail').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
