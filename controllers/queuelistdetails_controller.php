@@ -281,7 +281,7 @@ class QueueListDetailsController extends AppController
             $this->set('default_queue', $this->params['pass'][1]);
         }
         
-        if(count($queue_list_array)==0)
+        if(count($queue_list_array)==0 && empty($queue_list_array))
         {
                $queue_list_array = $this->Queue->getOnlyQueueDetails($this->params['pass'][0]); 
                $queue_songs_count = 0;
