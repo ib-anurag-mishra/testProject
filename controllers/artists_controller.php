@@ -1250,6 +1250,10 @@ Class ArtistsController extends AppController
                                     $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
                                     $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
                                  } 
+                            }else{
+                                $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
+                                $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+                                $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
                             }
                            //}   
                            
@@ -1296,24 +1300,30 @@ Class ArtistsController extends AppController
 
         function getAlbumData(){
             Configure::write('debug', 0);
-            $artistText = $_POST['artisttext'];
-            $referenceId = $_POST['referenceId'];
-            $providerType = $_POST['providerType'];
-            if(!empty($artistText) && !empty($referenceId) && !empty($providerType)){
-               $albumSongs =  $this->getAlbumSongs($artistText,$referenceId,$providerType,1);
+            $albumSongs = json_decode($_POST['albumtData']);
+            if(!empty($albumSongs)){
                 if (!empty($albumSongs))
                 {
                     foreach ($albumSongs as $value)
                     {
-                        if (!empty($value[0]['streamUrl']) || !empty($value[0]['Song']['SongTitle']))
+                        
+                        $filePath = shell_exec('perl files/tokengen_streaming '. $value['CdnPath']."/".$value['SaveAsName']);
+                        if(!empty($filePath))
+                         {
+                            $songPath = explode(':',$filePath);
+                            $streamUrl =  trim($songPath[1]);
+                            $value['streamUrl'] = $streamUrl;
+                            $value['totalseconds']  = $this->Streaming->getSeconds($value['FullLength_Duration']); 
+                         }                        
+                        if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle']))
                         {
 
-                            if ($value[0]["Song"]["Advisory"] == 'T')
+                            if ($value["Song"]["Advisory"] == 'T')
                             {
-                                $value[0]["Song"]["SongTitle"] = $value[0]["Song"]["SongTitle"] . ' (Explicit)';
+                                $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
                             }
 
-                            $playItem = array('playlistId' => 0, 'songId' => $value[0]["Song"]["ProdID"], 'providerType' => $value[0]["Song"]["provider_type"], 'label' => $value[0]['Song']['SongTitle'], 'songTitle' => $value[0]['Song']['SongTitle'], 'artistName' => $value[0]['Song']['ArtistText'], 'songLength' => $value[0]['totalseconds'], 'data' => $value[0]['streamUrl']);
+                            $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
                             $jsonPlayItem = json_encode($playItem);
                             $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
                             $playListData[] = $jsonPlayItem;
@@ -1327,8 +1337,7 @@ Class ArtistsController extends AppController
                     {
                         $playList = base64_encode('[' . $playList . ']');
                     }
-                }
-                
+                }                
                 $successData = array('success' => $playList);
                 echo json_encode($successData);
                 exit;

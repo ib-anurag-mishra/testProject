@@ -409,7 +409,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                         if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
                                                         {                                                          
                                                             //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
-                                                            echo $this->Queue->getAlbumStreamLabel(base64_encode($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]));
+                                                            echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                         }
                                                     }
                                                     ?> 
@@ -797,7 +797,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                 if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
                                                 {                                                         
                                                     //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
-                                                     echo $this->Queue->getAlbumStreamLabel(base64_encode($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]));
+                                                     echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                 }
                                             } 
                                             ?> 

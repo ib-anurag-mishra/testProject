@@ -2036,9 +2036,10 @@ function loadAlbumSong(albumSongs) {
 }
 
 
-function loadAlbumData(artistName,referenceId,providerType){
+function loadAlbumData(albumtData){
     
-    var data = "artisttext=" + artistName+ "&referenceId=" + referenceId + "&providerType=" + providerType;
+    //albumtData = JSON.parse(albumtData);
+    var data = "albumtData=" + albumtData;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getAlbumData", // URL to request
