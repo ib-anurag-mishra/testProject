@@ -37,7 +37,7 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
 <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
-		<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>
+<!--		<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
         <!--<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
@@ -58,7 +58,7 @@
 
         echo $javascript->link(
                 array(                    
-                    'freegal','ajaxify-html5.js' //'site.js?num=100000'
+                    'freegal','ajaxify-html5.js' ,'site.js'
                 )
         );
         
