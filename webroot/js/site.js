@@ -211,11 +211,11 @@ $('document').ready(function()
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-    
+
     $('.albums-page .album-detail-container .tracklist-container').on('mouseleave', '.tracklist', function() {
-         $(this).find('.wishlist-popover').removeClass('active');
+        $(this).find('.wishlist-popover').removeClass('active');
     });
-    
+
 
     //genres-page 
     $('.genres-page .album-detail-container').on('mouseenter', '.album-detail', function() {
@@ -227,15 +227,15 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
- $(document).on('mouseleave', '.search-page .tracklist-container .tracklist', function() {
+    $(document).on('mouseleave', '.search-page .tracklist-container .tracklist', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
     $(document).on('mouseleave', '.genres-page .album-detail-container .album-detail .album-cover-image', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
-    
-     $(document).on('mouseleave', '.genres-page .album-detail-container .tracklist-container .tracklist', function() {
+
+    $(document).on('mouseleave', '.genres-page .album-detail-container .tracklist-container .tracklist', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
@@ -547,6 +547,7 @@ $('document').ready(function()
 
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.download-now-button').css({opacity: 0});
+        $(this).find('.wishlist-popover').removeClass('active');
     });
 
     $('.top-videos-scrollable .video-thumb-container').on('mouseenter', function() {
@@ -559,7 +560,7 @@ $('document').ready(function()
     $('.top-videos-scrollable .video-thumb-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.download-now-button').css({opacity: 0});
-
+        $(this).find('.wishlist-popover').removeClass('active');
 
     });
 
