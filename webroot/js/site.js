@@ -221,7 +221,7 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
     
-    $('.genres-page .album-detail-container .tracklist-container .tracklist').on('mouseleave', function(){
+    $('.genres-page .tracklist').on('mouseleave', function(){
          $(this).find('.wishlist-popover').removeClass('active');
     });
 
