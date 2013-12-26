@@ -795,7 +795,7 @@ function Get_Sales_date($sales_date_array, $country)
                                             {
                                                 echo 123; 
                                                 if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
-                                                {                                                          
+                                                {     echo 789;                                                     
                                                     //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                      echo $this->Queue->getAlbumStreamLabel(base64_encode($palbum->ArtistText),$palbum->ReferenceID,base64_encode($palbum->provider_type));
                                                 }
