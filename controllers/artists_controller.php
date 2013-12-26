@@ -1306,23 +1306,23 @@ Class ArtistsController extends AppController
                 foreach ($albumSongs as $value)
                 {
 
-                    $filePath = shell_exec('perl files/tokengen_streaming '. $value['CdnPath']."/".$value['SaveAsName']);
+                    $filePath = shell_exec('perl files/tokengen_streaming '. $value->CdnPath."/".$value->SaveAsName);
                     if(!empty($filePath))
                      {
                         $songPath = explode(':',$filePath);
                         $streamUrl =  trim($songPath[1]);
                         $value['streamUrl'] = $streamUrl;
-                        $value['totalseconds']  = $this->Streaming->getSeconds($value['FullLength_Duration']); 
+                        $value['totalseconds']  = $this->Streaming->getSeconds($value->FullLength_Duration); 
                      }                        
-                    if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle']))
+                    if (!empty($value->streamUrl) || !empty($value->Song->SongTitle))
                     {
 
-                        if ($value["Song"]["Advisory"] == 'T')
+                        if ($value->Song->Advisory == 'T')
                         {
-                            $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
+                            $value->Song->SongTitle = $value->Song->SongTitle . ' (Explicit)';
                         }
 
-                        $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                        $playItem = array('playlistId' => 0, 'songId' => $value->Song->ProdID, 'providerType' => $value->Song->provider_type, 'label' => $value->Song->SongTitle, 'songTitle' => $value->Song->SongTitle, 'artistName' => $value->Song->ArtistText, 'songLength' => $value->totalseconds, 'data' => $value->streamUrl);
                         $jsonPlayItem = json_encode($playItem);
                         $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
                         $playListData[] = $jsonPlayItem;
