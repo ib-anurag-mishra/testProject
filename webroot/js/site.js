@@ -221,7 +221,11 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
-    $(document).on('mouseleave', '.genres-page .album-detail-container .tracklist-container .tracklist', function() {
+    $(document).on('mouseleave', '.search-page .tracklist-container .tracklist', function() {
+        $(this).find('.wishlist-popover').removeClass('active');
+    });
+    
+     $(document).on('mouseleave', '.genres-page .album-detail-container .tracklist-container .tracklist', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
