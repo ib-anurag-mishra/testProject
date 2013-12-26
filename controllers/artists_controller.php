@@ -1765,7 +1765,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ),'order'=>array('FIELD(Album.ProdID, '.$val.') ASC'), 'cache' => 'yes', 'chk' => 2
+                                    ),'order'=>array('FIELD(Album.ProdID, '.$val.') ASC'), 'limit'=>'12', 'cache' => 'yes', 'chk' => 2
                             );
             
                       
