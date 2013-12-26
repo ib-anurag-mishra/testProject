@@ -209,7 +209,13 @@ $('document').ready(function()
     $('.albums-page .album-detail-container').on('mouseleave', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.wishlist-popover').removeClass('active');
     });
+    
+    $('.albums-page .album-detail-container .tracklist-container').on('mouseleave', '.tracklist', function() {
+         $(this).find('.wishlist-popover').removeClass('active');
+    });
+    
 
     //genres-page 
     $('.genres-page .album-detail-container').on('mouseenter', '.album-detail', function() {
@@ -221,7 +227,11 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
-    $(document).on('mouseleave', '.search-page .tracklist-container .tracklist', function() {
+ $(document).on('mouseleave', '.search-page .tracklist-container .tracklist', function() {
+        $(this).find('.wishlist-popover').removeClass('active');
+    });
+
+    $(document).on('mouseleave', '.genres-page .album-detail-container .album-detail .album-cover-image', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
     
