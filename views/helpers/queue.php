@@ -215,10 +215,10 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getAlbumStreamLabel($artistText,$referenceId,$providerType)
+    function getAlbumStreamLabel($albumSongs)
     {
         $str = <<<EOD
-       <a onclick="javascript:loadAlbumData('$artistText',$referenceId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+       <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
 EOD;
 
         return $str;
