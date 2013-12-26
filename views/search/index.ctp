@@ -406,7 +406,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                             
                                                     if ($this->Session->read("patron"))
                                                     {
-                                                        if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
+                                                        if ($this->Session->read('library_type') == 2)
                                                         {                                                          
                                                             //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                             echo $this->Queue->getAlbumStreamLabel(base64_encode($palbum->ArtistText),$palbum->ReferenceID,base64_encode($palbum->provider_type));
@@ -793,13 +793,13 @@ function Get_Sales_date($sales_date_array, $country)
                                             <?php   
                                             if ($this->Session->read("patron"))
                                             {
-                                                echo 123; 
-                                                if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
-                                                {     echo 789;                                                     
+                                                
+                                                if ($this->Session->read('library_type') == 2)
+                                                {                                                         
                                                     //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
                                                      echo $this->Queue->getAlbumStreamLabel(base64_encode($palbum->ArtistText),$palbum->ReferenceID,base64_encode($palbum->provider_type));
                                                 }
-                                            } echo 456;
+                                            } 
                                             ?> 
                                         </div>
                                         <div class="album-title">
