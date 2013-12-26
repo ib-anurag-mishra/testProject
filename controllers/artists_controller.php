@@ -1311,8 +1311,8 @@ Class ArtistsController extends AppController
                      {
                         $songPath = explode(':',$filePath);
                         $streamUrl =  trim($songPath[1]);
-                        $value['streamUrl'] = $streamUrl;
-                        $value['totalseconds']  = $this->Streaming->getSeconds($value->FullLength_Duration); 
+                        $value->streamUrl = $streamUrl;
+                        $value->totalseconds  = $this->Streaming->getSeconds($value->FullLength_Duration); 
                      }                        
                     if (!empty($value->streamUrl) || !empty($value->Song->SongTitle))
                     {
