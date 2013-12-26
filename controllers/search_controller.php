@@ -215,16 +215,16 @@ class SearchController extends AppController
                         //echo "here1 : ".date('d-m-Y h:i:s');
                         // echo "Group Search for Albums Ended at ".time();
                         
-                          $arr_albumStream    =   array();
-                            
-                        foreach ($albums as $objKey=>$objAlbum) 
-                        {                                                       
-                            $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
-                                           array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                           array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
-                                   );
-                            
-                        }
+//                          $arr_albumStream    =   array();
+//                            
+//                        foreach ($albums as $objKey=>$objAlbum) 
+//                        {                                                       
+//                            $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
+//                                           array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                           array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
+//                                   );
+//                            
+//                        }
                       //  echo "<pre>"; print_r($albums);
                       //echo "<br/>here2 : ".date('d-m-Y h:i:s'); exit;
                         $this->set('albumData', $albums);
