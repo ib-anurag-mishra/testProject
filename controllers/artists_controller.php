@@ -1014,9 +1014,6 @@ Class ArtistsController extends AppController
 	*/
 	function getAlbumSongs($id=null,$album=null, $provider=null, $ajax= null)
 	{
-            
-            
-            if(empty($ajax)){
                 if(count($this -> params['pass']) > 1) {
                         $count = count($this -> params['pass']);
                         $id = $this -> params['pass'][0];
@@ -1034,12 +1031,6 @@ Class ArtistsController extends AppController
                                 $provider = "";
                         }
                 }
-            }else{
-                
-                $provider = base64_decode($provider);
-                
-            }
-
 		// echo base64_decode($id) . $album;
 		// exit;
 		$country = $this->Session->read('territory');
@@ -1244,14 +1235,16 @@ Class ArtistsController extends AppController
                                         
                             //if($this->Session->read('library_type')==2)
                            //{
-                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
-                            if(!empty($filePath))
-                             {
-                                $songPath = explode(':',$filePath);
-                                $streamUrl =  trim($songPath[1]);
-                                $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
-                                $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
-                             } 
+                            if(empty($ajax)){
+                                $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
+                                if(!empty($filePath))
+                                 {
+                                    $songPath = explode(':',$filePath);
+                                    $streamUrl =  trim($songPath[1]);
+                                    $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
+                                    $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
+                                 } 
+                            }
                            //}   
                            
                            
