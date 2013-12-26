@@ -1014,22 +1014,28 @@ Class ArtistsController extends AppController
 	*/
 	function getAlbumSongs($id=null,$album=null, $provider=null, $ajax= null)
 	{
-                if(count($this -> params['pass']) > 1) {
-                        $count = count($this -> params['pass']);
-                        $id = $this -> params['pass'][0];
-                        for($i=1;$i<$count-1;$i++) {
-                                if(!is_numeric($this -> params['pass'][$i])) {
-                                        $id .= "/".$this -> params['pass'][$i];
-                                }
-                        }
-                        if(is_numeric($this -> params['pass'][$count - 2])) {
-                                $album = $this -> params['pass'][$count - 2];
-                                $provider = base64_decode($this -> params['pass'][$count - 1]);
-                        }
-                        else {
-                                $album = "";
-                                $provider = "";
-                        }
+                if(empty($ajax)){                
+                    if(count($this -> params['pass']) > 1) {
+                            $count = count($this -> params['pass']);
+                            $id = $this -> params['pass'][0];
+                            for($i=1;$i<$count-1;$i++) {
+                                    if(!is_numeric($this -> params['pass'][$i])) {
+                                            $id .= "/".$this -> params['pass'][$i];
+                                    }
+                            }
+                            if(is_numeric($this -> params['pass'][$count - 2])) {
+                                    $album = $this -> params['pass'][$count - 2];
+                                    $provider = base64_decode($this -> params['pass'][$count - 1]);
+                            }
+                            else {
+                                    $album = "";
+                                    $provider = "";
+                            }
+                    }            
+                }else{
+                
+                    $provider = base64_decode($provider);
+                
                 }
 		// echo base64_decode($id) . $album;
 		// exit;
