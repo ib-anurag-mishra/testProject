@@ -1089,16 +1089,16 @@ Class ArtistsController extends AppController
 			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").")");
 		}
                 $id = str_replace('@','/',$id);
-		$this->layout = 'home';
-		$this->set('artistName',base64_decode($id));
-		$this->set('album',$album);
-		$patId = $this->Session->read('patron');
-		$libId = $this->Session->read('library');
+//		$this->layout = 'home';
+//		$this->set('artistName',base64_decode($id));
+//		$this->set('album',$album);
+//		$patId = $this->Session->read('patron');
+//		$libId = $this->Session->read('library');
 		//$country = "'".$country."'";
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
+//		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+//		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+//		$this->set('libraryDownload',$libraryDownload);
+//		$this->set('patronDownload',$patronDownload);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Album.Advisory' => 'F');
 		}
@@ -1278,15 +1278,15 @@ Class ArtistsController extends AppController
                        
                         
 		}
-	    $this->set('albumData', $albumData);
-	    if(isset($albumData[0]['Song']['ArtistURL'])) {
-	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
-	    }else {
-	       $this->set('artistUrl', "N/A");
-	    }
-		$array = array();
-		$pre = '';
-		$res = array();
+//	    $this->set('albumData', $albumData);
+//	    if(isset($albumData[0]['Song']['ArtistURL'])) {
+//	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
+//	    }else {
+//	       $this->set('artistUrl', "N/A");
+//	    }
+//		$array = array();
+//		$pre = '';
+//		$res = array();
                 
                
                 
@@ -1673,7 +1673,7 @@ Class ArtistsController extends AppController
         
 	function album($id=null,$album=null,$provider=null)
 	{
-            Configure::write('debug', 2);
+            //Configure::write('debug', 2);
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
                     $id = $this -> params['pass'][0];
@@ -1793,11 +1793,11 @@ Class ArtistsController extends AppController
             if($libType == 2){
                 foreach ($albumData as $key => $value) 
                 {
-                    $albumData[$key]['albumSongs'] = $this->requestAction(
-                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
-                                            );
-                    //$albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type']),1);
+//                    $albumData[$key]['albumSongs'] = $this->requestAction(
+//                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
+//                                            );
+                    $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type']),1);
 
                 }
             }
