@@ -15160,10 +15160,30 @@ img {
                                                                         top: 0;
                                                                         width: 145px;
 
-                                                                        ul li {
-                                                                            float: none;
-                                                                            padding: 0;
-                                                                        }
+                                                                        &.active {							
+                                                                                    display: block;
+                                                                            }
+
+                                                                            ul {
+                                                                                
+                                                                                height: auto;
+                                                                                width: 145px;
+                                                                                overflow-x: hidden;
+                                                                                
+                                                                                    li {
+                                                                                            float: none;
+                                                                                            padding: 0;
+
+                                                                                            a {
+                                                                                                    padding: 5px 5px 5px 10px;
+                                                                                                    text-decoration: none;
+
+                                                                                                    &:hover {
+                                                                                                            text-decoration: none;
+                                                                                                    }
+                                                                                            }
+                                                                                    }
+                                                                            }
                                                                     }
                                                             }
 
