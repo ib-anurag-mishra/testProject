@@ -1965,10 +1965,10 @@ Class ReportsController extends AppController {
                 $this->set('downloads', $arr);
                 $this->set('errors', $this->Report->invalidFields());
             }
-            $this->set('formAction', 'admin_index');
+            $this->set('formAction', 'admin_streamingreport');
             $this->set('getData', $this->data);
         } else {
-            $this->set('formAction', 'admin_index');
+            $this->set('formAction', 'admin_streamingreport');
             $this->set('library_id', '');
             $arr = array();
             $this->set('getData', $arr);
