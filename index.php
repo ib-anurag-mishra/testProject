@@ -1,5 +1,5 @@
 <?php
-echo "Hello";exit;
+
 /**
  * PHP versions 4 and 5
  *
