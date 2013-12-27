@@ -1668,5 +1668,25 @@ Class ReportsController extends AppController
             $this->set('errors', $arr);
         }
 	}
+        
+        /*
+        Function Name : admin_streamingreport
+        Desc : actions for streaming report page
+       */
+       function admin_streamingreport() {
+           if(isset($this->data)) {
+               Configure::write('debug',0); // Otherwise we cannot use this method while developing
+               $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
+               if($this->data['downloadType'] == 'pdf') {
+                   $this->layout = 'pdf';
+                   $this->render("/reports/admin_streamingReportAsPdf");
+               }
+               elseif($this->data['downloadType'] == 'csv') {
+                   $this->layout = false;
+                   $this->render("/reports/admin_streamingReportAsCsv");
+               }
+           }
+           $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
+       }
 }
 ?>
