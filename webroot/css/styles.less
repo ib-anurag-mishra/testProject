@@ -15942,7 +15942,7 @@ img {
                                                                     }
 
                                                                     .playlist-options{
-                                                                            background: none repeat scroll 0 0 #FFFFFF;
+                                                                         background: none repeat scroll 0 0 #FFFFFF;
                                                                             box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
                                                                             display: none;
                                                                             height: 205px;
@@ -15953,6 +15953,26 @@ img {
                                                                             top: 0;
                                                                             width: 145px;
                                                                             z-index: 100;
+
+                                                                            &.active {							
+                                                                                    display: block;
+                                                                            }
+
+                                                                            ul {
+                                                                                    li {
+                                                                                            float: none;
+                                                                                            padding: 0;
+
+                                                                                            a {
+                                                                                                    padding: 5px 5px 5px 10px;
+                                                                                                    text-decoration: none;
+
+                                                                                                    &:hover {
+                                                                                                            text-decoration: none;
+                                                                                                    }
+                                                                                            }
+                                                                                    }
+                                                                            }
                                                                     }
                                                             }
                                                         }
