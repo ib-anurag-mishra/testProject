@@ -820,6 +820,7 @@ Class ArtistsController extends AppController
 //                                array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
 //                        );
                         $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type']));
+                        
                     }
                  }
                
@@ -1791,10 +1792,11 @@ Class ArtistsController extends AppController
             if($libType == 2){
                 foreach ($albumData as $key => $value) 
                 {
-                    $albumData[$key]['albumSongs'] = $this->requestAction(
-                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
-                                            );    
+//                    $albumData[$key]['albumSongs'] = $this->requestAction(
+//                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
+//                                            );
+                    $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type']));
 
                 }
             }
