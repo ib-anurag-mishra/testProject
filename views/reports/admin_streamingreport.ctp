@@ -120,14 +120,14 @@ if (empty($getData)) {
                             </td>
                         </tr>
                         <tr><td colspan="6">&nbsp;</td></tr>
-                        <tr><th colspan="6" align="center">Library Remaining Downloads</th></tr>
+                        <tr><th colspan="6" align="center">Library Remaining Stream</th></tr>
                         <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>Library Name</th>
-                                        <th>Number of Remaining Downloads</th>
+                                        <th>Number of Remaining Stream</th>
                                     </tr>
                                     <?php
                                     $i = 1;
@@ -159,13 +159,13 @@ if (empty($getData)) {
                         <?php if (empty($arr_all_library_downloads)) { ?>
 
                             <tr>
-                                <th colspan="6" align="center">Total Downloads during Reporting Period</th>
+                                <th colspan="6" align="center">Total Streamed during Reporting Period</th>
                             </tr>
                             <tr>
                                 <td colspan="6" align="center">
                                     <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                         <tr>
-                                            <th>Total Downloads</th>
+                                            <th>Total Streamed</th>
                                         </tr>
                                         <tr>
                                             <td align="center"><?php echo count($downloads); ?></td>
@@ -178,13 +178,13 @@ if (empty($getData)) {
                             <tr>
 
                                 <td colspan="6" align="center">
-                                    <div style="padding-bottom: 5px;"> <b> Total Downloads during Reporting Period </b> </div>
+                                    <div style="padding-bottom: 5px;"> <b> Total Streamed during Reporting Period </b> </div>
 
                                     <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
                                         <tr>
                                             <th align="center"> &nbsp; </th>
                                             <th align="center"> Library name </th>
-                                            <th align="center"> Total Downloads </th>
+                                            <th align="center"> Total Streamed </th>
                                         </tr>
 
                                         <?php
@@ -213,7 +213,7 @@ if (empty($getData)) {
                             <tr>
                                 <td colspan="6" align="center">
                                     <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                        <tr><th>Total Number of Patrons who have downloaded during Reporting Period</th></tr>
+                                        <tr><th>Total Number of Patrons who have streamed during Reporting Period</th></tr>
                                         <tr><td align="center"><?php echo count($patronBothDownloads); ?></td></tr>
                                     </table>
                                 </td>
@@ -221,7 +221,7 @@ if (empty($getData)) {
     <?php } else { ?>         
                             <tr>
                                 <td colspan="6" align="center">
-                                    <div style="padding-bottom: 5px;"> <b> Total Number of Patrons who have downloaded during Reporting Period </b> </div>
+                                    <div style="padding-bottom: 5px;"> <b> Total Number of Patrons who have streamed during Reporting Period </b> </div>
 
                                     <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
                                         <tr>
@@ -249,7 +249,7 @@ if (empty($getData)) {
 
 
                         <tr><td colspan="6">&nbsp;</td></tr>
-                        <tr><th colspan="6" align="center">Library Downloads Report</th></tr>
+                        <tr><th colspan="6" align="center">Library Streaming Report</th></tr>
                         <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
@@ -259,7 +259,7 @@ if (empty($getData)) {
                                         <th>Patron ID</th>
                                         <th>Artists Name</th>
                                         <th>Track Title</th>
-                                        <th>Download</th>
+                                        <th>Streamed</th>
                                     </tr>
                                     <?php
                                     $i = 1;
@@ -290,7 +290,7 @@ if (empty($getData)) {
                         </tr>
 
                         <tr><td colspan="6">&nbsp;</td></tr>
-                        <tr><th colspan="6" align="center">Patron Downloads Report</th></tr>
+                        <tr><th colspan="6" align="center">Patron Streamed Report</th></tr>
                         <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
@@ -298,7 +298,7 @@ if (empty($getData)) {
                                         <th>&nbsp;</th>
                                         <th>Patron ID</th>
                                         <th>Library Name</th>
-                                        <th>Total Number of Tracks Downloaded</th>
+                                        <th>Total Number of Tracks Streamed</th>
                                     </tr>
     <?php
     $i = 1;
@@ -326,14 +326,14 @@ if (empty($getData)) {
                         </tr>
                         <tr><td colspan="6">&nbsp;</td></tr>
                         
-                        <tr><th colspan="6" align="center">Genres Downloads Report</th></tr>
+                        <tr><th colspan="6" align="center">Genres Streamed Report</th></tr>
                         <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>Genre Name</th>
-                                        <th>Total Number of Tracks Downloaded</th>
+                                        <th>Total Number of Tracks Streamed</th>
                                     </tr>
     <?php
     $i = 1;
@@ -358,7 +358,7 @@ if (empty($getData)) {
                     } elseif (empty($downloads) && empty($errors) && isset($this->data)) {
                         ?>
                         <tr>
-                            <td colspan="6" align="center"><label>There are not downloads found for the selected criteria.</label></td>
+                            <td colspan="6" align="center"><label>There are no streaming found for the selected criteria.</label></td>
                         </tr>
     <?php
 }
