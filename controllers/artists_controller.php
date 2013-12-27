@@ -819,7 +819,7 @@ Class ArtistsController extends AppController
 //                                array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 //                                array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
 //                        );
-                        //$albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type']),1);
+                        $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type']),1);
                         
                     }
                  }
@@ -1793,11 +1793,12 @@ Class ArtistsController extends AppController
             if($libType == 2){
                 foreach ($albumData as $key => $value) 
                 {
-//                    $albumData[$key]['albumSongs'] = $this->requestAction(
-//                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-//                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
-//                                            );
-                   $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type']),1);
+                    $albumData[$key]['albumSongs'] = $this->requestAction(
+                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
+                                            );
+                    //$albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type']),1);
+
                 }
             }
                  
