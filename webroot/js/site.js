@@ -24,20 +24,7 @@
 
 }(jQuery));
 
-
-
-
-
-
-
-
-
-
-
 /* end lazyload initalizations */
-
-
-
 
 $('document').ready(function()
 {
@@ -795,6 +782,10 @@ $('document').ready(function()
 
         }
 
+    });
+    
+    $(document).on('scroll' , '.artist-page .album-shadow-container .album-scrollable',function(e){
+        alert('scrolled..');
     });
     /* end artist page */
 
