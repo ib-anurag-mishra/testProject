@@ -819,7 +819,7 @@ Class ArtistsController extends AppController
 //                                array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 //                                array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
 //                        );
-                        $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type']),1);
+                        //$albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type']),1);
                         
                     }
                  }
