@@ -784,7 +784,10 @@ $('document').ready(function()
 
     });
     
-   
+
+    $(document).on('scroll','.artist-page .album-shadow-container .album-scrollable',function(e){
+        alert('scrolled..');
+    });
     /* end artist page */
 
 
