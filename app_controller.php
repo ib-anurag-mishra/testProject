@@ -23,7 +23,7 @@ class AppController extends Controller
                 // $this->Cookie->write('UrlReferer',$_SERVER['REQUEST_URI']);	
             }
         }
-        $this->switchCpuntriesTable();
+        //$this->switchCpuntriesTable();
         if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url'))
         {
             $this->redirect(Configure::read('SiteSettings.site_offline_url'));
@@ -81,6 +81,7 @@ class AppController extends Controller
                 $this->Session->write("library_type", '1');          
             }            
         }
+        $this->switchCpuntriesTable();
         if ((Cache::read('maintainLatestDownload')) === false)
         {
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
