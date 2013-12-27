@@ -1,6 +1,6 @@
 <?php
 $this->pageTitle = 'Reports';
-echo $this->Form->create('Report', array('action' => $formAction));
+//echo $this->Form->create('Report', array('action' => $formAction));
 if (empty($getData)) {
     $getData['Report']['library_id'] = "all";
     $getData['Report']['reports_daterange'] = "day";
