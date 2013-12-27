@@ -17,7 +17,7 @@ Class ReportsController extends AppController {
 
     function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('admin_consortium');
+        $this->Auth->allow('admin_consortium','admin_streamingreport');
     }
 
     /*
