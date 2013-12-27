@@ -265,6 +265,13 @@ $('document').ready(function()
     });
 
 
+$('.search-page .advanced-search-results-albums .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable .album-cover-container').on('mouseenter' , '.add-to-playlist' , function(){
+    $(this).find('.playlist-options').addClass('active');
+});
+
+
+
+
 
 
     $('.add-to-queue').on('mouseenter', function() {
