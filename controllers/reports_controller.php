@@ -1693,17 +1693,17 @@ Class ReportsController extends AppController {
                 if ($this->data['Report']['reports_daterange'] == 'day') {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
-                    $downloads = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $downloads = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
 
                     $arr_all_library_downloads = array();
                     if ($library_id == "all") {
-                        $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsDay($library_id, $this->data['Report']['date'], $territory);
+                        $arr_all_library_downloads = $this->StreamingHistory->getAllLibraryStreamingDuringReportingPeriod($library_id, $this->data['Report']['date'], $territory);
                     }
                    
                     
-                    $patronDownloads = $this->Downloadpatron->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $patronDownloads = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory);
                     if ($library_id != "all") {
-                        $patronBothDownloads = $this->Downloadpatron->getDaysBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                        $patronBothDownloads = $this->StreamingHistory->getDaysBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     }
                     
                     
