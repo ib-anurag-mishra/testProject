@@ -290,7 +290,7 @@ if (empty($getData)) {
                         </tr>
 
                         <tr><td colspan="6">&nbsp;</td></tr>
-                        <tr><th colspan="6" align="center">Patron Streamed Report</th></tr>
+                        <tr><th colspan="6" align="center">Patron Streaming Report</th></tr>
                         <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
@@ -326,7 +326,7 @@ if (empty($getData)) {
                         </tr>
                         <tr><td colspan="6">&nbsp;</td></tr>
                         
-                        <tr><th colspan="6" align="center">Genres Streamed Report</th></tr>
+                        <tr><th colspan="6" align="center">Genres Streaming Report</th></tr>
                         <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
