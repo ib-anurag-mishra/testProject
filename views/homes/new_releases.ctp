@@ -19,6 +19,11 @@
                      $count  =   1;           
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_albums as $key => $value){
+					
+					if($count > 100)
+					{
+						break;
+					}
                                             
                                         //hide song if library block the explicit content
                                         if(($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] =='T')) {
