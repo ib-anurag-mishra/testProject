@@ -203,7 +203,7 @@ class SearchController extends AppController
 
             if (!empty($type) && !($type == 'all'))
             {
-
+echo $typeVar;
                 switch ($typeVar)
                 {
                     case 'album':
