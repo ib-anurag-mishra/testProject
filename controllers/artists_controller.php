@@ -1895,6 +1895,11 @@ Class ArtistsController extends AppController
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
         
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+        
         
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
