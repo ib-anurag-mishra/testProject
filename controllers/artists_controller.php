@@ -1903,7 +1903,10 @@ Class ArtistsController extends AppController
 
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
-            'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
+            'fields' => array(
+                'DISTINCT Song.ReferenceID',
+                'Song.provider_type',
+                'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode($id),
                 'Song.DownloadStatus' => 1,
                 "Song.Sample_FileID != ''",
@@ -1911,9 +1914,13 @@ Class ArtistsController extends AppController
                 'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
-                'Country' => array('fields' => array('Country.Territory'))),
+                'Country' => array(
+                    'fields' => array('Country.Territory')
+                )),
             'recursive' => 0,
-            'order' => array('Country.SalesDate DESC'))
+            'order' => array(
+                'Country.SalesDate DESC'
+            ))
         );
 
         $val = '';
@@ -1976,11 +1983,11 @@ Class ArtistsController extends AppController
                         )
                     ),
                     'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
-                    
         );
 
         $this->Album->recursive = 2;
-        $albumData = $this->paginate('Album'); //getting the Albums for the artist
+        //$albumData = $this->paginate('Album'); //getting the Albums for the artist
+        $albumData = $this->paginate();
 
         if ($libType == 2)
         {
