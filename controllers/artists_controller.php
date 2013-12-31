@@ -1861,12 +1861,12 @@ Class ArtistsController extends AppController
     function album($id = null, $album = null, $provider = null)
     {
         Configure::write('debug', 2);
-        
+
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $libType = $this->Session->read('library_type');
-        
+
 
         if ($this->Session->read('block') == 'yes')
         {
@@ -1876,7 +1876,7 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
-        
+
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
@@ -1889,11 +1889,25 @@ Class ArtistsController extends AppController
                 }
             }
         }
-        
-          $id = str_replace('@', '/', $id);
-          
-          echo "<pre>";
-          print_r(base64_decode($id));
+
+        $id = str_replace('@', '/', $id);
+        $this->Song->Behaviors->attach('Containable');
+        $songs = $this->Song->find('all', array(
+            'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
+            'conditions' => array('Song.ArtistText' => base64_decode($id),
+                'Song.DownloadStatus' => 1,
+                "Song.Sample_FileID != ''",
+                "Song.FullLength_FIleID != ''",
+                'Country.Territory' => $country, $cond,
+                'Song.provider_type = Country.provider_type'),
+            'contain' => array(
+                'Country' => array('fields' => array('Country.Territory'))),
+            'recursive' => 0,
+            'order' => array('Country.SalesDate DESC')));
+
+        echo "<pre>";
+        print_r($songs);
+        die;
     }
 
     function album_ajax($id = null, $album = null, $provider = null)
