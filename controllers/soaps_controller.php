@@ -391,7 +391,8 @@ class SoapsController extends AppController {
 						)
 					),
           'order' => array('FIELD(Album.ProdID, '.$val.') ASC'), 
-          'chk' => 2 
+          'chk' => 2,
+          'cache' => 'yes'
 		  ));
       
       if(empty($albumData)) {
@@ -1099,6 +1100,8 @@ STR;
 									array('Song.ReferenceID' => $prodId),
 									array('Song.provider_type = Country.provider_type'),
 									array('Country.DownloadStatus' => 1),
+									array('Country.StreamingStatus' => 1),
+									array('Country.StreamingSalesDate < NOW()'),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
 									array("Song.provider_type" => $provider_type),
@@ -1284,7 +1287,10 @@ STR;
     $downloadCount = $this->getTotalDownloadCound($libraryId, $patronId);
     
     $this->Library->recursive = -1;
-    $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libraryId)));
+    $libraryDetails = $this->Library->find('first', array(
+      'fields' => array('library_user_download_limit'),
+      'conditions' => array('id' => $libraryId),
+    ));
 
     $wishlist = 0;
     
@@ -5837,10 +5843,6 @@ STR;
     for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
       
       if(!(empty($data[$cnt]['QueueList']['queue_name']))) { 
-
-       //if(0 == $this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
-          
-          //if(1 == $this->getPlayButtonStatus($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) {
             
             $obj = new QueueDetailDataType;
         
@@ -5865,8 +5867,6 @@ STR;
               
             $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
           
-         // } 
-       // }  
       }     
     }
     
