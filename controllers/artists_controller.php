@@ -1982,7 +1982,10 @@ Class ArtistsController extends AppController
                             ),
                         )
                     ),
-                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
+                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+                    'limit'=>'5', 
+                    'cache' => 'yes', 
+                    'chk' => 2
         );
 
         $this->Album->recursive = 2;
