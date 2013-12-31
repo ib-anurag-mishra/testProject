@@ -1085,7 +1085,6 @@ STR;
     );
    
 
-    
     if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
 			$cond = array('Song.Advisory' => 'F');
 		}
