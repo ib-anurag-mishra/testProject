@@ -80,9 +80,9 @@
         $ieVersion = ieversion();
         ?>
     </div>
-    
+
     <br class="clr">
-    
+
     <header class="clearfix">
         <?php
         if (isset($artisttitle))
@@ -92,6 +92,221 @@
         <?php } ?>
         <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
     </header>
-    
-    
+
+
+
+
+    <!-- Videos Section  -->
+    <?php
+    if (!empty($artistVideoList))
+    {
+        ?>
+        <h3>Videos</h3>
+        <div class="videos-shadow-container">
+            <div class="videos-scrollable horiz-scroll">
+                <ul style="width:15000px;">
+                    <?php
+                    foreach ($artistVideoList as $key => $value)
+                    {
+                        ?>  
+                        <li>
+
+                            <div class="video-container">
+                                <a href="/videos/details/<?php echo $value["Video"]["ProdID"]; ?>">                                                        
+                                    <img src="<?php echo trim($value['videoAlbumImage']); ?>" alt="jlo" width="272" height="162"  />
+                                </a>                                                  
+                                <?php
+                                if ($this->Session->read('patron'))
+                                {
+                                    if ($value['Country']['SalesDate'] <= date('Y-m-d'))
+                                    {
+
+                                        if ($libraryDownload == '1' && $patronDownload == '1')
+                                        {
+                                            $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
+                                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+                                            $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            if ($downloadsUsed > 0)
+                                            {
+                                                $value['Video']['status'] = 'avail';
+                                            }
+                                            else
+                                            {
+                                                $value['Video']['status'] = 'not';
+                                            }
+                                            if ($value['Video']['status'] != 'avail')
+                                            {
+                                                ?>
+                                                <span class="top-100-download-now-button">
+                                                    <form method="Post" id="form<?php echo $value['Video']['ProdID']; ?>" action="/videos/download" class="suggest_text1">
+                                                        <input type="hidden" name="ProdID" value="<?php echo $value['Video']['ProdID']; ?>" />
+                                                        <input type="hidden" name="ProviderType" value="<?php echo $value['Video']['provider_type']; ?>" />
+                                                        <span class="beforeClick" id="download_video_<?php echo $value['Video']['ProdID']; ?>">
+                                                            <![if !IE]>
+                                                            <a class="no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthers("<?php echo $value['Video']['ProdID']; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $value['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
+                                                            <![endif]>
+                                                            <!--[if IE]>
+                                                                    <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE('<?php echo $value['Video']['ProdID']; ?>','0','<?php echo $value['Video']['provider_type']; ?>');" href="<?php echo trim($finalVideoUrl); ?>"><?php __('Download Now'); ?></a></label>
+                                                            <![endif]-->
+                                                        </span>
+                                                        <span class="afterClick" id="vdownloading_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __('Please Wait...&nbsp&nbsp'); ?></label></span>
+                                                        <span id="vdownload_loader_<?php echo $value['Video']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                                    </form>
+                                                </span>
+                                                <?php
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                <a class="top-100-download-now-button" href='/homes/my_history'><label class="top-10-download-now-button" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
+                                                <?php
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            if ($libraryDownload != '1')
+                                            {
+                                                $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                                                $wishlistCount = $wishlist->getWishlistCount();
+                                                if ($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount)
+                                                {
+                                                    ?> 
+                                                    <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?></a>
+                                                    <?php
+                                                }
+                                                else
+                                                {
+                                                    $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
+                                                    if ($wishlistInfo == 'Added To Wishlist')
+                                                    {
+                                                        ?> 
+                                                        <a class="top-100-download-now-button"  href="javascript:void(0);"><?php __("Added To Wishlist"); ?></a>
+                                                        <?php
+                                                    }
+                                                    else
+                                                    {
+                                                        ?>
+                                                        <span class="beforeClick" id="wishlist<?php echo $value['Video']['ProdID']; ?>"><a class="top-100-download-now-button" href="JavaScript:void(0);" onclick="addToWishlist('<?php echo $value['Video']['ProdID']; ?>', '<?php echo $value['Video']['provider_type']; ?>');"><?php __("Add To Wishlist"); ?></a></span><span id="wishlist_loader_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                                                        <span class="afterClick" id="downloading_<?php echo $value['Video']['ProdID']; ?>" style="display:none;"><label class="top-10-download-now-button"><?php __("Please Wait..."); ?></label></span>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?></a>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
+                                            if (isset($value['Country']['SalesDate']))
+                                            {
+                                                echo date("F d Y", strtotime($value['Country']['SalesDate']));
+                                            }
+                                            ?> )'><?php __("Coming Soon"); ?></span></a>
+                                            <?php
+                                        }
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                    <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
+
+
+                                    <?php
+                                }
+                                ?>
+                                <!-- <a class="top-100-download-now-button" href="javascript:void(0)">Download Now</a> -->
+
+
+                                <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                    ?> 
+
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
+
+                                    <div class="wishlist-popover">
+                                        <?php
+                                        $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
+
+                                        if ($wishlistInfo == 'Added To Wishlist')
+                                        {
+                                            ?> 
+                                            <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added To Wishlist"); ?></a>
+                                            <?php
+                                        }
+                                        else
+                                        {
+                                            ?>
+
+                                            <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>">
+                                                <a class="add-to-wishlist" href='JavaScript:void(0);' 
+                                                   onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>", "<?php echo $value["Video"]["provider_type"]; ?>");'>
+                                                       <?php __("Add To Wishlist"); ?>
+                                                </a>
+                                            </span>
+                                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;">
+                                                <a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button">
+                                                        <?php __("Please Wait..."); ?>
+                                                    </label>
+                                                </a>
+                                            </span>
+                                            <?php
+                                        }
+                                        ?>														
+                                    </div>
+                                <?php } ?>
+
+
+
+                            </div>
+                            <?php
+                            $title_song_replace = str_replace('"', '', $this->getTextEncode($value['Video']['VideoTitle']));
+                            ?>
+                            <div class="song-title">
+                                <a title="<?php echo $title_song_replace; ?>" href="javascript:void(0);">
+                                    <?php
+                                    if (strlen($value['Video']['VideoTitle']) > 25)
+                                        echo substr($value['Video']['VideoTitle'], 0, 25) . "...";
+                                    else
+                                        echo $value['Video']['VideoTitle'];
+                                    ?>
+                                </a><?php
+                                if ('T' == $value['Video']['Advisory'])
+                                {
+                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
+                            </div>
+                            <div class="genre">
+                                <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
+                            </div>
+                            <?php
+                            if (!empty($value['Video']['video_label']))
+                            {
+                                ?>
+                                <div class="label">
+                                    Label: <?php
+                                    if (strlen($value['Video']['video_label']) > 25)
+                                        echo substr($value['Video']['video_label'], 0, 25) . "...";
+                                    else
+                                        echo $value['Video']['video_label'];
+                                    ?>
+
+                                </div>
+                            <?php } ?>
+                        </li>
+                    <?php } ?>      
+                </ul>
+            </div>
+        </div>
+    <?php } ?>
+    <br class="clr">
 </section>
