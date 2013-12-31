@@ -253,9 +253,9 @@
             </div>
         </div>
         <div class="paging">
-            <?php echo $this->paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
-            | 	    <?php echo $this->paginator->numbers(); ?>
-            <?php echo $this->paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+            <?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
+            | 	    <?php //echo $this->paginator->numbers(); ?>
+            <?php // echo $this->paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
         </div>
     <?php } ?>                        
 
