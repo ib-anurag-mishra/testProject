@@ -151,10 +151,10 @@
                             <div class="album-container">
                                 <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
                                 <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
-                                <img src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>" width="162" height="162" alt="">
+                                    <img src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>" width="162" height="162" alt="">
                                 </a> 
-                                    
-                                    <?php
+
+                                <?php
                                 if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
                                 {
                                     //echo $this->Queue->getAlbumStreamNowLabel($album['albumSongs'][$album['Album']['ProdID']]);
@@ -162,7 +162,7 @@
                                     ?>
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                     <div class="wishlist-popover">
-                                         <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album"/>
+                                        <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album"/>
                                         <?php
                                         //echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
                                         ?>
@@ -252,11 +252,11 @@
                 </ul>
             </div>
         </div>
-<!--        <div class="paging">
-	<?php //echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
-| 	    <?php //echo $paginator->numbers();?>
-            <?php //echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
-        </div>-->
+        <div class="paging">
+            <?php echo $this->paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
+            | 	    <?php echo $this->paginator->numbers(); ?>
+            <?php echo $this->paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+        </div>
     <?php } ?>                        
 
     <?php

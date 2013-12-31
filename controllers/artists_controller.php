@@ -1801,10 +1801,7 @@ Class ArtistsController extends AppController
 
                 }
             }
-                 
-             echo "<pre>";
-            print_r($albumData);
-            die;
+         
             
             $albumSongs = array();
             $this->set('albumData', $albumData);
