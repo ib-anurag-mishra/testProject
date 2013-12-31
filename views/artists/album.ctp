@@ -102,6 +102,26 @@
         ?>
         <h3>Albums</h3>
         <div class="album-shadow-container">
+            <div class="album-scrollable horiz-scroll">
+                <ul>
+                    <?php
+                    foreach ($albumData as $album_key => $album):
+                        //hide album if library block the explicit content
+                        if (($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] == 'T'))
+                        {
+                            continue;
+                        }
+                        ?>
+                        <li>
+                            <div class="album-container">
+
+                            </div>
+                        </li>
+                        <?php
+                    endforeach;
+                    ?>
+                </ul>
+            </div>
 
             <div class="paging">            
                 <?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
@@ -226,12 +246,12 @@
                                     {
                                         ?>
                                         <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
-                                            if (isset($value['Country']['SalesDate']))
-                                            {
-                                                echo date("F d Y", strtotime($value['Country']['SalesDate']));
-                                            }
-                                            ?> )'><?php __("Coming Soon"); ?></span></a>
-                                            <?php
+                        if (isset($value['Country']['SalesDate']))
+                        {
+                            echo date("F d Y", strtotime($value['Country']['SalesDate']));
+                        }
+                                        ?> )'><?php __("Coming Soon"); ?></span></a>
+                                                                                                                <?php
                                         }
                                     }
                                     else
@@ -300,9 +320,9 @@
                                         echo $value['Video']['VideoTitle'];
                                     ?>
                                 </a><?php
-                                if ('T' == $value['Video']['Advisory'])
-                                {
-                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
+                            if ('T' == $value['Video']['Advisory'])
+                            {
+                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
                             </div>
                             <div class="genre">
                                 <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
@@ -313,11 +333,11 @@
                                 ?>
                                 <div class="label">
                                     Label: <?php
-                                    if (strlen($value['Video']['video_label']) > 25)
-                                        echo substr($value['Video']['video_label'], 0, 25) . "...";
-                                    else
-                                        echo $value['Video']['video_label'];
-                                    ?>
+                    if (strlen($value['Video']['video_label']) > 25)
+                        echo substr($value['Video']['video_label'], 0, 25) . "...";
+                    else
+                        echo $value['Video']['video_label'];
+                                ?>
 
                                 </div>
                             <?php } ?>

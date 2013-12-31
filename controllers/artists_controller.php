@@ -1934,44 +1934,49 @@ Class ArtistsController extends AppController
         }
 
         $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
-        $this->paginate = array('conditions' =>
-            array('and' =>
+
+        $this->paginate =
                 array(
-                    $condition
-                ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
-            ),
-            'fields' => array(
-                'Album.ProdID',
-                'Album.Title',
-                'Album.ArtistText',
-                'Album.AlbumTitle',
-                'Album.Advisory',
-                'Album.Artist',
-                'Album.ArtistURL',
-                'Album.Label',
-                'Album.Copyright',
-                'Album.provider_type',
-                'Files.CdnPath',
-                'Files.SaveAsName',
-                'Files.SourceURL',
-                'Genre.Genre'
-            ),
-            'contain' => array(
-                'Genre' => array(
+                    'conditions' =>
+                    array(
+                        'and' =>
+                        array(
+                            $condition
+                        ),
+                        "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+                    ),
                     'fields' => array(
-                        'Genre.Genre'
-                    )
-                ),
-                'Files' => array(
-                    'fields' => array(
+                        'Album.ProdID',
+                        'Album.Title',
+                        'Album.ArtistText',
+                        'Album.AlbumTitle',
+                        'Album.Advisory',
+                        'Album.Artist',
+                        'Album.ArtistURL',
+                        'Album.Label',
+                        'Album.Copyright',
+                        'Album.provider_type',
                         'Files.CdnPath',
                         'Files.SaveAsName',
-                        'Files.SourceURL'
+                        'Files.SourceURL',
+                        'Genre.Genre'
                     ),
-                )
-            ),
-            'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-            'limit' => '5'
+                    'contain' => array(
+                        'Genre' => array(
+                            'fields' => array(
+                                'Genre.Genre'
+                            )
+                        ),
+                        'Files' => array(
+                            'fields' => array(
+                                'Files.CdnPath',
+                                'Files.SaveAsName',
+                                'Files.SourceURL'
+                            ),
+                        )
+                    ),
+                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
+                    
         );
 
         $this->Album->recursive = 2;
