@@ -1889,7 +1889,16 @@ Class ArtistsController extends AppController
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
-            'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'order' => array('Country.SalesDate DESC')));
+            'conditions' => array('Song.ArtistText' => base64_decode($id),
+                'Song.DownloadStatus' => 1,
+                "Song.Sample_FileID != ''",
+                "Song.FullLength_FIleID != ''",
+                'Country.Territory' => $country, $cond,
+                'Song.provider_type = Country.provider_type'),
+            'contain' => array(
+                'Country' => array('fields' => array('Country.Territory'))),
+            'recursive' => 0,
+            'order' => array('Country.SalesDate DESC')));
 
         $val = '';
         $val_provider_type = '';
@@ -1986,11 +1995,11 @@ Class ArtistsController extends AppController
         {
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
         }
-        
+
         echo "<pre>";
         print_r($this->paginate('Album'));
         die;
-        
+
         //$this->set('count_albums',count($albumData));   
         $libType = $this->Session->read('library_type');
         if ($libType == 2)

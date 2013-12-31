@@ -472,3 +472,5 @@
     <?php } ?>
     <br class="clr">
 </section>
+
+<?php $this->element('sql_dump'); ?>
