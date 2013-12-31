@@ -1938,9 +1938,6 @@ Class ArtistsController extends AppController
         }
         
         
-        echo "<pre>";
-        print_r($songs);
-        die;
     }
 
     function album_ajax($id = null, $album = null, $provider = null)
