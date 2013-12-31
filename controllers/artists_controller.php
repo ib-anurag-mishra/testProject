@@ -1932,9 +1932,6 @@ Class ArtistsController extends AppController
         $this->paginate = array('conditions' =>
             array('and' =>
                 array(
-                    //array('Album.ArtistText' => base64_decode($id)),
-                    //array('Album.provider_type = Genre.provider_type'),
-                    //array('Album.provider_type = Country.provider_type'),
                     $condition
                 ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
             ),
@@ -1969,9 +1966,7 @@ Class ArtistsController extends AppController
                 )
             ),
             'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-            'limit' => '5',
-            'cache' => 'yes',
-            'chk' => 2
+            'limit' => '5'
         );
 
 
@@ -1986,10 +1981,6 @@ Class ArtistsController extends AppController
         
         $this->Album->recursive = 2;
         $albumData = array();
-
-        echo "<pre>";
-        print_r($val_provider_type);
-        die;
         
         if (!empty($val_provider_type))
         {
@@ -2010,8 +2001,9 @@ Class ArtistsController extends AppController
         }
 
 
-        $albumSongs = array();
-        $this->set('albumData', $albumData);
+        $albumSongs = array();      
+       
+        
         if (isset($albumData[0]['Album']['Artist']))
         {
             $this->set('artisttitle', $albumData[0]['Album']['Artist']);
@@ -2044,6 +2036,9 @@ Class ArtistsController extends AppController
             }
             $this->set('artistVideoList', $artistVideoList);
         }
+        
+         $this->set('albumData', $albumData);
+         
 
 //          if(!empty($country)){
 //            if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
