@@ -1673,7 +1673,7 @@ Class ArtistsController extends AppController
         
 	function album($id=null,$album=null,$provider=null)
 	{
-            //Configure::write('debug', 2);
+            Configure::write('debug', 2);
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
                     $id = $this -> params['pass'][0];
@@ -1783,6 +1783,10 @@ Class ArtistsController extends AppController
             }
             $this->Album->recursive = 2;
             $albumData = array();
+            
+            echo "<pre>";
+            print_r($this->paginate('Album'));
+            die;
             
             if(!empty($val_provider_type))
             {
