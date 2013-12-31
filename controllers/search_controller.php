@@ -66,6 +66,10 @@ class SearchController extends AppController
         }
         $this->set('type', $typeVar);
 
+        echo '<pre>';
+        print_r($typeVar);
+        die ;
+        
         if (isset($_GET['sort']))
         {
             $sort = $_GET['sort'];
