@@ -1784,10 +1784,6 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             
-            echo "<pre>";
-            print_r($this->paginate('Album'));
-            die;
-            
             if(!empty($val_provider_type))
             {
                 $albumData = $this->paginate('Album'); //getting the Albums for the artist
@@ -1806,6 +1802,9 @@ Class ArtistsController extends AppController
                 }
             }
                  
+             echo "<pre>";
+            print_r($albumData);
+            die;
             
             $albumSongs = array();
             $this->set('albumData', $albumData);
