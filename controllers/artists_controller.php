@@ -1861,12 +1861,12 @@ Class ArtistsController extends AppController
     function album($id = null, $album = null, $provider = null)
     {
         Configure::write('debug', 2);
-
+        
+        $this->layout = 'home';
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $libType = $this->Session->read('library_type');
-
 
         if ($this->Session->read('block') == 'yes')
         {
@@ -1890,7 +1890,12 @@ Class ArtistsController extends AppController
             }
         }
 
-        $id = str_replace('@', '/', $id);
+        $id = str_replace('@', '/', $id);        
+        $this->set('artisttext', base64_decode($id));
+        $this->set('artisttitle', base64_decode($id));
+        $this->set('genre', base64_decode($album));
+        
+        
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
@@ -1905,6 +1910,34 @@ Class ArtistsController extends AppController
             'recursive' => 0,
             'order' => array('Country.SalesDate DESC')));
 
+        
+        
+        
+        
+        
+        
+        // Videos Section
+        $decodedId = trim(base64_decode($id));
+
+        if (!empty($country))
+        {
+            if (((Cache::read("videolist_" . $country . "_" . $decodedId)) === false) || (Cache::read("videolist_" . $country . "_" . $decodedId) === null))
+            {
+
+                if (!empty($decodedId))
+                {
+                    $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
+                    Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
+                }
+            }
+            else
+            {
+                $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
+            }
+            $this->set('artistVideoList', $artistVideoList);
+        }
+        
+        
         echo "<pre>";
         print_r($songs);
         die;
