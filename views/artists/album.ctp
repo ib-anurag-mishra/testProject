@@ -132,7 +132,49 @@
                                     <?php
                                 }
                                 ?>
+<a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
+                                    <?php
+                                    if (empty($album['Files']['CdnPath']))
+                                    {
+                                        if (empty($album['Files']['SourceURL']))
+                                        {
+                                            // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                                        }
+                                        else
+                                        {
+                                            // mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                                        }
+                                    }
+                                    ?>
 
+                                    <?php
+                                    $image = Configure::read('App.Music_Path') . $albumArtwork;
+                                    if ($page->isImage($image))
+                                    {
+                                        // Image is a correct one
+                                    }
+                                    else
+                                    {
+                                        //mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                    }
+                                    ?>
+
+                                </a>   
+                            </div>
+                            <div class="album-title">
+                                <a title="<?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>" 
+                                   href="/artists/view/<?php echo str_replace('/', '@', base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
+
+                                    <b>
+                                        <?php
+                                        if (strlen($album['Album']['AlbumTitle']) >= 50)
+                                        {
+                                            $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
+                                        }
+                                        ?>
+                                        <?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>		
+                                    </b>
+                                </a>
                             </div>
                         </li>
                         <?php
@@ -142,9 +184,9 @@
             </div>
 
             <div class="paging">            
-                <?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
-                | 	    <?php echo $this->Paginator->numbers(); ?>
-                <?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
+               
+                	    <?php echo $this->Paginator->numbers(); ?>
+              
             </div>
         </div>
         <?php
