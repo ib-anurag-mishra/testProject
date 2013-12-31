@@ -1988,7 +1988,7 @@ Class ArtistsController extends AppController
         }
         
         echo "<pre>";
-        print_r($this->paginate());
+        print_r($this->paginate('Album'));
         die;
         
         //$this->set('count_albums',count($albumData));   
