@@ -114,6 +114,24 @@
                         ?>
                         <li>
                             <div class="album-container">
+                                <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
+                                <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
+                                    <img src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>" width="162" height="162" alt="">
+                                </a> 
+
+                                <?php
+                                if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
+                                {
+                                    echo $this->Queue->getAlbumStreamLabel($album['albumSongs'][$album['Album']['ProdID']]);
+                                    ?>
+                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
+                                    <div class="wishlist-popover">
+                                        <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album"/>                                       
+                                        <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>                                       
+                                    </div>
+                                    <?php
+                                }
+                                ?>
 
                             </div>
                         </li>
@@ -246,12 +264,12 @@
                                     {
                                         ?>
                                         <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
-                        if (isset($value['Country']['SalesDate']))
-                        {
-                            echo date("F d Y", strtotime($value['Country']['SalesDate']));
-                        }
-                                        ?> )'><?php __("Coming Soon"); ?></span></a>
-                                                                                                                <?php
+                                            if (isset($value['Country']['SalesDate']))
+                                            {
+                                                echo date("F d Y", strtotime($value['Country']['SalesDate']));
+                                            }
+                                            ?> )'><?php __("Coming Soon"); ?></span></a>
+                                            <?php
                                         }
                                     }
                                     else
@@ -320,9 +338,9 @@
                                         echo $value['Video']['VideoTitle'];
                                     ?>
                                 </a><?php
-                            if ('T' == $value['Video']['Advisory'])
-                            {
-                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
+                                if ('T' == $value['Video']['Advisory'])
+                                {
+                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
                             </div>
                             <div class="genre">
                                 <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
@@ -333,11 +351,11 @@
                                 ?>
                                 <div class="label">
                                     Label: <?php
-                    if (strlen($value['Video']['video_label']) > 25)
-                        echo substr($value['Video']['video_label'], 0, 25) . "...";
-                    else
-                        echo $value['Video']['video_label'];
-                                ?>
+                                    if (strlen($value['Video']['video_label']) > 25)
+                                        echo substr($value['Video']['video_label'], 0, 25) . "...";
+                                    else
+                                        echo $value['Video']['video_label'];
+                                    ?>
 
                                 </div>
                             <?php } ?>
