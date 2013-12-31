@@ -1861,7 +1861,7 @@ Class ArtistsController extends AppController
     function album($id = null, $album = null, $provider = null)
     {
         Configure::write('debug', 2);
-        
+
         $this->layout = 'home';
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
@@ -1890,17 +1890,17 @@ Class ArtistsController extends AppController
             }
         }
 
-        $id = str_replace('@', '/', $id);        
+        $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
-        
+
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
-        
-        
+
+
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
@@ -1913,14 +1913,89 @@ Class ArtistsController extends AppController
             'contain' => array(
                 'Country' => array('fields' => array('Country.Territory'))),
             'recursive' => 0,
-            'order' => array('Country.SalesDate DESC')));
+            'order' => array('Country.SalesDate DESC'))
+        );
 
-        
-        
-        
-        
-        
-        
+        $val = '';
+        $val_provider_type = '';
+
+        foreach ($songs as $k => $v)
+        {
+            if (empty($val))
+            {
+                $val .= $v['Song']['ReferenceID'];
+                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+            }
+            else
+            {
+                $val .= ',' . $v['Song']['ReferenceID'];
+                $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+            }
+        }
+
+        $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
+        $this->paginate = array('conditions' =>
+            array('and' =>
+                array(
+                    $condition
+                ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+            ),
+            'fields' => array(
+                'Album.ProdID',
+                'Album.Title',
+                'Album.ArtistText',
+                'Album.AlbumTitle',
+                'Album.Advisory',
+                'Album.Artist',
+                'Album.ArtistURL',
+                'Album.Label',
+                'Album.Copyright',
+                'Album.provider_type',
+                'Files.CdnPath',
+                'Files.SaveAsName',
+                'Files.SourceURL',
+                'Genre.Genre'
+            ),
+            'contain' => array(
+                'Genre' => array(
+                    'fields' => array(
+                        'Genre.Genre'
+                    )
+                ),
+                'Files' => array(
+                    'fields' => array(
+                        'Files.CdnPath',
+                        'Files.SaveAsName',
+                        'Files.SourceURL'
+                    ),
+                )
+            ),
+            'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+            'limit' => '5'
+        );
+
+        $this->Album->recursive = 2;
+        $albumData = $this->paginate('Album'); //getting the Albums for the artist
+
+        if ($libType == 2)
+        {
+            foreach ($albumData as $key => $value)
+            {
+                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+            }
+        }
+
+        if (isset($albumData[0]['Song']['ArtistURL']))
+        {
+            $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
+        }
+        else
+        {
+            $this->set('artistUrl', "N/A");
+        }
+        $this->set('albumData', $albumData);
+
+
         // Videos Section
         $decodedId = trim(base64_decode($id));
 
@@ -1941,8 +2016,6 @@ Class ArtistsController extends AppController
             }
             $this->set('artistVideoList', $artistVideoList);
         }
-        
-        
     }
 
     function album_ajax($id = null, $album = null, $provider = null)
