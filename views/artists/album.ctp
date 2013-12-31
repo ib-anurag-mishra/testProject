@@ -132,7 +132,7 @@
                                     <?php
                                 }
                                 ?>
-<a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
+                                <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID']; ?>/<?php echo base64_encode($album['Album']['provider_type']); ?>" >
                                     <?php
                                     if (empty($album['Files']['CdnPath']))
                                     {
@@ -176,6 +176,34 @@
                                     </b>
                                 </a>
                             </div>
+                            <div class="genre">
+                                <?php
+                                echo __('Genre') . ": " . $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre'])), array("title" => $this->getTextEncode($album['Genre']['Genre']))) . '<br />';
+                                if ($album['Album']['ArtistURL'] != '')
+                                {
+                                    echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank', 'style' => 'word-wrap:break-word;word-break:break-word;width:160px;'));
+                                    echo '<br />';
+                                }
+                                if ($album['Album']['Advisory'] == 'T')
+                                {
+                                    echo '<span class="explicit"> (Explicit)</span>';
+                                    echo '<br />';
+                                }
+                                ?>
+                            </div>
+                            <div class="label">
+                                <?php
+                                if ($album['Album']['Label'] != '')
+                                {
+                                    echo __("Label") . ': ' . $this->getTextEncode($album['Album']['Label']);
+                                    echo '<br />';
+                                }
+                                if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown')
+                                {
+                                    echo $this->getTextEncode($album['Album']['Copyright']);
+                                }
+                                ?>
+                            </div>
                         </li>
                         <?php
                     endforeach;
@@ -183,10 +211,8 @@
                 </ul>
             </div>
 
-            <div class="paging">            
-               
-                	    <?php echo $this->Paginator->numbers(); ?>
-              
+            <div class="paging">     
+                <?php echo $this->Paginator->numbers(); ?>
             </div>
         </div>
         <?php
