@@ -2035,6 +2035,36 @@ function loadAlbumSong(albumSongs) {
     }
 }
 
+
+function loadAlbumData(albumtData){
+    
+    //albumtData = JSON.parse(albumtData);
+    var data = "albumtData=" + albumtData;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "artists/getAlbumData", // URL to request
+        data: data, // post data
+        dataType: "json", 
+        success: function(response) {
+            if(response.success){
+                playlist = base64_decode(response.success);
+                playlist = JSON.parse(playlist);
+                if (playlist.length) {
+                    pushSongs(playlist);
+                }
+            }else if(response.error){
+                console.log(response.error);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log('Ajax call to get album songs has been failed');
+        }
+    });
+    return false;
+    
+    
+}
+
 function base64_decode(data) {
     // http://kevin.vanzonneveld.net
     // +   original by: Tyler Akins (http://rumkin.com)

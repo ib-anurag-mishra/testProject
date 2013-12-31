@@ -406,10 +406,20 @@ function Get_Sales_date($sales_date_array, $country)
                                                             
                                                     if ($this->Session->read("patron"))
                                                     {
-                                                        if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
+                                                        if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
                                                         {                                                          
-                                                            echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
-                                                        }
+                                                            //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
+                                                            echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]); ?>
+                                                            <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
+                                                            <div class="wishlist-popover">
+                                                                <input type="hidden" id="<?= $palbum->ReferenceID; ?>" value="album"/>
+                                                                <?php
+                                                                // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
+                                                                ?>
+                                                                <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+                                                                <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                            </div>                                                    
+                                                        <?php }
                                                     }
                                                     ?> 
                                                 </div>
@@ -792,11 +802,23 @@ function Get_Sales_date($sales_date_array, $country)
                                             <?php   
                                             if ($this->Session->read("patron"))
                                             {
-                                                if ($this->Session->read('library_type') == 2 && $arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])
-                                                {                                                          
-                                                    echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
-                                                }
-                                            }
+                                                
+                                                if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
+                                                {                                                         
+                                                    //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
+                                                     echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]); ?>
+                                            
+                                                    <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
+                                                    <div class="wishlist-popover">
+                                                        <input type="hidden" id="<?= $palbum->ReferenceID; ?>" value="album"/>
+                                                        <?php
+                                                        // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $album['albumSongs'][$album['Album']['ProdID']], $album['Album']['ProdID'], $album['Album']['provider_type']);
+                                                        ?>
+                                                        <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>
+                                                        <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                    </div>                                             
+                                             <?php   }
+                                            } 
                                             ?> 
                                         </div>
                                         <div class="album-title">

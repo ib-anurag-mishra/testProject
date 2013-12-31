@@ -259,7 +259,7 @@ class SearchController extends AppController
                         {                                                       
                             $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
                                            array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                           array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
+                                           array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type),1))
                                    );
                             
                         }
@@ -333,7 +333,7 @@ class SearchController extends AppController
                 {                                                       
                     $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                   array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type)))
+                                   array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type),1))
                            );
 
                 }

@@ -19,7 +19,7 @@ Class ArtistsController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view','test','album','album_ajax','album_ajax_view','admin_getAlbums','admin_getAutoArtist','getAlbumSongs');
+		$this->Auth->allowedActions = array('view','test','album','album_ajax','album_ajax_view','admin_getAlbums','admin_getAutoArtist','getAlbumSongs','getAlbumData');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
@@ -815,10 +815,12 @@ Class ArtistsController extends AppController
                
                     $libType = $this->Session->read('library_type');
                     if($libType == 2){
-                        $albumData[0]['albumSongs'] = $this->requestAction(
-                                array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
-                        );
+//                        $albumData[0]['albumSongs'] = $this->requestAction(
+//                                array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+//                        );
+                        $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type']),1);
+                        
                     }
                  }
                
@@ -1012,27 +1014,31 @@ Class ArtistsController extends AppController
 	 Function Name : getAlbumSongs
 	 Desc : For getting songs related to an Album
 	*/
-	function getAlbumSongs($id=null,$album=null, $provider=null)
+	function getAlbumSongs($id=null,$album=null, $provider=null, $ajax= null)
 	{
-		
-            if(count($this -> params['pass']) > 1) {
-                    $count = count($this -> params['pass']);
-                    $id = $this -> params['pass'][0];
-                    for($i=1;$i<$count-1;$i++) {
-                            if(!is_numeric($this -> params['pass'][$i])) {
-                                    $id .= "/".$this -> params['pass'][$i];
+                if(empty($ajax)){                
+                    if(count($this -> params['pass']) > 1) {
+                            $count = count($this -> params['pass']);
+                            $id = $this -> params['pass'][0];
+                            for($i=1;$i<$count-1;$i++) {
+                                    if(!is_numeric($this -> params['pass'][$i])) {
+                                            $id .= "/".$this -> params['pass'][$i];
+                                    }
                             }
-                    }
-                    if(is_numeric($this -> params['pass'][$count - 2])) {
-                            $album = $this -> params['pass'][$count - 2];
-                            $provider = base64_decode($this -> params['pass'][$count - 1]);
-                    }
-                    else {
-                            $album = "";
-                            $provider = "";
-                    }
-            }
-            
+                            if(is_numeric($this -> params['pass'][$count - 2])) {
+                                    $album = $this -> params['pass'][$count - 2];
+                                    $provider = base64_decode($this -> params['pass'][$count - 1]);
+                            }
+                            else {
+                                    $album = "";
+                                    $provider = "";
+                            }
+                    }            
+                }else{
+                
+                    $provider = base64_decode($provider);
+                
+                }
 		// echo base64_decode($id) . $album;
 		// exit;
 		$country = $this->Session->read('territory');
@@ -1083,16 +1089,16 @@ Class ArtistsController extends AppController
 			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").")");
 		}
                 $id = str_replace('@','/',$id);
-		$this->layout = 'home';
-		$this->set('artistName',base64_decode($id));
-		$this->set('album',$album);
-		$patId = $this->Session->read('patron');
-		$libId = $this->Session->read('library');
+//		$this->layout = 'home';
+//		$this->set('artistName',base64_decode($id));
+//		$this->set('album',$album);
+//		$patId = $this->Session->read('patron');
+//		$libId = $this->Session->read('library');
 		//$country = "'".$country."'";
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
+//		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+//		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+//		$this->set('libraryDownload',$libraryDownload);
+//		$this->set('patronDownload',$patronDownload);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Album.Advisory' => 'F');
 		}
@@ -1237,14 +1243,20 @@ Class ArtistsController extends AppController
                                         
                             //if($this->Session->read('library_type')==2)
                            //{
-                            $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
-                            if(!empty($filePath))
-                             {
-                                $songPath = explode(':',$filePath);
-                                $streamUrl =  trim($songPath[1]);
-                                $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
-                                $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
-                             } 
+                            if(empty($ajax)){
+                                $filePath = shell_exec('perl files/tokengen_streaming '. $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SaveAsName']);
+                                if(!empty($filePath))
+                                 {
+                                    $songPath = explode(':',$filePath);
+                                    $streamUrl =  trim($songPath[1]);
+                                    $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
+                                    $albumSongs[$k][$key]['totalseconds']  = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']); 
+                                 } 
+                            }else{
+                                $albumSongs[$k][$key]['CdnPath'] = $value['Full_Files']['CdnPath'];
+                                $albumSongs[$k][$key]['SaveAsName'] = $value['Full_Files']['SaveAsName'];
+                                $albumSongs[$k][$key]['FullLength_Duration'] = $value['Song']['FullLength_Duration'];
+                            }
                            //}   
                            
                            
@@ -1266,21 +1278,75 @@ Class ArtistsController extends AppController
                        
                         
 		}
-	    $this->set('albumData', $albumData);
-	    if(isset($albumData[0]['Song']['ArtistURL'])) {
-	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
-	    }else {
-	       $this->set('artistUrl', "N/A");
-	    }
-		$array = array();
-		$pre = '';
-		$res = array();
+//	    $this->set('albumData', $albumData);
+//	    if(isset($albumData[0]['Song']['ArtistURL'])) {
+//	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
+//	    }else {
+//	       $this->set('artistUrl', "N/A");
+//	    }
+//		$array = array();
+//		$pre = '';
+//		$res = array();
                 
                
                 
         return $albumSongs;       
                 
 }
+
+            /*
+             * Function Name : getAlbumData
+             * Description   : This function is used to get songs related to an album
+             * 
+             */
+
+        function getAlbumData(){
+            Configure::write('debug', 0);
+            $albumSongs = json_decode(base64_decode($_POST['albumtData']));
+            if (!empty($albumSongs))
+            {
+                foreach ($albumSongs as $value)
+                {
+
+                    $filePath = shell_exec('perl files/tokengen_streaming '. $value->CdnPath."/".$value->SaveAsName);
+                    if(!empty($filePath))
+                     {
+                        $songPath = explode(':',$filePath);
+                        $streamUrl =  trim($songPath[1]);
+                        $value->streamUrl = $streamUrl;
+                        $value->totalseconds  = $this->Streaming->getSeconds($value->FullLength_Duration); 
+                     }                        
+                    if (!empty($value->streamUrl) || !empty($value->Song->SongTitle))
+                    {
+
+                        if ($value->Song->Advisory == 'T')
+                        {
+                            $value->Song->SongTitle = $value->Song->SongTitle . ' (Explicit)';
+                        }
+
+                        $playItem = array('playlistId' => 0, 'songId' => $value->Song->ProdID, 'providerType' => $value->Song->provider_type, 'label' => $value->Song->SongTitle, 'songTitle' => $value->Song->SongTitle, 'artistName' => $value->Song->ArtistText, 'songLength' => $value->totalseconds, 'data' => $value->streamUrl);
+                        $jsonPlayItem = json_encode($playItem);
+                        $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+                        $playListData[] = $jsonPlayItem;
+                    }
+                }
+                if (!empty($playListData))
+                {
+                    $playList = implode(',', $playListData);
+                    if (!empty($playList))
+                    {
+                        $playList = base64_encode('[' . $playList . ']');
+                    }
+                }                
+                $successData = array('success' => $playList);
+                echo json_encode($successData);
+                exit;
+            }else{
+                $errorData = array('error' => 'Required parameters are missing');
+                echo json_encode($errorData);
+                exit;
+            }
+        }
 
 
 
@@ -1430,10 +1496,12 @@ Class ArtistsController extends AppController
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
                 $libType = $this->Session->read('library_type');
                 if($libType == 2){
-                    $albumData[0]['albumSongs'] = $this->requestAction(
-                                        array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                        array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
-                                );
+//                    $albumData[0]['albumSongs'] = $this->requestAction(
+//                                        array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                        array('pass' => array(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type'])))
+//                                );
+                    $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'] , base64_encode($albumData[0]['Album']['provider_type']));
+                    $this -> layout = 'ajax';
                 }
 
 		$albumSongs = array();
@@ -1701,7 +1769,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),                                                
                                             )
-                                    ),'order'=>array('FIELD(Album.ProdID, '.$val.') ASC'), 'cache' => 'yes', 'chk' => 2
+                                    ),'order'=>array('FIELD(Album.ProdID, '.$val.') ASC'), 'limit'=>'12', 'cache' => 'yes', 'chk' => 2
                             );
             
                       
@@ -1724,10 +1792,11 @@ Class ArtistsController extends AppController
             if($libType == 2){
                 foreach ($albumData as $key => $value) 
                 {
-                    $albumData[$key]['albumSongs'] = $this->requestAction(
-                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
-                                            );    
+//                    $albumData[$key]['albumSongs'] = $this->requestAction(
+//                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
+//                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
+//                                            );
+                    $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type']),1);
 
                 }
             }

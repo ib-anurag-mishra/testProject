@@ -209,6 +209,21 @@ EOD;
 
         return $str;
     }
+    
+    
+    /* Function name : getAlbumStreamLabel
+     * Description   : This function is used to get stream now mark up replacing play button 
+     */
+
+    function getAlbumStreamLabel($albumSongs)
+    {
+        $albumSongs = base64_encode(json_encode($albumSongs));
+        $str = <<<EOD
+       <a onclick="javascript:loadAlbumData('$albumSongs');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+EOD;
+
+        return $str;
+    }    
 
     /**
      * Function Name: getSocialNetworkinglinksMarkup
