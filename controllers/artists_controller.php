@@ -1978,14 +1978,19 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
-        
+
         $this->Album->recursive = 2;
         $albumData = array();
-        
+
         if (!empty($val_provider_type))
         {
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
         }
+        
+        echo "<pre>";
+        print_r($this->paginate());
+        die;
+        
         //$this->set('count_albums',count($albumData));   
         $libType = $this->Session->read('library_type');
         if ($libType == 2)
@@ -2000,10 +2005,6 @@ Class ArtistsController extends AppController
             }
         }
 
-
-        $albumSongs = array();      
-       
-        
         if (isset($albumData[0]['Album']['Artist']))
         {
             $this->set('artisttitle', $albumData[0]['Album']['Artist']);
@@ -2016,8 +2017,10 @@ Class ArtistsController extends AppController
         {
             $this->set('artistUrl', "N/A");
         }
+
+        $this->set('albumData', $albumData);
+
         $decodedId = trim(base64_decode($id));
-        $country = $this->Session->read('territory');
 
         if (!empty($country))
         {
@@ -2036,9 +2039,9 @@ Class ArtistsController extends AppController
             }
             $this->set('artistVideoList', $artistVideoList);
         }
-        
-         $this->set('albumData', $albumData);
-         
+
+
+
 
 //          if(!empty($country)){
 //            if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
