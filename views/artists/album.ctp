@@ -1,3 +1,136 @@
+<?php
+function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null)
+{
+    $queryString = html_entity_decode($queryString);
+    if ($totalPages > 1)
+    {
+
+        $part = floor($pageLimitToShow / 2);
+        if ($type == 'listing')
+        {
+            if (1 != $currentPage)
+            {
+                $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
+            }
+            else
+            {
+                $pagination_str .= "&lt&ltprevious";
+            }
+        }
+        else if ($type == 'block')
+        {
+            if (1 != $facetPage)
+            {
+                $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
+            }
+            else
+            {
+                $pagination_str .= "&lt&ltprevious";
+            }
+        }
+
+        $pagination_str .= " ";
+        if ($type == 'listing')
+        {
+            if ($currentPage <= $part)
+            {
+                $fromPage = 1;
+                $topage = $currentPage + ($pageLimitToShow - $currentPage);
+                $topage = (($topage <= $totalPages) ? $topage : $totalPages);
+            }
+            elseif ($currentPage >= ($totalPages - $part))
+            {
+                $fromPage = ($currentPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($currentPage - ($pageLimitToShow - ($totalPages - $currentPage))) + 1);
+                $topage = $totalPages;
+                $fromPage = (($fromPage > 1) ? $fromPage : 1);
+            }
+            else
+            {
+                $fromPage = $currentPage - $part;
+                $topage = $currentPage + $part;
+            }
+        }
+        else if ($type == 'block')
+        {
+            if ($facetPage <= $part)
+            {
+                $fromPage = 1;
+                $topage = $facetPage + ($pageLimitToShow - $facetPage);
+                $topage = (($topage <= $totalPages) ? $topage : $totalPages);
+            }
+            elseif ($facetPage >= ($totalPages - $part))
+            {
+                $fromPage = ($facetPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($facetPage - ($pageLimitToShow - ($totalPages - $facetPage))) + 1);
+                $topage = $totalPages;
+                $fromPage = (($fromPage > 1) ? $fromPage : 1);
+            }
+            else
+            {
+                $fromPage = $facetPage - $part;
+                $topage = $facetPage + $part;
+            }
+        }
+
+        for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++)
+        {
+            if ($type == 'listing')
+            {
+                if ($currentPage == $pageCount)
+                {
+                    $pagination_str .= $pageCount;
+                }
+                else
+                {
+                    $pagination_str .= $html->link($pageCount, '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString);
+                }
+            }
+            else if ($type == 'block')
+            {
+                if ($facetPage == $pageCount)
+                {
+                    $pagination_str .= $pageCount;
+                }
+                else
+                {
+                    $pagination_str .= $html->link($pageCount, '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString);
+                }
+            }
+            $pagination_str .= " ";
+        }
+        $pagination_str .= " ";
+
+        if ($type == 'listing')
+        {
+            if ($currentPage != $totalPages)
+            {
+                $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString);
+            }
+            else
+            {
+                $pagination_str .= "next&gt&gt";
+            }
+        }
+        else if ($type == 'block')
+        {
+            if ($facetPage != $totalPages)
+            {
+                $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString);
+            }
+            else
+            {
+                $pagination_str .= "next&gt&gt";
+            }
+        }
+    }
+    else
+    {
+        $pagination_str = '';
+    }
+
+    return $pagination_str;
+}
+?>
+
 <section class="artist-page">
     <div class="breadCrumb">
         <?php
@@ -252,7 +385,7 @@
                 </ul>
             </div>
         </div>
-        <div class="paging">
+        <div class="paging">            
             <?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class' => 'disabled')); ?>
             | 	    <?php echo $this->Paginator->numbers(); ?>
             <?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled')); ?>
