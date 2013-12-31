@@ -1996,10 +1996,6 @@ Class ArtistsController extends AppController
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
         }
 
-        echo "<pre>";
-        print_r($this->paginate('Album'));
-        die;
-
         //$this->set('count_albums',count($albumData));   
         $libType = $this->Session->read('library_type');
         if ($libType == 2)
