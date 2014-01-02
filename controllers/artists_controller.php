@@ -1858,34 +1858,26 @@ Class ArtistsController extends AppController
         $this->set("genre", $albumData['0']['Genre']['Genre']);
     }
 
-    function album($id = null, $album = null, $page = 1, $facetPage = 1)
+    function album($id = null, $album = null)
     {
          Configure::write('debug', 2);
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
+        
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+        
         $libType = $this->Session->read('library_type');
 
 
         //reading the page value for pagination
         $limit = 6;
-        
-        if (!isset($page) || $page < 1)
-        {
-            $page = 1;
-        }
-        if (!isset($facetPage) || $facetPage < 1)
-        {
-            $facetPage = 1;
-        }
-        else
-        {
-            $facetPage = $facetPage;
-        }
-
-        
+               
 
         if ($this->Session->read('block') == 'yes')
         {
@@ -1912,17 +1904,10 @@ Class ArtistsController extends AppController
         }
        
         $id = str_replace('@', '/', $id);
-        $this->set('artisttextEn', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
-
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
-
-
+        
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
@@ -2020,23 +2005,10 @@ Class ArtistsController extends AppController
                 $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
             }
         }
-
-        if (isset($albumData[0]['Song']['ArtistURL']))
-        {
-            $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
-        }
-        else
-        {
-            $this->set('artistUrl', "N/A");
-        }
+     
 
         $this->set('albumData', $albumData);
         $this->set('totalCount', count($albumData));
-        $this->set('currentPage', $page);
-        $this->set('facetPage', $facetPage);
-        
-        $totalPages = ceil(count($albumData) / $limit);
-        $this->set('totalPages', $totalPages);
 
 
         // Videos Section
