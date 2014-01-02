@@ -1870,6 +1870,7 @@ Class ArtistsController extends AppController
 
 
         //reading the page value for pagination
+        $limit = 6;
         $page = $_GET['page'];
         if (!isset($page) || $page < 1)
         {
@@ -1884,7 +1885,7 @@ Class ArtistsController extends AppController
             $facetPage = $facetPage;
         }
 
-        $limit = 12;
+        
 
         if ($this->Session->read('block') == 'yes')
         {
@@ -1909,13 +1910,7 @@ Class ArtistsController extends AppController
                 }
             }
         }
-        echo '<pre>';
-        print_r($this->params);
-        echo "\n";
-        print_r($id);
-
-        die;
-
+       
         $id = str_replace('@', '/', $id);
         $this->set('artisttextEn', $id);
         $this->set('artisttext', base64_decode($id));
@@ -2038,6 +2033,7 @@ Class ArtistsController extends AppController
         $this->set('totalCount', count($albumData));
         $this->set('currentPage', $page);
         $this->set('facetPage', $facetPage);
+        
         $totalPages = ceil(count($albumData) / $limit);
         $this->set('totalPages', $totalPages);
 
