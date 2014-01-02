@@ -1989,12 +1989,10 @@ Class ArtistsController extends AppController
                             ),
                         )
                     ),
-                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-                    'limit' => 4,
-                    'cache' => 'yes',
-                    'chk' => 2
+                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
         );
-
+        
+        $this->paginate['limit'] = 5; 
         $this->Album->recursive = 0;
         $albumData = $this->paginate('Album');
 
