@@ -566,8 +566,9 @@ echo "<pre>";print_r($additionalParams);
             if ($type != 'video') {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
                 echo "<pre>";print_r($response);
-                exit;
                 if ($response->getHttpStatus() == 200) {
+                    echo $response->facet_counts->facet_fields->$field;
+                exit;
                     if (!empty($response->facet_counts->facet_fields->$field)) {
                         return count($response->facet_counts->facet_fields->$field);
                     } else {
