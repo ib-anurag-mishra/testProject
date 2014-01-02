@@ -1900,8 +1900,8 @@ Class ArtistsController extends AppController
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
-            $id = $this->params['pass'][0];
-            for ($i = 1; $i < $count - 1; $i++)
+            $id = "";
+            for ($i = 1; $i < $count ; $i++)
             {
                 if (!is_numeric($this->params['pass'][$i]))
                 {
