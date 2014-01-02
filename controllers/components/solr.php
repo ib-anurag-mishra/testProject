@@ -563,6 +563,7 @@ class SolrComponent extends Object {
             echo "<br />";
 echo $query;
 echo "<pre>";print_r($additionalParams);
+
             if ($type != 'video') {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
                 echo "<pre>";print_r($response);
