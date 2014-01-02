@@ -1858,7 +1858,7 @@ Class ArtistsController extends AppController
         $this->set("genre", $albumData['0']['Genre']['Genre']);
     }
 
-    function album($id = null, $album = null, $provider = null)
+    function album($id = null, $album = null, $page = 1)
     {
         // Configure::write('debug', 2);
 
@@ -1867,6 +1867,15 @@ Class ArtistsController extends AppController
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $libType = $this->Session->read('library_type');
+        
+        
+        //reading the page value for pagination
+        $page = $_GET['page'];        
+        if (!isset($page) || $page < 1)
+        {
+            $page = 1;
+        }
+        $limit = 12;
 
         if ($this->Session->read('block') == 'yes')
         {
@@ -1890,6 +1899,10 @@ Class ArtistsController extends AppController
             }
         }
 
+        echo '<pre>';
+        print_r($id);
+        die;
+        
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
@@ -2006,16 +2019,10 @@ Class ArtistsController extends AppController
         {
             $this->set('artistUrl', "N/A");
         }
-        $this->set('albumData', $albumData);
-
-        $count = count($albumData);
-        echo "<pre>";
-        print_r($albumData);
-        echo "\n count :";
-        print_r($count);
-        die;
-
-
+        
+        $this->set('albumData', $albumData);      
+        $this->set('totalCount', count($albumData));
+        
 
         // Videos Section
 //        $decodedId = trim(base64_decode($id));

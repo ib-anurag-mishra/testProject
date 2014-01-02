@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <section class="artist-page">
     <div class="breadcrumbs">
         <?php
