@@ -2009,6 +2009,8 @@ Class ArtistsController extends AppController
         
         $count = count($albumData);
         echo "<pre>";
+        print_r($albumData);
+        echo "\n count :";
         print_r($count);
         die;
         
