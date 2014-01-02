@@ -2010,7 +2010,7 @@ Class ArtistsController extends AppController
                     'chk' => 2
         );
 
-        //$this->Album->recursive = 2;
+        $this->Album->recursive = 0;
         $albumData = $this->paginate('Album');
 
         if ($libType == 2)

@@ -102,7 +102,31 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
             }
             $pagination_str .= " ";
         }
+        
         $pagination_str .= " ";
+        
+        if ($type == 'listing')
+        {
+            if ($currentPage != $totalPages)
+            {
+                $pagination_str .= $html->link(__('next', true) . '>>', '/artists/album/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString);
+            }
+            else
+            {
+                $pagination_str .= "next&gt&gt";
+            }
+        }
+        else if ($type == 'block')
+        {
+            if ($facetPage != $totalPages)
+            {
+                $pagination_str .= $html->link(__('next', true) . '>>', '/artists/album/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString);
+            }
+            else
+            {
+                $pagination_str .= "next&gt&gt";
+            }
+        }
     }
     else
     {
@@ -330,31 +354,18 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
 
             <div class="paging">    
                 <?php
-                echo $html->div(
-                        null, $paginator->prev(
-                                '<< Previous', array(
-                            'class' => 'PrevPg'
-                                ), null, array(
-                            'class' => 'PrevPg DisabledPgLk'
-                                )
-                        ) .
-                        $paginator->numbers() .
-                        $paginator->next(
-                                'Next >>', array(
-                            'class' => 'NextPg'
-                                ), null, array(
-                            'class' => 'NextPg DisabledPgLk'
-                                )
-                        ), array(
-                    'style' => 'width: 100%;'
-                        )
-                );
+                $searchString = $artisttextEn;
+                $pagination = createPagination($html, $currentPage, $facetPage, $totalPages, 10, 'block', $searchString);
+                echo $pagination;
+                
+                
+                $this->Paginator->numbers();
                 ?>
             </div>
         </div>
-                <?php
-            }
-            ?>
+        <?php
+    }
+    ?>
 
 
 
@@ -367,40 +378,40 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
         <div class="videos-shadow-container">
             <div class="videos-scrollable horiz-scroll">
                 <ul style="width:15000px;">
-        <?php
-        foreach ($artistVideoList as $key => $value)
-        {
-            ?>  
+                    <?php
+                    foreach ($artistVideoList as $key => $value)
+                    {
+                        ?>  
                         <li>
 
                             <div class="video-container">
                                 <a href="/videos/details/<?php echo $value["Video"]["ProdID"]; ?>">                                                        
                                     <img src="<?php echo trim($value['videoAlbumImage']); ?>" alt="jlo" width="272" height="162"  />
                                 </a>                                                  
-                        <?php
-                        if ($this->Session->read('patron'))
-                        {
-                            if ($value['Country']['SalesDate'] <= date('Y-m-d'))
-                            {
-
-                                if ($libraryDownload == '1' && $patronDownload == '1')
+                                <?php
+                                if ($this->Session->read('patron'))
                                 {
-                                    $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-                                    $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                                    if ($downloadsUsed > 0)
+                                    if ($value['Country']['SalesDate'] <= date('Y-m-d'))
                                     {
-                                        $value['Video']['status'] = 'avail';
-                                    }
-                                    else
-                                    {
-                                        $value['Video']['status'] = 'not';
-                                    }
-                                    if ($value['Video']['status'] != 'avail')
-                                    {
-                                        ?>
+
+                                        if ($libraryDownload == '1' && $patronDownload == '1')
+                                        {
+                                            $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
+                                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+                                            $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                            if ($downloadsUsed > 0)
+                                            {
+                                                $value['Video']['status'] = 'avail';
+                                            }
+                                            else
+                                            {
+                                                $value['Video']['status'] = 'not';
+                                            }
+                                            if ($value['Video']['status'] != 'avail')
+                                            {
+                                                ?>
                                                 <span class="top-100-download-now-button">
                                                     <form method="Post" id="form<?php echo $value['Video']['ProdID']; ?>" action="/videos/download" class="suggest_text1">
                                                         <input type="hidden" name="ProdID" value="<?php echo $value['Video']['ProdID']; ?>" />
@@ -417,25 +428,25 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                                                         <span id="vdownload_loader_<?php echo $value['Video']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
                                                     </form>
                                                 </span>
-                        <?php
-                    }
-                    else
-                    {
-                        ?>
+                                                <?php
+                                            }
+                                            else
+                                            {
+                                                ?>
                                                 <a class="top-100-download-now-button" href='/homes/my_history'><label class="top-10-download-now-button" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></label></a>
-                        <?php
-                    }
-                }
-                else
-                {
+                                                <?php
+                                            }
+                                        }
+                                        else
+                                        {
 
-                    if ($libraryDownload != '1')
-                    {
-                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-                        $wishlistCount = $wishlist->getWishlistCount();
-                        if ($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount)
-                        {
-                            ?> 
+                                            if ($libraryDownload != '1')
+                                            {
+                                                $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                                                $wishlistCount = $wishlist->getWishlistCount();
+                                                if ($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount)
+                                                {
+                                                    ?> 
                                                     <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?></a>
                                                     <?php
                                                 }
@@ -469,40 +480,40 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                                     {
                                         ?>
                                         <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
-                                        if (isset($value['Country']['SalesDate']))
-                                        {
-                                            echo date("F d Y", strtotime($value['Country']['SalesDate']));
+                                            if (isset($value['Country']['SalesDate']))
+                                            {
+                                                echo date("F d Y", strtotime($value['Country']['SalesDate']));
+                                            }
+                                            ?> )'><?php __("Coming Soon"); ?></span></a>
+                                            <?php
                                         }
-                                        ?> )'><?php __("Coming Soon"); ?></span></a>
-                                        <?php
                                     }
-                                }
-                                else
-                                {
-                                    ?>
+                                    else
+                                    {
+                                        ?>
                                     <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login"); ?></a>
 
 
-                                        <?php
-                                    }
-                                    ?>
+                                    <?php
+                                }
+                                ?>
                                 <!-- <a class="top-100-download-now-button" href="javascript:void(0)">Download Now</a> -->
 
 
-        <?php
-        if ($this->Session->read("patron"))
-        {
-            ?> 
+                                <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                    ?> 
 
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)"></a>
 
                                     <div class="wishlist-popover">
-                                    <?php
-                                    $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
+                                        <?php
+                                        $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
 
-                                    if ($wishlistInfo == 'Added To Wishlist')
-                                    {
-                                        ?> 
+                                        if ($wishlistInfo == 'Added To Wishlist')
+                                        {
+                                            ?> 
                                             <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added To Wishlist"); ?></a>
                                             <?php
                                         }
@@ -513,47 +524,47 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                                             <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>">
                                                 <a class="add-to-wishlist" href='JavaScript:void(0);' 
                                                    onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>", "<?php echo $value["Video"]["provider_type"]; ?>");'>
-                                            <?php __("Add To Wishlist"); ?>
+                                                       <?php __("Add To Wishlist"); ?>
                                                 </a>
                                             </span>
                                             <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;">
                                                 <a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button">
-                <?php __("Please Wait..."); ?>
+                                                        <?php __("Please Wait..."); ?>
                                                     </label>
                                                 </a>
                                             </span>
-                <?php
-            }
-            ?>														
+                                            <?php
+                                        }
+                                        ?>														
                                     </div>
-                                                <?php } ?>
+                                <?php } ?>
 
 
 
                             </div>
-                                    <?php
-                                    $title_song_replace = str_replace('"', '', $this->getTextEncode($value['Video']['VideoTitle']));
-                                    ?>
+                            <?php
+                            $title_song_replace = str_replace('"', '', $this->getTextEncode($value['Video']['VideoTitle']));
+                            ?>
                             <div class="song-title">
                                 <a title="<?php echo $title_song_replace; ?>" href="javascript:void(0);">
-        <?php
-        if (strlen($value['Video']['VideoTitle']) > 25)
-            echo substr($value['Video']['VideoTitle'], 0, 25) . "...";
-        else
-            echo $value['Video']['VideoTitle'];
-        ?>
+                                    <?php
+                                    if (strlen($value['Video']['VideoTitle']) > 25)
+                                        echo substr($value['Video']['VideoTitle'], 0, 25) . "...";
+                                    else
+                                        echo $value['Video']['VideoTitle'];
+                                    ?>
                                 </a><?php
-                    if ('T' == $value['Video']['Advisory'])
-                    {
-            ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
+                                if ('T' == $value['Video']['Advisory'])
+                                {
+                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
                             </div>
                             <div class="genre">
-                                    <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
+                                <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
                             </div>
-                                <?php
-                                if (!empty($value['Video']['video_label']))
-                                {
-                                    ?>
+                            <?php
+                            if (!empty($value['Video']['video_label']))
+                            {
+                                ?>
                                 <div class="label">
                                     Label: <?php
                                     if (strlen($value['Video']['video_label']) > 25)
@@ -563,13 +574,13 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                                     ?>
 
                                 </div>
-                                <?php } ?>
+                            <?php } ?>
                         </li>
-                            <?php } ?>      
+                    <?php } ?>      
                 </ul>
             </div>
         </div>
-<?php }
-?>
+    <?php }
+    ?>
     <br class="clr">
 </section>
