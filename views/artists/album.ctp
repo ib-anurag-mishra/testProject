@@ -189,7 +189,7 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
 
             <div class="paging">    
                 <?php
-                    $searchString = $artisttextEn;
+                    $searchString = $artisttextEn."&page=$currentPage";
                     $pagination = createPagination($html, $currentPage, $facetPage, $totalPages, 10 , 'block', $searchString);
                     echo $pagination ;
                 ?>
