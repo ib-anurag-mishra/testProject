@@ -357,9 +357,6 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                 $searchString = $artisttextEn;
                 $pagination = createPagination($html, $currentPage, $facetPage, $totalPages, 10, 'block', $searchString);
                 echo $pagination;
-                
-                
-                echo $this->Paginator->numbers();
                 ?>
             </div>
         </div>
