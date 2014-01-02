@@ -466,10 +466,12 @@ class SolrComponent extends Object {
     function getFacetSearchTotal($keyword, $type='song') {
         $query = '';
         $country = $this->Session->read('territory');
-        echo "<pre>";
-        echo 'keyword->' .print_r($keyword);
+        
+        echo 'keyword->' .$keyword;
+        echo "<br/>";
         echo 'type->' .$type;
-        echo 'country->' .print_r($country);
+        echo "<br/>";
+        echo 'country->' .$country;
         exit;
         if (!empty($keyword)){
         if (!empty($country)) {
