@@ -1005,15 +1005,21 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
             }
             else if (msg === 'suces')
             {
+                var downloadUsedArr = response.split('|');
+                
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                
+                location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
-                var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                
                 document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
                 document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 document.getElementById('vdownloading_' + prodId).style.display = 'none';
                 document.getElementById('download_video_' + prodId).style.display = 'block';
-                location.href = unescape(downloadUsedArr[2]);
+                
+                return false;
+
             }
             else
             {
