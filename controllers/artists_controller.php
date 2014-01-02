@@ -1860,7 +1860,7 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null, $provider = null)
     {
-       // Configure::write('debug', 2);
+        // Configure::write('debug', 2);
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
@@ -1983,12 +1983,13 @@ Class ArtistsController extends AppController
                         )
                     ),
                     'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-                    'cache' => 'yes', 
+                    'cache' => 'yes',
                     'chk' => 2
         );
 
         $this->Album->recursive = 2;
-      
+        $albumData = $this->paginate('Album');
+
         if ($libType == 2)
         {
             foreach ($albumData as $key => $value)
@@ -2006,14 +2007,14 @@ Class ArtistsController extends AppController
             $this->set('artistUrl', "N/A");
         }
         $this->set('albumData', $albumData);
-        
+
         $count = count($albumData);
         echo "<pre>";
         print_r($albumData);
         echo "\n count :";
         print_r($count);
         die;
-        
+
 
 
         // Videos Section
