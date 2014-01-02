@@ -217,7 +217,9 @@
 
             <div class="paging">    
                 <?php
-              echo $this->Paginator->numbers();
+              $pages = $this->Paginator->counter(array('format' => '%pages%')); 
+              echo '<pre>';
+              print_r($pages);
                 ?>
             </div>
         </div>
