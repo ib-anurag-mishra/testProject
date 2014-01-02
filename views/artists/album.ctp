@@ -217,9 +217,7 @@
 
             <div class="paging">    
                 <?php
-                $searchString = $artisttextEn;
-                $pagination = createPagination($html, $currentPage, $facetPage, $totalPages, 10, 'block', $searchString);
-                echo $pagination;
+              echo $this->Paginator->numbers();
                 ?>
             </div>
         </div>
