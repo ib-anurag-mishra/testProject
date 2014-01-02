@@ -11,7 +11,7 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
         {
             if (1 != $facetPage)
             {
-                $pagination_str .= $html->link('<<' . __('previous', true), "/artists/album/" . $queryString . '/');
+                $pagination_str .= $html->link('<<' . __('previous', true), "/artists/album/" . $queryString . $facetPage . '/');
             }
             else
             {
@@ -43,7 +43,7 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
 
         for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++)
         {
-           if ($type == 'block')
+            if ($type == 'block')
             {
                 if ($facetPage == $pageCount)
                 {
@@ -51,7 +51,7 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                 }
                 else
                 {
-                    $pagination_str .= $html->link($pageCount, "/artists/album/" . $queryString . '/');
+                    $pagination_str .= $html->link($pageCount, "/artists/album/" . $queryString . $facetPage . '/');
                 }
             }
             $pagination_str .= " ";
@@ -62,7 +62,7 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
         {
             if ($facetPage != $totalPages)
             {
-                $pagination_str .= $html->link(__('next', true) . '>>', "/artists/album/" . $queryString . '/');
+                $pagination_str .= $html->link(__('next', true) . '>>', "/artists/album/" . $queryString . $facetPage . '/');
             }
             else
             {
@@ -185,13 +185,13 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
         ?>
         <h3>Albums</h3>
         <div class="album-shadow-container">
-          
+
 
             <div class="paging">    
                 <?php
-                    $searchString = $artisttextEn."&page=$currentPage";
-                    $pagination = createPagination($html, $currentPage, $facetPage, $totalPages, 10 , 'block', $searchString);
-                    echo $pagination ;
+                $searchString = $artisttextEn . "&page=";
+                $pagination = createPagination($html, $currentPage, $currentPage, $totalPages, 10, 'block', $searchString);
+                echo $pagination;
                 ?>
             </div>
         </div>
@@ -312,12 +312,12 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                                     {
                                         ?>
                                         <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
-                        if (isset($value['Country']['SalesDate']))
-                        {
-                            echo date("F d Y", strtotime($value['Country']['SalesDate']));
-                        }
-                                        ?> )'><?php __("Coming Soon"); ?></span></a>
-                                                                                                                <?php
+                                            if (isset($value['Country']['SalesDate']))
+                                            {
+                                                echo date("F d Y", strtotime($value['Country']['SalesDate']));
+                                            }
+                                            ?> )'><?php __("Coming Soon"); ?></span></a>
+                                            <?php
                                         }
                                     }
                                     else
@@ -386,9 +386,9 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                                         echo $value['Video']['VideoTitle'];
                                     ?>
                                 </a><?php
-                            if ('T' == $value['Video']['Advisory'])
-                            {
-                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
+                                if ('T' == $value['Video']['Advisory'])
+                                {
+                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
                             </div>
                             <div class="genre">
                                 <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
@@ -399,11 +399,11 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                                 ?>
                                 <div class="label">
                                     Label: <?php
-                    if (strlen($value['Video']['video_label']) > 25)
-                        echo substr($value['Video']['video_label'], 0, 25) . "...";
-                    else
-                        echo $value['Video']['video_label'];
-                                ?>
+                                    if (strlen($value['Video']['video_label']) > 25)
+                                        echo substr($value['Video']['video_label'], 0, 25) . "...";
+                                    else
+                                        echo $value['Video']['video_label'];
+                                    ?>
 
                                 </div>
                             <?php } ?>
