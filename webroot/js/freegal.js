@@ -995,6 +995,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistVideoDownload", // URL to request
         data: data, // post data
+        async:false,
         success: function(response) {
             var msg = response.substring(0, 5);
             if (msg === 'error')
