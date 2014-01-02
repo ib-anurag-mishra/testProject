@@ -73,6 +73,8 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                 $topage = $facetPage + $part;
             }
         }
+        $pagination_str .= 'fromPage='.$fromPage ."  topPage=".$topage;
+        
     }
     else
     {
