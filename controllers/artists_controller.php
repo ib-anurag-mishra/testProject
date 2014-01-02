@@ -1860,7 +1860,7 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null, $provider = null)
     {
-        Configure::write('debug', 2);
+       // Configure::write('debug', 2);
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
@@ -1983,14 +1983,12 @@ Class ArtistsController extends AppController
                         )
                     ),
                     'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
-                    'limit'=>'5', 
                     'cache' => 'yes', 
                     'chk' => 2
         );
 
         $this->Album->recursive = 2;
-        $albumData = $this->paginate('Album'); //getting the Albums for the artist
-
+      
         if ($libType == 2)
         {
             foreach ($albumData as $key => $value)
@@ -2008,28 +2006,34 @@ Class ArtistsController extends AppController
             $this->set('artistUrl', "N/A");
         }
         $this->set('albumData', $albumData);
+        
+        $count = count($albumData);
+        echo "<pre>";
+        print_r($count);
+        die;
+        
 
 
         // Videos Section
-        $decodedId = trim(base64_decode($id));
-
-        if (!empty($country))
-        {
-            if (((Cache::read("videolist_" . $country . "_" . $decodedId)) === false) || (Cache::read("videolist_" . $country . "_" . $decodedId) === null))
-            {
-
-                if (!empty($decodedId))
-                {
-                    $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
-                    Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
-                }
-            }
-            else
-            {
-                $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
-            }
-            $this->set('artistVideoList', $artistVideoList);
-        }
+//        $decodedId = trim(base64_decode($id));
+//
+//        if (!empty($country))
+//        {
+//            if (((Cache::read("videolist_" . $country . "_" . $decodedId)) === false) || (Cache::read("videolist_" . $country . "_" . $decodedId) === null))
+//            {
+//
+//                if (!empty($decodedId))
+//                {
+//                    $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
+//                    Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
+//                }
+//            }
+//            else
+//            {
+//                $artistVideoList = Cache::read("videolist_" . $country . "_" . $decodedId);
+//            }
+//            $this->set('artistVideoList', $artistVideoList);
+//        }
     }
 
     function album_ajax($id = null, $album = null, $provider = null)

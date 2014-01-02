@@ -212,7 +212,7 @@
             </div>
 
             <div class="paging">     
-                <?php echo $this->Paginator->numbers(); ?>
+                
             </div>
         </div>
         <?php
@@ -432,6 +432,7 @@
                 </ul>
             </div>
         </div>
-    <?php } ?>
+    <?php } 
+    ?>
     <br class="clr">
 </section>
