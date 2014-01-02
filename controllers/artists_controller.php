@@ -1895,6 +1895,10 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
+        echo '<pre>';
+        print_r($this->params);
+        die;
+        
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
