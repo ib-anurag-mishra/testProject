@@ -561,9 +561,12 @@ class SolrComponent extends Object {
                 'facet.limit' => -1
             );
             echo "<br />";
-echo $query;exit;
+echo $query;
+echo "<pre>";print_r($additionalParams);
             if ($type != 'video') {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                echo "<pre>";print_r($response);
+                exit;
                 if ($response->getHttpStatus() == 200) {
                     if (!empty($response->facet_counts->facet_fields->$field)) {
                         return count($response->facet_counts->facet_fields->$field);
