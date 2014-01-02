@@ -2019,6 +2019,9 @@ Class ArtistsController extends AppController
 
         $this->set('albumData', $albumData);
         $this->set('totalCount', count($albumData));
+        $this->set('currentPage', $page);
+        $totalPages = ceil(count($albumData) / $limit);
+        $this->set('totalPages', $totalPages);
 
 
         // Videos Section
