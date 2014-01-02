@@ -533,9 +533,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                              if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
                                                { 
                                                      $streamTime = 'UNLIMITED';
+                                                     $libraryunlimited = 1;
 
                                                }else if($this->Session->read('library_type')==2){
-
+                                                    $libraryunlimited = 0;
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
                                                     $todaysDate         =   date("Y-m-d");                                                    
                                                     
@@ -556,12 +557,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             $streamTime = (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
                                                         }
                                                                                                            
-                                                    } 
-
+                                                    }
                                                      $streamTime =   gmdate("H:i:s", $streamTime);
                                                }   
                                         ?>
-                                                <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryInfo['Library']['library_unlimited']; ?></span>
+                                                <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryunlimited; ?></span>
                                                 <?php if($this->Session->read('library_type')==2){ ?>
                                                     <div class="stream-time" ><span>Streaming Time Remaining:&nbsp;</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
                                                 <?php
