@@ -1997,13 +1997,13 @@ Class ArtistsController extends AppController
         $this->Album->recursive = 0;
         $albumData = $this->paginate('Album');
 
-//        if ($libType == 2)
-//        {
-//            foreach ($albumData as $key => $value)
-//            {
-//                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
-//            }
-//        }
+        if ($libType == 2)
+        {
+            foreach ($albumData as $key => $value)
+            {
+                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+            }
+        }
 
 
         $this->set('albumData', $albumData);
