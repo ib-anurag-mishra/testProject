@@ -12,7 +12,7 @@ Class ArtistsController extends AppController
     var $name = 'Artists';
     var $uses = array('Featuredartist', 'Artist', 'Newartist', 'Files', 'Album', 'Song', 'Download', 'Video', 'Territory');
     var $layout = 'admin';
-    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue','Paginator');
+    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator');
     var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common');
 
     /*
@@ -1196,9 +1196,9 @@ Class ArtistsController extends AppController
         }
         else
         {
-
             $provider = base64_decode($provider);
         }
+        
         // echo base64_decode($id) . $album;
         // exit;
         $country = $this->Session->read('territory');
@@ -1211,6 +1211,8 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
+        
+        
         if ($album != '')
         {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
@@ -1263,16 +1265,10 @@ Class ArtistsController extends AppController
 //		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 //		$this->set('libraryDownload',$libraryDownload);
 //		$this->set('patronDownload',$patronDownload);
-        if ($this->Session->read('block') == 'yes')
-        {
-            $cond = array('Album.Advisory' => 'F');
-        }
-        else
-        {
+       
 
-            $cond = "";
-        }
-        $this->paginate = array('conditions' =>
+        $this->Album->recursive = 2;
+        $albumData = $this->Album->find('all', array('conditions' =>
             array('and' =>
                 array(
                     //   array('Album.ArtistText' => base64_decode($id)),
@@ -1311,8 +1307,14 @@ Class ArtistsController extends AppController
                         'Files.SourceURL'
                     ),
                 )
-            ), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3', 'cache' => 'yes', 'chk' => 2
+            ),
+            'order' => array('Country.SalesDate' => 'desc'),
+            'limit' => '3',
+            'cache' => 'yes',
+            'chk' => 2
+                )
         );
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -1321,9 +1323,8 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
-        $this->Album->recursive = 2;
-        $albumData = array();
-        $albumData = $this->paginate('Album'); //getting the Albums for the artist
+
+
 
         $albumSongs = array();
         if (!empty($albumData))
@@ -1860,24 +1861,24 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null)
     {
-         Configure::write('debug', 2);
+        Configure::write('debug', 2);
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
-        
+
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
-        
+
         $libType = $this->Session->read('library_type');
 
 
         //reading the page value for pagination
         $limit = 6;
-               
+
 
         if ($this->Session->read('block') == 'yes')
         {
@@ -1894,20 +1895,20 @@ Class ArtistsController extends AppController
         {
             $count = count($this->params['pass']);
             $id = "";
-            for ($i = 1; $i < $count ; $i++)
+            for ($i = 1; $i < $count; $i++)
             {
                 if (!is_numeric($this->params['pass'][$i]))
                 {
-                    $id .=  $this->params['pass'][$i];
+                    $id .= $this->params['pass'][$i];
                 }
             }
         }
-       
+
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
-        
+
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
@@ -1991,8 +1992,8 @@ Class ArtistsController extends AppController
                     ),
                     'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
         );
-        
-        $this->paginate['limit'] = 5; 
+
+        $this->paginate['limit'] = 10;
         $this->Album->recursive = 0;
         $albumData = $this->paginate('Album');
 
@@ -2003,7 +2004,7 @@ Class ArtistsController extends AppController
 //                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
 //            }
 //        }
-     
+
 
         $this->set('albumData', $albumData);
         $this->set('totalCount', count($albumData));
