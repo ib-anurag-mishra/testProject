@@ -359,7 +359,7 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                 echo $pagination;
                 
                 
-                $this->Paginator->numbers();
+                echo $this->Paginator->numbers();
                 ?>
             </div>
         </div>

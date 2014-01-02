@@ -1860,7 +1860,7 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null, $page = 1, $facetPage = 1)
     {
-        // Configure::write('debug', 2);
+         Configure::write('debug', 2);
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
