@@ -30,6 +30,49 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
                 $pagination_str .= "&lt&ltprevious";
             }
         }
+        
+        $pagination_str .= " ";
+        
+        if ($type == 'listing')
+        {
+            if ($currentPage <= $part)
+            {
+                $fromPage = 1;
+                $topage = $currentPage + ($pageLimitToShow - $currentPage);
+                $topage = (($topage <= $totalPages) ? $topage : $totalPages);
+            }
+            elseif ($currentPage >= ($totalPages - $part))
+            {
+                $fromPage = ($currentPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($currentPage - ($pageLimitToShow - ($totalPages - $currentPage))) + 1);
+                $topage = $totalPages;
+                $fromPage = (($fromPage > 1) ? $fromPage : 1);
+            }
+            else
+            {
+                $fromPage = $currentPage - $part;
+                $topage = $currentPage + $part;
+            }
+        }
+        else if ($type == 'block')
+        {
+            if ($facetPage <= $part)
+            {
+                $fromPage = 1;
+                $topage = $facetPage + ($pageLimitToShow - $facetPage);
+                $topage = (($topage <= $totalPages) ? $topage : $totalPages);
+            }
+            elseif ($facetPage >= ($totalPages - $part))
+            {
+                $fromPage = ($facetPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($facetPage - ($pageLimitToShow - ($totalPages - $facetPage))) + 1);
+                $topage = $totalPages;
+                $fromPage = (($fromPage > 1) ? $fromPage : 1);
+            }
+            else
+            {
+                $fromPage = $facetPage - $part;
+                $topage = $facetPage + $part;
+            }
+        }
     }
     else
     {
