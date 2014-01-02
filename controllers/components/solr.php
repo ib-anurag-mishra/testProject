@@ -566,9 +566,11 @@ echo "<pre>";print_r($additionalParams);
             if ($type != 'video') {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
                 echo "<pre>";print_r($response);
+                echo "<pre>";print_r($response->facet_counts->facet_fields);
                 if ($response->getHttpStatus() == 200) {
-                    echo "<pre>";print_r($response->facet_counts);
-                    echo $response->facet_counts->facet_fields->$field;
+                    echo 'in';
+//                    echo "<pre>";print_r($response->facet_counts->facet_fields);
+//                    echo $response->facet_counts->facet_fields->$field;
                 exit;
                     if (!empty($response->facet_counts->facet_fields->$field)) {
                         return count($response->facet_counts->facet_fields->$field);
