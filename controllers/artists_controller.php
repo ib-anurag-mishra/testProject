@@ -1871,7 +1871,7 @@ Class ArtistsController extends AppController
 
         //reading the page value for pagination
         $limit = 6;
-        $page = $_GET['page'];
+        
         if (!isset($page) || $page < 1)
         {
             $page = 1;
