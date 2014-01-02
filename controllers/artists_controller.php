@@ -1311,9 +1311,7 @@ Class ArtistsController extends AppController
                 )
             ),
             'order' => array('Country.SalesDate' => 'desc'),
-            'limit' => '3',
-            'cache' => 'yes',
-            'chk' => 2
+            
                 )
         );
 
@@ -1326,7 +1324,9 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
-
+ echo "<pre>";
+        print_r($albumData);
+        die;
 
         $albumSongs = array();
         if (!empty($albumData))
@@ -1457,9 +1457,7 @@ Class ArtistsController extends AppController
 //		$res = array();
 
 
-        echo "<pre>";
-        print_r($albumSongs);
-        die;
+       
         
         return $albumSongs;
     }
