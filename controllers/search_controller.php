@@ -209,10 +209,14 @@ class SearchController extends AppController
                     case 'album':
                         // $limit = 24;
                         $limit = 12;
+//                        echo 'here';
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        echo $totalFacetCount;
+                        exit;
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
-                        echo "<pre>";print_r($albums);
+//                        echo 'under';
+//                        echo "<pre>";print_r($albums);
                         //echo "here1 : ".date('d-m-Y h:i:s');
                         // echo "Group Search for Albums Ended at ".time();
                         
@@ -226,8 +230,8 @@ class SearchController extends AppController
                                    );
                             
                         }
-                        echo 'after';
-                        echo "<pre>";print_r($albums);exit;
+//                        echo 'after';
+//                        echo "<pre>";print_r($albums);exit;
                       //  echo "<pre>"; print_r($albums);
                       //echo "<br/>here2 : ".date('d-m-Y h:i:s'); exit;
                         $this->set('albumData', $albums);

@@ -466,6 +466,13 @@ class SolrComponent extends Object {
     function getFacetSearchTotal($keyword, $type='song') {
         $query = '';
         $country = $this->Session->read('territory');
+        
+        echo 'keyword->' .$keyword;
+        echo "<br/>";
+        echo 'type->' .$type;
+        echo "<br/>";
+        echo 'country->' .$country;
+        
         if (!empty($keyword)){
         if (!empty($country)) {
             
@@ -553,10 +560,19 @@ class SolrComponent extends Object {
                 'facet.mincount' => 1,
                 'facet.limit' => -1
             );
+            echo "<br />";
+echo $query;
+echo "<pre>";print_r($additionalParams);
 
             if ($type != 'video') {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
+                echo "<pre>";print_r($response);
+                echo "<pre>";print_r($response->facet_counts->facet_fields);
                 if ($response->getHttpStatus() == 200) {
+                    echo 'in';
+//                    echo "<pre>";print_r($response->facet_counts->facet_fields);
+//                    echo $response->facet_counts->facet_fields->$field;
+                exit;
                     if (!empty($response->facet_counts->facet_fields->$field)) {
                         return count($response->facet_counts->facet_fields->$field);
                     } else {
