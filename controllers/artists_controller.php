@@ -1905,7 +1905,7 @@ Class ArtistsController extends AppController
             {
                 if (!is_numeric($this->params['pass'][$i]))
                 {
-                    $id .= "/" . $this->params['pass'][$i];
+                    $id .=  $this->params['pass'][$i];
                 }
             }
         }
