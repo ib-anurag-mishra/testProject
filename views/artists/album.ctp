@@ -1,7 +1,86 @@
 <?php
 
+function createPagination($html, $currentPage, $facetPage, $totalPages, $pageLimitToShow, $type = 'listing', $queryString = null)
+{
+    $queryString = html_entity_decode($queryString);
 
+    if ($totalPages > 1)
+    {
+        $part = floor($pageLimitToShow / 2);
+        if ($type == 'block')
+        {
+            if (1 != $facetPage)
+            {
+                $pagination_str .= $html->link('<<' . __('previous', true), "/artists/album/" . $queryString . '/');
+            }
+            else
+            {
+                $pagination_str .= "&lt&ltprevious";
+            }
+        }
+
+        $pagination_str .= " ";
+        if ($type == 'block')
+        {
+            if ($facetPage <= $part)
+            {
+                $fromPage = 1;
+                $topage = $facetPage + ($pageLimitToShow - $facetPage);
+                $topage = (($topage <= $totalPages) ? $topage : $totalPages);
+            }
+            elseif ($facetPage >= ($totalPages - $part))
+            {
+                $fromPage = ($facetPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($facetPage - ($pageLimitToShow - ($totalPages - $facetPage))) + 1);
+                $topage = $totalPages;
+                $fromPage = (($fromPage > 1) ? $fromPage : 1);
+            }
+            else
+            {
+                $fromPage = $facetPage - $part;
+                $topage = $facetPage + $part;
+            }
+        }
+
+        for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++)
+        {
+           if ($type == 'block')
+            {
+                if ($facetPage == $pageCount)
+                {
+                    $pagination_str .= $pageCount;
+                }
+                else
+                {
+                    $pagination_str .= $html->link($pageCount, "/artists/album/" . $queryString . '/');
+                }
+            }
+            $pagination_str .= " ";
+        }
+        $pagination_str .= " ";
+
+        if ($type == 'block')
+        {
+            if ($facetPage != $totalPages)
+            {
+                $pagination_str .= $html->link(__('next', true) . '>>', "/artists/album/" . $queryString . '/');
+            }
+            else
+            {
+                $pagination_str .= "next&gt&gt";
+            }
+        }
+    }
+    else
+    {
+        $pagination_str = '';
+    }
+
+    return $pagination_str;
+}
 ?>
+
+
+
 <section class="artist-page">
     <div class="breadcrumbs">
         <?php
@@ -215,8 +294,12 @@
                 </ul>
             </div>
 
-            <div class="paging">     
-                
+            <div class="paging">    
+                <?php
+                    $searchString = $artisttextEn;
+                    $pagination = createPagination($html, $currentPage, $facetPage, $totalPages, 10 , 'block', $searchString);
+                    echo $pagination ;
+                ?>
             </div>
         </div>
         <?php
@@ -336,12 +419,12 @@
                                     {
                                         ?>
                                         <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon"); ?> ( <?php
-                                            if (isset($value['Country']['SalesDate']))
-                                            {
-                                                echo date("F d Y", strtotime($value['Country']['SalesDate']));
-                                            }
-                                            ?> )'><?php __("Coming Soon"); ?></span></a>
-                                            <?php
+                        if (isset($value['Country']['SalesDate']))
+                        {
+                            echo date("F d Y", strtotime($value['Country']['SalesDate']));
+                        }
+                                        ?> )'><?php __("Coming Soon"); ?></span></a>
+                                                                                                                <?php
                                         }
                                     }
                                     else
@@ -410,9 +493,9 @@
                                         echo $value['Video']['VideoTitle'];
                                     ?>
                                 </a><?php
-                                if ('T' == $value['Video']['Advisory'])
-                                {
-                                    ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
+                            if ('T' == $value['Video']['Advisory'])
+                            {
+                                        ?> <span style="color: red;display: inline;"> (Explicit)</span> <?php } ?>							
                             </div>
                             <div class="genre">
                                 <?php echo __('Genre') . ": " . $html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre'])), array('title' => $value['Genre']['Genre'])) . '<br />'; ?>
@@ -423,11 +506,11 @@
                                 ?>
                                 <div class="label">
                                     Label: <?php
-                                    if (strlen($value['Video']['video_label']) > 25)
-                                        echo substr($value['Video']['video_label'], 0, 25) . "...";
-                                    else
-                                        echo $value['Video']['video_label'];
-                                    ?>
+                    if (strlen($value['Video']['video_label']) > 25)
+                        echo substr($value['Video']['video_label'], 0, 25) . "...";
+                    else
+                        echo $value['Video']['video_label'];
+                                ?>
 
                                 </div>
                             <?php } ?>
@@ -436,7 +519,7 @@
                 </ul>
             </div>
         </div>
-    <?php } 
+    <?php }
     ?>
     <br class="clr">
 </section>

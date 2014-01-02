@@ -1867,10 +1867,10 @@ Class ArtistsController extends AppController
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $libType = $this->Session->read('library_type');
-        
-        
+
+
         //reading the page value for pagination
-        $page = $_GET['page'];        
+        $page = $_GET['page'];
         if (!isset($page) || $page < 1)
         {
             $page = 1;
@@ -1899,11 +1899,8 @@ Class ArtistsController extends AppController
             }
         }
 
-        echo '<pre>';
-        print_r($id);
-        die;
-        
         $id = str_replace('@', '/', $id);
+        $this->set('artisttextEn', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
@@ -2019,10 +2016,10 @@ Class ArtistsController extends AppController
         {
             $this->set('artistUrl', "N/A");
         }
-        
-        $this->set('albumData', $albumData);      
+
+        $this->set('albumData', $albumData);
         $this->set('totalCount', count($albumData));
-        
+
 
         // Videos Section
 //        $decodedId = trim(base64_decode($id));
