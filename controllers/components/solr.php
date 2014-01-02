@@ -472,7 +472,7 @@ class SolrComponent extends Object {
         echo 'type->' .$type;
         echo "<br/>";
         echo 'country->' .$country;
-        exit;
+        
         if (!empty($keyword)){
         if (!empty($country)) {
             
@@ -560,7 +560,8 @@ class SolrComponent extends Object {
                 'facet.mincount' => 1,
                 'facet.limit' => -1
             );
-
+            echo "<br />";
+echo $query;exit;
             if ($type != 'video') {
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
                 if ($response->getHttpStatus() == 200) {
