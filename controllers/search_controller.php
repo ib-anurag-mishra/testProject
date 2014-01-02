@@ -225,6 +225,7 @@ class SearchController extends AppController
                                    );
                             
                         }
+                        echo "<pre>";print_r($albums);exit;
                       //  echo "<pre>"; print_r($albums);
                       //echo "<br/>here2 : ".date('d-m-Y h:i:s'); exit;
                         $this->set('albumData', $albums);
