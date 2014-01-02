@@ -568,11 +568,13 @@ echo "<pre>";print_r($additionalParams);
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
                 echo "<pre>";print_r($response);
                 echo "<pre>";print_r($response->facet_counts->facet_fields);
+                echo 'counter value-> '.count($response->facet_counts->facet_fields->$field);
+                echo 'num counter-> '.count($response->numFound);
+                exit;
                 if ($response->getHttpStatus() == 200) {
                     echo 'in';
 //                    echo "<pre>";print_r($response->facet_counts->facet_fields);
 //                    echo $response->facet_counts->facet_fields->$field;
-                exit;
                     if (!empty($response->facet_counts->facet_fields->$field)) {
                         return count($response->facet_counts->facet_fields->$field);
                     } else {
