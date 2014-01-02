@@ -567,6 +567,7 @@ echo "<pre>";print_r($additionalParams);
                 $response = self::$solr->search($query, $start, $limit, $additionalParams);
                 echo "<pre>";print_r($response);
                 if ($response->getHttpStatus() == 200) {
+                    echo "<pre>";print_r($response->facet_counts->facet_fields);
                     echo $response->facet_counts->facet_fields->$field;
                 exit;
                     if (!empty($response->facet_counts->facet_fields->$field)) {
