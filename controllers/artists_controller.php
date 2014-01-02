@@ -1324,10 +1324,6 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
- echo "<pre>";
-        print_r($albumData);
-        die;
-
         $albumSongs = array();
         if (!empty($albumData))
         {
@@ -1398,6 +1394,9 @@ Class ArtistsController extends AppController
         }
 
 
+ echo "<pre>";
+        print_r($albumSongs);
+        die;
 
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)

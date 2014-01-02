@@ -2398,8 +2398,6 @@ function showHideGridCommingSoon(varType) {
 
 $(document).ready(function() {
     
-    $('.artist-page .album-shadow-container').ajaxify();
-
     $(document).on('click', '.play-queue-btn', function() {
         playlist = $('#playlist_data').text();
         playlist = JSON.parse(playlist);
