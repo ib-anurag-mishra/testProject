@@ -209,8 +209,8 @@ class SearchController extends AppController
                     case 'album':
                         // $limit = 24;
                         $limit = 12;
-                        echo 'here';
-                        //$totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+//                        echo 'here';
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
 //                        echo 'under';
