@@ -1858,7 +1858,7 @@ Class ArtistsController extends AppController
         $this->set("genre", $albumData['0']['Genre']['Genre']);
     }
 
-    function album($id = null, $album = null, $page = 1, $facetPage=1)
+    function album($id = null, $album = null, $page = 1, $facetPage = 1)
     {
         // Configure::write('debug', 2);
 
@@ -1876,14 +1876,14 @@ Class ArtistsController extends AppController
             $page = 1;
         }
         if (!isset($facetPage) || $facetPage < 1)
-            {
-                $facetPage = 1;
-            }
-            else
-            {
-                $facetPage = $facetPage;
-            }
-            
+        {
+            $facetPage = 1;
+        }
+        else
+        {
+            $facetPage = $facetPage;
+        }
+
         $limit = 12;
 
         if ($this->Session->read('block') == 'yes')
@@ -1895,10 +1895,8 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
-        echo '<pre>';
-        print_r($this->params);
-        die;
-        
+
+
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
@@ -1911,6 +1909,12 @@ Class ArtistsController extends AppController
                 }
             }
         }
+        echo '<pre>';
+        print_r($this->params);
+        echo "\n";
+        print_r($id);
+
+        die;
 
         $id = str_replace('@', '/', $id);
         $this->set('artisttextEn', $id);
