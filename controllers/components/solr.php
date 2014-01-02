@@ -1077,7 +1077,12 @@ class SolrComponent extends Object {
     function query($query, $limit) {
         
         $country = $this->Session->read('territory');
-        
+        echo '$query->'.$query;
+        echo "<br/>";
+        echo '$keyword->'. $keyword;
+        echo "<br/>";
+        echo '$country->'. $country;
+        exit;
         if (!empty($keyword)){
         if (!empty($country))
         {
