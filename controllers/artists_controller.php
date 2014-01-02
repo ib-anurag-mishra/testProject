@@ -12,7 +12,7 @@ Class ArtistsController extends AppController
     var $name = 'Artists';
     var $uses = array('Featuredartist', 'Artist', 'Newartist', 'Files', 'Album', 'Song', 'Download', 'Video', 'Territory');
     var $layout = 'admin';
-    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue');
+    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue','Paginator');
     var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common');
 
     /*
@@ -2005,11 +2005,12 @@ Class ArtistsController extends AppController
                         )
                     ),
                     'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+                    'limit' => 4,
                     'cache' => 'yes',
                     'chk' => 2
         );
 
-        $this->Album->recursive = 2;
+        //$this->Album->recursive = 2;
         $albumData = $this->paginate('Album');
 
         if ($libType == 2)
