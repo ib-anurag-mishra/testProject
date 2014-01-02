@@ -1394,10 +1394,6 @@ Class ArtistsController extends AppController
         }
 
 
- echo "<pre>";
-        print_r($albumSongs);
-        die;
-
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)
         {
@@ -1454,9 +1450,6 @@ Class ArtistsController extends AppController
 //		$array = array();
 //		$pre = '';
 //		$res = array();
-
-
-       
         
         return $albumSongs;
     }
@@ -1999,15 +1992,18 @@ Class ArtistsController extends AppController
         $this->Album->recursive = 0;
         $albumData = $this->paginate('Album');
 
+        echo "<pre>";
         if ($libType == 2)
         {
             foreach ($albumData as $key => $value)
             {
                 $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+            
+                print_r($albumData);
             }
         }
 
-
+        die;
         $this->set('albumData', $albumData);
         $this->set('totalCount', count($albumData));
 
