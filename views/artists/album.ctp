@@ -7,66 +7,27 @@ function createPagination($html, $currentPage, $facetPage = 1, $totalPages, $pag
     if ($totalPages > 1)
     {
         $part = floor($pageLimitToShow / 2);
-        if ($type == 'block')
+
+        if ($type == 'listing')
         {
-            if (1 != $facetPage)
+            if (1 != $currentPage)
             {
-                $pagination_str .= $html->link('<<' . __('previous', true), "/artists/album/" . $queryString . $facetPage . '/');
+                $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
             }
             else
             {
                 $pagination_str .= "&lt&ltprevious";
             }
         }
-
-        $pagination_str .= " ";
-        if ($type == 'block')
+        else if ($type == 'block')
         {
-            if ($facetPage <= $part)
+            if (1 != $facetPage)
             {
-                $fromPage = 1;
-                $topage = $facetPage + ($pageLimitToShow - $facetPage);
-                $topage = (($topage <= $totalPages) ? $topage : $totalPages);
-            }
-            elseif ($facetPage >= ($totalPages - $part))
-            {
-                $fromPage = ($facetPage >= $totalPages) ? $totalPages - ($pageLimitToShow - 1) : (($facetPage - ($pageLimitToShow - ($totalPages - $facetPage))) + 1);
-                $topage = $totalPages;
-                $fromPage = (($fromPage > 1) ? $fromPage : 1);
+                $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
             }
             else
             {
-                $fromPage = $facetPage - $part;
-                $topage = $facetPage + $part;
-            }
-        }
-
-        for ($pageCount = $fromPage; $pageCount <= $topage; $pageCount++)
-        {
-            if ($type == 'block')
-            {
-                if ($facetPage == $pageCount)
-                {
-                    $pagination_str .= $pageCount;
-                }
-                else
-                {
-                    $pagination_str .= $html->link($pageCount, "/artists/album/" . $queryString . $facetPage . '/');
-                }
-            }
-            $pagination_str .= " ";
-        }
-        $pagination_str .= " ";
-
-        if ($type == 'block')
-        {
-            if ($facetPage != $totalPages)
-            {
-                $pagination_str .= $html->link(__('next', true) . '>>', "/artists/album/" . $queryString . $facetPage . '/');
-            }
-            else
-            {
-                $pagination_str .= "next&gt&gt";
+                $pagination_str .= "&lt&ltprevious";
             }
         }
     }

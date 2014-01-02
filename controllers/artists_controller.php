@@ -1858,7 +1858,7 @@ Class ArtistsController extends AppController
         $this->set("genre", $albumData['0']['Genre']['Genre']);
     }
 
-    function album($id = null, $album = null, $page = 1)
+    function album($id = null, $album = null, $page = 1, $facetPage=1)
     {
         // Configure::write('debug', 2);
 
@@ -1875,6 +1875,15 @@ Class ArtistsController extends AppController
         {
             $page = 1;
         }
+        if (!isset($facetPage) || $facetPage < 1)
+            {
+                $facetPage = 1;
+            }
+            else
+            {
+                $facetPage = $facetPage;
+            }
+            
         $limit = 12;
 
         if ($this->Session->read('block') == 'yes')
@@ -2020,6 +2029,7 @@ Class ArtistsController extends AppController
         $this->set('albumData', $albumData);
         $this->set('totalCount', count($albumData));
         $this->set('currentPage', $page);
+        $this->set('facetPage', $facetPage);
         $totalPages = ceil(count($albumData) / $limit);
         $this->set('totalPages', $totalPages);
 
