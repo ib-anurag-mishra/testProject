@@ -35,7 +35,7 @@ class SolrComponent extends Object {
      */
     var $total = null;
     
-    var $timeoutSeconds = 30;
+    var $timeoutSeconds = 60;
 
     function initialize($config = array(), $config2 = array()) {
         
