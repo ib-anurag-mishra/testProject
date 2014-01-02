@@ -1085,7 +1085,6 @@ STR;
     );
    
 
-    
     if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
 			$cond = array('Song.Advisory' => 'F');
 		}
@@ -1100,6 +1099,8 @@ STR;
 									array('Song.ReferenceID' => $prodId),
 									array('Song.provider_type = Country.provider_type'),
 									array('Country.DownloadStatus' => 1),
+									array('Country.StreamingStatus' => 1),
+									array('Country.StreamingSalesDate < NOW()'),
 									array("Song.Sample_FileID != ''"),
 									array("Song.FullLength_FIleID != ''"),
 									array("Song.provider_type" => $provider_type),
@@ -5841,10 +5842,6 @@ STR;
     for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
       
       if(!(empty($data[$cnt]['QueueList']['queue_name']))) { 
-
-       //if(0 == $this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
-          
-          //if(1 == $this->getPlayButtonStatus($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) {
             
             $obj = new QueueDetailDataType;
         
@@ -5869,8 +5866,6 @@ STR;
               
             $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
           
-         // } 
-       // }  
       }     
     }
     
