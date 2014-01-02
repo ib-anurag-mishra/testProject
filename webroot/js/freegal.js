@@ -993,7 +993,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
     id = prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
-        url: webroot + "homes/wishlistVideoDownload", // URL to request
+        url: webroot + "homes/wishlistVideoDownloadToken", // URL to request
         data: data, // post data
         async:false,
         success: function(response) {
