@@ -447,20 +447,22 @@
 
 <script>
                                                                 $(document).ready(function() {
-                                                                    $('.artist-page .album-shadow-container div.paging_all_block span a').on('click', function(event) {
-                                                                        // Add a class loading to the container box
-                                                                        var loading_div = "<div class='loader'>";
-                                                                        loading_div += "</div>";
-                                                                        $('.content').append(loading_div);
 
-                                                                        // Get the data from the link into the container box
-                                                                        $('.artist-page .album-shadow-container').load($(this).attr('href'),
-                                                                                function() {
-                                                                                    $(document).find('.loader').fadeOut(50);
-                                                                                    $(document).find('.content').find('.loader').css('opacity' , 0);
-                                                                                });
+                                                                    $('.artist-page .album-shadow-container div.paging_all_block span a').on('click',
+                                                                            function(event) {
+                                                                                // Add a class loading to the container box
+                                                                                var loading_div = "<div class='loader'>";
+                                                                                loading_div += "</div>";
+                                                                                $('.content').append(loading_div);
 
-                                                                        event.preventDefault();
-                                                                    });
+                                                                                // Get the data from the link into the container box
+                                                                                $('.artist-page .album-shadow-container').load($(this).attr('href'),
+                                                                                        function() {
+                                                                                            $(document).find('.loader').fadeOut(50);
+                                                                                            $(document).find('.content').find('.loader').remove();
+                                                                                        });
+
+                                                                                event.preventDefault();
+                                                                            });
                                                                 });
 </script>
