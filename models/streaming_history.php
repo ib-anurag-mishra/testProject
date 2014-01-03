@@ -49,7 +49,6 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
-
         if ($libraryID == "all") {
 
             $all_Ids = '';
