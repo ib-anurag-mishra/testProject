@@ -457,7 +457,7 @@
                                                                         $('.artist-page .album-shadow-container .album-scrollable').load($(this).attr('href'),
                                                                                 function(data) {
                                                                                     $(document).find('.loader').fadeOut(50);
-                                                                                    $(document).find('.content').remove('.loader');
+                                                                                    $(document).find('.content').find('.loader').css('opacity' , 0);
                                                                                     alert(data);
                                                                                 });
 
