@@ -454,7 +454,7 @@
                                                                         $('.content').append(loading_div);
 
                                                                         // Get the data from the link into the container box
-                                                                        $('.artist-page .album-shadow-container .album-scrollable').load($(this).attr('href'), function() {
+                                                                        $('.artist-page .album-shadow-container .album-scrollable').load( $(this).attr('href'), function(data) {
                                                                             // Prepare
                                                                             var
                                                                                     $data = $(documentHtml(data)),
