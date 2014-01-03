@@ -73,7 +73,7 @@
             <?php
                 }*/
             ?>
-            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.css" />
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.css?refr= <?php echo rand(0,100000); ?>" />
              <!--[if IE 8]>
                 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/master-filter-ie8.css" />
             <![endif]-->   
