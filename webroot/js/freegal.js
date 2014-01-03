@@ -2704,7 +2704,7 @@ $(document).ready(function() {
     });
     
     $('.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button').click( function(e){
-        event.preventDefault();
+        e.preventDefault();
         return false ;
     });
 
