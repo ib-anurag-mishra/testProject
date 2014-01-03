@@ -215,16 +215,16 @@ class QueueListDetailsController extends AppController
 
         if ($this->params['pass'][1] == '1')   //  Default Queue
         {
-            if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === false)
+            if ($queue_list_array = Cache::read("defaultqueuelistdetails".$territory. $this->params['pass'][0]) === false)
             {
                 $queue_list_array = $this->Queue->getQueueDetails($this->params['pass'][0], $territory);
                 if (!empty($queue_list_array))
                 {
-                    Cache::write("defaultqueuelistdetails" . $this->params['pass'][0], $queue_list_array);
+                    Cache::write("defaultqueuelistdetails".$territory. $this->params['pass'][0], $queue_list_array);
                 }
             }
 
-            $queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]);
+            $queue_list_array = Cache::read("defaultqueuelistdetails".$territory . $this->params['pass'][0]);
             $queue_name = base64_decode($this->params['pass'][2]);
             $this->set('queue_name', $queue_name);
             $this->set('queueType', 'Default');
@@ -281,7 +281,7 @@ class QueueListDetailsController extends AppController
             $this->set('default_queue', $this->params['pass'][1]);
         }
         
-        if(count($queue_list_array)==0)
+        if(count($queue_list_array)==0 || empty($queue_list_array))
         {
                $queue_list_array = $this->Queue->getOnlyQueueDetails($this->params['pass'][0]); 
                $queue_songs_count = 0;

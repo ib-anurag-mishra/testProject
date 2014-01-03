@@ -2543,7 +2543,7 @@ STR;
         //freegal Query Cache set
         if ((count($queueData) < 1) || ($queueData === false))
         {
-            Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
+            Cache::write("defaultqueuelist", Cache::read("defaultqueuelist"));
             $this->log("Freegal Defaut Queues returns null ", "cache");
         }
         else
@@ -2568,7 +2568,7 @@ STR;
             }
             else
             {
-                Cache::write("defaultqueuelistdetails" . $defaultQueueId, $eachQueueDetails);
+                Cache::write("defaultqueuelistdetails".$territory.$defaultQueueId, $eachQueueDetails);
                 $this->log("Freegal Defaut Queues " . $defaultQueueName . "( " . $defaultQueueId . " )" . " cache set", "cache");
             }
         }
