@@ -217,9 +217,9 @@
 
             <div class="paging">    
                 <?php
-                echo $paginator->prev('« '.__('Previous', true), array(), null, array('class' => 'disabled'));
-                echo $paginator->numbers();
-                echo $paginator->next(' |'.__(' Next »', true) , array(), null, array('class' => 'disabled'));
+                echo $paginator->prev('« Previous', array('tag'=>'li'), null, array('class' => 'disabled','tag'=>'li'));
+                echo $paginator->numbers(array('separator' => '','tag'=>'li'));
+                echo $paginator->next('Next »', array('tag'=>'li'), null, array('class' => 'disabled','tag'=>'li'));
                 ?>
             </div>
         </div>
