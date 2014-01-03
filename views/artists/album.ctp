@@ -446,11 +446,13 @@
 </section>
 
 <script>
-$(document).ready(function(){
-    $('.artist-page .album-shadow-container div.paging_all_block span a').on('click', function(event){
-        
-        alert('Pagination link clicked');
-        event.preventDefault();
+    $(document).ready(function() {
+        $('.artist-page .album-shadow-container div.paging_all_block span a').on('click', function(event) {
+            // Add a class loading to the container box
+            $('.artist-page .album-shadow-container').addClass('loading');
+
+            alert('Pagination link clicked');
+            event.preventDefault();
+        });
     });
-});
 </script>
