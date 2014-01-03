@@ -837,9 +837,9 @@ $('document').ready(function()
             });
 
     $(document).on('mouseleave',
-            '.artist-page .album-shadow-container .album-scrollable .album-container .wishlist-popover .add-to-playlist',
+            '.artist-page .album-shadow-container .album-scrollable .album-container',
             function() {
-                $(this).parent().find('.playlist-options').removeClass('active');
+                $('.wishlist-popover').removeClass('active');
             });
     /* end artist page */
 
