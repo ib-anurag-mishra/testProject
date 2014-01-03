@@ -217,8 +217,6 @@
 
             <div class="paging_all_block">    
                 <?php
-                $options = array('url' => array('controller' => 'news'));
-                $paginator->options($options);
                 echo $paginator->prev('« ' . __('Previous ', true), null, null, array('class' => 'disabled'));
                 echo $paginator->numbers();
                 echo $paginator->next(' |' . __(' Next »', true), null, null, array('class' => 'disabled'));
@@ -446,3 +444,13 @@
     ?>
     <br class="clr">
 </section>
+
+<script>
+$(document).ready(function(){
+    $('.artist-page .album-shadow-container div.paging_all_block span a').on('click', function(event){
+        
+        alert('Pagination link clicked');
+        event.preventDefault();
+    });
+});
+</script>
