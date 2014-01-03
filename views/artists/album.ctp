@@ -454,64 +454,12 @@
                                                                         $('.content').append(loading_div);
 
                                                                         // Get the data from the link into the container box
-                                                                        $('.artist-page .album-shadow-container .album-scrollable').load( $(this).attr('href'), function(data) {
-                                                                            // Prepare
-                                                                            var
-                                                                                    $data = $(documentHtml(data)),
-                                                                                    $dataBody = $data.find('.document-body:first'),
-                                                                                    $dataContent = $dataBody.find(contentSelector).filter(':first');
-
-                                                                            // Fetch the scripts
-                                                                            $scripts = $dataContent.find('.document-script');
-                                                                            if ($scripts.length) {
-                                                                                $scripts.detach();
-                                                                            }
-
-                                                                            // Fetch the content
-                                                                            contentHtml = $dataContent.html() || $data.html();
-                                                                            if (!contentHtml) {
-                                                                                document.location.href = url;
-                                                                                return false;
-                                                                            }
-
-                                                                            // Update the content
-                                                                            $content.stop(true, true);
-                                                                            $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
-
-                                                                            // Update the title
-                                                                            document.title = $data.find('.document-title:first').text();
-                                                                            try {
-                                                                                // document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
-                                                                                document.title = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
-                                                                            }
-                                                                            catch (Exception) {
-                                                                            }
-
-                                                                            // Add the scripts
-                                                                            if ($scripts.length > 1) {
-                                                                                $scripts.each(function() {
-                                                                                    var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-                                                                                    if ($script.attr('src')) {
-                                                                                        if (!$script[0].async) {
-                                                                                            scriptNode.async = false;
-                                                                                        }
-                                                                                        scriptNode.src = $script.attr('src');
-                                                                                    }
-                                                                                    scriptNode.appendChild(document.createTextNode(scriptText));
-                                                                                    contentNode.appendChild(scriptNode);
+                                                                        $('.artist-page .album-shadow-container .album-scrollable').load($(this).attr('href'),
+                                                                                function(data) {
+                                                                                    $('.loader').fadeOut(50);
+                                                                                    $('.content').remove('.loader');
+                                                                                    alert(data);
                                                                                 });
-                                                                            }
-
-                                                                            // Complete the change
-                                                                            if ($body.ScrollTo || false) {
-                                                                                $body.ScrollTo(scrollOptions);
-                                                                            } /* http://balupton.com/projects/jquery-scrollto */
-
-                                                                            $window.trigger(completedEventName);
-                                                                            // Remove the loading class again
-                                                                            $('.loader').fadeOut(50);
-                                                                            $('.content').remove('.loader');
-                                                                        });
 
                                                                         event.preventDefault();
                                                                     });
