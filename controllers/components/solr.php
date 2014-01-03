@@ -502,7 +502,7 @@ class SolrComponent extends Object {
                 ),
                 'facet.query' => $query,
                 'facet.mincount' => 1,
-                'facet.limit' => 1000
+                'facet.limit' => 5000
             );
 
             if ($type != 'video') {
