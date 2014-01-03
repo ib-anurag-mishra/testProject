@@ -456,8 +456,8 @@
                                                                         // Get the data from the link into the container box
                                                                         $('.artist-page .album-shadow-container .album-scrollable').load($(this).attr('href'),
                                                                                 function(data) {
-                                                                                    $('.loader').fadeOut(50);
-                                                                                    $('.content').remove('.loader');
+                                                                                    $(document).find('.loader').fadeOut(50);
+                                                                                    $(document).find('.content').remove('.loader');
                                                                                     alert(data);
                                                                                 });
 
