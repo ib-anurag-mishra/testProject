@@ -2703,10 +2703,12 @@ $(document).ready(function() {
         $('.my-wishlist-shadow-container').show();
     });
 
-    $('.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button').on('click', function(event) {
-        event.preventDefault();
-        $(this).addClass('active');
-    });
+    $('.recent-downloads-page .recent-downloads-filter-container').on('click',
+            '.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button',
+            function(event) {
+                event.preventDefault();
+                $(this).addClass('active');
+            });
 
 
 
