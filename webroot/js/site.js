@@ -736,6 +736,14 @@ $('document').ready(function()
 
     });
 
+	var totalASLiWidth = 0;
+	$('.artist-page .album-scrollable ul li').each(function(){
+		totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
+		
+	});
+	
+	$('.artist-page .album-scrollable ul').css({width:totalASLiWidth+5});
+
     var totalVSLiWidth = 0;
 
     $('.artist-page .videos-scrollable ul li').each(function() {
