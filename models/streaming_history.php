@@ -49,7 +49,7 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
-        Configure::write('debug',2);
+        //Configure::write('debug',2);
         if ($libraryID == "all") {
 
             $all_Ids = '';
@@ -103,7 +103,7 @@ class StreamingHistory extends AppModel {
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         $conditions = array(
-            'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY created ASC"
+            'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
         );
         return $this->find('all', array('conditions' => $conditions, 'fields' => array('StreamingHistory.token_id', 'StreamingHistory.library_id', 'StreamingHistory.patron_id',), 'recursive' => -1));
     }
