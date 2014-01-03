@@ -982,6 +982,62 @@ function wishlistVideoDownloadIE(prodId, id, provider)
 }
 
 
+function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('vdownloading_' + prodId).style.display = 'block';
+    document.getElementById('download_video_' + prodId).style.display = 'none';
+    document.getElementById('vdownload_loader_' + prodId).style.display = 'block';
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/wishlistVideoDownloadToken", // URL to request
+        data: data, // post data
+        async:false,
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                var downloadUsedArr = response.split('|');
+                
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                
+                location.href = unescape(downloadUsedArr[2]);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                
+                document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
+                document.getElementById('vdownloading_' + prodId).style.display = 'none';
+                document.getElementById('download_video_' + prodId).style.display = 'block';
+                
+                return false;
+
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+
+
+
+
 function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
 {
     $('.beforeClick').hide();
@@ -1323,6 +1379,60 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
                 document.getElementById('vdownloading_' + prodId).style.display = 'none';
                 document.getElementById('download_video_' + prodId).style.display = 'block';
                 location.href = unescape(finalURL);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+
+function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provider)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('vdownloading_' + prodId).style.display = 'block';
+    document.getElementById('download_video_' + prodId).style.display = 'none';
+    document.getElementById('vdownload_loader_' + prodId).style.display = 'block';
+//    var finalURL = downloadUrl1;
+//    finalURL += downloadUrl2;
+//    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId + "&id=" + id + "&provider=" + provider + "&CdnPath=" + CdnPath + "&SaveAsName=" + SaveAsName;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/wishlistVideoDownloadToken", // URL to request
+        data: data, // post data
+        success: function(response) {
+            //  alert(response);
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                if (languageSet === 'en') {
+                    document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                } else {
+                    document.getElementById('download_video_' + prodId).innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
+                }
+                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
+                document.getElementById('vdownloading_' + prodId).style.display = 'none';
+                document.getElementById('download_video_' + prodId).style.display = 'block';
+                location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
             }
