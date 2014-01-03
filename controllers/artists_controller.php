@@ -1858,7 +1858,7 @@ Class ArtistsController extends AppController
     {
         //Configure::write('debug', 2);
 
-        $this->layout = 'home';
+        
         $country = $this->Session->read('territory');
 
         $patId = $this->Session->read('patron');
@@ -1898,7 +1898,13 @@ Class ArtistsController extends AppController
                 }
             }
         }
-
+        
+        echo "<pre>";
+        print_r($this->params);
+        die;
+        
+        $this->layout = 'home';
+        
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
