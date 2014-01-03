@@ -1,5 +1,14 @@
+var flashvars = {};
+var params = {};
+var attributes = {};
+attributes.id = "fmp_player";
+swfobject.switchOffAutoHideShow();
+swfobject.embedSWF("swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
+
 $(document).ready(function(){
 	
+	
+
 	
 	$('.my-account-menu').on('click',function(){
 		
@@ -12,10 +21,11 @@ $(document).ready(function(){
 		$(this).removeClass('active');
 	});
 	
-	var ulPosition = 0;
+	var ulPosition;
 	
 	$('.album-scroll-left').on('click',function(){
 		
+		ulPosition = parseInt($(this).parent('.album-navigation-container').siblings('.album-list-container').find('ul').css("margin-left"));
 		
 		if(ulPosition !== 0) {
 		
@@ -23,7 +33,7 @@ $(document).ready(function(){
 	
 			
 			
-			$('.album-list-container ul').animate({
+			$(this).parent('.album-navigation-container').siblings('.album-list-container').find('ul').animate({
 				
 				marginLeft:ulPosition
 			});
@@ -32,6 +42,12 @@ $(document).ready(function(){
 	
 	
 	$('.album-scroll-right').on('click',function(){
+	
+		ulPosition = parseInt($(this).parent('.album-navigation-container').siblings('.album-list-container').find('ul').css("margin-left"));
+		
+		
+		
+		
 
 		if(ulPosition !== -3440) {
 		
@@ -39,7 +55,7 @@ $(document).ready(function(){
 	
 
 
-			$('.album-list-container ul').animate({
+			$(this).parent('.album-navigation-container').siblings('.album-list-container').find('ul').animate({
 				
 				marginLeft:ulPosition
 			});

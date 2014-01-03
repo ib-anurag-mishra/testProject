@@ -292,19 +292,19 @@ body {
                 background: url(../images/notifications-icon.png) no-repeat 10px center white; }
                 /* line 292, ../sass/screen.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover {
-                  background: url(../images/notifications-icon.png) no-repeat 10px center #dcedf3; }
+                  background: url(../images/notifications-icon-hover.png) no-repeat 10px center #dcedf3; }
               /* line 301, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password {
                 background: url(../images/change-password-icon.png) no-repeat 10px center white; }
                 /* line 305, ../sass/screen.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover {
-                  background: url(../images/change-password-icon.png) no-repeat 10px center #dcedf3; }
+                  background: url(../images/change-password-icon-hover.png) no-repeat 10px center #dcedf3; }
               /* line 314, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout {
                 background: url(../images/logout-icon.png) no-repeat 10px center white; }
                 /* line 317, ../sass/screen.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover {
-                  background: url(../images/logout-icon.png) no-repeat 10px center #dcedf3; }
+                  background: url(../images/logout-icon-hover.png) no-repeat 10px center #dcedf3; }
       /* line 333, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .browse {
         float: right;
@@ -478,15 +478,7 @@ body {
               background-image: -moz-linear-gradient(#d3e8f0, #d5e9f1);
               background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
               background-image: linear-gradient(#d3e8f0, #d5e9f1); }
-          /* line 448, ../sass/screen.scss */
-          .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .clear-icon {
-            position: absolute;
-            right: 44px;
-            top: 9px;
-            background: url(../images/clear-icon.png) no-repeat;
-            width: 10px;
-            height: 9px; }
-        /* line 460, ../sass/screen.scss */
+        /* line 452, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .master-search-container .search-icon {
           background: url(../images/search-icon.png) no-repeat;
           width: 13px;
@@ -495,11 +487,11 @@ body {
           left: 136px;
           top: 8px; }
           @media screen and (max-width: 1305px) {
-            /* line 460, ../sass/screen.scss */
+            /* line 452, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .search-icon {
               left: 117px; } }
 
-/* line 482, ../sass/screen.scss */
+/* line 474, ../sass/screen.scss */
 .top-nav {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5cc9ed), color-stop(100%, #4fbde1));
   background-image: -webkit-linear-gradient(#5cc9ed, #4fbde1);
@@ -510,16 +502,16 @@ body {
   height: 33px;
   border-top: 1px solid #84d7f2;
   border-bottom: 1px solid #a7def0; }
-  /* line 489, ../sass/screen.scss */
+  /* line 481, ../sass/screen.scss */
   .top-nav ul {
     position: absolute;
     right: 40px;
     top: 0; }
-    /* line 496, ../sass/screen.scss */
+    /* line 488, ../sass/screen.scss */
     .top-nav ul li {
       display: block;
       float: left; }
-      /* line 501, ../sass/screen.scss */
+      /* line 493, ../sass/screen.scss */
       .top-nav ul li a {
         display: block;
         color: #fff;
@@ -528,15 +520,15 @@ body {
         text-align: center;
         text-transform: uppercase;
         font-size: 13px; }
-      /* line 516, ../sass/screen.scss */
+      /* line 508, ../sass/screen.scss */
       .top-nav ul li:last-child a {
         padding-right: 0; }
 
-/* line 525, ../sass/screen.scss */
+/* line 517, ../sass/screen.scss */
 .content-wrapper {
   position: relative;
   /* height: 100%; */ }
-  /* line 531, ../sass/screen.scss */
+  /* line 523, ../sass/screen.scss */
   .content-wrapper .left-nav {
     width: 192px;
     /* float: left; */
@@ -552,185 +544,205 @@ body {
     box-sizing: border-box;
     background: #fff;
     height: 100%; }
-    /* line 548, ../sass/screen.scss */
+    /* line 540, ../sass/screen.scss */
     .content-wrapper .left-nav h2 {
       padding-left: 25px;
-      margin-bottom: 18px;
-      line-height: 20px; }
-    /* line 555, ../sass/screen.scss */
-    .content-wrapper .left-nav ul {
+      margin-bottom: 15px;
+      line-height: 20px;
+      font-size: 15px; }
+    /* line 548, ../sass/screen.scss */
+    .content-wrapper .left-nav > .streaming > ul, .content-wrapper .left-nav > .my-downloads > ul {
       margin-left: 25px; }
-      /* line 559, ../sass/screen.scss */
-      .content-wrapper .left-nav ul li {
-        margin-bottom: 20px; }
-        /* line 563, ../sass/screen.scss */
-        .content-wrapper .left-nav ul li a {
+      /* line 552, ../sass/screen.scss */
+      .content-wrapper .left-nav > .streaming > ul li, .content-wrapper .left-nav > .my-downloads > ul li {
+        margin-bottom: 15px; }
+        /* line 556, ../sass/screen.scss */
+        .content-wrapper .left-nav > .streaming > ul li a, .content-wrapper .left-nav > .my-downloads > ul li a {
           text-decoration: none;
-          color: #9f9f9f; }
-    /* line 574, ../sass/screen.scss */
-    .content-wrapper .left-nav .browse h2 {
-      background: url(../images/left-nav-music-icon.png) no-repeat; }
-    /* line 587, ../sass/screen.scss */
+          color: #9f9f9f;
+          font-size: 15px; }
+    /* line 570, ../sass/screen.scss */
     .content-wrapper .left-nav .streaming h2 {
-      background: url(../images/left-nav-streaming-icon.png) no-repeat; }
-    /* line 597, ../sass/screen.scss */
+      background: url(../images/left-nav-streaming-icon.png) no-repeat 0 3px; }
+    /* line 579, ../sass/screen.scss */
+    .content-wrapper .left-nav .streaming li ul {
+      margin-left: 20px;
+      margin-top: 10px;
+      display: none; }
+      /* line 584, ../sass/screen.scss */
+      .content-wrapper .left-nav .streaming li ul.active {
+        display: block; }
+      /* line 589, ../sass/screen.scss */
+      .content-wrapper .left-nav .streaming li ul li {
+        margin-bottom: 10px; }
+    /* line 600, ../sass/screen.scss */
     .content-wrapper .left-nav .my-downloads h2 {
       background: url(../images/left-nav-download-icon.png) no-repeat; }
-    /* line 607, ../sass/screen.scss */
+    /* line 610, ../sass/screen.scss */
     .content-wrapper .left-nav .announcements h2 {
       background: url(../images/left-nav-announcement-icon.png) no-repeat; }
-    /* line 614, ../sass/screen.scss */
+    /* line 617, ../sass/screen.scss */
     .content-wrapper .left-nav .announcements .announcement {
       background: #eeeeee;
       font-size: 14px;
       padding: 10px; }
-      /* line 620, ../sass/screen.scss */
+      /* line 623, ../sass/screen.scss */
       .content-wrapper .left-nav .announcements .announcement p {
         padding-bottom: 10px; }
-      /* line 624, ../sass/screen.scss */
+      /* line 627, ../sass/screen.scss */
       .content-wrapper .left-nav .announcements .announcement .announcement_header {
         text-decoration: underline;
         font-weight: bold; }
-  /* line 633, ../sass/screen.scss */
+  /* line 636, ../sass/screen.scss */
   .content-wrapper .content {
     background: url(../images/content-bkg.gif) repeat;
-    /*
-    		position: absolute;
-    		left: 218px;
-    		top:0;
-    		bottom:0;
-    		right:0;
-    */
-    /* padding: 25px; */
     padding: 25px 40px 25px 212px; }
-    /* line 649, ../sass/screen.scss */
+    /* line 642, ../sass/screen.scss */
     .content-wrapper .content .featured-artists, .content-wrapper .content .featured-composers, .content-wrapper .content .featured-themes {
       margin-top: 28px; }
-    /* line 658, ../sass/screen.scss */
-    .content-wrapper .content .top-albums h2, .content-wrapper .content .featured-artists h2, .content-wrapper .content .featured-composers h2, .content-wrapper .content .featured-themes h2 {
-      font-size: 24px; }
-    /* line 663, ../sass/screen.scss */
-    .content-wrapper .content .top-albums .album-list-container, .content-wrapper .content .featured-artists .album-list-container, .content-wrapper .content .featured-composers .album-list-container, .content-wrapper .content .featured-themes .album-list-container {
-      margin-top: 10px;
-      height: 226px;
-      overflow-y: hidden; }
-      /* line 668, ../sass/screen.scss */
-      .content-wrapper .content .top-albums .album-list-container ul, .content-wrapper .content .featured-artists .album-list-container ul, .content-wrapper .content .featured-composers .album-list-container ul, .content-wrapper .content .featured-themes .album-list-container ul {
+    /* line 647, ../sass/screen.scss */
+    .content-wrapper .content .top-albums, .content-wrapper .content .featured-artists, .content-wrapper .content .featured-composers, .content-wrapper .content .featured-themes {
+      position: relative; }
+      /* line 651, ../sass/screen.scss */
+      .content-wrapper .content .top-albums h2, .content-wrapper .content .featured-artists h2, .content-wrapper .content .featured-composers h2, .content-wrapper .content .featured-themes h2 {
+        font-size: 24px; }
+      /* line 658, ../sass/screen.scss */
+      .content-wrapper .content .top-albums .album-list-container, .content-wrapper .content .featured-artists .album-list-container, .content-wrapper .content .featured-composers .album-list-container, .content-wrapper .content .featured-themes .album-list-container {
+        margin-top: 10px;
+        height: 226px;
         overflow-y: hidden;
-        height: 216px;
-        width: 4300px; }
-        /* line 673, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-list-container ul li, .content-wrapper .content .featured-artists .album-list-container ul li, .content-wrapper .content .featured-composers .album-list-container ul li, .content-wrapper .content .featured-themes .album-list-container ul li {
-          float: left;
-          display: block;
-          margin-right: 10px;
-          margin-bottom: 10px;
-          width: 162px; }
-          /* line 681, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-artists .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-composers .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-themes .album-list-container ul li .album-cover-container {
-            width: 162px;
-            height: 162px; }
-            /* line 686, ../sass/screen.scss */
-            .content-wrapper .content .top-albums .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-artists .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-composers .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-themes .album-list-container ul li .album-cover-container img {
+        position: relative; }
+        /* line 664, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .album-list-container ul, .content-wrapper .content .featured-artists .album-list-container ul, .content-wrapper .content .featured-composers .album-list-container ul, .content-wrapper .content .featured-themes .album-list-container ul {
+          overflow-y: hidden;
+          height: 216px;
+          width: 4300px; }
+          /* line 669, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-list-container ul li, .content-wrapper .content .featured-artists .album-list-container ul li, .content-wrapper .content .featured-composers .album-list-container ul li, .content-wrapper .content .featured-themes .album-list-container ul li {
+            float: left;
+            display: block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            width: 162px; }
+            /* line 677, ../sass/screen.scss */
+            .content-wrapper .content .top-albums .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-artists .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-composers .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-themes .album-list-container ul li .album-cover-container {
               width: 162px;
               height: 162px; }
-    /* line 697, ../sass/screen.scss */
-    .content-wrapper .content .top-albums .album-info, .content-wrapper .content .featured-artists .album-info, .content-wrapper .content .featured-composers .album-info, .content-wrapper .content .featured-themes .album-info {
-      font-size: 14px; }
-      /* line 700, ../sass/screen.scss */
-      .content-wrapper .content .top-albums .album-info p, .content-wrapper .content .featured-artists .album-info p, .content-wrapper .content .featured-composers .album-info p, .content-wrapper .content .featured-themes .album-info p {
-        margin-top: 5px; }
-        /* line 704, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-info p.title, .content-wrapper .content .featured-artists .album-info p.title, .content-wrapper .content .featured-composers .album-info p.title, .content-wrapper .content .featured-themes .album-info p.title {
-          font-weight: bold;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis; }
-        /* line 711, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-info p.artist, .content-wrapper .content .featured-artists .album-info p.artist, .content-wrapper .content .featured-composers .album-info p.artist, .content-wrapper .content .featured-themes .album-info p.artist {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis; }
-    /* line 721, ../sass/screen.scss */
-    .content-wrapper .content .top-albums .album-navigation-container, .content-wrapper .content .featured-artists .album-navigation-container, .content-wrapper .content .featured-composers .album-navigation-container, .content-wrapper .content .featured-themes .album-navigation-container {
-      background: url(../images/gray-dotted-border.png) bottom repeat-x;
-      padding-bottom: 10px;
-      margin-top: 10px; }
-      /* line 725, ../sass/screen.scss */
-      .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left {
-        float: left;
-        width: 38px;
-        height: 38px;
-        cursor: pointer;
-        background: url(../images/album-scroll-left.png) no-repeat; }
-        /* line 733, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left:hover {
-          background: url(../images/album-scroll-left-hover.png) no-repeat; }
-        /* line 737, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left:active {
-          background: url(../images/album-scroll-left-active.png) no-repeat; }
-      /* line 743, ../sass/screen.scss */
-      .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right {
-        float: right;
-        width: 38px;
-        height: 38px;
-        cursor: pointer;
-        background: url(../images/album-scroll-right.png) no-repeat; }
-        /* line 750, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right:hover {
-          background: url(../images/album-scroll-right-hover.png) no-repeat; }
-        /* line 754, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right:active {
-          background: url(../images/album-scroll-right-active.png) no-repeat; }
-    /* line 762, ../sass/screen.scss */
+              /* line 682, ../sass/screen.scss */
+              .content-wrapper .content .top-albums .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-artists .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-composers .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-themes .album-list-container ul li .album-cover-container img {
+                width: 162px;
+                height: 162px;
+                -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+                -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
+      /* line 699, ../sass/screen.scss */
+      .content-wrapper .content .top-albums .album-info, .content-wrapper .content .featured-artists .album-info, .content-wrapper .content .featured-composers .album-info, .content-wrapper .content .featured-themes .album-info {
+        font-size: 14px; }
+        /* line 702, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .album-info p, .content-wrapper .content .featured-artists .album-info p, .content-wrapper .content .featured-composers .album-info p, .content-wrapper .content .featured-themes .album-info p {
+          margin-top: 5px; }
+          /* line 706, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-info p.title, .content-wrapper .content .featured-artists .album-info p.title, .content-wrapper .content .featured-composers .album-info p.title, .content-wrapper .content .featured-themes .album-info p.title {
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 13px; }
+          /* line 714, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-info p.artist, .content-wrapper .content .featured-artists .album-info p.artist, .content-wrapper .content .featured-composers .album-info p.artist, .content-wrapper .content .featured-themes .album-info p.artist {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 12px; }
+      /* line 726, ../sass/screen.scss */
+      .content-wrapper .content .top-albums .album-navigation-container, .content-wrapper .content .featured-artists .album-navigation-container, .content-wrapper .content .featured-composers .album-navigation-container, .content-wrapper .content .featured-themes .album-navigation-container {
+        background: url(../images/gray-dotted-border.png) bottom repeat-x;
+        padding-bottom: 10px;
+        margin-top: 10px; }
+        /* line 730, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left {
+          float: left;
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+          /* background: url(../images/album-scroll-left.png) no-repeat; */
+          background: url(../images/album-scroll-left-sprite.png) no-repeat 0 0; }
+          /* line 739, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left:hover {
+            /* background: url(../images/album-scroll-left-hover.png) no-repeat; */
+            background: url(../images/album-scroll-left-sprite.png) no-repeat -30px 0; }
+          /* line 744, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left:active {
+            /* background: url(../images/album-scroll-left-active.png) no-repeat; */
+            background: url(../images/album-scroll-left-sprite.png) no-repeat -60px 0; }
+        /* line 751, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right {
+          float: right;
+          width: 38px;
+          height: 38px;
+          cursor: pointer;
+          background: url(../images/album-scroll-right.png) no-repeat; }
+          /* line 758, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right:hover {
+            background: url(../images/album-scroll-right-hover.png) no-repeat; }
+          /* line 762, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right:active {
+            background: url(../images/album-scroll-right-active.png) no-repeat; }
+    /* line 770, ../sass/screen.scss */
     .content-wrapper .content .top-songs {
       margin-top: 20px; }
-      /* line 764, ../sass/screen.scss */
+      /* line 772, ../sass/screen.scss */
       .content-wrapper .content .top-songs h2 {
         font-size: 24px; }
-      /* line 769, ../sass/screen.scss */
+      /* line 777, ../sass/screen.scss */
       .content-wrapper .content .top-songs ol {
         width: 48%;
         margin-top: 20px;
-        font-size: 14px; }
-        /* line 776, ../sass/screen.scss */
+        font-size: 13px; }
+        /* line 784, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol.left-col {
           margin-right: 2%;
           float: left; }
           @media screen and (max-width: 1305px) {
-            /* line 776, ../sass/screen.scss */
+            /* line 784, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol.left-col {
               float: none;
               width: 100%;
               margin-right: 0; } }
-        /* line 789, ../sass/screen.scss */
+        /* line 797, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol.right-col {
           float: right; }
           @media screen and (max-width: 1305px) {
-            /* line 789, ../sass/screen.scss */
+            /* line 797, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol.right-col {
               float: none;
               width: 100%;
               margin-right: 0;
               margin-top: 0; } }
-        /* line 804, ../sass/screen.scss */
+        /* line 812, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol li {
-          background: url(../images/top-song-border.png) repeat-x;
           height: 35px;
           position: relative; }
-          /* line 809, ../sass/screen.scss */
+          /* line 818, ../sass/screen.scss */
+          .content-wrapper .content .top-songs ol li:nth-child(odd) {
+            background: url(../images/top-singles-bkg-odd.png) repeat-x; }
+          /* line 823, ../sass/screen.scss */
+          .content-wrapper .content .top-songs ol li:nth-child(even) {
+            background: url(../images/top-singles-bkg-even.png) repeat-x; }
+          /* line 827, ../sass/screen.scss */
           .content-wrapper .content .top-songs ol li .inner-col {
             float: left;
             position: absolute; }
-            /* line 814, ../sass/screen.scss */
+            /* line 832, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.ranking {
               margin-top: 10px;
               left: 1%; }
               @media screen and (max-width: 1305px) {
-                /* line 814, ../sass/screen.scss */
+                /* line 832, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.ranking {
                   left: 1%; } }
-            /* line 824, ../sass/screen.scss */
+            /* line 842, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.title {
               margin-top: 10px;
               left: 5%;
@@ -740,10 +752,10 @@ body {
               white-space: nowrap;
               height: 15px; }
               @media screen and (max-width: 1305px) {
-                /* line 824, ../sass/screen.scss */
+                /* line 842, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.title {
                   left: 4%; } }
-            /* line 840, ../sass/screen.scss */
+            /* line 858, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.artist {
               margin-top: 10px;
               left: 50%;
@@ -753,70 +765,84 @@ body {
               text-overflow: ellipsis;
               white-space: nowrap; }
               @media screen and (max-width: 1305px) {
-                /* line 840, ../sass/screen.scss */
+                /* line 858, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.artist {
                   left: 45%; } }
-            /* line 854, ../sass/screen.scss */
+            /* line 872, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.time {
               margin-top: 10px;
               right: 70px; }
               @media screen and (max-width: 1305px) {
-                /* line 854, ../sass/screen.scss */
+                /* line 872, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.time {
                   right: 76px; } }
-            /* line 863, ../sass/screen.scss */
+            /* line 881, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon {
               margin-top: 7px;
               background: url(../images/top-songs-download-icon.png) no-repeat;
               width: 20px;
               height: 20px;
               margin-left: 5px;
-              right: 36px; }
+              right: 36px;
+              cursor: pointer; }
+              /* line 892, ../sass/screen.scss */
+              .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon:hover {
+                background: url(../images/top-songs-download-icon-hover.png) no-repeat; }
+              /* line 897, ../sass/screen.scss */
+              .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon:active {
+                background: url(../images/top-songs-download-icon-active.png) no-repeat; }
               @media screen and (max-width: 1305px) {
-                /* line 863, ../sass/screen.scss */
+                /* line 881, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon {
                   right: 38px; } }
-            /* line 878, ../sass/screen.scss */
+            /* line 907, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon {
               margin-top: 7px;
               margin-left: 5px;
               background: url(../images/top-songs-play-icon.png) no-repeat;
               width: 20px;
               height: 20px;
-              right: 10px; }
+              right: 10px;
+              cursor: pointer; }
+              /* line 917, ../sass/screen.scss */
+              .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon:hover {
+                background: url(../images/top-songs-play-icon-hover.png) no-repeat; }
+              /* line 922, ../sass/screen.scss */
+              .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon:active {
+                background: url(../images/top-songs-play-icon-active.png) no-repeat; }
               @media screen and (max-width: 1305px) {
-                /* line 878, ../sass/screen.scss */
+                /* line 907, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon {
                   right: 10px; } }
 
-/* line 905, ../sass/screen.scss */
+/* line 945, ../sass/screen.scss */
 footer {
   height: 98px;
   background: url(../images/footer-bkg.gif) repeat;
   color: #000;
   font-size: 12px;
   padding-bottom: 100px; }
-  /* line 913, ../sass/screen.scss */
+  /* line 953, ../sass/screen.scss */
   footer .inner-wrapper {
     height: 98px;
     position: relative;
     width: 1215px;
     margin: 0 auto; }
-    /* line 920, ../sass/screen.scss */
+    /* line 960, ../sass/screen.scss */
     footer .inner-wrapper .legal {
       position: absolute;
       left: 75px;
       top: 25px; }
-    /* line 926, ../sass/screen.scss */
+    /* line 966, ../sass/screen.scss */
     footer .inner-wrapper .footer-nav {
       position: absolute;
       right: 0;
       top: 25px; }
-      /* line 932, ../sass/screen.scss */
+      /* line 972, ../sass/screen.scss */
       footer .inner-wrapper .footer-nav li {
         display: block;
         float: left; }
-        /* line 937, ../sass/screen.scss */
+        /* line 977, ../sass/screen.scss */
         footer .inner-wrapper .footer-nav li a {
           display: block;
           padding-left: 6px;
@@ -824,33 +850,34 @@ footer {
           color: #000;
           text-decoration: none;
           border-right: 1px solid #000; }
-        /* line 947, ../sass/screen.scss */
+        /* line 987, ../sass/screen.scss */
         footer .inner-wrapper .footer-nav li:last-child a {
           border-right: 0; }
-    /* line 954, ../sass/screen.scss */
+    /* line 994, ../sass/screen.scss */
     footer .inner-wrapper .languages {
       position: absolute;
       right: 0;
       top: 60px; }
-      /* line 960, ../sass/screen.scss */
+      /* line 1000, ../sass/screen.scss */
       footer .inner-wrapper .languages li {
         display: block;
         float: left; }
-        /* line 965, ../sass/screen.scss */
+        /* line 1005, ../sass/screen.scss */
         footer .inner-wrapper .languages li a {
           display: block;
           padding-left: 6px;
           padding-right: 6px;
           color: #000;
           text-decoration: none; }
-        /* line 975, ../sass/screen.scss */
+        /* line 1015, ../sass/screen.scss */
         footer .inner-wrapper .languages li:nth-child(2) a, footer .inner-wrapper .languages li:nth-child(3) a, footer .inner-wrapper .languages li:nth-child(4) a {
           border-right: 1px solid #000; }
 
-/* line 987, ../sass/screen.scss */
+/* line 1027, ../sass/screen.scss */
 .fmp-container {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: #666;
-  height: 100px; }
+  background: url(../images/player-bkg.jpg) repeat;
+  height: 100px;
+  text-align: center; }
