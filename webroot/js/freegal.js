@@ -2703,7 +2703,7 @@ $(document).ready(function() {
         $('.my-wishlist-shadow-container').show();
     });
 
-    $('.recent-downloads-page .recent-downloads-filter-container').on('click',
+    $('.recent-downloads-page .recent-downloads-filter-container').off('click',
             '.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button',
             function() {
                 return false ;
