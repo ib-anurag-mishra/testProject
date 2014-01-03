@@ -794,21 +794,21 @@ $('document').ready(function()
     });
 
     $(document).on('click', '.artist-page .album-shadow-container div.paging_all_block span a', function(event) {
-        
-                // Add a class loading to the container box
-                var loading_div = "<div class='loader'>";
-                loading_div += "</div>";
-                $('.content').append(loading_div);
 
-                // Get the data from the link into the container box
-                $('.artist-page .album-shadow-container').load($(this).attr('href'),
-                        function() {
-                            $(document).find('.loader').fadeOut(50);
-                            $(document).find('.content').find('.loader').remove();
-                        });
+        // Add a class loading to the container box
+        var loading_div = "<div class='loader'>";
+        loading_div += "</div>";
+        $('.content').append(loading_div);
 
-                event.preventDefault();
-            });
+        // Get the data from the link into the container box
+        $('.artist-page .album-shadow-container').load($(this).attr('href'),
+                function() {
+                    $(document).find('.loader').fadeOut(50);
+                    $(document).find('.content').find('.loader').remove();
+                });
+
+        event.preventDefault();
+    });
 
     $(document).on('mouseenter', '.artist-page .album-shadow-container .album-scrollable ul li .album-container', function() {
         $('.preview').css({opacity: 0});
@@ -829,6 +829,18 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
+
+    $(document).on('mouseenter',
+            '.artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .add-to-playlist',
+            function() {
+                $(this).find('.playlist-options').addClass('active');
+            });
+
+    $(document).on('mouseleave',
+            '.artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .add-to-playlist',
+            function() {
+                $(this).find('.playlist-options').removeClass('active');
+            });
     /* end artist page */
 
 
