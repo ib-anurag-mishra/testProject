@@ -362,6 +362,7 @@ if (empty($getData)) {
                         </tr>
     <?php
 }
+ echo $this->element('sql_dump');
 ?>
                 </table>
             </div>
