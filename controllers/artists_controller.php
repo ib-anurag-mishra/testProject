@@ -1855,11 +1855,9 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null)
     {
-        //Configure::write('debug', 2);
-
+        Configure::write('debug', 2);
 
         $country = $this->Session->read('territory');
-
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -1869,11 +1867,6 @@ Class ArtistsController extends AppController
 
         $libType = $this->Session->read('library_type');
 
-
-        //reading the page value for pagination
-        $limit = 6;
-
-
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -1882,8 +1875,6 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
-
-
 
         if (count($this->params['pass']) > 1)
         {
