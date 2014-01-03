@@ -536,7 +536,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                      $libraryunlimited = 1;
 
                                                }else if($this->Session->read('library_type')==2){
-                                                    $libraryunlimited = 0;
+                                                   $libraryunlimited = 0;
+
                                                     $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
                                                     $todaysDate         =   date("Y-m-d");                                                    
                                                     
@@ -557,7 +558,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             $streamTime = (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
                                                         }
                                                                                                            
-                                                    }
+                                                    } 
+
                                                      $streamTime =   gmdate("H:i:s", $streamTime);
                                                }   
                                         ?>
