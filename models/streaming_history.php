@@ -65,20 +65,11 @@ class StreamingHistory extends AppModel {
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
-        /*$conditions = array(
-            'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and streaming_histories.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
-        );*/
-        return $this->find('all',array(
-        'joins' => array(
-            array(
-                'table' => strtolower($territory).'_countries',
-                'alias' => 'countries',
-                'type' => 'left',
-                'conditions' => array('StreamingHistory.ProdID=countries.ProdID','StreamingHistory.provider_type=countries.provider_type',
-                                    'StreamingHistory.createdOn  BETWEEN ? and ?' => array($startDate,$endDate),'StreamingHistory.library_id'=>$libraryID
-                    )
-            )
-        ), 'fields' => array('sum(StreamingHistory.consumed_time)'), 'recursive' => -1));
+        $conditions = array(
+            'StreamingHistory.provider_type=countries.provider_type and StreamingHistory.ProdID=countries.ProdID and createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
+        );
+        
+        return $this->find('all', array('conditions'=>$conditions, 'fields'=>array('sum(StreamingHistory.consumed_time)'),'recursive' => -1));
     }
     /*
       Function Name : getDaysStreamedInformation
