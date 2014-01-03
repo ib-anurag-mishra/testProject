@@ -74,7 +74,7 @@ class StreamingHistory extends AppModel {
                 'table' => strtolower($territory).'_countries',
                 'alias' => 'countries',
                 'type' => 'left',
-                'conditions' => array('StreamingHistory.ProdID=countries.ProID','StreamingHistory.provider_type=countries.provider_type',
+                'conditions' => array('StreamingHistory.ProdID=countries.ProdID','StreamingHistory.provider_type=countries.provider_type',
                                     'StreamingHistory.createdOn  BETWEEN ? and ?' => array($startDate,$endDate),'StreamingHistory.library_id'=>$libraryID
                     )
             )
@@ -103,9 +103,9 @@ class StreamingHistory extends AppModel {
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         $conditions = array(
-            'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and streaming_histories.token_id is not null GROUP BY id  ORDER BY created ASC"
+            'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY created ASC"
         );
-        return $this->find('all', array('conditions' => $conditions, 'fields' => array('streaming_histories.token_id', 'streaming_histories.library_id', 'streaming_histories.patron_id',), 'recursive' => -1));
+        return $this->find('all', array('conditions' => $conditions, 'fields' => array('StreamingHistory.token_id', 'StreamingHistory.library_id', 'StreamingHistory.patron_id',), 'recursive' => -1));
     }
 
 }
