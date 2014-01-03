@@ -110,9 +110,18 @@
                             $duration = explode(':', $value['Songs']['FullLength_Duration']);
                             $duration_in_secs = $duration[0] * 60;
                             $total_duration = $duration_in_secs + $duration[1];
+                            if ($value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1)
+                            {
                             echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $key, "onClick" => 'loadSong("' . $value['streamUrl'] . '", "' . base64_encode($value['Songs']['SongTitle']) . '","' . base64_encode($value['Songs']['ArtistText']) . '",' . $total_duration . ',"' . $value['Songs']['ProdID'] . '","' . $value['Songs']['provider_type'] . '",' . $queue_id . ');'));
                             echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $key));
                             echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $key, "onClick" => 'stopThis(this, "' . $key . '");'));
+                            }
+                             else if ($value['Countries']['SalesDate'] <= date('Y-m-d'))
+                            {
+                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio" . $key, "onClick" => 'playSample(this, "' . $key . '", ' . $value['Songs']['ProdID'] . ', "' . base64_encode($value['Songs']['provider_type']) . '", "' . $this->webroot . '");'));
+                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "load_audio" . $key));
+                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "stop_audio" . $key, "onClick" => 'stopThis(this, "' . $key . '");'));
+                            }
 
                             if (!empty($value['Songs']['ProdID']))
                             {
