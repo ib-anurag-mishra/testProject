@@ -2703,12 +2703,7 @@ $(document).ready(function() {
         $('.my-wishlist-shadow-container').show();
     });
 
-    $('.recent-downloads-page .recent-downloads-filter-container').on('click',
-            '.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button',
-            function(event) {
-                event.preventDefault();
-                $(this).addClass('active');
-            });
+    $('.recent-downloads-filter-container .date-filter-button , .recent-downloads-filter-container .song-filter-button , .recent-downloads-filter-container .artist-filter-button ,.recent-downloads-filter-container .album-filter-button , .recent-downloads-filter-container .download-button').off('click');
 
 
 
