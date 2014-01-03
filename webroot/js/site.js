@@ -831,15 +831,15 @@ $('document').ready(function()
 
 
     $(document).on('mouseenter',
-            '.artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .add-to-playlist',
+            '.artist-page .album-shadow-container .album-scrollable .album-container .wishlist-popover .add-to-playlist',
             function() {
-                $(this).find('.playlist-options').addClass('active');
+                $(this).parent().find('.playlist-options').addClass('active');
             });
 
     $(document).on('mouseleave',
-            '.artist-page .album-shadow-container .album-scrollable ul li .album-container .wishlist-popover .add-to-playlist',
+            '.artist-page .album-shadow-container .album-scrollable .album-container .wishlist-popover .add-to-playlist',
             function() {
-                $(this).find('.playlist-options').removeClass('active');
+                $(this).parent().find('.playlist-options').removeClass('active');
             });
     /* end artist page */
 
