@@ -1169,8 +1169,8 @@ Class ArtistsController extends AppController
 
     function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null)
     {
-        Configure::write('debug' , 2);
-        
+        //Configure::write('debug' , 2);
+
         if (empty($ajax))
         {
             if (count($this->params['pass']) > 1)
@@ -1200,7 +1200,7 @@ Class ArtistsController extends AppController
         {
             $provider = base64_decode($provider);
         }
-        
+
         // echo base64_decode($id) . $album;
         // exit;
         $country = $this->Session->read('territory');
@@ -1213,8 +1213,8 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
-        
-        
+
+
         if ($album != '')
         {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
@@ -1267,7 +1267,7 @@ Class ArtistsController extends AppController
 //		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 //		$this->set('libraryDownload',$libraryDownload);
 //		$this->set('patronDownload',$patronDownload);
-       
+
 
         $this->Album->recursive = 2;
         $albumData = $this->Album->find('all', array('conditions' =>
@@ -1311,7 +1311,6 @@ Class ArtistsController extends AppController
                 )
             ),
             'order' => array('Country.SalesDate' => 'desc'),
-            
                 )
         );
 
@@ -1450,7 +1449,7 @@ Class ArtistsController extends AppController
 //		$array = array();
 //		$pre = '';
 //		$res = array();
-        
+
         return $albumSongs;
     }
 
@@ -1858,7 +1857,7 @@ Class ArtistsController extends AppController
     {
         //Configure::write('debug', 2);
 
-        
+
         $country = $this->Session->read('territory');
 
         $patId = $this->Session->read('patron');
@@ -1898,13 +1897,18 @@ Class ArtistsController extends AppController
                 }
             }
         }
-        
-        echo "<pre>";
-        print_r($this->params);
-        die;
-        
+
+        if ($this->RequestHandler->isAjax())
+        {
+            $this->layout = 'ajax';
+            echo "<pre>";
+            print_r($this->params);
+            die;
+        }
+
+
         $this->layout = 'home';
-        
+
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
         $this->set('artisttitle', base64_decode($id));
@@ -2002,7 +2006,7 @@ Class ArtistsController extends AppController
         {
             foreach ($albumData as $key => $value)
             {
-                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);            
+                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
             }
         }
 
