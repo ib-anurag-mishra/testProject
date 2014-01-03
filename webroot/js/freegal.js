@@ -2704,8 +2704,8 @@ $(document).ready(function() {
     });
     
     $('.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button').click( function(e){
-        e.stopPropagation();
-        e.preventDefault();
+        e.stopImmediatePropagation();
+        $(this).addClass('active');
         return false ;
     });
 
