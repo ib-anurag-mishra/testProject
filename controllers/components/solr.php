@@ -518,7 +518,7 @@ class SolrComponent extends Object {
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.'))';
+                    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') CComposer:(' . $searchkeyword . '))';
                     $field = 'Title';
                     break;
                 case 'artist':
