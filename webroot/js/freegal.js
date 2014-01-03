@@ -2705,9 +2705,8 @@ $(document).ready(function() {
 
     $('.recent-downloads-page .recent-downloads-filter-container').on('click',
             '.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button',
-            function(event) {
-                event.preventDefault();
-                $(this).addClass('active');
+            function() {
+                return false ;
             });
 
 
