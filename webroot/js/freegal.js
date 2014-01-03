@@ -892,7 +892,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistDownloadHome", // URL to request
         data: data, // post data
-        async:false,
+        async: false,
         success: function(response) {
             var msg = response.substring(0, 5);
             if (msg === 'error')
@@ -931,9 +931,9 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
     return false;
 }
 
-function toDownload( urlToDownload )
+function toDownload(urlToDownload)
 {
-    window.location.href = urlToDownload ;
+    window.location.href = urlToDownload;
 }
 
 function wishlistVideoDownloadIE(prodId, id, provider)
@@ -995,7 +995,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistVideoDownloadToken", // URL to request
         data: data, // post data
-        async:false,
+        async: false,
         success: function(response) {
             var msg = response.substring(0, 5);
             if (msg === 'error')
@@ -1007,18 +1007,18 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
             else if (msg === 'suces')
             {
                 var downloadUsedArr = response.split('|');
-                
+
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                
+
                 location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
-                
+
                 document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
                 document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 document.getElementById('vdownloading_' + prodId).style.display = 'none';
                 document.getElementById('download_video_' + prodId).style.display = 'block';
-                
+
                 return false;
 
             }
@@ -1038,7 +1038,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
 
 
 
-function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
+function historyDownload(id, libID, patronID, CdnPath, SaveAsName)
 {
     $('.beforeClick').hide();
     $('.afterClick').show();
@@ -1059,8 +1059,8 @@ function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
             else if (msg === 'suces')
             {
                 var count = response.substring(0, 1);
-                 var downloadUsedArr = response.split('|');
-                 
+                var downloadUsedArr = response.split('|');
+
                 if (count === 2) {
                     if (languageSet === 'en') {
                         document.getElementById('download_song_' + id).innerHTML = 'Limit Met';
@@ -2146,23 +2146,23 @@ function loadAlbumSong(albumSongs) {
 }
 
 
-function loadAlbumData(albumtData){
-    
+function loadAlbumData(albumtData) {
+
     //albumtData = JSON.parse(albumtData);
     var data = "albumtData=" + albumtData;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getAlbumData", // URL to request
         data: data, // post data
-        dataType: "json", 
+        dataType: "json",
         success: function(response) {
-            if(response.success){
+            if (response.success) {
                 playlist = base64_decode(response.success);
                 playlist = JSON.parse(playlist);
                 if (playlist.length) {
                     pushSongs(playlist);
                 }
-            }else if(response.error){
+            } else if (response.error) {
                 console.log(response.error);
             }
         },
@@ -2171,8 +2171,8 @@ function loadAlbumData(albumtData){
         }
     });
     return false;
-    
-    
+
+
 }
 
 function base64_decode(data) {
@@ -2397,7 +2397,7 @@ function showHideGridCommingSoon(varType) {
 }
 
 $(document).ready(function() {
-    
+
     $(document).on('click', '.play-queue-btn', function() {
         playlist = $('#playlist_data').text();
         playlist = JSON.parse(playlist);
@@ -2501,7 +2501,7 @@ $(document).ready(function() {
 
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
         e.preventDefault();
-        
+
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
@@ -2702,12 +2702,9 @@ $(document).ready(function() {
         $('.my-video-wishlist-shadow-container').hide();
         $('.my-wishlist-shadow-container').show();
     });
-    
-    $('.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button').click( function(e){
-        e.stopImmediatePropagation();
-        $(this).addClass('active');
-        return false ;
-    });
+
+
+
 
     /********* manage notification code js **********/
 
@@ -2727,7 +2724,14 @@ $(document).ready(function() {
     });
 });
 
+var $j = jQuery.noConflict();
 
+$j(function() {
+    $('.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button').on('click', function(event) {
+        event.preventDefault();
+        $(this).addClass('active');
+    });
+});
 
 
 // Below method for removal of '#' & '#.' in between URL
