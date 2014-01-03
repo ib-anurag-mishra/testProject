@@ -49,7 +49,6 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
-        echo 'here';exit;
         if ($libraryID == "all") {
 
             $all_Ids = '';
@@ -71,7 +70,7 @@ class StreamingHistory extends AppModel {
         return $this->find('all',array(
         'joins' => array(
             array(
-                'table' => $territory.'_countries',
+                'able' => $territory.'_countries',
                 'alias' => 'countries',
                 'type' => 'left',
                 'conditions' => array('streaming_histories.ProdID=countries.ProdID','streaming_histories.provider_type=countries.provider_type',
