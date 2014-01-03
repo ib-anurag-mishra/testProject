@@ -2703,7 +2703,14 @@ $(document).ready(function() {
         $('.my-wishlist-shadow-container').show();
     });
 
+    var $j = jQuery.noConflict();
 
+    $j(function() {
+        $('.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button').on('click', function(event) {
+            event.preventDefault();
+            $(this).addClass('active');
+        });
+    });
 
 
     /********* manage notification code js **********/
@@ -2724,14 +2731,7 @@ $(document).ready(function() {
     });
 });
 
-var $j = jQuery.noConflict();
 
-$j(function() {
-    $('.date-filter-button , .song-filter-button , .artist-filter-button , .artist-filter-button , .download-button').on('click', function(event) {
-        event.preventDefault();
-        $(this).addClass('active');
-    });
-});
 
 
 // Below method for removal of '#' & '#.' in between URL
