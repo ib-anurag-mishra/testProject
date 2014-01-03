@@ -455,10 +455,10 @@
 
                                                                         // Get the data from the link into the container box
                                                                         $('.artist-page .album-shadow-container').load($(this).attr('href'),
-                                                                                function(data) {
+                                                                                function() {
                                                                                     $(document).find('.loader').fadeOut(50);
                                                                                     $(document).find('.content').find('.loader').css('opacity' , 0);
-                                                                                    alert(data);
+                                                                                   return false ;
                                                                                 });
 
                                                                         event.preventDefault();
