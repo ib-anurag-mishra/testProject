@@ -1898,16 +1898,14 @@ Class ArtistsController extends AppController
             }
         }
 
-        if ($this->RequestHandler->isAjax())
+        if (isset($this->params['named']['page']))
         {
-            $this->layout = 'ajax';
-            echo "<pre>";
-            print_r($this->params);
-            die;
+            $this->layout = 'ajax';           
         }
-
-
-        $this->layout = 'home';
+        else
+        {
+             $this->layout = 'home';
+        }
 
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
