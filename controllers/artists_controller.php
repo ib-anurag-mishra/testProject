@@ -2012,7 +2012,7 @@ Class ArtistsController extends AppController
         
         if (isset($this->params['named']['page']))
         {
-            $this->render(' artist_album_ajax');     
+            $this->render('/artist/artist_album_ajax');     
             die;
         }
         
