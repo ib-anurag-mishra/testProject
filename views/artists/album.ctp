@@ -446,13 +446,21 @@
 </section>
 
 <script>
-    $(document).ready(function() {
-        $('.artist-page .album-shadow-container div.paging_all_block span a').on('click', function(event) {
-            // Add a class loading to the container box
-            $('.artist-page .album-shadow-container').addClass('loading');
+                                                                $(document).ready(function() {
+                                                                    $('.artist-page .album-shadow-container div.paging_all_block span a').on('click', function(event) {
+                                                                        // Add a class loading to the container box
+                                                                        var loading_div = "<div class='loader'>";
+                                                                        loading_div += "</div>";
+                                                                        $('.content').append(loading_div);
 
-            alert('Pagination link clicked');
-            event.preventDefault();
-        });
-    });
+                                                                        // Get the data from the link into the container box
+                                                                        $('.artist-page .album-shadow-container .album-scrollable').load($(this).attr('href'), function() {
+                                                                            // Remove the loading class again
+                                                                            $('.loader').fadeOut(50);
+                                                                            $('.content').remove('.loader');
+                                                                        });
+                                                                       
+                                                                        event.preventDefault();
+                                                                    });
+                                                                });
 </script>
