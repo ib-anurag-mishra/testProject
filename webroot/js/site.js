@@ -264,9 +264,9 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
-    $('.search-page .advanced-search-results-albums .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable .album-cover-container').on('mouseenter' , '.add-to-playlist' , function(){
-    $(this).find('.playlist-options').addClass('active');
-});
+    $('.search-page .advanced-search-results-albums .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable .album-cover-container').on('mouseenter', '.add-to-playlist', function() {
+        $(this).find('.playlist-options').addClass('active');
+    });
 
     $('.add-to-queue').on('mouseenter', function() {
 
@@ -723,7 +723,6 @@ $('document').ready(function()
 
     $('.artist-page .tracklist-scrollable').bindMouseWheel();
 
-
     $('.artist-page .tracklist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
     $(document).on('scroll', '.artist-page .tracklist-scrollable', function(e) {
@@ -738,6 +737,7 @@ $('document').ready(function()
     });
 
     var totalVSLiWidth = 0;
+
     $('.artist-page .videos-scrollable ul li').each(function() {
         totalVSLiWidth = totalVSLiWidth + $(this).outerWidth(true);
 
@@ -788,11 +788,59 @@ $('document').ready(function()
         }
 
     });
-    
 
-    $(document).on('scroll','.artist-page .album-shadow-container',function(e){
+    $(document).on('scroll', '.artist-page .album-shadow-container', function(e) {
         alert('scrolled..');
     });
+
+    $(document).on('click', '.artist-page .album-shadow-container div.paging span a', function(event) {
+
+        // Add a class loading to the container box
+        var loading_div = "<div class='loader'>";
+        loading_div += "</div>";
+        $('.content').append(loading_div);
+
+        // Get the data from the link into the container box
+        $('.artist-page .album-shadow-container').load($(this).attr('href'),
+                function() {
+                    $(document).find('.loader').fadeOut(50);
+                    $(document).find('.content').find('.loader').remove();
+                });
+
+        event.preventDefault();
+    });
+
+    $(document).on('mouseenter', '.artist-page .album-shadow-container .album-scrollable ul li .album-container', function() {
+        $('.preview').css({opacity: 0});
+        $('.album-preview').css({opacity: 0});
+        $(this).find('.add-to-playlist-button').css({opacity: 1});
+        $(this).find('.preview').css({opacity: 1});
+        $(this).find('.album-preview').css({opacity: 1});
+        $(this).find('.top-100-download-now-button').css({opacity: 1});
+        $(this).find('.top-10-download-now-button').css({opacity: 1});
+    });
+
+    $(document).on('mouseleave', '.artist-page .album-shadow-container .album-scrollable ul li .album-container', function() {
+        $('.preview').css({opacity: 0});
+        $('.album-preview').css({opacity: 0});
+        $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.top-100-download-now-button').css({opacity: 0});
+        $(this).find('.top-10-download-now-button').css({opacity: 0});
+        $(this).find('.wishlist-popover').removeClass('active');
+    });
+
+
+    $(document).on('mouseenter',
+            '.artist-page .album-shadow-container .album-scrollable .album-container .wishlist-popover .add-to-playlist',
+            function() {
+                $(this).parent().find('.playlist-options').addClass('active');
+            });
+
+    $(document).on('mouseleave',
+            '.artist-page .album-shadow-container .album-scrollable .album-container',
+            function() {
+                $('.wishlist-popover').removeClass('active');
+            });
     /* end artist page */
 
 
@@ -1734,8 +1782,6 @@ $('document').ready(function()
         $('.delete-queue-dialog-box').addClass('active');
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
-
-
 
     $(document).on('click', ".create-new-queue , .create-new-queue-btn", function(e) {
         e.preventDefault();

@@ -47,9 +47,9 @@
                                         {
 
                                             //$productInfo = $mvideo->getDownloadData($featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-                                            $videoUrl = shell_exec('perl files/tokengen ' . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['Video_file']['SaveAsName']);
-                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+//                                            $videoUrl = shell_exec('perl files/tokengen ' . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['Video_file']['SaveAsName']);
+//                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+//                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
 
 
                                             $downloadsUsed = $this->Videodownload->getVideodownloadfind($featureVideo['FeaturedVideo']['ProdID'], $featureVideo['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
@@ -72,10 +72,10 @@
                                                         <input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
                                                         <span class="beforeClick" id="download_video_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>">
                                                             <![if !IE]>
-                                                            <a class="no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthers("<?php echo $featureVideo['FeaturedVideo']['ProdID']; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $featureVideo['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
+                                                            <a class="no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $featureVideo['FeaturedVideo']['ProdID']; ?>", "0", "<?php echo $featureVideo['File']['CdnPath']; ?>", "<?php echo $featureVideo['Video_file']['SaveAsName']; ?>",  "<?php echo $featureVideo['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
                                                             <![endif]>
                                                             <!--[if IE]>
-                                                                    <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE('<?php echo $featureVideo['FeaturedVideo']['ProdID']; ?>','0','<?php echo $featureVideo['Video']['provider_type']; ?>');" href="<?php echo trim($finalVideoUrl); ?>"><?php __('Download Now'); ?></a></label>
+                                                                    <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $featureVideo['FeaturedVideo']['ProdID']; ?>','0','<?php echo $featureVideo['Video']['provider_type']; ?>', '<?php echo $featureVideo['File']['CdnPath']; ?>', '<?php echo $featureVideo['Video_file']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
                                                             <![endif]-->
                                                         </span>
                                                         <span class="afterClick" id="vdownloading_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp'); ?></span>
@@ -214,9 +214,9 @@
                                             //$productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
 
 
-                                            $videoUrl = shell_exec('perl files/tokengen ' . $topDownload["File"]['CdnPath'] . "/" . $topDownload['Video_file']['SaveAsName']);
-                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+//                                            $videoUrl = shell_exec('perl files/tokengen ' . $topDownload["File"]['CdnPath'] . "/" . $topDownload['Video_file']['SaveAsName']);
+//                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+//                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
 
                                             $downloadsUsed = $this->Videodownload->getVideodownloadfind($topDownload['Video']['ProdID'], $topDownload['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
 
@@ -237,10 +237,10 @@
                                                     <input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
                                                     <span class="beforeClick" id="download_video_<?php echo $topDownload["Video"]["ProdID"]; ?>">
                                                         <![if !IE]>
-                                                        <a class="no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthers("<?php echo $topDownload['Video']['ProdID']; ?>", "0", "<?php echo urlencode($finalVideoUrlArr[0]); ?>", "<?php echo urlencode($finalVideoUrlArr[1]); ?>", "<?php echo urlencode($finalVideoUrlArr[2]); ?>", "<?php echo $topDownload['Video']['provider_type']; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
+                                                        <a class="no-ajaxy" href="javascript:void(0);" title="<?php __('IMPORTANT:  Please note that once you press Download Now you have used up one of your downloads, regardless of whether you then press Cancel or not.'); ?>" onclick='return wishlistVideoDownloadOthersToken("<?php echo $topDownload['Video']['ProdID']; ?>", "0", "<?php echo $topDownload['File']['CdnPath']; ?>", "<?php echo $topDownload['Video_file']['SaveAsName']; ?>",  "<?php echo $topDownload["Video"]["provider_type"]; ?>");'><label class="top-10-download-now-button"><?php __('Download Now'); ?></label></a>
                                                         <![endif]>
                                                         <!--[if IE]>
-                                                                <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIE('<?php echo $topDownload['Video']['ProdID']; ?>','0','<?php echo $topDownload['Video']['provider_type']; ?>');" href="<?php echo trim($finalVideoUrl); ?>"><?php __('Download Now'); ?></a></label>
+                                                                <label class="top-10-download-now-button"><a class="no-ajaxy" title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick="wishlistVideoDownloadIEToken('<?php echo $topDownload['Video']['ProdID']; ?>','0','<?php echo $topDownload['Video']['provider_type']; ?>', '<?php echo $topDownload['File']['CdnPath']; ?>', '<?php echo $topDownload['Video_file']['SaveAsName']; ?>');" href="javascript:void(0);"><?php __('Download Now'); ?></a></label>
                                                         <![endif]-->
                                                     </span>
                                                     <span class="afterClick" id="vdownloading_<?php echo $topDownload["Video"]["ProdID"]; ?>" style="display:none;">

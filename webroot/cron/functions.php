@@ -174,6 +174,7 @@ function resetDownloads()
         if($downloadType == "daily")
         {
             $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+            echo date("Y-m-d H:i:s")." - Daily basis library_current_downloads variable updated successfully for Library ID ".$resultsArr['id']." to 0 !!\n";
             mysql_query($sql);            
         }
         else if($downloadType == "weekly")
@@ -181,6 +182,7 @@ function resetDownloads()
             if($currentDate == $weekFirstDay)
             {
                 $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                echo date("Y-m-d H:i:s")." - Weekly basis library_current_downloads variable updated successfully for Library ID ".$resultsArr['id']." to 0 !!\n";
                 mysql_query($sql);
             }
         }
@@ -189,6 +191,7 @@ function resetDownloads()
             if($currentDate == $monthFirstDate)
             {
                 $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                echo date("Y-m-d H:i:s")." - Monthly basis library_current_downloads variable updated successfully for Library ID ".$resultsArr['id']." to 0 !!\n";
                 mysql_query($sql);
             }
         }
