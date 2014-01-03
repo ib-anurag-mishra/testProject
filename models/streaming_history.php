@@ -49,6 +49,7 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
+        Configure::write('debug',2);
         if ($libraryID == "all") {
 
             $all_Ids = '';
