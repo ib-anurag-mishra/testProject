@@ -458,7 +458,6 @@
                                                                                 function() {
                                                                                     $(document).find('.loader').fadeOut(50);
                                                                                     $(document).find('.content').find('.loader').css('opacity' , 0);
-                                                                                   return false ;
                                                                                 });
 
                                                                         event.preventDefault();
