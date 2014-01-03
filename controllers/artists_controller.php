@@ -2009,7 +2009,14 @@ Class ArtistsController extends AppController
         }
 
         $this->set('albumData', $albumData);
-        $this->set('totalCount', count($albumData));
+        
+        if (isset($this->params['named']['page']))
+        {
+            $this->render(' artist_album_ajax');     
+            die;
+        }
+        
+       
 
 
         // Videos Section

@@ -454,7 +454,7 @@
                                                                         $('.content').append(loading_div);
 
                                                                         // Get the data from the link into the container box
-                                                                        $('.artist-page .album-shadow-container .album-scrollable').load($(this).attr('href'),
+                                                                        $('.artist-page .album-shadow-container').load($(this).attr('href'),
                                                                                 function(data) {
                                                                                     $(document).find('.loader').fadeOut(50);
                                                                                     $(document).find('.content').find('.loader').css('opacity' , 0);
