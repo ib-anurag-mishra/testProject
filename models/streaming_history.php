@@ -70,7 +70,7 @@ class StreamingHistory extends AppModel {
         return $this->find('all',array(
         'joins' => array(
             array(
-                'able' => $territory.'_countries',
+                'table' => $territory.'_countries',
                 'alias' => 'countries',
                 'type' => 'left',
                 'conditions' => array('streaming_histories.ProdID=countries.ProdID','streaming_histories.provider_type=countries.provider_type',

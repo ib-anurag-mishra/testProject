@@ -362,7 +362,7 @@ if (empty($getData)) {
                         </tr>
     <?php
 }
- echo $this->element('sql_dump');
+ 
 ?>
                 </table>
             </div>
@@ -461,3 +461,5 @@ if (!empty($downloads)) {
 }
 ?>
 </script>
+
+<?php echo $this->element('sql_dump');?>
