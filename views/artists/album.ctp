@@ -448,7 +448,8 @@
 <script>
                                                                 $(document).ready(function() {
 
-                                                                    $('.artist-page .album-shadow-container div.paging_all_block span a').on('click',
+                                                                    $(document).on('click',
+                                                                            '.artist-page .album-shadow-container div.paging_all_block span a',
                                                                             function(event) {
                                                                                 // Add a class loading to the container box
                                                                                 var loading_div = "<div class='loader'>";
