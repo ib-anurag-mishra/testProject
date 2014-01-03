@@ -558,7 +558,7 @@ class SolrComponent extends Object {
                 ),
                 'facet.query' => $query,
                 'facet.mincount' => 1,
-                'facet.limit' => -1
+                'facet.limit' => 1000
             );
             echo "<br />";
 echo $query;
