@@ -135,7 +135,7 @@ class StreamingHistory extends AppModel {
             'fields' => array('distinct(patron_id) AS total_patrons'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
-            print_r($this->find('count', $qryArr));exit;
+            
             return($this->find('count', $qryArr));
         }
     }
