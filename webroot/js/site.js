@@ -2034,13 +2034,16 @@ function ajaxSearch() {
             $('.content').remove('.loader');
             
             $('div.ac_results').hide();
+            
+            History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+            
             callSearchAjax();
         },
         failure: function() {
             alert('Problem fetching data');
         }
     });
-    History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+    
     return false;
 }
 // code to ajaxify MyAccount form start
