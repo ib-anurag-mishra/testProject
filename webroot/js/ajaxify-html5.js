@@ -272,7 +272,7 @@
                     //$.getScript(webroot + 'js/search-results.js');
 
                     $('.loader').fadeOut(50);
-                    $('#content').remove('.loader');
+                    $('#content').find('.loader').remove();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
