@@ -39,7 +39,7 @@ class StreamingHistory extends AppModel {
 
             $arr_all_library_streaming[$libraryName] = $count;
         }
-
+echo "<pre>";print_r($arr_all_library_streaming);exit;
         return $arr_all_library_streaming;
     }
     
