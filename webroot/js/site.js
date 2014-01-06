@@ -1935,8 +1935,11 @@ function resetNavigation() {
 
 function ajaxSearch() {
 
-
     resetNavigation();
+
+    var loading_div = "<div class='loader'>";
+    loading_div += "</div>";
+    $('.content').append(loading_div);
 
     var contentSelector = '.content,article:first,.article:first,.post:first';
     var $content = $(contentSelector).filter(':first');
@@ -1948,10 +1951,6 @@ function ajaxSearch() {
 
     var q = $('#search-text').val();
     var type = $('#master-filter').val();
-
-    var loading_div = "<div class='loader'>";
-    loading_div += "</div>";
-    $('.content').append(loading_div);
 
     // Start Fade Out
     // Animating to opacity to 0 still keeps the element's height intact

@@ -4,7 +4,7 @@
 (function(window, undefined) {
 
     // Prepare our Variables
-    var            
+    var
             History = window.History,
             $ = window.jQuery,
             document = window.document;
@@ -124,6 +124,11 @@
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
 
+            // Set Loading
+            var loading_div = "<div class='loader'>";
+            loading_div += "</div>";
+            $('.content').append(loading_div);
+
             $.ajax({
                 url: webroot + 'users/isPatronLogin',
                 type: "post",
@@ -136,13 +141,7 @@
                         }
             });
 
-            // Set Loading
-            var loading_div = "<div class='loader'>";
-            loading_div += "</div>";
-            $('.content').append(loading_div);
-
             //$body.addClass('loader');
-
             // Start Fade Out
             // Animating to opacity to 0 still keeps the element's height intact
             // Which prevents that annoying pop bang issue when loading in new content
@@ -269,7 +268,7 @@
                     //$body.removeClass('loader');
                     //$.getScript(webroot + 'css/styles.css');
                     //$.getScript(webroot + 'css/freegal_styles.css');
-                    
+
                     //$.getScript(scriptPath + '/js/freegal.js');
                     $.getScript(webroot + 'js/site.js');
                     $.getScript(webroot + 'js/freegal.js');
