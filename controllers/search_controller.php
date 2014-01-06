@@ -45,15 +45,7 @@ class SearchController extends AppController
         }//sets values in session
 
 
-        if (isset($this->params['named']['page']))
-        {
-            $this->layout = 'ajax';
-        }
-        else
-        {
-            $this->layout = 'home';
-        }
-        
+        $this->layout = 'home';
         $queryVar = null;
         $check_all = null;
         $sortVar = 'ArtistText';
