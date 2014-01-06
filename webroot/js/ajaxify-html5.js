@@ -127,7 +127,7 @@
             // Set Loading
             var loading_div = "<div class='loader'>";
             loading_div += "</div>";
-            $('.content').append(loading_div);
+            $('#content').append(loading_div);
 
             $.ajax({
                 url: webroot + 'users/isPatronLogin',
@@ -272,7 +272,7 @@
                     //$.getScript(webroot + 'js/search-results.js');
 
                     $('.loader').fadeOut(50);
-                    $('.content').remove('.loader');
+                    $('#content').remove('.loader');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
