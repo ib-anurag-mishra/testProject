@@ -2050,7 +2050,7 @@ function ajaxSearch() {
             alert('Problem fetching data');
         }
     });
-    History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+    //History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
    // return false;
 }
 // code to ajaxify MyAccount form start
