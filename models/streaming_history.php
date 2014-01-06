@@ -62,7 +62,7 @@ class StreamingHistory extends AppModel {
             $lib_condition = "'StreamingHistory.library_id' =>array (" . rtrim($all_Ids, ",") . ")";
         } else {
 //            $lib_condition = "and library_id = " . $libraryID;
-            $lib_condition = "'StreamingHistory.library_id'=$libraryID";
+            $lib_condition = "StreamingHistory.library_id=$libraryID";
         }
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
