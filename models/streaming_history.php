@@ -28,7 +28,7 @@ class StreamingHistory extends AppModel {
             $libraryName = $row["library_name"];
 
             $lib_condition = "and library_id = '" . $libraryID . "'";
-            $conditions = array('createdO BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+            $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
             $count = $this->find(
                     'count', array(
@@ -36,7 +36,7 @@ class StreamingHistory extends AppModel {
                 'recursive' => -1
                     )
             );
-
+echo $count;exit;
             $arr_all_library_streaming[$libraryName] = $count;
         }
         return $arr_all_library_streaming;
