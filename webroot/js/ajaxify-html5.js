@@ -120,7 +120,7 @@
             // Prepare Variables
             var
                     scriptPath = document.getElementById('Scripts_Path').value;
-            State = History.getState(),
+                    State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
 
@@ -131,7 +131,7 @@
 
             $.ajax({
                 url: webroot + 'users/isPatronLogin',
-                type: "post",
+                type: "get",
                 success:
                         function(data) {
                             if (!data) {
