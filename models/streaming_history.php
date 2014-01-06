@@ -13,6 +13,7 @@ class StreamingHistory extends AppModel {
     var $primaryKey = 'id';
 
     function getDayAllLibraryStreamingDuringReportingPeriod($libraryID, $date, $territory) {
+                Configure::write('debug',2);
 
         $arr_all_library_streaming = array();
         $all_Ids = '';
@@ -28,7 +29,7 @@ class StreamingHistory extends AppModel {
             $libraryName = $row["library_name"];
 
             $lib_condition = "and library_id = '" . $libraryID . "'";
-            $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+            $conditions = array('createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
             $count = $this->find(
                     'count', array(
@@ -36,7 +37,7 @@ class StreamingHistory extends AppModel {
                 'recursive' => -1
                     )
             );
-echo $count;exit;
+
             $arr_all_library_streaming[$libraryName] = $count;
         }
         return $arr_all_library_streaming;
@@ -88,7 +89,6 @@ echo $count;exit;
      */
 
     function getDaysStreamedByPetronInformation($libraryID, $date, $territory) {
-                Configure::write('debug',2);
 
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
