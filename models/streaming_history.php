@@ -49,7 +49,6 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
-        Configure::write('debug',2);
         if ($libraryID == "all") {
 
             $all_Ids = '';
@@ -90,6 +89,8 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedByPetronInformation($libraryID, $date, $territory) {
+                Configure::write('debug',2);
+
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
