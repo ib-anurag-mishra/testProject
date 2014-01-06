@@ -70,6 +70,18 @@ class StreamingHistory extends AppModel {
         /*$conditions = array(
             'StreamingHistory.provider_type=countries.provider_type and StreamingHistory.ProdID=countries.ProdID and createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
         );*/
+        $testArr=array(
+            'joins' => array(
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.Prod=countries.ProdID')
+                )
+             ), 
+            'fields' => array('sum(StreamingHistory.consumed_time)'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition)) ;
+        print_r($testArr);exit;
         return $this->find('all',array(
             'joins' => array(
                 array(
