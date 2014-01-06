@@ -49,7 +49,7 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
-        //Configure::write('debug',2);
+        Configure::write('debug',2);
         if ($libraryID == "all") {
 
             $all_Ids = '';
@@ -58,28 +58,43 @@ class StreamingHistory extends AppModel {
             while ($row = mysql_fetch_assoc($result)) {
                 $all_Ids = $all_Ids . $row["id"] . ",";
             }
-            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+            $lib_condition = "'StreamingHistory.library_id' =>array (" . rtrim($all_Ids, ",") . ")";
         } else {
-            $lib_condition = "and library_id = " . $libraryID;
+//            $lib_condition = "and library_id = " . $libraryID;
+            $lib_condition = "'StreamingHistory.library_id'=$libraryID";
         }
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
-        $conditions = array(
+        /*$conditions = array(
             'StreamingHistory.provider_type=countries.provider_type and StreamingHistory.ProdID=countries.ProdID and createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
-        );
-        /*return $this->find('all',array(
-        'joins' => array(
-            array(
-                'table' => strtolower($territory).'_countries',
-                'alias' => 'countries',
-                'type' => 'left',
-                'conditions' => array('StreamingHistory.ProdID=countries.ProdID','StreamingHistory.provider_type=countries.provider_type',
-                                    'StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),'StreamingHistory.library_id'=>$libraryID
-                    )
-            )
-        ), 'fields' => array('sum(StreamingHistory.consumed_time)'), 'recursive' => -1));*/
-        return $this->find('all', array('joins' => array(array('table' => strtolower($territory).'_countries','alias' => 'countries','type' => 'left','conditions'=>$conditions)), 'fields'=>array('sum(StreamingHistory.consumed_time)'),'recursive' => -1));
+        );*/
+        $testArr=array(
+            'joins' => array(
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.Prod=countries.ProdID')
+                )
+             ), 
+            'fields' => array('sum(StreamingHistory.consumed_time)'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition)) ;
+        //print_r($testArr);exit;
+        print_r( $this->find('all',array(
+            'joins' => array(
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID','StreamingHistory.provider_type=countries.provider_type')
+                )
+             ), 
+            'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
+            'conditions'=>array('StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition), 
+            'recursive' => -1)));exit;
+        //return $this->find('all', array('joins' => array(array('table' => strtolower($territory).'_countries','alias' => 'countries','type' => 'left','conditions'=>$conditions)), 'fields'=>array('sum(StreamingHistory.consumed_time)'),'recursive' => -1));
     }
     /*
       Function Name : getDaysStreamedInformation
@@ -87,7 +102,6 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedByPetronInformation($libraryID, $date, $territory) {
-
         if ($libraryID == "all") {
 
             $all_Ids = '';
