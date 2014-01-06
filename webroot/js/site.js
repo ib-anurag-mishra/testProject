@@ -1956,7 +1956,7 @@ function ajaxSearch() {
     // Start Fade Out
     // Animating to opacity to 0 still keeps the element's height intact
     // Which prevents that annoying pop bang issue when loading in new content
-    $content.animate({opacity: 0}, 800);
+    $content.animate({opacity: 0}, 1200);
 
 
     $.ajax({
@@ -2039,7 +2039,8 @@ function ajaxSearch() {
             
             callSearchAjax();
         },
-        failure: function() {
+        error: function(result) {
+            console.log(result);
             alert('Problem fetching data');
         }
     });
