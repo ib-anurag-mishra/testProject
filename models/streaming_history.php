@@ -88,7 +88,7 @@ class StreamingHistory extends AppModel {
                     'table' => strtolower($territory).'_countries',
                     'alias' => 'countries',
                     'type' => 'left',
-                    'conditions' => array('StreamingHistory.Prod=countries.ProdID')
+                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
                 )
              ), 
             'fields' => array('sum(StreamingHistory.consumed_time)'),
