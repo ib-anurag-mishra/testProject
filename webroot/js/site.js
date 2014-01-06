@@ -1984,20 +1984,10 @@ function ajaxSearch() {
                 return false;
             }
 
-            // Update the menu
-            /*
-             $menuChildren = $menu.find(menuChildrenSelector);
-             $menuChildren.filter(activeSelector).removeClass(activeClass);
-             $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-             if ($menuChildren.length === 1) {
-             $menuChildren.addClass(activeClass);
-             }
-             */
-
             // Update the content
             $content.stop(true, true);
 //            $content.html(contentHtml).css('opacity', 100).show(); /* you could fade in here if you'd like */
-            $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
+            //$content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
 
             // Update the title
             document.title = $data.find('.document-title:first').text();
@@ -2041,8 +2031,8 @@ function ajaxSearch() {
 
 
             $('.loader').fadeOut(500);
-
             $('.content').remove('.loader');
+            
             $('div.ac_results').hide();
             callSearchAjax();
         },
