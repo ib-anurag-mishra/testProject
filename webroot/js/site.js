@@ -736,13 +736,13 @@ $('document').ready(function()
 
     });
 
-	var totalASLiWidth = 0;
-	$('.artist-page .album-scrollable ul li').each(function(){
-		totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
-		
-	});
-	
-	$('.artist-page .album-scrollable ul').css({width:totalASLiWidth+5});
+    var totalASLiWidth = 0;
+    $('.artist-page .album-scrollable ul li').each(function() {
+        totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.artist-page .album-scrollable ul').css({width: totalASLiWidth + 5});
 
     var totalVSLiWidth = 0;
 
@@ -1964,6 +1964,10 @@ function ajaxSearch() {
         method: 'get',
         data: {'q': q, 'type': type},
         success: function(response) {
+            var loading_div = "<div class='loader'>";
+            loading_div += "</div>";
+            $('.content').append(loading_div);
+
             $('.content').html($(response).filter('.content'));
             // Prepare
             var $data = $(documentHtml(response)),
@@ -2032,11 +2036,11 @@ function ajaxSearch() {
 
             $('.loader').fadeOut(500);
             $('.content').remove('.loader');
-            
+
             $('div.ac_results').hide();
-            
+
             History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
-            
+
             callSearchAjax();
         },
         error: function(result) {
@@ -2044,7 +2048,7 @@ function ajaxSearch() {
             alert('Problem fetching data');
         }
     });
-    
+
     return false;
 }
 // code to ajaxify MyAccount form start
