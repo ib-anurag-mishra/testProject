@@ -80,7 +80,7 @@ class StreamingHistory extends AppModel {
                 )
              ), 
             'fields' => array('sum(StreamingHistory.consumed_time)'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition)) ;
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','created BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition),'recursive' => -1) ;
         //print_r($testArr);exit;
 //        print_r( $this->find('all',array(
 //            'joins' => array(
@@ -95,7 +95,7 @@ class StreamingHistory extends AppModel {
 //            'conditions'=>array('StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition), 
 //            'recursive' => -1)));exit;
         //return $this->find('all', array('joins' => array(array('table' => strtolower($territory).'_countries','alias' => 'countries','type' => 'left','conditions'=>$conditions)), 'fields'=>array('sum(StreamingHistory.consumed_time)'),'recursive' => -1));
-        return $this->find('all', array('joins' => array(array('table' => strtolower($territory).'_countries','alias' => 'countries','type' => 'left','conditions'=>$conditions)),'recursive' => -1));
+        print_r($this->find('all', $testArr));exit;
     }
     /*
       Function Name : getDaysStreamedInformation
