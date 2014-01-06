@@ -120,7 +120,7 @@
             // Prepare Variables
             var
                     scriptPath = document.getElementById('Scripts_Path').value;
-                    State = History.getState(),
+            State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
 
@@ -153,11 +153,6 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
-
-                    $('.loader').fadeOut(50);
-                    $('.content').remove('.loader');
-
-
                     // Prepare
                     var
                             $data = $(documentHtml(data)),
@@ -276,7 +271,8 @@
                     $.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
 
-
+                    $('.loader').fadeOut(50);
+                    $('.content').remove('.loader');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;
