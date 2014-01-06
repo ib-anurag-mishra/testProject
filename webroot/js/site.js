@@ -2051,7 +2051,7 @@ function ajaxSearch() {
         }
     });
     History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
-    return false;
+   // return false;
 }
 // code to ajaxify MyAccount form start
 function callMyAccountAjax() {
