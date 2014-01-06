@@ -1848,7 +1848,7 @@ Class ReportsController extends AppController {
                             $patronDownloads[$i]['Downloadpatron']['total'] = $patronRecord[0]['total'];
                         }
                     }
-                    $this->set('patronDownloads', $patronDownloads);
+                    $this->set('patronStreamedInfo', $patronStreaminInfo);
                 } else {
                     if (!empty($currentPatronDownload)) {
                         foreach ($currentPatronDownload as $patronRecord) {
