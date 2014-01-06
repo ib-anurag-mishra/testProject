@@ -82,7 +82,7 @@ class StreamingHistory extends AppModel {
             'fields' => array('sum(StreamingHistory.consumed_time)'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition)) ;
         //print_r($testArr);exit;
-        return $this->find('all',array(
+        print_r( $this->find('all',array(
             'joins' => array(
                 array(
                     'table' => strtolower($territory).'_countries',
@@ -93,7 +93,7 @@ class StreamingHistory extends AppModel {
              ), 
             'fields' => array('sum(StreamingHistory.consumed_time)'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition), 
-            'recursive' => -1));
+            'recursive' => -1)));exit;
         //return $this->find('all', array('joins' => array(array('table' => strtolower($territory).'_countries','alias' => 'countries','type' => 'left','conditions'=>$conditions)), 'fields'=>array('sum(StreamingHistory.consumed_time)'),'recursive' => -1));
     }
     /*
