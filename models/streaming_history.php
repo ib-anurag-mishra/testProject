@@ -62,7 +62,7 @@ class StreamingHistory extends AppModel {
             $lib_condition = "'StreamingHistory.library_id' =>array (" . rtrim($all_Ids, ",") . ")";
         } else {
 //            $lib_condition = "and library_id = " . $libraryID;
-            $lib_condition = "'StreamingHistory.library_id'=>$libraryID";
+            $lib_condition = "'StreamingHistory.library_id'=>'$libraryID'";
         }
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
@@ -72,14 +72,16 @@ class StreamingHistory extends AppModel {
         );*/
         return $this->find('all',array(
             'joins' => array(
-            array(
-                'table' => strtolower($territory).'_countries',
-                'alias' => 'countries',
-                'type' => 'left',
-                'conditions' => array('StreamingHistory.Prod=countries.ProdID')
-            )
-        ), 'fields' => array('sum(StreamingHistory.consumed_time)','conditions'=>array('StreamingHistory.provider_type=countries.provider_type',
-                                    'StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition)), 'recursive' => -1));
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.Prod=countries.ProdID')
+                )
+             ), 
+            'fields' => array('sum(StreamingHistory.consumed_time)'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition), 
+            'recursive' => -1));
         //return $this->find('all', array('joins' => array(array('table' => strtolower($territory).'_countries','alias' => 'countries','type' => 'left','conditions'=>$conditions)), 'fields'=>array('sum(StreamingHistory.consumed_time)'),'recursive' => -1));
     }
     /*
