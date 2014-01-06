@@ -214,7 +214,7 @@ if (empty($getData)) {
                                 <td colspan="6" align="center">
                                     <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                         <tr><th>Total Number of Patrons who have streamed during Reporting Period</th></tr>
-                                        <tr><td align="center"><?php echo count($patronBothDownloads); ?></td></tr>
+                                        <tr><td align="center"><?php echo $patronStreamedInfo[0][0]['total_patrons']; ?></td></tr>
                                     </table>
                                 </td>
                             </tr>

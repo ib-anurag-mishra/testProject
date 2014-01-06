@@ -12,7 +12,7 @@ class StreamingHistory extends AppModel {
     var $usetable = 'streaming_histories';
     var $primaryKey = 'id';
 
-    function getAllLibraryStreamingDuringReportingPeriod($libraryID, $date, $territory) {
+    function getDayAllLibraryStreamingDuringReportingPeriod($libraryID, $date, $territory) {
 
         $arr_all_library_streaming = array();
         $all_Ids = '';
@@ -28,7 +28,7 @@ class StreamingHistory extends AppModel {
             $libraryName = $row["library_name"];
 
             $lib_condition = "and library_id = '" . $libraryID . "'";
-            $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . "");
+            $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
             $count = $this->find(
                     'count', array(
@@ -49,7 +49,6 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
-        Configure::write('debug',2);
         if ($libraryID == "all") {
 
             $all_Ids = '';
@@ -70,7 +69,7 @@ class StreamingHistory extends AppModel {
         /*$conditions = array(
             'StreamingHistory.provider_type=countries.provider_type and StreamingHistory.ProdID=countries.ProdID and createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
         );*/
-        $testArr=array(
+        $qryArr=array(
             'joins' => array(
                 array(
                     'table' => strtolower($territory).'_countries',
@@ -80,9 +79,9 @@ class StreamingHistory extends AppModel {
                 )
              ),
             'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
-        return($this->find('all', $testArr));
+        return($this->find('all', $qryArr));
     }
     /*
       Function Name : getDaysStreamedInformation
@@ -90,25 +89,56 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedByPetronInformation($libraryID, $date, $territory) {
-        if ($libraryID == "all") {
+                Configure::write('debug',2);
 
-            $all_Ids = '';
-            $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
-            $result = mysql_query($sql);
-            while ($row = mysql_fetch_assoc($result)) {
-                $all_Ids = $all_Ids . $row["id"] . ",";
-            }
-            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
-        } else {
-            $lib_condition = "and library_id = " . $libraryID;
-        }
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
-        $conditions = array(
-            'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
-        );
-        return $this->find('all', array('conditions' => $conditions, 'fields' => array('StreamingHistory.token_id', 'StreamingHistory.library_id', 'StreamingHistory.patron_id',), 'recursive' => -1));
+        if ($libraryID == "all") {
+            $arr_all_library_streaming = array();
+            $all_Ids = '';
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+            $result = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($result)) {
+
+                $date_arr = explode("/", $date);
+                $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
+                $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
+
+                $libraryID = $row["id"];
+                $libraryName = $row["library_name"];
+
+                $lib_condition = "and library_id = '" . $libraryID . "'";
+                $conditions = array('createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+
+                $count = $this->find(
+                        'count', array(
+                    'conditions' => $conditions,
+                    'recursive' => -1
+                        )
+                );
+
+                $arr_all_library_streaming[$libraryName] = $count;
+            }
+
+            return $arr_all_library_streaming;
+        } else {
+            $lib_condition = "StreamingHistory.library_id=$libraryID";
+            $qryArr=array(
+            'joins' => array(
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                )
+             ),
+            'fields' => array('distinct(StreamingHistory.patron_id) AS total_patrons'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
+            'recursive' => -1);
+            
+            print_r($this->find('all', $qryArr));exit;
+        }
     }
 
 }

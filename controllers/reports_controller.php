@@ -1693,18 +1693,17 @@ Class ReportsController extends AppController {
                 if ($this->data['Report']['reports_daterange'] == 'day') {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
-                    $downloads = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
+                    if ($library_id != "all") {
+                        $downloads = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
+                    }
 
                     $arr_all_library_downloads = array();
                     if ($library_id == "all") {
-                        $arr_all_library_downloads = $this->StreamingHistory->getAllLibraryStreamingDuringReportingPeriod($library_id, $this->data['Report']['date'], $territory);
+                        $arr_all_library_downloads = $this->StreamingHistory->getDayAllLibraryStreamingDuringReportingPeriod($library_id, $this->data['Report']['date'], $territory);
                     }
                    
+                    $patronStreaminInfo = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory);
                     
-                    $patronDownloads = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory);
-                    if ($library_id != "all") {
-                        $patronBothDownloads = $this->StreamingHistory->getDaysBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                    }
                     
                     
                     $arr_all_patron_downloads = array();
@@ -1849,7 +1848,7 @@ Class ReportsController extends AppController {
                             $patronDownloads[$i]['Downloadpatron']['total'] = $patronRecord[0]['total'];
                         }
                     }
-                    $this->set('patronDownloads', $patronDownloads);
+                    $this->set('patronStreamedInfo', $patronStreaminInfo);
                 } else {
                     if (!empty($currentPatronDownload)) {
                         foreach ($currentPatronDownload as $patronRecord) {
