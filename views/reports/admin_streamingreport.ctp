@@ -168,7 +168,7 @@ if (empty($getData)) {
                                             <th>Total Streamed</th>
                                         </tr>
                                         <tr>
-                                            <td align="center"><?php echo count($downloads); ?></td>
+                                            <td align="center"><?php echo $downloads[0][0]['total_streamed']; ?></td>
                                         </tr>
                                     </table>
                                 </td>
