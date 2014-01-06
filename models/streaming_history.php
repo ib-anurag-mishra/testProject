@@ -28,7 +28,7 @@ class StreamingHistory extends AppModel {
             $libraryName = $row["library_name"];
 
             $lib_condition = "and library_id = '" . $libraryID . "'";
-            $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+            $conditions = array('createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
             $count = $this->find(
                     'count', array(
@@ -109,7 +109,7 @@ class StreamingHistory extends AppModel {
                 $libraryName = $row["library_name"];
 
                 $lib_condition = "and library_id = '" . $libraryID . "'";
-                $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+                $conditions = array('createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
                 $count = $this->find(
                         'count', array(
