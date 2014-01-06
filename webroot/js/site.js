@@ -1964,70 +1964,8 @@ function ajaxSearch() {
         method: 'get',
         data: {'q': q, 'type': type},
         success: function(response) {
-            $('.content').html($(response).filter('.content'));
-            // Prepare
-            var $data = $(documentHtml(response)),
-                    $dataBody = $data.find('.document-body:first'),
-                    $dataContent = $dataBody.find(contentSelector).filter(':first'),
-                    $menuChildren, contentHtml, $scripts;
-
-            // Fetch the scripts
-            $scripts = $dataContent.find('.document-script');
-            if ($scripts.length) {
-                $scripts.detach();
-            }
-
-            // Fetch the content
-            contentHtml = $dataContent.html() || $data.html();
-            if (!contentHtml) {
-                alert('Problem fetching data');
-                return false;
-            }
-
-            // Update the menu
-            /*
-             $menuChildren = $menu.find(menuChildrenSelector);
-             $menuChildren.filter(activeSelector).removeClass(activeClass);
-             $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-             if ($menuChildren.length === 1) {
-             $menuChildren.addClass(activeClass);
-             }
-             */
-
-            // Update the content
-            $content.stop(true, true);
-//            $content.html(contentHtml).css('opacity', 100).show(); /* you could fade in here if you'd like */
-            $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
-
-            // Update the title
-            document.title = $data.find('.document-title:first').text();
-            try {
-                document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
-            }
-            catch (Exception) {
-            }
-
-            // Add the scripts
-            if ($scripts.length > 1) {
-                $scripts.each(function() {
-                    var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-                    if ($script.attr('src')) {
-                        if (!$script[0].async) {
-                            scriptNode.async = false;
-                        }
-                        scriptNode.src = $script.attr('src');
-                    }
-                    scriptNode.appendChild(document.createTextNode(scriptText));
-                    contentNode.appendChild(scriptNode);
-                });
-            }
-
-            // Complete the change
-            if ($body.ScrollTo || false) {
-                $body.ScrollTo(scrollOptions);
-            } /* http://balupton.com/projects/jquery-scrollto */
-
-
+           $(".content").append(response);
+           
             //$body.removeClass('loader');
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
