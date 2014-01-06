@@ -736,13 +736,13 @@ $('document').ready(function()
 
     });
 
-	var totalASLiWidth = 0;
-	$('.artist-page .album-scrollable ul li').each(function(){
-		totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
-		
-	});
-	
-	$('.artist-page .album-scrollable ul').css({width:totalASLiWidth+5});
+    var totalASLiWidth = 0;
+    $('.artist-page .album-scrollable ul li').each(function() {
+        totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.artist-page .album-scrollable ul').css({width: totalASLiWidth + 5});
 
     var totalVSLiWidth = 0;
 
@@ -1934,7 +1934,10 @@ function resetNavigation() {
 }
 
 function ajaxSearch() {
-
+    
+    var loading_div = "<div class='loader'>";
+    loading_div += "</div>";
+    $('.content').append(loading_div);
 
     resetNavigation();
 
@@ -1949,14 +1952,10 @@ function ajaxSearch() {
     var q = $('#search-text').val();
     var type = $('#master-filter').val();
 
-    var loading_div = "<div class='loader'>";
-    loading_div += "</div>";
-    $('.content').append(loading_div);
-
     // Start Fade Out
     // Animating to opacity to 0 still keeps the element's height intact
     // Which prevents that annoying pop bang issue when loading in new content
-    $content.animate({opacity: 0}, 00);
+    $content.animate({opacity: 0}, 2500);
 
 
     $.ajax({
@@ -2032,11 +2031,11 @@ function ajaxSearch() {
 
             $('.loader').fadeOut(500);
             $('.content').remove('.loader');
-            
+
             $('div.ac_results').hide();
-            
+
             History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
-            
+
             callSearchAjax();
         },
         error: function(result) {
@@ -2044,11 +2043,7 @@ function ajaxSearch() {
             alert('Problem fetching data');
         }
     });
-    
-    var loading_div = "<div class='loader'>";
-    loading_div += "</div>";
-    $('.content').append(loading_div);
-    
+
     return false;
 }
 // code to ajaxify MyAccount form start
