@@ -91,7 +91,7 @@ class StreamingHistory extends AppModel {
                     'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
                 )
              ), 
-            'fields' => array('sum(StreamingHistory.consumed_time)'),
+            'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN ? and ?' => array($startDate,$endDate),$lib_condition), 
             'recursive' => -1)));exit;
         //return $this->find('all', array('joins' => array(array('table' => strtolower($territory).'_countries','alias' => 'countries','type' => 'left','conditions'=>$conditions)), 'fields'=>array('sum(StreamingHistory.consumed_time)'),'recursive' => -1));
