@@ -109,7 +109,7 @@ class StreamingHistory extends AppModel {
                 $libraryName = $row["library_name"];
 
                 $lib_condition = "and library_id = '" . $libraryID . "'";
-                $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+                $conditions = array('createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
                 $count = $this->find(
                         'count', array(
@@ -133,11 +133,11 @@ class StreamingHistory extends AppModel {
                     'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
                 )
              ),
-            'fields' => array('distinct(patron_id) AS total_patrons'),
+            'fields' => array('distinct patron_id AS total_patrons'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
             
-            return($this->find('count', $qryArr));
+            return($this->find('all', $qryArr));
         }
     }
 
