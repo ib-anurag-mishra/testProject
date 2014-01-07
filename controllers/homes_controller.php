@@ -4664,6 +4664,9 @@ STR;
             //if(1){
 
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+            $size = strlen($new_releases_albums_rs);
+            print($size * 8 / 1000);
+            exit();
         }
         else    //  Show From Cache
         {
