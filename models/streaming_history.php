@@ -171,8 +171,11 @@ class StreamingHistory extends AppModel {
                 'recursive' => -1));
         }
     }
-    function getTotalPatronStreamingDay($libraryID, $date, $territory) {
-  
+    function getPatronStreamingDay($libraryID, $date, $territory) {
+        Configure::write('debug',2);
+        $date_arr = explode("/", $date);
+        $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
+        $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         $arr_all_patron_downloads = array();
         $all_Ids = '';
         $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '".$territory."'  ORDER BY library_name ASC";
@@ -180,14 +183,11 @@ class StreamingHistory extends AppModel {
 
         while ($row = mysql_fetch_assoc($result)) {    
             $count = 0;
-            $date_arr = explode("/", $date);
-            $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-
             $libraryID = $row["id"];
             $libraryName = $row["library_name"]; 
-            $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'"
-                    UNION
-                    SELECT patron_id FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'") AS table1 GROUP BY patron_id';
+            $sql = "SELECT users.id as user_id,users.email as patron_id,count(sh.ProdID) from streaming_histories as sh left join us_countries as countries on sh.ProdID=countries.ProdID
+left join users on users.library_id = sh.library_id AND users.id = sh.patron_id where sh.provider_type=countries.provider_type and sh.createdOn between '$startDate' and '$endDate' 
+and sh.library_id = '$libraryID' and sh.token_id is not null group by sh.patron_id";
             $patronDownload = $this->query($sql);
             if(!empty($patronDownload)){
                $count = count($patronDownload); 
