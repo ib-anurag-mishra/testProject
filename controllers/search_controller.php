@@ -29,7 +29,6 @@ class SearchController extends AppController
         //set_time_limit(0);
         //echo "<br>Started at ".date("Y-m-d H:i:s");
         // reset page parameters when serach keyword changes
-        
         // to check if the search is made from search bar or click on search page
         $layout = $_GET['layout'];
 
@@ -216,8 +215,6 @@ class SearchController extends AppController
                         $limit = 12;
 //                        echo 'here';
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
-                        echo $totalFacetCount;
-                        exit;
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
 //                        echo 'under';

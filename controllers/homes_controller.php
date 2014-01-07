@@ -76,7 +76,6 @@ class HomesController extends AppController
     {
 
         //Configure::write('debug', 3);
-        
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443)
         {
@@ -154,33 +153,34 @@ class HomesController extends AppController
         {
             $this->Session->write('Config.language', 'en');
         }
-        
-        
-        $news_rs = array();    
+
+
+        $news_rs = array();
         //create the cache variable name
-        $newCacheVarName = "news".$this->Session->read('territory').$this->Session->read('Config.language');        
+        $newCacheVarName = "news" . $this->Session->read('territory') . $this->Session->read('Config.language');
         //first check lenguage and territory set or not        
-        if($this->Session->read('territory') && $this->Session->read('Config.language')){            
+        if ($this->Session->read('territory') && $this->Session->read('Config.language'))
+        {
             if (($newsInfo = Cache::read($newCacheVarName)) === false)
             {
                 //if cache not set then run the queries
-                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")),
-                'order' => 'News.created DESC',
-                'limit' => '10'
-                )); 
-                Cache::write($newCacheVarName,$news_rs);
+                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
+                    'order' => 'News.created DESC',
+                    'limit' => '10'
+                ));
+                Cache::write($newCacheVarName, $news_rs);
             }
             else
-            {           
+            {
                 //get all the information from the cache for news
                 $news_rs = Cache::read($newCacheVarName);
-            }            
-        }  
-        
-        
+            }
+        }
+
+
         $this->set('news', $news_rs);
-        
-        
+
+
 
 
         /*
@@ -221,7 +221,6 @@ class HomesController extends AppController
          */
 
         //print_r( $this->element('sql_dump') );
-
         //print_r($this->Session->read('downloadVariArray'));
     }
 
@@ -229,7 +228,6 @@ class HomesController extends AppController
     function checkStreamingComponent()
     {
 //        Configure::write('debug', 0);
-
 //         $query='select * from streaming_histories where id="3007"';
 //         $obj = mysql_query($query);
 //         
@@ -666,7 +664,7 @@ STR;
 
     function autoComplete()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $country = $this->Session->read('territory');
         $searchKey = '';
         if (isset($_REQUEST['q']) && $_REQUEST['q'] != '')
@@ -2391,7 +2389,7 @@ STR;
 
     function _sendForgotPasswordMail($id, $password)
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->Email->template = 'email/forgotPasswordEmail';
         $this->User->recursive = -1;
         $Patron = $this->User->read(null, $id);
@@ -2919,7 +2917,7 @@ STR;
 
     function wishlistDownload()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
 
         $libId = $this->Session->read('library');
@@ -3181,26 +3179,26 @@ STR;
             exit;
         }
     }
-    
+
     function wishlistDownloadHome()
     {
-       // Configure::write('debug', 0);
-        $this->layout = false; 
+        // Configure::write('debug', 0);
+        $this->layout = false;
 
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        
+
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-        
-        
+
+
         $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
-        $finalURL = urlencode($finalSongUrlArr[0]).urlencode($finalSongUrlArr[1]).urlencode($finalSongUrlArr[2]);
-        
-        
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+        $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
+
+
         $downloadsDetail = array();
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
@@ -3441,9 +3439,9 @@ STR;
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
-            $this->Session->write('downloadCount' , $downloadsUsed);
-            
-            echo "suces|" . $downloadsUsed. "|".$finalURL;
+            $this->Session->write('downloadCount', $downloadsUsed);
+
+            echo "suces|" . $downloadsUsed . "|" . $finalURL;
             exit;
         }
         else
@@ -3719,8 +3717,7 @@ STR;
             exit;
         }
     }
-    
-    
+
     function wishlistVideoDownloadToken()
     {
         //Configure::write('debug', 0);
@@ -3728,18 +3725,18 @@ STR;
 
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        
+
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-        
-        
+
+
         $videoUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-        $finalURL = urlencode($finalVideoUrlArr[0]).urlencode($finalVideoUrlArr[1]).urlencode($finalVideoUrlArr[2]);
-        
-        
+        $finalURL = urlencode($finalVideoUrlArr[0]) . urlencode($finalVideoUrlArr[1]) . urlencode($finalVideoUrlArr[2]);
+
+
         $downloadsDetail = array();
         $libraryDownload = $this->Downloadsvideos->checkLibraryDownloadVideos($libId);
         $patronDownload = $this->Downloadsvideos->checkPatronDownloadVideos($patId, $libId);
@@ -3972,7 +3969,7 @@ STR;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
 
-            echo "suces|" . $downloadsUsed. "|".$finalURL;
+            echo "suces|" . $downloadsUsed . "|" . $finalURL;
             exit;
         }
         else
@@ -3987,8 +3984,6 @@ STR;
             exit;
         }
     }
-    
-    
 
     /*
       Function Name : historyDownload
@@ -4003,18 +3998,18 @@ STR;
         $id = $_REQUEST['id'];
         $libId = $_REQUEST['libid'];
         $patId = $_REQUEST['patronid'];
-        
+
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-        
-        
+
+
         $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
-        $finalURL = urlencode($finalSongUrlArr[0]).urlencode($finalSongUrlArr[1]).urlencode($finalSongUrlArr[2]);
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+        $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
 
-        
-        
+
+
         $this->Download->recursive = -1;
         $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $id, 'library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'order' => 'created DESC', 'limit' => '1'));
         $downloadCount = $downloadsUsed[0]['Download']['history'];
@@ -4027,7 +4022,7 @@ STR;
             $this->Download->setDataSource('default');
             $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $id, 'library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'order' => 'created DESC', 'limit' => '1'));
             $downloadCount = $downloadsUsed[0]['Download']['history'];
-            echo "suces|" . $downloadCount."|".$finalURL;
+            echo "suces|" . $downloadCount . "|" . $finalURL;
         }
         else
         {
@@ -4265,7 +4260,7 @@ STR;
     function language()
     {
 
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $language = $_POST['lang'];
         $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -4406,7 +4401,7 @@ STR;
 
     function convertString()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $str = $_POST['str'];
         echo sha1($str);
@@ -4416,7 +4411,7 @@ STR;
     //Used to get Sample Song url
     function userSample()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $prodId = $_POST['prodId'];
         $pt = base64_decode($_POST['pt']);
