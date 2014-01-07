@@ -331,7 +331,7 @@ class SearchController extends AppController
         //echo "<br>search end- ".date("Y-m-d H:i:s");
         
         
-        if (isset($this->params['named']['page']))
+        if (isset( $this->params['isAjax']))
         {
             $this->layout = 'ajax';
              $this->autoLayout = false;
