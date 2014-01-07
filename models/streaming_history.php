@@ -213,7 +213,7 @@ class StreamingHistory extends AppModel {
                 )
              ),
             'fields' => array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','users.email','StreamingHistory.createdOn'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'),
             'group' => array('StreamingHistory.library_id'),
             'recursive' => -1);
 
