@@ -84,6 +84,7 @@ class StreamingHistory extends AppModel {
             'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
+        print_r($qryArr);exit;
 //        return($this->find('all', $qryArr));
         print_r($this->find('all', $qryArr));exit;
     }
