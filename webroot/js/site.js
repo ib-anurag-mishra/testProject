@@ -1950,6 +1950,8 @@ function ajaxSearch() {
         data: {'q': q, 'type': type},
         success: function(response) {
 
+            $(document).find('.content').empty();
+            $(document).find('.content').append(response);
 
             $('.loader').fadeOut(500);
             $('.content').remove('.loader');

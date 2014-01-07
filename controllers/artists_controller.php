@@ -1855,7 +1855,7 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null, $provider = null)
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
 
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
