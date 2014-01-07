@@ -1773,26 +1773,27 @@ Class ReportsController extends AppController {
                 } elseif ($this->data['Report']['reports_daterange'] == 'manual') {
                     $date_arr = explode("/", $this->data['Report']['date_to']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
-
-                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'manual');
+//$this->data['Report']['date_from'], $this->data['Report']['date_to']
+                    $datesInfo=array($this->data['Report']['date_from'],$this->data['Report']['date_to']);
+                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id,$datesInfo, $territory,'manual');
                     if ($library_id != "all") {
                         $streamingHours = $streamingInfo[0][0]['total_streamed'];
                     }else{
                         $streamingHours = $streamingInfo;
                     }
                    
-                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'manual');
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $datesInfo, $territory,'manual');
                     if ($library_id != "all") {
                         $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
-                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'manual');
+                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $datesInfo, $territory,'manual');
 
-                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'manual');
+                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $datesInfo, $territory,'manual');
 
-                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'manual');
+                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $datesInfo, $territory,'manual');
                 }
 
                 $date = date('Y-m-d', time());
