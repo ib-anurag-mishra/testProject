@@ -64,7 +64,8 @@ class StreamingHistory extends AppModel {
             $lib_condition = "StreamingHistory.library_id =>$all_Ids";
         } else {
 //            $lib_condition = "and library_id = " . $libraryID;
-            $lib_condition = "StreamingHistory.library_id=$libraryID";
+//            $lib_condition = "StreamingHistory.library_id=$libraryID";
+            $lib_condition = $libraryID;
         }
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
@@ -82,7 +83,7 @@ class StreamingHistory extends AppModel {
                 )
              ),
             'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
         
 //        return($this->find('all', $qryArr));
