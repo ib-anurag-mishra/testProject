@@ -80,8 +80,8 @@ class SolrComponent extends Object {
         if (!empty($keyword)){
             if (!empty($country))
             {
-                $cond = " AND DownloadStatus:1";
-                //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                //$cond = " AND DownloadStatus:1";
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
             
                 if(1 == $mobileExplicitStatus)
                 {
@@ -341,8 +341,8 @@ class SolrComponent extends Object {
         if (!empty($keyword)){
             if (!empty($country)) 
             {
-                $cond = " AND DownloadStatus:1";
-                //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                //$cond = " AND DownloadStatus:1";
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
             
                 if ($this->Session->read('block') == 'yes') {
                     $cond .= " AND Advisory:F";
@@ -476,8 +476,8 @@ class SolrComponent extends Object {
         if (!empty($keyword)){
         if (!empty($country)) {
             
-            $cond = " AND DownloadStatus:1";
-            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            //$cond = " AND DownloadStatus:1";
+            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
 
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
@@ -622,8 +622,8 @@ echo "<pre>";print_r($additionalParams);
             if (!empty($country))
             {
           
-                $cond = " AND DownloadStatus:1";
-                //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                //$cond = " AND DownloadStatus:1";
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
     
                 if(1 == $mobileExplicitStatus)
                 {
@@ -777,8 +777,8 @@ echo "<pre>";print_r($additionalParams);
             if (!empty($country))
             {
                 
-                $cond = " AND DownloadStatus:1";
-                //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                //$cond = " AND DownloadStatus:1";
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
                 
                 if ($this->Session->read('block') == 'yes')
                 {
@@ -942,8 +942,8 @@ echo "<pre>";print_r($additionalParams);
         if (!empty($country))
         {
             
-            $cond = " AND DownloadStatus:1";
-            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            //$cond = " AND DownloadStatus:1";
+            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
 
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
@@ -1099,8 +1099,8 @@ echo "<pre>";print_r($additionalParams);
         if (!empty($keyword)){
         if (!empty($country))
         {
-            $cond = " AND DownloadStatus:1";
-            //$cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            //$cond = " AND DownloadStatus:1";
+            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
     
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
