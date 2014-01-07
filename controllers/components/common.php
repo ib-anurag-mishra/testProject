@@ -341,7 +341,7 @@ STR;
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
-                   // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
+                    // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                     //{
                     $data[$key]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
@@ -614,10 +614,10 @@ STR;
     {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
-        
-        if(empty($countryPrefix))
+
+        if (empty($countryPrefix))
         {
-            $this->log("Empty countryPrefix in getComingSoonSongs for : ".$territory, "cache");
+            $this->log("Empty countryPrefix in getComingSoonSongs for : " . $territory, "cache");
             die;
         }
         $albumInstance = ClassRegistry::init('Album');
@@ -695,14 +695,14 @@ STR;
     {
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
-        
-        if(empty($countryPrefix))
+
+        if (empty($countryPrefix))
         {
-            $this->log("Empty countryPrefix in getComingSoonVideos for : ".$territory, "cache");
+            $this->log("Empty countryPrefix in getComingSoonVideos for : " . $territory, "cache");
             die;
         }
 
-        
+
         $albumInstance = ClassRegistry::init('Video');
         // Added caching functionality for coming soon videos
         $sql_coming_soon_v = <<<STR
@@ -1290,8 +1290,11 @@ STR;
                     );
                     //}
                 }
-                Cache::delete("new_releases_albums" . $country);
-                Cache::write("new_releases_albums" . $country, $data);
+//                Cache::delete("new_releases_albums" . $country);
+//                Cache::write("new_releases_albums" . $country, $data); 
+                
+                Cache::delete("new_releases_albums_test" . $country);
+                Cache::write("new_releases_albums_test" . $country, $data);
                 $this->log("cache written for new releases albums for $territory", "cache");
             }
             else
@@ -1574,10 +1577,10 @@ STR;
                 $featured[$k]['featuredImage'] = $image;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
-                    $featured[$k]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type'])))
-                    );
-               // }
+                $featured[$k]['albumSongs'] = $this->requestAction(
+                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type'])))
+                );
+                // }
             }
             Cache::delete("featured" . $territory);
             Cache::write("featured" . $territory, $featured);
@@ -1916,15 +1919,15 @@ STR;
 
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
-                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
-                    if (!empty($filePath))
-                    {
-                        $songPath = explode(':', $filePath);
-                        $streamUrl = trim($songPath[1]);
-                        $topDownload[$key]['streamUrl'] = $streamUrl;
-                        $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
-                    }
+                if (!empty($filePath))
+                {
+                    $songPath = explode(':', $filePath);
+                    $streamUrl = trim($songPath[1]);
+                    $topDownload[$key]['streamUrl'] = $streamUrl;
+                    $topDownload[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                }
                 //}
             }
             Cache::delete("lib" . $libId);
@@ -2113,9 +2116,9 @@ STR;
                 $topDownload[$key]['album_img'] = $album_img;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
-                    $topDownload[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
-                    );
+                $topDownload[$key]['albumSongs'] = $this->requestAction(
+                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
+                );
                 //}
             }
             Cache::delete("lib_album" . $libId);
@@ -2568,7 +2571,7 @@ STR;
             }
             else
             {
-                Cache::write("defaultqueuelistdetails".$territory.$defaultQueueId, $eachQueueDetails);
+                Cache::write("defaultqueuelistdetails" . $territory . $defaultQueueId, $eachQueueDetails);
                 $this->log("Freegal Defaut Queues " . $defaultQueueName . "( " . $defaultQueueId . " )" . " cache set", "cache");
             }
         }

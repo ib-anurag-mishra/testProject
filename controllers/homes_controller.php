@@ -4662,7 +4662,6 @@ STR;
         if (($coming_soon = Cache::read("new_releases_albums_test" . $territory)) === false)
         {
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
-            Cache::write("new_releases_albums_test" . $territory, $new_releases_albums_rs);
         }
         else    //  Show From Cache
         {            
