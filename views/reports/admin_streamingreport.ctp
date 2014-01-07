@@ -105,7 +105,7 @@ if (empty($getData)) {
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <?php
-                    if (!empty($downloads)) {
+                    if (!empty($streamingHours)) {
                         ?>
                         <tr>
                             <td colspan="3" align="center">
@@ -168,7 +168,7 @@ if (empty($getData)) {
                                             <th>Total Streamed</th>
                                         </tr>
                                         <tr>
-                                            <td align="center"><?php echo $downloads; ?></td>
+                                            <td align="center"><?php echo $streamingHours; ?></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -264,7 +264,7 @@ if (empty($getData)) {
                                     <?php
                                     $i = 1;
                                     //				print "<pre>";print_r($downloads);exit;
-                                    foreach ($downloads as $key => $download) {
+                                    foreach ($streamingHours as $key => $download) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
@@ -355,7 +355,7 @@ if (empty($getData)) {
                         
 
                         <?php
-                    } elseif (empty($downloads) && empty($errors) && isset($this->data)) {
+                    } elseif (empty($streamingHours) && empty($errors) && isset($this->data)) {
                         ?>
                         <tr>
                             <td colspan="6" align="center"><label>There are no streaming found for the selected criteria.</label></td>
@@ -442,7 +442,7 @@ if (empty($library_id)) {
 
     });
 <?php
-if (!empty($downloads)) {
+if (!empty($streamingHours)) {
     ?>
         $("#generateReportSubmit").click(function() {
             $("#ReportAdminIndexForm").attr('action', '/admin/reports/streamingreport');
