@@ -237,8 +237,8 @@ if (empty($getData)) {
 
                                             <tr>
                                                 <td> <?php echo $index; ?> </td>
-                                                <td> <?php echo $key; ?> </td>
-                                                <td align="center"> <?php echo $val; ?> </td>
+                                                <td> <?php echo $val['lib']['library_name']; ?> </td>
+                                                <td align="center"> <?php echo $val['0']['total_patrons']; ?> </td>
                                             </tr>
 
             <?php $index++;

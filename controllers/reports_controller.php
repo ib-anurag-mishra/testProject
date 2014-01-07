@@ -1706,7 +1706,7 @@ Class ReportsController extends AppController {
                     }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
-                    echo "<pre>";print_r($patronStreaminInfo);exit;
+//                    echo "<pre>";print_r($patronStreaminInfo);exit;
                     $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'day');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'day');
