@@ -265,22 +265,22 @@ if (empty($getData)) {
                                     <?php
                                     $i = 1;
                                     //				print "<pre>";print_r($downloads);exit;
-                                    foreach ($streamingHours as $key => $download) {
+                                    foreach ($patronStreamingInfo as $key => $streamInformation) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
+                                            <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['Download']['library_id'])); ?></td>
                                             <td><?php
-                                                if ($download['Download']['email'] != '') {
-                                                    echo $download['Download']['email'];
+                                                if ($streamInformation['Download']['email'] != '') {
+                                                    echo $streamInformation['Download']['email'];
                                                 } else {
-                                                    echo $download['Download']['patron_id'];
+                                                    echo $streamInformation['Download']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
-                                            <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
-                                            <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
+                                            <td><?php echo $this->getTextEncode($streamInformation['Download']['artist']); ?></td>
+                                            <td><?php echo $this->getTextEncode($streamInformation['Download']['track_title']); ?></td>
+                                            <td><?php echo date('Y-m-d', strtotime($streamInformation['Download']['created'])); ?></td>
                                         </tr>
                                         <?php
                                         $i++;
