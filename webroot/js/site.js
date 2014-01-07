@@ -1956,8 +1956,7 @@ function ajaxSearch() {
             $('body').addClass('page-search-index');
 
             $(document).find('.content').find('section').remove();
-            $(document).find('.content').append(response);
-            $(document).find('.content').ajaxify().css('opacity', 100).show();
+            $(document).find('.content').append(response);            
 
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
@@ -1968,6 +1967,7 @@ function ajaxSearch() {
             $('.loader').fadeOut(500);
             $('.content').remove('.loader');
 
+            $(document).find('.content').ajaxify().css('opacity', 100).show();
             callSearchAjax();
         },
         error: function() {

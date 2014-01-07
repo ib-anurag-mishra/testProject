@@ -31,6 +31,7 @@
                 completedEventName = 'statechangecomplete',
                 /* Application Generic Variables */
                 $window = $(window),
+                search = false,
                 $body = $(document.body),
                 rootUrl = History.getRootUrl(),
                 scrollOptions = {
@@ -101,6 +102,12 @@
                 }
                 //console.log(url);
 
+                var tempURL = url.split('/');
+                if (tempURL[0] === 'search')
+                {
+                    search = true;
+                }
+
                 History.pushState(null, title, url);
                 event.preventDefault();
                 return false;
@@ -126,7 +133,7 @@
 
             // for search page 
             var tempURL = relativeUrl.split('/');
-            if (tempURL[0] === 'search')
+            if (tempURL[0] === 'search' && search)
             {
                 return false;
             }
