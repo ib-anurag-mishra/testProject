@@ -1955,7 +1955,7 @@ function ajaxSearch() {
             $('body').removeClass(className);
             $('body').addClass('page-search-index');
 
-            $(document).find('.content').empty();
+            $(document).find('.content').find('section').remove()();
             $(document).find('.content').append(response);
             $(document).find('.content').ajaxify().css('opacity', 100).show();
 
