@@ -1224,10 +1224,6 @@ STR;
                 $this->log("new release data not recevied for " . $territory, "cache");
             }
 
-
-
-
-
             $data = array();
             $sql_album_new_release = <<<STR
                     SELECT 
@@ -1267,7 +1263,7 @@ STR;
                         AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
                     group by Song.ReferenceID
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 200
+                    LIMIT 100
 STR;
 
 
