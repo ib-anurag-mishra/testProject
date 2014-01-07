@@ -1694,8 +1694,8 @@ Class ReportsController extends AppController {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
                     if ($library_id != "all") {
-                        $downloadsInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
-                        $downloads = floor($downloads[0][0]['total_streamed']/60/60);
+                        $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
+                        $streamingHours = floor($streamingInfo[0][0]['total_streamed']/60/60);
                     }
 
                     $arr_all_library_downloads = array();
@@ -1714,7 +1714,7 @@ Class ReportsController extends AppController {
                             $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",'") . ")";
                             $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id IN (' . rtrim($all_Ids, ",") . ')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                         } else {
-                            $this->set('libraries_download', ((count($patronStreaminInfo)*21)-$downloads)); //21=7 days of week * 3 hours per user for each day
+                            $this->set('libraries_download', ((count($patronStreaminInfo)*3)-$streamingHours)); //3 hours per user for each day
                         }
                     }
                     $arr_all_patron_downloads = array();
@@ -1738,7 +1738,7 @@ Class ReportsController extends AppController {
                             $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))) + 7, $date_arr[2]));
                         }
                     }
-                    $downloads = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $streamingHours = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
 
                     $arr_all_library_downloads = array();
                     if ($library_id == "all") {
@@ -1846,7 +1846,7 @@ Class ReportsController extends AppController {
                     $currentPatronBothDownload = array();
                 }
 
-                $this->set('downloads', $downloads);
+                $this->set('streamingHours', $streamingHours);
                 $this->set('arr_all_library_downloads', $arr_all_library_downloads);
                 $this->set('arr_all_patron_downloads', $arr_all_patron_downloads);
 
