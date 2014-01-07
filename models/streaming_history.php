@@ -284,6 +284,18 @@ class StreamingHistory extends AppModel {
             return $this->find('all', array(
                 'joins' => array(
                     array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                    ),
+                    array(
+                        'table' => 'libraries',
+                        'alias' => 'lib',
+                        'type' => 'left',
+                        'conditions' => array('lib.id=StreamingHistory.library_id')
+                    ),
+                    array(
                         'table' => 'users',
                         'alias' => 'users',
                         'type' => 'left',
@@ -296,7 +308,7 @@ class StreamingHistory extends AppModel {
                         'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
                     )
                  ),
-                'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'), 
+                'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'),
                 'fields'=>array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','users.email','StreamingHistory.createdOn'),
                 'recursive' => -1));
         }
