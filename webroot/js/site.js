@@ -1944,6 +1944,8 @@ function ajaxSearch() {
     var q = $('#search-text').val();
     var type = $('#master-filter').val();
 
+    History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+
     $.ajax({
         url: '/search/index',
         method: 'get',
