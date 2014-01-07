@@ -51,9 +51,9 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory,$reportCond=NULL) {
-                        Configure::write('debug',2);
+        Configure::write('debug',2);
+        $date_arr = explode("/", $date);
         if($reportCond=='day'){
-            $date_arr = explode("/", $date);
             $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
             $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         }elseif ($reportCond=='week') {
@@ -127,8 +127,8 @@ class StreamingHistory extends AppModel {
 
     function getDaysStreamedByPetronInformation($libraryID, $date, $territory,$reportCond=NULL) {
                 Configure::write('debug',2);
+        $date_arr = explode("/", $date);
         if($reportCond=='day'){
-            $date_arr = explode("/", $date);
             $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
             $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         }elseif ($reportCond=='week') {
@@ -192,8 +192,8 @@ class StreamingHistory extends AppModel {
     
     function getDayStreamingReportingPeriod($libraryID, $date, $territory,$reportCond=NULL) {
         Configure::write('debug',2);
+        $date_arr = explode("/", $date);
         if($reportCond=='day'){
-            $date_arr = explode("/", $date);
             $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
             $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         }elseif ($reportCond=='week') {
@@ -273,8 +273,8 @@ class StreamingHistory extends AppModel {
     }
     function getPatronStreamingDay($libraryID, $date, $territory,$reportCond=NULL) {
         Configure::write('debug',2);
+        $date_arr = explode("/", $date);
         if($reportCond=='day'){
-            $date_arr = explode("/", $date);
             $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
             $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         }elseif ($reportCond=='week') {
