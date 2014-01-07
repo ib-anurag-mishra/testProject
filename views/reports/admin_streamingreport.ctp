@@ -269,7 +269,7 @@ if (empty($getData)) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['Download']['library_id'])); ?></td>
+                                            <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
                                             <td><?php
                                                 if ($streamInformation['users']['email'] != '') {
                                                     echo $streamInformation['users']['email'];
@@ -280,7 +280,7 @@ if (empty($getData)) {
                                             </td>
                                             <td><?php echo $this->getTextEncode($streamInformation['songs']['artist']); ?></td>
                                             <td><?php echo $this->getTextEncode($streamInformation['songs']['track_title']); ?></td>
-                                            <td><?php echo date('Y-m-d', strtotime($streamInformation['StreamingHistory']['created'])); ?></td>
+                                            <td><?php echo date('Y-m-d', strtotime($streamInformation['StreamingHistory']['createdOn'])); ?></td>
                                         </tr>
                                         <?php
                                         $i++;
