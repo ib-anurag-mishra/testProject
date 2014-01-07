@@ -140,6 +140,39 @@ class StreamingHistory extends AppModel {
         }
     }
     
+    function getDayStreamingReportingPeriod($libraryID, $date, $territory) {
+        Configure::write('debug',2);
+
+        $date_arr = explode("/", $date);
+        $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
+        $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
+        if ($libraryID == "all") {
+            //something
+        }else{
+            $lib_condition = "StreamingHistory.library_id=$libraryID";
+            //$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC");
+            return $this->find('all', array(
+                'joins' => array(
+                    array(
+                        'table' => 'users',
+                        'alias' => 'users',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.library_id=users.library_id')
+                    )
+                 ),
+                'joins' => array(
+                    array(
+                        'table' => 'Songs',
+                        'alias' => 'songs',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
+                    )
+                 ),
+                'conditions'=>array('createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'), 
+                'fields'=>array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','users.email','StreamingHistory.createdOn'),
+                'recursive' => -1));
+        }
+    }
     function getTotalPatronStreamingDay($libraryID, $date, $territory) {
   
         $arr_all_patron_downloads = array();

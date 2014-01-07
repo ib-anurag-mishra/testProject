@@ -1704,7 +1704,9 @@ Class ReportsController extends AppController {
                     }
                    
                     $patronStreaminInfo = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory);
-                    if ($territory != '') {
+                    
+                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory);
+                    /*if ($territory != '') {
                         if ($library_id == 'all') {
                             $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
                             $result = mysql_query($sql);
@@ -1716,7 +1718,7 @@ Class ReportsController extends AppController {
                         } else {
                             $this->set('libraries_download', ((count($patronStreaminInfo)*3)-$streamingHours)); //3 hours per user for each day
                         }
-                    }
+                    }*/
                     $arr_all_patron_downloads = array();
                     if ($library_id == "all") {
                         $arr_all_patron_downloads = $this->StreamingHistory->getTotalPatronStreamingDay($library_id, $this->data['Report']['date'], $territory);
@@ -1860,6 +1862,7 @@ Class ReportsController extends AppController {
                         }
                     }
                     $this->set('patronStreamedInfo', $patronStreaminInfo);
+                    $this->set('patronStreamingInfo', $arr_day_streaming_report);
                 } else {
                     if (!empty($currentPatronDownload)) {
                         foreach ($currentPatronDownload as $patronRecord) {
