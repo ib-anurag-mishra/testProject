@@ -174,7 +174,7 @@
 						<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
 					</li>
                                         <li>
-						<?php echo $html->link('Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
 					</li>
 				</ul>
 			</li>	
@@ -224,7 +224,7 @@
 						<?php echo $html->link('Consortium Download Report', array('controller' => 'reports', 'action' => 'consortium'));?>
 					</li>
                                         <li>
-						<?php echo $html->link('Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
 					</li>
 				</ul>
 			</li>	
