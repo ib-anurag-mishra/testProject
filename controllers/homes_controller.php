@@ -4665,8 +4665,12 @@ STR;
             Cache::write("new_releases_albums_test" . $territory, $new_releases_albums_rs);
         }
         else    //  Show From Cache
-        {
+        {            
             $new_releases_albums_rs = Cache::read("new_releases_albums_test" . $territory);
+            echo "<pre>";
+            echo 'in cache albums';
+            print_r($new_releases_albums_rs);
+            exit();
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
