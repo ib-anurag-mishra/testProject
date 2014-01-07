@@ -1945,7 +1945,7 @@ function ajaxSearch() {
     var type = $('#master-filter').val();
 
     History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
-    $('div.ac_results').hide();
+    $(document).find('.ac_results').remove();
     
     $.ajax({
         url: '/search/index',
