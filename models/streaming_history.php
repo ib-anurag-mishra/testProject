@@ -58,7 +58,7 @@ class StreamingHistory extends AppModel {
             $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
             $result = mysql_query($sql);
             while ($row = mysql_fetch_assoc($result)) {
-                $all_Ids = $all_Ids . $row["id"] . ",";
+                $all_Ids[] = $row["id"];
             }
 //            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
             $lib_condition = $all_Ids;
