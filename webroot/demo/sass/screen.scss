@@ -57,7 +57,7 @@ button,select,input {
 	border: 0;
 	margin: 0;
 	outline: 0;
-	
+	cursor: pointer;
 }
 
 
@@ -498,6 +498,11 @@ body {
 					top:11px;
 					background: url(../images/freegal_sprite.png) no-repeat -40px 0;
 					content: "";
+					
+					@media screen and (max-width:1305px) {
+						
+						left: 94px;
+					}
 				}
 				
 				&::after {
@@ -512,7 +517,10 @@ body {
 					top: 8px;
 					content: "";
 					
-					
+					@media screen and (max-width:1305px) {
+						
+						left: 117px;
+					}					
 
 				}
 				
@@ -781,48 +789,105 @@ body {
 				font-size: 24px;
 			}
 			
-
-			
-			.album-list-container {
+			.top-albums-carousel-container {
 				
-				margin-top: 10px;
-				height: 226px;
-				overflow-y: hidden;
 				position: relative;
-				ul {
-					overflow-y: hidden;
-					height: 216px;
-					width: 4300px;
+				
+				.left-scroll-button {
 					
-					li {
+					width: 39px;
+					height: 162px;
+					position: absolute;
+					left: 0;
+					top:0;
+					background: url(../images/carousel-sprite.png) 0 0;
+					
+					&:hover {
+						background: url(../images/carousel-sprite.png) -39px 0;
 						
-						float: left;
-						display: block;
-						margin-right: 10px;
-						margin-bottom: 10px;
-						width: 162px;
+					}
+					
+					&:active {
+						background: url(../images/carousel-sprite.png) -78px 0;
 						
-						.album-cover-container {
-							
-							width: 162px;
-							height: 162px;
-							
-							img {
-								
-								width: 162px;
-								height: 162px;
-								@include box-shadow(0 0 4px rgba(0,0,0,.5));
-								
-							}
-						}
+					}
+
+				}
+				
+				.right-scroll-button {
+					
+					width: 39px;
+					height: 162px;
+					position: absolute;
+					right: 0;
+					top:0;
+					
+					
+					background: url(../images/carousel-sprite.png) -195px 0;
+					
+					&:hover {
+						
+						background: url(../images/carousel-sprite.png) -156px 0;
+					}
+					
+					&:active {
+						
+						background: url(../images/carousel-sprite.png) -117px 0;
 					}
 				}
 				
-				
+				.top-albums-carousel {
+					
+					margin-top: 10px;
+					margin-left: 48px;
+					margin-right: 48px;
+					height: 226px;
+					overflow-y: hidden;
+					position: relative;
+					
 					
 
+					
+					ul {
+						overflow-y: hidden;
+						height: 216px;
+						width: 4300px;
+						
+						li {
+							
+							float: left;
+							display: block;
+							margin-right: 10px;
+							margin-bottom: 10px;
+							width: 162px;
+							
+							.album-cover-container {
+								
+								width: 162px;
+								height: 162px;
+								
+								img {
+									
+									width: 162px;
+									height: 162px;
+									@include box-shadow(0 0 4px rgba(0,0,0,.5));
+									
+								}
+							}
+						}
+					}
+					
+					
+						
+	
+					
+				}
+				
 				
 			}
+
+			
+
 			
 			.album-info {
 				font-size: 14px;
@@ -851,71 +916,12 @@ body {
 
 			}
 			
-			.album-navigation-container {
-				
-				
-				padding-bottom: 10px;
-				margin-top: 10px;
-				
-				position: relative;
-				
-				&::before {
-					
-					position: absolute;
-					width: 100%;
-					bottom:0;
-					left: 0;
-					height: 3px;
-					content: "";
-					background: url(../images/gray-dotted-border-rpt.png) bottom repeat-x;
-					@include opacity(.5);
-				}
-				.album-scroll-left {
-					
-					float: left;
-					width: 30px;
-					height: 30px;
-					cursor: pointer;
-					
-					
-					background: url(../images/freegal_sprite.png) no-repeat 0 -20px;
-					
-					&:hover {
-						
-						
-						
-						background: url(../images/freegal_sprite.png) no-repeat -30px -20px;
-					}
-					&:active {
-						
-						
-						
-						background: url(../images/freegal_sprite.png) no-repeat -60px -20px;
-					}
-				}
-				
-				.album-scroll-right {
-					
-					float: right;
-					width: 30px;
-					height: 30px;
-					cursor: pointer;
-					
-					background: url(../images/freegal_sprite.png) no-repeat -90px -20px;
-					&:hover {
-						
-						background: url(../images/freegal_sprite.png) no-repeat -120px -20px;
-					}
-					&:active {
-						
-						background: url(../images/freegal_sprite.png) no-repeat -150px -20px;
-					}
-				}
-			}
+
 		}
 		
 		.top-songs {
 			margin-top: 20px;
+			padding-bottom: 500px;
 			h2 {
 				
 				font-size: 24px;
