@@ -73,7 +73,8 @@ class StreamingHistory extends AppModel {
         /*$conditions = array(
             'StreamingHistory.provider_type=countries.provider_type and StreamingHistory.ProdID=countries.ProdID and createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ' . $lib_condition . " AND 1 = 1 and StreamingHistory.token_id is not null GROUP BY id  ORDER BY createdOn ASC"
         );*/
-        $qryArr=array(
+        if ($libraryID != "all") {
+            $qryArr=array(
             'joins' => array(
                 array(
                     'table' => strtolower($territory).'_countries',
@@ -85,9 +86,28 @@ class StreamingHistory extends AppModel {
             'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
-        
-//        return($this->find('all', $qryArr));
-        print_r($this->find('all', $qryArr));exit;
+        }else{
+            $qryArr=array(
+            'joins' => array(
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                ),
+                array(
+                    'table' => 'libraries',
+                    'alias' => 'lib',
+                    'type' => 'left',
+                    'conditions' => array('lib.id=StreamingHistory.library_id')
+                )
+             ),
+            'fields' => array('lib.library_name','count(StreamingHistory.ProdID) as total_count'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
+            'group' => array('StreamingHistory.library_id'),
+            'recursive' => -1);
+        }
+        return($this->find('all', $qryArr));
     }
     /*
       Function Name : getDaysStreamedInformation

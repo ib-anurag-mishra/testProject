@@ -1695,7 +1695,11 @@ Class ReportsController extends AppController {
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
 //                    if ($library_id != "all") {
                         $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
-                        $streamingHours = floor($streamingInfo[0][0]['total_streamed']/60/60);
+                        if ($library_id != "all") {
+                            $streamingHours = floor($streamingInfo[0][0]['total_streamed']/60/60);
+                        }else{
+                            $streamingHours = $streamingInfo;
+                        }
 //                    }
 
                     /*$arr_all_library_downloads = array();
