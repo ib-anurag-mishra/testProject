@@ -1751,48 +1751,48 @@ Class ReportsController extends AppController {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . date('d', time());
 
-                    $downloads = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                    $arr_all_library_downloads = array();
-                    if ($library_id == "all") {
-                        $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsMonth($library_id, $this->data['Report']['date'], $territory);
-                    }
-                    
-                    
-                    
-                    $patronDownloads = $this->Downloadpatron->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'month');
                     if ($library_id != "all") {
-                        $patronBothDownloads = $this->Downloadpatron->getMonthsBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                        $streamingHours = $streamingInfo[0][0]['total_streamed'];
+                    }else{
+                        $streamingHours = $streamingInfo;
                     }
-                    
-                    
-
-                    $arr_all_patron_downloads = array();
-                    if ($library_id == "all") {
-                        $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadMonth($library_id, $this->data['Report']['date'], $territory);
+                   
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'month');
+                    if ($library_id != "all") {
+                        $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
+                    }else{
+                        $patronStreaminInfo = $patronStreaminInfoRes;
                     }
+//                    echo "<pre>";print_r($patronStreaminInfo);exit;
+                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'month');
 
-                    $genreDownloads = $this->Downloadgenre->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'month');
+
+                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'month');
                 } elseif ($this->data['Report']['reports_daterange'] == 'manual') {
                     $date_arr = explode("/", $this->data['Report']['date_to']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
 
-                    $downloads = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
-                    $arr_all_library_downloads = array();
-                    if ($library_id == "all") {
-                        $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
-                    }
-
-                    $patronDownloads = $this->Downloadpatron->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'manual');
                     if ($library_id != "all") {
-                        $patronBothDownloads = $this->Downloadpatron->getManualBothDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                        $streamingHours = $streamingInfo[0][0]['total_streamed'];
+                    }else{
+                        $streamingHours = $streamingInfo;
                     }
-                    
-                    $arr_all_patron_downloads = array();
-                    if ($library_id == "all") {
-                        $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                   
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'manual');
+                    if ($library_id != "all") {
+                        $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
+                    }else{
+                        $patronStreaminInfo = $patronStreaminInfoRes;
                     }
+//                    echo "<pre>";print_r($patronStreaminInfo);exit;
+                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'manual');
 
-                    $genreDownloads = $this->Downloadgenre->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'manual');
+
+                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'manual');
                 }
 
                 $date = date('Y-m-d', time());
