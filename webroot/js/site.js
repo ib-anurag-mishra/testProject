@@ -1952,9 +1952,16 @@ function ajaxSearch() {
 
             $(document).find('.content').empty();
             $(document).find('.content').append(response);
+            $(document).find('.content').ajaxify().css('opacity', 100).show();
+            
+            $.getScript(webroot + 'css/styles.css');
+            $.getScript(webroot + 'css/freegal_styles.css');
 
-            $('.loader').fadeOut(500);
-            $('.content').remove('.loader');
+            $.getScript(webroot + 'js/site.js');
+            $.getScript(webroot + 'js/freegal.js');
+            
+            History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+
             callSearchAjax();
         },
         error: function() {
