@@ -44,8 +44,6 @@ class SearchController extends AppController
             $_SESSION['SearchReq']['type'] = $_GET['type'];
         }//sets values in session
 
-
-        $this->layout = 'home';
         $queryVar = null;
         $check_all = null;
         $sortVar = 'ArtistText';
@@ -124,7 +122,7 @@ class SearchController extends AppController
             $insertArr[] = $this->searchrecords($typeVar, $queryVar);
             $this->Searchrecord->saveAll($insertArr);
             //End Added code for log search data
-            
+
             $patId = $this->Session->read('patron');
             $libId = $this->Session->read('library');
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -156,7 +154,7 @@ class SearchController extends AppController
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-            
+
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
@@ -167,34 +165,37 @@ class SearchController extends AppController
                   $this->redirect();
                   } */
             }
-            
-            /*echo "Microtime : ".microtime();
-            echo "Time : ".date('h:m:s');*/
-            
+
+            /* echo "Microtime : ".microtime();
+              echo "Time : ".date('h:m:s'); */
+
             $songArray = array();
             foreach ($songs as $key => $song)
             {
                 $songArray[] = $song->ProdID;
             }
-            
-            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-            
-            foreach($songs as $key => $song){
+
+            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+
+            foreach ($songs as $key => $song)
+            {
                 $set = 0;
-                foreach($downloadsUsed as $downloadKey => $downloadData){
-                    if ($downloadData['Download']['ProdID'] == $song->ProdID )
+                foreach ($downloadsUsed as $downloadKey => $downloadData)
+                {
+                    if ($downloadData['Download']['ProdID'] == $song->ProdID)
                     {
                         $songs[$key]->status = 'avail';
                         $set = 1;
                         break;
                     }
                 }
-                if($set == 0){
+                if ($set == 0)
+                {
                     $songs[$key]->status = 'not';
                 }
             }
-            /*echo "Microtime : ".microtime();
-            echo "Time : ".date('h:m:s');*/
+            /* echo "Microtime : ".microtime();
+              echo "Time : ".date('h:m:s'); */
 
             $this->set('songs', $songs);
             // print_r($songs);
@@ -219,21 +220,19 @@ class SearchController extends AppController
 //                        echo "<pre>";print_r($albums);
                         //echo "here1 : ".date('d-m-Y h:i:s');
                         // echo "Group Search for Albums Ended at ".time();
-                        
-                          $arr_albumStream    =   array();
-                            
-                        foreach ($albums as $objKey=>$objAlbum) 
-                        {                                                       
-                            $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
-                                           array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                           array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type),1))
-                                   );
-                            
+
+                        $arr_albumStream = array();
+
+                        foreach ($albums as $objKey => $objAlbum)
+                        {
+                            $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                            );
                         }
 //                        echo 'after';
 //                        echo "<pre>";print_r($albums);exit;
-                      //  echo "<pre>"; print_r($albums);
-                      //echo "<br/>here2 : ".date('d-m-Y h:i:s'); exit;
+                        //  echo "<pre>"; print_r($albums);
+                        //echo "<br/>here2 : ".date('d-m-Y h:i:s'); exit;
                         $this->set('albumData', $albums);
                         $this->set('arr_albumStream', $arr_albumStream);
 
@@ -286,16 +285,14 @@ class SearchController extends AppController
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 $queryArr = null;
-                
-                $arr_albumStream    =   array();
-                            
-                foreach ($albums as $objKey=>$objAlbum) 
-                {                                                       
-                    $arr_albumStream[$objKey]['albumSongs']  = $this->requestAction(
-                                   array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-                                   array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID , base64_encode($objAlbum->provider_type),1))
-                           );
 
+                $arr_albumStream = array();
+
+                foreach ($albums as $objKey => $objAlbum)
+                {
+                    $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                    );
                 }
 
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
@@ -332,6 +329,20 @@ class SearchController extends AppController
         }
         $this->set('keyword', htmlspecialchars($queryVar));
         //echo "<br>search end- ".date("Y-m-d H:i:s");
+        
+        
+        if (isset($this->params['named']['page']))
+        {
+            $this->layout = 'ajax';
+             $this->autoLayout = false;
+            $this->autoRender = false;
+            
+            die;
+        }
+        else
+        {
+            $this->layout = 'home';
+        }
     }
 
     function searchrecords($type, $search_text)
