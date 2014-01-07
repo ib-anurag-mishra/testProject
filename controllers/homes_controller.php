@@ -4664,11 +4664,10 @@ STR;
             //if(1){
 
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
-            echo "<pre>";
-            print_r(serialize($new_releases_albums_rs));
-            
-            $size = strlen(serialize($new_releases_albums_rs));
-            print($size * 8 / 1000);
+                   
+            echo "<pre> <br/> size :";
+            $size = (serialize($new_releases_albums_rs));
+            echo  mb_strlen(serialize($size), '8bit');
             exit();
         }
         else    //  Show From Cache
