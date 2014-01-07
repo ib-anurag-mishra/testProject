@@ -61,7 +61,7 @@ class StreamingHistory extends AppModel {
                 $all_Ids = $all_Ids . $row["id"] . ",";
             }
 //            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
-            $lib_condition = "StreamingHistory.library_id =>$all_Ids";
+            $lib_condition = $all_Ids;
         } else {
 //            $lib_condition = "and library_id = " . $libraryID;
 //            $lib_condition = "StreamingHistory.library_id=$libraryID";
