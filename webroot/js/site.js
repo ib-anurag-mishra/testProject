@@ -1960,7 +1960,7 @@ function ajaxSearch() {
             $.getScript(webroot + 'js/site.js');
             $.getScript(webroot + 'js/freegal.js');
             
-            History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+            //History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
 
             callSearchAjax();
         },
