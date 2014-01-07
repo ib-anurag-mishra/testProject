@@ -4671,7 +4671,7 @@ STR;
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
-        exit();
+     
     }
 
 }
