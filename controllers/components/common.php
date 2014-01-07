@@ -1275,6 +1275,9 @@ STR;
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_album_new_release, "cachequery");
 
+            echo '<pre>';
+            print_r($data);
+            exit();
 
             if (!empty($data))
             {

@@ -4664,17 +4664,12 @@ STR;
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
         }
         else    //  Show From Cache
-        {            
+        {
             $new_releases_albums_rs = Cache::read("new_releases_albums_test" . $territory);
-            echo "<pre>";
-            echo 'in cache albums';
-            print_r($new_releases_albums_rs);
-            exit();
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
-     
     }
 
 }
