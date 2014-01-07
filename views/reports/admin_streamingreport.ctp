@@ -303,7 +303,7 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
-    foreach ($patronDownloads as $key => $patronDownload) {
+    foreach ($patronStramedInfo as $key => $patronDownload) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>

@@ -1720,11 +1720,9 @@ Class ReportsController extends AppController {
                             $this->set('libraries_download', ((count($patronStreaminInfo)*3)-$streamingHours)); //3 hours per user for each day
                         }
                     }*/
-                    $arr_all_patron_downloads = array();
-                    if ($library_id == "all") {
-                        $arr_all_patron_downloads = $this->StreamingHistory->getTotalPatronStreamingDay($library_id, $this->data['Report']['date'], $territory);
-                    }
-
+                    $patronStreamedInformation = array();
+                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory);
+echo "<pre>";print_r($patronStreamedInformation);exit;
                     $genreDownloads = $this->Downloadgenre->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 } elseif ($this->data['Report']['reports_daterange'] == 'week') {
                     $date_arr = explode("/", $this->data['Report']['date']);
@@ -1864,6 +1862,7 @@ Class ReportsController extends AppController {
                     }
                     $this->set('patronStreamedInfo', $patronStreaminInfo);
                     $this->set('patronStreamingInfo', $arr_day_streaming_report);
+                    $this->set('patronStramedInfo', $patronStreamedInformation);
                 } else {
                     if (!empty($currentPatronDownload)) {
                         foreach ($currentPatronDownload as $patronRecord) {
@@ -1891,7 +1890,7 @@ Class ReportsController extends AppController {
                         }
                         //die;
                     }
-                    $this->set('patronDownloads', $patronDownloads[0]);
+                    $this->set('patronStramedInfo', $patronDownloads[0]);
                 }
                 if ($library_id != "all") {
                     if ($this->data['Report']['reports_daterange'] == 'day') {
