@@ -158,9 +158,7 @@ class StreamingHistory extends AppModel {
                         'alias' => 'users',
                         'type' => 'left',
                         'conditions' => array('StreamingHistory.library_id=users.library_id')
-                    )
-                 ),
-                'joins' => array(
+                    ),
                     array(
                         'table' => 'Songs',
                         'alias' => 'songs',
