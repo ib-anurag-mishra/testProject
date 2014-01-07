@@ -114,7 +114,7 @@ class StreamingHistory extends AppModel {
                 )
              ),
             'fields' => array('lib.library_name','count(StreamingHistory.ProdID) as total_count'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
+            'conditions'=>array('StreamingHistory.provide_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
             'group' => array('StreamingHistory.library_id'),
             'recursive' => -1);
         }
