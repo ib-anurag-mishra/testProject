@@ -1263,7 +1263,7 @@ STR;
                         AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
                     group by Song.ReferenceID
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 100
+                    LIMIT 110
 STR;
 
 
