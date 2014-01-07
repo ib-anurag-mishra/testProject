@@ -1705,7 +1705,6 @@ Class ReportsController extends AppController {
                     $patronStreaminInfo = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory);
                     
                     
-                    
                     $arr_all_patron_downloads = array();
                     if ($library_id == "all") {
                         $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadDay($library_id, $this->data['Report']['date'], $territory);
