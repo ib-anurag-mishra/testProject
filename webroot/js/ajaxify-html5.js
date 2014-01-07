@@ -4,7 +4,7 @@
 (function(window, undefined) {
 
     // Prepare our Variables
-    var            
+    var
             History = window.History,
             $ = window.jQuery,
             document = window.document;
@@ -31,6 +31,7 @@
                 completedEventName = 'statechangecomplete',
                 /* Application Generic Variables */
                 $window = $(window),
+                search = false,
                 $body = $(document.body),
                 rootUrl = History.getRootUrl(),
                 scrollOptions = {
@@ -101,6 +102,12 @@
                 }
                 //console.log(url);
 
+                var tempURL = url.split('/');
+                if (tempURL[0] === 'search')
+                {
+                    search = true;
+                }
+
                 History.pushState(null, title, url);
                 event.preventDefault();
                 return false;
@@ -120,13 +127,25 @@
             // Prepare Variables
             var
                     scriptPath = document.getElementById('Scripts_Path').value;
-                    State = History.getState(),
+            State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
 
+            // for search page 
+            var tempURL = relativeUrl.split('/');
+            if (tempURL[0] === 'search' && search)
+            {
+                return false;
+            }
+
+            // Set Loading
+            var loading_div = "<div class='loader'>";
+            loading_div += "</div>";
+            $('#content').append(loading_div);
+
             $.ajax({
                 url: webroot + 'users/isPatronLogin',
-                type: "post",
+                type: "get",
                 success:
                         function(data) {
                             if (!data) {
@@ -136,13 +155,7 @@
                         }
             });
 
-            // Set Loading
-            var loading_div = "<div class='loader'>";
-            loading_div += "</div>";
-            $('.content').append(loading_div);
-
             //$body.addClass('loader');
-
             // Start Fade Out
             // Animating to opacity to 0 still keeps the element's height intact
             // Which prevents that annoying pop bang issue when loading in new content
@@ -154,11 +167,6 @@
             $.ajax({
                 url: url,
                 success: function(data, textStatus, jqXHR) {
-
-                    $('.loader').fadeOut(50);
-                    $('.content').remove('.loader');
-
-
                     // Prepare
                     var
                             $data = $(documentHtml(data)),
@@ -269,7 +277,7 @@
                     //$body.removeClass('loader');
                     //$.getScript(webroot + 'css/styles.css');
                     //$.getScript(webroot + 'css/freegal_styles.css');
-                    
+
                     //$.getScript(scriptPath + '/js/freegal.js');
                     $.getScript(webroot + 'js/site.js');
                     $.getScript(webroot + 'js/freegal.js');
@@ -277,7 +285,8 @@
                     $.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
 
-
+                    $('.loader').fadeOut(50);
+                    $('#content').find('.loader').remove();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     document.location.href = url;

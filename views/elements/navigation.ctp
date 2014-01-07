@@ -437,8 +437,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                            <?php } ?>
                                         </div>
 					<div class="master-music-search-wrapper">
-						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">							
-                            <select name="type" id="master-filter">
+						<form class="search" name="search" id="HomeSearchForm" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">							
+                                                        <select name="type" id="master-filter">
 								<option value="all">Search All</option>
 								<option value="album">Albums</option>
 								<option value="artist">Artists</option>
@@ -448,7 +448,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 								<option value="video">Videos</option>
 							</select>
 							<input type="text" id="search-text" name="q" value="" />							
-                            <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
+                                                        <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
 						</form>
 						<!-- onclick="document.getElementById('HomeSearchForm').submit()" -->
                         <button id="headerSearchSubmit"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="13" height="13"></button>

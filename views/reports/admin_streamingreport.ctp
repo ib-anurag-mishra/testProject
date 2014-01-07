@@ -105,7 +105,7 @@ if (empty($getData)) {
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <?php
-                    if (!empty($downloads)) {
+                    if (!empty($streamingHours)) {
                         ?>
                         <tr>
                             <td colspan="3" align="center">
@@ -120,8 +120,8 @@ if (empty($getData)) {
                             </td>
                         </tr>
                         <tr><td colspan="6">&nbsp;</td></tr>
-                        <tr><th colspan="6" align="center">Library Remaining Stream</th></tr>
-                        <tr>
+                        <!--<tr><th colspan="6" align="center">Library Remaining Stream</th></tr>-->
+<!--                        <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
@@ -137,6 +137,7 @@ if (empty($getData)) {
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($libraryid['Library']['library_name']); ?></td>
                                             <?php
+                                            // and library_user_download_limit should >4 than "Unlimited"
                                             if ($libraryid['Library']['library_unlimited'] == 1) {
                                                 $text = "Unlimited";
                                             } else {
@@ -151,12 +152,12 @@ if (empty($getData)) {
                                     ?>
                                 </table>
                             </td>
-                        </tr>
+                        </tr>-->
 
 
                         <tr><td colspan="6">&nbsp;</td></tr>
 
-                        <?php if (empty($arr_all_library_downloads)) { ?>
+                        <?php if (!is_array($streamingHours)) { ?>
 
                             <tr>
                                 <th colspan="6" align="center">Total Streamed during Reporting Period</th>
@@ -168,7 +169,7 @@ if (empty($getData)) {
                                             <th>Total Streamed</th>
                                         </tr>
                                         <tr>
-                                            <td align="center"><?php echo count($downloads); ?></td>
+                                            <td align="center"><?php echo $streamingHours; ?></td>
                                         </tr>
                                     </table>
                                 </td>
@@ -189,14 +190,13 @@ if (empty($getData)) {
 
                                         <?php
                                         $index = 1;
-                                        foreach ($arr_all_library_downloads AS $key => $val) {
+                                        foreach ($streamingHours AS $key => $val) {
                                             ?>
 
                                             <tr>
                                                 <td> <?php echo $index; ?> </td>
-                                                <td> <?php echo $key; ?> </td>
-
-                                                <td align="center"> <?php echo $val ; ?> </td>
+                                                <td> <?php echo $val['lib']['library_name']; ?> </td>
+                                                <td align="center"> <?php echo $val['0']['total_count']; ?> </td>
                                             </tr>
 
                                             <?php $index++;
@@ -214,7 +214,7 @@ if (empty($getData)) {
                                 <td colspan="6" align="center">
                                     <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                         <tr><th>Total Number of Patrons who have streamed during Reporting Period</th></tr>
-                                        <tr><td align="center"><?php echo count($patronBothDownloads); ?></td></tr>
+                                        <tr><td align="center"><?php echo count($patronStreamedInfo); ?></td></tr>
                                     </table>
                                 </td>
                             </tr>
@@ -264,22 +264,22 @@ if (empty($getData)) {
                                     <?php
                                     $i = 1;
                                     //				print "<pre>";print_r($downloads);exit;
-                                    foreach ($downloads as $key => $download) {
+                                    foreach ($patronStreamingInfo as $key => $streamInformation) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($download['Download']['library_id'])); ?></td>
+                                            <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
                                             <td><?php
-                                                if ($download['Download']['email'] != '') {
-                                                    echo $download['Download']['email'];
+                                                if ($streamInformation['users']['email'] != '') {
+                                                    echo $streamInformation['users']['email'];
                                                 } else {
-                                                    echo $download['Download']['patron_id'];
+                                                    echo $streamInformation['users']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?php echo $this->getTextEncode($download['Download']['artist']); ?></td>
-                                            <td><?php echo $this->getTextEncode($download['Download']['track_title']); ?></td>
-                                            <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
+                                            <td><?php echo $this->getTextEncode($streamInformation['songs']['artist']); ?></td>
+                                            <td><?php echo $this->getTextEncode($streamInformation['songs']['track_title']); ?></td>
+                                            <td><?php echo date('Y-m-d', strtotime($streamInformation['StreamingHistory']['createdOn'])); ?></td>
                                         </tr>
                                         <?php
                                         $i++;
@@ -302,20 +302,20 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
-    foreach ($patronDownloads as $key => $patronDownload) {
+    foreach ($patronStramedInfo as $key => $patronStramed) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php
-                                                if (isset($patronDownload['Downloadpatron']['email']) && $patronDownload['Downloadpatron']['email'] != '') {
-                                                    echo $patronDownload['Downloadpatron']['email'];
+                                                if (isset($patronStramed['users']['email']) && $patronStramed['users']['email'] != '') {
+                                                    echo $patronStramed['users']['email'];
                                                 } else {
-                                                    echo $patronDownload['Downloadpatron']['patron_id'];
+                                                    echo $patronStramed['users']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
-                                            <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']); ?></td>
+                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
+                                            <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
                                         </tr>
         <?php
         $i++;
@@ -337,12 +337,12 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
-    foreach ($genreDownloads as $key => $genreDownload) {
+    foreach ($genreDayStremedInfo as $key => $genreStreamed) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($genreDownload['Downloadgenre']['genre_name']); ?></td>
-                                            <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $genreDownload['Downloadgenre']['total'] : $genreDownload[0]['total']); ?></td>
+                                            <td><?php echo $this->getTextEncode($genreStreamed['songs']['Genre']); ?></td>
+                                            <td align="center"><?php echo $genreStreamed[0]['total_streamed_songs']; ?></td>
                                         </tr>
         <?php
         $i++;
@@ -355,7 +355,7 @@ if (empty($getData)) {
                         
 
                         <?php
-                    } elseif (empty($downloads) && empty($errors) && isset($this->data)) {
+                    } elseif (empty($streamingHours) && empty($errors) && isset($this->data)) {
                         ?>
                         <tr>
                             <td colspan="6" align="center"><label>There are no streaming found for the selected criteria.</label></td>
@@ -442,7 +442,7 @@ if (empty($library_id)) {
 
     });
 <?php
-if (!empty($downloads)) {
+if (!empty($streamingHours)) {
     ?>
         $("#generateReportSubmit").click(function() {
             $("#ReportAdminIndexForm").attr('action', '/admin/reports/streamingreport');

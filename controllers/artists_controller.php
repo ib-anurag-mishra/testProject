@@ -1853,18 +1853,13 @@ Class ArtistsController extends AppController
         $this->set("genre", $albumData['0']['Genre']['Genre']);
     }
 
-    function album($id = null, $album = null)
+    function album($id = null, $album = null, $provider = null)
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
 
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
-
         $libType = $this->Session->read('library_type');
 
         if ($this->Session->read('block') == 'yes')
@@ -1879,12 +1874,12 @@ Class ArtistsController extends AppController
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
-            $id = "";
-            for ($i = 1; $i < $count; $i++)
+            $id = $this->params['pass'][0];
+            for ($i = 1; $i < $count - 1; $i++)
             {
                 if (!is_numeric($this->params['pass'][$i]))
                 {
-                    $id .= $this->params['pass'][$i];
+                    $id .= "/" . $this->params['pass'][$i];
                 }
             }
         }
@@ -1903,6 +1898,12 @@ Class ArtistsController extends AppController
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
 
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+        
+        
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
