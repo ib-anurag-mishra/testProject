@@ -107,8 +107,7 @@ class StreamingHistory extends AppModel {
             'group' => array('StreamingHistory.library_id'),
             'recursive' => -1);
         }
-//        return($this->find('all', $qryArr));
-        print_r($this->find('all', $qryArr));exit;
+        return($this->find('all', $qryArr));
     }
     /*
       Function Name : getDaysStreamedInformation

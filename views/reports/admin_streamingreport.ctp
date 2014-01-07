@@ -157,7 +157,7 @@ if (empty($getData)) {
 
                         <tr><td colspan="6">&nbsp;</td></tr>
 
-                        <?php if (empty($arr_all_library_downloads)) { ?>
+                        <?php if (!is_array($streamingHours)) { ?>
 
                             <tr>
                                 <th colspan="6" align="center">Total Streamed during Reporting Period</th>
@@ -190,12 +190,12 @@ if (empty($getData)) {
 
                                         <?php
                                         $index = 1;
-                                        foreach ($arr_all_library_downloads AS $key => $val) {
+                                        foreach ($streamingHours AS $key => $val) {
                                             ?>
 
                                             <tr>
-                                                <td> <?php echo $index; ?> </td>
-                                                <td> <?php echo $key; ?> </td>
+                                                <td> <?php echo $val['lib']['library_name']; ?> </td>
+                                                <td> <?php echo $val['0']['total_count']; ?> </td>
 
                                                 <td align="center"> <?php echo $val ; ?> </td>
                                             </tr>
