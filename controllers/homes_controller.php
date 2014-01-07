@@ -4624,7 +4624,7 @@ STR;
 
     function new_releases()
     {
-        //Configure::write('debug', 0);
+        Configure::write('debug', 2);
 
         $this->layout = 'home';
 
@@ -4661,9 +4661,8 @@ STR;
 
         if (($coming_soon = Cache::read("new_releases_albums" . $territory)) === false)
         {
-            //if(1){
-
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
+            Cache::write("new_releases_albums" . $territory, $new_releases_albums_rs);
         }
         else    //  Show From Cache
         {
@@ -4672,6 +4671,7 @@ STR;
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
+        exit();
     }
 
 }
