@@ -168,7 +168,7 @@ if (empty($getData)) {
                                             <th>Total Streamed</th>
                                         </tr>
                                         <tr>
-                                            <td align="center"><?php echo floor($downloads[0][0]['total_streamed']/60/60); ?></td>
+                                            <td align="center"><?php echo $downloads; ?></td>
                                         </tr>
                                     </table>
                                 </td>
