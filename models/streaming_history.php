@@ -71,7 +71,7 @@ class StreamingHistory extends AppModel {
             }
         }else{
             $date_arr_from = explode("/", $date[0]);
-            $date_arr_to = explode("/", $date[0]);
+            $date_arr_to = explode("/", $date[1]);
             $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
             $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
         }
@@ -156,7 +156,7 @@ class StreamingHistory extends AppModel {
             }
         }else{
             $date_arr_from = explode("/", $date[0]);
-            $date_arr_to = explode("/", $date[0]);
+            $date_arr_to = explode("/", $date[1]);
             $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
             $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
         }
@@ -231,7 +231,7 @@ class StreamingHistory extends AppModel {
             }
         }else{
             $date_arr_from = explode("/", $date[0]);
-            $date_arr_to = explode("/", $date[0]);
+            $date_arr_to = explode("/", $date[1]);
             $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
             $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
         }
@@ -322,7 +322,7 @@ class StreamingHistory extends AppModel {
             }
         }else{
             $date_arr_from = explode("/", $date[0]);
-            $date_arr_to = explode("/", $date[0]);
+            $date_arr_to = explode("/", $date[1]);
             $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
             $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
         }
@@ -402,7 +402,7 @@ class StreamingHistory extends AppModel {
             }
         }else{
             $date_arr_from = explode("/", $date[0]);
-            $date_arr_to = explode("/", $date[0]);
+            $date_arr_to = explode("/", $date[1]);
             $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
             $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
         }
