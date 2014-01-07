@@ -137,6 +137,7 @@ if (empty($getData)) {
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($libraryid['Library']['library_name']); ?></td>
                                             <?php
+                                            // and library_user_download_limit should >4 than "Unlimited"
                                             if ($libraryid['Library']['library_unlimited'] == 1) {
                                                 $text = "Unlimited";
                                             } else {

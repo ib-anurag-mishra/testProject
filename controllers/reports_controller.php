@@ -1719,7 +1719,7 @@ Class ReportsController extends AppController {
                     }
                     $arr_all_patron_downloads = array();
                     if ($library_id == "all") {
-                        $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadDay($library_id, $this->data['Report']['date'], $territory);
+                        $arr_all_patron_downloads = $this->StreamingHistory->getTotalPatronStreamingDay($library_id, $this->data['Report']['date'], $territory);
                     }
 
                     $genreDownloads = $this->Downloadgenre->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);

@@ -139,6 +139,33 @@ class StreamingHistory extends AppModel {
             return $this->find('all', $qryArr);
         }
     }
+    
+    function getTotalPatronStreamingDay($libraryID, $date, $territory) {
+  
+        $arr_all_patron_downloads = array();
+        $all_Ids = '';
+        $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '".$territory."'  ORDER BY library_name ASC";
+        $result = mysql_query($sql);
+
+        while ($row = mysql_fetch_assoc($result)) {    
+            $count = 0;
+            $date_arr = explode("/", $date);
+            $downloadDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+
+            $libraryID = $row["id"];
+            $libraryName = $row["library_name"]; 
+            $sql = 'SELECT * FROM (SELECT patron_id FROM downloadpatrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'"
+                    UNION
+                    SELECT patron_id FROM download_video_patrons WHERE library_id = '.$libraryID.' AND  download_date = "'.$downloadDate.'") AS table1 GROUP BY patron_id';
+            $patronDownload = $this->query($sql);
+            if(!empty($patronDownload)){
+               $count = count($patronDownload); 
+
+            }
+            $arr_all_patron_downloads[$libraryName] = $count;
+        }
+        return $arr_all_patron_downloads;
+    }
 
 }
 
