@@ -1723,7 +1723,8 @@ Class ReportsController extends AppController {
                     $patronStreamedInformation = array();
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory);
 
-                    $genreDownloads = $this->Downloadgenre->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory);
+                    echo "<pre>";print_r($genreDayStremed);exit;
                 } elseif ($this->data['Report']['reports_daterange'] == 'week') {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     if (date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0) {

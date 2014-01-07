@@ -176,9 +176,7 @@ class StreamingHistory extends AppModel {
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
-        /*$sql = "SELECT users.id as user_id,users.email as patron_id,count(sh.ProdID) as total_streamed_songs,sh.library_id from streaming_histories as sh left join us_countries as countries on sh.ProdID=countries.ProdID
-left join users on users.library_id = sh.library_id AND users.id = sh.patron_id where sh.provider_type=countries.provider_type and sh.createdOn between '$startDate' and '$endDate' 
-and sh.library_id = '$libraryID' and sh.token_id is not null group by sh.patron_id";*/
+        
         if ($libraryID == "all") {
             //something
         }else{
@@ -202,6 +200,45 @@ and sh.library_id = '$libraryID' and sh.token_id is not null group by sh.patron_
                 'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id'), 
                 'fields'=>array('users.id as patron_id','users.email','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
                 'group' => array('StreamingHistory.patron_id'),
+                'recursive' => -1));
+        }
+        return $this->query($sql);
+    }
+    
+    function getDaysGenreStramedInformation($libraryID, $date, $territory) {
+        Configure::write('debug',2);
+        $date_arr = explode("/", $date);
+        $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
+        $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
+        
+        if ($libraryID == "all") {
+            //something
+        }else{
+            $lib_condition = "StreamingHistory.library_id=$libraryID";
+            /*SELECT Songs.Genre ,count(sh.ProdID) from streaming_histories as sh 
+left join us_countries as countries on sh.ProdID=countries.ProdID
+LEFT JOIN Songs on Songs.ProdID=sh.ProdID AND Songs.provider_type=sh.provider_type 
+where sh.provider_type=countries.provider_type and sh.createdOn between '2013-12-02 00:00:00' and '2013-12-02 23:59:59' 
+and sh.library_id = '1' and sh.token_id is not null group by Songs.Genre;
+             */
+            return $this->find('all', array(
+                'joins' => array(
+                    array(
+                        'table' => 'Songs',
+                        'alias' => 'songs',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
+                    ),
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'countries',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                    )
+                 ),
+                'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=songs.provider_type'), 
+                'fields'=>array('songs.Genre','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
+                'group' => array('songs.Genre'),
                 'recursive' => -1));
         }
         return $this->query($sql);
