@@ -194,10 +194,9 @@ if (empty($getData)) {
                                             ?>
 
                                             <tr>
+                                                <td> <?php echo $index; ?> </td>
                                                 <td> <?php echo $val['lib']['library_name']; ?> </td>
-                                                <td> <?php echo $val['0']['total_count']; ?> </td>
-
-                                                <td align="center"> <?php echo $val ; ?> </td>
+                                                <td align="center"> <?php echo $val['0']['total_count']; ?> </td>
                                             </tr>
 
                                             <?php $index++;
