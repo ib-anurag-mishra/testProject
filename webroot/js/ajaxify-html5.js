@@ -120,9 +120,16 @@
             // Prepare Variables
             var
                     scriptPath = document.getElementById('Scripts_Path').value;
-                    State = History.getState(),
+            State = History.getState(),
                     url = State.url,
                     relativeUrl = url.replace(rootUrl, '');
+
+            // for search page 
+            var tempURL = relativeUrl.split('/');
+            if (tempURL[0] === 'search')
+            {
+                return false;
+            }
 
             // Set Loading
             var loading_div = "<div class='loader'>";
