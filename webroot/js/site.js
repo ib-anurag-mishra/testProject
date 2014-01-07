@@ -1949,7 +1949,7 @@ function ajaxSearch() {
     $.ajax({
         url: '/search/index',
         method: 'get',
-        data: {'q': q, 'type': type},
+        data: {'q': q, 'type': type , 'layout' : 'ajax'},
         success: function(response) {
             var className = $('body').attr('class');
             $('body').removeClass(className);

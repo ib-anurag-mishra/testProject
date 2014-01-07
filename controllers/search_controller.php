@@ -29,6 +29,8 @@ class SearchController extends AppController
         //set_time_limit(0);
         //echo "<br>Started at ".date("Y-m-d H:i:s");
         // reset page parameters when serach keyword changes
+         $layout = $_GET['layout'];
+         
         if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
         {
             unset($_SESSION['SearchReq']);
@@ -41,7 +43,7 @@ class SearchController extends AppController
         if (('' != trim($_GET['q'])) && ('' != trim($_GET['type'])))
         {
             $_SESSION['SearchReq']['word'] = $_GET['q'];
-            $_SESSION['SearchReq']['type'] = $_GET['type'];
+            $_SESSION['SearchReq']['type'] = $_GET['type'];           
         }//sets values in session
 
         $queryVar = null;
@@ -330,7 +332,7 @@ class SearchController extends AppController
         $this->set('keyword', htmlspecialchars($queryVar));
         //echo "<br>search end- ".date("Y-m-d H:i:s");
        
-        if (isset($this->params['isAjax']) && $this->params['isAjax'])
+        if (isset($this->params['isAjax']) && $this->params['isAjax'] && $layout == 'ajax')
         {
             $this->layout = 'ajax';
             $this->autoLayout = false;
