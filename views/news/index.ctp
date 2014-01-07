@@ -34,7 +34,7 @@ $(".adjust").toggle(
 });
 </script> 
 
-<div class="questions index">
+<div class="questions index"> 
 
 <div class="breadCrumb">
 <?php
