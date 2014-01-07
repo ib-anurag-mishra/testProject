@@ -13,33 +13,35 @@ class StreamingHistory extends AppModel {
     var $primaryKey = 'id';
 
     function getDayAllLibraryStreamingDuringReportingPeriod($libraryID, $date, $territory) {
+        if ($libraryID == "all") {
+            
+        }else{
+            $arr_all_library_streaming = array();
+            $all_Ids = '';
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+            $result = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($result)) {
 
-        $arr_all_library_streaming = array();
-        $all_Ids = '';
-        $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
-        $result = mysql_query($sql);
-        while ($row = mysql_fetch_assoc($result)) {
+                $date_arr = explode("/", $date);
+                $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
+                $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
 
-            $date_arr = explode("/", $date);
-            $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
-            $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
+                $libraryID = $row["id"];
+                $libraryName = $row["library_name"];
 
-            $libraryID = $row["id"];
-            $libraryName = $row["library_name"];
+                $lib_condition = "and library_id = '" . $libraryID . "'";
+                $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
-            $lib_condition = "and library_id = '" . $libraryID . "'";
-            $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+                $count = $this->find(
+                        'count', array(
+                    'conditions' => $conditions,
+                    'recursive' => -1
+                        )
+                );
 
-            $count = $this->find(
-                    'count', array(
-                'conditions' => $conditions,
-                'recursive' => -1
-                    )
-            );
-
-            $arr_all_library_streaming[$libraryName] = $count;
+                $arr_all_library_streaming[$libraryName] = $count;
+            }
         }
-
         return $arr_all_library_streaming;
     }
     
