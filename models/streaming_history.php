@@ -12,7 +12,7 @@ class StreamingHistory extends AppModel {
     var $usetable = 'streaming_histories';
     var $primaryKey = 'id';
 
-    function getDayAllLibraryStreamingDuringReportingPeriod($libraryID, $date, $territory) {
+    function getDayAllLibraryStreamingDuringReportingPeriod($libraryID, $date, $territory,$reportCond=NULL) {
         if ($libraryID == "all") {
             
         }else{
@@ -50,7 +50,7 @@ class StreamingHistory extends AppModel {
       Desc : lists all the streaming for the selected day
      */
 
-    function getDaysStreamedInformation($libraryID, $date, $territory) {
+    function getDaysStreamedInformation($libraryID, $date, $territory,$reportCond=NULL) {
                         Configure::write('debug',2);
         if ($libraryID == "all") {
 
@@ -114,40 +114,43 @@ class StreamingHistory extends AppModel {
       Desc : lists all the streaming for the selected day
      */
 
-    function getDaysStreamedByPetronInformation($libraryID, $date, $territory) {
+    function getDaysStreamedByPetronInformation($libraryID, $date, $territory,$reportCond=NULL) {
                 Configure::write('debug',2);
 
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         if ($libraryID == "all") {
-            $arr_all_library_streaming = array();
             $all_Ids = '';
-            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+            $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
             $result = mysql_query($sql);
             while ($row = mysql_fetch_assoc($result)) {
-
-                $date_arr = explode("/", $date);
-                $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
-                $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
-
-                $libraryID = $row["id"];
-                $libraryName = $row["library_name"];
-
-                $lib_condition = "and library_id = '" . $libraryID . "'";
-                $conditions = array('createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
-
-                $count = $this->find(
-                        'count', array(
-                    'conditions' => $conditions,
-                    'recursive' => -1
-                        )
-                );
-
-                $arr_all_library_streaming[$libraryName] = $count;
+                $all_Ids[] = $row["id"];
             }
+//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+            $lib_condition = $all_Ids;
+            $arr_all_library_streaming = array();
+            $qryArr=array(
+            'joins' => array(
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                ),
+                array(
+                    'table' => 'libraries',
+                    'alias' => 'lib',
+                    'type' => 'left',
+                    'conditions' => array('lib.id=StreamingHistory.library_id')
+                )
+             ),
+            'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons','lib.library_name',),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
+            'group' => array('StreamingHistory.library_id'),
+            'recursive' => -1);
 
-            return $arr_all_library_streaming;
+            return $this->find('all', $qryArr);;
         } else {
             $lib_condition = "StreamingHistory.library_id=$libraryID";
             $qryArr=array(
@@ -166,7 +169,7 @@ class StreamingHistory extends AppModel {
         }
     }
     
-    function getDayStreamingReportingPeriod($libraryID, $date, $territory) {
+    function getDayStreamingReportingPeriod($libraryID, $date, $territory,$reportCond=NULL) {
         Configure::write('debug',2);
 
         $date_arr = explode("/", $date);
@@ -197,7 +200,7 @@ class StreamingHistory extends AppModel {
                 'recursive' => -1));
         }
     }
-    function getPatronStreamingDay($libraryID, $date, $territory) {
+    function getPatronStreamingDay($libraryID, $date, $territory,$reportCond=NULL) {
         Configure::write('debug',2);
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
@@ -231,12 +234,21 @@ class StreamingHistory extends AppModel {
         return $this->query($sql);
     }
     
-    function getDaysGenreStramedInformation($libraryID, $date, $territory) {
+    function getDaysGenreStramedInformation($libraryID, $date, $territory,$reportCond=NULL) {
         Configure::write('debug',2);
         $date_arr = explode("/", $date);
-        $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
-        $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
-        
+        if($reportCond=='day'){
+            $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
+            $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
+        }elseif ($reportCond=='week') {
+            if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
+                    $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));
+                    $endDate = date('Y-m-d', mktime(0,0,0,$date_arr[0],($date_arr[1]-date('w', mktime(0,0,0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+            }else{
+                    $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
+                    $endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+            }
+        }
         if ($libraryID == "all") {
             //something
         }else{
