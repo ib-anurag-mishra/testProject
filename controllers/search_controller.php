@@ -330,7 +330,10 @@ class SearchController extends AppController
         $this->set('keyword', htmlspecialchars($queryVar));
         //echo "<br>search end- ".date("Y-m-d H:i:s");
 
-
+        echo "<pre>";
+        print_r($this->params);
+        die;
+        
         if (isset($this->params['isAjax']))
         {
             $this->layout = 'ajax';
