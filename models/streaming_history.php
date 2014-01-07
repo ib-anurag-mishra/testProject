@@ -176,26 +176,35 @@ class StreamingHistory extends AppModel {
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
-        $arr_all_patron_downloads = array();
-        $all_Ids = '';
-        $sql = "SELECT id, library_name FROM libraries WHERE library_territory = '".$territory."'  ORDER BY library_name ASC";
-        $result = mysql_query($sql);
-
-        while ($row = mysql_fetch_assoc($result)) {    
-            $count = 0;
-            $libraryID = $row["id"];
-            $libraryName = $row["library_name"]; 
-            $sql = "SELECT users.id as user_id,users.email as patron_id,count(sh.ProdID) from streaming_histories as sh left join us_countries as countries on sh.ProdID=countries.ProdID
+        /*$sql = "SELECT users.id as user_id,users.email as patron_id,count(sh.ProdID) as total_streamed_songs,sh.library_id from streaming_histories as sh left join us_countries as countries on sh.ProdID=countries.ProdID
 left join users on users.library_id = sh.library_id AND users.id = sh.patron_id where sh.provider_type=countries.provider_type and sh.createdOn between '$startDate' and '$endDate' 
-and sh.library_id = '$libraryID' and sh.token_id is not null group by sh.patron_id";
-            $patronDownload = $this->query($sql);
-            if(!empty($patronDownload)){
-               $count = count($patronDownload); 
-
-            }
-            $arr_all_patron_downloads[$libraryName] = $count;
+and sh.library_id = '$libraryID' and sh.token_id is not null group by sh.patron_id";*/
+        if ($libraryID == "all") {
+            //something
+        }else{
+            $lib_condition = "StreamingHistory.library_id=$libraryID";
+            //$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC");
+            return $this->find('all', array(
+                'joins' => array(
+                    array(
+                        'table' => 'users',
+                        'alias' => 'users',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.library_id=users.library_id')
+                    ),
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'countries',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                    )
+                 ),
+                'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id'), 
+                'fields'=>array('users.id as patron_id','users.email','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
+                'group' => array('StreamingHistory.patron_id'),
+                'recursive' => -1));
         }
-        return $arr_all_patron_downloads;
+        return $this->query($sql);
     }
 
 }
