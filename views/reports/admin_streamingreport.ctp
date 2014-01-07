@@ -120,8 +120,8 @@ if (empty($getData)) {
                             </td>
                         </tr>
                         <tr><td colspan="6">&nbsp;</td></tr>
-                        <tr><th colspan="6" align="center">Library Remaining Stream</th></tr>
-                        <tr>
+                        <!--<tr><th colspan="6" align="center">Library Remaining Stream</th></tr>-->
+<!--                        <tr>
                             <td colspan="6" align="center">
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
@@ -152,7 +152,7 @@ if (empty($getData)) {
                                     ?>
                                 </table>
                             </td>
-                        </tr>
+                        </tr>-->
 
 
                         <tr><td colspan="6">&nbsp;</td></tr>
