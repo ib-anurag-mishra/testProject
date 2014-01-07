@@ -360,7 +360,7 @@ class StreamingHistory extends AppModel {
                         'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
                     )
                  ),
-                'conditions'=>array('StreamingHistory.createdn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type'), 
+                'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type'), 
                 'fields'=>array('songs.Genre','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
                 'group' => array('songs.Genre'),
                 'recursive' => -1));
