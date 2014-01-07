@@ -49,6 +49,7 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory) {
+                        Configure::write('debug',2);
         if ($libraryID == "all") {
 
             $all_Ids = '';
@@ -58,7 +59,7 @@ class StreamingHistory extends AppModel {
                 $all_Ids = $all_Ids . $row["id"] . ",";
             }
 //            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
-            $lib_condition = "'StreamingHistory.library_id' =>array (" . rtrim($all_Ids, ",") . ")";
+            $lib_condition = "StreamingHistory.library_id =>$all_Ids";
         } else {
 //            $lib_condition = "and library_id = " . $libraryID;
             $lib_condition = "StreamingHistory.library_id=$libraryID";
@@ -81,7 +82,8 @@ class StreamingHistory extends AppModel {
             'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
-        return($this->find('all', $qryArr));
+//        return($this->find('all', $qryArr));
+        print_r($this->find('all', $qryArr));exit;
     }
     /*
       Function Name : getDaysStreamedInformation
