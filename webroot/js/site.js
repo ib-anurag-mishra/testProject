@@ -1945,7 +1945,8 @@ function ajaxSearch() {
     var type = $('#master-filter').val();
 
     History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
-
+    $('div.ac_results').hide();
+    
     $.ajax({
         url: '/search/index',
         method: 'get',
@@ -1974,6 +1975,7 @@ function ajaxSearch() {
             alert('Problem fetching data');
         }
     });
+    
     return false;
 }
 // code to ajaxify MyAccount form start

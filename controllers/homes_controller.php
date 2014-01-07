@@ -4624,7 +4624,7 @@ STR;
 
     function new_releases()
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 0);
 
         $this->layout = 'home';
 
@@ -4658,16 +4658,16 @@ STR;
 
         //print_r($coming_soon_videos);
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
-        Cache::write("new_releases_albums_test" . $territory, 'Testing with data');                 
-exit();
 
-        if (($coming_soon = Cache::read("new_releases_albums_test" . $territory)) === false)
+        if (($coming_soon = Cache::read("new_releases_albums" . $territory)) === false)
         {
+            //if(1){
+
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
         }
         else    //  Show From Cache
         {
-            $new_releases_albums_rs = Cache::read("new_releases_albums_test" . $territory);
+            $new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
