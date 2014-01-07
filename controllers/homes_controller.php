@@ -4666,7 +4666,7 @@ STR;
         }
         else    //  Show From Cache
         {
-            $new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
+            $new_releases_albums_rs = Cache::read("new_releases_albums_test" . $territory);
         }
 
         $this->set('new_releases_albums', $new_releases_albums_rs);
