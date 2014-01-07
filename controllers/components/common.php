@@ -1184,6 +1184,8 @@ STR;
 
     function getNewReleaseAlbums($territory)
     {
+        
+        
         set_time_limit(0);
         $countryPrefix = $this->getCountryPrefix($territory);
         $songInstance = ClassRegistry::init('Song');
@@ -1193,6 +1195,8 @@ STR;
         {
 
             //if ( !empty($country ) && ( $territory == "US" ) ) {   
+Cache::write("new_release_test" . $country, 'Testing with data'); 
+exit();
 
 
             $sql = "SELECT Song.ProdID,Song.ReferenceID,Song.provider_type
@@ -1275,10 +1279,6 @@ STR;
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_album_new_release, "cachequery");
 
-            echo '<pre>';
-            print_r($data);
-            exit();
-
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
@@ -1293,11 +1293,8 @@ STR;
                     );
                     //}
                 }
-//                Cache::delete("new_releases_albums" . $country);
-//                Cache::write("new_releases_albums" . $country, $data); 
-                
-                Cache::delete("new_releases_albums_test" . $country);
-                Cache::write("new_releases_albums_test" . $country, $data);
+                Cache::delete("new_releases_albums" . $country);
+                Cache::write("new_releases_albums" . $country, $data); 
                 $this->log("cache written for new releases albums for $territory", "cache");
             }
             else
