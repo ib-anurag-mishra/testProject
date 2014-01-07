@@ -4658,6 +4658,8 @@ STR;
 
         //print_r($coming_soon_videos);
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
+        Cache::write("new_releases_albums_test" . $country, 'Testing with data');                 
+exit();
 
         if (($coming_soon = Cache::read("new_releases_albums_test" . $territory)) === false)
         {
