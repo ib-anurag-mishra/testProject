@@ -4646,9 +4646,11 @@ STR;
         //////////////////////////////////Videos/////////////////////////////////////////////////////////            
 
         echo "<pre>";
+        echo "new_releases_videos";
         $coming_soon = Cache::read("new_releases_videos" . $territory);
         print_r($coming_soon);
 
+         echo "new_releases_albums";
         $coming_soon = Cache::read("new_releases_albums" . $territory);
         print_r($coming_soon);
         die;
