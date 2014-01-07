@@ -4664,7 +4664,10 @@ STR;
             //if(1){
 
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
-            $size = strlen($new_releases_albums_rs);
+            echo "<pre>";
+            print_r(serialize($new_releases_albums_rs));
+            
+            $size = strlen(serialize($new_releases_albums_rs));
             print($size * 8 / 1000);
             exit();
         }
