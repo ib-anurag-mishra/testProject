@@ -13,33 +13,35 @@ class StreamingHistory extends AppModel {
     var $primaryKey = 'id';
 
     function getDayAllLibraryStreamingDuringReportingPeriod($libraryID, $date, $territory) {
+        if ($libraryID == "all") {
+            
+        }else{
+            $arr_all_library_streaming = array();
+            $all_Ids = '';
+            $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
+            $result = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($result)) {
 
-        $arr_all_library_streaming = array();
-        $all_Ids = '';
-        $sql = "SELECT id, library_name from libraries where library_territory = '" . $territory . "' ORDER BY library_name ASC";
-        $result = mysql_query($sql);
-        while ($row = mysql_fetch_assoc($result)) {
+                $date_arr = explode("/", $date);
+                $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
+                $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
 
-            $date_arr = explode("/", $date);
-            $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
-            $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
+                $libraryID = $row["id"];
+                $libraryName = $row["library_name"];
 
-            $libraryID = $row["id"];
-            $libraryName = $row["library_name"];
+                $lib_condition = "and library_id = '" . $libraryID . "'";
+                $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
 
-            $lib_condition = "and library_id = '" . $libraryID . "'";
-            $conditions = array('created BETWEEN "' . $startDate . '" and "' . $endDate . '" and token_id is not null ' . $lib_condition . "");
+                $count = $this->find(
+                        'count', array(
+                    'conditions' => $conditions,
+                    'recursive' => -1
+                        )
+                );
 
-            $count = $this->find(
-                    'count', array(
-                'conditions' => $conditions,
-                'recursive' => -1
-                    )
-            );
-
-            $arr_all_library_streaming[$libraryName] = $count;
+                $arr_all_library_streaming[$libraryName] = $count;
+            }
         }
-
         return $arr_all_library_streaming;
     }
     
@@ -56,13 +58,14 @@ class StreamingHistory extends AppModel {
             $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
             $result = mysql_query($sql);
             while ($row = mysql_fetch_assoc($result)) {
-                $all_Ids = $all_Ids . $row["id"] . ",";
+                $all_Ids[] = $row["id"];
             }
 //            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
-            $lib_condition = "StreamingHistory.library_id =>$all_Ids";
+            $lib_condition = $all_Ids;
         } else {
 //            $lib_condition = "and library_id = " . $libraryID;
-            $lib_condition = "StreamingHistory.library_id=$libraryID";
+//            $lib_condition = "StreamingHistory.library_id=$libraryID";
+            $lib_condition = $libraryID;
         }
         $date_arr = explode("/", $date);
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
@@ -80,8 +83,9 @@ class StreamingHistory extends AppModel {
                 )
              ),
             'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
+        
 //        return($this->find('all', $qryArr));
         print_r($this->find('all', $qryArr));exit;
     }

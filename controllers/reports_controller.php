@@ -1693,15 +1693,15 @@ Class ReportsController extends AppController {
                 if ($this->data['Report']['reports_daterange'] == 'day') {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
-                    if ($library_id != "all") {
+//                    if ($library_id != "all") {
                         $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
                         $streamingHours = floor($streamingInfo[0][0]['total_streamed']/60/60);
-                    }
+//                    }
 
-                    $arr_all_library_downloads = array();
+                    /*$arr_all_library_downloads = array();
                     if ($library_id == "all") {
                         $arr_all_library_downloads = $this->StreamingHistory->getDayAllLibraryStreamingDuringReportingPeriod($library_id, $this->data['Report']['date'], $territory);
-                    }
+                    }*/
                    
                     $patronStreaminInfo = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory);
                     
