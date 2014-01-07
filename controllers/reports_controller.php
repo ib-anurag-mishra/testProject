@@ -1724,7 +1724,6 @@ Class ReportsController extends AppController {
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory);
 
                     $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory);
-                    echo "<pre>";print_r($genreDayStremed);exit;
                 } elseif ($this->data['Report']['reports_daterange'] == 'week') {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     if (date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0) {
@@ -1864,6 +1863,7 @@ Class ReportsController extends AppController {
                     $this->set('patronStreamedInfo', $patronStreaminInfo);
                     $this->set('patronStreamingInfo', $arr_day_streaming_report);
                     $this->set('patronStramedInfo', $patronStreamedInformation);
+                    $this->set('genreDayStremedInfo', $genreDayStremed);
                 } else {
                     if (!empty($currentPatronDownload)) {
                         foreach ($currentPatronDownload as $patronRecord) {

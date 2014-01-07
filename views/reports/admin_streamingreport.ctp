@@ -338,12 +338,12 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
-    foreach ($genreDownloads as $key => $genreDownload) {
+    foreach ($genreDayStremedInfo as $key => $genreStreamed) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $this->getTextEncode($genreDownload['Downloadgenre']['genre_name']); ?></td>
-                                            <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $genreDownload['Downloadgenre']['total'] : $genreDownload[0]['total']); ?></td>
+                                            <td><?php echo $this->getTextEncode($genreStreamed['songs']['Genre']); ?></td>
+                                            <td align="center"><?php echo $genreStreamed[0]['total_streamed_songs']; ?></td>
                                         </tr>
         <?php
         $i++;
