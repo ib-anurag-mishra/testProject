@@ -1850,8 +1850,8 @@ Class ReportsController extends AppController {
                         }
                     }
                     $this->set('patronStreamedInfo', $patronStreaminInfo);
-                    $this->set('patronStreamingInfo', $arr_day_streaming_report);
-                    $this->set('patronStramedInfo', $patronStreamedInformation);
+                    $this->set('dayStreamingInfo', $arr_day_streaming_report);
+                    $this->set('patronStreamedDetailedInfo', $patronStreamedInformation);
                     $this->set('genreDayStremedInfo', $genreDayStremed);
                 } else {
                     if (!empty($currentPatronDownload)) {

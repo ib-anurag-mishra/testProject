@@ -146,11 +146,11 @@ class StreamingHistory extends AppModel {
                 )
              ),
             'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons','lib.library_name',),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
             'group' => array('StreamingHistory.library_id'),
             'recursive' => -1);
 
-            return $this->find('all', $qryArr);;
+            return $this->find('all', $qryArr);
         } else {
             $lib_condition = "StreamingHistory.library_id=$libraryID";
             $qryArr=array(
@@ -176,7 +176,48 @@ class StreamingHistory extends AppModel {
         $startDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 00:00:00";
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         if ($libraryID == "all") {
-            //something
+            $all_Ids = '';
+            $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+            $result = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($result)) {
+                $all_Ids[] = $row["id"];
+            }
+//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+            $lib_condition = $all_Ids;
+            $arr_all_library_streaming = array();
+            $qryArr=array(
+            'joins' => array(
+                array(
+                    'table' => strtolower($territory).'_countries',
+                    'alias' => 'countries',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                ),
+                array(
+                    'table' => 'libraries',
+                    'alias' => 'lib',
+                    'type' => 'left',
+                    'conditions' => array('lib.id=StreamingHistory.library_id')
+                ),
+                array(
+                    'table' => 'users',
+                    'alias' => 'users',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.library_id=users.library_id')
+                ),
+                array(
+                    'table' => 'Songs',
+                    'alias' => 'songs',
+                    'type' => 'left',
+                    'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
+                )
+             ),
+            'fields' => array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','users.email','StreamingHistory.createdOn'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'),
+            'group' => array('StreamingHistory.library_id'),
+            'recursive' => -1);
+
+            return $this->find('all', $qryArr);
         }else{
             $lib_condition = "StreamingHistory.library_id=$libraryID";
             //$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC");

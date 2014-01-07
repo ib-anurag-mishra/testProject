@@ -264,7 +264,7 @@ if (empty($getData)) {
                                     <?php
                                     $i = 1;
                                     //				print "<pre>";print_r($downloads);exit;
-                                    foreach ($patronStreamingInfo as $key => $streamInformation) {
+                                    foreach ($dayStreamingInfo as $key => $streamInformation) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
@@ -302,7 +302,7 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
-    foreach ($patronStramedInfo as $key => $patronStramed) {
+    foreach ($patronStreamedDetailedInfo as $key => $patronStramed) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
