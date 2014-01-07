@@ -80,8 +80,11 @@ class SolrComponent extends Object {
         if (!empty($keyword)){
             if (!empty($country))
             {
-                //$cond = " AND DownloadStatus:1";
-                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                if($type == 'video'){
+                    $cond = " AND DownloadStatus:1";
+                } else {
+                    $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                }
             
                 if(1 == $mobileExplicitStatus)
                 {
@@ -341,9 +344,12 @@ class SolrComponent extends Object {
         if (!empty($keyword)){
             if (!empty($country)) 
             {
-                //$cond = " AND DownloadStatus:1";
-                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-            
+                if($type == 'video'){
+                    $cond = " AND DownloadStatus:1";
+                } else {
+                    $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                }
+                
                 if ($this->Session->read('block') == 'yes') {
                     $cond .= " AND Advisory:F";
                     if($type != 'video'){
@@ -476,9 +482,12 @@ class SolrComponent extends Object {
         if (!empty($keyword)){
         if (!empty($country)) {
             
-            //$cond = " AND DownloadStatus:1";
-            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-
+            if($type == 'video'){
+                    $cond = " AND DownloadStatus:1";
+            } else {
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            }
+            
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
                 if($type != 'video'){
@@ -622,8 +631,11 @@ echo "<pre>";print_r($additionalParams);*/
             if (!empty($country))
             {
           
-                //$cond = " AND DownloadStatus:1";
-                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                if($type == 'video'){
+                    $cond = " AND DownloadStatus:1";
+                } else {
+                    $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                }
     
                 if(1 == $mobileExplicitStatus)
                 {
@@ -777,8 +789,11 @@ echo "<pre>";print_r($additionalParams);*/
             if (!empty($country))
             {
                 
-                //$cond = " AND DownloadStatus:1";
-                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                if($type == 'video'){
+                    $cond = " AND DownloadStatus:1";
+                } else {
+                    $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+                }
                 
                 if ($this->Session->read('block') == 'yes')
                 {
@@ -942,9 +957,12 @@ echo "<pre>";print_r($additionalParams);*/
         if (!empty($country))
         {
             
-            //$cond = " AND DownloadStatus:1";
-            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-
+            if($type == 'video'){
+                    $cond = " AND DownloadStatus:1";
+            } else {
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            }
+            
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
                 if($type != 'video'){
@@ -1099,9 +1117,12 @@ echo "<pre>";print_r($additionalParams);*/
         if (!empty($keyword)){
         if (!empty($country))
         {
-            //$cond = " AND DownloadStatus:1";
-            $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
-    
+            if($type == 'video'){
+                    $cond = " AND DownloadStatus:1";
+            } else {
+                $cond = " AND (TerritoryDownloadStatus:".$country."_1 OR TerritoryStreamingStatus:".$country."_1)";
+            }
+            
             if ($this->Session->read('block') == 'yes') {
                 $cond .= " AND Advisory:F";
             }
