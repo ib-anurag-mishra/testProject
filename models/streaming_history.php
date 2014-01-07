@@ -84,7 +84,7 @@ class StreamingHistory extends AppModel {
                 )
              ),
             'fields' => array('count(StreamingHistory.ProdID) AS total_streamed'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
+            'conditions'=>array('StreamingHistory.provide_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
         }else{
             $qryArr=array(
