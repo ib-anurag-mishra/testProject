@@ -4645,23 +4645,14 @@ STR;
         //$advisory_status = $this->getLibraryExplicitStatus($libraryId);
         //////////////////////////////////Videos/////////////////////////////////////////////////////////            
 
-        echo "<pre>";
-        echo "new_releases_videos";
-        $coming_soon = Cache::read("new_releases_videos" . $territory);
-        print_r($coming_soon);
-
-         echo "new_releases_albums";
-        $coming_soon = Cache::read("new_releases_albums" . $territory);
-        print_r($coming_soon);
-        die;
-
-
         if (($coming_soon = Cache::read("new_releases_videos" . $territory)) === false)
         {
+            echo "Videos from db";
             $coming_soon_videos = $this->Common->getNewReleaseVideos($territory);
         }
         else
         {
+            echo "Videos from cache";
             $coming_soon_videos = Cache::read("new_releases_videos" . $territory);
         }
 
@@ -4671,13 +4662,16 @@ STR;
 
         if (($coming_soon = Cache::read("new_releases_albums" . $territory)) === false)
         {
+            echo "Albums from db";
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
         }
         else    //  Show From Cache
         {
+            echo "Albums from cache";
             $new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
         }
-
+        exit();
+        
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
     }
