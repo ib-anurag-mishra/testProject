@@ -303,20 +303,20 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
-    foreach ($patronStramedInfo as $key => $patronDownload) {
+    foreach ($patronStramedInfo as $key => $patronStramed) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php
-                                                if (isset($patronDownload['Downloadpatron']['email']) && $patronDownload['Downloadpatron']['email'] != '') {
-                                                    echo $patronDownload['Downloadpatron']['email'];
+                                                if (isset($patronStramed['users']['email']) && $patronStramed['users']['email'] != '') {
+                                                    echo $patronStramed['users']['email'];
                                                 } else {
-                                                    echo $patronDownload['Downloadpatron']['patron_id'];
+                                                    echo $patronStramed['users']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
-                                            <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day') ? $patronDownload['Downloadpatron']['total'] : $patronDownload[0]['total']); ?></td>
+                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
+                                            <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
                                         </tr>
         <?php
         $i++;
