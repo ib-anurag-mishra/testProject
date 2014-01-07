@@ -1714,7 +1714,7 @@ Class ReportsController extends AppController {
                     $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'day');
                     
                 } elseif ($this->data['Report']['reports_daterange'] == 'week') {
-                    /*$date_arr = explode("/", $this->data['Report']['date']);
+                    $date_arr = explode("/", $this->data['Report']['date']);
                     if (date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0) {
                         if (mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]) > time()) {
                             $compareDate = date('Y-m-d', time());
@@ -1727,7 +1727,7 @@ Class ReportsController extends AppController {
                         } else {
                             $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))) + 7, $date_arr[2]));
                         }
-                    }*/
+                    }
                     $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'week');
                     if ($library_id != "all") {
                         $streamingHours = $streamingInfo[0][0]['total_streamed'];
