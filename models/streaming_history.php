@@ -83,7 +83,7 @@ class StreamingHistory extends AppModel {
                     'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
                 )
              ),
-            'fields' => array('sum(StreamingHistory.consumed_time) AS total_streamed'),
+            'fields' => array('count(StreamingHistory.ProdID) AS total_streamed'),
             'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
             'recursive' => -1);
         }else{

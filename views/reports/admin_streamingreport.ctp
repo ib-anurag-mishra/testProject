@@ -166,7 +166,7 @@ if (empty($getData)) {
                                 <td colspan="6" align="center">
                                     <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                         <tr>
-                                            <th>Total Streamed</th>
+                                            <th>Total Streamed (Number of Songs)</th>
                                         </tr>
                                         <tr>
                                             <td align="center"><?php echo $streamingHours; ?></td>
