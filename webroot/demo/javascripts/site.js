@@ -64,4 +64,14 @@ $(document).ready(function(){
 		
 		
 	});
+	
+	$('.freegal-playlist-subcat-toggle').on('click',function(){
+		
+		$('.freegal-playlist-subcat').toggleClass('active');
+	});
+	
+	$('.my-playlist-subcat-toggle').on('click',function(){
+		
+		$('.my-playlist-subcat').toggleClass('active');
+	});
 });

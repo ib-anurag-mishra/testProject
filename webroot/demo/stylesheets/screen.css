@@ -58,7 +58,7 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block; }
 
-/* line 43, ../sass/screen.scss */
+/* line 44, ../sass/screen.scss */
 .clearfix:after {
   content: ".";
   display: block;
@@ -67,7 +67,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   line-height: 0;
   height: 0; }
 
-/* line 52, ../sass/screen.scss */
+/* line 53, ../sass/screen.scss */
 button, select, input {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -77,45 +77,40 @@ button, select, input {
   margin: 0;
   outline: 0; }
 
-/* line 64, ../sass/screen.scss */
+/* line 65, ../sass/screen.scss */
 html, body {
   /* height: 100%; */ }
 
-/* line 68, ../sass/screen.scss */
+/* line 69, ../sass/screen.scss */
 body {
   font-family: Helvetica, Arial, sans-serif; }
 
-/* line 74, ../sass/screen.scss */
-.wrapper {
-  /* height: 100%; */ }
-
-/* line 79, ../sass/screen.scss */
+/* line 77, ../sass/screen.scss */
 .site-header {
   position: relative;
   height: 108px; }
-  /* line 84, ../sass/screen.scss */
+  /* line 82, ../sass/screen.scss */
   .site-header .logo {
-    background: url(../images/freegal-logo.png) no-repeat;
-    /* width: 146px; */
     width: 350px;
     height: 72px;
     position: absolute;
     left: 40px;
-    top: 20px; }
-  /* line 98, ../sass/screen.scss */
+    top: 20px;
+    background: url(../images/freegal-logo.png) no-repeat; }
+  /* line 97, ../sass/screen.scss */
   .site-header .header-right-col {
     position: absolute;
     right: 40px;
     top: 20px; }
-    /* line 106, ../sass/screen.scss */
+    /* line 105, ../sass/screen.scss */
     .site-header .header-right-col .row-1 {
       margin-bottom: 16px; }
-      /* line 112, ../sass/screen.scss */
+      /* line 111, ../sass/screen.scss */
       .site-header .header-right-col .row-1 .streaming-arrows-icon {
         float: right;
         width: 19px;
         height: 13px;
-        background: url(../images/streaming-arrows-icon.png); }
+        background: url(../images/freegal_sprite.png) no-repeat; }
       /* line 120, ../sass/screen.scss */
       .site-header .header-right-col .row-1 .streaming-time-remaining {
         float: right;
@@ -138,24 +133,30 @@ body {
     .site-header .header-right-col .row-2 {
       width: 900px; }
       /* line 150, ../sass/screen.scss */
-      .site-header .header-right-col .row-2 .download-count {
+      .site-header .header-right-col .row-2 .download-count-container {
         float: right;
-        margin-top: 12px;
-        margin-left: 10px; }
-      /* line 157, ../sass/screen.scss */
-      .site-header .header-right-col .row-2 .music-note-icon {
-        float: right;
-        width: 33px;
-        height: 19px;
-        background: url(../images/music-note-icon.png) no-repeat right center;
-        margin-top: 9px;
-        margin-left: 20px;
-        border-left: 1px solid #dcdcdc; }
-        @media screen and (max-width: 1305px) {
-          /* line 157, ../sass/screen.scss */
-          .site-header .header-right-col .row-2 .music-note-icon {
-            margin-left: 5px; } }
-      /* line 173, ../sass/screen.scss */
+        border-left: 1px solid #dcdcdc;
+        position: relative;
+        width: 66px;
+        height: 30px; }
+        /* line 156, ../sass/screen.scss */
+        .site-header .header-right-col .row-2 .download-count-container .music-note-icon {
+          width: 15px;
+          height: 19px;
+          background: url(../images/freegal_sprite.png) no-repeat -50px 0;
+          position: absolute;
+          left: 12px;
+          top: 6px; }
+          @media screen and (max-width: 1305px) {
+            /* line 156, ../sass/screen.scss */
+            .site-header .header-right-col .row-2 .download-count-container .music-note-icon {
+              margin-left: 5px; } }
+        /* line 170, ../sass/screen.scss */
+        .site-header .header-right-col .row-2 .download-count-container .download-count {
+          position: absolute;
+          right: 0;
+          top: 8px; }
+      /* line 182, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .login {
         float: right;
         background: #d9ebf2;
@@ -177,37 +178,36 @@ body {
         border-radius: 20px;
         padding: 6px 10px;
         margin: 4px 4px 4px 20px; }
-        /* line 27, ../sass/screen.scss */
+        /* line 28, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .login:hover {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
           background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 32, ../sass/screen.scss */
+        /* line 33, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .login:active {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d3e8f0), color-stop(100%, #d5e9f1));
           background-image: -webkit-linear-gradient(#d3e8f0, #d5e9f1);
           background-image: -moz-linear-gradient(#d3e8f0, #d5e9f1);
           background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
           background-image: linear-gradient(#d3e8f0, #d5e9f1); }
-      /* line 187, ../sass/screen.scss */
+      /* line 196, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .my-account-menu-container {
         float: right;
         position: relative;
-        margin-left: 20px; }
+        margin-left: 20px;
+        margin-right: 5px;
+        width: 145px;
+        height: 30px; }
         @media screen and (max-width: 1305px) {
-          /* line 187, ../sass/screen.scss */
+          /* line 196, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container {
             margin-left: 0; } }
-        /* line 203, ../sass/screen.scss */
+        /* line 216, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu {
-          margin-left: 10px;
-          background: url(../images/my-account-icon.png) no-repeat 10px 5px, url(../images/master-search-arrow.png) no-repeat 113px 14px, white;
-          padding-left: 40px;
-          padding-right: 30px;
-          padding-top: 8px;
-          padding-bottom: 6px;
+          width: 145px;
+          height: 30px;
           -webkit-border-radius: 5px;
           -moz-border-radius: 5px;
           -ms-border-radius: 5px;
@@ -215,19 +215,37 @@ body {
           border-radius: 5px;
           border: 1px solid transparent;
           cursor: pointer;
-          /* @include box-shadow(1px 1px 1px rgba(0,0,0,.3)); */
-          margin-top: 3px; }
+          background: #fff;
+          position: relative; }
+          /* line 228, ../sass/screen.scss */
+          .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu::before {
+            position: absolute;
+            content: "";
+            width: 18px;
+            height: 18px;
+            background: url(../images/freegal_sprite.png) no-repeat -20px 0;
+            left: 10px;
+            top: 6px; }
+          /* line 239, ../sass/screen.scss */
+          .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu::after {
+            position: absolute;
+            content: "";
+            width: 6px;
+            height: 4px;
+            background: url(../images/freegal_sprite.png) no-repeat -40px 0;
+            right: 16px;
+            top: 14px; }
           @media screen and (max-width: 1305px) {
-            /* line 203, ../sass/screen.scss */
+            /* line 216, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu {
               margin-left: 0; } }
-          /* line 222, ../sass/screen.scss */
+          /* line 255, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu:hover {
             border: 1px solid #dedddd; }
-        /* line 228, ../sass/screen.scss */
+        /* line 263, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown {
           position: absolute;
-          left: 10px;
+          left: 0;
           top: 35px;
           z-index: 100;
           -webkit-border-radius: 5px;
@@ -239,16 +257,16 @@ body {
           width: 218px;
           display: none; }
           @media screen and (max-width: 1305px) {
-            /* line 228, ../sass/screen.scss */
+            /* line 263, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown {
               left: 0; } }
-          /* line 244, ../sass/screen.scss */
+          /* line 279, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown.active {
             display: block; }
-          /* line 249, ../sass/screen.scss */
+          /* line 284, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item {
             background: #fff; }
-            /* line 253, ../sass/screen.scss */
+            /* line 288, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:first-child {
               -moz-border-radius-topleft: 5px;
               -webkit-border-top-left-radius: 5px;
@@ -256,7 +274,7 @@ body {
               -moz-border-radius-topright: 5px;
               -webkit-border-top-right-radius: 5px;
               border-top-right-radius: 5px; }
-              /* line 257, ../sass/screen.scss */
+              /* line 292, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:first-child a {
                 -moz-border-radius-topleft: 5px;
                 -webkit-border-top-left-radius: 5px;
@@ -264,7 +282,7 @@ body {
                 -moz-border-radius-topright: 5px;
                 -webkit-border-top-right-radius: 5px;
                 border-top-right-radius: 5px; }
-            /* line 265, ../sass/screen.scss */
+            /* line 300, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:last-child {
               -moz-border-radius-bottomleft: 5px;
               -webkit-border-bottom-left-radius: 5px;
@@ -272,7 +290,7 @@ body {
               -moz-border-radius-bottomright: 5px;
               -webkit-border-bottom-right-radius: 5px;
               border-bottom-right-radius: 5px; }
-              /* line 269, ../sass/screen.scss */
+              /* line 304, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:last-child a {
                 -moz-border-radius-bottomleft: 5px;
                 -webkit-border-bottom-left-radius: 5px;
@@ -280,32 +298,78 @@ body {
                 -moz-border-radius-bottomright: 5px;
                 -webkit-border-bottom-right-radius: 5px;
                 border-bottom-right-radius: 5px; }
-            /* line 278, ../sass/screen.scss */
+            /* line 313, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a {
               display: block;
               text-decoration: none;
               color: #212121;
               padding: 10px 5px 10px 35px;
-              font-size: 12px; }
-              /* line 289, ../sass/screen.scss */
-              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications {
-                background: url(../images/notifications-icon.png) no-repeat 10px center white; }
-                /* line 292, ../sass/screen.scss */
-                .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover {
-                  background: url(../images/notifications-icon-hover.png) no-repeat 10px center #dcedf3; }
-              /* line 301, ../sass/screen.scss */
-              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password {
-                background: url(../images/change-password-icon.png) no-repeat 10px center white; }
-                /* line 305, ../sass/screen.scss */
-                .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover {
-                  background: url(../images/change-password-icon-hover.png) no-repeat 10px center #dcedf3; }
-              /* line 314, ../sass/screen.scss */
-              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout {
-                background: url(../images/logout-icon.png) no-repeat 10px center white; }
-                /* line 317, ../sass/screen.scss */
-                .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover {
-                  background: url(../images/logout-icon-hover.png) no-repeat 10px center #dcedf3; }
-      /* line 333, ../sass/screen.scss */
+              font-size: 12px;
+              position: relative; }
+              /* line 327, ../sass/screen.scss */
+              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications::before {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                width: 13px;
+                height: 10px;
+                content: "";
+                background: url(../images/freegal_sprite.png) no-repeat -120px 0; }
+              /* line 340, ../sass/screen.scss */
+              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover {
+                background: #dcedf3; }
+                /* line 343, ../sass/screen.scss */
+                .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover::before {
+                  position: absolute;
+                  left: 10px;
+                  top: 10px;
+                  width: 13px;
+                  height: 10px;
+                  content: "";
+                  background: url(../images/freegal_sprite.png) no-repeat -135px 0; }
+              /* line 363, ../sass/screen.scss */
+              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password::before {
+                position: absolute;
+                left: 10px;
+                top: 8px;
+                width: 11px;
+                height: 13px;
+                content: "";
+                background: url(../images/freegal_sprite.png) no-repeat -150px 0; }
+              /* line 374, ../sass/screen.scss */
+              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover {
+                background: #dcedf3; }
+                /* line 377, ../sass/screen.scss */
+                .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover::before {
+                  position: absolute;
+                  left: 10px;
+                  top: 8px;
+                  width: 11px;
+                  height: 13px;
+                  content: "";
+                  background: url(../images/freegal_sprite.png) no-repeat -165px 0; }
+              /* line 396, ../sass/screen.scss */
+              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout::before {
+                position: absolute;
+                left: 10px;
+                top: 8px;
+                width: 10px;
+                height: 13px;
+                content: "";
+                background: url(../images/freegal_sprite.png) no-repeat -180px 0; }
+              /* line 407, ../sass/screen.scss */
+              .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover {
+                background: #dcedf3; }
+                /* line 409, ../sass/screen.scss */
+                .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover::before {
+                  position: absolute;
+                  left: 10px;
+                  top: 8px;
+                  width: 10px;
+                  height: 13px;
+                  content: "";
+                  background: url(../images/freegal_sprite.png) no-repeat -190px 0; }
+      /* line 432, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .browse {
         float: right;
         background: #d9ebf2;
@@ -327,14 +391,14 @@ body {
         border-radius: 20px;
         padding: 6px 20px;
         margin: 4px 4px 4px 20px; }
-        /* line 27, ../sass/screen.scss */
+        /* line 28, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .browse:hover {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
           background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 32, ../sass/screen.scss */
+        /* line 33, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .browse:active {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d3e8f0), color-stop(100%, #d5e9f1));
           background-image: -webkit-linear-gradient(#d3e8f0, #d5e9f1);
@@ -342,10 +406,10 @@ body {
           background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
           background-image: linear-gradient(#d3e8f0, #d5e9f1); }
         @media screen and (max-width: 1305px) {
-          /* line 333, ../sass/screen.scss */
+          /* line 432, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .browse {
             margin: 4px 4px 4px 8px; } }
-      /* line 350, ../sass/screen.scss */
+      /* line 449, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .master-search-container {
         float: right;
         -webkit-border-radius: 20px;
@@ -365,10 +429,10 @@ body {
         background-image: -o-linear-gradient(#eeeeee, #fcfcfc 25%, #fafafa 90%);
         background-image: linear-gradient(#eeeeee, #fcfcfc 25%, #fafafa 90%); }
         @media screen and (max-width: 1305px) {
-          /* line 350, ../sass/screen.scss */
+          /* line 449, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container {
             width: 330px; } }
-        /* line 365, ../sass/screen.scss */
+        /* line 464, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .master-search-container .master-search-select {
           padding: 6px 20px;
           color: #527988;
@@ -394,30 +458,36 @@ body {
           width: 130px;
           border-right: 1px solid #b1d3e0; }
           @media screen and (max-width: 1305px) {
-            /* line 365, ../sass/screen.scss */
+            /* line 464, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-select {
               padding: 6px 12px;
               width: 110px; } }
-          /* line 385, ../sass/screen.scss */
+          /* line 484, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-select:hover {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
             background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 392, ../sass/screen.scss */
-        .site-header .header-right-col .row-2 .master-search-container .master-search-arrow {
-          background: url(../images/master-search-arrow.png) no-repeat;
+        /* line 492, ../sass/screen.scss */
+        .site-header .header-right-col .row-2 .master-search-container::before {
+          position: absolute;
           width: 6px;
           height: 5px;
-          position: absolute;
           left: 115px;
-          top: 11px; }
-          @media screen and (max-width: 1305px) {
-            /* line 392, ../sass/screen.scss */
-            .site-header .header-right-col .row-2 .master-search-container .master-search-arrow {
-              left: 96px; } }
-        /* line 407, ../sass/screen.scss */
+          top: 11px;
+          background: url(../images/freegal_sprite.png) no-repeat -40px 0;
+          content: ""; }
+        /* line 503, ../sass/screen.scss */
+        .site-header .header-right-col .row-2 .master-search-container::after {
+          background: url(../images/freegal_sprite.png) no-repeat -105px 0;
+          width: 13px;
+          height: 13px;
+          position: absolute;
+          left: 136px;
+          top: 8px;
+          content: ""; }
+        /* line 519, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .master-search-container .master-search-field-container {
           position: relative;
           display: inline-block;
@@ -425,10 +495,10 @@ body {
           height: 27px;
           vertical-align: top; }
           @media screen and (max-width: 1305px) {
-            /* line 407, ../sass/screen.scss */
+            /* line 519, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-field-container {
               width: 215px; } }
-          /* line 420, ../sass/screen.scss */
+          /* line 532, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .search-text {
             width: 274px;
             font-size: 12px;
@@ -438,10 +508,10 @@ body {
             top: 0;
             left: 18px; }
             @media screen and (max-width: 1305px) {
-              /* line 420, ../sass/screen.scss */
+              /* line 532, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .search-text {
                 width: 135px; } }
-          /* line 436, ../sass/screen.scss */
+          /* line 548, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
             background: #d9ebf2;
             font-size: 12px;
@@ -464,34 +534,22 @@ body {
             position: absolute;
             right: -1px;
             top: 0; }
-            /* line 27, ../sass/screen.scss */
+            /* line 28, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go:hover {
               background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
               background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
               background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
               background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
               background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-            /* line 32, ../sass/screen.scss */
+            /* line 33, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go:active {
               background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d3e8f0), color-stop(100%, #d5e9f1));
               background-image: -webkit-linear-gradient(#d3e8f0, #d5e9f1);
               background-image: -moz-linear-gradient(#d3e8f0, #d5e9f1);
               background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
               background-image: linear-gradient(#d3e8f0, #d5e9f1); }
-        /* line 452, ../sass/screen.scss */
-        .site-header .header-right-col .row-2 .master-search-container .search-icon {
-          background: url(../images/search-icon.png) no-repeat;
-          width: 13px;
-          height: 13px;
-          position: absolute;
-          left: 136px;
-          top: 8px; }
-          @media screen and (max-width: 1305px) {
-            /* line 452, ../sass/screen.scss */
-            .site-header .header-right-col .row-2 .master-search-container .search-icon {
-              left: 117px; } }
 
-/* line 474, ../sass/screen.scss */
+/* line 573, ../sass/screen.scss */
 .top-nav {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5cc9ed), color-stop(100%, #4fbde1));
   background-image: -webkit-linear-gradient(#5cc9ed, #4fbde1);
@@ -502,16 +560,16 @@ body {
   height: 33px;
   border-top: 1px solid #84d7f2;
   border-bottom: 1px solid #a7def0; }
-  /* line 481, ../sass/screen.scss */
+  /* line 580, ../sass/screen.scss */
   .top-nav ul {
     position: absolute;
     right: 40px;
     top: 0; }
-    /* line 488, ../sass/screen.scss */
+    /* line 587, ../sass/screen.scss */
     .top-nav ul li {
       display: block;
       float: left; }
-      /* line 493, ../sass/screen.scss */
+      /* line 592, ../sass/screen.scss */
       .top-nav ul li a {
         display: block;
         color: #fff;
@@ -520,18 +578,16 @@ body {
         text-align: center;
         text-transform: uppercase;
         font-size: 13px; }
-      /* line 508, ../sass/screen.scss */
+      /* line 607, ../sass/screen.scss */
       .top-nav ul li:last-child a {
         padding-right: 0; }
 
-/* line 517, ../sass/screen.scss */
+/* line 616, ../sass/screen.scss */
 .content-wrapper {
-  position: relative;
-  /* height: 100%; */ }
-  /* line 523, ../sass/screen.scss */
+  position: relative; }
+  /* line 621, ../sass/screen.scss */
   .content-wrapper .left-nav {
     width: 192px;
-    /* float: left; */
     position: absolute;
     left: 0;
     top: 0;
@@ -544,205 +600,240 @@ body {
     box-sizing: border-box;
     background: #fff;
     height: 100%; }
-    /* line 540, ../sass/screen.scss */
+    /* line 636, ../sass/screen.scss */
     .content-wrapper .left-nav h2 {
       padding-left: 25px;
       margin-bottom: 15px;
       line-height: 20px;
       font-size: 15px; }
-    /* line 548, ../sass/screen.scss */
+    /* line 644, ../sass/screen.scss */
     .content-wrapper .left-nav > .streaming > ul, .content-wrapper .left-nav > .my-downloads > ul {
       margin-left: 25px; }
-      /* line 552, ../sass/screen.scss */
+      /* line 648, ../sass/screen.scss */
       .content-wrapper .left-nav > .streaming > ul li, .content-wrapper .left-nav > .my-downloads > ul li {
         margin-bottom: 15px; }
-        /* line 556, ../sass/screen.scss */
+        /* line 652, ../sass/screen.scss */
         .content-wrapper .left-nav > .streaming > ul li a, .content-wrapper .left-nav > .my-downloads > ul li a {
           text-decoration: none;
           color: #9f9f9f;
           font-size: 15px; }
-    /* line 570, ../sass/screen.scss */
+    /* line 668, ../sass/screen.scss */
     .content-wrapper .left-nav .streaming h2 {
-      background: url(../images/left-nav-streaming-icon.png) no-repeat 0 3px; }
-    /* line 579, ../sass/screen.scss */
+      position: relative; }
+      /* line 674, ../sass/screen.scss */
+      .content-wrapper .left-nav .streaming h2::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 3px;
+        background: url(../images/freegal_sprite.png) no-repeat 0 0;
+        width: 19px;
+        height: 13px; }
+    /* line 689, ../sass/screen.scss */
     .content-wrapper .left-nav .streaming li ul {
       margin-left: 20px;
       margin-top: 10px;
       display: none; }
-      /* line 584, ../sass/screen.scss */
+      /* line 694, ../sass/screen.scss */
       .content-wrapper .left-nav .streaming li ul.active {
         display: block; }
-      /* line 589, ../sass/screen.scss */
+      /* line 699, ../sass/screen.scss */
       .content-wrapper .left-nav .streaming li ul li {
         margin-bottom: 10px; }
-    /* line 600, ../sass/screen.scss */
+    /* line 710, ../sass/screen.scss */
     .content-wrapper .left-nav .my-downloads h2 {
-      background: url(../images/left-nav-download-icon.png) no-repeat; }
-    /* line 610, ../sass/screen.scss */
+      position: relative; }
+      /* line 713, ../sass/screen.scss */
+      .content-wrapper .left-nav .my-downloads h2::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        background: url(../images/freegal_sprite.png) no-repeat -70px 0;
+        width: 20px;
+        height: 17px; }
+    /* line 729, ../sass/screen.scss */
     .content-wrapper .left-nav .announcements h2 {
-      background: url(../images/left-nav-announcement-icon.png) no-repeat; }
-    /* line 617, ../sass/screen.scss */
+      position: relative; }
+      /* line 732, ../sass/screen.scss */
+      .content-wrapper .left-nav .announcements h2::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        background: url(../images/freegal_sprite.png) no-repeat -90px 0;
+        width: 14px;
+        height: 18px; }
+    /* line 745, ../sass/screen.scss */
     .content-wrapper .left-nav .announcements .announcement {
       background: #eeeeee;
       font-size: 14px;
       padding: 10px; }
-      /* line 623, ../sass/screen.scss */
+      /* line 751, ../sass/screen.scss */
       .content-wrapper .left-nav .announcements .announcement p {
         padding-bottom: 10px; }
-      /* line 627, ../sass/screen.scss */
+      /* line 755, ../sass/screen.scss */
       .content-wrapper .left-nav .announcements .announcement .announcement_header {
         text-decoration: underline;
         font-weight: bold; }
-  /* line 636, ../sass/screen.scss */
+  /* line 764, ../sass/screen.scss */
   .content-wrapper .content {
     background: url(../images/content-bkg.gif) repeat;
     padding: 25px 40px 25px 212px; }
-    /* line 642, ../sass/screen.scss */
+    /* line 770, ../sass/screen.scss */
     .content-wrapper .content .featured-artists, .content-wrapper .content .featured-composers, .content-wrapper .content .featured-themes {
       margin-top: 28px; }
-    /* line 647, ../sass/screen.scss */
+    /* line 775, ../sass/screen.scss */
     .content-wrapper .content .top-albums, .content-wrapper .content .featured-artists, .content-wrapper .content .featured-composers, .content-wrapper .content .featured-themes {
       position: relative; }
-      /* line 651, ../sass/screen.scss */
+      /* line 779, ../sass/screen.scss */
       .content-wrapper .content .top-albums h2, .content-wrapper .content .featured-artists h2, .content-wrapper .content .featured-composers h2, .content-wrapper .content .featured-themes h2 {
         font-size: 24px; }
-      /* line 658, ../sass/screen.scss */
+      /* line 786, ../sass/screen.scss */
       .content-wrapper .content .top-albums .album-list-container, .content-wrapper .content .featured-artists .album-list-container, .content-wrapper .content .featured-composers .album-list-container, .content-wrapper .content .featured-themes .album-list-container {
         margin-top: 10px;
         height: 226px;
         overflow-y: hidden;
         position: relative; }
-        /* line 664, ../sass/screen.scss */
+        /* line 792, ../sass/screen.scss */
         .content-wrapper .content .top-albums .album-list-container ul, .content-wrapper .content .featured-artists .album-list-container ul, .content-wrapper .content .featured-composers .album-list-container ul, .content-wrapper .content .featured-themes .album-list-container ul {
           overflow-y: hidden;
           height: 216px;
           width: 4300px; }
-          /* line 669, ../sass/screen.scss */
+          /* line 797, ../sass/screen.scss */
           .content-wrapper .content .top-albums .album-list-container ul li, .content-wrapper .content .featured-artists .album-list-container ul li, .content-wrapper .content .featured-composers .album-list-container ul li, .content-wrapper .content .featured-themes .album-list-container ul li {
             float: left;
             display: block;
             margin-right: 10px;
             margin-bottom: 10px;
             width: 162px; }
-            /* line 677, ../sass/screen.scss */
+            /* line 805, ../sass/screen.scss */
             .content-wrapper .content .top-albums .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-artists .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-composers .album-list-container ul li .album-cover-container, .content-wrapper .content .featured-themes .album-list-container ul li .album-cover-container {
               width: 162px;
               height: 162px; }
-              /* line 682, ../sass/screen.scss */
+              /* line 810, ../sass/screen.scss */
               .content-wrapper .content .top-albums .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-artists .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-composers .album-list-container ul li .album-cover-container img, .content-wrapper .content .featured-themes .album-list-container ul li .album-cover-container img {
                 width: 162px;
                 height: 162px;
                 -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
                 -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
                 box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
-      /* line 699, ../sass/screen.scss */
+      /* line 827, ../sass/screen.scss */
       .content-wrapper .content .top-albums .album-info, .content-wrapper .content .featured-artists .album-info, .content-wrapper .content .featured-composers .album-info, .content-wrapper .content .featured-themes .album-info {
         font-size: 14px; }
-        /* line 702, ../sass/screen.scss */
+        /* line 830, ../sass/screen.scss */
         .content-wrapper .content .top-albums .album-info p, .content-wrapper .content .featured-artists .album-info p, .content-wrapper .content .featured-composers .album-info p, .content-wrapper .content .featured-themes .album-info p {
           margin-top: 5px; }
-          /* line 706, ../sass/screen.scss */
+          /* line 834, ../sass/screen.scss */
           .content-wrapper .content .top-albums .album-info p.title, .content-wrapper .content .featured-artists .album-info p.title, .content-wrapper .content .featured-composers .album-info p.title, .content-wrapper .content .featured-themes .album-info p.title {
             font-weight: bold;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             font-size: 13px; }
-          /* line 714, ../sass/screen.scss */
+          /* line 842, ../sass/screen.scss */
           .content-wrapper .content .top-albums .album-info p.artist, .content-wrapper .content .featured-artists .album-info p.artist, .content-wrapper .content .featured-composers .album-info p.artist, .content-wrapper .content .featured-themes .album-info p.artist {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             color: rgba(0, 0, 0, 0.5);
             font-size: 12px; }
-      /* line 726, ../sass/screen.scss */
+      /* line 854, ../sass/screen.scss */
       .content-wrapper .content .top-albums .album-navigation-container, .content-wrapper .content .featured-artists .album-navigation-container, .content-wrapper .content .featured-composers .album-navigation-container, .content-wrapper .content .featured-themes .album-navigation-container {
-        background: url(../images/gray-dotted-border.png) bottom repeat-x;
         padding-bottom: 10px;
-        margin-top: 10px; }
-        /* line 730, ../sass/screen.scss */
+        margin-top: 10px;
+        position: relative; }
+        /* line 862, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .album-navigation-container::before, .content-wrapper .content .featured-artists .album-navigation-container::before, .content-wrapper .content .featured-composers .album-navigation-container::before, .content-wrapper .content .featured-themes .album-navigation-container::before {
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          left: 0;
+          height: 3px;
+          content: "";
+          background: url(../images/gray-dotted-border-rpt.png) bottom repeat-x;
+          filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+          opacity: 0.5; }
+        /* line 873, ../sass/screen.scss */
         .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left {
           float: left;
           width: 30px;
           height: 30px;
           cursor: pointer;
-          /* background: url(../images/album-scroll-left.png) no-repeat; */
-          background: url(../images/album-scroll-left-sprite.png) no-repeat 0 0; }
-          /* line 739, ../sass/screen.scss */
+          background: url(../images/freegal_sprite.png) no-repeat 0 -20px; }
+          /* line 883, ../sass/screen.scss */
           .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left:hover, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left:hover {
-            /* background: url(../images/album-scroll-left-hover.png) no-repeat; */
-            background: url(../images/album-scroll-left-sprite.png) no-repeat -30px 0; }
-          /* line 744, ../sass/screen.scss */
+            background: url(../images/freegal_sprite.png) no-repeat -30px -20px; }
+          /* line 889, ../sass/screen.scss */
           .content-wrapper .content .top-albums .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-left:active, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-left:active {
-            /* background: url(../images/album-scroll-left-active.png) no-repeat; */
-            background: url(../images/album-scroll-left-sprite.png) no-repeat -60px 0; }
-        /* line 751, ../sass/screen.scss */
+            background: url(../images/freegal_sprite.png) no-repeat -60px -20px; }
+        /* line 897, ../sass/screen.scss */
         .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right {
           float: right;
-          width: 38px;
-          height: 38px;
+          width: 30px;
+          height: 30px;
           cursor: pointer;
-          background: url(../images/album-scroll-right.png) no-repeat; }
-          /* line 758, ../sass/screen.scss */
+          background: url(../images/freegal_sprite.png) no-repeat -90px -20px; }
+          /* line 905, ../sass/screen.scss */
           .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right:hover, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right:hover {
-            background: url(../images/album-scroll-right-hover.png) no-repeat; }
-          /* line 762, ../sass/screen.scss */
+            background: url(../images/freegal_sprite.png) no-repeat -120px -20px; }
+          /* line 909, ../sass/screen.scss */
           .content-wrapper .content .top-albums .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-artists .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-composers .album-navigation-container .album-scroll-right:active, .content-wrapper .content .featured-themes .album-navigation-container .album-scroll-right:active {
-            background: url(../images/album-scroll-right-active.png) no-repeat; }
-    /* line 770, ../sass/screen.scss */
+            background: url(../images/freegal_sprite.png) no-repeat -150px -20px; }
+    /* line 917, ../sass/screen.scss */
     .content-wrapper .content .top-songs {
       margin-top: 20px; }
-      /* line 772, ../sass/screen.scss */
+      /* line 919, ../sass/screen.scss */
       .content-wrapper .content .top-songs h2 {
         font-size: 24px; }
-      /* line 777, ../sass/screen.scss */
+      /* line 924, ../sass/screen.scss */
       .content-wrapper .content .top-songs ol {
         width: 48%;
         margin-top: 20px;
         font-size: 13px; }
-        /* line 784, ../sass/screen.scss */
+        /* line 931, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol.left-col {
           margin-right: 2%;
           float: left; }
           @media screen and (max-width: 1305px) {
-            /* line 784, ../sass/screen.scss */
+            /* line 931, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol.left-col {
               float: none;
               width: 100%;
               margin-right: 0; } }
-        /* line 797, ../sass/screen.scss */
+        /* line 944, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol.right-col {
           float: right; }
           @media screen and (max-width: 1305px) {
-            /* line 797, ../sass/screen.scss */
+            /* line 944, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol.right-col {
               float: none;
               width: 100%;
               margin-right: 0;
               margin-top: 0; } }
-        /* line 812, ../sass/screen.scss */
+        /* line 959, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol li {
           height: 35px;
           position: relative; }
-          /* line 818, ../sass/screen.scss */
+          /* line 965, ../sass/screen.scss */
           .content-wrapper .content .top-songs ol li:nth-child(odd) {
             background: url(../images/top-singles-bkg-odd.png) repeat-x; }
-          /* line 823, ../sass/screen.scss */
+          /* line 970, ../sass/screen.scss */
           .content-wrapper .content .top-songs ol li:nth-child(even) {
             background: url(../images/top-singles-bkg-even.png) repeat-x; }
-          /* line 827, ../sass/screen.scss */
+          /* line 974, ../sass/screen.scss */
           .content-wrapper .content .top-songs ol li .inner-col {
             float: left;
             position: absolute; }
-            /* line 832, ../sass/screen.scss */
+            /* line 979, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.ranking {
               margin-top: 10px;
               left: 1%; }
               @media screen and (max-width: 1305px) {
-                /* line 832, ../sass/screen.scss */
+                /* line 979, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.ranking {
                   left: 1%; } }
-            /* line 842, ../sass/screen.scss */
+            /* line 989, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.title {
               margin-top: 10px;
               left: 5%;
@@ -752,10 +843,10 @@ body {
               white-space: nowrap;
               height: 15px; }
               @media screen and (max-width: 1305px) {
-                /* line 842, ../sass/screen.scss */
+                /* line 989, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.title {
                   left: 4%; } }
-            /* line 858, ../sass/screen.scss */
+            /* line 1005, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.artist {
               margin-top: 10px;
               left: 50%;
@@ -765,84 +856,84 @@ body {
               text-overflow: ellipsis;
               white-space: nowrap; }
               @media screen and (max-width: 1305px) {
-                /* line 858, ../sass/screen.scss */
+                /* line 1005, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.artist {
                   left: 45%; } }
-            /* line 872, ../sass/screen.scss */
+            /* line 1019, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.time {
               margin-top: 10px;
               right: 70px; }
               @media screen and (max-width: 1305px) {
-                /* line 872, ../sass/screen.scss */
+                /* line 1019, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.time {
                   right: 76px; } }
-            /* line 881, ../sass/screen.scss */
+            /* line 1028, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon {
               margin-top: 7px;
-              background: url(../images/top-songs-download-icon.png) no-repeat;
+              background: url(../images/freegal_sprite.png) no-repeat 0 -50px;
               width: 20px;
               height: 20px;
               margin-left: 5px;
               right: 36px;
               cursor: pointer; }
-              /* line 892, ../sass/screen.scss */
+              /* line 1040, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon:hover {
-                background: url(../images/top-songs-download-icon-hover.png) no-repeat; }
-              /* line 897, ../sass/screen.scss */
+                background: url(../images/freegal_sprite.png) no-repeat -20px -50px; }
+              /* line 1045, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon:active {
-                background: url(../images/top-songs-download-icon-active.png) no-repeat; }
+                background: url(../images/freegal_sprite.png) no-repeat -40px -50px; }
               @media screen and (max-width: 1305px) {
-                /* line 881, ../sass/screen.scss */
+                /* line 1028, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon {
                   right: 38px; } }
-            /* line 907, ../sass/screen.scss */
+            /* line 1055, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon {
               margin-top: 7px;
               margin-left: 5px;
-              background: url(../images/top-songs-play-icon.png) no-repeat;
               width: 20px;
               height: 20px;
               right: 10px;
-              cursor: pointer; }
-              /* line 917, ../sass/screen.scss */
+              cursor: pointer;
+              background: url(../images/freegal_sprite.png) no-repeat -60px -50px; }
+              /* line 1067, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon:hover {
-                background: url(../images/top-songs-play-icon-hover.png) no-repeat; }
-              /* line 922, ../sass/screen.scss */
+                background: url(../images/freegal_sprite.png) no-repeat -80px -50px; }
+              /* line 1072, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon:active {
-                background: url(../images/top-songs-play-icon-active.png) no-repeat; }
+                background: url(../images/freegal_sprite.png) no-repeat -100px -50px; }
               @media screen and (max-width: 1305px) {
-                /* line 907, ../sass/screen.scss */
+                /* line 1055, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon {
                   right: 10px; } }
 
-/* line 945, ../sass/screen.scss */
+/* line 1095, ../sass/screen.scss */
 footer {
   height: 98px;
   background: url(../images/footer-bkg.gif) repeat;
   color: #000;
   font-size: 12px;
   padding-bottom: 100px; }
-  /* line 953, ../sass/screen.scss */
+  /* line 1103, ../sass/screen.scss */
   footer .inner-wrapper {
     height: 98px;
     position: relative;
     width: 1215px;
     margin: 0 auto; }
-    /* line 960, ../sass/screen.scss */
+    /* line 1110, ../sass/screen.scss */
     footer .inner-wrapper .legal {
       position: absolute;
       left: 75px;
       top: 25px; }
-    /* line 966, ../sass/screen.scss */
+    /* line 1116, ../sass/screen.scss */
     footer .inner-wrapper .footer-nav {
       position: absolute;
       right: 0;
       top: 25px; }
-      /* line 972, ../sass/screen.scss */
+      /* line 1122, ../sass/screen.scss */
       footer .inner-wrapper .footer-nav li {
         display: block;
         float: left; }
-        /* line 977, ../sass/screen.scss */
+        /* line 1127, ../sass/screen.scss */
         footer .inner-wrapper .footer-nav li a {
           display: block;
           padding-left: 6px;
@@ -850,30 +941,30 @@ footer {
           color: #000;
           text-decoration: none;
           border-right: 1px solid #000; }
-        /* line 987, ../sass/screen.scss */
+        /* line 1137, ../sass/screen.scss */
         footer .inner-wrapper .footer-nav li:last-child a {
           border-right: 0; }
-    /* line 994, ../sass/screen.scss */
+    /* line 1144, ../sass/screen.scss */
     footer .inner-wrapper .languages {
       position: absolute;
       right: 0;
       top: 60px; }
-      /* line 1000, ../sass/screen.scss */
+      /* line 1150, ../sass/screen.scss */
       footer .inner-wrapper .languages li {
         display: block;
         float: left; }
-        /* line 1005, ../sass/screen.scss */
+        /* line 1155, ../sass/screen.scss */
         footer .inner-wrapper .languages li a {
           display: block;
           padding-left: 6px;
           padding-right: 6px;
           color: #000;
           text-decoration: none; }
-        /* line 1015, ../sass/screen.scss */
+        /* line 1165, ../sass/screen.scss */
         footer .inner-wrapper .languages li:nth-child(2) a, footer .inner-wrapper .languages li:nth-child(3) a, footer .inner-wrapper .languages li:nth-child(4) a {
           border-right: 1px solid #000; }
 
-/* line 1027, ../sass/screen.scss */
+/* line 1177, ../sass/screen.scss */
 .fmp-container {
   position: fixed;
   bottom: 0;
