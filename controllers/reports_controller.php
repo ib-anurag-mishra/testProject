@@ -1696,7 +1696,7 @@ Class ReportsController extends AppController {
 //                    if ($library_id != "all") {
                         $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory);
                         if ($library_id != "all") {
-                            $streamingHours = floor($streamingInfo[0][0]['total_streamed']/60/60);
+                            $streamingHours = $streamingInfo[0][0]['total_streamed'];
                         }else{
                             $streamingHours = $streamingInfo;
                         }
