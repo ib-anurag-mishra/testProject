@@ -1700,7 +1700,12 @@ Class ReportsController extends AppController {
                         $streamingHours = $streamingInfo;
                     }
                    
-                    $patronStreaminInfo = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'day');
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'day');
+                    if ($library_id != "all") {
+                        $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
+                    }else{
+                        $patronStreaminInfo = $patronStreaminInfoRes;
+                    }
                     echo "<pre>";print_r($patronStreaminInfo);exit;
                     $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'day');
 

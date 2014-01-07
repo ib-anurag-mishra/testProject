@@ -207,7 +207,7 @@ if (empty($getData)) {
                         <tr><td colspan="6">&nbsp;</td></tr>
 
                         <?php
-                        if (empty($arr_all_patron_downloads)) {
+                        if (!is_array($patronStreamedInfo)) {
                             ?>                              
                             <tr><th colspan="6" align="center">Total Patrons</th></tr>
                             <tr>
@@ -232,7 +232,7 @@ if (empty($getData)) {
 
                                         <?php
                                         $index = 1;
-                                        foreach ($arr_all_patron_downloads AS $key => $val) {
+                                        foreach ($patronStreamedInfo AS $key => $val) {
                                             ?>
 
                                             <tr>
