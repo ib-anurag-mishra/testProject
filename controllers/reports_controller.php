@@ -1810,10 +1810,10 @@ Class ReportsController extends AppController {
                 }
 
                 $this->set('streamingHours', $streamingHours);
-                $this->set('arr_all_library_downloads', $arr_all_library_downloads);
-                $this->set('arr_all_patron_downloads', $arr_all_patron_downloads);
+//                $this->set('arr_all_library_downloads', $arr_all_library_downloads);
+//                $this->set('arr_all_patron_downloads', $arr_all_patron_downloads);
 
-                if ($this->data['Report']['reports_daterange'] == 'day') {
+                /*if ($this->data['Report']['reports_daterange'] == 'day') {
                     if (!empty($currentPatronDownload)) {
                         foreach ($currentPatronDownload as $patronRecord) {
                             $i = count($patronDownloads);
@@ -1821,12 +1821,12 @@ Class ReportsController extends AppController {
                             $patronDownloads[$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
                             $patronDownloads[$i]['Downloadpatron']['total'] = $patronRecord[0]['total'];
                         }
-                    }
+                    }*/
                     $this->set('patronStreamedInfo', $patronStreaminInfo);
                     $this->set('dayStreamingInfo', $arr_day_streaming_report);
                     $this->set('patronStreamedDetailedInfo', $patronStreamedInformation);
                     $this->set('genreDayStremedInfo', $genreDayStremed);
-                } else {
+                /*} else {
                     if (!empty($currentPatronDownload)) {
                         foreach ($currentPatronDownload as $patronRecord) {
                             if (!empty($patronDownloads[0])) {
@@ -1932,7 +1932,7 @@ Class ReportsController extends AppController {
                     }
                     $this->set('genreDownloads', $genreDownloads[0]);
                 }
-                
+                */
                 $arr = array();
                 $this->set('errors', $arr);
             } else {
