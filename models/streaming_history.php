@@ -247,7 +247,33 @@ class StreamingHistory extends AppModel {
         $endDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1] . " 23:59:59";
         
         if ($libraryID == "all") {
-            //something
+            $all_Ids = '';
+            $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+            $result = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($result)) {
+                $all_Ids[] = $row["id"];
+            }
+//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+            $lib_condition = $all_Ids;
+            return $this->find('all', array(
+                'joins' => array(
+                    array(
+                        'table' => 'users',
+                        'alias' => 'users',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.library_id=users.library_id')
+                    ),
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'countries',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                    )
+                 ),
+                'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id'), 
+                'fields'=>array('users.id as patron_id','users.email','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
+                'group' => array('StreamingHistory.patron_id'),
+                'recursive' => -1));
         }else{
             $lib_condition = "StreamingHistory.library_id=$libraryID";
             //$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id  ORDER BY created ASC");
@@ -271,7 +297,7 @@ class StreamingHistory extends AppModel {
                 'group' => array('StreamingHistory.patron_id'),
                 'recursive' => -1));
         }
-        return $this->query($sql);
+        
     }
     
     function getDaysGenreStramedInformation($libraryID, $date, $territory,$reportCond=NULL) {
@@ -290,15 +316,35 @@ class StreamingHistory extends AppModel {
             }
         }
         if ($libraryID == "all") {
-            //something
+            $all_Ids = '';
+            $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
+            $result = mysql_query($sql);
+            while ($row = mysql_fetch_assoc($result)) {
+                $all_Ids[] = $row["id"];
+            }
+//            $lib_condition = "and library_id IN (" . rtrim($all_Ids, ",") . ")";
+            $lib_condition = $all_Ids;
+            return $this->find('all', array(
+                'joins' => array(
+                    array(
+                        'table' => 'Songs',
+                        'alias' => 'songs',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
+                    ),
+                    array(
+                        'table' => strtolower($territory).'_countries',
+                        'alias' => 'countries',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                    )
+                 ),
+                'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=songs.provider_type'), 
+                'fields'=>array('songs.Genre','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
+                'group' => array('songs.Genre'),
+                'recursive' => -1));
         }else{
             $lib_condition = "StreamingHistory.library_id=$libraryID";
-            /*SELECT Songs.Genre ,count(sh.ProdID) from streaming_histories as sh 
-left join us_countries as countries on sh.ProdID=countries.ProdID
-LEFT JOIN Songs on Songs.ProdID=sh.ProdID AND Songs.provider_type=sh.provider_type 
-where sh.provider_type=countries.provider_type and sh.createdOn between '2013-12-02 00:00:00' and '2013-12-02 23:59:59' 
-and sh.library_id = '1' and sh.token_id is not null group by Songs.Genre;
-             */
             return $this->find('all', array(
                 'joins' => array(
                     array(
@@ -319,7 +365,6 @@ and sh.library_id = '1' and sh.token_id is not null group by Songs.Genre;
                 'group' => array('songs.Genre'),
                 'recursive' => -1));
         }
-        return $this->query($sql);
     }
 
 }
