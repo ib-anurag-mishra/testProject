@@ -1706,7 +1706,7 @@ Class ReportsController extends AppController {
                     $patronStreaminInfo = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory);
                     
                     $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory);
-                    echo "<pre>";print_r($arr_day_streaming_report);exit;
+                    
                     /*if ($territory != '') {
                         if ($library_id == 'all') {
                             $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";

@@ -271,16 +271,16 @@ if (empty($getData)) {
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['Download']['library_id'])); ?></td>
                                             <td><?php
-                                                if ($streamInformation['Download']['email'] != '') {
-                                                    echo $streamInformation['Download']['email'];
+                                                if ($streamInformation['users']['email'] != '') {
+                                                    echo $streamInformation['users']['email'];
                                                 } else {
-                                                    echo $streamInformation['Download']['patron_id'];
+                                                    echo $streamInformation['users']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
-                                            <td><?php echo $this->getTextEncode($streamInformation['Download']['artist']); ?></td>
-                                            <td><?php echo $this->getTextEncode($streamInformation['Download']['track_title']); ?></td>
-                                            <td><?php echo date('Y-m-d', strtotime($streamInformation['Download']['created'])); ?></td>
+                                            <td><?php echo $this->getTextEncode($streamInformation['songs']['artist']); ?></td>
+                                            <td><?php echo $this->getTextEncode($streamInformation['songs']['track_title']); ?></td>
+                                            <td><?php echo date('Y-m-d', strtotime($streamInformation['StreamingHistory']['created'])); ?></td>
                                         </tr>
                                         <?php
                                         $i++;
