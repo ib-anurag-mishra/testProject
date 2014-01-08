@@ -1956,6 +1956,7 @@ Class ReportsController extends AppController {
         $this->set('territory', $this->Territory->find('list', array('fields' => array('Territory', 'Territory'))));
         if($this->params['pass'][0]=='csv'){
             $this->autoRender=false;
+            $this->layout=NULL;
             $this->render('admin_download_streaming_report_as_csv');
         }
     }
