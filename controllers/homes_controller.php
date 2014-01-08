@@ -2490,7 +2490,7 @@ STR;
 
     function addToWishlist()
     {
-        //Configure::write('debug', 0);
+        Configure::write('debug', 2);
         //creates log for Add to wishlist method when it is called
 
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
@@ -2512,7 +2512,7 @@ STR;
                 {
                     $provider = 'ioda';
                 }
-                
+
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
 
                 $insertArr = Array();
@@ -2522,12 +2522,12 @@ STR;
                 $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
                 $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-                $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];                
+                $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
                 $insertArr['provider_type'] = $provider;
                 $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-                
+
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
                 $this->Wishlist->save($insertArr);
@@ -2582,21 +2582,25 @@ STR;
     function addToWishlistVideo()
     {
 
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+
 
         if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']))
         {
-
+            $libraryId = $this->Session->read('library');
+            $patronId = $this->Session->read('patron');
 
             $wishlistCount = $this->WishlistVideo->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $_REQUEST['prodId'])));
             if (!$wishlistCount)
             {
-                $libraryId = $this->Session->read('library');
-                $patronId = $this->Session->read('patron');
-
                 $prodId = $_REQUEST['prodId'];
-                $downloadsDetail = array();
-                //get song details
                 $provider = $_REQUEST['provider'];
+                if ($provider != 'sony')
+                {
+                    $provider = 'ioda';
+                }
 
                 $trackDetails = $this->Video->getVideoData($prodId, $provider);
                 $insertArr = Array();
@@ -2607,22 +2611,15 @@ STR;
                 $insertArr['album'] = $trackDetails['0']['Video']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Video']['VideoTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
-
-                if ($provider != 'sony')
-                {
-                    $provider = 'ioda';
-                }
                 $insertArr['provider_type'] = $provider;
-
                 $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
                 $this->WishlistVideo->setDataSource('master');
                 //insert into wishlist table
                 $this->WishlistVideo->save($insertArr);
                 $this->WishlistVideo->setDataSource('default');
-
-
                 //add the wishlist videos ProdID in the session array
                 if ($this->Session->read('wishlistVideoArray'))
                 {
@@ -2631,18 +2628,34 @@ STR;
                     $this->Session->write('wishlistVideoArray', $wishlistVideoArray);
                 }
 
+                $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                        . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
 
                 echo "Success";
                 exit;
             }
             else
             {
+                $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                        . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "TracklistDetails:Track Details not found..";
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
+
                 echo 'error1';
                 exit;
             }
         }
         else
         {
+            $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                    . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+            $this->log($log_data, $log_name);
+
             echo 'error';
             exit;
         }
