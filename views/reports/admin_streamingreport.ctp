@@ -110,12 +110,12 @@ if (empty($getData)) {
                         <tr>
                             <td colspan="3" align="center">
                                 <?php
-                                echo $html->image('excel_icon.gif', array("alt" => "Download As CSV", "title" => "Download As CSV", 'style' => 'cursor:pointer;', 'id' => 'downloadCVSOne'));
+                                echo $html->image('excel_icon.gif', array("alt" => "Download As CSV", "title" => "Download As CSV", 'style' => 'cursor:pointer;', 'id' => 'downloadStreamingCVSOne'));
                                 ?>
                             </td>
                             <td colspan="3" align="center">
                                 <?php
-                                echo $html->image('pdf_icon.gif', array("alt" => "Download As PDF", "title" => "Download As PDF", 'style' => 'cursor:pointer;', 'id' => 'downloadPDFOne'));
+                                echo $html->image('pdf_icon.gif', array("alt" => "Download As PDF", "title" => "Download As PDF", 'style' => 'cursor:pointer;', 'id' => 'downloadStreamingPDFOne'));
                                 ?>
                             </td>
                         </tr>
@@ -445,18 +445,17 @@ if (empty($library_id)) {
 if (!empty($streamingHours)) {
     ?>
         $("#generateReportSubmit").click(function() {
-            $("#ReportAdminIndexForm").attr('action', '/admin/reports/streamingreport');
+            $("#ReportAdminStreamingreportForm").attr('action', '/admin/reports/streamingreport');
         });
 
-        $("#downloadCVSOne").click(function() {
-            alert("hello");
-            $("#ReportAdminIndexForm").attr('action', '/admin/reports/downloadStreamingReportAsCsv');
-            $("#ReportAdminIndexForm").submit();
+        $("#downloadStreamingCVSOne").click(function() {
+            $("#ReportAdminStreamingreportForm").attr('action', '/admin/reports/downloadStreamingReportAsCsv');
+            $("#ReportAdminStreamingreportForm").submit();
         });
 
-        $("#downloadPDFOne").click(function() {
-            $("#ReportAdminIndexForm").attr('action', '/admin/reports/downloadStreamingReportAsPdf');
-            $("#ReportAdminIndexForm").submit();
+        $("#downloadStreamingPDFOne").click(function() {
+            $("#ReportAdminStreamingreportForm").attr('action', '/admin/reports/downloadStreamingReportAsPdf');
+            $("#ReportAdminStreamingreportForm").submit();
         });
     <?php
 }
