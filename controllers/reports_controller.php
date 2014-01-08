@@ -17,7 +17,7 @@ Class ReportsController extends AppController {
 
     function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('admin_consortium','admin_streamingreport');
+        $this->Auth->allow('admin_consortium','admin_streamingreport','admin_downloadStreamingReportAsCsv');
     }
 
     /*
@@ -1955,6 +1955,7 @@ Class ReportsController extends AppController {
         $this->set('territory', $this->Territory->find('list', array('fields' => array('Territory', 'Territory'))));
     }
     function admin_downloadStreamingReportAsCsv() {
+        echo 'here';
         $this->set('testing', "hello");
         exit;
     }
