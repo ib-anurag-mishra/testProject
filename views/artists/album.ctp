@@ -261,11 +261,7 @@
 //                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 //                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                             $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
-                      if($value['Video']['ProdID'] == '23050980'){
-                                            echo "<pre>";
-                      print_r($this->Session->read('videodownloadCountArray'));
-                      exit;
-                      }
+                     
                                             if ($downloadsUsed > 0)
                                             {
                                                 $value['Video']['status'] = 'avail';
