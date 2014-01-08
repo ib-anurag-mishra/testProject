@@ -1,5 +1,5 @@
 <?php
-echo $testing;exit;
+//echo $testing;exit;
 /*
  File Name : admin_download_as_csv.ctp
  File Description : View page for download csv
@@ -7,8 +7,8 @@ echo $testing;exit;
  */
 ?>
 <?php
-/*
-$line = array('Library Remaining Downloads');
+
+/*$line = array('Library Remaining Downloads');
 $csv->addRow($line);
 
 $line = array('', 'Library Name', 'Number of Remaining Downloads');
@@ -25,21 +25,21 @@ foreach($libraries_download as $LibraryName => $DownloadCount) {
 	$key++;
 }
 $line = array('', '', '', '', '', '');
-$csv->addRow($line);
+$csv->addRow($line);*/
 
 
-// start - Total Downloads during Reporting Period
+// start - Total Straming during Reporting Period
 
 
-if(empty($arr_all_library_downloads)) {
+if(!is_array($streamingHours)) {
   
-  $line = array('Total Downloads during Reporting Period');
+  $line = array('Total Streamed during Reporting Period');
   $csv->addRow($line);
 
-  $line = array('Total Downloads');
+  $line = array('Total Streamed (Number of Songs)');
   $csv->addRow($line);
 
-  $line = array(count($downloads)+(count($videoDownloads)*2));
+  $line = array($streamingHours);
   $csv->addRow($line);
 
   $line = array('', '', '', '', '', '');
@@ -47,15 +47,15 @@ if(empty($arr_all_library_downloads)) {
  
 } else {
   
-  $line = array('Total Downloads during Reporting Period');
+  $line = array('Total Streamed during Reporting Period');
   $csv->addRow($line);
   
-  $line = array('', 'Library Name', 'Total Downloads');
+  $line = array('', 'Library Name', 'Total Streamed (Number of Songs)');
   $csv->addRow($line);
   $key=1;
-  foreach($arr_all_library_downloads as $LibraryName => $DownloadCount) {
+  foreach($streamingHours as $LibraryName => $streamedCount) {
    
-    $line = array($key, $LibraryName, $DownloadCount+($arr_all_video_library_downloads[$LibraryName]*2));
+    $line = array($key, $streamedCount['lib']['library_name'], $streamedCount['0']['total_count']);
     $csv->addRow($line);
     $key++;
   }
@@ -66,21 +66,21 @@ if(empty($arr_all_library_downloads)) {
 }
 
   
-// end - Total Downloads during Reporting Period 
+// end - Total Streaming during Reporting Period 
 
 
 // start - Total Patrons
 
 
-if(empty($arr_all_patron_downloads)) {
+if(!is_array($patronStreamedInfo)) {
   
   $line = array('Total Patrons');
   $csv->addRow($line);
 
-  $line = array('Total Number of Patrons who have downloaded during Reporting Period');
+  $line = array('Total Number of Patrons who have streamed during Reporting Period');
   $csv->addRow($line);
 
-  $line = array(count($patronBothDownloads));
+  $line = array($patronStreamedInfo);
   $csv->addRow($line);
   
   $line = array('', '', '', '', '', '');
@@ -88,15 +88,15 @@ if(empty($arr_all_patron_downloads)) {
   
 } else {
   
-  $line = array('Total Number of Patrons who have downloaded during Reporting Period');
+  $line = array('Total Number of Patrons who have streamed during Reporting Period');
   $csv->addRow($line);
   
   $line = array('', 'Library Name', 'Total Patrons');
   $csv->addRow($line);
   $key=1;
-  foreach($arr_all_patron_downloads as $LibraryName => $DownloadCount) {
+  foreach($patronStreamedInfo as $LibraryName => $streamdCount) {
    
-    $line = array($key, $LibraryName, $DownloadCount);
+    $line = array($key, $streamdCount['lib']['library_name'], $streamdCount['0']['total_patrons']);
     $csv->addRow($line);
     $key++;
   }
@@ -112,107 +112,59 @@ if(empty($arr_all_patron_downloads)) {
 
 
 
-$line = array('Library Downloads Report');
+$line = array('Library Streaming Report');
 $csv->addRow($line);
 
-$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
+$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
 $csv->addRow($line);
 
-foreach($downloads as $key => $download) {
-	if($download['Download']['email']!=''){
-		$patron = $download['Download']['email'];
+foreach($dayStreamingInfo as $key => $stream) {
+	if($stream['users']['email']!=''){
+		$patron = $stream['users']['email'];
 	}
 	else{
-		$patron = $download['Download']['patron_id'];
+		$patron = $stream['users']['patron_id'];
 	}
-    $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
-    $line = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
+    $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+    $line = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
     $csv->addRow($line);
 }
 
-
-$line = array('Library Video Downloads Report');
-$csv->addRow($line);
-
-$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Video title', 'Download');
-$csv->addRow($line);
-
-foreach($videoDownloads as $key => $download) {
-	if($download['Videodownload']['email']!=''){
-		$patron = $download['Videodownload']['email'];
-	}
-	else{
-		$patron = $download['Videodownload']['patron_id'];
-	}
-    $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Videodownload']['library_id']));
-    $line = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
-    $csv->addRow($line);
-}
 
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
 
-$line = array('Patron Downloads Report');
+$line = array('Patron Streaming Report');
 $csv->addRow($line);
 
 $line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
-foreach($patronDownloads as $key => $patronDownload) {
-	if($patronDownload['Downloadpatron']['email']!=''){
-		$patron_id = $patronDownload['Downloadpatron']['email'];
+foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
+	if($patronStreamed['users']['email']!=''){
+		$patron_id = $patronStreamed['users']['email'];
 	}
 	else{
-		$patron_id = $patronDownload['Downloadpatron']['patron_id'];
+		$patron_id = $patronStreamed['users']['patron_id'];
 	}
-    $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+    $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
     $csv->addRow($line);
 }
 
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
 
-$line = array('Patron Video Downloads Report');
+$line = array('Genres Streaming Report');
 $csv->addRow($line);
 
-$line = array('', 'Patron ID', 'Library Name', 'Total Number of Videos Downloaded');
+$line = array('', 'Genre Name', 'Total Number of Tracks Streamed');
 $csv->addRow($line);
 
-foreach($patronVideoDownloads as $key => $patronDownload) {
-	if($patronDownload['DownloadVideoPatron']['email']!=''){
-		$patron_id = $patronDownload['DownloadVideoPatron']['email'];
-	}
-	else{
-		$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
-	}
-    $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
+foreach($genreDayStremedInfo as $key => $genreStreamed) {
+    $line = array($key+1, $this->getAdminTextEncode($genreStreamed['songs']['Genre']), ($genreStreamed[0]['total_streamed_songs']));
     $csv->addRow($line);
 }
 
-$line = array('', '', '', '', '', '');
-$csv->addRow($line);
-
-$line = array('Genres Downloads Report');
-$csv->addRow($line);
-
-$line = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
-$csv->addRow($line);
-
-foreach($genreDownloads as $key => $genreDownload) {
-    $line = array($key+1, $this->getAdminTextEncode($genreDownload['Downloadgenre']['genre_name']), (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
-    $csv->addRow($line);
-}
-
-$line = array('Genres Video Downloads Report');
-$csv->addRow($line);
-
-$line = array('', 'Genre Name', 'Total Number of Videos Downloaded');
-$csv->addRow($line);
-
-foreach($genreVideoDownloads as $key => $genreDownload) {
-    $line = array($key+1, $this->getAdminTextEncode($genreDownload['DownloadVideoGenre']['genre_name']), (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
-    $csv->addRow($line);
-}
 
 
 if($this->data['Report']['library_id'] == "all") {
@@ -247,6 +199,6 @@ elseif($this->data['Report']['reports_daterange'] == 'year') {
 elseif($this->data['Report']['reports_daterange'] == 'manual') {
     $dateRange = "_for_".$date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]."_to_".$date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1];
 }
-echo $csv->render('DownloadsReport_'.$libraryName.$dateRange.'.csv');*/
+echo $csv->render('StreamingReport_'.$libraryName.$dateRange.'.csv');
 ?>
 

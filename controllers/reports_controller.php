@@ -1642,7 +1642,7 @@ Class ReportsController extends AppController {
       Desc : actions for streaming report page
      */
 
-    function admin_streamingreport() {
+    function admin_streamingreport($reportType=NULL) {
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
@@ -1955,7 +1955,7 @@ Class ReportsController extends AppController {
         $this->set('territory', $this->Territory->find('list', array('fields' => array('Territory', 'Territory'))));
     }
     function admin_downloadStreamingReportAsCsv() {
-        $this->set('testing', "hello");
+        return admin_streamingreport('csv');
     }
 }
 
