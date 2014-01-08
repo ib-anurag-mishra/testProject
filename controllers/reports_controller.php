@@ -1956,6 +1956,7 @@ Class ReportsController extends AppController {
     }
     function admin_downloadStreamingReportAsCsv() {
         $this->set('testing', "hello");
+        exit;
     }
 }
 
