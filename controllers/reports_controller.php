@@ -1959,6 +1959,11 @@ Class ReportsController extends AppController {
             $this->layout=NULL;
             $this->render('admin_download_streaming_report_as_csv');
         }
+        if($this->params['pass'][0]=='pdf'){
+            $this->autoRender=false;
+            $this->layout=NULL;
+            $this->render('admin_download_streaming_report_as_pdf');
+        }
     }
     
 }

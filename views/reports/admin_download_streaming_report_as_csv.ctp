@@ -1,8 +1,8 @@
 <?php
 //echo $testing;exit;
 /*
- File Name : admin_download_as_csv.ctp
- File Description : View page for download csv
+ File Name : admin_download_streaming_report_as_csv.ctp
+ File Description : View page for streaming csv
  Author : m68interactive
  */
 ?>
@@ -172,7 +172,7 @@ if($this->data['Report']['library_id'] == "all") {
 }
 else {
     //$libraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
-    $libraryName = str_replace(" ", "_", $libraries_download[0]['Library']['library_name']);
+    $libraryName = str_replace(" ", "_", $library->getLibraryName($stream['StreamingHistory']['library_id']));
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);
