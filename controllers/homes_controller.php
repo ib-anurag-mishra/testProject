@@ -2542,8 +2542,8 @@ STR;
                 }
 
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
-                $log_data .= "TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
+                        . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
 
@@ -2553,8 +2553,8 @@ STR;
             else
             {
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
-                $log_data .= "TracklistDetails:Track Details not found..";
+                        . " ProdID:" . $_REQUEST['prodId'] . "   ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "   TracklistDetails:Track Details not found..";
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
 
@@ -2565,7 +2565,7 @@ STR;
         else
         {
             $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                    . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
+                    . " :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
             $this->log($log_data, $log_name);
 
@@ -2629,8 +2629,8 @@ STR;
                 }
 
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
-                $log_data .= "TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
+                        . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . "  :InsertArrayDetails:" . serialize($insertArr);
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
 
@@ -2640,8 +2640,8 @@ STR;
             else
             {
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
-                $log_data .= "TracklistDetails:Track Details not found..";
+                        . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "  :TracklistDetails:Track Details not found..";
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
 
@@ -2652,7 +2652,7 @@ STR;
         else
         {
             $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                    . " ProdID:" . $_REQUEST['prodId'] . "ProviderId:" . $_REQUEST['provider'];
+                    . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
             $this->log($log_data, $log_name);
 
