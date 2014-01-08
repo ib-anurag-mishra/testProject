@@ -448,8 +448,8 @@
 
     //Column titles
     $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
-    $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
-    $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
+    $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Streamed');
+    $genre_header = array('', 'Genre Name', 'Total Number of Tracks Streamed');
 
 
     //Data loading
