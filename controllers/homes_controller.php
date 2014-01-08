@@ -2493,7 +2493,7 @@ STR;
         //Configure::write('debug', 0);
         //creates log for Add to wishlist method when it is called
 
-        $log_name = 'stored_procedure_web_add_to_wishlist_log_' . date('Y_m_d');
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
 
