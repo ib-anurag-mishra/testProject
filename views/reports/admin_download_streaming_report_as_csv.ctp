@@ -172,7 +172,7 @@ if($this->data['Report']['library_id'] == "all") {
 }
 else {
     //$libraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
-    $libraryName = str_replace(" ", "_", $library->getLibraryName($stream['StreamingHistory']['library_id']));
+    $libraryName = str_replace(" ", "_", $library->getLibraryName($library_id));
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);

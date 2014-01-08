@@ -9,8 +9,8 @@
     }
     else {
         //$savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];        
-        $savelibraryName =  $libraries_download[0]['Library']['library_name'];
-        $displaylibraryName = "LibraryID ".$downloads[0]['Download']['library_id'];
+        $savelibraryName =  $library->getLibraryName($stream['StreamingHistory']['library_id']);
+        $displaylibraryName = "LibraryID ".$stream['StreamingHistory']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
     $date_arr_from = explode("/", $this->data['Report']['date_from']);
