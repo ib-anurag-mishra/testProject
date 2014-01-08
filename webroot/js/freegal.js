@@ -1337,6 +1337,8 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
             {
                 var downloadUsedArr = response.split('|');
                 alert(downloadUsedArr[1]);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
                 return false ;
             }
             else
