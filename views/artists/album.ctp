@@ -315,19 +315,7 @@
                                                   //  $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
                                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
                                                     echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value['Video']["provider_type"]);
-//                                                    if ($wishlistInfo == 'Added To Wishlist')
-//                                                    {
-//                                                        ?> 
-                                                       <!-- <a class="top-100-download-now-button"  href="javascript:void(0);">//<?php //__("Added To Wishlist"); ?></a> -->
-                                                        <?php
-//                                                    }
-//                                                    else
-//                                                    {
-//                                                        ?>
-                                                     <!--   <span class="beforeClick" id="wishlist//<?php //echo $value['Video']['ProdID']; ?>"><a class="top-100-download-now-button" href="JavaScript:void(0);" onclick="addToWishlist('<?php //echo $value['Video']['ProdID']; ?>', '<?php //echo $value['Video']['provider_type']; ?>');"><?php //__("Add To Wishlist"); ?></a></span><span id="wishlist_loader_<?php //echo $value['Video']['ProdID']; ?>" style="display:none;"><?php //echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-                                                        <span class="afterClick" id="downloading_//<?php //echo $value['Video']['ProdID']; ?>" style="display:none;"><label class="top-10-download-now-button"><?php //__("Please Wait..."); ?></label></span> -->
-                                                        <?php
-//                                                    }
+
                                                 }
                                             }
                                             else
@@ -374,31 +362,7 @@
                                         //$wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
                                         echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo, $value["Video"]["ProdID"], $value['Video']["provider_type"]);
-
-                                       /* if ($wishlistInfo == 'Added To Wishlist')
-                                        {
-                                            ?> 
-                                            <a class="add-to-wishlist " href="javascript:void(0);"><?php __("Added To Wishlist"); ?></a>
-                                            <?php
-                                        }
-                                        else
-                                        {*/
-                                            ?>
-
-                                            <!--<span class="beforeClick" id="wishlist<?php //echo $value["Video"]["ProdID"]; ?>">
-                                                <a class="add-to-wishlist" href='JavaScript:void(0);' 
-                                                   onclick='Javascript: addToWishlist("<?php //echo $value["Video"]["ProdID"]; ?>", "<?php //echo $value["Video"]["provider_type"]; ?>");'>
-                                                       <?php //__("Add To Wishlist"); ?>
-                                                </a>
-                                            </span>
-                                            <span class="afterClick" id="downloading_<?php //echo $value["Video"]["ProdID"]; ?>" style="display:none;">
-                                                <a class="add-to-wishlist" href='JavaScript:void(0);'><label class="top-10-download-now-button">
-                                                        <?php //__("Please Wait..."); ?>
-                                                    </label>
-                                                </a>
-                                            </span> -->
-                                            <?php
-                                        //}
+                                       
                                         ?>														
                                     </div>
                                 <?php } ?>
