@@ -1288,7 +1288,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
 
 function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
 {
-    console.log('wishlistDownloadOthers called');
+    //console.log('wishlistDownloadOthers called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
