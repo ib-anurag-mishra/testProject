@@ -1955,9 +1955,7 @@ Class ReportsController extends AppController {
         $this->set('territory', $this->Territory->find('list', array('fields' => array('Territory', 'Territory'))));
     }
     function admin_downloadStreamingReportAsCsv() {
-        echo 'here';
         $this->set('testing', "hello");
-        exit;
     }
 }
 
