@@ -449,12 +449,12 @@ if (!empty($streamingHours)) {
         });
 
         $("#downloadStreamingCVSOne").click(function() {
-            $("#ReportAdminStreamingreportForm").attr('action', '/admin/reports/downloadStreamingReportAsCsv');
+            $("#ReportAdminStreamingreportForm").attr('action', '/admin/reports/streamingreport/csv');
             $("#ReportAdminStreamingreportForm").submit();
         });
 
         $("#downloadStreamingPDFOne").click(function() {
-            $("#ReportAdminStreamingreportForm").attr('action', '/admin/reports/downloadStreamingReportAsPdf');
+            $("#ReportAdminStreamingreportForm").attr('action', '/admin/reports/streamingreport/pdf');
             $("#ReportAdminStreamingreportForm").submit();
         });
     <?php
