@@ -174,9 +174,9 @@
     
     // Header
     $w = array(250);
-    $DownloadCount_header = array('Total Streamed (Number of Songs)');
-    for($i = 0; $i < count($DownloadCount_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+    $StreamedCount_header = array('Total Streamed (Number of Songs)');
+    for($i = 0; $i < count($StreamedCount_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $StreamedCount_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
     // Color and font restoration
     $tcpdf->SetFillColor(224, 235, 255);
@@ -186,15 +186,15 @@
     $fill = 0;
 	
  
-    $arr_all_library_downloads_data[] = array(count($downloads)+(count($videoDownloads)*2));
+    $arr_all_library_streaming_data[] = array($streamingHours);
 
     
-    foreach($arr_all_library_downloads_data as $k=>$row) {
+    foreach($arr_all_library_streaming_data as $k=>$row) {
         if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Total Downloads during Reporting Period', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -204,8 +204,8 @@
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
             // Header
-            for($i = 0; $i < count($DownloadCount_header); $i++)
-                $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+            for($i = 0; $i < count($StreamedCount_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $StreamedCount_header[$i], 1, 0, 'C', 1);
                 $tcpdf->Ln();
         }
         // Color and font restoration
@@ -231,7 +231,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Total Downloads during Reporting Period', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -242,9 +242,9 @@
     
     // Header
     $w = array(10, 50, 190);
-    $DownloadCount_header = array('', 'Library Name', 'Total Downloads');
-    for($i = 0; $i < count($DownloadCount_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+    $StreamingCount_header = array('', 'Library Name', 'Total Streamed (Number of Songs)');
+    for($i = 0; $i < count($StreamingCount_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $StreamingCount_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
     // Color and font restoration
     $tcpdf->SetFillColor(224, 235, 255);
@@ -255,13 +255,13 @@
 	
  
     $key = 1;
-    foreach($arr_all_library_downloads as $LibraryName => $DownloadCount) {
+    foreach($streamingHours as $LibraryName => $DownloadCount) {
       
-      $arr_all_library_downloads_data[] = array($key, $LibraryName, $DownloadCount+($arr_all_video_library_downloads[$LibraryName]*2));
+      $arr_all_library_streming_data[] = array($key, $DownloadCount['lib']['library_name'], $DownloadCount['0']['total_count']);
       $key++;
     }
     
-    foreach($arr_all_library_downloads_data as $k=>$row) {
+    foreach($arr_all_library_streming_data as $k=>$row) {
         if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
@@ -301,7 +301,7 @@
     
     // start - Total Number of Patrons who have downloaded during Reporting Period
     
-    if(empty($arr_all_patron_downloads)) {
+    if(!is_array($patronStreamedInfo)) {
 
     // add a page
     $tcpdf->AddPage();
@@ -320,9 +320,9 @@
     
     // Header
     $w = array(250);
-    $DownloadCount_header = array('Total Number of Patrons who have downloaded during Reporting Period');
-    for($i = 0; $i < count($DownloadCount_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+    $StreamingCount_header = array('Total Number of Patrons who have streamed during Reporting Period');
+    for($i = 0; $i < count($StreamingCount_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $StreamingCount_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
     // Color and font restoration
     $tcpdf->SetFillColor(224, 235, 255);
@@ -331,15 +331,15 @@
     // Data
     $fill = 0;
   
-    $arr_all_patron_downloads_data[] = array(count($patronBothDownloads));
+    $arr_all_patron_streaming_data[] = array($patronStreamedInfo);
 
     
-    foreach($arr_all_patron_downloads_data as $k=>$row) {
+    foreach($arr_all_patron_streaming_data as $k=>$row) {
         if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Total Number of Patrons who have downloaded during Reporting Period', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Total Number of Patrons who have streamed during Reporting Period', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -349,8 +349,8 @@
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
             // Header
-            for($i = 0; $i < count($DownloadCount_header); $i++)
-                $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+            for($i = 0; $i < count($StreamingCount_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $StreamingCount_header[$i], 1, 0, 'C', 1);
                 $tcpdf->Ln();
         }
         // Color and font restoration
@@ -375,7 +375,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Total Number of Patrons who have downloaded during Reporting Period', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Total Number of Patrons who have streamed during Reporting Period', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -386,9 +386,9 @@
     
     // Header
     $w = array(10, 50, 190);
-    $DownloadCount_header = array('', 'Library Name', 'Total Patrons');
-    for($i = 0; $i < count($DownloadCount_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+    $StreamingCount_header = array('', 'Library Name', 'Total Patrons');
+    for($i = 0; $i < count($StreamingCount_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $StreamingCount_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
     // Color and font restoration
     $tcpdf->SetFillColor(224, 235, 255);
@@ -399,18 +399,18 @@
     
     
     $key = 1;
-    foreach($arr_all_patron_downloads as $LibraryName => $DownloadCount) {
+    foreach($patronStreamedInfo as $LibraryName => $StreamedCount) {
       
-      $arr_all_patron_downloads_data[] = array($key, $this->getAdminTextEncode($LibraryName), $DownloadCount);
+      $arr_all_patron_streamed_data[] = array($key, $this->getAdminTextEncode($StreamedCount['lib']['library_name']), $StreamedCount['0']['total_patrons']);
       $key++;
     }
     
-    foreach($arr_all_patron_downloads_data as $k=>$row) {
+    foreach($arr_all_patron_streamed_data as $k=>$row) {
         if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Total Number of Patrons who have downloaded during Reporting Period', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Total Number of Patrons who have streamed during Reporting Period', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -420,8 +420,8 @@
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
             // Header
-            for($i = 0; $i < count($DownloadCount_header); $i++)
-                $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+            for($i = 0; $i < count($StreamedCount_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $StreamedCount_header[$i], 1, 0, 'C', 1);
                 $tcpdf->Ln();
         }
         // Color and font restoration
@@ -439,7 +439,7 @@
     $tcpdf->Cell(array_sum($w), 0, '', 'T');
     
     }
-    // end - Total Number of Patrons who have downloaded during Reporting Period
+    // end - Total Number of Patrons who have streamed during Reporting Period
      
     //------------------------------------------------------------------------------------------------------ 
      
@@ -447,69 +447,44 @@
     $tcpdf->AddPage();
 
     //Column titles
-    $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
-    $video_header = array('','Library Name', 'Patron ID', 'Artists Name', 'Video title', 'Download');
+    $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
     $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
-    $patron_video_header = array('', 'Patron ID', 'Library Name', 'Total Number of Videos Downloaded');
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
-    $genre_video_header = array('', 'Genre Name', 'Total Number of Videos Downloaded');
+
 
     //Data loading
-    foreach($downloads as $key => $download) {
-		if($download['Download']['email']!=''){
-			$patron = $download['Download']['email'];
+    foreach($dayStreamingInfo as $key => $stream) {
+		if($stream['users']['email']!=''){
+			$patron = $stream['users']['email'];
 		}
 		else{
-			$patron = $download['Download']['patron_id'];
+			$patron = $stream['users']['patron_id'];
 		}
-        $libraryName = $this->getAdminTextEncode($library->getLibraryName($download['Download']['library_id']));
-        $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($download['Download']['artist']), $this->getAdminTextEncode($download['Download']['track_title']), date('Y-m-d', strtotime($download['Download']['created'])));
-    }
-    foreach($videoDownloads as $key => $download) {
-		if($download['Videodownload']['email']!=''){
-			$patron = $download['Videodownload']['email'];
-		}
-		else{
-			$patron = $download['Videodownload']['patron_id'];
-		}
-        $libraryName = $library->getLibraryName($download['Videodownload']['library_id']);
-        $video_data[] = array($key+1, $this->getAdminTextEncode($libraryName), $patron, $this->getAdminTextEncode($download['Videodownload']['artist']), $this->getAdminTextEncode($download['Videodownload']['track_title']), date('Y-m-d', strtotime($download['Videodownload']['created'])));
-    }
-
-    foreach($patronDownloads as $key => $patronDownload) {
-		if($patronDownload['Downloadpatron']['email']!=''){
-			$patron_id = $patronDownload['Downloadpatron']['email'];
-		}
-		else{
-			$patron_id = $patronDownload['Downloadpatron']['patron_id'];
-		}
-        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
+        $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+        $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['users']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
     }
     
-    foreach($patronVideoDownloads as $key => $patronDownload) {
-		if($patronDownload['DownloadVideoPatron']['email']!=''){
-			$patron_id = $patronDownload['DownloadVideoPatron']['email'];
+
+    foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
+		if($patronStreamed['users']['email']!=''){
+			$patron_id = $patronStreamed['users']['email'];
 		}
 		else{
-			$patron_id = $patronDownload['DownloadVideoPatron']['patron_id'];
+			$patron_id = $patronStreamed['users']['patron_id'];
 		}
-        $patron_video_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronDownload['DownloadVideoPatron']['library_id'])), (($dataRange == 'day')?$patronDownload['DownloadVideoPatron']['total']:$patronDownload[0]['total']));
-    }    
-
-    foreach($genreDownloads as $key => $genreDownload) {
-        $genre_data[] = array($key+1, $this->getAdminTextEncode($genreDownload['Downloadgenre']['genre_name']), (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
+        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
     }
     
-    foreach($genreVideoDownloads as $key => $genreDownload) {
-        $genre_video_data[] = array($key+1, $this->getAdminTextEncode($genreDownload['DownloadVideoGenre']['genre_name']), (($dataRange == 'day')?$genreDownload['DownloadVideoGenre']['total']:$genreDownload[0]['total']));
-    }    
-
+    foreach($genreDayStremedInfo as $key => $genreStreamed) {
+        $genre_data[] = array($key+1, $this->getAdminTextEncode($genreStreamed['songs']['Genre']), ($genreStreamed[0]['total_streamed_songs']));
+    }
+    
     // print colored table
     // Colors, line width and bold font
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Library Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Library Streaming Report', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -533,7 +508,7 @@
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Library Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Library Streaming Report', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -572,80 +547,13 @@
         $fill=!$fill;
     }
      // add a page
-    $tcpdf->AddPage();
-    // print colored table
-    // Colors, line width and bold font
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Library Video Downloads Report', 0, 0, 'C', 0);
-    $tcpdf->Ln();
-
-    $tcpdf->SetFillColor(0, 153, 255);
-    $tcpdf->SetTextColor(255);
-    $tcpdf->SetDrawColor(224, 224, 224);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    // Header
-    $w = array(10, 50, 40, 60, 80, 20);
-    for($i = 0; $i < count($video_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $video_header[$i], 1, 0, 'C', 1);
-        $tcpdf->Ln();
-    // Color and font restoration
-    $tcpdf->SetFillColor(224, 235, 255);
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetFont('');
-    // Data
-    $fill = 0;
-    foreach($video_data as $k=>$row) {
-        if($k%13 == 0 && $k != 0) {
-            $tcpdf->SetTextColor(0);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Library Video Downloads Report', 0, 0, 'C', 0);
-            $tcpdf->Ln();
-
-            // Colors, line width and bold font
-            $tcpdf->SetFillColor(0, 153, 255);
-            $tcpdf->SetTextColor(255);
-            $tcpdf->SetDrawColor(224, 224, 224);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            // Header
-            for($i = 0; $i < count($video_header); $i++)
-                $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
-                $tcpdf->Ln();
-        }
-        // Color and font restoration
-        $tcpdf->SetFillColor(224, 235, 255);
-        $tcpdf->SetTextColor(0);
-        $tcpdf->SetFont('');
-
-        /*$tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill, '', 3);
-	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);*/
-        
-        
-        $tcpdf->MultiCell($w[0], 12.5, number_format($row[0]), 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[1], 12.5, $row[1], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[2], 12.5, $row[2], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
-        
-        $tcpdf->Ln();
-        $fill=!$fill;
-    }
-    // add a page
+    
     $tcpdf->AddPage();
 
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Patron Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Patron Streaming Report', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -669,7 +577,7 @@
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Patron Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Patron Streaming Report', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -702,64 +610,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Patron Video Downloads Report', 0, 0, 'C', 0);
-    $tcpdf->Ln();
-
-    $tcpdf->SetFillColor(0, 153, 255);
-    $tcpdf->SetTextColor(255);
-    $tcpdf->SetDrawColor(224, 224, 224);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    // Header
-    $w = array(10, 50, 100, 90);
-    for($i = 0; $i < count($patron_video_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $patron_video_header[$i], 1, 0, 'C', 1);
-        $tcpdf->Ln();
-    // Color and font restoration
-    $tcpdf->SetFillColor(224, 235, 255);
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetFont('');
-    // Data
-    $fill = 0;
-    foreach($patron_video_data as $k=>$row) {
-        if($k%27 == 0 && $k != 0) {
-            $tcpdf->SetTextColor(0);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Patron Video Downloads Report', 0, 0, 'C', 0);
-            $tcpdf->Ln();
-
-            // Colors, line width and bold font
-            $tcpdf->SetFillColor(0, 153, 255);
-            $tcpdf->SetTextColor(255);
-            $tcpdf->SetDrawColor(224, 224, 224);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            // Header
-            for($i = 0; $i < count($patron_video_header); $i++)
-                $tcpdf->Cell($w[$i], 7, $patron_video_header[$i], 1, 0, 'C', 1);
-                $tcpdf->Ln();
-        }
-        // Color and font restoration
-        $tcpdf->SetFillColor(224, 235, 255);
-        $tcpdf->SetTextColor(0);
-        $tcpdf->SetFont('');
-
-        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'C', $fill, '', 3);
-        $tcpdf->Ln();
-        $fill=!$fill;
-    }
-    
-    // add a page
-    $tcpdf->AddPage();
-
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Genres Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Genres Streaming Report', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -783,7 +634,7 @@
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Genres Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Genres Streaming Report', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -809,64 +660,7 @@
         $fill=!$fill;
     }
 
-    
-    // add a page
-    $tcpdf->AddPage();
-
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Genres Video Downloads Report', 0, 0, 'C', 0);
-    $tcpdf->Ln();
-
-    $tcpdf->SetFillColor(0, 153, 255);
-    $tcpdf->SetTextColor(255);
-    $tcpdf->SetDrawColor(224, 224, 224);
-    $tcpdf->SetLineWidth(0.3);
-    $tcpdf->SetFont('', 'B');
-    // Header
-    $w = array(10, 50, 190);
-    for($i = 0; $i < count($genre_video_header); $i++)
-        $tcpdf->Cell($w[$i], 7, $genre_video_header[$i], 1, 0, 'C', 1);
-        $tcpdf->Ln();
-    // Color and font restoration
-    $tcpdf->SetFillColor(224, 235, 255);
-    $tcpdf->SetTextColor(0);
-    $tcpdf->SetFont('');
-    // Data
-    $fill = 0;
-    foreach($genre_video_data as $k=>$row) {
-        if($k%27 == 0 && $k != 0) {
-            $tcpdf->SetTextColor(0);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Genres Video Downloads Report', 0, 0, 'C', 0);
-            $tcpdf->Ln();
-
-            // Colors, line width and bold font
-            $tcpdf->SetFillColor(0, 153, 255);
-            $tcpdf->SetTextColor(255);
-            $tcpdf->SetDrawColor(224, 224, 224);
-            $tcpdf->SetLineWidth(0.3);
-            $tcpdf->SetFont('', 'B');
-            // Header
-            for($i = 0; $i < count($genre_video_header); $i++)
-                $tcpdf->Cell($w[$i], 7, $genre_video_header[$i], 1, 0, 'C', 1);
-                $tcpdf->Ln();
-        }
-        // Color and font restoration
-        $tcpdf->SetFillColor(224, 235, 255);
-        $tcpdf->SetTextColor(0);
-        $tcpdf->SetFont('');
-
-        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'C', $fill, '', 3);
-        $tcpdf->Ln();
-        $fill=!$fill;
-    }
-    
-    $tcpdf->Cell(array_sum($w), 0, '', 'T');
+//    $tcpdf->Cell(array_sum($w), 0, '', 'T');
 
     echo $tcpdf->Output('StreamingReport_'.str_replace(" ", "_", $savelibraryName).$savedateRange.'.pdf', 'D');
 ?>
