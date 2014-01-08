@@ -27,8 +27,6 @@ class VideodownloadHelper extends AppHelper
             {
                 return $videodownloadCountArray[$prodId]['totalProds'];
             }
-
-            return 0;
         }
         else
         {
