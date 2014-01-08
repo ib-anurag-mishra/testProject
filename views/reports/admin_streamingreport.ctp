@@ -449,6 +449,7 @@ if (!empty($streamingHours)) {
         });
 
         $("#downloadCVSOne").click(function() {
+            alert("hello");
             $("#ReportAdminIndexForm").attr('action', '/admin/reports/downloadStreamingReportAsCsv');
             $("#ReportAdminIndexForm").submit();
         });
