@@ -2526,11 +2526,11 @@ STR;
                 $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-                
+
                 echo "<pre>";
                 print_r($insertArr);
                 exit();
-                
+
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
                 $this->Wishlist->save($insertArr);
@@ -3187,15 +3187,46 @@ STR;
     {
         // Configure::write('debug', 0);
         $this->layout = false;
-
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
 
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
+        $id = $_REQUEST['id'];
+        $provider = $_REQUEST['provider'];
 
-
+        
+        /**
+         * creates log file name
+         */
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+        
+        /**
+         * Check if any of the required parameter is null or not set then log details 
+         * and return and error message to client 
+         */
+        if( empty($prodId) || empty($CdnPath) || empty($SaveAsName) 
+                || empty($id) || empty($provider) || empty($libId) || empty($patId) )
+        {
+            $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider
+                    ."DownloadComponentParameters-CDNPath= '" . $CdnPath . "':DownloadComponentParameters-SaveAsName= '" . $SaveAsName
+                    ."DownloadComponentParameters-id= '" . $id . "':DownloadComponentParameters-Library= '" . $libId
+                    ."DownloadComponentParameters-PatronId= '" . $patId."DownloadCompleteStatus=Fail";
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+            $this->log($log_data, $log_name);
+            
+            echo "empty|Something went wrong during download.Please try again later.";
+            exit;
+        }
+        
+        /*
+         * if all required field are not null then we continue 
+         * for download and  insert record in download table
+         */
+        
         $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
@@ -3213,8 +3244,7 @@ STR;
             exit;
         }
 
-        $id = $_REQUEST['id'];
-        $provider = $_REQUEST['provider'];
+
 
         //get details for this song
         $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
@@ -3228,12 +3258,7 @@ STR;
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         $insertArr['provider_type'] = $provider;
 
-        /**
-          creates log file name
-         */
-        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
-        $log_id = md5(time());
-        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+        
 
         $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];

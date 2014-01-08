@@ -918,6 +918,12 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
                 return false;
             }
+            else if(msg === 'empty')
+            {
+                var downloadUsedArr = response.split('|');
+                alert(downloadUsedArr[1]);
+                return false ;
+            }
             else
             {
                 alert("You have been logged out from the system. Please login again.");
@@ -1326,6 +1332,12 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
                 location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
+            }
+            else if(msg === 'empty')
+            {
+                var downloadUsedArr = response.split('|');
+                alert(downloadUsedArr[1]);
+                return false ;
             }
             else
             {
