@@ -9,8 +9,8 @@
     }
     else {
         //$savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];        
-        $savelibraryName =  $library->getLibraryName($stream['StreamingHistory']['library_id']);
-        $displaylibraryName = "LibraryID ".$stream['StreamingHistory']['library_id'];
+        $savelibraryName =  $library->getLibraryName($library_id);
+        $displaylibraryName = "LibraryID ".$library_id;
     }
     $date_arr = explode("/", $this->data['Report']['date']);
     $date_arr_from = explode("/", $this->data['Report']['date_from']);
@@ -45,9 +45,9 @@
     // set document information
     $tcpdf->SetCreator("FreegalMusic.com");
     $tcpdf->SetAuthor('MayCreate');
-    $tcpdf->SetTitle('Downloads Report');
-    $tcpdf->SetSubject('Library Downloads Report');
-    $tcpdf->SetKeywords('Library, Downloads, Report');
+    $tcpdf->SetTitle('Streaming Report');
+    $tcpdf->SetSubject('Library Streaming Report');
+    $tcpdf->SetKeywords('Library, Streaming, Report');
 
     //set auto page breaks
     $tcpdf->SetAutoPageBreak(TRUE, "20");
@@ -55,7 +55,7 @@
     // set default header data
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
-    $tcpdf->xheadertext = 'Libraries/Patrons Download Report for '.$savelibraryName.$displaydateRange;
+    $tcpdf->xheadertext = 'Libraries/Patrons Streaming Report for '.$savelibraryName.$displaydateRange;
     $tcpdf->xfootertext = 'Copyright � %d FreegalMusic.com. All rights reserved.';
 
     //set margins
@@ -74,12 +74,12 @@
         
      
  
-    // start - Library Remaining Downloads
+    // start - Library Remaining Streaming
     
     // add a page
     $tcpdf->AddPage();
         
-    $tcpdf->SetTextColor(0);
+    /*$tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     $tcpdf->Cell(250, 7, 'Library Remaining Downloads', 0, 0, 'C', 0);
@@ -101,7 +101,7 @@
     // Color and font restoration
     $tcpdf->SetFillColor(224, 235, 255);
     $tcpdf->SetTextColor(0);
-    $tcpdf->SetFont('');
+    $tcpdf->SetFont('');*/
     // Data
     $fill = 0;
 	
@@ -115,7 +115,7 @@
         $libraries_downloads[] = array($key, $this->getAdminTextEncode($DownloadCount['Library']['library_name']), $text);
 		$key++;
     }*/
-    foreach($libraries_downloads as $k=>$row) {
+    /*foreach($libraries_downloads as $k=>$row) {
         if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
@@ -147,7 +147,7 @@
     }
 
     $tcpdf->Cell(array_sum($w), 0, '', 'T');
-    
+    */
     // end - Library Remaining Downloads  
       
     //----------------------------------------------------------------------------------------------  
@@ -155,7 +155,7 @@
     // start - Total Downloads during Reporting Period
     
  
-    if(empty($arr_all_library_downloads)) {
+    if(!is_array($streamingHours)) {
        
     // add a page
     $tcpdf->AddPage();
@@ -163,7 +163,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Total Downloads during Reporting Period', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -174,7 +174,7 @@
     
     // Header
     $w = array(250);
-    $DownloadCount_header = array('Total Downloads');
+    $DownloadCount_header = array('Total Streamed (Number of Songs)');
     for($i = 0; $i < count($DownloadCount_header); $i++)
         $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
