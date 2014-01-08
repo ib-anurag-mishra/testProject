@@ -3209,12 +3209,12 @@ STR;
          * and return and error message to client 
          */
         if( empty($prodId) || empty($CdnPath) || empty($SaveAsName) 
-                || empty($id) || empty($provider) || empty($libId) || empty($patId) )
+                || empty($provider) || empty($libId) || empty($patId) )
         {
             $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider
                     ."':DownloadComponentParameters-CDNPath= '" . $CdnPath . "':DownloadComponentParameters-SaveAsName= '" . $SaveAsName
                     ."':DownloadComponentParameters-id= '" . $id . "':DownloadComponentParameters-Library= '" . $libId
-                    ."':DownloadComponentParameters-PatronId= '" . $patId."DownloadCompleteStatus=Fail";
+                    ."':DownloadComponentParameters-PatronId= '" . $patId."':DownloadCompleteStatus=Fail";
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
             $this->log($log_data, $log_name);
             
