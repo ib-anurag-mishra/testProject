@@ -1129,6 +1129,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
                 $('.beforeClick').show();
                 document.getElementById('download_loader_' + id).style.display = 'none';
                 location.href = unescape(downloadUsedArr[2]);
+                return false;
             }
             else
             {
