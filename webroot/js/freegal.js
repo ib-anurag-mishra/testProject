@@ -973,6 +973,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
                 document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 document.getElementById('vdownloading_' + prodId).style.display = 'none';
                 document.getElementById('download_video_' + prodId).style.display = 'block';
+                return false;
             }
             else
             {
@@ -1078,6 +1079,7 @@ function historyDownload(id, libID, patronID, CdnPath, SaveAsName)
                 //document.getElementById('download_loader_'+id).style.display = 'none';
                 $('.afterClick').hide();
                 $('.beforeClick').show();
+                return false;
             }
             else
             {
@@ -1175,6 +1177,7 @@ function historyDownloadVideo(id, libID, patronID)
                 //document.getElementById('download_loader_'+id).style.display = 'none';
                 $('.afterClick').hide();
                 $('.beforeClick').show();
+                return false;
             }
             else
             {
@@ -1225,6 +1228,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
                 $('.beforeClick').show();
                 document.getElementById('download_loader_' + id).style.display = 'none';
                 location.href = unescape(finalURL);
+                return flase;
             }
             else
             {
