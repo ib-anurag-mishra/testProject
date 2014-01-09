@@ -118,6 +118,7 @@ class CacheController extends AppController {
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
        $this->setTopArtist();
+
     }
     
     /*
