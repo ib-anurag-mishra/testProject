@@ -1919,8 +1919,8 @@ function ajaxSearch() {
             $('div.ac_results').hide();
             callSearchAjax();
         },
-        error: function() {
-            alert('Problem fetching data');
+        error: function(response) {
+            alert('Problem fetching data  '+response);
         }
     });
     
