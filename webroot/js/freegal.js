@@ -973,6 +973,7 @@ function wishlistVideoDownloadIE(prodId, id, provider)
                 document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 document.getElementById('vdownloading_' + prodId).style.display = 'none';
                 document.getElementById('download_video_' + prodId).style.display = 'block';
+                return false;
             }
             else
             {
@@ -1078,6 +1079,7 @@ function historyDownload(id, libID, patronID, CdnPath, SaveAsName)
                 //document.getElementById('download_loader_'+id).style.display = 'none';
                 $('.afterClick').hide();
                 $('.beforeClick').show();
+                return false;
             }
             else
             {
@@ -1129,6 +1131,7 @@ function historyDownloadOthers(id, libID, patronID, CdnPath, SaveAsName)
                 $('.beforeClick').show();
                 document.getElementById('download_loader_' + id).style.display = 'none';
                 location.href = unescape(downloadUsedArr[2]);
+                return false;
             }
             else
             {
@@ -1174,6 +1177,7 @@ function historyDownloadVideo(id, libID, patronID)
                 //document.getElementById('download_loader_'+id).style.display = 'none';
                 $('.afterClick').hide();
                 $('.beforeClick').show();
+                return false;
             }
             else
             {
@@ -1224,6 +1228,7 @@ function historyDownloadVideoOthers(id, libID, patronID, downloadUrl1, downloadU
                 $('.beforeClick').show();
                 document.getElementById('download_loader_' + id).style.display = 'none';
                 location.href = unescape(finalURL);
+                return flase;
             }
             else
             {
@@ -1371,6 +1376,7 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistVideoDownload", // URL to request
         data: data, // post data
+        async: false,
         success: function(response) {
             //  alert(response);
             var msg = response.substring(0, 5);
@@ -1395,6 +1401,7 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
                 location.href = unescape(finalURL);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
+                return false;
             }
             else
             {
