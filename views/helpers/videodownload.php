@@ -17,6 +17,7 @@ class VideodownloadHelper extends AppHelper
         $videodownloadCountArray = array();
 
         $videodownloadInstance = ClassRegistry::init('Videodownload');
+        
         $videodownloadInstance->recursive = -1;
 
         if ($this->Session->check('videodownloadCountArray'))
@@ -26,12 +27,30 @@ class VideodownloadHelper extends AppHelper
             {
                 return $videodownloadCountArray[$prodId]['totalProds'];
             }
-
             return 0;
         }
         else
         {
-            return 0;
+            $videodownloadCount = $videodownloadInstance->find(
+                    'all', array(
+                'fields' => array('DISTINCT ProdID , provider_type, COUNT(DISTINCT id) AS totalProds'),
+                'conditions' => array(
+                    'library_id' => $libId,
+                    'patron_id' => $patID,
+                    'history < 2',
+                    'created BETWEEN ? AND ?' => array($startDate, $endDate)
+                ),
+                'group' => 'ProdID',
+            ));
+            foreach ($videodownloadCount as $key => $value)
+            {
+                $videodownloadCountArray[$value['Videodownload']['ProdID']] = array(
+                    'provider_type' => $value['Videodownload']['provider_type'],
+                    'totalProds' => $value[0]['totalProds']
+                );
+            }
+            $this->Session->write('videodownloadCountArray', $videodownloadCountArray);
+            return $videodownloadCountArray[$prodId]['totalProds'];
         }
       
     }
