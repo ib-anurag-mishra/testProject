@@ -1920,7 +1920,7 @@ function ajaxSearch() {
             callSearchAjax();
         },
         error: function(response) {
-            alert('Problem fetching data  '+response);
+           
         }
     });
     

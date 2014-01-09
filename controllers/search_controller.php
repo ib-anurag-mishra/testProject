@@ -44,6 +44,7 @@ class SearchController extends AppController
         //echo "<br>Started at ".date("Y-m-d H:i:s");
         // reset page parameters when serach keyword changes
         // to check if the search is made from search bar or click on search page
+        
         $layout = $_GET['layout'];
 
         if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
