@@ -3164,7 +3164,7 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = $videodownloadsUsed + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
 
             echo "suces|" . $downloadsUsed;
             exit;
@@ -3439,11 +3439,11 @@ STR;
             $this->Videodownload->recursive = -1;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
-            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = $videodownloadsUsed + $downloadscount;
-            $this->Session->write('downloadCount' , $downloadsUsed);
-            
-            echo "suces|" . $downloadsUsed. "|".$finalURL;
+            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));            
+            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $this->Session->write('downloadCount', $downloadsUsed);
+
+            echo "suces|" . $downloadsUsed . "|" . $finalURL;
             exit;
         }
         else
@@ -3702,7 +3702,7 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = $videodownloadsUsed + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
 
             echo "suces|" . $downloadsUsed;
             exit;
@@ -3970,7 +3970,7 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = $videodownloadsUsed + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
 
             //updating session for VideoDown load status
             $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
