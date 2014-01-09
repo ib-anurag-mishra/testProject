@@ -1917,6 +1917,7 @@ function ajaxSearch() {
 
             $(document).find('.content').ajaxify().css('opacity', 100).show();
             $('div.ac_results').hide();
+            $('#search-text').val('');
             callSearchAjax();
         },
         error: function(response) {
