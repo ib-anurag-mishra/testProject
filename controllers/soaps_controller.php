@@ -292,13 +292,13 @@ class SoapsController extends AppController {
 	 * @return AlbumDataByArtistType[]
    */
 	function getAlbumsFromArtistText($authenticationToken, $artistText, $startFrom, $recordCount) {
-
+	echo "working"; exit;
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-
+ 
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory', 'library_block_explicit_content'),
