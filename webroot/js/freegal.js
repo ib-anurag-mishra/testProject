@@ -1371,6 +1371,7 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistVideoDownload", // URL to request
         data: data, // post data
+        async: false,
         success: function(response) {
             //  alert(response);
             var msg = response.substring(0, 5);
@@ -1395,6 +1396,7 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
                 location.href = unescape(finalURL);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
+                return false;
             }
             else
             {
