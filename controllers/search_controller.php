@@ -43,6 +43,9 @@ class SearchController extends AppController
         //set_time_limit(0);
         //echo "<br>Started at ".date("Y-m-d H:i:s");
         // reset page parameters when serach keyword changes
+        // to check if the search is made from search bar or click on search page
+        $layout = $_GET['layout'];
+
         if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
         {
             unset($_SESSION['SearchReq']);
@@ -58,8 +61,6 @@ class SearchController extends AppController
             $_SESSION['SearchReq']['type'] = $_GET['type'];
         }//sets values in session
 
-
-        $this->layout = 'home';
         $queryVar = null;
         $check_all = null;
         $sortVar = 'ArtistText';
@@ -138,6 +139,7 @@ class SearchController extends AppController
             $insertArr[] = $this->searchrecords($typeVar, $queryVar);
             $this->Searchrecord->saveAll($insertArr);
             //End Added code for log search data
+
             $patId = $this->Session->read('patron');
             $libId = $this->Session->read('library');
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -169,7 +171,7 @@ class SearchController extends AppController
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-            //print_r($songs); die; 
+
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
@@ -180,23 +182,14 @@ class SearchController extends AppController
                   $this->redirect();
                   } */
             }
-            
-            /*echo "Microtime : ".microtime();
-            echo "Time : ".date('h:m:s');*/
+
+            /* echo "Microtime : ".microtime();
+              echo "Time : ".date('h:m:s'); */
+
             $songArray = array();
             foreach ($songs as $key => $song)
             {
                 $songArray[] = $song->ProdID;
-                /*$downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $song->ProdID, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                //echo $this->Download->lastQuery(); die;
-                if (count($downloadsUsed) > 0)
-                {
-                    $songs[$key]->status = 'avail';
-                }
-                else
-                {
-                    $songs[$key]->status = 'not';
-                }*/
             }
             $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in ('.implode(',',$songArray).')' , 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
             
@@ -372,6 +365,19 @@ class SearchController extends AppController
         }
         $this->set('keyword', htmlspecialchars($queryVar));
         //echo "<br>search end- ".date("Y-m-d H:i:s");
+
+        if (isset($this->params['isAjax']) && $this->params['isAjax'] && $layout == 'ajax')
+        {
+            $this->layout = 'ajax';
+            $this->autoLayout = false;
+            $this->autoRender = false;
+            echo $this->render();
+            die;
+        }
+        else
+        {
+            $this->layout = 'home';
+        }
     }
 
     function advanced_search($page = 1, $facetPage = 1)

@@ -24,20 +24,7 @@
 
 }(jQuery));
 
-
-
-
-
-
-
-
-
-
-
 /* end lazyload initalizations */
-
-
-
 
 $('document').ready(function()
 {
@@ -277,9 +264,9 @@ $('document').ready(function()
         $(this).find('.wishlist-popover').removeClass('active');
     });
 
-    $('.search-page .advanced-search-results-albums .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable .album-cover-container').on('mouseenter' , '.add-to-playlist' , function(){
-    $(this).find('.playlist-options').addClass('active');
-});
+    $('.search-page .advanced-search-results-albums .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable .album-cover-container').on('mouseenter', '.add-to-playlist', function() {
+        $(this).find('.playlist-options').addClass('active');
+    });
 
     $('.add-to-queue').on('mouseenter', function() {
 
@@ -736,7 +723,6 @@ $('document').ready(function()
 
     $('.artist-page .tracklist-scrollable').bindMouseWheel();
 
-
     $('.artist-page .tracklist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
 
     $(document).on('scroll', '.artist-page .tracklist-scrollable', function(e) {
@@ -750,7 +736,16 @@ $('document').ready(function()
 
     });
 
+    var totalASLiWidth = 0;
+    $('.artist-page .album-scrollable ul li').each(function() {
+        totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
+
+    });
+
+    $('.artist-page .album-scrollable ul').css({width: totalASLiWidth + 5});
+
     var totalVSLiWidth = 0;
+
     $('.artist-page .videos-scrollable ul li').each(function() {
         totalVSLiWidth = totalVSLiWidth + $(this).outerWidth(true);
 
@@ -1743,8 +1738,6 @@ $('document').ready(function()
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
 
-
-
     $(document).on('click', ".create-new-queue , .create-new-queue-btn", function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
@@ -1889,122 +1882,48 @@ function resetNavigation() {
 
 function ajaxSearch() {
 
-
     resetNavigation();
-
-    var contentSelector = '.content,article:first,.article:first,.post:first';
-    var $content = $(contentSelector).filter(':first');
-    var $body = $(document.body);
-    // Ensure Content
-    if ($content.length === 0) {
-        $content = $body;
-    }
-
-    var q = $('#search-text').val();
-    var type = $('#master-filter').val();
 
     var loading_div = "<div class='loader'>";
     loading_div += "</div>";
     $('.content').append(loading_div);
 
-    // Start Fade Out
-    // Animating to opacity to 0 still keeps the element's height intact
-    // Which prevents that annoying pop bang issue when loading in new content
-    $content.animate({opacity: 0}, 800);
+    var q = $('#search-text').val();
+    var type = $('#master-filter').val();
 
-
+    History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+    $(document).find('.ac_results').remove();
+    
     $.ajax({
         url: '/search/index',
         method: 'get',
-        data: {'q': q, 'type': type},
+        data: {'q': q, 'type': type , 'layout' : 'ajax'},
         success: function(response) {
-            $('.content').html($(response).filter('.content'));
-            // Prepare
-            var $data = $(documentHtml(response)),
-                    $dataBody = $data.find('.document-body:first'),
-                    $dataContent = $dataBody.find(contentSelector).filter(':first'),
-                    $menuChildren, contentHtml, $scripts;
+            var className = $('body').attr('class');
+            $('body').removeClass(className);
+            $('body').addClass('page-search-index');
 
-            // Fetch the scripts
-            $scripts = $dataContent.find('.document-script');
-            if ($scripts.length) {
-                $scripts.detach();
-            }
+            $(document).find('.content').find('section').remove();
+            $(document).find('.content').append(response);            
 
-            // Fetch the content
-            contentHtml = $dataContent.html() || $data.html();
-            if (!contentHtml) {
-                alert('Problem fetching data');
-                return false;
-            }
-
-            // Update the menu
-            /*
-             $menuChildren = $menu.find(menuChildrenSelector);
-             $menuChildren.filter(activeSelector).removeClass(activeClass);
-             $menuChildren = $menuChildren.has('a[href^="' + relativeUrl + '"],a[href^="/' + relativeUrl + '"],a[href^="' + url + '"]');
-             if ($menuChildren.length === 1) {
-             $menuChildren.addClass(activeClass);
-             }
-             */
-
-            // Update the content
-            $content.stop(true, true);
-//            $content.html(contentHtml).css('opacity', 100).show(); /* you could fade in here if you'd like */
-            $content.html(contentHtml).ajaxify().css('opacity', 100).show(); /* you could fade in here if you'd like */
-
-            // Update the title
-            document.title = $data.find('.document-title:first').text();
-            try {
-                document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<', '&lt;').replace('>', '&gt;').replace(' & ', ' &amp; ');
-            }
-            catch (Exception) {
-            }
-
-            // Add the scripts
-            if ($scripts.length > 1) {
-                $scripts.each(function() {
-                    var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
-                    if ($script.attr('src')) {
-                        if (!$script[0].async) {
-                            scriptNode.async = false;
-                        }
-                        scriptNode.src = $script.attr('src');
-                    }
-                    scriptNode.appendChild(document.createTextNode(scriptText));
-                    contentNode.appendChild(scriptNode);
-                });
-            }
-
-            // Complete the change
-            if ($body.ScrollTo || false) {
-                $body.ScrollTo(scrollOptions);
-            } /* http://balupton.com/projects/jquery-scrollto */
-
-
-            //$body.removeClass('loader');
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
 
-            $.getScript(webroot + 'js/freegal.js');
             $.getScript(webroot + 'js/site.js');
-
-            $.getScript(webroot + 'js/audioPlayer.js');
-            $.getScript(webroot + 'js/recent-downloads.js');
-            $.getScript(webroot + 'js/search-results.js');
-
+            $.getScript(webroot + 'js/freegal.js');
 
             $('.loader').fadeOut(500);
-
             $('.content').remove('.loader');
+
+            $(document).find('.content').ajaxify().css('opacity', 100).show();
             $('div.ac_results').hide();
             callSearchAjax();
         },
-        failure: function() {
+        error: function() {
             alert('Problem fetching data');
         }
     });
-    History.pushState(null, 'Search', '/search/index' + '?' + 'q=' + q + '&type=' + type);
+    
     return false;
 }
 // code to ajaxify MyAccount form start

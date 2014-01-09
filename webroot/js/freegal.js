@@ -1288,7 +1288,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
 
 function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
 {
-    console.log('wishlistDownloadOthers called');
+    //console.log('wishlistDownloadOthers called');
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -2702,6 +2702,10 @@ $(document).ready(function() {
         $('.my-video-wishlist-shadow-container').hide();
         $('.my-wishlist-shadow-container').show();
     });
+
+    $('.recent-downloads-filter-container .date-filter-button , .recent-downloads-filter-container .song-filter-button , .recent-downloads-filter-container .artist-filter-button ,.recent-downloads-filter-container .album-filter-button , .recent-downloads-filter-container .download-button').off('click');
+
+
 
     /********* manage notification code js **********/
 
