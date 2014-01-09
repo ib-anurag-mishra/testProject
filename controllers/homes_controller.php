@@ -3972,7 +3972,11 @@ STR;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = $videodownloadsUsed + $downloadscount;
 
-            echo "suces|" . $downloadsUsed. "|".$finalURL;
+            //updating session for VideoDown load status
+            $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
+                   
+                
+            echo "suces|" . $downloadsUsed . "|" . $finalURL;
             exit;
         }
         else
@@ -3987,8 +3991,6 @@ STR;
             exit;
         }
     }
-    
-    
 
     /*
       Function Name : historyDownload
@@ -4003,18 +4005,18 @@ STR;
         $id = $_REQUEST['id'];
         $libId = $_REQUEST['libid'];
         $patId = $_REQUEST['patronid'];
-        
+
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-        
-        
+
+
         $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
-        $finalURL = urlencode($finalSongUrlArr[0]).urlencode($finalSongUrlArr[1]).urlencode($finalSongUrlArr[2]);
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+        $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
 
-        
-        
+
+
         $this->Download->recursive = -1;
         $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $id, 'library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'order' => 'created DESC', 'limit' => '1'));
         $downloadCount = $downloadsUsed[0]['Download']['history'];
@@ -4027,7 +4029,7 @@ STR;
             $this->Download->setDataSource('default');
             $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $id, 'library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'order' => 'created DESC', 'limit' => '1'));
             $downloadCount = $downloadsUsed[0]['Download']['history'];
-            echo "suces|" . $downloadCount."|".$finalURL;
+            echo "suces|" . $downloadCount . "|" . $finalURL;
         }
         else
         {
