@@ -150,7 +150,7 @@ Class LibrariesController extends AppController
 
     function admin_libraryform()
     {
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
