@@ -4498,7 +4498,7 @@ function login($library = null){
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
-						$this->Session->write("login_action",'inhlogin');
+						$this->Session->write("login_action",'capita');
 					}
 				}
 				else {
@@ -4603,13 +4603,13 @@ function login($library = null){
 													 );
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/inhlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/capita"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
 						$this->Session->setFlash("This is not a valid credential.");
 					}
-					$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
+					$this->redirect(array('controller' => 'users', 'action' => 'capita'));
 				}
 				else{
 					$matches = array();
@@ -4628,7 +4628,7 @@ function login($library = null){
 					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
-						$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
+						$this->redirect(array('controller' => 'users', 'action' => 'capita'));
 					}elseif($resultAnalysis[0] == "success"){
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
