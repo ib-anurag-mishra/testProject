@@ -160,7 +160,7 @@ if (empty($getData)) {
                         <?php if (!is_array($streamingHours)) { ?>
 
                             <tr>
-                                <th colspan="6" align="center">Total Streamed during Reporting Period</th>
+                                <th colspan="6" align="center">Total Songs Streamed</th>
                             </tr>
                             <tr>
                                 <td colspan="6" align="center">
@@ -179,7 +179,7 @@ if (empty($getData)) {
                             <tr>
 
                                 <td colspan="6" align="center">
-                                    <div style="padding-bottom: 5px;"> <b> Total Streamed during Reporting Period </b> </div>
+                                    <div style="padding-bottom: 5px;"> <b> Total Songs Streamed </b> </div>
 
                                     <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
                                         <tr>
@@ -270,10 +270,10 @@ if (empty($getData)) {
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
                                             <td><?php
-                                                if ($streamInformation['users']['email'] != '') {
-                                                    echo $streamInformation['users']['email'];
-                                                } else {
-                                                    echo $streamInformation['users']['patron_id'];
+                                                if ($streamInformation['StreamingHistory']['patron_id'] != '') {
+                                                   /* echo $streamInformation['StreamingHistory']['email'];
+                                                } else {*/
+                                                    echo $streamInformation['StreamingHistory']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
@@ -302,15 +302,16 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
+    
     foreach ($patronStreamedDetailedInfo as $key => $patronStramed) {
         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php
-                                                if (isset($patronStramed['users']['email']) && $patronStramed['users']['email'] != '') {
-                                                    echo $patronStramed['users']['email'];
-                                                } else {
-                                                    echo $patronStramed['users']['patron_id'];
+                                                if (isset($patronStramed['StreamingHistory']['patron_id']) && $patronStramed['StreamingHistory']['patron_id'] != '') {
+                                                  /*  echo $patronStramed['StreamingHistory']['email'];
+                                                } else {*/
+                                                    echo $patronStramed['StreamingHistory']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
