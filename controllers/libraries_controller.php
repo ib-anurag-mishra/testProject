@@ -150,7 +150,7 @@ Class LibrariesController extends AppController
 
     function admin_libraryform()
     {
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
         {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
@@ -377,7 +377,8 @@ Class LibrariesController extends AppController
                             'Library.facebook_icon',
                             'Library.twiter_icon',
                             'Library.youtube_icon',
-                            'Library.library_unlimited'
+                            'Library.library_unlimited',
+                            'Library.library_type'
                         ),
                         'contain' => array(
                             'User' => array(
@@ -592,11 +593,7 @@ Class LibrariesController extends AppController
                                                 {
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
-                                                
-                                                echo "<pre>";
-                                                print_r($this->data['Library']);
-                                                exit();
-                                                
+                                                                                               
                                                 if ($this->Library->save($this->data['Library']))
                                                 {
                                                     if (count($this->data['Variable']) > 0)
