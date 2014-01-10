@@ -289,7 +289,7 @@ Class LibrariesController extends AppController
 
     function admin_ajax_validate()
     {
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         $this->layout = false;
         if ($this->RequestHandler->isAjax())
         {
@@ -593,7 +593,8 @@ Class LibrariesController extends AppController
                                                 {
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
-                                                                                               
+                                               
+                                                
                                                 if ($this->Library->save($this->data['Library']))
                                                 {
                                                     if (count($this->data['Variable']) > 0)

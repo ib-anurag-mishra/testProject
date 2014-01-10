@@ -23,4 +23,6 @@
 		));
 	}
 	echo $javascript->object($output);
+        
+        echo '<br />'.$this->element('sql_dump');
 ?>
