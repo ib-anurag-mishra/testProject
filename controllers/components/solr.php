@@ -1181,7 +1181,7 @@ echo "<pre>";print_r($additionalParams);*/
         
         echo $searchkeyword;
         
-        $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>"'".$searchkeyword."'")));
+        $data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>"'".$searchkeyword."'")));
         
         echo $synonymsInstance->lastQuery();
         
