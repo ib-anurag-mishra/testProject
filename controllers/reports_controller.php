@@ -26,6 +26,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_index() {
+        Configure::write('debug',2);
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
         //	print_r($this->data);exit;
