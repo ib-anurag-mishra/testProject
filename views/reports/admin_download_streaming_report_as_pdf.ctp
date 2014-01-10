@@ -461,7 +461,7 @@
 			$patron = $stream['StreamingHistory']['patron_id'];
 		}
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
-        $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['users']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
+        $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
     }
     
 
