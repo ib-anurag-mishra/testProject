@@ -466,11 +466,11 @@
     
 
     foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-		if($patronStreamed['users']['email']!=''){
-			$patron_id = $patronStreamed['users']['email'];
+		if($patronStreamed['StreamingHistory']['patron_id']!=''){
+			/*$patron_id = $patronStreamed['users']['email'];
 		}
-		else{
-			$patron_id = $patronStreamed['users']['patron_id'];
+		else{*/
+			$patron_id = $patronStreamed['StreamingHistory']['patron_id'];
 		}
         $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
     }

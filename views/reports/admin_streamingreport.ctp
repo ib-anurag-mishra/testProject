@@ -307,10 +307,10 @@ if (empty($getData)) {
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php
-                                                if (isset($patronStramed['users']['email']) && $patronStramed['users']['email'] != '') {
-                                                    echo $patronStramed['users']['email'];
-                                                } else {
-                                                    echo $patronStramed['users']['patron_id'];
+                                                if (isset($patronStramed['StreamingHistory']['patron_id']) && $patronStramed['StreamingHistory']['patron_id'] != '') {
+                                                  /*  echo $patronStramed['StreamingHistory']['email'];
+                                                } else {*/
+                                                    echo $patronStramed['StreamingHistory']['patron_id'];
                                                 }
                                                 ?>
                                             </td>
