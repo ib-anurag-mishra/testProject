@@ -51,7 +51,7 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedInformation($libraryID, $date, $territory,$reportCond=NULL) {
-        Configure::write('debug',0);
+//        Configure::write('debug',0);
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -136,7 +136,7 @@ class StreamingHistory extends AppModel {
      */
 
     function getDaysStreamedByPetronInformation($libraryID, $date, $territory,$reportCond=NULL) {
-                Configure::write('debug',0);
+//                Configure::write('debug',0);
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -211,7 +211,7 @@ class StreamingHistory extends AppModel {
     }
     
     function getDayStreamingReportingPeriod($libraryID, $date, $territory,$reportCond=NULL) {
-        Configure::write('debug',0);
+//        Configure::write('debug',0);
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -314,7 +314,7 @@ class StreamingHistory extends AppModel {
         }
     }
     function getPatronStreamingDay($libraryID, $date, $territory,$reportCond=NULL) {
-        Configure::write('debug',0);
+//        Configure::write('debug',0);
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
@@ -394,7 +394,7 @@ class StreamingHistory extends AppModel {
     }
     
     function getDaysGenreStramedInformation($libraryID, $date, $territory,$reportCond=NULL) {
-        Configure::write('debug',0);
+//        Configure::write('debug',0);
         if(!is_array($date)){
             $date_arr = explode("/", $date);
             if($reportCond=='day'){
