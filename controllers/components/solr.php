@@ -1183,6 +1183,8 @@ echo "<pre>";print_r($additionalParams);*/
         
         $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>$searchkeyword)));
         
+        echo $synonymsInstance->lastQuery();
+        
         print_r($data);
                 
         if(!empty($data)) {
