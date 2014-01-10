@@ -1214,12 +1214,12 @@ if (empty($getData))
                     <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Library Streaming is Allowed'); ?></td>
                         <td  style="font-size:12px;">
-                            <input id="redio1" type="radio" name="data[Library][library_type]" value="2" class="form_fields" onClick="get_purFields('2');" <?php
-                            if ($getData['Library']['library_unlimited'] == 2)
+                            <input id="redio1" type="radio" name="data[Library][library_type]" value="2" class="form_fields" <?php
+                            if ($getData['Library']['library_type'] == 2)
                             {
                                 ?> checked="checked" <?php } ?>> Allowed
-                            <input id="redio2" type="radio" name="data[Library][library_type]" value="1" class="form_fields" onClick="get_purFields('1');" <?php
-                            if ($getData['Library']['library_unlimited'] == 1)
+                            <input id="redio2" type="radio" name="data[Library][library_type]" value="1" class="form_fields"  <?php
+                            if ($getData['Library']['library_type'] == 1)
                             {
                                 ?> checked="checked" <?php } ?>> Not Allowed
                         </td>
