@@ -266,7 +266,7 @@
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Total Downloads during Reporting Period', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -454,11 +454,11 @@
 
     //Data loading
     foreach($dayStreamingInfo as $key => $stream) {
-		if($stream['users']['email']!=''){
-			$patron = $stream['users']['email'];
+		if($stream['StreamingHistory']['patron_id']!=''){
+			/*$patron = $stream['users']['email'];
 		}
-		else{
-			$patron = $stream['users']['patron_id'];
+		else{*/
+			$patron = $stream['StreamingHistory']['patron_id'];
 		}
         $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
         $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['users']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));

@@ -119,11 +119,11 @@ $line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'S
 $csv->addRow($line);
 
 foreach($dayStreamingInfo as $key => $stream) {
-	if($stream['users']['email']!=''){
-		$patron = $stream['users']['email'];
+	if($stream['StreamingHistory']['patron_id']!=''){
+		/*$patron = $stream['users']['email'];
 	}
-	else{
-		$patron = $stream['users']['patron_id'];
+	else{*/
+		$patron = $stream['StreamingHistory']['patron_id'];
 	}
     $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
     $line = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
