@@ -1972,7 +1972,6 @@ function ajaxSearch() {
             callSearchAjax();
         },
         error: function() {
-            alert('Problem fetching data');
         }
     });
     
