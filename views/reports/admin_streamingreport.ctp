@@ -270,9 +270,9 @@ if (empty($getData)) {
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
                                             <td><?php
-                                                if ($streamInformation['StreamingHistory']['email'] != '') {
-                                                    echo $streamInformation['StreamingHistory']['email'];
-                                                } else {
+                                                if ($streamInformation['StreamingHistory']['patron_id'] != '') {
+                                                   /* echo $streamInformation['StreamingHistory']['email'];
+                                                } else {*/
                                                     echo $streamInformation['StreamingHistory']['patron_id'];
                                                 }
                                                 ?>
