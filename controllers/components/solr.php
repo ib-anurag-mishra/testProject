@@ -108,8 +108,9 @@ class SolrComponent extends Object {
                 
                 $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>$searchkeyword)));
                 
-                if(!empty($data)){
-                    print_r($data); die;
+                if(!empty($data)) {
+                    $searchkeyword = utf8_encode($data['Synonym']['replacement_text']);
+                    echo $searchkeyword; die;
                 }
                 
             
