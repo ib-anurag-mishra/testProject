@@ -1183,7 +1183,7 @@ echo "<pre>";print_r($additionalParams);*/
         
         $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>$searchkeyword)));
         
-        echo $data;
+        print_r($data);
                 
         if(!empty($data)) {
             //$searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
