@@ -7,8 +7,7 @@
 ?>
 <?php
 $this->pageTitle = 'Libraries';
-echo $this->Form->create('Library', array('action' => $formAction, 'type' => 'file', 'id' => 'LibraryAdminForm')
-);
+echo $this->Form->create('Library', array('action' => $formAction, 'type' => 'file', 'id' => 'LibraryAdminForm'));
 if (empty($getData))
 {
     $getData['Library']['id'] = "";

@@ -164,11 +164,7 @@ Class LibrariesController extends AppController
                 $this->set('formAction', 'admin_libraryform/id:' . $libraryId);
                 $this->set('formHeader', 'Edit Library');
                 $this->Library->Behaviors->attach('Containable');
-                $getData = $this->Library->find('first', array(
-                    'conditions' =>
-                    array(
-                        'Library.id' => $libraryId
-                    ),
+                $getData = $this->Library->find('first', array('conditions' => array('Library.id' => $libraryId),
                     'fields' => array(
                         'Library.id',
                         'Library.library_name',
@@ -289,7 +285,7 @@ Class LibrariesController extends AppController
 
     function admin_ajax_validate()
     {
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         $this->layout = false;
         if ($this->RequestHandler->isAjax())
         {
@@ -378,7 +374,7 @@ Class LibrariesController extends AppController
                             'Library.twiter_icon',
                             'Library.youtube_icon',
                             'Library.library_unlimited',
-                            'Library.library_type'
+                             'Library.library_type'
                         ),
                         'contain' => array(
                             'User' => array(
@@ -593,10 +589,13 @@ Class LibrariesController extends AppController
                                                 {
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
-                                               
                                                 
                                                 if ($this->Library->save($this->data['Library']))
                                                 {
+                                                    $this->Library->id =  $this->data['Library']['id'];
+                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
+                                                    $this->Library->save();
+                                                    
                                                     if (count($this->data['Variable']) > 0)
                                                     {
                                                         if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
