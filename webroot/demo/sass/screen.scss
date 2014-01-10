@@ -11,6 +11,7 @@
 @import "compass/css3/box-shadow";
 @import "compass/css3/box-sizing";
 @import "compass/css3/opacity";
+@import "compass/css3/transition";
 
 
 
@@ -62,10 +63,7 @@ button,select,input {
 
 
 
-html,body {
-	
-	/* height: 100%; */
-}
+
 body {
 	
 	font-family: Helvetica, Arial, sans-serif;
@@ -161,9 +159,11 @@ body {
 					position: absolute;
 					left: 12px;
 					top:6px;
+					
 					@media screen and (max-width:1305px) {
 						
 						margin-left: 5px;
+						
 					}
 				}
 				
@@ -208,6 +208,8 @@ body {
 				@media screen and (max-width:1305px) {
 					
 					margin-left: 0;
+					
+					
 				}
 				
 				
@@ -250,6 +252,7 @@ body {
 					@media screen and (max-width:1305px) {
 						
 						margin-left: 0;
+						
 					}
 					
 					&:hover {
@@ -274,6 +277,8 @@ body {
 					@media screen and (max-width:1305px) {
 						
 						left: 0;
+						
+						
 					}
 					
 					&.active {
@@ -459,6 +464,8 @@ body {
 				@media screen and (max-width:1305px) {
 					
 					width: 330px;
+					
+					
 				}
 				
 				.master-search-select {
@@ -475,10 +482,13 @@ body {
 					width: 130px;
 					border-right: 1px solid #b1d3e0;
 					
+					
 					@media screen and (max-width:1305px) {
 						
 						padding: 6px 12px;
 						width: 110px;
+						
+						
 					}
 					
 					&:hover {
@@ -499,9 +509,12 @@ body {
 					background: url(../images/freegal_sprite.png) no-repeat -40px 0;
 					content: "";
 					
+					
 					@media screen and (max-width:1305px) {
 						
 						left: 94px;
+						
+						
 					}
 				}
 				
@@ -520,6 +533,8 @@ body {
 					@media screen and (max-width:1305px) {
 						
 						left: 117px;
+						
+						
 					}					
 
 				}
@@ -533,8 +548,10 @@ body {
 					height: 27px;
 					vertical-align: top;
 					
+					
 					@media screen and (max-width:1305px) { 
 						width: 215px;
+						
 					}
 					
 					.search-text {
@@ -549,6 +566,7 @@ body {
 						
 						@media screen and (max-width:1305px) { 
 							width: 135px;
+							
 						}
 
 					}
@@ -582,8 +600,10 @@ body {
 	@include background-image(linear-gradient(#5cc9ed, #4fbde1));
 	position: relative;
 	height: 33px;
+/*
 	border-top:1px solid #84d7f2;
 	border-bottom: 1px solid #a7def0;
+*/
 	
 	ul {
 		
@@ -606,18 +626,21 @@ body {
 				text-align: center;
 				text-transform: uppercase;
 				font-size: 13px;
+				@include background-image(linear-gradient(#5cc9ed, #4fbde1));
 				
+				&:hover {
+					
+					
+					@include background-image(linear-gradient(#a7def0, #a7def0));
+				}
 
 			}
 			
-			&:last-child {
-				
-				a {
-					padding-right: 0;
-				}
-			}
+
 		}
 	}
+	
+
 	
 }
 
@@ -774,13 +797,14 @@ body {
 		background: url(../images/content-bkg.gif) repeat;
 
 		padding:25px 40px 25px 212px;
+		min-height: 1000px;
 
 		.featured-artists,.featured-composers,.featured-themes {
 			
 			margin-top: 28px;
 		}
 		
-		.top-albums,.featured-artists,.featured-composers,.featured-themes {
+		.top-albums {
 		
 			position: relative;
 			
@@ -866,6 +890,73 @@ body {
 								width: 162px;
 								height: 162px;
 								
+								position: relative;
+								
+								.playlist-menu-icon {
+									
+									position: absolute;
+									left: 5px;
+									top: 5px;
+									width: 20px;
+									height: 20px;
+									background: url(../images/freegal_sprite.png) -120px -50px;
+									display: none;
+									
+									&:hover {
+										
+										background: url(../images/freegal_sprite.png) -140px -50px;
+									}
+									
+									&.active {
+										
+										display: block;
+									}
+								}
+								
+								> ul {
+									
+									position: absolute;
+									left: 26px;
+									top:5px;
+									width: 130px;
+									max-height: 151px;
+									overflow-y: scroll;
+									display: none;
+									
+									&.active {
+										
+										display: block;
+									}
+									> li {
+										display: block;
+										background: #fff;
+										float: none;
+										margin-bottom: 0;
+										width: 100%;
+										a {
+											display: block;
+											padding:5px;
+											border-bottom: 1px solid rgba(0,0,0,.1);
+											text-decoration: none;
+											color:#000;
+											font-size: 10px;
+											
+											&:hover {
+												
+												background:#66ccff;
+												border-bottom: 1px solid #5cb7e5;
+												color: #fff;
+												
+											}
+											
+											&.create-new-playlist {
+												
+												font-weight: bold;
+											}
+										}
+						
+									}
+								}
 								img {
 									
 									width: 162px;
@@ -921,7 +1012,20 @@ body {
 		
 		.top-songs {
 			margin-top: 20px;
-			padding-bottom: 500px;
+			position: relative;
+			padding-bottom: 40px;
+			
+			&::after {
+				
+				position: absolute;
+				content: "";
+				bottom:0;
+				left: 0;
+				background: url(../images/gray-dotted-border-rpt.png) repeat-x;
+				width: 100%;
+				height: 3px;
+			}
+			
 			h2 {
 				
 				font-size: 24px;
@@ -1094,6 +1198,148 @@ body {
 			
 
 			
+		}
+		
+		.featured-artists {
+			
+			h2 {
+				
+				font-size: 24px;
+			}
+			
+			.featured-artists-grid {
+				
+				margin-top: 10px;
+
+
+			}
+			
+			.featured-grid-item {
+				
+				display: block;
+				float: left;
+				position: relative;
+				overflow: hidden;
+				margin-right: 10px;
+				margin-bottom: 10px;
+				img {
+					
+					width: 162px;
+					height: 162px;
+					@include box-shadow(0 0 4px rgba(0,0,0,.5));
+
+				}
+				
+				.featured-grid-menu {
+					background: rgb(0,0,0);
+					background: rgba(0,0,0,.8);
+					
+					color: #fff;
+					position: absolute;
+					bottom:-34px;
+					
+					left: 0;
+					width: 100%;
+					height: 65px;
+
+					@include single-transition(bottom,500ms);
+					
+
+					&.active {
+						
+						bottom:0;
+						@include single-transition(bottom,500ms);
+					}
+					
+					.featured-artist-name {
+						
+						font-size: 14px;
+						font-weight: bold;
+						padding: 10px;
+						@include box-sizing(border-box);
+						
+						position: relative;
+						
+						&::before {
+							
+							content: "";
+							position: absolute;
+							width: 153px;
+							height: 3px;
+							left: 4px;
+							bottom:0;
+							background: url(../images/featured-menu-border-rpt.png) repeat;
+						}
+					}
+					
+					.featured-artist-ctas {
+						margin-top: 5px;
+						position: relative;
+						
+
+						button {
+							
+							background: #d3d1cf;
+							@include border-radius(5px);
+							position: relative;
+							vertical-align: top;
+							
+							&:hover {
+								
+								@include background-image(linear-gradient(white, #f4f4f4));
+							}	
+							&:active {
+								
+								@include background-image(linear-gradient(#ccc, #f4f4f4));
+							}							
+							
+							&.stream-artist {
+								font-size: 11px;
+								font-weight: bold;
+								width:120px;
+								height: 20px;
+								margin-left: 4px;
+								padding-left: 22px;
+								font-family: Helvetica, Arial, sans-serif;
+								
+
+								
+								&::before {
+									
+									content: "";
+									position: absolute;
+									left: 4px;
+									top:4px;
+									background: url(../images/freegal_sprite.png) 0 0;
+									width: 19px;
+									height: 13px;
+								}
+								
+							}
+							
+							&.more-by-artist {
+								width: 30px;
+								height: 20px;
+								margin-left: 3px;
+								&::before {
+									
+									background: url(../images/freegal_sprite.png) -180px -20px no-repeat;
+									content: "";
+									position: absolute;
+									left: 7px;
+									top:3px;
+									width: 16px;
+									height: 14px;
+								}
+								
+							}
+						}
+
+					}
+				}
+			}
+			
+
 		}
 	}
 }
