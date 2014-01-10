@@ -110,7 +110,7 @@ class SolrComponent extends Object {
                 
                 if(!empty($data)) {
                     $searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
-                    echo $searchkeyword; die;
+                    //echo $searchkeyword; die;
                 }
                 
             
