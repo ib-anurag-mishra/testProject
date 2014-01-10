@@ -1183,7 +1183,7 @@ echo "<pre>";print_r($additionalParams);*/
                 
         if(!empty($data)) {
             //$searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
-            $searchkeyword = $data['Synonym']['replacement_text']." OR ".$searchkeyword;
+            $searchkeyword = $data['Synonym']['replacement_text']."^100000 OR ".$searchkeyword;
             //echo $searchkeyword; die;
         }
         return $searchkeyword;
