@@ -238,8 +238,7 @@ Class LibrariesController extends AppController
                         'Library.library_unlimited',
                         'Library.library_exp_date_format',
                         'Library.is_sip_over_ssh',
-                        'Library.library_sip_command',
-                        'Library.library_type'
+                        'Library.library_sip_command'
                     ),
                     'contain' => array(
                         'User' => array(
@@ -373,8 +372,7 @@ Class LibrariesController extends AppController
                             'Library.facebook_icon',
                             'Library.twiter_icon',
                             'Library.youtube_icon',
-                            'Library.library_unlimited',
-                             'Library.library_type'
+                            'Library.library_unlimited'
                         ),
                         'contain' => array(
                             'User' => array(
@@ -591,10 +589,7 @@ Class LibrariesController extends AppController
                                                 }
                                                 
                                                 if ($this->Library->save($this->data['Library']))
-                                                {
-                                                    $this->Library->id =  $this->data['Library']['id'];
-                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
-                                                    $this->Library->save();
+                                                {                                        
                                                     
                                                     if (count($this->data['Variable']) > 0)
                                                     {

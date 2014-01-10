@@ -88,7 +88,7 @@ if (empty($getData))
 
     $getData['Library']['library_language'] = 'en';
     $getData['Library']['library_exp_date_format'] = '';
-    $getData['Library']['library_type'] = '1';
+//    $getData['Library']['library_type'] = '1';
 }
 ?>
 <fieldset>
@@ -1210,7 +1210,7 @@ if (empty($getData))
                                 ?> checked="checked" <?php } ?>>Unlimited
                         </td>
                     </tr>
-                    <tr>
+<!--                    <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Library Streaming is Allowed'); ?></td>
                         <td  style="font-size:12px;">
                             <input id="redio1" type="radio" name="data[Library][library_type]" value="2" class="form_fields" <?php
@@ -1222,7 +1222,7 @@ if (empty($getData))
                             {
                                 ?> checked="checked" <?php } ?>> Not Allowed
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Create a New Contract'); ?></td>
                         <td>
