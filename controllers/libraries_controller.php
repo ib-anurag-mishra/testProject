@@ -593,16 +593,9 @@ Class LibrariesController extends AppController
                                                 {
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
-                                               
-                                               try
-                                               {
-                                                   $this->Library->save($this->data['Library']);
-                                               }catch(Exception $e)
-                                               {
-                                                   $e->getMessage();
-                                               }
-                                               
-                                                die ;
+                                                                  
+                                                $this->Library->library_type = $this->data['Library']['library_type'];
+                                                unset($this->data['Library']['library_type']);
                                                 
                                                 if ($this->Library->save($this->data['Library']))
                                                 {
