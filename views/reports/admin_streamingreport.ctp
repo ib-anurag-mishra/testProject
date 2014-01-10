@@ -302,6 +302,7 @@ if (empty($getData)) {
                                     </tr>
     <?php
     $i = 1;
+    
     foreach ($patronStreamedDetailedInfo as $key => $patronStramed) {
         ?>
                                         <tr>
