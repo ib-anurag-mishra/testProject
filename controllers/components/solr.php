@@ -103,6 +103,15 @@ class SolrComponent extends Object {
                 }
             
                 $searchkeyword = strtolower($this->escapeSpace($keyword));
+                
+                $synonymsInstance = ClassRegistry::init('Synonym');
+                
+                $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>$searchkeyword)));
+                
+                if(!empty($data)){
+                    print_r($data); die;
+                }
+                
             
             
                 if (!isset(self::$solr))
