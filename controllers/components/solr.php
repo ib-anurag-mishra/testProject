@@ -1182,7 +1182,8 @@ echo "<pre>";print_r($additionalParams);*/
         $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>$searchkeyword)));
                 
         if(!empty($data)) {
-            $searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
+            //$searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
+            $searchkeyword = $data['Synonym']['replacement_text'];
             //echo $searchkeyword; die;
         }
         return $searchkeyword;
