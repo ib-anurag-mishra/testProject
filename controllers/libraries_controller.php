@@ -238,7 +238,8 @@ Class LibrariesController extends AppController
                         'Library.library_unlimited',
                         'Library.library_exp_date_format',
                         'Library.is_sip_over_ssh',
-                        'Library.library_sip_command'
+                        'Library.library_sip_command',
+                        'Library.library_type'
                     ),
                     'contain' => array(
                         'User' => array(
