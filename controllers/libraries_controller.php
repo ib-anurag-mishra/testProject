@@ -372,7 +372,8 @@ Class LibrariesController extends AppController
                             'Library.facebook_icon',
                             'Library.twiter_icon',
                             'Library.youtube_icon',
-                            'Library.library_unlimited'
+                            'Library.library_unlimited',
+                             'Library.library_type'
                         ),
                         'contain' => array(
                             'User' => array(
@@ -590,6 +591,9 @@ Class LibrariesController extends AppController
                                                 
                                                 if ($this->Library->save($this->data['Library']))
                                                 {                                        
+                                                    $this->Library->id =  $this->data['Library']['id'];
+                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
+                                                    $this->Library->save();
                                                     
                                                     if (count($this->data['Variable']) > 0)
                                                     {
