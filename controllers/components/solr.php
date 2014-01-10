@@ -103,16 +103,8 @@ class SolrComponent extends Object {
                 }
             
                 $searchkeyword = strtolower($this->escapeSpace($keyword));
-                
-                $synonymsInstance = ClassRegistry::init('Synonym');
-                
-                $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>$searchkeyword)));
-                
-                if(!empty($data)) {
-                    $searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
-                    //echo $searchkeyword; die;
-                }
-                
+            
+                $searchkeyword = $this->checkSearchKeyword($searchkeyword);
             
             
                 if (!isset(self::$solr))
@@ -368,6 +360,8 @@ class SolrComponent extends Object {
                 }
     
                 $searchkeyword = strtolower($this->escapeSpace($keyword));
+                
+                $searchkeyword = $this->checkSearchKeyword($searchkeyword);
             
                 if (!isset(self::$solr)) {
                     $connectedToSolr = false;
@@ -506,6 +500,8 @@ class SolrComponent extends Object {
             }
             
             $searchkeyword = strtolower($this->escapeSpace($keyword));
+            
+            $searchkeyword = $this->checkSearchKeyword($searchkeyword);
         
             if (!isset(self::$solr)) {
                 $connectedToSolr = false;
@@ -660,7 +656,10 @@ echo "<pre>";print_r($additionalParams);*/
                         }
                     }            
                 }
+                
                 $searchkeyword = strtolower($this->escapeSpace($keyword));
+                
+                $searchkeyword = $this->checkSearchKeyword($searchkeyword);
                 
                 if (!isset(self::$solr)) {
                     $connectedToSolr = false;
@@ -814,6 +813,8 @@ echo "<pre>";print_r($additionalParams);*/
                 }
                 
                 $searchkeyword = strtolower($this->escapeSpace($keyword));
+                
+                $searchkeyword = $this->checkSearchKeyword($searchkeyword);
                 
                 if (!isset(self::$solr))
                 {
@@ -981,6 +982,9 @@ echo "<pre>";print_r($additionalParams);*/
             }
         
             $searchkeyword = strtolower($this->escapeSpace($keyword));
+            
+            $searchkeyword = $this->checkSearchKeyword($searchkeyword);
+            
             $char = substr($keyword, 0, 1);
         
         
@@ -1169,6 +1173,19 @@ echo "<pre>";print_r($additionalParams);*/
     function escapeSpace($keyword) {
         $keyword = str_replace(array('(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $keyword); // for edismax
         return $keyword;
+    }
+    
+    function checkSearchKeyword($searchkeyword)
+    {
+        $synonymsInstance = ClassRegistry::init('Synonym');
+                
+        $data = $synonymsInstance->find('first',array('condition'=>array('searched_text'=>$searchkeyword)));
+                
+        if(!empty($data)) {
+            $searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
+            //echo $searchkeyword; die;
+        }
+        return $searchkeyword;
     }
 
 }
