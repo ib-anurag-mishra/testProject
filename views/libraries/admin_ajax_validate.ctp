@@ -4,6 +4,7 @@
  File Description : View page for admin layout
  Author : m68interactive
  */
+$this->element('sql_dump');
 ?>
 <?php
 	$output = array();
