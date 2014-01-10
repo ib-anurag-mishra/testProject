@@ -220,7 +220,7 @@ class Download extends AppModel
    Desc : lists all the downloads for for the selected day
   */
   function getDaysDownloadInformation($libraryID, $date, $territory) {
-    Configure::write('debug',2);
+    
     if($libraryID == "all") {
 		  
       $all_Ids = '';
