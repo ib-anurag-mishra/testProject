@@ -1179,14 +1179,8 @@ echo "<pre>";print_r($additionalParams);*/
     {
         $synonymsInstance = ClassRegistry::init('Synonym');
         
-        echo $searchkeyword;
-        
         $data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>"'".$searchkeyword."'")));
         
-        echo $synonymsInstance->lastQuery();
-        
-        print_r($data);
-                
         if(!empty($data)) {
             //$searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
             $searchkeyword = $data['Synonym']['replacement_text'];
