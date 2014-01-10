@@ -595,6 +595,8 @@ Class LibrariesController extends AppController
                                                 }
                                                
                                                 
+                                                $this->Library->query('SET SQL_SAFE_UPDATES=0;');
+                                                
                                                 if ($this->Library->save($this->data['Library']))
                                                 {
                                                     if (count($this->data['Variable']) > 0)
