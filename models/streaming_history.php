@@ -261,20 +261,14 @@ class StreamingHistory extends AppModel {
                     'conditions' => array('lib.id=StreamingHistory.library_id')
                 ),
                 array(
-                    'table' => 'users',
-                    'alias' => 'users',
-                    'type' => 'left',
-                    'conditions' => array('StreamingHistory.library_id=users.library_id')
-                ),
-                array(
                     'table' => 'Songs',
                     'alias' => 'songs',
                     'type' => 'left',
                     'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
                 )
              ),
-            'fields' => array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','users.email','StreamingHistory.createdOn'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'),
+            'fields' => array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','StreamingHistory.createdOn'),
+            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null),'songs.provider_type=StreamingHistory.provider_type'),
             'recursive' => -1);
 
             return $this->find('all', $qryArr);
@@ -296,20 +290,14 @@ class StreamingHistory extends AppModel {
                         'conditions' => array('lib.id=StreamingHistory.library_id')
                     ),
                     array(
-                        'table' => 'users',
-                        'alias' => 'users',
-                        'type' => 'left',
-                        'conditions' => array('StreamingHistory.library_id=users.library_id')
-                    ),
-                    array(
                         'table' => 'Songs',
                         'alias' => 'songs',
                         'type' => 'left',
                         'conditions' => array('StreamingHistory.ProdID=songs.ProdID')
                     )
                  ),
-                'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.patron_id=users.id','songs.provider_type=StreamingHistory.provider_type'),
-                'fields'=>array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','users.email','StreamingHistory.createdOn'),
+                'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'songs.provider_type=StreamingHistory.provider_type'),
+                'fields'=>array('StreamingHistory.library_id','StreamingHistory.patron_id','songs.artist','songs.SongTitle As track_title','StreamingHistory.createdOn'),
                 'recursive' => -1));
         }
     }
