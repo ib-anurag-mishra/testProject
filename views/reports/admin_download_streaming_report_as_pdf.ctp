@@ -163,7 +163,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Total Songs Streamed', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -194,7 +194,7 @@
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Total Songs Streamed', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -231,7 +231,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Total Songs Streamed', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);

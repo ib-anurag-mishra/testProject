@@ -33,7 +33,7 @@ $csv->addRow($line);*/
 
 if(!is_array($streamingHours)) {
   
-  $line = array('Total Streamed during Reporting Period');
+  $line = array('Total Songs Streamed');
   $csv->addRow($line);
 
   $line = array('Total Streamed (Number of Songs)');
@@ -47,7 +47,7 @@ if(!is_array($streamingHours)) {
  
 } else {
   
-  $line = array('Total Streamed during Reporting Period');
+  $line = array('Total Songs Streamed');
   $csv->addRow($line);
   
   $line = array('', 'Library Name', 'Total Streamed (Number of Songs)');
