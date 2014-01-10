@@ -289,7 +289,7 @@ Class LibrariesController extends AppController
 
     function admin_ajax_validate()
     {
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
         $this->layout = false;
         if ($this->RequestHandler->isAjax())
         {
