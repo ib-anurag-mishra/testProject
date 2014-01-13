@@ -160,7 +160,7 @@ if (empty($getData)) {
                         <?php if (!is_array($streamingHours)) { ?>
 
                             <tr>
-                                <th colspan="6" align="center">Total Songs Streamed</th>
+                                <th colspan="6" align="center">Total Songs Streamed<?php echo $getData['Report']['library_id']?></th>
                             </tr>
                             <tr>
                                 <td colspan="6" align="center">
