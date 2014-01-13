@@ -160,7 +160,7 @@ if (empty($getData)) {
                         <?php if (!is_array($streamingHours)) { ?>
 
                             <tr>
-                                <th colspan="6" align="center">Total Songs Streamed<?php echo $getData['Report']['library_id'];?></th>
+                                <th colspan="6" align="center">Total Songs Streamed<?php echo $getData['Report']['library_id']?></th>
                             </tr>
                             <tr>
                                 <td colspan="6" align="center">
@@ -184,9 +184,7 @@ if (empty($getData)) {
                                     <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
                                         <tr>
                                             <th align="center"> &nbsp; </th>
-                                            <?php if(!$getData['Report']['library_id']):?>
                                             <th align="center"> Library name </th>
-                                            <?php endif; ?>
                                             <th align="center"> Total Streamed </th>
                                         </tr>
 
@@ -197,9 +195,7 @@ if (empty($getData)) {
 
                                             <tr>
                                                 <td> <?php echo $index; ?> </td>
-                                                <?php if(!$getData['Report']['library_id']):?>
                                                 <td> <?php echo $val['lib']['library_name']; ?> </td>
-                                                <?php endif; ?>
                                                 <td align="center"> <?php echo $val['0']['total_count']; ?> </td>
                                             </tr>
 
@@ -230,9 +226,7 @@ if (empty($getData)) {
                                     <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
                                         <tr>
                                             <th align="center"> &nbsp; </th>
-                                            <?php if(!$getData['Report']['library_id']):?>
                                             <th align="center"> Library name </th>
-                                            <?php endif; ?>
                                             <th align="center"> Total Patrons </th>
                                         </tr>
 
@@ -243,9 +237,7 @@ if (empty($getData)) {
 
                                             <tr>
                                                 <td> <?php echo $index; ?> </td>
-                                                <?php if(!$getData['Report']['library_id']):?>
                                                 <td> <?php echo $val['lib']['library_name']; ?> </td>
-                                                <?php endif; ?>
                                                 <td align="center"> <?php echo $val['0']['total_patrons']; ?> </td>
                                             </tr>
 
@@ -263,7 +255,9 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
+                                        <?php if(!$getData['Report']['library_id']):?>
                                         <th>Library Name</th>
+                                        <?php endif; ?>
                                         <th>Patron ID</th>
                                         <th>Artists Name</th>
                                         <th>Track Title</th>
@@ -276,7 +270,9 @@ if (empty($getData)) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
+                                            <?php if(!$getData['Report']['library_id']):?>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
+                                            <?php endif; ?>
                                             <td><?php
                                                 if ($streamInformation['StreamingHistory']['patron_id'] != '') {
                                                    /* echo $streamInformation['StreamingHistory']['email'];
@@ -323,7 +319,9 @@ if (empty($getData)) {
                                                 }
                                                 ?>
                                             </td>
+                                            <?php if(!$getData['Report']['library_id']):?>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
+                                            <?php endif; ?>
                                             <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
                                         </tr>
         <?php
