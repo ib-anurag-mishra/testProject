@@ -1902,8 +1902,8 @@ Class ArtistsController extends AppController
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
-        
-        
+
+
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
@@ -1945,52 +1945,49 @@ Class ArtistsController extends AppController
 
         $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
 
-        $this->paginate =
+        $albumData = $this->Album->find(
+                'all', array(
+            'conditions' =>
+            array(
+                'and' =>
                 array(
-                    'conditions' =>
-                    array(
-                        'and' =>
-                        array(
-                            $condition
-                        ),
-                        "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
-                    ),
+                    $condition
+                ),
+                "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+            ),
+            'fields' => array(
+                'Album.ProdID',
+                'Album.Title',
+                'Album.ArtistText',
+                'Album.AlbumTitle',
+                'Album.Advisory',
+                'Album.Artist',
+                'Album.ArtistURL',
+                'Album.Label',
+                'Album.Copyright',
+                'Album.provider_type',
+                'Files.CdnPath',
+                'Files.SaveAsName',
+                'Files.SourceURL',
+                'Genre.Genre'
+            ),
+            'contain' => array(
+                'Genre' => array(
                     'fields' => array(
-                        'Album.ProdID',
-                        'Album.Title',
-                        'Album.ArtistText',
-                        'Album.AlbumTitle',
-                        'Album.Advisory',
-                        'Album.Artist',
-                        'Album.ArtistURL',
-                        'Album.Label',
-                        'Album.Copyright',
-                        'Album.provider_type',
+                        'Genre.Genre'
+                    )
+                ),
+                'Files' => array(
+                    'fields' => array(
                         'Files.CdnPath',
                         'Files.SaveAsName',
-                        'Files.SourceURL',
-                        'Genre.Genre'
+                        'Files.SourceURL'
                     ),
-                    'contain' => array(
-                        'Genre' => array(
-                            'fields' => array(
-                                'Genre.Genre'
-                            )
-                        ),
-                        'Files' => array(
-                            'fields' => array(
-                                'Files.CdnPath',
-                                'Files.SaveAsName',
-                                'Files.SourceURL'
-                            ),
-                        )
-                    ),
-                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
-        );
+                )
+            ),
+            'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
+        ));
 
-        $this->paginate['limit'] = 20;
-        $this->Album->recursive = 0;
-        $albumData = $this->paginate('Album');
 
         if ($libType == 2)
         {
@@ -2006,7 +2003,7 @@ Class ArtistsController extends AppController
         {
             $this->autoLayout = false;
             $this->autoRender = false;
-            
+
             echo $this->render('/artists/artist_album_ajax');
             die;
         }
