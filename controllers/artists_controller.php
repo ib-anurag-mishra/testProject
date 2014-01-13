@@ -1884,14 +1884,7 @@ Class ArtistsController extends AppController
             }
         }
 
-        if (isset($this->params['named']['page']))
-        {
-            $this->layout = 'ajax';
-        }
-        else
-        {
-            $this->layout = 'home';
-        }
+        $this->layout = 'home';
 
         $id = str_replace('@', '/', $id);
         $this->set('artisttext', base64_decode($id));
@@ -1998,17 +1991,6 @@ Class ArtistsController extends AppController
         }
 
         $this->set('albumData', $albumData);
-
-        if (isset($this->params['named']['page']))
-        {
-            $this->autoLayout = false;
-            $this->autoRender = false;
-
-            echo $this->render('/artists/artist_album_ajax');
-            die;
-        }
-
-
 
 
         // Videos Section
