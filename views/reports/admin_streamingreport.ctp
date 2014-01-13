@@ -160,7 +160,7 @@ if (empty($getData)) {
                         <?php if (!is_array($streamingHours)) { ?>
 
                             <tr>
-                                <th colspan="6" align="center">Total Songs Streamed<?php echo $getData['Report']['library_id']?></th>
+                                <th colspan="6" align="center">Total Songs Streamed</th>
                             </tr>
                             <tr>
                                 <td colspan="6" align="center">
@@ -184,7 +184,9 @@ if (empty($getData)) {
                                     <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
                                         <tr>
                                             <th align="center"> &nbsp; </th>
+                                            <?php if(!$getData['Report']['library_id']):?>
                                             <th align="center"> Library name </th>
+                                            <?php endif; ?>
                                             <th align="center"> Total Streamed </th>
                                         </tr>
 
@@ -195,7 +197,9 @@ if (empty($getData)) {
 
                                             <tr>
                                                 <td> <?php echo $index; ?> </td>
+                                                <?php if(!$getData['Report']['library_id']):?>
                                                 <td> <?php echo $val['lib']['library_name']; ?> </td>
+                                                <?php endif; ?>
                                                 <td align="center"> <?php echo $val['0']['total_count']; ?> </td>
                                             </tr>
 
@@ -226,7 +230,9 @@ if (empty($getData)) {
                                     <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
                                         <tr>
                                             <th align="center"> &nbsp; </th>
+                                            <?php if(!$getData['Report']['library_id']):?>
                                             <th align="center"> Library name </th>
+                                            <?php endif; ?>
                                             <th align="center"> Total Patrons </th>
                                         </tr>
 
@@ -237,7 +243,9 @@ if (empty($getData)) {
 
                                             <tr>
                                                 <td> <?php echo $index; ?> </td>
+                                                <?php if(!$getData['Report']['library_id']):?>
                                                 <td> <?php echo $val['lib']['library_name']; ?> </td>
+                                                <?php endif; ?>
                                                 <td align="center"> <?php echo $val['0']['total_patrons']; ?> </td>
                                             </tr>
 
