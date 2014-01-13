@@ -115,21 +115,37 @@ if(!is_array($patronStreamedInfo)) {
 $line = array('Library Streaming Report');
 $csv->addRow($line);
 
-$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
-$csv->addRow($line);
-
-foreach($dayStreamingInfo as $key => $stream) {
-	if($stream['StreamingHistory']['patron_id']!=''){
-		/*$patron = $stream['users']['email'];
-	}
-	else{*/
-		$patron = $stream['StreamingHistory']['patron_id'];
-	}
-    $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
-    $line = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
-    $csv->addRow($line);
+if($this->data['Report']['library_id'] == "all") {
+    $line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+}else{
+    $line = array('', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
 }
-
+$csv->addRow($line);
+if($this->data['Report']['library_id'] == "all") {
+    foreach($dayStreamingInfo as $key => $stream) {
+            if($stream['StreamingHistory']['patron_id']!=''){
+                    /*$patron = $stream['users']['email'];
+            }
+            else{*/
+                    $patron = $stream['StreamingHistory']['patron_id'];
+            }
+        $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+        $line = array($key+1, $libraryName,$patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
+        $csv->addRow($line);
+    }
+}else{
+    foreach($dayStreamingInfo as $key => $stream) {
+            if($stream['StreamingHistory']['patron_id']!=''){
+                    /*$patron = $stream['users']['email'];
+            }
+            else{*/
+                    $patron = $stream['StreamingHistory']['patron_id'];
+            }
+//        $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+        $line = array($key+1,  $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['StreamingHistory']['createdOn'])));
+        $csv->addRow($line);
+    }
+}
 
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
@@ -137,20 +153,38 @@ $csv->addRow($line);
 $line = array('Patron Streaming Report');
 $csv->addRow($line);
 
-$line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+if($this->data['Report']['library_id'] == "all") {
+    $line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+}else{
+    $line = array('', 'Patron ID', 'Total Number of Tracks Downloaded');
+}
 $csv->addRow($line);
 
-foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-	if($patronStreamed['StreamingHistory']['patron_id']!=''){
-		/*$patron_id = $patronStreamed['users']['email'];
-	}
-	else{*/
-		$patron_id = $patronStreamed['StreamingHistory']['patron_id'];
-	}
-    $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
-    $csv->addRow($line);
-}
+if($this->data['Report']['library_id'] == "all") {
+    foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
+            if($patronStreamed['StreamingHistory']['patron_id']!=''){
+                    /*$patron_id = $patronStreamed['users']['email'];
+            }
+            else{*/
+                    $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
+            }
 
+        $line = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])),($patronStreamed[0]['total_streamed_songs']));
+        $csv->addRow($line);
+    }
+}else{
+    foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
+            if($patronStreamed['StreamingHistory']['patron_id']!=''){
+                    /*$patron_id = $patronStreamed['users']['email'];
+            }
+            else{*/
+                    $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
+            }
+
+        $line = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
+        $csv->addRow($line);
+    }
+}
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
 

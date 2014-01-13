@@ -301,7 +301,9 @@ if (empty($getData)) {
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>Patron ID</th>
+                                        <?php if(!$getData['Report']['library_id']):?>
                                         <th>Library Name</th>
+                                        <?php endif; ?>
                                         <th>Total Number of Tracks Streamed</th>
                                     </tr>
     <?php
