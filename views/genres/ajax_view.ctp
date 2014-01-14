@@ -104,3 +104,7 @@ var preValue= 1;
                                 <span id="artist_loader" style="padding-left:115px;display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0"/></span>
 				</div>
 			</div>
+
+<?php
+    echo $this->Session->read('Genre') ; echo $this->Session->read('Artist');
+?>
