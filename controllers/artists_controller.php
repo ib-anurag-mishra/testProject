@@ -1988,7 +1988,7 @@ Class ArtistsController extends AppController
                     'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
         );
 
-        $this->paginate['limit'] = 20;
+        $this->paginate['limit'] = 50;
         $this->Album->recursive = 0;
         $albumData = $this->paginate('Album');
 
