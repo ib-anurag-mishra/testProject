@@ -1609,7 +1609,8 @@ Class ArtistsController extends AppController
             $this->Session->write('Artist' , base64_decode($id));
         }
         $this->Session->write('album' , $album);
-      
+        $this->Session->write('provider' , $provider);
+        
         
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');

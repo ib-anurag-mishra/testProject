@@ -318,4 +318,20 @@ if ($this->Session->check('Artist'))
 
     <?php
 }
+
+if ($this->Session->check('album'))
+{
+    $albumURL = "artists/album_ajax_view/" . str_replace('/', '@', base64_encode($this->Session->read('Artist'))) . "/" . $this->Session->read('album') . "/" . base64_encode($this->Session->read('provider'));
+    echo "<input type='hidden' id='selectedAlbumUrl' value='" . $albumURL . "'  />";
+    ?>
+    <script>
+        $(document).ready(function() {
+            var album_url = $("#selectedAlbumUrl").attr('value');
+
+            showAlbumDetails(album_url);
+        });
+    </script>
+
+    <?php
+}
 ?>
