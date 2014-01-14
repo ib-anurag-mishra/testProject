@@ -403,19 +403,12 @@ Class GenresController extends AppController
             $Genre = "QWxs";
         }
 
-
-
         $this->set('selectedCallFlag', 0);
         if (isset($_REQUEST['ajax_genre_name']))
         {
             $this->set('selectedCallFlag', 1);
         }
-        
-        echo "<pre>";
-        print_r($Genre);
-        print_r($Artist);
-        exit();
-        
+                
         $this->layout = 'ajax';
 
         $patId = $this->Session->read('patron');
@@ -445,7 +438,13 @@ Class GenresController extends AppController
         $this->Song->recursive = 0;
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
-
+        
+        
+        echo "<pre>";
+        print_r($genre);
+        echo "<br/>";
+        print_r($Artist);
+        exit();
 
         if ($genre != 'All')
         {
