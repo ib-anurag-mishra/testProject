@@ -105,7 +105,7 @@
             <h3>Albums</h3>
             <div class="album-shadow-container">
                 <div class="album-scrollable horiz-scroll">
-                    <ul>
+                    <ul style="width:4500px">
                         <?php
                         foreach ($albumData as $album_key => $album):
                             //hide album if library block the explicit content
