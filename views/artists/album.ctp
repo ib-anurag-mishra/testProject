@@ -97,7 +97,7 @@
 
     <!-- Album Section -->
     <?php
-    if (!empty($albumData) && !empty($artistVideoList))
+    if (!empty($albumData) || !empty($artistVideoList))
     {
         if (!empty($albumData))
         {
