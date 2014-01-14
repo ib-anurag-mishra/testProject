@@ -163,7 +163,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Total Songs Streamed', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -194,7 +194,7 @@
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Total Songs Streamed', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -231,7 +231,7 @@
     $tcpdf->SetTextColor(0);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
-    $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
+    $tcpdf->Cell(250, 7, 'Total Songs Streamed', 0, 0, 'C', 0);
     $tcpdf->Ln();
 
     $tcpdf->SetFillColor(0, 153, 255);
@@ -266,7 +266,7 @@
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
-            $tcpdf->Cell(250, 7, 'Total Downloads during Reporting Period', 0, 0, 'C', 0);
+            $tcpdf->Cell(250, 7, 'Total Streamed during Reporting Period', 0, 0, 'C', 0);
             $tcpdf->Ln();
 
             // Colors, line width and bold font
@@ -447,34 +447,62 @@
     $tcpdf->AddPage();
 
     //Column titles
-    $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
-    $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Streamed');
+    if($this->data['Report']['library_id'] == "all") {
+        $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+        $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Streamed');
+    }else{
+        $header = array('', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+        $patron_header = array('', 'Patron ID', 'Total Number of Tracks Streamed');
+    }
     $genre_header = array('', 'Genre Name', 'Total Number of Tracks Streamed');
 
 
     //Data loading
-    foreach($dayStreamingInfo as $key => $stream) {
-		if($stream['users']['email']!=''){
-			$patron = $stream['users']['email'];
-		}
-		else{
-			$patron = $stream['users']['patron_id'];
-		}
-        $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
-        $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['users']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
+    if($this->data['Report']['library_id'] == "all") {
+        foreach($dayStreamingInfo as $key => $stream) {
+                    if($stream['StreamingHistory']['patron_id']!=''){
+                            /*$patron = $stream['users']['email'];
+                    }
+                    else{*/
+                            $patron = $stream['StreamingHistory']['patron_id'];
+                    }
+            $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+            $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
+        }
+    }else{
+        foreach($dayStreamingInfo as $key => $stream) {
+                    if($stream['StreamingHistory']['patron_id']!=''){
+                            /*$patron = $stream['users']['email'];
+                    }
+                    else{*/
+                            $patron = $stream['StreamingHistory']['patron_id'];
+                    }
+//            $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+            $data[] = array($key+1, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
+        }
     }
-    
 
-    foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
-		if($patronStreamed['users']['email']!=''){
-			$patron_id = $patronStreamed['users']['email'];
-		}
-		else{
-			$patron_id = $patronStreamed['users']['patron_id'];
-		}
-        $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
+    if($this->data['Report']['library_id'] == "all") {
+        foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
+                    if($patronStreamed['StreamingHistory']['patron_id']!=''){
+                            /*$patron_id = $patronStreamed['users']['email'];
+                    }
+                    else{*/
+                            $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
+                    }
+            $patron_data[] = array($key+1, $patron_id, $this->getAdminTextEncode($library->getLibraryName($patronStreamed['StreamingHistory']['library_id'])), ($patronStreamed[0]['total_streamed_songs']));
+        }
+    }else{
+        foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
+                    if($patronStreamed['StreamingHistory']['patron_id']!=''){
+                            /*$patron_id = $patronStreamed['users']['email'];
+                    }
+                    else{*/
+                            $patron_id = $patronStreamed['StreamingHistory']['patron_id'];
+                    }
+            $patron_data[] = array($key+1, $patron_id, ($patronStreamed[0]['total_streamed_songs']));
+        }
     }
-    
     foreach($genreDayStremedInfo as $key => $genreStreamed) {
         $genre_data[] = array($key+1, $this->getAdminTextEncode($genreStreamed['songs']['Genre']), ($genreStreamed[0]['total_streamed_songs']));
     }
@@ -541,8 +569,9 @@
         $tcpdf->MultiCell($w[2], 12.5, $row[2], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[3], 12.5, $row[3], 'LR', 'L',  $fill, 0);
         $tcpdf->MultiCell($w[4], 12.5, $row[4], 'LR', 'L',  $fill, 0);
-        $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
-        
+        if($this->data['Report']['library_id'] == "all") {
+            $tcpdf->MultiCell($w[5], 12.5, $row[5], 'LR', 'L',  $fill, 0);
+        }        
         $tcpdf->Ln();
         $fill=!$fill;
     }
@@ -599,7 +628,9 @@
         $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'C', $fill, '', 3);
+        if($this->data['Report']['library_id'] == "all") {
+            $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'C', $fill, '', 3);
+        }
         $tcpdf->Ln();
         $fill=!$fill;
     }

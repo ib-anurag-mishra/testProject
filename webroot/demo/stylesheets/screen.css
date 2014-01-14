@@ -58,7 +58,7 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block; }
 
-/* line 44, ../sass/screen.scss */
+/* line 45, ../sass/screen.scss */
 .clearfix:after {
   content: ".";
   display: block;
@@ -67,7 +67,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   line-height: 0;
   height: 0; }
 
-/* line 53, ../sass/screen.scss */
+/* line 54, ../sass/screen.scss */
 button, select, input {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -78,19 +78,15 @@ button, select, input {
   outline: 0;
   cursor: pointer; }
 
-/* line 65, ../sass/screen.scss */
-html, body {
-  /* height: 100%; */ }
-
-/* line 69, ../sass/screen.scss */
+/* line 67, ../sass/screen.scss */
 body {
   font-family: Helvetica, Arial, sans-serif; }
 
-/* line 77, ../sass/screen.scss */
+/* line 75, ../sass/screen.scss */
 .site-header {
   position: relative;
   height: 108px; }
-  /* line 82, ../sass/screen.scss */
+  /* line 80, ../sass/screen.scss */
   .site-header .logo {
     width: 350px;
     height: 72px;
@@ -98,49 +94,49 @@ body {
     left: 40px;
     top: 20px;
     background: url(../images/freegal-logo.png) no-repeat; }
-  /* line 97, ../sass/screen.scss */
+  /* line 95, ../sass/screen.scss */
   .site-header .header-right-col {
     position: absolute;
     right: 40px;
     top: 20px; }
-    /* line 105, ../sass/screen.scss */
+    /* line 103, ../sass/screen.scss */
     .site-header .header-right-col .row-1 {
       margin-bottom: 16px; }
-      /* line 111, ../sass/screen.scss */
+      /* line 109, ../sass/screen.scss */
       .site-header .header-right-col .row-1 .streaming-arrows-icon {
         float: right;
         width: 19px;
         height: 13px;
         background: url(../images/freegal_sprite.png) no-repeat; }
-      /* line 120, ../sass/screen.scss */
+      /* line 118, ../sass/screen.scss */
       .site-header .header-right-col .row-1 .streaming-time-remaining {
         float: right;
         font-size: 12px;
         border-right: 1px solid #dcdcdc;
         padding-right: 10px;
         margin-left: 10px; }
-      /* line 129, ../sass/screen.scss */
+      /* line 127, ../sass/screen.scss */
       .site-header .header-right-col .row-1 .forgot-password {
         float: right;
         color: #cccccc;
         font-size: 10px;
         line-height: 12px;
         margin-left: 10px; }
-        /* line 137, ../sass/screen.scss */
+        /* line 135, ../sass/screen.scss */
         .site-header .header-right-col .row-1 .forgot-password a {
           color: #66ccff;
           text-decoration: none; }
-    /* line 145, ../sass/screen.scss */
+    /* line 143, ../sass/screen.scss */
     .site-header .header-right-col .row-2 {
       width: 900px; }
-      /* line 150, ../sass/screen.scss */
+      /* line 148, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .download-count-container {
         float: right;
         border-left: 1px solid #dcdcdc;
         position: relative;
         width: 66px;
         height: 30px; }
-        /* line 156, ../sass/screen.scss */
+        /* line 154, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .download-count-container .music-note-icon {
           width: 15px;
           height: 19px;
@@ -149,7 +145,7 @@ body {
           left: 12px;
           top: 6px; }
           @media screen and (max-width: 1305px) {
-            /* line 156, ../sass/screen.scss */
+            /* line 154, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .download-count-container .music-note-icon {
               margin-left: 5px; } }
         /* line 170, ../sass/screen.scss */
@@ -179,14 +175,14 @@ body {
         border-radius: 20px;
         padding: 6px 10px;
         margin: 4px 4px 4px 20px; }
-        /* line 28, ../sass/screen.scss */
+        /* line 29, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .login:hover {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
           background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 33, ../sass/screen.scss */
+        /* line 34, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .login:active {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d3e8f0), color-stop(100%, #d5e9f1));
           background-image: -webkit-linear-gradient(#d3e8f0, #d5e9f1);
@@ -205,7 +201,7 @@ body {
           /* line 196, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container {
             margin-left: 0; } }
-        /* line 216, ../sass/screen.scss */
+        /* line 218, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu {
           width: 145px;
           height: 30px;
@@ -218,7 +214,7 @@ body {
           cursor: pointer;
           background: #fff;
           position: relative; }
-          /* line 228, ../sass/screen.scss */
+          /* line 230, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu::before {
             position: absolute;
             content: "";
@@ -227,7 +223,7 @@ body {
             background: url(../images/freegal_sprite.png) no-repeat -20px 0;
             left: 10px;
             top: 6px; }
-          /* line 239, ../sass/screen.scss */
+          /* line 241, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu::after {
             position: absolute;
             content: "";
@@ -237,13 +233,13 @@ body {
             right: 16px;
             top: 14px; }
           @media screen and (max-width: 1305px) {
-            /* line 216, ../sass/screen.scss */
+            /* line 218, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu {
               margin-left: 0; } }
-          /* line 255, ../sass/screen.scss */
+          /* line 258, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu:hover {
             border: 1px solid #dedddd; }
-        /* line 263, ../sass/screen.scss */
+        /* line 266, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown {
           position: absolute;
           left: 0;
@@ -258,16 +254,16 @@ body {
           width: 218px;
           display: none; }
           @media screen and (max-width: 1305px) {
-            /* line 263, ../sass/screen.scss */
+            /* line 266, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown {
               left: 0; } }
-          /* line 279, ../sass/screen.scss */
+          /* line 284, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown.active {
             display: block; }
-          /* line 284, ../sass/screen.scss */
+          /* line 289, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item {
             background: #fff; }
-            /* line 288, ../sass/screen.scss */
+            /* line 293, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:first-child {
               -moz-border-radius-topleft: 5px;
               -webkit-border-top-left-radius: 5px;
@@ -275,7 +271,7 @@ body {
               -moz-border-radius-topright: 5px;
               -webkit-border-top-right-radius: 5px;
               border-top-right-radius: 5px; }
-              /* line 292, ../sass/screen.scss */
+              /* line 297, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:first-child a {
                 -moz-border-radius-topleft: 5px;
                 -webkit-border-top-left-radius: 5px;
@@ -283,7 +279,7 @@ body {
                 -moz-border-radius-topright: 5px;
                 -webkit-border-top-right-radius: 5px;
                 border-top-right-radius: 5px; }
-            /* line 300, ../sass/screen.scss */
+            /* line 305, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:last-child {
               -moz-border-radius-bottomleft: 5px;
               -webkit-border-bottom-left-radius: 5px;
@@ -291,7 +287,7 @@ body {
               -moz-border-radius-bottomright: 5px;
               -webkit-border-bottom-right-radius: 5px;
               border-bottom-right-radius: 5px; }
-              /* line 304, ../sass/screen.scss */
+              /* line 309, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:last-child a {
                 -moz-border-radius-bottomleft: 5px;
                 -webkit-border-bottom-left-radius: 5px;
@@ -299,7 +295,7 @@ body {
                 -moz-border-radius-bottomright: 5px;
                 -webkit-border-bottom-right-radius: 5px;
                 border-bottom-right-radius: 5px; }
-            /* line 313, ../sass/screen.scss */
+            /* line 318, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a {
               display: block;
               text-decoration: none;
@@ -307,7 +303,7 @@ body {
               padding: 10px 5px 10px 35px;
               font-size: 12px;
               position: relative; }
-              /* line 327, ../sass/screen.scss */
+              /* line 332, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications::before {
                 position: absolute;
                 left: 10px;
@@ -316,10 +312,10 @@ body {
                 height: 10px;
                 content: "";
                 background: url(../images/freegal_sprite.png) no-repeat -120px 0; }
-              /* line 340, ../sass/screen.scss */
+              /* line 345, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover {
                 background: #dcedf3; }
-                /* line 343, ../sass/screen.scss */
+                /* line 348, ../sass/screen.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover::before {
                   position: absolute;
                   left: 10px;
@@ -328,7 +324,7 @@ body {
                   height: 10px;
                   content: "";
                   background: url(../images/freegal_sprite.png) no-repeat -135px 0; }
-              /* line 363, ../sass/screen.scss */
+              /* line 368, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password::before {
                 position: absolute;
                 left: 10px;
@@ -337,10 +333,10 @@ body {
                 height: 13px;
                 content: "";
                 background: url(../images/freegal_sprite.png) no-repeat -150px 0; }
-              /* line 374, ../sass/screen.scss */
+              /* line 379, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover {
                 background: #dcedf3; }
-                /* line 377, ../sass/screen.scss */
+                /* line 382, ../sass/screen.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover::before {
                   position: absolute;
                   left: 10px;
@@ -349,7 +345,7 @@ body {
                   height: 13px;
                   content: "";
                   background: url(../images/freegal_sprite.png) no-repeat -165px 0; }
-              /* line 396, ../sass/screen.scss */
+              /* line 401, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout::before {
                 position: absolute;
                 left: 10px;
@@ -358,10 +354,10 @@ body {
                 height: 13px;
                 content: "";
                 background: url(../images/freegal_sprite.png) no-repeat -180px 0; }
-              /* line 407, ../sass/screen.scss */
+              /* line 412, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover {
                 background: #dcedf3; }
-                /* line 409, ../sass/screen.scss */
+                /* line 414, ../sass/screen.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover::before {
                   position: absolute;
                   left: 10px;
@@ -370,7 +366,7 @@ body {
                   height: 13px;
                   content: "";
                   background: url(../images/freegal_sprite.png) no-repeat -190px 0; }
-      /* line 432, ../sass/screen.scss */
+      /* line 437, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .browse {
         float: right;
         background: #d9ebf2;
@@ -392,14 +388,14 @@ body {
         border-radius: 20px;
         padding: 6px 20px;
         margin: 4px 4px 4px 20px; }
-        /* line 28, ../sass/screen.scss */
+        /* line 29, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .browse:hover {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
           background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
           background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 33, ../sass/screen.scss */
+        /* line 34, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .browse:active {
           background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d3e8f0), color-stop(100%, #d5e9f1));
           background-image: -webkit-linear-gradient(#d3e8f0, #d5e9f1);
@@ -407,10 +403,10 @@ body {
           background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
           background-image: linear-gradient(#d3e8f0, #d5e9f1); }
         @media screen and (max-width: 1305px) {
-          /* line 432, ../sass/screen.scss */
+          /* line 437, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .browse {
             margin: 4px 4px 4px 8px; } }
-      /* line 449, ../sass/screen.scss */
+      /* line 454, ../sass/screen.scss */
       .site-header .header-right-col .row-2 .master-search-container {
         float: right;
         -webkit-border-radius: 20px;
@@ -430,10 +426,10 @@ body {
         background-image: -o-linear-gradient(#eeeeee, #fcfcfc 25%, #fafafa 90%);
         background-image: linear-gradient(#eeeeee, #fcfcfc 25%, #fafafa 90%); }
         @media screen and (max-width: 1305px) {
-          /* line 449, ../sass/screen.scss */
+          /* line 454, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container {
             width: 330px; } }
-        /* line 464, ../sass/screen.scss */
+        /* line 471, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .master-search-container .master-search-select {
           padding: 6px 20px;
           color: #527988;
@@ -459,18 +455,18 @@ body {
           width: 130px;
           border-right: 1px solid #b1d3e0; }
           @media screen and (max-width: 1305px) {
-            /* line 464, ../sass/screen.scss */
+            /* line 471, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-select {
               padding: 6px 12px;
               width: 110px; } }
-          /* line 484, ../sass/screen.scss */
+          /* line 494, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-select:hover {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
             background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 492, ../sass/screen.scss */
+        /* line 502, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .master-search-container::before {
           position: absolute;
           width: 6px;
@@ -480,10 +476,10 @@ body {
           background: url(../images/freegal_sprite.png) no-repeat -40px 0;
           content: ""; }
           @media screen and (max-width: 1305px) {
-            /* line 492, ../sass/screen.scss */
+            /* line 502, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container::before {
               left: 94px; } }
-        /* line 508, ../sass/screen.scss */
+        /* line 521, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .master-search-container::after {
           background: url(../images/freegal_sprite.png) no-repeat -105px 0;
           width: 13px;
@@ -493,10 +489,10 @@ body {
           top: 8px;
           content: ""; }
           @media screen and (max-width: 1305px) {
-            /* line 508, ../sass/screen.scss */
+            /* line 521, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container::after {
               left: 117px; } }
-        /* line 527, ../sass/screen.scss */
+        /* line 542, ../sass/screen.scss */
         .site-header .header-right-col .row-2 .master-search-container .master-search-field-container {
           position: relative;
           display: inline-block;
@@ -504,10 +500,10 @@ body {
           height: 27px;
           vertical-align: top; }
           @media screen and (max-width: 1305px) {
-            /* line 527, ../sass/screen.scss */
+            /* line 542, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-field-container {
               width: 215px; } }
-          /* line 540, ../sass/screen.scss */
+          /* line 557, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .search-text {
             width: 274px;
             font-size: 12px;
@@ -517,10 +513,10 @@ body {
             top: 0;
             left: 18px; }
             @media screen and (max-width: 1305px) {
-              /* line 540, ../sass/screen.scss */
+              /* line 557, ../sass/screen.scss */
               .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .search-text {
                 width: 135px; } }
-          /* line 556, ../sass/screen.scss */
+          /* line 574, ../sass/screen.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
             background: #d9ebf2;
             font-size: 12px;
@@ -543,14 +539,14 @@ body {
             position: absolute;
             right: -1px;
             top: 0; }
-            /* line 28, ../sass/screen.scss */
+            /* line 29, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go:hover {
               background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
               background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
               background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
               background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
               background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-            /* line 33, ../sass/screen.scss */
+            /* line 34, ../sass/screen.scss */
             .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go:active {
               background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d3e8f0), color-stop(100%, #d5e9f1));
               background-image: -webkit-linear-gradient(#d3e8f0, #d5e9f1);
@@ -558,7 +554,7 @@ body {
               background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
               background-image: linear-gradient(#d3e8f0, #d5e9f1); }
 
-/* line 581, ../sass/screen.scss */
+/* line 599, ../sass/screen.scss */
 .top-nav {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5cc9ed), color-stop(100%, #4fbde1));
   background-image: -webkit-linear-gradient(#5cc9ed, #4fbde1);
@@ -567,18 +563,20 @@ body {
   background-image: linear-gradient(#5cc9ed, #4fbde1);
   position: relative;
   height: 33px;
-  border-top: 1px solid #84d7f2;
-  border-bottom: 1px solid #a7def0; }
-  /* line 588, ../sass/screen.scss */
+  /*
+  	border-top:1px solid #84d7f2;
+  	border-bottom: 1px solid #a7def0;
+  */ }
+  /* line 608, ../sass/screen.scss */
   .top-nav ul {
     position: absolute;
     right: 40px;
     top: 0; }
-    /* line 595, ../sass/screen.scss */
+    /* line 615, ../sass/screen.scss */
     .top-nav ul li {
       display: block;
       float: left; }
-      /* line 600, ../sass/screen.scss */
+      /* line 620, ../sass/screen.scss */
       .top-nav ul li a {
         display: block;
         color: #fff;
@@ -586,15 +584,24 @@ body {
         padding: 10px;
         text-align: center;
         text-transform: uppercase;
-        font-size: 13px; }
-      /* line 615, ../sass/screen.scss */
-      .top-nav ul li:last-child a {
-        padding-right: 0; }
+        font-size: 13px;
+        background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5cc9ed), color-stop(100%, #4fbde1));
+        background-image: -webkit-linear-gradient(#5cc9ed, #4fbde1);
+        background-image: -moz-linear-gradient(#5cc9ed, #4fbde1);
+        background-image: -o-linear-gradient(#5cc9ed, #4fbde1);
+        background-image: linear-gradient(#5cc9ed, #4fbde1); }
+        /* line 631, ../sass/screen.scss */
+        .top-nav ul li a:hover {
+          background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a7def0), color-stop(100%, #a7def0));
+          background-image: -webkit-linear-gradient(#a7def0, #a7def0);
+          background-image: -moz-linear-gradient(#a7def0, #a7def0);
+          background-image: -o-linear-gradient(#a7def0, #a7def0);
+          background-image: linear-gradient(#a7def0, #a7def0); }
 
-/* line 624, ../sass/screen.scss */
+/* line 647, ../sass/screen.scss */
 .content-wrapper {
   position: relative; }
-  /* line 629, ../sass/screen.scss */
+  /* line 652, ../sass/screen.scss */
   .content-wrapper .left-nav {
     width: 192px;
     position: absolute;
@@ -609,27 +616,27 @@ body {
     box-sizing: border-box;
     background: #fff;
     height: 100%; }
-    /* line 644, ../sass/screen.scss */
+    /* line 667, ../sass/screen.scss */
     .content-wrapper .left-nav h2 {
       padding-left: 25px;
       margin-bottom: 15px;
       line-height: 20px;
       font-size: 15px; }
-    /* line 652, ../sass/screen.scss */
+    /* line 675, ../sass/screen.scss */
     .content-wrapper .left-nav > .streaming > ul, .content-wrapper .left-nav > .my-downloads > ul {
       margin-left: 25px; }
-      /* line 656, ../sass/screen.scss */
+      /* line 679, ../sass/screen.scss */
       .content-wrapper .left-nav > .streaming > ul li, .content-wrapper .left-nav > .my-downloads > ul li {
         margin-bottom: 15px; }
-        /* line 660, ../sass/screen.scss */
+        /* line 683, ../sass/screen.scss */
         .content-wrapper .left-nav > .streaming > ul li a, .content-wrapper .left-nav > .my-downloads > ul li a {
           text-decoration: none;
           color: #9f9f9f;
           font-size: 15px; }
-    /* line 676, ../sass/screen.scss */
+    /* line 699, ../sass/screen.scss */
     .content-wrapper .left-nav .streaming h2 {
       position: relative; }
-      /* line 682, ../sass/screen.scss */
+      /* line 705, ../sass/screen.scss */
       .content-wrapper .left-nav .streaming h2::before {
         content: "";
         position: absolute;
@@ -638,21 +645,21 @@ body {
         background: url(../images/freegal_sprite.png) no-repeat 0 0;
         width: 19px;
         height: 13px; }
-    /* line 697, ../sass/screen.scss */
+    /* line 720, ../sass/screen.scss */
     .content-wrapper .left-nav .streaming li ul {
       margin-left: 20px;
       margin-top: 10px;
       display: none; }
-      /* line 702, ../sass/screen.scss */
+      /* line 725, ../sass/screen.scss */
       .content-wrapper .left-nav .streaming li ul.active {
         display: block; }
-      /* line 707, ../sass/screen.scss */
+      /* line 730, ../sass/screen.scss */
       .content-wrapper .left-nav .streaming li ul li {
         margin-bottom: 10px; }
-    /* line 718, ../sass/screen.scss */
+    /* line 741, ../sass/screen.scss */
     .content-wrapper .left-nav .my-downloads h2 {
       position: relative; }
-      /* line 721, ../sass/screen.scss */
+      /* line 744, ../sass/screen.scss */
       .content-wrapper .left-nav .my-downloads h2::before {
         position: absolute;
         content: "";
@@ -661,10 +668,10 @@ body {
         background: url(../images/freegal_sprite.png) no-repeat -70px 0;
         width: 20px;
         height: 17px; }
-    /* line 737, ../sass/screen.scss */
+    /* line 760, ../sass/screen.scss */
     .content-wrapper .left-nav .announcements h2 {
       position: relative; }
-      /* line 740, ../sass/screen.scss */
+      /* line 763, ../sass/screen.scss */
       .content-wrapper .left-nav .announcements h2::before {
         position: absolute;
         content: "";
@@ -673,168 +680,230 @@ body {
         background: url(../images/freegal_sprite.png) no-repeat -90px 0;
         width: 14px;
         height: 18px; }
-    /* line 753, ../sass/screen.scss */
+    /* line 776, ../sass/screen.scss */
     .content-wrapper .left-nav .announcements .announcement {
       background: #eeeeee;
       font-size: 14px;
       padding: 10px; }
-      /* line 759, ../sass/screen.scss */
+      /* line 782, ../sass/screen.scss */
       .content-wrapper .left-nav .announcements .announcement p {
         padding-bottom: 10px; }
-      /* line 763, ../sass/screen.scss */
+      /* line 786, ../sass/screen.scss */
       .content-wrapper .left-nav .announcements .announcement .announcement_header {
         text-decoration: underline;
         font-weight: bold; }
-  /* line 772, ../sass/screen.scss */
+  /* line 795, ../sass/screen.scss */
   .content-wrapper .content {
     background: url(../images/content-bkg.gif) repeat;
-    padding: 25px 40px 25px 212px; }
-    /* line 778, ../sass/screen.scss */
+    padding: 25px 40px 25px 212px;
+    min-height: 1000px; }
+    /* line 802, ../sass/screen.scss */
     .content-wrapper .content .featured-artists, .content-wrapper .content .featured-composers, .content-wrapper .content .featured-themes {
       margin-top: 28px; }
-    /* line 783, ../sass/screen.scss */
-    .content-wrapper .content .top-albums, .content-wrapper .content .featured-artists, .content-wrapper .content .featured-composers, .content-wrapper .content .featured-themes {
+    /* line 807, ../sass/screen.scss */
+    .content-wrapper .content .top-albums {
       position: relative; }
-      /* line 787, ../sass/screen.scss */
-      .content-wrapper .content .top-albums h2, .content-wrapper .content .featured-artists h2, .content-wrapper .content .featured-composers h2, .content-wrapper .content .featured-themes h2 {
+      /* line 811, ../sass/screen.scss */
+      .content-wrapper .content .top-albums h2 {
         font-size: 24px; }
-      /* line 792, ../sass/screen.scss */
-      .content-wrapper .content .top-albums .top-albums-carousel-container, .content-wrapper .content .featured-artists .top-albums-carousel-container, .content-wrapper .content .featured-composers .top-albums-carousel-container, .content-wrapper .content .featured-themes .top-albums-carousel-container {
+      /* line 816, ../sass/screen.scss */
+      .content-wrapper .content .top-albums .top-albums-carousel-container {
         position: relative; }
-        /* line 796, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .top-albums-carousel-container .left-scroll-button, .content-wrapper .content .featured-artists .top-albums-carousel-container .left-scroll-button, .content-wrapper .content .featured-composers .top-albums-carousel-container .left-scroll-button, .content-wrapper .content .featured-themes .top-albums-carousel-container .left-scroll-button {
+        /* line 820, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .top-albums-carousel-container .left-scroll-button {
           width: 39px;
           height: 162px;
           position: absolute;
           left: 0;
           top: 0;
           background: url(../images/carousel-sprite.png) 0 0; }
-          /* line 805, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .top-albums-carousel-container .left-scroll-button:hover, .content-wrapper .content .featured-artists .top-albums-carousel-container .left-scroll-button:hover, .content-wrapper .content .featured-composers .top-albums-carousel-container .left-scroll-button:hover, .content-wrapper .content .featured-themes .top-albums-carousel-container .left-scroll-button:hover {
+          /* line 829, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .top-albums-carousel-container .left-scroll-button:hover {
             background: url(../images/carousel-sprite.png) -39px 0; }
-          /* line 810, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .top-albums-carousel-container .left-scroll-button:active, .content-wrapper .content .featured-artists .top-albums-carousel-container .left-scroll-button:active, .content-wrapper .content .featured-composers .top-albums-carousel-container .left-scroll-button:active, .content-wrapper .content .featured-themes .top-albums-carousel-container .left-scroll-button:active {
+          /* line 834, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .top-albums-carousel-container .left-scroll-button:active {
             background: url(../images/carousel-sprite.png) -78px 0; }
-        /* line 817, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .top-albums-carousel-container .right-scroll-button, .content-wrapper .content .featured-artists .top-albums-carousel-container .right-scroll-button, .content-wrapper .content .featured-composers .top-albums-carousel-container .right-scroll-button, .content-wrapper .content .featured-themes .top-albums-carousel-container .right-scroll-button {
+        /* line 841, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .top-albums-carousel-container .right-scroll-button {
           width: 39px;
           height: 162px;
           position: absolute;
           right: 0;
           top: 0;
           background: url(../images/carousel-sprite.png) -195px 0; }
-          /* line 828, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .top-albums-carousel-container .right-scroll-button:hover, .content-wrapper .content .featured-artists .top-albums-carousel-container .right-scroll-button:hover, .content-wrapper .content .featured-composers .top-albums-carousel-container .right-scroll-button:hover, .content-wrapper .content .featured-themes .top-albums-carousel-container .right-scroll-button:hover {
+          /* line 852, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .top-albums-carousel-container .right-scroll-button:hover {
             background: url(../images/carousel-sprite.png) -156px 0; }
-          /* line 833, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .top-albums-carousel-container .right-scroll-button:active, .content-wrapper .content .featured-artists .top-albums-carousel-container .right-scroll-button:active, .content-wrapper .content .featured-composers .top-albums-carousel-container .right-scroll-button:active, .content-wrapper .content .featured-themes .top-albums-carousel-container .right-scroll-button:active {
+          /* line 857, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .top-albums-carousel-container .right-scroll-button:active {
             background: url(../images/carousel-sprite.png) -117px 0; }
-        /* line 839, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel, .content-wrapper .content .featured-artists .top-albums-carousel-container .top-albums-carousel, .content-wrapper .content .featured-composers .top-albums-carousel-container .top-albums-carousel, .content-wrapper .content .featured-themes .top-albums-carousel-container .top-albums-carousel {
+        /* line 863, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel {
           margin-top: 10px;
           margin-left: 48px;
           margin-right: 48px;
           height: 226px;
           overflow-y: hidden;
           position: relative; }
-          /* line 851, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul, .content-wrapper .content .featured-artists .top-albums-carousel-container .top-albums-carousel ul, .content-wrapper .content .featured-composers .top-albums-carousel-container .top-albums-carousel ul, .content-wrapper .content .featured-themes .top-albums-carousel-container .top-albums-carousel ul {
+          /* line 875, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul {
             overflow-y: hidden;
             height: 216px;
             width: 4300px; }
-            /* line 856, ../sass/screen.scss */
-            .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li, .content-wrapper .content .featured-artists .top-albums-carousel-container .top-albums-carousel ul li, .content-wrapper .content .featured-composers .top-albums-carousel-container .top-albums-carousel ul li, .content-wrapper .content .featured-themes .top-albums-carousel-container .top-albums-carousel ul li {
+            /* line 880, ../sass/screen.scss */
+            .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li {
               float: left;
               display: block;
               margin-right: 10px;
               margin-bottom: 10px;
               width: 162px; }
-              /* line 864, ../sass/screen.scss */
-              .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container, .content-wrapper .content .featured-artists .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container, .content-wrapper .content .featured-composers .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container, .content-wrapper .content .featured-themes .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container {
+              /* line 888, ../sass/screen.scss */
+              .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container {
                 width: 162px;
-                height: 162px; }
-                /* line 869, ../sass/screen.scss */
-                .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container img, .content-wrapper .content .featured-artists .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container img, .content-wrapper .content .featured-composers .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container img, .content-wrapper .content .featured-themes .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container img {
+                height: 162px;
+                position: relative; }
+                /* line 895, ../sass/screen.scss */
+                .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon {
+                  position: absolute;
+                  left: 5px;
+                  top: 5px;
+                  width: 20px;
+                  height: 20px;
+                  background: url(../images/freegal_sprite.png) -120px -50px;
+                  display: none; }
+                  /* line 905, ../sass/screen.scss */
+                  .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon:hover {
+                    background: url(../images/freegal_sprite.png) -140px -50px; }
+                  /* line 910, ../sass/screen.scss */
+                  .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon.active {
+                    display: block; }
+                /* line 916, ../sass/screen.scss */
+                .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul {
+                  position: absolute;
+                  left: 26px;
+                  top: 5px;
+                  width: 130px;
+                  max-height: 151px;
+                  overflow-y: scroll;
+                  display: none; }
+                  /* line 926, ../sass/screen.scss */
+                  .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul.active {
+                    display: block; }
+                  /* line 930, ../sass/screen.scss */
+                  .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li {
+                    display: block;
+                    background: #fff;
+                    float: none;
+                    margin-bottom: 0;
+                    width: 100%; }
+                    /* line 936, ../sass/screen.scss */
+                    .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a {
+                      display: block;
+                      padding: 5px;
+                      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                      text-decoration: none;
+                      color: #000;
+                      font-size: 10px; }
+                      /* line 944, ../sass/screen.scss */
+                      .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a:hover {
+                        background: #66ccff;
+                        border-bottom: 1px solid #5cb7e5;
+                        color: #fff; }
+                      /* line 952, ../sass/screen.scss */
+                      .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a.create-new-playlist {
+                        font-weight: bold; }
+                /* line 960, ../sass/screen.scss */
+                .content-wrapper .content .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container img {
                   width: 162px;
                   height: 162px;
                   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
                   -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
                   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
-      /* line 892, ../sass/screen.scss */
-      .content-wrapper .content .top-albums .album-info, .content-wrapper .content .featured-artists .album-info, .content-wrapper .content .featured-composers .album-info, .content-wrapper .content .featured-themes .album-info {
+      /* line 983, ../sass/screen.scss */
+      .content-wrapper .content .top-albums .album-info {
         font-size: 14px; }
-        /* line 895, ../sass/screen.scss */
-        .content-wrapper .content .top-albums .album-info p, .content-wrapper .content .featured-artists .album-info p, .content-wrapper .content .featured-composers .album-info p, .content-wrapper .content .featured-themes .album-info p {
+        /* line 986, ../sass/screen.scss */
+        .content-wrapper .content .top-albums .album-info p {
           margin-top: 5px; }
-          /* line 899, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .album-info p.title, .content-wrapper .content .featured-artists .album-info p.title, .content-wrapper .content .featured-composers .album-info p.title, .content-wrapper .content .featured-themes .album-info p.title {
+          /* line 990, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-info p.title {
             font-weight: bold;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             font-size: 13px; }
-          /* line 907, ../sass/screen.scss */
-          .content-wrapper .content .top-albums .album-info p.artist, .content-wrapper .content .featured-artists .album-info p.artist, .content-wrapper .content .featured-composers .album-info p.artist, .content-wrapper .content .featured-themes .album-info p.artist {
+          /* line 998, ../sass/screen.scss */
+          .content-wrapper .content .top-albums .album-info p.artist {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             color: rgba(0, 0, 0, 0.5);
             font-size: 12px; }
-    /* line 922, ../sass/screen.scss */
+    /* line 1013, ../sass/screen.scss */
     .content-wrapper .content .top-songs {
       margin-top: 20px;
-      padding-bottom: 500px; }
-      /* line 925, ../sass/screen.scss */
+      position: relative;
+      padding-bottom: 40px; }
+      /* line 1018, ../sass/screen.scss */
+      .content-wrapper .content .top-songs::after {
+        position: absolute;
+        content: "";
+        bottom: 0;
+        left: 0;
+        background: url(../images/gray-dotted-border-rpt.png) repeat-x;
+        width: 100%;
+        height: 3px; }
+      /* line 1029, ../sass/screen.scss */
       .content-wrapper .content .top-songs h2 {
         font-size: 24px; }
-      /* line 930, ../sass/screen.scss */
+      /* line 1034, ../sass/screen.scss */
       .content-wrapper .content .top-songs ol {
         width: 48%;
         margin-top: 20px;
         font-size: 13px; }
-        /* line 937, ../sass/screen.scss */
+        /* line 1041, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol.left-col {
           margin-right: 2%;
           float: left; }
           @media screen and (max-width: 1305px) {
-            /* line 937, ../sass/screen.scss */
+            /* line 1041, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol.left-col {
               float: none;
               width: 100%;
               margin-right: 0; } }
-        /* line 950, ../sass/screen.scss */
+        /* line 1054, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol.right-col {
           float: right; }
           @media screen and (max-width: 1305px) {
-            /* line 950, ../sass/screen.scss */
+            /* line 1054, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol.right-col {
               float: none;
               width: 100%;
               margin-right: 0;
               margin-top: 0; } }
-        /* line 965, ../sass/screen.scss */
+        /* line 1069, ../sass/screen.scss */
         .content-wrapper .content .top-songs ol li {
           height: 35px;
           position: relative; }
-          /* line 971, ../sass/screen.scss */
+          /* line 1075, ../sass/screen.scss */
           .content-wrapper .content .top-songs ol li:nth-child(odd) {
             background: url(../images/top-singles-bkg-odd.png) repeat-x; }
-          /* line 976, ../sass/screen.scss */
+          /* line 1080, ../sass/screen.scss */
           .content-wrapper .content .top-songs ol li:nth-child(even) {
             background: url(../images/top-singles-bkg-even.png) repeat-x; }
-          /* line 980, ../sass/screen.scss */
+          /* line 1084, ../sass/screen.scss */
           .content-wrapper .content .top-songs ol li .inner-col {
             float: left;
             position: absolute; }
-            /* line 985, ../sass/screen.scss */
+            /* line 1089, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.ranking {
               margin-top: 10px;
               left: 1%; }
               @media screen and (max-width: 1305px) {
-                /* line 985, ../sass/screen.scss */
+                /* line 1089, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.ranking {
                   left: 1%; } }
-            /* line 995, ../sass/screen.scss */
+            /* line 1099, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.title {
               margin-top: 10px;
               left: 5%;
@@ -844,10 +913,10 @@ body {
               white-space: nowrap;
               height: 15px; }
               @media screen and (max-width: 1305px) {
-                /* line 995, ../sass/screen.scss */
+                /* line 1099, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.title {
                   left: 4%; } }
-            /* line 1011, ../sass/screen.scss */
+            /* line 1115, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.artist {
               margin-top: 10px;
               left: 50%;
@@ -857,18 +926,18 @@ body {
               text-overflow: ellipsis;
               white-space: nowrap; }
               @media screen and (max-width: 1305px) {
-                /* line 1011, ../sass/screen.scss */
+                /* line 1115, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.artist {
                   left: 45%; } }
-            /* line 1025, ../sass/screen.scss */
+            /* line 1129, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.time {
               margin-top: 10px;
               right: 70px; }
               @media screen and (max-width: 1305px) {
-                /* line 1025, ../sass/screen.scss */
+                /* line 1129, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.time {
                   right: 76px; } }
-            /* line 1034, ../sass/screen.scss */
+            /* line 1138, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon {
               margin-top: 7px;
               background: url(../images/freegal_sprite.png) no-repeat 0 -50px;
@@ -877,17 +946,17 @@ body {
               margin-left: 5px;
               right: 36px;
               cursor: pointer; }
-              /* line 1046, ../sass/screen.scss */
+              /* line 1150, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon:hover {
                 background: url(../images/freegal_sprite.png) no-repeat -20px -50px; }
-              /* line 1051, ../sass/screen.scss */
+              /* line 1155, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon:active {
                 background: url(../images/freegal_sprite.png) no-repeat -40px -50px; }
               @media screen and (max-width: 1305px) {
-                /* line 1034, ../sass/screen.scss */
+                /* line 1138, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.top-song-download-icon {
                   right: 38px; } }
-            /* line 1061, ../sass/screen.scss */
+            /* line 1165, ../sass/screen.scss */
             .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon {
               margin-top: 7px;
               margin-left: 5px;
@@ -896,45 +965,165 @@ body {
               right: 10px;
               cursor: pointer;
               background: url(../images/freegal_sprite.png) no-repeat -60px -50px; }
-              /* line 1073, ../sass/screen.scss */
+              /* line 1177, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon:hover {
                 background: url(../images/freegal_sprite.png) no-repeat -80px -50px; }
-              /* line 1078, ../sass/screen.scss */
+              /* line 1182, ../sass/screen.scss */
               .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon:active {
                 background: url(../images/freegal_sprite.png) no-repeat -100px -50px; }
               @media screen and (max-width: 1305px) {
-                /* line 1061, ../sass/screen.scss */
+                /* line 1165, ../sass/screen.scss */
                 .content-wrapper .content .top-songs ol li .inner-col.top-song-play-icon {
                   right: 10px; } }
+    /* line 1205, ../sass/screen.scss */
+    .content-wrapper .content .featured-artists h2 {
+      font-size: 24px; }
+    /* line 1210, ../sass/screen.scss */
+    .content-wrapper .content .featured-artists .featured-artists-grid {
+      margin-top: 10px; }
+    /* line 1217, ../sass/screen.scss */
+    .content-wrapper .content .featured-artists .featured-grid-item {
+      display: block;
+      float: left;
+      position: relative;
+      overflow: hidden;
+      margin-right: 10px;
+      margin-bottom: 10px; }
+      /* line 1225, ../sass/screen.scss */
+      .content-wrapper .content .featured-artists .featured-grid-item img {
+        width: 162px;
+        height: 162px;
+        -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
+      /* line 1233, ../sass/screen.scss */
+      .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu {
+        background: black;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        position: absolute;
+        bottom: -34px;
+        left: 0;
+        width: 100%;
+        height: 65px;
+        -webkit-transition: bottom 500ms;
+        -moz-transition: bottom 500ms;
+        -o-transition: bottom 500ms;
+        transition: bottom 500ms; }
+        /* line 1248, ../sass/screen.scss */
+        .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu.active {
+          bottom: 0;
+          -webkit-transition: bottom 500ms;
+          -moz-transition: bottom 500ms;
+          -o-transition: bottom 500ms;
+          transition: bottom 500ms; }
+        /* line 1254, ../sass/screen.scss */
+        .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-name {
+          font-size: 14px;
+          font-weight: bold;
+          padding: 10px;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          position: relative; }
+          /* line 1263, ../sass/screen.scss */
+          .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-name::before {
+            content: "";
+            position: absolute;
+            width: 153px;
+            height: 3px;
+            left: 4px;
+            bottom: 0;
+            background: url(../images/featured-menu-border-rpt.png) repeat; }
+        /* line 1275, ../sass/screen.scss */
+        .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas {
+          margin-top: 5px;
+          position: relative; }
+          /* line 1280, ../sass/screen.scss */
+          .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button {
+            background: #d3d1cf;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+            -o-border-radius: 5px;
+            border-radius: 5px;
+            position: relative;
+            vertical-align: top; }
+            /* line 1287, ../sass/screen.scss */
+            .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button:hover {
+              background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f4f4f4));
+              background-image: -webkit-linear-gradient(#ffffff, #f4f4f4);
+              background-image: -moz-linear-gradient(#ffffff, #f4f4f4);
+              background-image: -o-linear-gradient(#ffffff, #f4f4f4);
+              background-image: linear-gradient(#ffffff, #f4f4f4); }
+            /* line 1291, ../sass/screen.scss */
+            .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button:active {
+              background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cccccc), color-stop(100%, #f4f4f4));
+              background-image: -webkit-linear-gradient(#cccccc, #f4f4f4);
+              background-image: -moz-linear-gradient(#cccccc, #f4f4f4);
+              background-image: -o-linear-gradient(#cccccc, #f4f4f4);
+              background-image: linear-gradient(#cccccc, #f4f4f4); }
+            /* line 1296, ../sass/screen.scss */
+            .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.stream-artist {
+              font-size: 11px;
+              font-weight: bold;
+              width: 120px;
+              height: 20px;
+              margin-left: 4px;
+              padding-left: 22px;
+              font-family: Helvetica, Arial, sans-serif; }
+              /* line 1307, ../sass/screen.scss */
+              .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.stream-artist::before {
+                content: "";
+                position: absolute;
+                left: 4px;
+                top: 4px;
+                background: url(../images/freegal_sprite.png) 0 0;
+                width: 19px;
+                height: 13px; }
+            /* line 1320, ../sass/screen.scss */
+            .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.more-by-artist {
+              width: 30px;
+              height: 20px;
+              margin-left: 3px; }
+              /* line 1324, ../sass/screen.scss */
+              .content-wrapper .content .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.more-by-artist::before {
+                background: url(../images/freegal_sprite.png) -180px -20px no-repeat;
+                content: "";
+                position: absolute;
+                left: 7px;
+                top: 3px;
+                width: 16px;
+                height: 14px; }
 
-/* line 1101, ../sass/screen.scss */
+/* line 1347, ../sass/screen.scss */
 footer {
   height: 98px;
   background: url(../images/footer-bkg.gif) repeat;
   color: #000;
   font-size: 12px;
   padding-bottom: 100px; }
-  /* line 1109, ../sass/screen.scss */
+  /* line 1355, ../sass/screen.scss */
   footer .inner-wrapper {
     height: 98px;
     position: relative;
     width: 1215px;
     margin: 0 auto; }
-    /* line 1116, ../sass/screen.scss */
+    /* line 1362, ../sass/screen.scss */
     footer .inner-wrapper .legal {
       position: absolute;
       left: 75px;
       top: 25px; }
-    /* line 1122, ../sass/screen.scss */
+    /* line 1368, ../sass/screen.scss */
     footer .inner-wrapper .footer-nav {
       position: absolute;
       right: 0;
       top: 25px; }
-      /* line 1128, ../sass/screen.scss */
+      /* line 1374, ../sass/screen.scss */
       footer .inner-wrapper .footer-nav li {
         display: block;
         float: left; }
-        /* line 1133, ../sass/screen.scss */
+        /* line 1379, ../sass/screen.scss */
         footer .inner-wrapper .footer-nav li a {
           display: block;
           padding-left: 6px;
@@ -942,30 +1131,30 @@ footer {
           color: #000;
           text-decoration: none;
           border-right: 1px solid #000; }
-        /* line 1143, ../sass/screen.scss */
+        /* line 1389, ../sass/screen.scss */
         footer .inner-wrapper .footer-nav li:last-child a {
           border-right: 0; }
-    /* line 1150, ../sass/screen.scss */
+    /* line 1396, ../sass/screen.scss */
     footer .inner-wrapper .languages {
       position: absolute;
       right: 0;
       top: 60px; }
-      /* line 1156, ../sass/screen.scss */
+      /* line 1402, ../sass/screen.scss */
       footer .inner-wrapper .languages li {
         display: block;
         float: left; }
-        /* line 1161, ../sass/screen.scss */
+        /* line 1407, ../sass/screen.scss */
         footer .inner-wrapper .languages li a {
           display: block;
           padding-left: 6px;
           padding-right: 6px;
           color: #000;
           text-decoration: none; }
-        /* line 1171, ../sass/screen.scss */
+        /* line 1417, ../sass/screen.scss */
         footer .inner-wrapper .languages li:nth-child(2) a, footer .inner-wrapper .languages li:nth-child(3) a, footer .inner-wrapper .languages li:nth-child(4) a {
           border-right: 1px solid #000; }
 
-/* line 1183, ../sass/screen.scss */
+/* line 1429, ../sass/screen.scss */
 .fmp-container {
   position: fixed;
   bottom: 0;

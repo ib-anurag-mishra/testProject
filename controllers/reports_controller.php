@@ -26,6 +26,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_index() {
+//        Configure::write('debug',2);
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
         //	print_r($this->data);exit;
@@ -476,7 +477,7 @@ Class ReportsController extends AppController {
     function admin_downloadAsCsv() {
         ini_set('memory_limit', '2048M');
         set_time_limit(0);
-        Configure::write('debug', 0);
+//        Configure::write('debug', 0);
         $this->layout = false;
         if (isset($this->data)) {
             $all_Ids = '';
@@ -906,7 +907,7 @@ Class ReportsController extends AppController {
     function admin_downloadAsPdf() {
         ini_set('memory_limit', '2048M');
         set_time_limit(0);
-        Configure::write('debug', 0); // Otherwise we cannot use this method while developing
+//        Configure::write('debug', 0); // Otherwise we cannot use this method while developing
         if (isset($this->data)) {
             $all_Ids = '';
             $this->Report->set($this->data);
@@ -1339,7 +1340,7 @@ Class ReportsController extends AppController {
 
     function admin_libraryrenewalreport() {
         if (isset($this->data)) {
-            Configure::write('debug', 0); // Otherwise we cannot use this method while developing
+//            Configure::write('debug', 0); // Otherwise we cannot use this method while developing
             $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
             if ($this->data['downloadType'] == 'pdf') {
                 $this->layout = 'pdf';
@@ -1370,7 +1371,7 @@ Class ReportsController extends AppController {
             $this->set('libraryID', "");
         }
         if (isset($this->data)) {
-            Configure::write('debug', 0); // Otherwise we cannot use this method while developing
+//            Configure::write('debug', 0); // Otherwise we cannot use this method while developing
             $this->Report->set($this->data);
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
@@ -1413,7 +1414,7 @@ Class ReportsController extends AppController {
 
     function admin_sonyreports() {
         if (!empty($this->params['named']['id'])) {//gets the values from the url in form  of array
-            Configure::write('debug', 0); // Otherwise we cannot use this method while developing
+//            Configure::write('debug', 0); // Otherwise we cannot use this method while developing
             $sonyReport = $this->SonyReport->find("first", array('conditions' => array('id' => base64_decode($this->params['named']['id']))));
             $path = "http://music.freegalmusic.com/freegalmusic/prod/EN/sony_reports"; // change the path to fit your websites document structure
             $fullPath = $path . "/" . $sonyReport['SonyReport']['report_name'];
@@ -1435,7 +1436,7 @@ Class ReportsController extends AppController {
     }
 
     function admin_getLibraryIds() {
-        Configure::write('debug', 0);
+//        Configure::write('debug', 0);
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"), 'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
@@ -1532,7 +1533,7 @@ Class ReportsController extends AppController {
     }
 
     function admin_unlimitedpdf() {
-        Configure::write('debug', 0);
+//        Configure::write('debug', 0);
         $this->layout = false;
         $all_Ids = '';
         $sql = "SELECT id from libraries where library_unlimited = '1'";
