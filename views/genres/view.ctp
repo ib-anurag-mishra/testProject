@@ -285,7 +285,16 @@ $totalRows = count($genresAll);
 
         <div class="border"></div>
 
-        <span class="album-list-span"></span>
+        <span class="album-list-span">
+            <?php
+         
+            if($this->Session->check('Artist'))        
+            {
+                $url = "artists/album_ajax/" . str_replace('/','@',$this->Session->read('Artist')) . "/" . base64_encode($this->Session->read('Genre'));
+                $this->requestAction($url);
+            }
+            ?>
+        </span>
         
     </section>
 
