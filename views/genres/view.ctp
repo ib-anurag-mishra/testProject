@@ -289,20 +289,7 @@ $totalRows = count($genresAll);
 
         <div class="border"></div>
 
-        <span class="album-list-span">
-            <?php
-            if ($this->Session->check('Artist'))
-            {
-                ?>
-                <script>
-        var url = "artists/album_ajax/".<?php str_replace('/', '@', $this->Session->read('Artist')) . "/" . base64_encode($this->Session->read('Genre')) ?>;
-        showAllAlbumsList(url);
-                </script>
-
-                <?php
-            }
-            ?>
-        </span>
+        <span class="album-list-span"></span>
 
     </section>
 
@@ -310,3 +297,19 @@ $totalRows = count($genresAll);
 
 
 </section>
+
+<?php
+if ($this->Session->check('Artist'))
+{
+    ?>
+    <script>
+        $(document).ready(function() {
+            var url = "artists/album_ajax/".<?php str_replace('/', '@', $this->Session->read('Artist')) . "/" . base64_encode($this->Session->read('Genre')) ?>;
+            showAllAlbumsList(url);
+        });
+
+    </script>
+
+    <?php
+}
+?>
