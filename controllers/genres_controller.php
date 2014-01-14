@@ -86,7 +86,7 @@ Class GenresController extends AppController
         $genreAll = Cache::read("genre" . $country);
 
         $this->set('genresAll', $genreAll);
-        
+
         $category_ids = $this->Category->find('list', array('conditions' => array('Language' => Configure::read('App.LANGUAGE')), 'fields' => 'id'));
         $rand_keys = array_rand($category_ids, 4);
         $rand_val = implode(",", $rand_keys);
@@ -242,7 +242,7 @@ Class GenresController extends AppController
 
     function view($Genre = null, $Artist = null)
     {
-        
+
 
         if ($Genre == '')
         {
@@ -282,8 +282,8 @@ Class GenresController extends AppController
         }
         $genreAll = Cache::read("genre" . $country);
 
-        
-        
+
+
         $this->set('genresAll', $genreAll);
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
@@ -318,7 +318,7 @@ Class GenresController extends AppController
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
         if ($genre != 'All')
-        {           
+        {
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -366,7 +366,7 @@ Class GenresController extends AppController
 
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
-        
+
 
         $allArtistsNew = $allArtists;
 
@@ -383,7 +383,7 @@ Class GenresController extends AppController
         {
             $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
         }
-        sort($tempArray,SORT_STRING);
+        sort($tempArray, SORT_STRING);
 
         for ($i = 0; $i < count($tempArray); $i++)
         {
@@ -397,32 +397,45 @@ Class GenresController extends AppController
 
     function ajax_view($Genre = null, $Artist = null)
     {
-
-        if ($Genre == '')
-        {
-            $Genre = "QWxs";
-        }
-
-        $this->set('selectedCallFlag', 0);
-        if (isset($_REQUEST['ajax_genre_name']))
-        {
-            $this->set('selectedCallFlag', 1);
-        }
-                
         $this->layout = 'ajax';
 
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $country = $this->Session->read('territory');
 
-        if ($this->Session->read('block') == 'yes')
+        if ($Genre == '')
         {
-            $cond = array('Song.Advisory' => 'F');
+            $Genre = "QWxs";
+        }
+        $genre = base64_decode($Genre);
+        $genre = mysql_escape_string($genre);
+
+
+
+        /*
+         * storing Genre name and Artist name 
+         * for login redirect
+         */
+        if (isset($this->Session->read('Genre')) && isset($this->Session->read('Artist')))
+        {
+            if (!$genre == $this->Session->read('Genre'))
+            {
+                $this->Session->write('Genre', $genre);
+                $this->Session->write('Artist', $Artist);
+            }
         }
         else
         {
-            $cond = "";
+            $this->Session->write('Genre', $genre);
+            $this->Session->write('Artist', $Artist);
         }
+
+
+        echo '<pre>';
+        print_r($this->Session);
+        die;
+
+
         if ($Artist == 'spl')
         {
             $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
@@ -435,11 +448,29 @@ Class GenresController extends AppController
         {
             $condition = "";
         }
+
+
+        $this->set('selectedCallFlag', 0);
+        if (isset($_REQUEST['ajax_genre_name']))
+        {
+            $this->set('selectedCallFlag', 1);
+        }
+
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Song.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }
+
+
+
         $this->Song->recursive = 0;
-        $genre = base64_decode($Genre);
-        $genre = mysql_escape_string($genre);
-        
-        
+
+
+
         echo "<pre>";
         print_r($genre);
         echo "<br/>";
@@ -449,7 +480,7 @@ Class GenresController extends AppController
         if ($genre != 'All')
         {
 
-   //this one
+            //this one
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -472,7 +503,7 @@ Class GenresController extends AppController
         else
         {
 
-           $this->Song->unbindModel(array('hasOne' => array('Participant')));
+            $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('hasOne' => array('Genre')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
@@ -513,7 +544,7 @@ Class GenresController extends AppController
         {
             $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
         }
-        sort($tempArray,SORT_STRING);
+        sort($tempArray, SORT_STRING);
 
         for ($i = 0; $i < count($tempArray); $i++)
         {
@@ -529,7 +560,7 @@ Class GenresController extends AppController
     {
 
         $this->layout = 'ajax';
-        
+
         if ($Genre == '')
         {
             $Genre = "QWxs";
@@ -584,8 +615,7 @@ Class GenresController extends AppController
                 ),
                 'extra' => array('chk' => 1),
                 'limit' => '60', 'cache' => 'yes', 'check' => 2,
-            );            
-            
+            );
         }
         else
         {
@@ -614,7 +644,7 @@ Class GenresController extends AppController
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $allArtists = $this->paginate('Song');
 
-     
+
         $allArtistsNew = $allArtists;
         for ($i = 0; $i < count($allArtistsNew); $i++)
         {
@@ -629,13 +659,13 @@ Class GenresController extends AppController
         {
             $tempArray[] = trim($allArtistsNew[$i]['Song']['ArtistText']);
         }
-        sort($tempArray,SORT_STRING);
+        sort($tempArray, SORT_STRING);
 
         for ($i = 0; $i < count($tempArray); $i++)
         {
             $allArtists[$i]['Song']['ArtistText'] = trim($tempArray[$i]);
         }
-        
+
 
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);
