@@ -1995,7 +1995,8 @@ Class ArtistsController extends AppController
             );
 
             $this->paginate['limit'] = 30;
-            $this->Album->recursive = 0;
+            $this->Album->recursive = 2;
+            
             $albumData = $this->paginate('Album');
 
             if ($libType == 2)
