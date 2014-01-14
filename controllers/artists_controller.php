@@ -1602,6 +1602,13 @@ Class ArtistsController extends AppController
         $id = str_replace('@', '/', $id);
         $this->set('artistName', base64_decode($id));
         $this->set('album', $album);
+        
+        //for setting album prod id for login redirect
+        $this->Session->write('album' , $album);
+        echo '<pre>';
+        print_r($this->Session->read('album'));
+        die;
+        
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         //$country = "'".$country."'";
@@ -2044,7 +2051,8 @@ Class ArtistsController extends AppController
 
 
         $id = str_replace('@', '/', $id);
-        //update session  value for Artist
+        
+        //update session value for Artist
         if($this->Session->check('Artist'))
         {
             if(base64_decode($id) != $this->Session->read('Artist'))
@@ -2057,9 +2065,6 @@ Class ArtistsController extends AppController
             $this->Session->write('Artist', base64_decode($id));
         }
 
-        echo "<pre>";
-        print_r($cond);
-        exit($this->Session->read('Artist'));
         
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
