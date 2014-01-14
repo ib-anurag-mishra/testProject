@@ -264,10 +264,13 @@ $totalRows = count($genresAll);
                             {
                                 echo " <li>";
                                 $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
-                                //$ArtistName = $this->getValidText($genres[$i]['Song']['ArtistText']);
+                                $ArtistName = str_replace("'", '', ($ArtistName));
+                              
                                 $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+                                
                                 $selected = ($ArtistName == $this->Session->read('Artist') ) ? "class='selected'" : "";
-                                echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . str_replace("'", '', ($ArtistName)) . "'" . " $selected >";
+                                
+                                echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . $ArtistName . "'" . " $selected >";
                                 echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
                                 echo '</a>';
                                 echo '</li>';
