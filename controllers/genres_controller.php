@@ -430,14 +430,6 @@ Class GenresController extends AppController
             $this->Session->write('Artist', $Artist);
         }
 
-
-        echo '<pre>';
-        print_r($this->Session->read('Genre'));
-        echo '<br/>';
-        print_r($this->Session->read('Artist'));
-        die;
-
-
         if ($Artist == 'spl')
         {
             $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
