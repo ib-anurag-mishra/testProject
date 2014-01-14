@@ -1,7 +1,3 @@
-
-
-
-
 <section class="artist-page">
     <div class="breadcrumbs">
         <?php
@@ -214,7 +210,7 @@
                     ?>
                 </ul>
             </div>
-            
+
             <div class="paging">    
                 <?php
                 echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
