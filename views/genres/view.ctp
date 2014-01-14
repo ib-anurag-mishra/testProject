@@ -304,7 +304,7 @@ if ($this->Session->check('Artist'))
     ?>
     <script>
         $(document).ready(function() {
-            var url = "artists/album_ajax/" + <?php echo str_replace('/', '@', $this->Session->read('Artist')) ?> + "/" + <?php echo base64_encode($this->Session->read('Genre')) ?>;
+            var url = "artists/album_ajax/" + <?php echo str_replace('/','@',base64_encode($this->Session->read('Artist'))) ?>+ "/" + <?php echo base64_encode($this->Session->read('Genre')) ?>;
             showAllAlbumsList(url);
         });
 
