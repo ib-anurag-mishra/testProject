@@ -63,7 +63,7 @@
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
                 $('#artist_loader').show();
-            var totalPages = <?=$totalPages?>;
+                var totalPages = <?= $totalPages ?>;
                 var data = "npage=" + artistPage;
 
                 if ((preValue != artistPage) && (artistPage <= totalPages)) {
@@ -71,21 +71,21 @@
                     if (artistPage <= totalPages) {
 
                         preValue = artistPage;
-                    var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
+                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/All';
 
                         jQuery.ajax({
                             type: "post", // Request method: post, get
                             url: link, // URL to request
                             data: data, // post data
                             success: function(newitems) {
-                                if(newitems){
+                                if (newitems) {
                                     artistPage++;
                                     $('#artist_loader').hide();
-                                    $('#artistlistrecord').append(newitems);  
-                                }else{
-                                     $('#artist_loader').hide(); 
-                                     return;
-                                }                                
+                                    $('#artistlistrecord').append(newitems);
+                                } else {
+                                    $('#artist_loader').hide();
+                                    return;
+                                }
                             },
                             async: true,
                             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -100,7 +100,7 @@
             }
         });
     });
-   
+
 </script>
 
 <?php
@@ -253,49 +253,57 @@ $totalRows = count($genresAll);
             </div>
 
 
-           <div class="artist-list-shadow-container">
-				<h3></h3>
-				<div class="artist-list" id="artistscroll">					
-					<ul id="artistlistrecord">						                                            
-                                         <?php                                                           
-                                            if(count($genres) > 0){                                                    
-                                                for ($i = 0; $i < count($genres); $i++) {
-                                                        echo " <li>";
-                                                        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);      
-                                                        //$ArtistName = $this->getValidText($genres[$i]['Song']['ArtistText']);
-                                                        $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        $selected = ($ArtistName == $this->Session->read('Artist') ) ? "class='selected'" : "";
-                                                        echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('".$url."')\" data-artist='".str_replace("'", '', ($ArtistName))."'" ." $selected >";
-                                                        echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
-                                                        echo '</a>';
-                                                        echo '</li>';                                                                    
-                                                }
-                                            }else{
-                                                    echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
-                                            }
-                                         ?> 
-                                            
-                                          <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
-				
-					</ul>
-                                    <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
-				</div>
-			</div>
+            <div class="artist-list-shadow-container">
+                <h3></h3>
+                <div class="artist-list" id="artistscroll">					
+                    <ul id="artistlistrecord">						                                            
+                        <?php
+                        if (count($genres) > 0)
+                        {
+                            for ($i = 0; $i < count($genres); $i++)
+                            {
+                                echo " <li>";
+                                $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
+                                //$ArtistName = $this->getValidText($genres[$i]['Song']['ArtistText']);
+                                $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+                                $selected = ($ArtistName == $this->Session->read('Artist') ) ? "class='selected'" : "";
+                                echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . str_replace("'", '', ($ArtistName)) . "'" . " $selected >";
+                                echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
+                                echo '</a>';
+                                echo '</li>';
+                            }
+                        }
+                        else
+                        {
+                            echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
+                        }
+                        ?> 
+
+                        <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
+
+                    </ul>
+                    <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
+                </div>
+            </div>
         </div>
 
         <div class="border"></div>
 
         <span class="album-list-span">
             <?php
-         
-            if($this->Session->check('Artist'))        
+            if ($this->Session->check('Artist'))
             {
-                $url = "artists/album_ajax/" . str_replace('/','@',$this->Session->read('Artist')) . "/" . base64_encode($this->Session->read('Genre'));
-                $this->requestAction($url);
+                ?>
+                <script>
+        var url = "artists/album_ajax/".<?php str_replace('/', '@', $this->Session->read('Artist')) . "/" . base64_encode($this->Session->read('Genre')) ?>;
+        showAllAlbumsList(url);
+                </script>
+
+                <?php
             }
             ?>
         </span>
-        
+
     </section>
 
     <section class="album-detail-container clearfix" id='album_details_container'></section>
