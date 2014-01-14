@@ -1167,8 +1167,10 @@ Class ArtistsController extends AppController
       Desc : For getting songs related to an Album
      */
 
-    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null)
+     function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null)
     {
+        //Configure::write('debug' , 2);
+
         if (empty($ajax))
         {
             if (count($this->params['pass']) > 1)
@@ -1211,6 +1213,8 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
+
+
         if ($album != '')
         {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
@@ -1265,65 +1269,12 @@ Class ArtistsController extends AppController
 //		$this->set('patronDownload',$patronDownload);
         if ($this->Session->read('block') == 'yes')
         {
-            $cond = array('Album.Advisory' => 'F');
-        }
-        else
-        {
-
-            $cond = "";
-        }
-        $this->paginate = array('conditions' =>
-            array('and' =>
-                array(
-                    //   array('Album.ArtistText' => base64_decode($id)),
-                    //	array('Album.provider_type = Genre.provider_type'),
-                    //	array('Album.provider_type = Country.provider_type'),
-                    $condition
-                ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
-            ),
-            'fields' => array(
-                'Album.ProdID',
-                'Album.Title',
-                'Album.ArtistText',
-                'Album.AlbumTitle',
-                'Album.Advisory',
-                'Album.Artist',
-                'Album.ArtistURL',
-                'Album.Label',
-                'Album.Copyright',
-                'Album.provider_type'
-            ),
-            'contain' => array(
-                'Genre' => array(
-                    'fields' => array(
-                        'Genre.Genre'
-                    )
-                ),
-                'Country' => array(
-                    'fields' => array(
-                        'Country.Territory'
-                    )
-                ),
-                'Files' => array(
-                    'fields' => array(
-                        'Files.CdnPath',
-                        'Files.SaveAsName',
-                        'Files.SourceURL'
-                    ),
-                )
-            ), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3', 'cache' => 'yes', 'chk' => 2
-        );
-        if ($this->Session->read('block') == 'yes')
-        {
             $cond = array('Song.Advisory' => 'F');
         }
         else
         {
             $cond = "";
         }
-        $this->Album->recursive = 2;
-        $albumData = array();
-        $albumData = $this->paginate('Album'); //getting the Albums for the artist
 
         $albumSongs = array();
         if (!empty($albumData))
@@ -1454,6 +1405,7 @@ Class ArtistsController extends AppController
 
         return $albumSongs;
     }
+
 
     /*
      * Function Name : getAlbumData
