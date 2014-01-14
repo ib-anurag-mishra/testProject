@@ -243,7 +243,7 @@ Class GenresController extends AppController
     function view($Genre = null, $Artist = null)
     {
 
-        Configure::write('debug' ,2 );
+//        /Configure::write('debug' ,2 );
 
         if ($Genre == '')
         {
@@ -318,6 +318,20 @@ Class GenresController extends AppController
         $this->Song->recursive = 0;
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
+        
+        //login redirect issue fix
+        if( $this->Session->check('Genre'))
+        {
+            if($genre == 'All')
+            {
+                $genre =  $this->Session->read('Genre');
+            }
+            else
+            {
+                
+            }
+        }
+        
         if ($genre != 'All')
         {
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
