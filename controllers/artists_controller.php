@@ -1604,10 +1604,12 @@ Class ArtistsController extends AppController
         $this->set('album', $album);
         
         //for setting album prod id for login redirect
+        if(base64_decode($id) != $this->Session->read('Artist'))
+        {
+            $this->Session->write('Artist' , base64_decode($id));
+        }
         $this->Session->write('album' , $album);
-        echo '<pre>';
-        print_r($this->Session->read('album'));
-        die;
+      
         
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');

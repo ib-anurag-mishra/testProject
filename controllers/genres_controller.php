@@ -416,20 +416,25 @@ Class GenresController extends AppController
          * for login redirect
          */
         if ($this->Session->check('Genre') && $this->Session->check('Artist'))
-        {           
-            if ($genre != $this->Session->read('Genre'))
+        {          
+            if($genre == 'All')
+            {
+                $genre = $this->Session->read('Genre');
+                $Artist = $this->Session->read('Artist');
+            }
+            else if ($genre != $this->Session->read('Genre') && $genre != 'All')
             {
                 $this->Session->write('Genre', $genre);
                 $this->Session->write('Artist', $Artist);
             }
         }
         else
-        {
-          
+        {          
             $this->Session->write('Genre', $genre);
             $this->Session->write('Artist', $Artist);
         }
 
+        
         if ($Artist == 'spl')
         {
             $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
