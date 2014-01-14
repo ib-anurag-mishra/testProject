@@ -2044,7 +2044,23 @@ Class ArtistsController extends AppController
 
 
         $id = str_replace('@', '/', $id);
+        //update session  value for Artist
+        if($this->Session->check('Artist'))
+        {
+            if(base64_decode($id) != $this->Session->read('Artist'))
+            {
+                $this->Session->write('Artist', base64_decode($id));
+            }
+        }
+        else
+        {
+            $this->Session->write('Artist', base64_decode($id));
+        }
 
+        echo "<pre>";
+        print_r($cond);
+        exit($this->Session->read('Artist'));
+        
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
