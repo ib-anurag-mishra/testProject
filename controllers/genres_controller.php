@@ -417,7 +417,7 @@ Class GenresController extends AppController
          * storing Genre name and Artist name 
          * for login redirect
          */
-        if (isset($this->Session->read('Genre')) && isset($this->Session->read('Artist')))
+        if ($this->Session->check('Genre') && $this->Session->check('Artist'))
         {
             $tmpGenre = $this->Session->read('Genre');
             if (!$genre == $tmpGenre)
