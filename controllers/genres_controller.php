@@ -419,7 +419,8 @@ Class GenresController extends AppController
          */
         if (isset($this->Session->read('Genre')) && isset($this->Session->read('Artist')))
         {
-            if (!$genre == $this->Session->read('Genre'))
+            $tmpGenre = $this->Session->read('Genre');
+            if (!$genre == $tmpGenre)
             {
                 $this->Session->write('Genre', $genre);
                 $this->Session->write('Artist', $Artist);
