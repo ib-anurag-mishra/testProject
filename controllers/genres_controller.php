@@ -435,14 +435,14 @@ Class GenresController extends AppController
                 $genre = $this->Session->read('Genre');
                 $Artist = $this->Session->read('Artist');
                 $this->Session->delete('provider');
-                $this->Session->delete('Artist');
+                $this->Session->delete('album');
             }
             else if ($genre != $this->Session->read('Genre') && $genre != 'All')
             {
                 $this->Session->write('Genre', $genre);
                 $this->Session->write('Artist', $Artist);
                 $this->Session->delete('provider');
-                $this->Session->delete('Artist');
+                $this->Session->delete('album');
             }
         }
         else
@@ -450,7 +450,7 @@ Class GenresController extends AppController
             $this->Session->write('Genre', $genre);
             $this->Session->write('Artist', $Artist);
             $this->Session->delete('provider');
-            $this->Session->delete('Artist');
+            $this->Session->delete('album');
         }
 
 

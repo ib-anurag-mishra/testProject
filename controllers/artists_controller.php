@@ -2084,14 +2084,14 @@ Class ArtistsController extends AppController
             {
                 $this->Session->write('Artist', base64_decode($id));
                 $this->Session->delete('provider');
-                $this->Session->delete('Artist');
+                $this->Session->delete('album');
             }
         }
         else
         {
             $this->Session->write('Artist', base64_decode($id));
             $this->Session->delete('provider');
-            $this->Session->delete('Artist');
+            $this->Session->delete('album');
         }
 
 
