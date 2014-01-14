@@ -1196,9 +1196,9 @@ Class ArtistsController extends AppController
         }
         else
         {
-
             $provider = base64_decode($provider);
         }
+
         // echo base64_decode($id) . $album;
         // exit;
         $country = $this->Session->read('territory');
@@ -1395,7 +1395,6 @@ Class ArtistsController extends AppController
         }
 
 
-
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)
         {
@@ -1452,8 +1451,6 @@ Class ArtistsController extends AppController
 //		$array = array();
 //		$pre = '';
 //		$res = array();
-
-
 
         return $albumSongs;
     }
