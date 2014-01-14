@@ -256,7 +256,7 @@ Class GenresController extends AppController
             $this->Session->setFlash(__('Invalid Genre.', true));
             $this->redirect(array('controller' => '/', 'action' => 'index'));
         }
-        
+
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
         if (($genre = Cache::read("genre" . $country)) === false)
@@ -317,20 +317,20 @@ Class GenresController extends AppController
         $this->Song->recursive = 0;
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
-        
+
         //login redirect issue fix
-        if( $this->Session->check('Genre'))
+        if ($this->Session->check('Genre'))
         {
-            if($genre == 'All')
+            if ($genre == 'All')
             {
-                $genre =  $this->Session->read('Genre');
+                $genre = $this->Session->read('Genre');
             }
             else
             {
                 
             }
         }
-        
+
         if ($genre != 'All')
         {
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -429,25 +429,31 @@ Class GenresController extends AppController
          * for login redirect
          */
         if ($this->Session->check('Genre') && $this->Session->check('Artist'))
-        {          
-            if($genre == 'All')
+        {
+            if ($genre == 'All')
             {
                 $genre = $this->Session->read('Genre');
                 $Artist = $this->Session->read('Artist');
+                $this->Session->delete('provider');
+                $this->Session->delete('Artist');
             }
             else if ($genre != $this->Session->read('Genre') && $genre != 'All')
             {
                 $this->Session->write('Genre', $genre);
                 $this->Session->write('Artist', $Artist);
+                $this->Session->delete('provider');
+                $this->Session->delete('Artist');
             }
         }
         else
-        {          
+        {
             $this->Session->write('Genre', $genre);
             $this->Session->write('Artist', $Artist);
+            $this->Session->delete('provider');
+            $this->Session->delete('Artist');
         }
 
-        
+
         if ($Artist == 'spl')
         {
             $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");

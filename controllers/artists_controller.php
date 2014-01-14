@@ -1602,16 +1602,16 @@ Class ArtistsController extends AppController
         $id = str_replace('@', '/', $id);
         $this->set('artistName', base64_decode($id));
         $this->set('album', $album);
-        
+
         //for setting album prod id for login redirect
-        if(base64_decode($id) != $this->Session->read('Artist'))
+        if (base64_decode($id) != $this->Session->read('Artist'))
         {
-            $this->Session->write('Artist' , base64_decode($id));
+            $this->Session->write('Artist', base64_decode($id));
         }
-        $this->Session->write('album' , $album);
-        $this->Session->write('provider' , $provider);
-        
-        
+        $this->Session->write('album', $album);
+        $this->Session->write('provider', $provider);
+
+
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         //$country = "'".$country."'";
@@ -2054,21 +2054,25 @@ Class ArtistsController extends AppController
 
 
         $id = str_replace('@', '/', $id);
-        
+
         //update session value for Artist
-        if($this->Session->check('Artist'))
+        if ($this->Session->check('Artist'))
         {
-            if(base64_decode($id) != $this->Session->read('Artist'))
+            if (base64_decode($id) != $this->Session->read('Artist'))
             {
                 $this->Session->write('Artist', base64_decode($id));
+                $this->Session->delete('provider');
+                $this->Session->delete('Artist');
             }
         }
         else
         {
             $this->Session->write('Artist', base64_decode($id));
+            $this->Session->delete('provider');
+            $this->Session->delete('Artist');
         }
 
-        
+
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),

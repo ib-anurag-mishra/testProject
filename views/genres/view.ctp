@@ -314,7 +314,6 @@ if ($this->Session->check('Artist'))
     <script>
         $(document).ready(function() {
             var all_album_url = $("#allAlbumUrl").attr('value');
-
             showAllAlbumsList(all_album_url);
         });
     </script>
