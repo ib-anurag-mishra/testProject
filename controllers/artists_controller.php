@@ -1875,6 +1875,11 @@ Class ArtistsController extends AppController
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+
         $libType = $this->Session->read('library_type');
 
         if ($this->Session->read('block') == 'yes')
@@ -1913,12 +1918,6 @@ Class ArtistsController extends AppController
         $this->set('artisttitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
 
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
-        
-        
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
@@ -2000,7 +1999,7 @@ Class ArtistsController extends AppController
                         ),
                     )
                     ),
-                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
+                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'), 'cache' => 'yes', 'chk' => 2
             );
 
         $this->paginate['limit'] = 50;
