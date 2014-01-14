@@ -243,6 +243,7 @@ Class GenresController extends AppController
     function view($Genre = null, $Artist = null)
     {
 
+        Configure::write('debug' ,2 );
 
         if ($Genre == '')
         {
