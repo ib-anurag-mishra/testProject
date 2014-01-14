@@ -1902,8 +1902,8 @@ Class ArtistsController extends AppController
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
-        
-        
+
+
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array(
@@ -1929,88 +1929,92 @@ Class ArtistsController extends AppController
         $val = '';
         $val_provider_type = '';
 
-        foreach ($songs as $k => $v)
+        if (!empty($songs))
         {
-            if (empty($val))
+            foreach ($songs as $k => $v)
             {
-                $val .= $v['Song']['ReferenceID'];
-                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                if (empty($val))
+                {
+                    $val .= $v['Song']['ReferenceID'];
+                    $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                }
+                else
+                {
+                    $val .= ',' . $v['Song']['ReferenceID'];
+                    $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
+                }
             }
-            else
-            {
-                $val .= ',' . $v['Song']['ReferenceID'];
-                $val_provider_type .= ',' . "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
-            }
-        }
 
-        $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
+            $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
 
-        $this->paginate =
-                array(
-                    'conditions' =>
+            $this->paginate =
                     array(
-                        'and' =>
+                        'conditions' =>
                         array(
-                            $condition
+                            'and' =>
+                            array(
+                                $condition
+                            ),
+                            "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                         ),
-                        "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
-                    ),
-                    'fields' => array(
-                        'Album.ProdID',
-                        'Album.Title',
-                        'Album.ArtistText',
-                        'Album.AlbumTitle',
-                        'Album.Advisory',
-                        'Album.Artist',
-                        'Album.ArtistURL',
-                        'Album.Label',
-                        'Album.Copyright',
-                        'Album.provider_type',
-                        'Files.CdnPath',
-                        'Files.SaveAsName',
-                        'Files.SourceURL',
-                        'Genre.Genre'
-                    ),
-                    'contain' => array(
-                        'Genre' => array(
-                            'fields' => array(
-                                'Genre.Genre'
+                        'fields' => array(
+                            'Album.ProdID',
+                            'Album.Title',
+                            'Album.ArtistText',
+                            'Album.AlbumTitle',
+                            'Album.Advisory',
+                            'Album.Artist',
+                            'Album.ArtistURL',
+                            'Album.Label',
+                            'Album.Copyright',
+                            'Album.provider_type',
+                            'Files.CdnPath',
+                            'Files.SaveAsName',
+                            'Files.SourceURL',
+                            'Genre.Genre'
+                        ),
+                        'contain' => array(
+                            'Genre' => array(
+                                'fields' => array(
+                                    'Genre.Genre'
+                                )
+                            ),
+                            'Files' => array(
+                                'fields' => array(
+                                    'Files.CdnPath',
+                                    'Files.SaveAsName',
+                                    'Files.SourceURL'
+                                ),
                             )
                         ),
-                        'Files' => array(
-                            'fields' => array(
-                                'Files.CdnPath',
-                                'Files.SaveAsName',
-                                'Files.SourceURL'
-                            ),
-                        )
-                    ),
-                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
-        );
+                        'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'),
+                        'cache' => 'yes',
+                        'chk' => 2
+            );
 
-        $this->paginate['limit'] = 50;
-        $this->Album->recursive = 0;
-        $albumData = $this->paginate('Album');
+            $this->paginate['limit'] = 50;
+            $this->Album->recursive = 0;
+            $albumData = $this->paginate('Album');
 
-        if ($libType == 2)
-        {
-            foreach ($albumData as $key => $value)
+            if ($libType == 2)
             {
-                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+                foreach ($albumData as $key => $value)
+                {
+                    $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+                }
+            }
+
+            $this->set('albumData', $albumData);
+
+            if (isset($this->params['named']['page']))
+            {
+                $this->autoLayout = false;
+                $this->autoRender = false;
+
+                echo $this->render('/artists/artist_album_ajax');
+                die;
             }
         }
-
-        $this->set('albumData', $albumData);
-
-        if (isset($this->params['named']['page']))
-        {
-            $this->autoLayout = false;
-            $this->autoRender = false;
-            
-            echo $this->render('/artists/artist_album_ajax');
-            die;
-        }
-
 
 
 
