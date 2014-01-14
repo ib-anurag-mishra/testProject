@@ -256,6 +256,7 @@ Class GenresController extends AppController
             $this->Session->setFlash(__('Invalid Genre.', true));
             $this->redirect(array('controller' => '/', 'action' => 'index'));
         }
+        
         $this->Genre->Behaviors->attach('Containable');
         $this->Genre->recursive = 2;
         if (($genre = Cache::read("genre" . $country)) === false)
@@ -282,8 +283,6 @@ Class GenresController extends AppController
             Cache::write("genre" . $country, $genreAll);
         }
         $genreAll = Cache::read("genre" . $country);
-
-
 
         $this->set('genresAll', $genreAll);
         $patId = $this->Session->read('patron');
@@ -407,7 +406,7 @@ Class GenresController extends AppController
 
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);
-        $this->set('genre', base64_decode($Genre));
+        $this->set('genre', $genre);
     }
 
     function ajax_view($Genre = null, $Artist = null)
