@@ -411,16 +411,13 @@ Class GenresController extends AppController
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
 
-
-
         /*
          * storing Genre name and Artist name 
          * for login redirect
          */
         if ($this->Session->check('Genre') && $this->Session->check('Artist'))
-        {
-            $tmpGenre = $this->Session->read('Genre');
-            if (!$genre == $tmpGenre)
+        {           
+            if (!$genre == $this->Session->read('Genre'))
             {
                 $this->Session->write('Genre', $genre);
                 $this->Session->write('Artist', $Artist);
@@ -428,13 +425,14 @@ Class GenresController extends AppController
         }
         else
         {
+          
             $this->Session->write('Genre', $genre);
             $this->Session->write('Artist', $Artist);
         }
 
 
         echo '<pre>';
-        print_r($this->Session);
+        print_r($this->Session->read('Artist'));
         die;
 
 
@@ -467,17 +465,7 @@ Class GenresController extends AppController
             $cond = "";
         }
 
-
-
         $this->Song->recursive = 0;
-
-
-
-        echo "<pre>";
-        print_r($genre);
-        echo "<br/>";
-        print_r($Artist);
-        exit();
 
         if ($genre != 'All')
         {
