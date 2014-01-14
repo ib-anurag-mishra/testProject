@@ -242,7 +242,7 @@ Class GenresController extends AppController
 
     function view($Genre = null, $Artist = null)
     {
-
+        
 
         if ($Genre == '')
         {
@@ -410,7 +410,12 @@ Class GenresController extends AppController
         {
             $this->set('selectedCallFlag', 1);
         }
-
+        
+        echo "<pre>";
+        print_r($Genre);
+        print_r($Artist);
+        exit();
+        
         $this->layout = 'ajax';
 
         $patId = $this->Session->read('patron');
