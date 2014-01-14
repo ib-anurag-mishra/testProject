@@ -1870,6 +1870,12 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null, $provider = null)
     {
+
+        $country = $this->Session->read('territory');
+        $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');
+        $libType = $this->Session->read('library_type');
+
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
@@ -1883,7 +1889,7 @@ Class ArtistsController extends AppController
             }
         }
 
-        $country = $this->Session->read('territory');
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -1922,26 +1928,16 @@ Class ArtistsController extends AppController
         $this->layout = 'home';
         $this->set('artisttext', base64_decode($id));
         $this->set('genre', base64_decode($album));
-        $patId = $this->Session->read('patron');
-        $libId = $this->Session->read('library');
+
+
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
-        }
-        else
-        {
-            $cond = "";
-        }
-
-
-
-        if ($this->Session->read('block') == 'yes')
-        {
-            $cond = array('Song.Advisory' => 'F');
         }
         else
         {
@@ -1995,23 +1991,22 @@ Class ArtistsController extends AppController
             );
 
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-        }
-        //$this->set('count_albums',count($albumData));   
-        $libType = $this->Session->read('library_type');
-        if ($libType == 2)
-        {
-            foreach ($albumData as $key => $value)
+            //$this->set('count_albums',count($albumData));   
+
+            if ($libType == 2)
             {
+                foreach ($albumData as $key => $value)
+                {
 //                    $albumData[$key]['albumSongs'] = $this->requestAction(
 //                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
 //                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
 //                                            );
-                $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+                    $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
+                }
             }
         }
 
 
-        $albumSongs = array();
         $this->set('albumData', $albumData);
         if (isset($albumData[0]['Album']['Artist']))
         {
@@ -2026,7 +2021,7 @@ Class ArtistsController extends AppController
             $this->set('artistUrl', "N/A");
         }
         $decodedId = trim(base64_decode($id));
-        $country = $this->Session->read('territory');
+
 
         if (!empty($country))
         {
