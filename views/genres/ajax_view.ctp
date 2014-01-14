@@ -105,6 +105,3 @@ var preValue= 1;
 				</div>
 			</div>
 
-<?php
-    echo $this->Session->read('Genre') ; echo $this->Session->read('Artist');
-?>
