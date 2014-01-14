@@ -12,7 +12,7 @@ Class ArtistsController extends AppController
     var $name = 'Artists';
     var $uses = array('Featuredartist', 'Artist', 'Newartist', 'Files', 'Album', 'Song', 'Download', 'Video', 'Territory');
     var $layout = 'admin';
-    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'WishlistVideo');
+    var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo');
     var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common');
 
     /*
@@ -1870,11 +1870,21 @@ Class ArtistsController extends AppController
 
     function album($id = null, $album = null, $provider = null)
     {
+        //Configure::write('debug', 2);
 
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $libType = $this->Session->read('library_type');
+
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Song.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }
 
         if (count($this->params['pass']) > 1)
         {
@@ -1889,22 +1899,47 @@ Class ArtistsController extends AppController
             }
         }
 
-
-        if ($this->Session->read('block') == 'yes')
+        if (isset($this->params['named']['page']))
         {
-            $cond = array('Song.Advisory' => 'F');
+            $this->layout = 'ajax';
         }
         else
         {
-            $cond = "";
+            $this->layout = 'home';
         }
 
-
         $id = str_replace('@', '/', $id);
+        $this->set('artisttext', base64_decode($id));
+        $this->set('artisttitle', base64_decode($id));
+        $this->set('genre', base64_decode($album));
+
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+        
+        
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
-            'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type', 'Country.SalesDate'),
-            'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'order' => array('Country.SalesDate DESC')));
+            'fields' => array(
+                'DISTINCT Song.ReferenceID',
+                'Song.provider_type',
+                'Country.SalesDate'),
+            'conditions' => array('Song.ArtistText' => base64_decode($id),
+                'Song.DownloadStatus' => 1,
+                "Song.Sample_FileID != ''",
+                "Song.FullLength_FIleID != ''",
+                'Country.Territory' => $country, $cond,
+                'Song.provider_type = Country.provider_type'),
+            'contain' => array(
+                'Country' => array(
+                    'fields' => array('Country.Territory')
+                )),
+            'recursive' => 0,
+            'order' => array(
+                'Country.SalesDate DESC'
+            ))
+        );
 
         $val = '';
         $val_provider_type = '';
@@ -1925,39 +1960,16 @@ Class ArtistsController extends AppController
 
         $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
 
-        $this->layout = 'home';
-        $this->set('artisttext', base64_decode($id));
-        $this->set('genre', base64_decode($album));
-
-
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
-
-        if ($this->Session->read('block') == 'yes')
-        {
-            $cond = array('Album.Advisory' => 'F');
-        }
-        else
-        {
-            $cond = "";
-        }
-
-        $albumData = array();
-
-        if (!empty($val_provider_type))
-        {
-            $this->Album->recursive = 2;
-            $this->paginate = array('conditions' =>
-                array('and' =>
+        $this->paginate =
                     array(
-                        //array('Album.ArtistText' => base64_decode($id)),
-                        //array('Album.provider_type = Genre.provider_type'),
-                        //array('Album.provider_type = Country.provider_type'),
+                    'conditions' =>
+                    array(
+                        'and' =>
+                        array(
                         $condition
-                    ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                 ),
+                        "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+                    ),
                 'fields' => array(
                     'Album.ProdID',
                     'Album.Title',
@@ -1987,41 +1999,38 @@ Class ArtistsController extends AppController
                             'Files.SourceURL'
                         ),
                     )
-                ), 'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC'), 'limit' => '50', 'cache' => 'yes', 'chk' => 2
+                    ),
+                    'order' => array('FIELD(Album.ProdID, ' . $val . ') ASC')
             );
 
-            $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //$this->set('count_albums',count($albumData));   
+        $this->paginate['limit'] = 50;
+        $this->Album->recursive = 0;
+        $albumData = $this->paginate('Album');
 
             if ($libType == 2)
             {
                 foreach ($albumData as $key => $value)
                 {
-//                    $albumData[$key]['albumSongs'] = $this->requestAction(
-//                                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'),
-//                                                    array('pass' => array(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'] , base64_encode($albumData[$key]['Album']['provider_type'])))
-//                                            );
                     $albumData[$key]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[$key]['Album']['ArtistText']), $albumData[$key]['Album']['ProdID'], base64_encode($albumData[$key]['Album']['provider_type']), 1);
                 }
             }
-        }
-
 
         $this->set('albumData', $albumData);
-        if (isset($albumData[0]['Album']['Artist']))
-        {
-            $this->set('artisttitle', $albumData[0]['Album']['Artist']);
-        }
-        if (isset($albumData[0]['Song']['ArtistURL']))
-        {
-            $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
-        }
-        else
-        {
-            $this->set('artistUrl', "N/A");
-        }
-        $decodedId = trim(base64_decode($id));
 
+        if (isset($this->params['named']['page']))
+        {
+            $this->autoLayout = false;
+            $this->autoRender = false;
+            
+            echo $this->render('/artists/artist_album_ajax');
+            die;
+        }
+
+
+
+
+        // Videos Section
+        $decodedId = trim(base64_decode($id));
 
         if (!empty($country))
         {
