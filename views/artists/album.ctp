@@ -130,9 +130,11 @@
     }
     ?>
     <?php
-    if (!empty($albumData))
+    if (!empty($albumData) || !empty($artistVideoList))
     {
-        ?>
+      if (!empty($albumData))
+      {
+          ?>
         <h3>Albums</h3>
         <div class="album-shadow-container">
             <div class="album-scrollable horiz-scroll">
@@ -251,6 +253,14 @@
                     ?>
                 </ul>
             </div>
+
+                <div class="paging">    
+                    <?php
+                    echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
+                    echo $paginator->numbers(array('separator' => ' '));
+                    echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
+                    ?>
+                </div>
         </div>                  
     <?php } ?>                        
 
@@ -432,6 +442,12 @@
                 </ul>
             </div>
         </div>
-    <?php } ?>
+    <?php 
+    }
+    else
+    {
+        echo '<span> Sorry,there are no details available gor this Artist.</span>';
+    }
+    ?>
     <br class="clr">
 </section>
