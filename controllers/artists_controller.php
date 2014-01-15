@@ -2120,6 +2120,7 @@ Class ArtistsController extends AppController
         $this->Session->write('calledGenre',base64_decode($album));
         $this->Session->write('calledArtist',base64_decode($id));
         $this->Session->delete('calledAlbum');
+        $this->Session->delete('calledProvider');
         
         if ($this->Session->read('block') == 'yes')
         {
@@ -2185,16 +2186,11 @@ Class ArtistsController extends AppController
         {
             foreach ($albumData as $album_key => $album)
             {
-
-
                 //hide song if library block the explicit content
                 if (($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] == 'T'))
                 {
                     continue;
                 }
-
-
-
 
                 //get the album image
                 if (empty($album['Files']['CdnPath']))
