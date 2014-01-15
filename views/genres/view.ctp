@@ -307,7 +307,7 @@ $totalRows = count($genresAll);
 <?php
 if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum'))
 {
-    $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . base64_encode($this->Session->read('calledGenre'));
+    $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . $this->Session->read('calledGenre');
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
@@ -320,7 +320,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
 }
 else if($this->Session->check('calledAlbum'))
 {
-    $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . base64_encode($this->Session->read('calledGenre'));
+    $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . $this->Session->read('calledGenre');
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
 
     $albumURL = "artists/album_ajax_view/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . $this->Session->read('calledAlbum') . "/" . base64_encode($this->Session->read('calledProvider'));
