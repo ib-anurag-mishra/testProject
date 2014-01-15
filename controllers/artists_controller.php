@@ -1270,7 +1270,7 @@ Class ArtistsController extends AppController
 
 
         $this->Album->recursive = 2;
-        $albumData = $this->Album->find('all', array('conditions' =>
+        $albumData = $this->Album->findSongs('all', array('conditions' =>
             array('and' =>
                 array(
                     //   array('Album.ArtistText' => base64_decode($id)),
@@ -1310,7 +1310,7 @@ Class ArtistsController extends AppController
                     ),
                 )
             ),
-            'order' => array('Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
+            'order' => array('Country.SalesDate' => 'desc'), 'cache' => 'yes'
                 )
         );
 

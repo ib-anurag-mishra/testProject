@@ -23,6 +23,44 @@ class AppModel extends Model {
             $data = parent::find($conditions, $fields, $order, $recursive);
         return $data;
     }
+    
+    
+     function findSongs($conditions = null, $fields = array(), $order = null, $recursive = null) {
+        $doQuery = true; 
+        // check if we want the cache
+        if (!empty($fields['cache'])) {
+         $cacheConfig = null;
+         // check if we have specified a custom config, e.g. different expiry time
+         if (!empty($fields['cacheConfig']))
+             $cacheConfig = $fields['cacheConfig'];
+
+                $args = func_get_args();
+                $uniqueCacheId = '';
+
+                  foreach ($args as $arg) {
+                  $uniqueCacheId .= serialize($arg);
+          }
+
+            $uniqueCacheId = md5($uniqueCacheId);
+
+            $cacheName = $this->name . '-'  . $uniqueCacheId;
+
+             // if so, check if the cache exists
+             if (($data = Cache::read($cacheName)) === false) {
+                //print_r($data);
+              $data = parent::find($conditions, $fields, $order, $recursive);
+
+              Cache::write($cacheName, $data);
+             }
+             $doQuery = false;
+            }
+        if ($doQuery)
+            $data = parent::find($conditions, $fields, $order, $recursive);
+        return $data;
+    }
+    
+    
+    
 
     function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
 		global $callType;
