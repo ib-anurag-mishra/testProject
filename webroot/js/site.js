@@ -2283,7 +2283,7 @@ function getQueueList(ProdID, type, addTo) {
 $('document').ready(function() {
     $('#search-text').autocomplete("/search/autocomplete",
             {
-                minChars: 1,
+                minChars: 3,
                 cacheLength: 10,
                 autoFill: false,
                 extraParams: {
