@@ -272,7 +272,7 @@ $totalRows = count($genresAll);
 
                                 $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
 
-                                $selected = "data-artistSession='".$calledArtist."'";
+                                $selected = "data-artistSession='".$this->Session->read('calledArtist')."'";
 
                                 echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . $ArtistName . "'" . " $selected >";
                                 echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
