@@ -245,10 +245,15 @@ Class GenresController extends AppController
 //        /Configure::write('debug' ,2 );
      
         //login redirect issue fix
-        if ($Genre == '')
+        if ($Genre == '' || !base64_decode($Genre))
         {
             $Genre = "QWxs";
         }
+        else if(base64_decode($Genre))
+        {
+             $Genre = $this->Session->read('calledGenre');
+        }
+        
         
         echo "Genre".base64_decode($Genre);
         echo "  calledGenre".base64_decode($this->Session->read('calledGenre'));
