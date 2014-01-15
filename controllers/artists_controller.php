@@ -2117,7 +2117,7 @@ Class ArtistsController extends AppController
         $this->set('genre', base64_decode($album));
         
         //for login redirect we are storing the Genre and Artist in Session
-        $this->Session->write('calledGenre',base64_decode($album));
+        $this->Session->write('calledGenre',$album);
         $this->Session->write('calledArtist',base64_decode($id));
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');

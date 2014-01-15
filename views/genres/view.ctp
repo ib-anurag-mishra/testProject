@@ -177,7 +177,7 @@ $totalRows = count($genresAll);
 
                             if ($genre_name != 'Porn Groove')
                             {
-                                if ($genre_name == $genre || $genre_name == $calledGenre)
+                                if ($genre_name == $genre)
                                 {
                                     ?>
                                     <li> 
