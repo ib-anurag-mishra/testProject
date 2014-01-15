@@ -251,6 +251,8 @@ Class GenresController extends AppController
             $Genre = "QWxs";
         }
         
+        echo '<pre>called Genre :'.$this->Session->read('calledGenre')."    Genre:".$Genre;
+        die;
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
