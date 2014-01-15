@@ -104,8 +104,6 @@
 </script>
 
 <?php
-$calledGenre = $this->Session->read('calledGenre');
-$calledArtist = $this->Session->read('calledArtist');
 
 $genre_text_conversion = array(
     "Children's Music" => "Children's",

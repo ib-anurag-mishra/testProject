@@ -252,6 +252,7 @@ Class GenresController extends AppController
         else
         {             
              $Genre = $this->Session->read('calledGenre');
+             $this->Session->write('calledGenre',$Genre);
         }
         
         if ($Genre == '')
