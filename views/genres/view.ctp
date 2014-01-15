@@ -337,8 +337,9 @@ else
                 if($(document).find('div.album-list-shadow-container'))
                     {
                         alert('found');
+                        return false ;
                     }
-            }, 300);
+            }, 3000);
         });
     </script>
     <?php
