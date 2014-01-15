@@ -334,7 +334,7 @@ else
             showAllAlbumsList(all_album_url);
             
             setTimeout(function(){
-                if($(document).find('.album-list-span').next().hasClass('album-list-shadow-container'))
+                if($(document).find('span.album-list-span > div').hasClass('album-list-shadow-container'))
                     {
                         alert('found');
                     }
