@@ -258,11 +258,7 @@ Class GenresController extends AppController
         {
             $Genre = "QWxs";
         }
-        
-        
-        echo "Genre".base64_decode($Genre);
-        echo "  calledGenre".base64_decode($this->Session->read('calledGenre'));
-
+       
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
