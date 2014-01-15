@@ -104,7 +104,6 @@
 </script>
 
 <?php
-
 $calledGenre = $this->Session->read('calledGenre');
 $calledArtist = $this->Session->read('calledArtist');
 
@@ -268,13 +267,13 @@ $totalRows = count($genresAll);
                             {
                                 echo " <li>";
                                 $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
-                                $selected = ($ArtistName == $this->Session->read('calledArtist')) ? "class='selected'" :"";
-                                
+                                $selected = ($ArtistName == $this->Session->read('calledArtist')) ? "class='selected'" : "";
+
                                 $ArtistName = str_replace("'", '', ($ArtistName));
 
                                 $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
 
-                                
+
 
                                 echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . $ArtistName . "'" . " $selected >";
                                 echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
@@ -308,11 +307,23 @@ $totalRows = count($genresAll);
 </section>
 
 <?php
-
-if($this->Session->check('calledArtist'))
+if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum'))
 {
-    $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . base64_encode($this->Session->read('calledGenre'));
-    echo "<input type='hidden' id='allAlbumUrl' value='" . $url . "'  />";
+    $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . base64_encode($this->Session->read('calledGenre'));
+    echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
+    ?>
+    <script>
+    $(document).ready(function() {
+        var all_album_url = $("#allAlbumUrl").attr('value');
+        showAllAlbumsList(all_album_url);
+    });
+    </script>
+    <?php
+}
+else
+{
+    $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . base64_encode($this->Session->read('calledGenre'));
+    echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
         $(document).ready(function() {
@@ -320,6 +331,6 @@ if($this->Session->check('calledArtist'))
             showAllAlbumsList(all_album_url);
         });
     </script>
-<?php
+    <?php
 }
 ?>
