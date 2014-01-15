@@ -2042,7 +2042,13 @@ Class ArtistsController extends AppController
 
     function album_ajax($id = null, $album = null, $provider = null)
     {
-        //Configure::write('debug', 2);	
+        //Configure::write('debug', 2);
+        
+        $country = $this->Session->read('territory');
+         $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');
+        
+        
         $this->layout = false;
         if (count($this->params['pass']) > 1)
         {
@@ -2057,7 +2063,9 @@ Class ArtistsController extends AppController
             }
         }
 
-        $country = $this->Session->read('territory');
+        
+        
+        
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -2092,15 +2100,19 @@ Class ArtistsController extends AppController
 
         $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ") AND Album.provider_type = Genre.provider_type");
 
-
-        $this->set('artisttext', base64_decode($id));
-        $this->set('genre', base64_decode($album));
-        $patId = $this->Session->read('patron');
-        $libId = $this->Session->read('library');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        
+        
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
+        $this->set('artisttext', base64_decode($id));
+        $this->set('genre', base64_decode($album));
+        
+        //for login redirect we are storing the Genre and Artist in Session
+        $this->Session->write('calledGenre',base64_decode($album));
+        $this->Session->write('calledArtist',base64_decode($id));
+        
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');

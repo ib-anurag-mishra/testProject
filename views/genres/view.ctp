@@ -104,6 +104,10 @@
 </script>
 
 <?php
+
+$calledGenre = $this->Session->read('calledGenre');
+$calledArtist = $this->Session->read('calledArtist');
+
 $genre_text_conversion = array(
     "Children's Music" => "Children's",
     "Classic" => "Soundtracks",
@@ -174,7 +178,7 @@ $totalRows = count($genresAll);
 
                             if ($genre_name != 'Porn Groove')
                             {
-                                if ($genre_name == $genre)
+                                if ($genre_name == $genre || $genre_name == $calledGenre)
                                 {
                                     ?>
                                     <li> 
@@ -300,47 +304,3 @@ $totalRows = count($genresAll);
 
 
 </section>
-
-
-
-
-
-<?php
-if ($this->Session->check('Artist'))
-{
-    $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('Artist'))) . "/" . base64_encode($this->Session->read('Genre'));
-    echo "<input type='hidden' id='allAlbumUrl' value='" . $url . "'  />";
-    ?>
-    <script>
-        $(document).ready(function() {
-            var all_album_url = $("#allAlbumUrl").attr('value');
-            showAllAlbumsList(all_album_url);
-        });
-    </script>
-
-    <?php
-}
-
-if ($this->Session->check('album'))
-{
-    $albumURL = "artists/album_ajax_view/" . str_replace('/', '@', base64_encode($this->Session->read('Artist'))) . "/" . $this->Session->read('album') . "/" . base64_encode($this->Session->read('provider'));
-    echo "<input type='hidden' id='selectedAlbumUrl' value='" . $albumURL . "'  />";
-    ?>
-    <script>
-        $(document).ready(function() {
-            var album_url = $("#selectedAlbumUrl").attr('value');
-            var delay = 3; // 3 second delay
-            var now = new Date();
-            var desiredTime = new Date().setSeconds(now.getSeconds() + delay);
-
-            while (now < desiredTime) {
-                now = new Date(); // update the current time
-            }
-
-            showAlbumDetails(album_url);
-        });
-    </script>
-
-    <?php
-}
-?>
