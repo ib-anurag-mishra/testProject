@@ -243,23 +243,22 @@ Class GenresController extends AppController
     function view($Genre = null, $Artist = null)
     {
 //        /Configure::write('debug' ,2 );
-     
         //login redirect issue fix        
-        if(!base64_decode($this->Session->read('calledGenre')))
+        if (!base64_decode($this->Session->read('calledGenre')))
         {
-             $Genre = '';
+            $Genre = '';
         }
         else
-        {             
-             $Genre = $this->Session->read('calledGenre');
-             $this->Session->write('calledGenre',$Genre);
+        {
+            $Genre = $this->Session->read('calledGenre');
+            $this->Session->write('calledGenre', $Genre);
         }
-        
+
         if ($Genre == '')
         {
             $Genre = "QWxs";
         }
-       
+
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
@@ -415,6 +414,10 @@ Class GenresController extends AppController
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
         $country = $this->Session->read('territory');
+
+        //login re-direct issue
+        $this->Session->write('calledGenre', $Genre);
+
 
         if ($Genre == '')
         {
