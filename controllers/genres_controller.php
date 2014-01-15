@@ -245,11 +245,13 @@ Class GenresController extends AppController
 //        /Configure::write('debug' ,2 );
      
         //login redirect issue fix
-        if ($Genre == '' )
+        if ($Genre == '' && !$this->Session->check('calledGenre'))
         {
             $Genre = "QWxs";
         }
         
+        echo $Genre;
+        echo $this->Session->read('calledGenre');
 
 
         $this->layout = 'home';
