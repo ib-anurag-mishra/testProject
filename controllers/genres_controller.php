@@ -312,10 +312,10 @@ Class GenresController extends AppController
             $cond = "";
         }
 
-        echo $this->Session->read('selectedAlpha');
+      
         
         //login redirect fix if selected 
-        if($this->Session->read('selectedAlpha') == '')
+        if($this->Session->read('selectedAlpha') == 'All')
         {
             $Artist = 'All';
         }
