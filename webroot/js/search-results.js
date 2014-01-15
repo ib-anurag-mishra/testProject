@@ -132,7 +132,7 @@ $(document).ready(function() {
     });
     
     $("#query").autocomplete(webroot + "search/autocomplete", {
-                minChars: 1,
+                minChars: 3,
                 cacheLength: 10,
                 autoFill: false,
                 extraParams: {
