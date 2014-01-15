@@ -311,6 +311,13 @@ Class GenresController extends AppController
         {
             $cond = "";
         }
+
+        //login redirect fix if selected 
+        if ($Artist != $this->Session->read('selectedAlpha'))
+        {
+            $Artist = $this->Session->read('selectedAlpha');
+        }
+        
         if ($Artist == 'spl')
         {
             $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
@@ -419,7 +426,7 @@ Class GenresController extends AppController
         //login re-direct issue
         $this->Session->write('calledGenre', $Genre);
         $this->Session->write('selectedAlpha', $Artist);
-        
+
         $this->Session->delete('calledArtist');
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
@@ -432,10 +439,10 @@ Class GenresController extends AppController
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
 
-       if($Artist != $this->Session->read('selectedAlpha'))
-       {
-           $Artist = $this->Session->read('selectedAlpha');
-       }
+        if ($Artist != $this->Session->read('selectedAlpha'))
+        {
+            $Artist = $this->Session->read('selectedAlpha');
+        }
 
 
         if ($Artist == 'spl')
