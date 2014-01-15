@@ -336,8 +336,8 @@ else
             setTimeout(function(){
                 if($(document).find('div.album-list-shadow-container'))
                     {
-                        alert('found');
-                        return false ;
+                       var album_url = $("#selectedAlbumUrl").attr('value');
+                        showAlbumDetails(album_url);
                     }
             }, 3000);
         });
