@@ -194,7 +194,10 @@
 				</li>
 				<li>
 					<?php echo $html->link('Consortium Download Report', array('controller' => 'reports', 'action' => 'consortium'));?>
-				</li>				
+				</li>
+                                 <li>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>
 			</ul>
 		</li>
 	</ul>	

@@ -1,0 +1,274 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3/images";
+@import "compass/css3/box-sizing";
+
+body {
+
+	font-family:Arial,Helvetica,sans-serif;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+
+}
+
+.inner-wrapper,.content-wrapper {
+
+	width:1024px;
+	margin:0 auto;
+	position:relative;
+}
+
+
+.top-nav {
+	background:#52c6ec;
+
+	ul {
+
+		float: right;
+	}
+
+	li {
+
+		display: block;
+		float: left;
+
+		a {
+
+			display: block;
+			text-transform: uppercase;
+			color: #fff;
+			text-decoration: none;
+			padding: 10px;
+			font-size: 14px;
+		}
+	}
+}
+
+.left-nav {
+	position:absolute;
+	left:0;
+	top:0;
+	padding-top:20px;
+	width:156px;
+	border-right:1px solid #e5e5e4;
+	height: 100%;
+	h2 {
+		
+		padding-bottom:10px;
+	}
+	> ul {
+
+		> li {
+
+			a {
+
+				text-decoration: none;
+				color:rgba(0,0,0,.35);
+				display: block;
+				padding-bottom:10px;
+
+			}
+		}
+	}
+
+
+}
+
+
+.content {
+	padding-left:177px;
+	padding-top:20px;
+	
+	.breadcrumbs {
+
+		font-size: 12px;
+		color: rgba(0,0,0,.3);
+		margin-bottom: 18px;
+	}
+
+	h3 {
+
+		font-size: 24px;
+		letter-spacing: 1px;
+		margin-bottom:20px;
+	}
+
+	.genres-page {
+		border:1px solid #d3d3d3;
+		header {
+			height: 34px;
+			@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
+			position:relative;
+			border-bottom:1px solid #d3d3d3;
+			color:#000;
+
+			 // &.sticky {
+
+			 // 	position:fixed;
+			 // 	top:31px;
+				// width:845px;
+			 // }
+			 
+			 .genres-header,.a-z-header,.artist-header {
+				
+				height:34px;
+				color: #000;
+				
+				@include box-sizing(border-box);
+				color:#717171;
+				font-size: 12px;
+				font-weight: bold;
+				padding-top:13px;
+				float: left;
+			 }
+			 
+
+			 .genres-header {
+
+			 	width:224px;
+			 	padding-left:24px;
+				border-right:1px solid #d3d3d3;
+			 	
+			 }
+
+			 .a-z-header {
+
+			 	width: 85px;
+				border-right:1px solid #d3d3d3;
+			 	padding-left:29px;
+
+			 }
+
+			 .artist-header {
+
+			 	width: 536px;
+			 	padding-left:17px;
+			 }
+
+
+		}
+	
+		.genre-filter-container {
+
+			
+
+			div {
+
+				@include box-sizing(border-box);
+
+				li {
+					
+					@include box-sizing(border-box);
+
+					&:nth-child(odd) {
+
+						background:#f7f7f7;
+					}
+
+					&:nth-child(even) {
+
+						background:#f2f2f2;
+					}
+
+					&:hover {
+
+						background:#bde6f3;
+					}
+
+					a {
+
+						display: block;
+
+						font-size: 12px;
+						text-decoration: none;
+						color:#707070;
+						position:relative;
+
+						&.active {
+
+							font-weight: bold;
+							color: #000;
+							background:#bde6f3;
+
+							&::before {
+
+								background:url(../images/genre-row-selected.png);
+								content: "";
+								position:absolute;
+								left:8px;
+								top:5px;
+								width: 11px;
+								height: 11px;
+							}
+						}
+
+
+					}
+				}
+			}
+
+			.genre-column {
+
+				float: left;
+				width: 224px;
+				height: 616px;
+				overflow-y: scroll;
+				border-right:1px solid #d3d3d3;
+				li {
+
+
+					a {
+
+						padding:5px 5px 5px 24px;
+					}
+				}
+			}
+
+			.alpha-artist-list-column {
+
+				float: left;
+				height: 616px;
+				width: 85px;
+				overflow-y: scroll;
+				border-right:1px solid #d3d3d3;
+				li {
+					
+
+					a {
+						padding:5px 5px 5px 38px;
+
+					}
+
+				}
+			}
+
+			.artist-column {
+
+				float: left;
+				width: 536px;
+				height: 616px;
+				overflow-y: scroll;
+
+				li {
+					
+
+					a {
+						padding:5px 5px 5px 17px;
+
+					}
+
+				}
+			}
+		}
+	}
+}
