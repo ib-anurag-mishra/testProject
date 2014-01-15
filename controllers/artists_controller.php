@@ -1547,6 +1547,7 @@ Class ArtistsController extends AppController
         if($album != '')
         {
             $this->Session->write('calledAlbum',$album);
+             $this->Session->write('calledProvider',$provider);
         }
                 
         // echo base64_decode($id) . $album;
