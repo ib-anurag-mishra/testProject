@@ -245,10 +245,16 @@ Class GenresController extends AppController
 
 //        /Configure::write('debug' ,2 );
 
-        if ($Genre == '')
+         //login redirect issue fix
+        if ($Genre == '' && !$this->Session->check('calledGenre'))
         {
             $Genre = "QWxs";
         }
+        elseif ($this->Session->check('calledGenre'))
+        {
+            $Genre = base64_encode($this->Session->read('calledGenre'));
+        }
+
         $this->layout = 'home';
         $country = $this->Session->read('territory');
         if (!base64_decode($Genre))
@@ -317,19 +323,6 @@ Class GenresController extends AppController
         $this->Song->recursive = 0;
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
-
-        //login redirect issue fix
-        if ($this->Session->check('Genre'))
-        {
-            if ($genre == 'All')
-            {
-                $genre = $this->Session->read('Genre');
-            }
-            else
-            {
-                
-            }
-        }
 
         if ($genre != 'All')
         {
