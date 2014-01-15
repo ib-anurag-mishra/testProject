@@ -317,7 +317,7 @@ Class GenresController extends AppController
         //login redirect fix if selected 
         if($this->Session->read('selectedAlpha') == 'All')
         {
-            $Artist = 'All';
+            $Artist = null;
         }
         elseif ($Artist != $this->Session->read('selectedAlpha'))
         {
@@ -348,7 +348,7 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
             $this->Song->Behaviors->attach('Containable');
-            $gcondition = array("Song.provider_type = Genre.provider_type", "Genre1.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1');
+            $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1');
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
