@@ -417,6 +417,8 @@ Class GenresController extends AppController
 
         //login re-direct issue
         $this->Session->write('calledGenre', $Genre);
+        $this->Session->write('selectedAlpha', $Artist);
+        
         $this->Session->delete('calledArtist');
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
@@ -429,32 +431,10 @@ Class GenresController extends AppController
         $genre = base64_decode($Genre);
         $genre = mysql_escape_string($genre);
 
-        /*
-         * storing Genre name and Artist name 
-         * for login redirect
-         */
-        if ($this->Session->check('Genre') && $this->Session->check('Artist'))
-        {
-            if ($genre == 'All')
-            {
-                $genre = $this->Session->read('Genre');
-                $this->Session->delete('provider');
-                $this->Session->delete('album');
-            }
-            else if ($genre != $this->Session->read('Genre') && $genre != 'All')
-            {
-                $this->Session->write('Genre', $genre);
-
-                $this->Session->delete('provider');
-                $this->Session->delete('album');
-            }
-        }
-        else
-        {
-            $this->Session->write('Genre', $genre);
-            $this->Session->delete('provider');
-            $this->Session->delete('album');
-        }
+       if($Artist != $this->Session->read('selectedAlpha'))
+       {
+           $Artist = $this->Session->read('selectedAlpha');
+       }
 
 
         if ($Artist == 'spl')
