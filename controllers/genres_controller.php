@@ -245,19 +245,11 @@ Class GenresController extends AppController
 //        /Configure::write('debug' ,2 );
      
         //login redirect issue fix
-        if ($Genre == '' && ($this->Session->read('calledGenre') == ''))
+        if ($Genre == '' )
         {
             $Genre = "QWxs";
-
-            $this->Session->delete('calledGenre');
-            $this->Session->delete('calledArtist');
-            $this->Session->delete('calledAlbum');
-            $this->Session->delete('calledProvider');
         }
-        else if ($this->Session->read('calledGenre') != '')
-        {
-            $Genre = base64_decode($this->Session->read('calledGenre'));
-        }
+        
 
 
         $this->layout = 'home';
