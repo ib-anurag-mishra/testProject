@@ -306,3 +306,20 @@ $totalRows = count($genresAll);
 
 
 </section>
+
+<?php
+
+if($this->Session->check('calledArtist'))
+{
+    $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . base64_encode($this->Session->read('calledGenre'));
+    echo "<input type='hidden' id='allAlbumUrl' value='" . $url . "'  />";
+    ?>
+    <script>
+        $(document).ready(function() {
+            var all_album_url = $("#allAlbumUrl").attr('value');
+            showAllAlbumsList(all_album_url);
+        });
+    </script>
+<?php
+}
+?>
