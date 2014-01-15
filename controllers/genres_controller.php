@@ -252,7 +252,7 @@ Class GenresController extends AppController
         }
         elseif ($this->Session->check('calledGenre'))
         {
-            $Genre = base64_encode($this->Session->read('calledGenre'));
+            $Genre = mysql_escape_string(base64_encode($this->Session->read('calledGenre')));
         }
 
         $this->layout = 'home';
