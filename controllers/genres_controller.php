@@ -250,9 +250,11 @@ Class GenresController extends AppController
         {
             $Genre = "QWxs";
         }
+        else if($this->Session->read('calledGenre') != '')
+        {
+            $Genre = base64_decode($this->Session->read('calledGenre'));
+        }
         
-        echo '<pre>called Genre :'.$this->Session->read('calledGenre')."    Genre:".$Genre;
-        die;
 
         $this->layout = 'home';
         $country = $this->Session->read('territory');
