@@ -417,6 +417,9 @@ Class GenresController extends AppController
 
         //login re-direct issue
         $this->Session->write('calledGenre', $Genre);
+        $this->Session->delete('calledArtist');
+        $this->Session->delete('calledAlbum');
+        $this->Session->delete('calledProvider');
 
 
         if ($Genre == '')
