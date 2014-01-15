@@ -405,6 +405,7 @@ Class GenresController extends AppController
         $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
         $this->set('genres', $allArtists);
         $this->set('genre', $genre);
+        $this->set('selectedAlpha', $this->Session->read('selectedAlpha'));
     }
 
     function ajax_view($Genre = null, $Artist = null)
