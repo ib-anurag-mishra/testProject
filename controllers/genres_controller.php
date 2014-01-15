@@ -247,11 +247,11 @@ Class GenresController extends AppController
         //login redirect issue fix        
         if(!base64_decode($this->Session->read('calledGenre')))
         {
-             $Genre = $this->Session->read('calledGenre');
+             $Genre = '';
         }
         else
-        {
-             $Genre = "QWxs";
+        {             
+             $Genre = $this->Session->read('calledGenre');
         }
         
         if ($Genre == '')
