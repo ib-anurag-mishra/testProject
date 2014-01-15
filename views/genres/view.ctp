@@ -324,11 +324,21 @@ else
 {
     $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . base64_encode($this->Session->read('calledGenre'));
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
+    
+     $albumURL = "artists/album_ajax_view/" . str_replace('/', '@', base64_encode($this->Session->read('Artist'))) . "/" . $this->Session->read('album') . "/" . base64_encode($this->Session->read('provider'));
+    echo "<input type='hidden' id='selectedAlbumUrl' value='" . $albumURL . "'  />";
     ?>
     <script>
         $(document).ready(function() {
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
+            
+            setTimeout(function(){
+                if($(document).find('.album-list-span').next().hasClass('album-list-shadow-container'))
+                    {
+                        alert('found');
+                    }
+            }, 300);
         });
     </script>
     <?php
