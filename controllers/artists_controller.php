@@ -1543,6 +1543,12 @@ Class ArtistsController extends AppController
             }
         }
 
+        //for login redirect issue
+        if($album != '')
+        {
+            $this->Session->write('calledAlbum',$album);
+        }
+                
         // echo base64_decode($id) . $album;
         // exit;
         $country = $this->Session->read('territory');
