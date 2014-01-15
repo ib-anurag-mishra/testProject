@@ -1310,7 +1310,7 @@ Class ArtistsController extends AppController
                     ),
                 )
             ),
-            'order' => array('Country.SalesDate' => 'desc'),
+            'order' => array('Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
                 )
         );
 
