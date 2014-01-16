@@ -37,6 +37,9 @@
 					<?php } ?>
 				</ul>
 			</li>
+                         <li>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>
 		</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
@@ -53,7 +56,10 @@
 						</li>
 						<li>
 							<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
-						</li>						
+						</li>
+                                                 <li>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>
 					</ul>
 				</li>
 			</ul>
