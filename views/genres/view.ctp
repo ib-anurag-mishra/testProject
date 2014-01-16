@@ -468,8 +468,8 @@ else if ($this->Session->check('calledAlbum'))
                         if(album_title === called_Album)
                         {                
                             var scrollTo= $(this).find('div.album-title');
-                            var scrollPos = scrollTo.scrollTop();                       //scrollTo.offset().top - 50;         //$(this).scrollTop() + $(this).innerHeight()
-                            $(document).find('div.album-list-shadow-container .album-list').scrollTop(scrollPos);
+                            var scrollPos =  scrollTo.offset().top;           //scrollTo.offset().top - 50;         //$(this).scrollTop() + $(this).innerHeight()
+                            $(document).find('div.album-list-shadow-container .album-list').scrollTop( scrollPos - $(this).offset().top + $(this).scrollTop() );
                             //$(this).find('div.album-title').find('a').focus();
                         }
                     });
