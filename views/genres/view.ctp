@@ -464,7 +464,7 @@ else if ($this->Session->check('calledAlbum'))
 
                     //focus on selected Album
                     $(document).find('div.album-list-shadow-container > div').each(function(){
-                        if($(this).find('div.album-title').find('a').text() === '<?php $this->Session->read('calledAlbum')?>')
+                        if($(this).find('div.album-title').find('a').text() === '<?php echo $this->Session->read('calledAlbum')?>')
                         {
                             $(this).focus();
                         }
