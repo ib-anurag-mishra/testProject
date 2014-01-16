@@ -39,9 +39,9 @@ foreach ($albumData as $album_key => $album):
 
         </div>
         <div class="album-title"><?php
-            if (strlen($album['Album']['AlbumTitle']) >= 40)
+            if (strlen($album['Album']['AlbumTitle']) >= 50)
             {
-                $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 40) . '...';
+                $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
             }
             ?>
             <?php echo $this->getTextEncode($album['Album']['AlbumTitle']); ?>

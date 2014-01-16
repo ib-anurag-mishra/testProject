@@ -1851,9 +1851,9 @@ Class ArtistsController extends AppController
          * then it store the Album name in session
          * for setting the focus in the list on album
          */
-        if (strlen($album['Album']['AlbumTitle']) >= 50)
+        if (strlen($album['Album']['AlbumTitle']) >= 40)
         {
-            $this->Session->write('calledAlbumText', substr($album['Album']['AlbumTitle'], 0, 50) . '...');
+            $this->Session->write('calledAlbumText', substr($album['Album']['AlbumTitle'], 0, 40) . '...');
         }
         else
         {
