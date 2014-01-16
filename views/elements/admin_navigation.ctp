@@ -39,7 +39,7 @@
 			</li>
                          <li>
 						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
-					</li>
+			</li>
 		</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
