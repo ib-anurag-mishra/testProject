@@ -467,8 +467,9 @@ else if ($this->Session->check('calledAlbum'))
                         var album_title = $(this).find('div.album-title').find('a').text();
                         var called_Album = "<?php echo $this->Session->read('calledAlbumText')?>" ;
                         if(album_title === called_Album)
-                        {                            
-                            var scrollPos = $(this).find('.album-overview-container').offset().top;
+                        {                
+                            var scrollTo= $(this).find('.album-overview-container');
+                            var scrollPos = scrollTo.offset().top;
                             $(document).find('div.album-list-shadow-container .album-list').scrollTop(scrollPos);
                             //$(this).find('div.album-title').find('a').focus();
                         }
