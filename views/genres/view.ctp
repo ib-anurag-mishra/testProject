@@ -469,7 +469,7 @@ else if ($this->Session->check('calledAlbum'))
                         if(album_title === called_Album)
                         {                
                             var scrollTo= $(this).find('div.album-title');
-                            var scrollPos = scrollTo.offset().top-100;
+                            var scrollPos = scrollTo.offset().top - 50;
                             $(document).find('div.album-list-shadow-container .album-list').scrollTop(scrollPos);
                             //$(this).find('div.album-title').find('a').focus();
                         }
