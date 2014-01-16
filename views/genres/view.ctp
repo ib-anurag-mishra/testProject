@@ -403,7 +403,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                     //$(this).find('a').focus().scrollTo();
 
                     $("#artistlistrecord li").animate({
-                        scrollTop: $("#artistlistrecord li").find('a').hasClass('selected').offset().top
+                        scrollTop: $("#artistlistrecord li a.selected").offset().top
                     }, 1000);
                 }
             });
