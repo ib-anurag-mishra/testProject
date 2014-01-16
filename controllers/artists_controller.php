@@ -1240,7 +1240,7 @@ Class ArtistsController extends AppController
 //                        }else{  
             $songs = $this->Song->find('all', array(
                 'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
+                'conditions' => array('Song.ArtistText' => base64_decode($id),  "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
                     array('or' =>
                         array(
                             array('Country.StreamingStatus' => 1)
@@ -1928,7 +1928,7 @@ Class ArtistsController extends AppController
                 'Song.provider_type',
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode($id),
-                'Song.DownloadStatus' => 1,
+                'Country.DownloadStatus' => 1,                               /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
                 'Country.Territory' => $country, $cond,
