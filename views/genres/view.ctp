@@ -453,6 +453,8 @@ else if ($this->Session->check('calledAlbum'))
             setTimeout(function() {
                 if ($(document).find('div.album-list-shadow-container'))
                 {
+                   
+                   //focus on selected Artist
                     $("#artistlistrecord li").each(function() {
                         if ($(this).find('a').hasClass('selected'))
                         {
@@ -460,7 +462,15 @@ else if ($this->Session->check('calledAlbum'))
                         }
                     });
 
-
+                    //focus on selected Album
+                    $(document).find('div.album-list-shadow-container > div').each(function(){
+                        if($(this).find('div.album-title').find('a').text() === '<?php $this->Session->read('calledAlbum')?>')
+                        {
+                            $(this).focus();
+                        }
+                    });
+                    
+                    //calling the selected Album Details
                     var album_url = $("#selectedAlbumUrl").attr('value');
                     showAlbumDetails(album_url);
                 }
