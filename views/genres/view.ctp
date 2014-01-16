@@ -372,7 +372,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
             $("#artistlistrecord li").each(function() {
                 if ($(this).find('a').hasClass('selected'))
                 {
-                    $(this).find('a').focus();
+                    $(this).find('a').focus().scrollTo();
                 }
             });
 
