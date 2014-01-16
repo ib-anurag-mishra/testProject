@@ -1845,6 +1845,14 @@ Class ArtistsController extends AppController
             }
         }
         $this->set('albumData', $albumData);
+        /**
+         * If user comes to genre page and earlier 
+         * he has selected the Album from list
+         * then it store the Album name in session
+         * for setting the focus in the list on album
+         */
+        $this->Session->write('calledAlbumText', $albumData[0]['Album']['AlbumTitle']);
+        
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
             $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
