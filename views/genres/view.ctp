@@ -104,7 +104,6 @@
 </script>
 
 <?php
-
 $genre_text_conversion = array(
     "Children's Music" => "Children's",
     "Classic" => "Soundtracks",
@@ -221,34 +220,90 @@ $totalRows = count($genresAll);
                 <h3><?php __('Artist'); ?></h3>
                 <div class="alphabetical-filter">
                     <ul>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="All") {?>class="selected" <?php } ?> data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>', '', '')">ALL</a></li>                                            
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="#") {?>class="selected" <?php } ?>  data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl', '', '')">#</a></li> 
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="A") {?>class="selected" <?php } ?>  data-letter="A"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A', '', '')">A</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="B") {?>class="selected" <?php } ?>  data-letter="B"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B', '', '')">B</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="C") {?>class="selected" <?php } ?>  data-letter="C"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/C', '', '')">C</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="D") {?>class="selected" <?php } ?>  data-letter="D"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/D', '', '')">D</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="E") {?>class="selected" <?php } ?>  data-letter="E"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/E', '', '')">E</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="F") {?>class="selected" <?php } ?>  data-letter="F"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/F', '', '')">F</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="G") {?>class="selected" <?php } ?>  data-letter="G"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/G', '', '')">G</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="H") {?>class="selected" <?php } ?>  data-letter="H"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/H', '', '')">H</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="I") {?>class="selected" <?php } ?>  data-letter="I"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/I', '', '')">I</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="J") {?>class="selected" <?php } ?>  data-letter="J"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/J', '', '')">J</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="K") {?>class="selected" <?php } ?>  data-letter="K"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/K', '', '')">K</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="L") {?>class="selected" <?php } ?>  data-letter="L"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/L', '', '')">L</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="M") {?>class="selected" <?php } ?>  data-letter="M"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/M', '', '')">M</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="N") {?>class="selected" <?php } ?>  data-letter="N"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/N', '', '')">N</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="O") {?>class="selected" <?php } ?>  data-letter="O"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/O', '', '')">O</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="P") {?>class="selected" <?php } ?>  data-letter="P"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/P', '', '')">P</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="Q") {?>class="selected" <?php } ?>  data-letter="Q"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Q', '', '')">Q</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="R") {?>class="selected" <?php } ?>  data-letter="R"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/R', '', '')">R</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="S") {?>class="selected" <?php } ?>  data-letter="S"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/S', '', '')">S</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="T") {?>class="selected" <?php } ?>  data-letter="T"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/T', '', '')">T</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="U") {?>class="selected" <?php } ?>  data-letter="U"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/U', '', '')">U</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="V") {?>class="selected" <?php } ?>  data-letter="V"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/V', '', '')">V</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="W") {?>class="selected" <?php } ?>  data-letter="W"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/W', '', '')">W</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="X") {?>class="selected" <?php } ?>  data-letter="X"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/X', '', '')">X</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="Y") {?>class="selected" <?php } ?>  data-letter="Y"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Y', '', '')">Y</a></li>
-                        <li><a   href="javascript:void(0);" <?php if($selectedAlpha =="Z") {?>class="selected" <?php } ?>  data-letter="Z"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Z', '', '')">Z</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "All")
+                    {
+                        ?>class="selected" <?php } ?> data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>', '', '')">ALL</a></li>                                            
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "#")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl', '', '')">#</a></li> 
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "A")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="A"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A', '', '')">A</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "B")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="B"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B', '', '')">B</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "C")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="C"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/C', '', '')">C</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "D")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="D"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/D', '', '')">D</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "E")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="E"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/E', '', '')">E</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "F")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="F"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/F', '', '')">F</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "G")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="G"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/G', '', '')">G</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "H")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="H"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/H', '', '')">H</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "I")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="I"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/I', '', '')">I</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "J")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="J"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/J', '', '')">J</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "K")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="K"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/K', '', '')">K</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "L")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="L"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/L', '', '')">L</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "M")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="M"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/M', '', '')">M</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "N")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="N"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/N', '', '')">N</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "O")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="O"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/O', '', '')">O</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "P")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="P"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/P', '', '')">P</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "Q")
+                                 {
+                        ?>class="selected" <?php } ?>  data-letter="Q"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Q', '', '')">Q</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "R")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="R"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/R', '', '')">R</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "S")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="S"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/S', '', '')">S</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "T")
+                             {
+                                 ?>class="selected" <?php } ?>  data-letter="T"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/T', '', '')">T</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "U")
+                        {
+                        ?>class="selected" <?php } ?>  data-letter="U"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/U', '', '')">U</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "V")
+                        {
+                        ?>class="selected" <?php } ?>  data-letter="V"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/V', '', '')">V</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "W")
+                        {
+                        ?>class="selected" <?php } ?>  data-letter="W"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/W', '', '')">W</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "X")
+                        {
+                        ?>class="selected" <?php } ?>  data-letter="X"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/X', '', '')">X</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "Y")
+                        {
+                        ?>class="selected" <?php } ?>  data-letter="Y"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Y', '', '')">Y</a></li>
+                        <li><a   href="javascript:void(0);" <?php if ($selectedAlpha == "Z")
+                        {
+                        ?>class="selected" <?php } ?>  data-letter="Z"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Z', '', '')">Z</a></li>
                     </ul>
                 </div>
             </div>
@@ -258,32 +313,32 @@ $totalRows = count($genresAll);
                 <h3></h3>
                 <div class="artist-list" id="artistscroll">					
                     <ul id="artistlistrecord">						                                            
-                        <?php
-                        if (count($genres) > 0)
-                        {
-                            for ($i = 0; $i < count($genres); $i++)
-                            {
-                                echo " <li>";
-                                $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
-                                $selected = ($ArtistName == $this->Session->read('calledArtist')) ? "class='selected'" : "";
+<?php
+if (count($genres) > 0)
+{
+    for ($i = 0; $i < count($genres); $i++)
+    {
+        echo " <li>";
+        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
+        $selected = ($ArtistName == $this->Session->read('calledArtist')) ? "class='selected'" : "";
 
-                                $ArtistName = str_replace("'", '', ($ArtistName));
+        $ArtistName = str_replace("'", '', ($ArtistName));
 
-                                $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+        $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
 
 
 
-                                echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . $ArtistName . "'" . " $selected >";
-                                echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
-                                echo '</a>';
-                                echo '</li>';
-                            }
-                        }
-                        else
-                        {
-                            echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
-                        }
-                        ?> 
+        echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . $ArtistName . "'" . " $selected >";
+        echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
+        echo '</a>';
+        echo '</li>';
+    }
+}
+else
+{
+    echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
+}
+?> 
 
                         <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
 
@@ -311,14 +366,21 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
-    $(document).ready(function() {
-        var all_album_url = $("#allAlbumUrl").attr('value');
-        showAllAlbumsList(all_album_url);
-    });
+        $(document).ready(function() {
+            var all_album_url = $("#allAlbumUrl").attr('value');
+            showAllAlbumsList(all_album_url);
+            $("#artistlistrecord li").each(function() {
+                if ($(this).find('a').hasClass('selected'))
+                {
+                    $(this).focus();
+                }
+            });
+
+        });
     </script>
     <?php
 }
-else if($this->Session->check('calledAlbum'))
+else if ($this->Session->check('calledAlbum'))
 {
     $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . $this->Session->read('calledGenre');
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
@@ -334,6 +396,14 @@ else if($this->Session->check('calledAlbum'))
             setTimeout(function() {
                 if ($(document).find('div.album-list-shadow-container'))
                 {
+                    $("#artistlistrecord li").each(function() {
+                        if ($(this).find('a').hasClass('selected'))
+                        {
+                            $(this).focus();
+                        }
+                    });
+                    
+                    
                     var album_url = $("#selectedAlbumUrl").attr('value');
                     showAlbumDetails(album_url);
                 }
