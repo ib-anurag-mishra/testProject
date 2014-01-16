@@ -400,9 +400,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
             $("#artistlistrecord li").each(function() {
                 if ($(this).find('a').hasClass('selected'))
                 {
-                    //$(this).find('a').focus().scrollTo();
-
-                    $("#artistlistrecord li").scrollTo($(this).scrollTop() + $(this).innerHeight());
+                    $(this).find('a').focus();
                 }
             });
 
@@ -429,7 +427,7 @@ else if ($this->Session->check('calledAlbum'))
                     $("#artistlistrecord li").each(function() {
                         if ($(this).find('a').hasClass('selected'))
                         {
-                            $(this).focus();
+                             $(this).find('a').focus();
                         }
                     });
 
