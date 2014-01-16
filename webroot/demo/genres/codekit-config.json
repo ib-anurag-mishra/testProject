@@ -2,54 +2,14 @@
   "CodeKitInfo" : "This is a CodeKit project configuration file. It is designed to sync project settings across multiple machines. Modifying the contents of this file can be a poor life decision if you don't know what you're doing. This file is not useful unless accompanied by the project that created it in CodeKit. For more information, see: http:\/\/incident57.com\/codekit",
   "creatorBuild" : "8403",
   "files" : {
-    "\/images\/genre-row-selected.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/genre-row-selected.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/genre-row-selected.png",
-      "initialSize" : 1281,
-      "fileType" : 8192
-    },
-    "\/stylesheets\/screen.css" : {
+    "\/stylesheets\/print.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/screen.css",
+      "inputAbbreviatedPath" : "\/stylesheets\/print.css",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
-    },
-    "\/stylesheets\/ie.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/ie.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/javascripts\/swfobject.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/swfobject.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/swfobject-ck.js",
-      "fileType" : 64
-    },
-    "\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/index.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
     },
     "\/javascripts\/jquery-1.10.2.js" : {
       "ignoreWasSetByUser" : 1,
@@ -73,6 +33,24 @@
       "initialSize" : 3165,
       "fileType" : 4096
     },
+    "\/stylesheets\/ie.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/stylesheets\/ie.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/index.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
     "\/javascripts\/modernizr.custom.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -84,25 +62,47 @@
       "outputAbbreviatedPath" : "\/javascripts\/modernizr.custom-ck.js",
       "fileType" : 64
     },
-    "\/stylesheets\/print.css" : {
+    "\/javascripts\/swfobject.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/javascripts\/swfobject.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/javascripts\/swfobject-ck.js",
+      "fileType" : 64
+    },
+    "\/stylesheets\/screen.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/print.css",
+      "inputAbbreviatedPath" : "\/stylesheets\/screen.css",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/javascripts\/site.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
+    "\/images\/genre-row-selected.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/site.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/site-ck.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/images\/genre-row-selected.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/genre-row-selected.png",
+      "initialSize" : 1281,
+      "fileType" : 8192
+    },
+    "\/images\/btn-scroll-down.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/btn-scroll-down.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/btn-scroll-down.png",
+      "initialSize" : 2024,
+      "fileType" : 8192
     },
     "\/config.rb" : {
       "ignoreWasSetByUser" : 0,
@@ -125,16 +125,16 @@
       "fileType" : 4,
       "debugStyle" : 0
     },
-    "\/images\/btn-scroll-down.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+    "\/javascripts\/site.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/btn-scroll-down.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/btn-scroll-down.png",
-      "initialSize" : 2024,
-      "fileType" : 8192
+      "inputAbbreviatedPath" : "\/javascripts\/site.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/javascripts\/site-ck.js",
+      "fileType" : 64
     },
     "\/images\/btn-scroll-up.png" : {
       "ignoreWasSetByUser" : 0,

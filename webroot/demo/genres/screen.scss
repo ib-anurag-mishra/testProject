@@ -7,7 +7,6 @@
 @import "compass/css3/images";
 @import "compass/css3/box-sizing";
 @import "compass/css3/transition";
-@import "compass/utilities/general/hacks";
 
 $default-transition-duration: 500ms;
 
@@ -122,7 +121,6 @@ button {
 		header {
 			height: 34px;
 			@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
-			@include filter-gradient(#f9f9f9, #e9e9e9);
 			position:relative;
 			border-bottom:1px solid #d3d3d3;
 			color:#000;
@@ -262,6 +260,7 @@ button {
 				float: left;
 				height: 616px;
 				width: 85px;
+				overflow-y: scroll;
 				border-right:1px solid #d3d3d3;
 				li {
 					
@@ -299,7 +298,6 @@ button {
 
 		.genre-button-container {
 			@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
-			@include filter-gradient(#f9f9f9, #e9e9e9);
 			height: 34px;
 			border-top:1px solid #d3d3d3;
 			position:relative;
