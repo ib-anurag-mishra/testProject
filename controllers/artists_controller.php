@@ -1240,7 +1240,7 @@ Class ArtistsController extends AppController
 //                        }else{  
             $songs = $this->Song->find('all', array(
                 'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                'conditions' => array('Song.ArtistText' => base64_decode($id),  "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
+                'conditions' => array('Song.ArtistText' => base64_decode($id), "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
                     array('or' =>
                         array(
                             array('Country.StreamingStatus' => 1)
@@ -1544,12 +1544,12 @@ Class ArtistsController extends AppController
         }
 
         //for login redirect issue
-        if($album != '')
+        if ($album != '')
         {
-            $this->Session->write('calledAlbum',$album);
-             $this->Session->write('calledProvider',$provider);
+            $this->Session->write('calledAlbum', $album);
+            $this->Session->write('calledProvider', $provider);
         }
-                
+
         // echo base64_decode($id) . $album;
         // exit;
         $country = $this->Session->read('territory');
@@ -1596,10 +1596,10 @@ Class ArtistsController extends AppController
                                 array('Country.StreamingStatus' => 1)
                             )), $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             }
-            
+
             $val = '';
-            $val_provider_type='';
-            
+            $val_provider_type = '';
+
             foreach ($songs as $k => $v)
             {
                 $val = $val . $v['Song']['ReferenceID'] . ",";
@@ -1851,8 +1851,15 @@ Class ArtistsController extends AppController
          * then it store the Album name in session
          * for setting the focus in the list on album
          */
-        $this->Session->write('calledAlbumText', $albumData[0]['Album']['AlbumTitle']);
-        
+        if (strlen($album['Album']['AlbumTitle']) >= 50)
+        {
+            $this->Session->write('calledAlbumText', substr($album['Album']['AlbumTitle'], 0, 50) . '...');
+        }
+        else
+        {
+            $this->Session->write('calledAlbumText', $albumData[0]['Album']['AlbumTitle']);
+        }
+
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
             $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
@@ -1928,7 +1935,7 @@ Class ArtistsController extends AppController
                 'Song.provider_type',
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode($id),
-                'Country.DownloadStatus' => 1,                               /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
+                'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
                 'Country.Territory' => $country, $cond,
@@ -2060,12 +2067,12 @@ Class ArtistsController extends AppController
     function album_ajax($id = null, $album = null, $provider = null)
     {
         //Configure::write('debug', 2);
-        
+
         $country = $this->Session->read('territory');
-         $patId = $this->Session->read('patron');
+        $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
-        
-        
+
+
         $this->layout = false;
         if (count($this->params['pass']) > 1)
         {
@@ -2080,7 +2087,7 @@ Class ArtistsController extends AppController
             }
         }
 
-        
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -2117,19 +2124,19 @@ Class ArtistsController extends AppController
 
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        
-        
+
+
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
         $this->set('artisttext', base64_decode($id));
         $this->set('genre', base64_decode($album));
-        
+
         //for login redirect we are storing the Genre and Artist in Session
-        $this->Session->write('calledGenre',$album);
-        $this->Session->write('calledArtist',base64_decode($id));
+        $this->Session->write('calledGenre', $album);
+        $this->Session->write('calledArtist', base64_decode($id));
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
-        
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
