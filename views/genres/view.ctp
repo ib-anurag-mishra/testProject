@@ -416,7 +416,6 @@ if ($this->Session->check('selectedAlpha'))
     <?php
 }
 
-
 if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum'))
 {
     $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . $this->Session->read('calledGenre');
@@ -469,7 +468,7 @@ else if ($this->Session->check('calledAlbum'))
                         if(album_title === called_Album)
                         {                
                             var scrollTo= $(this).find('div.album-title');
-                            var scrollPos = scrollTo.offset().top - 50;
+                            var scrollPos = scrollTo.scrollTop();                       //scrollTo.offset().top - 50;         //$(this).scrollTop() + $(this).innerHeight()
                             $(document).find('div.album-list-shadow-container .album-list').scrollTop(scrollPos);
                             //$(this).find('div.album-title').find('a').focus();
                         }
