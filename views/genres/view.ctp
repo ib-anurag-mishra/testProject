@@ -465,7 +465,7 @@ else if ($this->Session->check('calledAlbum'))
                     //focus on selected Album
                     $(document).find('div.album-list-shadow-container .album-list').children().each(function(){
                         var album_title = $(this).find('div.album-title').find('a').text();
-                        var called_Album = <?php echo $this->Session->read('calledAlbumText')?> ;
+                        var called_Album = "<?php echo $this->Session->read('calledAlbumText')?>" ;
                         if(album_title === called_Album)
                         {                            
                             var scrollPos = $(this).offset().top;
