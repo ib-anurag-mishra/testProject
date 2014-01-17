@@ -5,7 +5,7 @@ class AppController extends Controller
 
     var $components = array('Session', 'RequestHandler', 'Cookie', 'Acl', 'Common'); 
     var $helpers = array('Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download', 'Queue', 'Streaming');
-    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download');
+    var $uses = array('Genre', 'Featuredartist', 'Newartist', 'Category', 'Album', 'Country', 'Wishlist', 'WishlistVideo', 'Download','Library');
     var $view = 'Dataencode';
 
     function beforeFilter()
@@ -101,12 +101,14 @@ class AppController extends Controller
         $this->Auth->authorize = 'actions';
         $this->Auth->fields = array('username' => 'email', 'password' => 'password');
         $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
+        //this is hace code that we have write to fix the streaming report
+        //we need to modify it.
         if($this->Session->read("Auth.User.id") ){
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('library_type'), 'recursive' => -1));
            
              $this->Session->write('AdminlibraryType', $libraryAdminID["Library"]["library_type"]);
         }
-        echo $this->Session->read('AdminlibraryType');
+       
         $this->set('username', $this->Session->read('Auth.User.username'));
         $this->set('genresMenu', $this->Category->find('all', array('cache' => 'no')));
         $this->set('featuredArtistMenu', $this->Featuredartist->getallartists());
