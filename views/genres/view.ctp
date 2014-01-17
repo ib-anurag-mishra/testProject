@@ -422,23 +422,25 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     <script>
         $(document).ready(function()
         {
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-                var total_page_called = <?= $this->Session->check('page') ?>;
-              
-                var height = $("#artistscroll").height();
+            <?php
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        var total_page_called = <?= $this->Session->check('page') ?>;
 
-                for (i = 0; i < total_page_called; i++)
-                {
-                    $("#artistscroll").animate({
-                        scrollTop: height
-                    }, 300);
-                }
-        <?php
-    }
-    ?>
+                        var height = $("#artistscroll").height();
+
+                        for (i = 0; i < total_page_called; i++)
+                        {
+                            $(document).find("#artistscroll").animate({
+                                scrollTop: height
+                            }, 1000);
+                            
+                            $(document).find("#artistscroll").scrollTop( height);
+                        }
+                <?php
+            }
+            ?>
 
             $("#artistlistrecord li").each(function() {
                 if ($(this).find('a').hasClass('selected'))
