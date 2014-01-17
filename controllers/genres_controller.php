@@ -564,7 +564,7 @@ Class GenresController extends AppController
     function ajax_view_pagination($Genre = null, $Artist = null)
     {
         //pagination value for login redirect issue on genre page
-        $this->Session->write('page' ,$this->params['form']['npage']);
+        $this->Session->write('page' ,$this->params['npage']);
         
         $this->layout = 'ajax';
 
