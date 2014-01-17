@@ -446,7 +446,6 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
         $(document).ready(function()
         {
             <?php
-            
             if ($this->Session->check('page'))
             {
                 ?>
@@ -462,17 +461,23 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                             }, 3000);
 
                             $(document).find('#artist_loader').hide();
-
                         }
 
-                         $("#artistlistrecord li").each(function() {
-                            if ($(this).find('a').hasClass('selected'))
-                            {
-                                $(this).find('a').focus();
-                            }
-                        });
-
                 <?php
+                if ($this->Session->check('calledArtist'))
+                {
+                    ?>
+                            setTimeout(function() {
+                                $("#artistlistrecord li").each(function() {
+                                    if ($(this).find('a').hasClass('selected'))
+                                    {
+                                        $(this).find('a').focus();
+                                    }
+                                });
+                            },2000);
+                    <?php
+                }
+
             }
             else
             {
@@ -487,7 +492,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                 <?php
             }
             ?>
-                    
+
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
         });
