@@ -1188,7 +1188,7 @@ echo "<pre>";print_r($additionalParams);*/
 
         if(!empty($data)) {
             //$searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
-            $searchkeyword = $data['Synonym']['replacement_text'];
+            $searchkeyword = $searchkeyword." OR ".$data['Synonym']['replacement_text'];
             //echo $searchkeyword; die;
         }
         return $searchkeyword;
