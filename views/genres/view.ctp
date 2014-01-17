@@ -426,7 +426,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     if ($this->Session->check('page'))
     {
         ?>
-                var total_page_called = <?= $this->Session->check('page') ?>;
+                var total_page_called = <?= $this->Session->read('page') ?>;
 
                 var to_scroll = $("#artistscroll");
                 var scroll_distance = $("#artistscroll").get(0).scrollHeight;
