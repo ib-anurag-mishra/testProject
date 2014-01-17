@@ -408,28 +408,28 @@ if ($this->Session->check('selectedAlpha'))
             {
                 $(this).find('a').focus();
             }
-
-            <?php
-            if ($this->Session->check('page'))
-            {
-                ?>
-                        var total_page_called = <?= $this->Session->check('page') ?>;
-
-                        var height = $("#artistlistrecord").height();
-
-                        for (i = 0; i < total_page_called; i++)
-                        {
-                            $(document).find("#artistlistrecord").animate({
-                                scrollTop: height
-                            }, 2000);
-
-                            $(document).find('#artist_loader').hide();
-
-                        }
-                <?php
-            }
-            ?>
         });
+
+
+    <?php
+    if ($this->Session->check('page'))
+    {
+        ?>
+            var total_page_called = <?= $this->Session->check('page') ?>;
+
+            var to_scroll = $("#artistscroll").find('ul');
+            var scroll_distance = $('#artistscroll').find('li').outerHeight(true);
+            
+            for (i = 0; i < total_page_called; i++)
+            {
+                to_scroll.stop().animate({ top: '-=' + (scroll_distance) });
+
+                $(document).find('#artist_loader').hide();
+
+            }
+        <?php
+    }
+    ?>
     });
     </script>
     <?php
@@ -443,27 +443,27 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     <script>
         $(document).ready(function()
         {
-            <?php
-            if ($this->Session->check('page'))
-            {
-                ?>
-                        var total_page_called = <?= $this->Session->check('page') ?>;
+    <?php
+    if ($this->Session->check('page'))
+    {
+        ?>
+                var total_page_called = <?= $this->Session->check('page') ?>;
 
-                        var height = $("#artistscroll").height();
+                var height = $("#artistscroll").height();
 
-                        for (i = 0; i < total_page_called; i++)
-                        {
-                            $(document).find("#artistscroll").animate({
-                                scrollTop: height
-                            }, 2000);
+                for (i = 0; i < total_page_called; i++)
+                {
+                    $(document).find("#artistscroll").animate({
+                        scrollTop: height
+                    }, 2000);
 
-                            $(document).find('#artist_loader').hide();
+                    $(document).find('#artist_loader').hide();
 
-                            $(document).find("#artistscroll").scrollTop(height);
-                        }
-                <?php
-            }
-            ?>
+                    $(document).find("#artistscroll").scrollTop(height);
+                }
+        <?php
+    }
+    ?>
 
             $("#artistlistrecord li").each(function() {
                 if ($(this).find('a').hasClass('selected'))
