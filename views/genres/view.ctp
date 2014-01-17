@@ -434,7 +434,9 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                         {
                             $(document).find("#artistscroll").animate({
                                 scrollTop: height
-                            }, 1000);
+                            }, 2000);
+                            
+                            $(document).find('#artist_loader').hide();
                             
                             $(document).find("#artistscroll").scrollTop( height);
                         }
