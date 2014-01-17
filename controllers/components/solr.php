@@ -106,7 +106,7 @@ class SolrComponent extends Object {
             
                 $searchkeyword = $this->checkSearchKeyword($searchkeyword);
             	
-		echo $searchkeyword; die;
+		// echo $searchkeyword; die;
             
                 if (!isset(self::$solr))
                 {
@@ -1182,9 +1182,9 @@ echo "<pre>";print_r($additionalParams);*/
         
         $data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>$searchkeyword)));
 
-	echo $synonymsInstance->lastQuery();
+	// echo $synonymsInstance->lastQuery();
 	
-	print_r($data); die;        
+	// print_r($data); die;        
 
         if(!empty($data)) {
             //$searchkeyword = utf8_decode($data['Synonym']['replacement_text']);
