@@ -255,7 +255,7 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                        <?php if(!$getData['Report']['library_id']):?>
+                                        <?php echo $library_id;if(!$getData['Report']['library_id']):?>
                                         <th>Library Name</th>
                                         <?php endif; ?>
                                         <th>Patron ID</th>
