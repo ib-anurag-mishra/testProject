@@ -455,9 +455,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
 
                 for (var i = 0; i < total_page_called; i++)
                 {
-                    artist_scroll = to_scroll.animate({
-                        scrollTop: scroll_distance
-                    }, 1000);
+                    to_scroll.animate({ srollTop: scroll_distance }, 1000);
                 }
 
                 <?php
