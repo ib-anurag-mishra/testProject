@@ -456,21 +456,20 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
             var total_page_called = <?= $this->Session->read('page') ?>;
            
                         
-                for (var i = 1; i < total_page_called; i++)
-                {
-                  
+                for (var i = 0; i < total_page_called; i++)
+                {                  
                         var to_scroll = $("#artistscroll");
                         var scroll_distance = $("#artistscroll").get(0).scrollHeight;
-                        to_scroll.animate({srollTop: scroll_distance}, 1000);
-                        requestComplete = false ;
-                   
+                        setTimeout(function(){
+                            to_scroll.animate({srollTop: scroll_distance}, 1000);
+                        } , 500);                                           
                 }
 
         <?php
     }
 
 
-    //checking if Aritst was selected or not
+    //checking if Aritst was selected 
     if ($this->Session->check('calledArtist'))
     {
         ?>
