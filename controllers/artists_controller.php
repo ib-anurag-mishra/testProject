@@ -2071,7 +2071,7 @@ Class ArtistsController extends AppController
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
-
+        
 
         $this->layout = false;
         if (count($this->params['pass']) > 1)
@@ -2136,6 +2136,7 @@ Class ArtistsController extends AppController
         $this->Session->write('calledArtist', base64_decode($id));
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
+        $this->Session->delete('page');
 
         if ($this->Session->read('block') == 'yes')
         {
