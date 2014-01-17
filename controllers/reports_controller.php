@@ -1437,17 +1437,26 @@ Class ReportsController extends AppController {
 
     function admin_getLibraryIds() {
 //        Configure::write('debug', 0);
+        
+     
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"), 'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
+               $libValue = isset($_REQUEST['Territory'])? $_REQUEST['Territory']:'';
             $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
         } else {
             $var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
             $data = "<option value='all'>All Libraries</option>";
         }
         foreach ($var as $k => $v) {
-            $data = $data . "<option value=" . $k . ">" . $v . "</option>";
+            
+            $selected= '';
+            if(isset($libValue) && $libValue == $k){
+                 $selected= 'selected';
+            }
+            
+            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
         }
         print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
         exit;
