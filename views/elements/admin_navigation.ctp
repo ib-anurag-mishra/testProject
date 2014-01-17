@@ -5,6 +5,7 @@
  Author : m68interactive
  */
 	if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') {
+            echo 1;
 ?>
 		<ul id="menu" class="sf-menu">
 			<?php
@@ -37,15 +38,19 @@
 					<?php } ?>
 				</ul>
 			</li>
-                        <?php echo $this->Session->read('library_type'); if($this->Session->read('library_type')== 2) { ?>
+                         <?php echo $this->Session->read('library_type'); if($this->Session->read('library_type')== 2) { 
+                             
+                              echo 4; ?>
                        
                          <li>
 						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
 			</li>
                         <?php } ?>
+                       
 		</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
+            echo 2;
 ?>
 			<ul id="menu" class="sf-menu">
 				<li>
@@ -68,6 +73,7 @@
 			</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 1) {
+             echo 3;
 ?>
 		<ul id="menu" class="sf-menu">
 			<li>
