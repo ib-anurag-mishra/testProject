@@ -420,7 +420,7 @@ if ($this->Session->check('selectedAlpha'))
             var to_scroll = $("#artistscroll");
             var scroll_distance = $("#artistscroll").scrollTop() + $("#artistscroll").innerHeight();
 
-            for (i = 1; i < total_page_called; i++)
+            for (i = 0; i < total_page_called; i++)
             {
                 to_scroll.animate({
                     scrollTop: scroll_distance
