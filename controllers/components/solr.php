@@ -105,7 +105,8 @@ class SolrComponent extends Object {
                 $searchkeyword = strtolower($this->escapeSpace($keyword));
             
                 $searchkeyword = $this->checkSearchKeyword($searchkeyword);
-            
+            	
+		echo $searchkeyword; die;
             
                 if (!isset(self::$solr))
                 {
