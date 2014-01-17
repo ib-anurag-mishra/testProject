@@ -41,10 +41,11 @@
 					<?php } ?>
 				</ul>
 			</li>
+                        <?php if ($this->Session->read('library_type') == '2') {?>
                          <li>
                                               <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
                                             </li>
-                        
+                        <?php } ?>
 		</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
