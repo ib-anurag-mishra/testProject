@@ -435,7 +435,9 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                         {
                             to_scroll.animate({
                                 scrollTop: scroll_distance
-                            }, 2000);
+                            }, 10);
+                                    
+                            clearTimeout(artist_scroll);
 
                             $(document).find('#artist_loader').hide();
                         }
