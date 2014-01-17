@@ -31,12 +31,11 @@
 					<li>
 						<?php echo $html->link('Library Download Report1', array('controller' => 'reports', 'action' => 'index'));?>
 					</li>
-                                        <?php  echo 3;echo $this->Session->read('library_type'); if($this->Session->read('library_type')== '2') { ?>
                        
                                             <li>
                                               <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
                                             </li>
-                                        <?php } ?>
+                                      
 					<?php if(isset($libraryLimited)){?>
 					<li>
 						<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
