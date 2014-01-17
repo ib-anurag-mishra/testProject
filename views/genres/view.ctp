@@ -408,6 +408,28 @@ if ($this->Session->check('selectedAlpha'))
             {
                 $(this).find('a').focus();
             }
+            
+            <?php
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        var total_page_called = <?= $this->Session->check('page') ?>;
+
+                        var height = $("#artistscroll").height();
+
+                        for (i = 0; i < total_page_called; i++)
+                        {
+                            $(document).find("#artistscroll").animate({
+                                scrollTop: height
+                            }, 2000);
+                            
+                            $(document).find('#artist_loader').hide();
+                            
+                            $(document).find("#artistscroll").scrollTop( height);
+                        }
+                <?php
+            }
+            ?>
         });
     });
     </script>
