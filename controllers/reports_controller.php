@@ -1960,6 +1960,7 @@ Class ReportsController extends AppController {
             $this->set('downloads', $arr);
             $this->set('errors', $arr);
         }
+        print_r($libraries);
         $this->set('territory', $this->Territory->find('list', array('fields' => array('Territory', 'Territory'))));
         if($this->params['pass'][0]=='csv'){
             if ($library_id != "all") {
