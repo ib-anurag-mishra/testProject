@@ -454,18 +454,18 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
             if ($this->Session->check('calledArtist'))
             {
                 ?>
-                    artist_scroll = setTimeout(function() {
+                   
                         $("#artistlistrecord li").each(function() {
                             if ($(this).find('a').hasClass('selected'))
                             {
-                                scroll_distance = $("#artistscroll").get(0).scrollHeight - $(this).offset().top;
+                                scroll_distance = $(this).offset().top - $(this).parent().offset().top;;
                                 to_scroll.animate({
                                     scrollTop: scroll_distance
                                 }, 350);
                                 $(this).find('a').focus();
                             }
                         });
-                    }, 50);
+                  
                 <?php
             }
             ?>

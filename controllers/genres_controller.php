@@ -436,7 +436,7 @@ Class GenresController extends AppController
         $this->Session->delete('calledArtist');
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
-
+        $this->Session->delete('page');
 
         if ($Genre == '')
         {
