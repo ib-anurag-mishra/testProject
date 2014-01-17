@@ -439,7 +439,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
 
                 for (var i = 0; i < total_page_called; i++)
                 {
-                    to_scroll.animate({scrollTop: scroll_distance}, 1000);
+                    to_scroll.animate({scrollTop: scroll_distance}, 100);
                 }
 
         <?php
@@ -464,17 +464,17 @@ elseif ($this->Session->check('calledAlbum'))
     <script>
         $(document).ready(function() {
             var all_album_url = $("#allAlbumUrl").attr('value');
-            
+
             showAllAlbumsList(all_album_url);
 
             setTimeout(function() {
                 if ($(document).find('div.album-list-shadow-container'))
                 {
                     //Paginate the Artist list if it was already done before
-                    <?php
-                    if ($this->Session->check('page'))
-                    {
-                        ?>
+    <?php
+    if ($this->Session->check('page'))
+    {
+        ?>
                         var total_page_called = <?= $this->Session->check('page') ?>;
 
                         var to_scroll = $("#artistscroll");
@@ -488,9 +488,9 @@ elseif ($this->Session->check('calledAlbum'))
 
                             $(document).find('#artist_loader').hide();
                         }
-                        <?php
-                    }
-                    ?>
+        <?php
+    }
+    ?>
 
                     //focus on selected Artist
                     $("#artistlistrecord li").each(function() {
@@ -523,10 +523,19 @@ elseif ($this->Session->check('calledAlbum'))
     <?php
 }
 ?>
-    
-    
+
+
 <script>
+    var found = false;
+
     $(document).ready(function() {
+        while (!found) {
+            scrolltoSelectedArtist();
+        }
+    });
+
+    function scrolltoSelectedArtist()
+    {
         var to_scroll = $("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
@@ -536,7 +545,9 @@ elseif ($this->Session->check('calledAlbum'))
                     scrollTop: scroll_distance
                 }, 350);
                 $(this).find('a').focus();
+                found = true;
             }
+
         });
-    });
+    }
 </script>
