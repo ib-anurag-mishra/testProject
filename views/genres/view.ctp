@@ -422,6 +422,8 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     <script>
         $(document).ready(function()
         {
+             var artist_scroll;
+            
             <?php
             if ($this->Session->check('page'))
             {
@@ -433,15 +435,13 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
 
                         for (i = 0; i < total_page_called; i++)
                         {
-                            to_scroll.animate({
+                            artist_scroll = to_scroll.animate({
                                 scrollTop: scroll_distance
-                            }, 10);
-                                    
+                            }, 50);
+                            
                             clearTimeout(artist_scroll);
-
-                            $(document).find('#artist_loader').hide();
                         }
-                        var artist_scroll;
+                       
                         
                         <?php
                         if ($this->Session->check('calledArtist'))
@@ -454,11 +454,11 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                                                 scroll_distance = $("#artistscroll").get(0).scrollHeight - $(this).offset().top;
                                                 to_scroll.animate({
                                                     scrollTop: scroll_distance
-                                                }, 3500);
+                                                }, 350);
                                                 $(this).find('a').focus();
                                             }
                                         });
-                                    }, 10);
+                                    }, 50);
                                     
                                     clearTimeout(artist_scroll);
                             <?php
