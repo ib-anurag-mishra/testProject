@@ -417,7 +417,7 @@ if ($this->Session->check('selectedAlpha'))
         ?>
             var total_page_called = <?= $this->Session->check('page') ?>;
 
-            var height = $("#artistlistrecord").height();
+            var height = $("#artistscroll").offset().bottom;
 
             for (i = 0; i < total_page_called; i++)
             {
