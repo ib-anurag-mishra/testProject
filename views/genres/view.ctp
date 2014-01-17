@@ -428,54 +428,32 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     <script>
         $(document).ready(function()
         {
-            <?php
-            //doing pagination 
-            if ($this->Session->check('page'))
-            {
-                ?>
-                        var total_page_called = <?= $this->Session->read('page') ?>;
-                        var to_scroll = $("#artistscroll");
-                        var scroll_distance = $("#artistscroll").get(0).scrollHeight;
+    <?php
+    //doing pagination 
+    if ($this->Session->check('page'))
+    {
+        ?>
+                var total_page_called = <?= $this->Session->read('page') ?>;
+                var to_scroll = $("#artistscroll");
+                var scroll_distance = $("#artistscroll").get(0).scrollHeight;
 
-                        for (var i = 0; i < total_page_called; i++)
-                        {
-                            to_scroll.animate({scrollTop: scroll_distance}, 1000);
-                        }
+                for (var i = 0; i < total_page_called; i++)
+                {
+                    to_scroll.animate({scrollTop: scroll_distance}, 1000);
+                }
 
-                <?php
-            }
-            ?>
+        <?php
+    }
+    ?>
 
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
-            
-            <?php
-            //checking if Aritst was selected 
-            if ($this->Session->check('calledArtist'))
-            {
-                ?>
-                        var to_scroll = $("#artistscroll");
-                        $("#artistlistrecord li").each(function() {
-                            if ($(this).find('a').hasClass('selected'))
-                            {
-                                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;;
-                                to_scroll.animate({
-                                    scrollTop: scroll_distance
-                                }, 350);
-                                $(this).find('a').focus();
-                            }
-                        });
-                  
-                <?php
-            }
-            ?>
-        });    
+
+        });
     </script>
-      
-    
     <?php
 }
-else if ($this->Session->check('calledAlbum'))
+elseif ($this->Session->check('calledAlbum'))
 {
     $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . $this->Session->read('calledGenre');
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
@@ -492,27 +470,27 @@ else if ($this->Session->check('calledAlbum'))
                 if ($(document).find('div.album-list-shadow-container'))
                 {
                     //Paginate the Artist list if it was already done before
-                    <?php
-                    if ($this->Session->check('page'))
-                    {
-                        ?>
-                                        var total_page_called = <?= $this->Session->check('page') ?>;
+    <?php
+    if ($this->Session->check('page'))
+    {
+        ?>
+                        var total_page_called = <?= $this->Session->check('page') ?>;
 
-                                        var to_scroll = $("#artistscroll");
-                                        var scroll_distance = $("#artistscroll").get(0).scrollHeight;
+                        var to_scroll = $("#artistscroll");
+                        var scroll_distance = $("#artistscroll").get(0).scrollHeight;
 
-                                        for (i = 0; i < total_page_called; i++)
-                                        {
-                                            to_scroll.animate({
-                                                scrollTop: scroll_distance
-                                            }, 3000);
+                        for (i = 0; i < total_page_called; i++)
+                        {
+                            to_scroll.animate({
+                                scrollTop: scroll_distance
+                            }, 3000);
 
-                                            $(document).find('#artist_loader').hide();
+                            $(document).find('#artist_loader').hide();
 
-                                        }
-                        <?php
-                    }
-                    ?>
+                        }
+        <?php
+    }
+    ?>
 
                     //focus on selected Artist
                     $("#artistlistrecord li").each(function() {
@@ -544,4 +522,27 @@ else if ($this->Session->check('calledAlbum'))
     </script>
     <?php
 }
+elseif ($this->Session->check('calledArtist'))
+//checking if Aritst was selected 
+{
+    ?>
+    <script>
+        $(document).ready(function() {
+            var to_scroll = $("#artistscroll");
+            $("#artistlistrecord li").each(function() {
+                if ($(this).find('a').hasClass('selected'))
+                {
+                    var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                    ;
+                    to_scroll.animate({
+                        scrollTop: scroll_distance
+                    }, 350);
+                    $(this).find('a').focus();
+                }
+            });
+        });
+    </script>
+    <?php
+}
+?>
 ?>
