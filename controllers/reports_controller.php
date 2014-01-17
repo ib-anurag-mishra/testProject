@@ -1449,7 +1449,7 @@ Class ReportsController extends AppController {
         foreach ($var as $k => $v) {
             $data = $data . "<option value=" . $k . ">" . $v . "</option>";
         }
-        print "<select class='select_fields' name='library_id'>" . $data . "</select>";
+        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
         exit;
     }
 
