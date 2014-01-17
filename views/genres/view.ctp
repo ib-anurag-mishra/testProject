@@ -415,18 +415,16 @@ if ($this->Session->check('selectedAlpha'))
                 ?>
                         var total_page_called = <?= $this->Session->check('page') ?>;
 
-                        var height = $("#artistscroll").height();
+                        var height = $("#artistlistrecord").height();
 
                         for (i = 0; i < total_page_called; i++)
                         {
-                            $(document).find("#artistscroll").animate({
+                            $(document).find("#artistlistrecord").animate({
                                 scrollTop: height
                             }, 2000);
 
                             $(document).find('#artist_loader').hide();
 
-                            height = $("#artistscroll").height();
-                            $(document).find("#artistscroll").scrollTop(height);
                         }
                 <?php
             }
