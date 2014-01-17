@@ -30,6 +30,9 @@
 					<li>
 						<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
 					</li>
+                       
+                                           
+                                      
 					<?php if(isset($libraryLimited)){?>
 					<li>
 						<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
@@ -37,6 +40,11 @@
 					<?php } ?>
 				</ul>
 			</li>
+                        <?php if ($this->Session->read('AdminlibraryType') === '2') { ?>
+                         <li>
+                            <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+                        </li>
+                        <?php } ?>
 		</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
@@ -53,7 +61,10 @@
 						</li>
 						<li>
 							<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
-						</li>						
+						</li>
+                                                 <li>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>
 					</ul>
 				</li>
 			</ul>
@@ -172,7 +183,10 @@
 					</li>
 					<li>
 						<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
-					</li>						
+					</li>
+                                        <li>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>
 				</ul>
 			</li>	
 		</ul>
@@ -191,7 +205,10 @@
 				</li>
 				<li>
 					<?php echo $html->link('Consortium Download Report', array('controller' => 'reports', 'action' => 'consortium'));?>
-				</li>				
+				</li>
+                                 <li>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>
 			</ul>
 		</li>
 	</ul>	
@@ -219,7 +236,10 @@
 					</li>
 					<li>
 						<?php echo $html->link('Consortium Download Report', array('controller' => 'reports', 'action' => 'consortium'));?>
-					</li>					
+					</li>
+                                        <li>
+						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>
 				</ul>
 			</li>	
 		</ul>
