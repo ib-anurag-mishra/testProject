@@ -417,13 +417,15 @@ if ($this->Session->check('selectedAlpha'))
         ?>
             var total_page_called = <?= $this->Session->check('page') ?>;
 
-            var to_scroll = $("#artistscroll").find('ul');
-            var scroll_distance = $('#artistscroll').find('li').outerHeight(true);
-            
-            for (i = 0; i < total_page_called; i++)
-            {
-                to_scroll.stop().animate({ top: '-=' + (scroll_distance) });
+            var to_scroll = $("#artistscroll");
+            var scroll_distance = $("#artistscroll").scrollTop() + $("#artistscroll").innerHeight();
 
+            for (i = 1; i < total_page_called; i++)
+            {
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 3000);
+                
                 $(document).find('#artist_loader').hide();
 
             }
