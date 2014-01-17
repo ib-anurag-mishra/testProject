@@ -409,29 +409,6 @@ if ($this->Session->check('selectedAlpha'))
                 $(this).find('a').focus();
             }
         });
-
-
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-            var total_page_called = <?= $this->Session->check('page') ?>;
-
-            var to_scroll = $("#artistscroll");
-            var scroll_distance = $("#artistscroll").get(0).scrollHeight;
-
-            for (i = 0; i < total_page_called; i++)
-            {
-                to_scroll.animate({
-                    scrollTop: scroll_distance
-                }, 3000);
-
-                $(document).find('#artist_loader').hide();
-
-            }
-        <?php
-    }
-    ?>
     });
     </script>
     <?php
