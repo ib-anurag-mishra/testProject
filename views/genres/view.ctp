@@ -418,7 +418,7 @@ if ($this->Session->check('selectedAlpha'))
             var total_page_called = <?= $this->Session->check('page') ?>;
 
             var to_scroll = $("#artistscroll");
-            var scroll_distance = $("#artistscroll").scrollTop() + $("#artistscroll").innerHeight();
+            var scroll_distance = $("#artistscroll").get(0).scrollHeight;
 
             for (i = 0; i < total_page_called; i++)
             {
