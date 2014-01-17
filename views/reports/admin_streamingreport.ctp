@@ -387,7 +387,7 @@ echo $session->flash();
 <script type="text/javascript">
     $(function() {
 <?php
-echo $library_id;
+
 if (empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '')) {
     
     ?>
@@ -436,7 +436,7 @@ if (empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $th
 
 
         function report_load_page() {
-            var data = "Territory=" + $("#ReportTerritory").val()+"&lib_id=" + $("#library_id").val();
+            var data = "Territory=" + $("#ReportTerritory").val()+"&lib_id=" + <?php echo $library_id; ?>;
             jQuery.ajax({
                 type: "post", // Request method: post, get
                 url: webroot + "admin/reports/getLibraryIds", // URL to request
