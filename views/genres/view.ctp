@@ -442,9 +442,9 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                 for (var i = 0; i < total_page_called; i++)
                 {                  
                          scroll_distance = $("#artistscroll").get(0).scrollHeight;
-                        setTimeout(function(){
+                      
                             to_scroll.animate({srollTop: scroll_distance}, 1000);
-                        } , 50);                                           
+                                                               
                 }
 
         <?php
