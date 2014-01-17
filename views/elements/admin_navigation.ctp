@@ -28,11 +28,11 @@
 			<li>
 				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
 				<ul>
-					
+					<li>
+						<?php echo $html->link('Library Download Report1', array('controller' => 'reports', 'action' => 'index'));?>
+					</li>
                        
-                                            <li>
-                                              <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
-                                            </li>
+                                           
                                       
 					<?php if(isset($libraryLimited)){?>
 					<li>
@@ -41,6 +41,9 @@
 					<?php } ?>
 				</ul>
 			</li>
+                         <li>
+                                              <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+                                            </li>
                         
 		</ul>
 <?php
