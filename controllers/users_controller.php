@@ -310,6 +310,7 @@ Class UsersController extends AppController
    */
 
 	function admin_logout() {
+            $this->Session->delete('AdminlibraryType');
 		$this->redirect($this->Auth->logout());
 	}
 
