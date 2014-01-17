@@ -1437,7 +1437,6 @@ Class ReportsController extends AppController {
 
     function admin_getLibraryIds() {
 //        Configure::write('debug', 0);
-        
      
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
