@@ -1032,11 +1032,11 @@ echo "<pre>";print_r($additionalParams);*/
                         $queryFields = "CArtistText";
                         $field = 'ArtistText';
                         break;
-                    case 'label':
+                    /*case 'label':
                         $query = $searchkeyword; //.'*';
                         $queryFields = "CLabel";
                         $field = 'Label';
-                        break;
+                        break;*/
                     case 'video':
                         $query = $searchkeyword; //.'*';
                         $queryFields = "CVideoTitle^100 CArtistText^80 CTitle^60";
@@ -1178,9 +1178,9 @@ echo "<pre>";print_r($additionalParams);*/
     
     function checkSearchKeyword($searchkeyword)
     {
-        $synonymsInstance = ClassRegistry::init('Synonym');
+	$synonymsInstance = ClassRegistry::init('Synonym');
         
-        $data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>$searchkeyword)));
+	$data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>$searchkeyword)));
 
 	// echo $synonymsInstance->lastQuery();
 	
