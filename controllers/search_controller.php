@@ -401,7 +401,7 @@ class SearchController extends AppController
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'artist', 18, '1');
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'composer', 18, '1');
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'genre', 18, '1');
-                $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1');
+                // $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1');
                 $arr_data[] = $this->Solr->getAutoCompleteData($queryVar, 'song', 18, '1');
 
                 // formates array
