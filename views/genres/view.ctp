@@ -454,11 +454,11 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
             if ($this->Session->check('calledArtist'))
             {
                 ?>
-                   
+                        var to_scroll = $("#artistscroll");
                         $("#artistlistrecord li").each(function() {
                             if ($(this).find('a').hasClass('selected'))
                             {
-                                scroll_distance = $(this).offset().top - $(this).parent().offset().top;;
+                                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;;
                                 to_scroll.animate({
                                     scrollTop: scroll_distance
                                 }, 350);
