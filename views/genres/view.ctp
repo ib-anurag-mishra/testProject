@@ -408,7 +408,7 @@ if ($this->Session->check('selectedAlpha'))
             {
                 $(this).find('a').focus();
             }
-            
+
             <?php
             if ($this->Session->check('page'))
             {
@@ -422,10 +422,11 @@ if ($this->Session->check('selectedAlpha'))
                             $(document).find("#artistscroll").animate({
                                 scrollTop: height
                             }, 2000);
-                            
+
                             $(document).find('#artist_loader').hide();
-                            
-                            $(document).find("#artistscroll").scrollTop( height);
+
+                            height = $("#artistscroll").height();
+                            $(document).find("#artistscroll").scrollTop(height);
                         }
                 <?php
             }
@@ -457,10 +458,10 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                             $(document).find("#artistscroll").animate({
                                 scrollTop: height
                             }, 2000);
-                            
+
                             $(document).find('#artist_loader').hide();
-                            
-                            $(document).find("#artistscroll").scrollTop( height);
+
+                            $(document).find("#artistscroll").scrollTop(height);
                         }
                 <?php
             }
