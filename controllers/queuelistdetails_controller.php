@@ -257,14 +257,15 @@ class QueueListDetailsController extends AppController
                 $queue_list_array[$k]['streamUrl'] = $streamUrl;
             }
             
-            //add the condition for already download songs
-            $this->Download->recursive = -1;
-            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $v['Songs']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-            if(count($downloadsUsed) > 0){
-                    $queue_list_array[$k]['Songs']['status'] = 'avail';
-            } else{
-                    $queue_list_array[$k]['Songs']['status'] = 'not';
-            }
+            //for checking the song download status we are checking in view with Download helper
+//            //add the condition for already download songs
+//            $this->Download->recursive = -1;
+//            $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $v['Songs']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+//            if(count($downloadsUsed) > 0){
+//                    $queue_list_array[$k]['Songs']['status'] = 'avail';
+//            } else{
+//                    $queue_list_array[$k]['Songs']['status'] = 'not';
+//            }
         }    
         $total_duration     =    $total_seconds/60;
         $total_minutes      =    floor($total_duration);

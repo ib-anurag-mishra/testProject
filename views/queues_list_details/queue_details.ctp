@@ -154,6 +154,27 @@
 //                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 //                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                         
+                                        //checking the downlaod status from session
+                                         if ($this->Session->read('downloadVariArray'))
+                                                    {
+                                                        $downloadsUsed = $this->Download->getDownloadResults($value['Song']['ProdID'],$value['Song']['provider_type']);
+                                                    }
+                                                    else
+                                                    {
+                                                        $downloadsUsed = $this->Download->getDownloadfind($value['Song']['ProdID'], $value['Song']['provider_type'], $libraryDownload, $patronDownload, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                    }
+
+
+                                                    if ($downloadsUsed > 0)
+                                                    {
+                                                        $value['Song']['status'] = 'avail';
+                                                    }
+                                                    else
+                                                    {
+                                                        $value['Song']['status'] = 'not';
+                                                    }
+
+                                        
                                         if ($value['Songs']['status'] != 'avail')
                                         {
                                             ?>
