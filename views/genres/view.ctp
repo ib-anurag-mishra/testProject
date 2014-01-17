@@ -456,7 +456,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                                                 $(this).find('a').focus();
                                             }
                                         });
-                                    }, 500);
+                                    }, 100);
                                     
                                     clearTimeout(artist_scroll);
                             <?php
