@@ -29,7 +29,7 @@
 				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
 				<ul>
 					<li>
-						<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
+						<?php echo $html->link('Library Download Report1', array('controller' => 'reports', 'action' => 'index'));?>
 					</li>
                                         <?php  echo 3;echo $this->Session->read('library_type'); if($this->Session->read('library_type')== '2') { ?>
                        
