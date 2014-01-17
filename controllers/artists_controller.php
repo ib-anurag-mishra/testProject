@@ -2136,7 +2136,7 @@ Class ArtistsController extends AppController
         $this->Session->write('calledArtist', base64_decode($id));
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
-        $this->Session->delete('page');
+        
 
         if ($this->Session->read('block') == 'yes')
         {
