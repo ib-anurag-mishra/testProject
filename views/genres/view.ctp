@@ -465,12 +465,12 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
 
                         }
 
-                         $("#artistlistrecord li").each(function(){
-                             if($(this).find('a').text() === "<?=$this->Session->read('calledArtist')?>")
-                                 {
-                                     $(this).find('a').addClass('selected').focus();
-                                 }
-                         });
+                         $("#artistlistrecord li").each(function() {
+                            if ($(this).find('a').hasClass('selected'))
+                            {
+                                $(this).find('a').focus();
+                            }
+                        });
 
                 <?php
             }
