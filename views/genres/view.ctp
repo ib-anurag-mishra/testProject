@@ -390,7 +390,6 @@ $totalRows = count($genresAll);
 
 
 <?php
-
 /**
  * Below code is used for when user comes from 
  * any other page to genres page and its data are 
@@ -398,20 +397,19 @@ $totalRows = count($genresAll);
  * Album list and selected 
  * album will be shown.
  */
-
 if ($this->Session->check('selectedAlpha'))
 {
     ?>
     <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            $(document).find('.alphabetical-filter li').each(function() {
-                if ($(this).find('a').hasClass('selected'))
-                {
-                    $(this).find('a').focus();
-                }
-            });
+        $(document).find('.alphabetical-filter li').each(function() {
+            if ($(this).find('a').hasClass('selected'))
+            {
+                $(this).find('a').focus();
+            }
         });
+    });
     </script>
     <?php
 }
@@ -422,9 +420,26 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
-        $(document).ready(function() {
-            var all_album_url = $("#allAlbumUrl").attr('value');
-            showAllAlbumsList(all_album_url);
+        $(document).ready(function()
+        {
+    <?php
+    if ($this->Session->check('page'))
+    {
+        ?>
+                var total_page_called = <?= $this->Session->check('page') ?>;
+              
+                var height = $("#artistscroll").height();
+
+                for (i = 0; i < total_page_called; i++)
+                {
+                    $("#artistscroll").animate({
+                        scrollTop: height
+                    }, 300);
+                }
+        <?php
+    }
+    ?>
+
             $("#artistlistrecord li").each(function() {
                 if ($(this).find('a').hasClass('selected'))
                 {
@@ -432,6 +447,9 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                 }
             });
 
+
+            var all_album_url = $("#allAlbumUrl").attr('value');
+            showAllAlbumsList(all_album_url);
         });
     </script>
     <?php
@@ -452,8 +470,8 @@ else if ($this->Session->check('calledAlbum'))
             setTimeout(function() {
                 if ($(document).find('div.album-list-shadow-container'))
                 {
-                   
-                   //focus on selected Artist
+
+                    //focus on selected Artist
                     $("#artistlistrecord li").each(function() {
                         if ($(this).find('a').hasClass('selected'))
                         {
@@ -462,18 +480,18 @@ else if ($this->Session->check('calledAlbum'))
                     });
 
                     //focus on selected Album
-                    $(document).find('div.album-list-shadow-container .album-list').children().each(function(){
+                    $(document).find('div.album-list-shadow-container .album-list').children().each(function() {
                         var album_title = $(this).find('div.album-title').find('a').text();
-                        var called_Album = "<?php echo $this->Session->read('calledAlbumText')?>" ;
-                        if(album_title === called_Album)
-                        {                
-                            var scrollTo= $(this).find('div.album-title');
-                            var scrollPos =  scrollTo.offset().top - $(this).parent().offset().top;          
-                            $(document).find('div.album-list-shadow-container .album-list').scrollTop( scrollPos );
+                        var called_Album = "<?php echo $this->Session->read('calledAlbumText') ?>";
+                        if (album_title === called_Album)
+                        {
+                            var scrollTo = $(this).find('div.album-title');
+                            var scrollPos = scrollTo.offset().top - $(this).parent().offset().top;
+                            $(document).find('div.album-list-shadow-container .album-list').scrollTop(scrollPos);
                             //$(this).find('div.album-title').find('a').focus();
                         }
                     });
-                    
+
                     //calling the selected Album Details
                     var album_url = $("#selectedAlbumUrl").attr('value');
                     showAlbumDetails(album_url);
