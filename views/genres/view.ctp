@@ -435,7 +435,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                 {
                     to_scroll.animate({
                         scrollTop: scroll_distance
-                    }, 3000);
+                    }, 2000);
 
                     $(document).find('#artist_loader').hide();
                 }
@@ -451,7 +451,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                                 scroll_distance = $("#artistscroll").get(0).scrollHeight - $(this).offset().top;
                                 to_scroll.animate({
                                     scrollTop: scroll_distance
-                                }, 3000);
+                                }, 3500);
                                 $(this).find('a').focus();
                             }
                         });
