@@ -417,13 +417,12 @@ if ($this->Session->check('selectedAlpha'))
         ?>
             var total_page_called = <?= $this->Session->check('page') ?>;
 
-            var height = $("#artistscroll").offset().top;
-
+            var to_scroll = $("#artistscroll").find('ul');
+            var scroll_distance = $('#artistscroll').find('li').outerHeight(true);
+            
             for (i = 0; i < total_page_called; i++)
             {
-                $(document).find("#artistscroll").animate({
-                    scrollTop: height
-                }, 2000);
+                to_scroll.stop().animate({ top: '-=' + (scroll_distance) });
 
                 $(document).find('#artist_loader').hide();
 
