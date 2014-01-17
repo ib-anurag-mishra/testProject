@@ -255,7 +255,7 @@ if (empty($getData)) {
                                 <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                     <tr>
                                         <th>&nbsp;</th>
-                                        <?php echo $library_id;if(!$getData['Report']['library_id']):?>
+                                        <?php if(!is_numeric($library_id)):?>
                                         <th>Library Name</th>
                                         <?php endif; ?>
                                         <th>Patron ID</th>
@@ -270,7 +270,7 @@ if (empty($getData)) {
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <?php if(!$getData['Report']['library_id']):?>
+                                            <?php if(!is_numeric($library_id)):?>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($streamInformation['StreamingHistory']['library_id'])); ?></td>
                                             <?php endif; ?>
                                             <td><?php
@@ -301,7 +301,7 @@ if (empty($getData)) {
                                     <tr>
                                         <th>&nbsp;</th>
                                         <th>Patron ID</th>
-                                        <?php if(!$getData['Report']['library_id']):?>
+                                        <?php if(!is_numeric($library_id)):?>
                                         <th>Library Name</th>
                                         <?php endif; ?>
                                         <th>Total Number of Tracks Streamed</th>
@@ -321,7 +321,7 @@ if (empty($getData)) {
                                                 }
                                                 ?>
                                             </td>
-                                            <?php if(!$getData['Report']['library_id']):?>
+                                            <?php if(!is_numeric($library_id)):?>
                                             <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
                                             <?php endif; ?>
                                             <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
