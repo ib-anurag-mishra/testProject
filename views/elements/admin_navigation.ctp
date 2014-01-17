@@ -4,11 +4,12 @@
  File Description : View page for adfmin navigation
  Author : m68interactive
  */
-	if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') {
+	if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') { echo 1;
 ?>
 		<ul id="menu" class="sf-menu">
 			<?php
 			if($library->getAuthenticationType($this->Session->read('Auth.User.id')) == "user_account") {
+                            echo 2;
 			?>
 				<li>
 					<a href="#" <?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Patrons</a>
@@ -28,8 +29,14 @@
 				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
 				<ul>
 					<li>
-						<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
+						<?php echo $html->link('Library Download Report1', array('controller' => 'reports', 'action' => 'index'));?>
 					</li>
+                                        <?php  echo 3;echo $this->Session->read('library_type'); if($this->Session->read('library_type')== '2') { ?>
+                       
+                                            <li>
+                                              <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+                                            </li>
+                                        <?php } ?>
 					<?php if(isset($libraryLimited)){?>
 					<li>
 						<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
@@ -37,9 +44,7 @@
 					<?php } ?>
 				</ul>
 			</li>
-                         <li>
-						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
-			</li>
+                        
 		</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
