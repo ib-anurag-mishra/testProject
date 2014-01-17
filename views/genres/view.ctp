@@ -55,9 +55,6 @@
 </style>
 
 <script>
-
-    var requestComplete = false;
-
     //load the artist list when  scroll reached at the end
     $(document).ready(function() {
         var preValue = 1;
@@ -87,7 +84,7 @@
                                     artistPage++;
                                     $('#artist_loader').hide();
                                     $('#artistlistrecord').append(newitems);
-                                    requestComplete = true;
+
                                 } else {
                                     $('#artist_loader').hide();
                                     return;
@@ -417,25 +414,7 @@ if ($this->Session->check('selectedAlpha'))
                 $(this).find('a').focus();
             }
         });
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-            var total_page_called = <?= $this->Session->read('page') ?>;
-            var to_scroll = $("#artistscroll");
-            var scroll_distance = $("#artistscroll").get(0).scrollHeight;
 
-            for (var i = 0; i < total_page_called; i++)
-            {
-                artist_scroll = to_scroll.animate({
-                    scrollTop: scroll_distance
-                }, 50);
-
-                clearTimeout(artist_scroll);
-            }
-        <?php
-    }
-    ?>
     });
     </script>
     <?php
@@ -452,31 +431,24 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
             var artist_scroll;
 
     <?php
-    //doing pagination 
+//doing pagination 
     if ($this->Session->check('page'))
     {
         ?>
                 var total_page_called = <?= $this->Session->read('page') ?>;
+                var to_scroll = $("#artistscroll");
+                var scroll_distance = $("#artistscroll").get(0).scrollHeight;
 
                 for (var i = 0; i < total_page_called; i++)
                 {
-                    if (requestComplete)
-                    {
-                        var to_scroll = $("#artistscroll");
-                        var scroll_distance = $("#artistscroll").get(0).scrollHeight;
-                        to_scroll.animate({srollTop: scroll_distance}, 1000);
-                    }
-                    else
-                    {
-                        i--;
-                    }
+                    to_scroll.animate({scrollTop: scroll_distance}, 1000);
                 }
 
         <?php
     }
 
 
-    //checking if Aritst was selected or not
+//checking if Aritst was selected 
     if ($this->Session->check('calledArtist'))
     {
         ?>
