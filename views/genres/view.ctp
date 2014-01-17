@@ -55,9 +55,6 @@
 </style>
 
 <script>
-
-    var requestComplete = false;
-
     //load the artist list when  scroll reached at the end
     $(document).ready(function() {
         var preValue = 1;
@@ -87,7 +84,7 @@
                                     artistPage++;
                                     $('#artist_loader').hide();
                                     $('#artistlistrecord').append(newitems);
-                                    requestComplete = true;
+                                  
                                 } else {
                                     $('#artist_loader').hide();
                                     return;
@@ -457,23 +454,16 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     {
         ?>
             var total_page_called = <?= $this->Session->read('page') ?>;
-            var to_scroll = $("#artistscroll");
-            var scroll_distance = $("#artistscroll").get(0).scrollHeight;
-            to_scroll.animate({srollTop: scroll_distance}, 1000);
+           
                         
                 for (var i = 1; i < total_page_called; i++)
                 {
-                    if (requestComplete)
-                    {
+                  
                         var to_scroll = $("#artistscroll");
                         var scroll_distance = $("#artistscroll").get(0).scrollHeight;
                         to_scroll.animate({srollTop: scroll_distance}, 1000);
                         requestComplete = false ;
-                    }
-                    else
-                    {
-                        i--;
-                    }
+                   
                 }
 
         <?php
