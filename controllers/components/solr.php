@@ -1180,7 +1180,7 @@ echo "<pre>";print_r($additionalParams);*/
     {
         $synonymsInstance = ClassRegistry::init('Synonym');
         
-        $data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>"'".$searchkeyword."'")));
+        $data = $synonymsInstance->find('first',array('conditions'=>array('searched_text'=>$searchkeyword)));
 
 	echo $synonymsInstance->lastQuery();
 	
