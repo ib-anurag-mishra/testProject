@@ -526,12 +526,12 @@ elseif ($this->Session->check('calledAlbum'))
 
 
 <script>
-    var found = false;
+   
 
     $(document).ready(function() {
-        while (!found) {
+      
             scrolltoSelectedArtist();
-        }
+     
     });
 
     function scrolltoSelectedArtist()
@@ -545,9 +545,8 @@ elseif ($this->Session->check('calledAlbum'))
                     scrollTop: scroll_distance
                 }, 350);
                 $(this).find('a').focus();
-                found = true;
+             
             }
-
         });
     }
 </script>
