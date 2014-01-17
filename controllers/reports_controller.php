@@ -1649,15 +1649,21 @@ Class ReportsController extends AppController {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+            echo 147;
         } else {
+            echo 159;
             if ($this->data['Report']['Territory'] == '') {
+                echo 155;
                 //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 $this->set('libraries', array());
             } else {
+                echo 156;
                 $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             }
             $this->set('libraryID', "");
         }
+        
+        
         if (isset($this->data)) {
             //Configure::write('debug',0); // Otherwise we cannot use this method while developing
             $all_Ids = '';
