@@ -95,9 +95,17 @@ class AppController extends Controller
             $maintainLatestDownload = Cache::read('maintainLatestDownload');
             $this->Session->write('maintainLatestDownload', $maintainLatestDownload);
         }
+        
+        
+        
         $this->Auth->authorize = 'actions';
         $this->Auth->fields = array('username' => 'email', 'password' => 'password');
         $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
+        if($this->Session->read("Auth.User.id") && !$this->Session->read('AdminlibraryType')){
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('library_type'), 'recursive' => -1));
+           
+             $this->Session->write('AdminlibraryType', $libraryAdminID["Library"]["library_type"]);
+        }
         $this->set('username', $this->Session->read('Auth.User.username'));
         $this->set('genresMenu', $this->Category->find('all', array('cache' => 'no')));
         $this->set('featuredArtistMenu', $this->Featuredartist->getallartists());

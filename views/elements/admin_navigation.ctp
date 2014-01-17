@@ -42,10 +42,10 @@
 					<?php } ?>
 				</ul>
 			</li>
-                        <?php if ($this->Session->read('library_type') === '2') { ?>
+                        <?php if ($this->Session->read('AdminlibraryType') === '2') { ?>
                          <li>
-                                              <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
-                                            </li>
+                            <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+                        </li>
                         <?php } ?>
 		</ul>
 <?php
