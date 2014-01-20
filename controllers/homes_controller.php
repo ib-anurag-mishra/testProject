@@ -3433,6 +3433,12 @@ STR;
             $downloadStatus = $latestdownloadStatus = 0;
             //save to downloads table
             $this->Download->setDataSource('master');
+            $this->Download->create();          //prepare model to insert new record
+            
+            echo "<pre>";
+            print_r($insertArr);
+            exit;
+            
             if ($this->Download->save($insertArr))
             {
                 $downloadStatus = 1;
