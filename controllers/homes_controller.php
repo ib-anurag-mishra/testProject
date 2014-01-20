@@ -2533,6 +2533,11 @@ STR;
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
                 $this->Wishlist->create();      //Prepare model to save record
+                
+                echo "<pre>";
+                print_r($insertArr);
+                exit;
+                
                 $this->Wishlist->save($insertArr);
                 
                 $this->Wishlist->setDataSource('default');
@@ -3434,11 +3439,6 @@ STR;
             //save to downloads table
             $this->Download->setDataSource('master');
             $this->Download->create();          //prepare model to insert new record
-            
-            echo "<pre>";
-            print_r($insertArr);
-            exit;
-            
             if ($this->Download->save($insertArr))
             {
                 $downloadStatus = 1;
@@ -3471,8 +3471,6 @@ STR;
                 $this->Library->setDataSource('default');
             }
             $this->Download->setDataSource('default');
-
-
 
             $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
 
