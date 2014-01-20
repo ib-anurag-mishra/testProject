@@ -110,6 +110,7 @@
                             $duration = explode(':', $value['Songs']['FullLength_Duration']);
                             $duration_in_secs = $duration[0] * 60;
                             $total_duration = $duration_in_secs + $duration[1];
+                            
                             if ($value['Countries']['StreamingSalesDate'] <= date('Y-m-d') && $value['Countries']['StreamingStatus'] == 1)
                             {
                             echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $key, "onClick" => 'loadSong("' . $value['streamUrl'] . '", "' . base64_encode($value['Songs']['SongTitle']) . '","' . base64_encode($value['Songs']['ArtistText']) . '",' . $total_duration . ',"' . $value['Songs']['ProdID'] . '","' . $value['Songs']['provider_type'] . '",' . $queue_id . ');'));
@@ -122,7 +123,6 @@
                                 echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "load_audio" . $key));
                                 echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "stop_audio" . $key, "onClick" => 'stopThis(this, "' . $key . '");'));
                             }
-
                             if (!empty($value['Songs']['ProdID']))
                             {
                                 ?>
@@ -153,6 +153,27 @@
 //                                        $songUrl = shell_exec('perl files/tokengen ' . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
 //                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 //                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+                                        
+                                        //checking the downlaod status from session
+                                         if ($this->Session->read('downloadVariArray'))
+                                                    {
+                                                        $downloadsUsed = $this->Download->getDownloadResults($value['Song']['ProdID'],$value['Song']['provider_type']);
+                                                    }
+                                                    else
+                                                    {
+                                                        $downloadsUsed = $this->Download->getDownloadfind($value['Song']['ProdID'], $value['Song']['provider_type'], $libraryDownload, $patronDownload, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                    }
+
+
+                                                    if ($downloadsUsed > 0)
+                                                    {
+                                                        $value['Song']['status'] = 'avail';
+                                                    }
+                                                    else
+                                                    {
+                                                        $value['Song']['status'] = 'not';
+                                                    }
+
                                         
                                         if ($value['Songs']['status'] != 'avail')
                                         {
