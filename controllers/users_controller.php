@@ -4591,14 +4591,14 @@ function login($library = null){
 					$library_cond = $this->Session->read('lId');
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
-														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_https','id' => $library_cond),
+														'conditions' => array('library_status' => 'active','library_authentication_method' => 'capita','id' => $library_cond),
 														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
 														)
 													 );
 
 				} else {
 					$existingLibraries = $this->Library->find('all',array(
-														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_https'),
+														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'capita'),
 														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
 														)
 													 );
