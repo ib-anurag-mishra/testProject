@@ -47,12 +47,12 @@ class DownloadHelper extends AppHelper {
                 }
                 else
                 {
-                     $downloadsUsed =$this->getDownloadfind($prodID, $providerType, $this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                     $downloadsUsed =0;
                 }
             }
             else
             {
-                 $downloadsUsed =$this->getDownloadfind($prodID, $providerType, $this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                  $downloadsUsed =0;
             }
         }
         else
