@@ -853,12 +853,12 @@ class SolrComponent extends Object {
                         $queryFields = "CArtistText";
                         $field = 'ArtistText';
                         break;
-                    case 'label':
+                    /*case 'label':
                         //$query = '(CLabel:(' . $searchkeyword . '))';
                         $query = $searchkeyword; //.'*';
                         $queryFields = "CLabel";
                         $field = 'Label';
-                        break;
+                        break;*/
                     case 'video':
                         //$query = '(CVideoTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.'))';
                         $query = $searchkeyword; //.'*';
