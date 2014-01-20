@@ -412,7 +412,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     if ($this->Session->check('page'))
     {
         ?>
-            toScrollArtist();
+            toScrollArtist(<?= $this->Session->read('page') ?> - 1);
         <?php
     }
     ?>
@@ -446,7 +446,7 @@ elseif ($this->Session->check('calledAlbum'))
     if ($this->Session->check('page'))
     {
         ?>
-                        toScrollArtist();
+                        toScrollArtist(<?= $this->Session->read('page') ?> - 1);
         <?php
     }
     ?>
@@ -497,29 +497,31 @@ elseif ($this->Session->check('calledAlbum'))
         scrolltoSelectedArtist();
     });
 
-    function toScrollArtist()
+    function toScrollArtist(totalPageCalled)
     {
-        var total_page_called = <?= $this->Session->read('page') ?>;
-        var to_scroll = $("#artistscroll");
-        var scroll_distance = $("#artistscroll").get(0).scrollHeight;
-
-        for (var i = 0; i < total_page_called; i++)
+        totalPageCalled--;
+        
+        if (totalPageCalled < 0)
         {
-            to_scroll.animate({
-                scrollTop: scroll_distance
-            }, 100);
-            $(document).find('#artist_loader').hide();
+           return false ;
         }
+        else
+        {
+            var total_page_called = totalPageCalled;
+            var to_scroll = $("#artistscroll");
+            var scroll_distance = $("#artistscroll").get(0).scrollHeight;
 
-//                        for (i = 0; i < total_page_called; i++)
-//                        {
-//                            to_scroll.animate({
-//                                scrollTop: scroll_distance
-//                            }, 3000);
-//
-//                            $(document).find('#artist_loader').hide();
-//                        }
-
+            for (var i = 0; i < total_page_called; i++)
+            {
+                to_scroll.animate({
+                   scrollTop: scroll_distance
+                }, 100);
+                $(document).find('#artist_loader').hide();
+            }
+            
+            toScrollArtist(totalPageCalled);
+        }
+        
     }
 
     function scrolltoSelectedArtist()
