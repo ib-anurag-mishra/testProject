@@ -2497,8 +2497,8 @@ STR;
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
         $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
-        
+                . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+
         if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']))
         {
             $libraryId = $this->Session->read('library');
@@ -2521,7 +2521,7 @@ STR;
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
                 $insertArr['ProdID'] = $prodId;
-                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+                //$insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
                 $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
@@ -2533,13 +2533,16 @@ STR;
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
                 $this->Wishlist->create();      //Prepare model to save record
-                
-                echo "<pre>";
-                print_r($trackDetails);
-                exit;
-                
-                $this->Wishlist->save($insertArr);
-                
+
+                if ($this->Wishlist->save($insertArr))
+                {
+                    $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
+                }
+                else
+                {
+                    $log_data .= "  :Mysql Error :" . $this->Wishlist->validationErrors;
+                }
+
                 $this->Wishlist->setDataSource('default');
 
                 //add the wishlist songs in the session array
@@ -2550,8 +2553,6 @@ STR;
                     $this->Session->write('wishlistVariArray', $wishlistVariArray);
                 }
 
-                
-                $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
 
@@ -2559,7 +2560,7 @@ STR;
                 exit;
             }
             else
-            {                
+            {
                 $log_data .= "   TracklistDetails:Track Details not found..";
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
@@ -3197,7 +3198,7 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
 
             echo "suces|" . $downloadsUsed;
             exit;
@@ -3282,7 +3283,7 @@ STR;
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
-        $insertArr['ProdID'] = $prodId;
+        //$insertArr['ProdID'] = $prodId;
         $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
         $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
@@ -3470,6 +3471,10 @@ STR;
                 $this->Library->query($sql);
                 $this->Library->setDataSource('default');
             }
+            else
+            {
+                $log_data .= "  :Mysql Error :" . $this->Wishlist->validationErrors;
+            }
             $this->Download->setDataSource('default');
 
             $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
@@ -3495,8 +3500,8 @@ STR;
             $this->Videodownload->recursive = -1;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
-            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));            
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
             $this->Session->write('downloadCount', $downloadsUsed);
 
             echo "suces|" . $downloadsUsed . "|" . $finalURL;
@@ -3758,7 +3763,7 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
 
             echo "suces|" . $downloadsUsed;
             exit;
@@ -4025,12 +4030,12 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
 
             //updating session for VideoDown load status
-            $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
-                   
-                
+            $this->Common->getVideodownloadStatus($libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'), true);
+
+
             echo "suces|" . $downloadsUsed . "|" . $finalURL;
             exit;
         }
