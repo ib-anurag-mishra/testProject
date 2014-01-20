@@ -2535,7 +2535,7 @@ STR;
                 $this->Wishlist->create();      //Prepare model to save record
                 
                 echo "<pre>";
-                print_r($insertArr);
+                print_r($trackDetails);
                 exit;
                 
                 $this->Wishlist->save($insertArr);
