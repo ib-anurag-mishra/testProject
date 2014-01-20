@@ -2520,8 +2520,8 @@ STR;
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
-                //$insertArr['ProdID'] = $prodId;
-                //$insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+                $insertArr['ProdID'] = $prodId;
+                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
                 $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
@@ -3283,8 +3283,8 @@ STR;
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
-        //$insertArr['ProdID'] = $prodId;
-        //$insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+        $insertArr['ProdID'] = $prodId;
+        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
         $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
@@ -3473,9 +3473,8 @@ STR;
             }
             else
             {
-                $log_data .= "  :Mysql Error :" . $this->Download->validationErrors;
+                $log_data .= "  :Mysql Error :" . $this->Wishlist->validationErrors;
             }
-            
             $this->Download->setDataSource('default');
 
             $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
