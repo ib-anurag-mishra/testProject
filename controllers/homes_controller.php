@@ -3443,6 +3443,14 @@ STR;
             $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
             $this->Session->write('downloadCount', $downloadsUsed);
 
+            //add the download songs in the session array
+            if ($this->Session->read('downloadVariArray'))
+            {
+                $downloadVariArray = $this->Session->read('downloadVariArray');
+                $downloadVariArray[] = $prodId . '~' . $provider;
+                $this->Session->write('downloadVariArray', $downloadVariArray);
+            }
+                
             echo "suces|" . $downloadsUsed . "|" . $finalURL;
             exit;
         }
