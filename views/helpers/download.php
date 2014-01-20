@@ -33,34 +33,33 @@ class DownloadHelper extends AppHelper {
     }
     
     function getDownloadResults($prodID, $providerType)
-    { 
-            $downloadInstance = ClassRegistry::init('Download');
-            
-            if($this->Session->read('downloadVariArray'))
-            { 
-                 $downloadVariArr = $this->Session->read('downloadVariArray');
-                 if(!empty($downloadVariArr)){
-                     $checkDownloadVar =  $prodID.'~'.$providerType;                                                   
+    {
+        if ($this->Session->read('downloadVariArray'))
+        {
+            $downloadVariArr = $this->Session->read('downloadVariArray');
+            if (!empty($downloadVariArr))
+            {
+                $checkDownloadVar = $prodID . '~' . $providerType;
 
-                     if (in_array($checkDownloadVar, $downloadVariArr)) 
-                     {                                                               
-                         $downloadsUsed=1;
-                     }
-                     else
-                     {
-                          $downloadsUsed=0;
-                     }
-                 }else{
-                    $downloadsUsed = 0;
-                 }                                                        
-             }
-             else
-             {
-                    $downloadsUsed = '';
-             }
-             
-             
-           return $downloadsUsed;
+                if (in_array($checkDownloadVar, $downloadVariArr))
+                {
+                    $downloadsUsed = 1;
+                }
+                else
+                {
+                     $downloadsUsed =$this->getDownloadfind($prodID, $providerType, $this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                }
+            }
+            else
+            {
+                 $downloadsUsed =$this->getDownloadfind($prodID, $providerType, $this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+            }
+        }
+        else
+        {
+             $downloadsUsed =$this->getDownloadfind($prodID, $providerType, $this->Session->read('library'), $this->Session->read('patron'), Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+        }
+        return $downloadsUsed;
     }
 }
 

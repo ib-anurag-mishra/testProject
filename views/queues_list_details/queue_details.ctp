@@ -157,11 +157,11 @@
                                         //checking the downlaod status from session
                                          if ($this->Session->read('downloadVariArray'))
                                                     {
-                                                        $downloadsUsed = $this->Download->getDownloadResults($value['Song']['ProdID'],$value['Song']['provider_type']);
+                                                        $downloadsUsed = $this->Download->getDownloadResults($value['Songs']['ProdID'],$value['Songs']['provider_type']);
                                                     }
                                                     else
                                                     {
-                                                        $downloadsUsed = $this->Download->getDownloadfind($value['Song']['ProdID'], $value['Song']['provider_type'], $libraryDownload, $patronDownload, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
+                                                        $downloadsUsed = $this->Download->getDownloadfind($value['Songs']['ProdID'], $value['Songs']['provider_type'], $libraryDownload, $patronDownload, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                                     }
 
 
