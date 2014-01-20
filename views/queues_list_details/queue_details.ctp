@@ -167,11 +167,11 @@
 
                                                     if ($downloadsUsed > 0)
                                                     {
-                                                        $value['Song']['status'] = 'avail';
+                                                        $value['Songs']['status'] = 'avail';
                                                     }
                                                     else
                                                     {
-                                                        $value['Song']['status'] = 'not';
+                                                        $value['Songs']['status'] = 'not';
                                                     }
 
                                         
