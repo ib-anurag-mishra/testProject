@@ -2496,7 +2496,9 @@ STR;
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
-
+        $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                        . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+        
         if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']))
         {
             $libraryId = $this->Session->read('library');
@@ -2530,7 +2532,9 @@ STR;
 
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
+                $this->Wishlist->create();      //Prepare model to save record
                 $this->Wishlist->save($insertArr);
+                
                 $this->Wishlist->setDataSource('default');
 
                 //add the wishlist songs in the session array
@@ -2541,8 +2545,7 @@ STR;
                     $this->Session->write('wishlistVariArray', $wishlistVariArray);
                 }
 
-                $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                
                 $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
@@ -2551,9 +2554,7 @@ STR;
                 exit;
             }
             else
-            {
-                $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                        . " ProdID:" . $_REQUEST['prodId'] . "   ProviderId:" . $_REQUEST['provider'];
+            {                
                 $log_data .= "   TracklistDetails:Track Details not found..";
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
@@ -2564,8 +2565,7 @@ STR;
         }
         else
         {
-            $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                    . " :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+            $log_data .= "   Some values not found..";
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
             $this->log($log_data, $log_name);
 
