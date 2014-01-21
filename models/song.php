@@ -236,7 +236,7 @@ class Song extends AppModel
 
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
         
-        $query = $this->Song->lastQuery;
+        $query = $this->lastQuery;
         $log_data = "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
         $this->log($log_data, $log_name);
 
