@@ -2534,7 +2534,7 @@ STR;
                 //insert into wishlist table
                 $this->Wishlist->create();      //Prepare model to save record
 
-                if ($this->Wishlist->save($insertArr))
+                if ($this->Wishlist->save($insertArr , true))
                 {
                     $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
                 }
