@@ -2490,7 +2490,7 @@ STR;
 
     function addToWishlist()
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         //creates log for Add to wishlist method when it is called
 
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
@@ -2516,10 +2516,7 @@ STR;
                 }
 
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-                $logs = $this->Song->lastQuery();
-                  
-                    $log_data .=  " Mysql query:" . $logs;
-                    
+                            
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
