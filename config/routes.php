@@ -76,3 +76,5 @@
 	Router::connect('/:language/:controller/:action/*', array(), array('language' => '[a-z]{2}'));
 	Router::connect('/homes/chooser', array('controller' => 'homes', 'action' => 'chooser'));
         
+        // For Genre page if condition is like /Genre/{:any}
+        Router::connect('/genres/*', array('controller' => 'genres', 'action' => 'view'));
