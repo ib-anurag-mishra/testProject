@@ -48,6 +48,15 @@ Class GenresController extends AppController
 
     function index()
     {
+        /**
+         * Fix for Genre page other than view() method is called
+         * 
+         */
+        
+        echo '<pre>';
+        print_r($this->params);
+        die;
+        
         $country = $this->Session->read('territory');
 
         //$country = "'".$country."'";
