@@ -439,7 +439,7 @@ if (empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $th
             var data = "Territory=" + $("#ReportTerritory").val()+"&lib_id=<?=  $library_id; ?>";
             jQuery.ajax({
                 type: "post", // Request method: post, get
-                url: webroot + "admin/reports/getLibraryIds", // URL to request
+                url: webroot + "admin/reports/getLibraryIdsStream", // URL to request
                 data: data, // post data
                 success: function(response) {
                     $('#allLibrary').text('');
