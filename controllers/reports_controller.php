@@ -17,7 +17,7 @@ Class ReportsController extends AppController {
 
     function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('admin_consortium','admin_streamingreport','admin_downloadStreamingReportAsCsv');
+        $this->Auth->allow('admin_consortium','admin_streamingreport','admin_downloadStreamingReportAsCsv','admin_getLibraryIdsStream');
     }
 
     /*
@@ -1444,8 +1444,37 @@ Class ReportsController extends AppController {
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
             
                $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+        } else {
+            $var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+            $data = "<option value='all'>All Libraries</option>";
+        }
+        foreach ($var as $k => $v) {
+            
+            $selected= '';
+            if(isset($libValue) && $libValue == $k){
+                 $selected= 'selected';
+            }
+            
+            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
+        }
+        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
+        exit;
+    }
+    
+    function admin_getLibraryIdsStream() {
+//        Configure::write('debug', 0);
+     
+        $data = '';
+        if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"), 'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+            echo 146;
+        } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
+            echo 148;
+               $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
             $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 'Library.library_territory' => $_REQUEST['Territory'], 'Library.library_type' => 2), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
         } else {
+            echo 147;
             $var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory'], 'Library.library_type' => 2), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
             $data = "<option value='all'>All Libraries</option>";
         }
@@ -1656,7 +1685,7 @@ Class ReportsController extends AppController {
        
          
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'library_type' => '2'), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
             
@@ -1668,7 +1697,7 @@ Class ReportsController extends AppController {
                 $this->set('libraries', array());
             } else {
                 
-                $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+                $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_type' => '2','Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             }
             $this->set('libraryID', "");
         }
