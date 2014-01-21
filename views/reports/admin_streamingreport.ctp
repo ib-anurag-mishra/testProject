@@ -247,7 +247,7 @@ if (empty($getData)) {
 
     <?php } ?>            
 
-
+<?php if(!empty($dayStreamingInfo)){ ?>
                         <tr><td colspan="6">&nbsp;</td></tr>
                         <tr><th colspan="6" align="center">Library Streaming Report</th></tr>
                         <tr>
@@ -292,7 +292,7 @@ if (empty($getData)) {
                                 </table>
                             </td>
                         </tr>
-
+<?php } ?>
                         <tr><td colspan="6">&nbsp;</td></tr>
                         <tr><th colspan="6" align="center">Patron Streaming Report</th></tr>
                         <tr>
