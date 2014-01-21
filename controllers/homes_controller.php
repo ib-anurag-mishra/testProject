@@ -2533,7 +2533,8 @@ STR;
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
                 $this->Wishlist->create();      //Prepare model to save record
-
+                //check the inserting values
+                $log_data .= "  :InsertArray Beofre Save:" . serialize($insertArr);
                 if ($this->Wishlist->save($insertArr))
                 {
                     $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
@@ -2560,7 +2561,7 @@ STR;
                     $logs = $this->Wishlist->getDataSource()->getLog();
                     $lastLog = end($logs['log']);
                     $query = $lastLog['query'];
-                    $log_data .= "  :InsertArray :" . serialize($insertArr) . "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+                    $log_data .= "  :InsertArray During Save:" . serialize($insertArr) . "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
 
                     $log_data .= "   Some values not found..";
                     $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
