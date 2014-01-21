@@ -442,46 +442,54 @@
     // end - Total Number of Patrons who have streamed during Reporting Period
      
     //------------------------------------------------------------------------------------------------------ 
-     
-    // add a page
-    $tcpdf->AddPage();
+    
+    //check if this array is empty or not
+    if(!empty($dayStreamingInfo)){
+        // add a page
+        $tcpdf->AddPage();
 
-    //Column titles
-    if($this->data['Report']['library_id'] == "all") {
-        $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
-        $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Streamed');
-    }else{
-        $header = array('', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
-        $patron_header = array('', 'Patron ID', 'Total Number of Tracks Streamed');
-    }
-    $genre_header = array('', 'Genre Name', 'Total Number of Tracks Streamed');
-
-
-    //Data loading
-    if($this->data['Report']['library_id'] == "all") {
-        foreach($dayStreamingInfo as $key => $stream) {
-                    if($stream['StreamingHistory']['patron_id']!=''){
-                            /*$patron = $stream['users']['email'];
-                    }
-                    else{*/
-                            $patron = $stream['StreamingHistory']['patron_id'];
-                    }
-            $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
-            $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
+        //Column titles
+        if($this->data['Report']['library_id'] == "all") {
+            $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+            $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Streamed');
+        }else{
+            $header = array('', 'Patron ID', 'Artists Name', 'Track title', 'Streamed date');
+            $patron_header = array('', 'Patron ID', 'Total Number of Tracks Streamed');
         }
-    }else{
-        foreach($dayStreamingInfo as $key => $stream) {
-                    if($stream['StreamingHistory']['patron_id']!=''){
-                            /*$patron = $stream['users']['email'];
-                    }
-                    else{*/
-                            $patron = $stream['StreamingHistory']['patron_id'];
-                    }
-//            $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
-            $data[] = array($key+1, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
-        }
-    }
+        $genre_header = array('', 'Genre Name', 'Total Number of Tracks Streamed');
 
+
+        //Data loading
+        if($this->data['Report']['library_id'] == "all") {
+            foreach($dayStreamingInfo as $key => $stream) {
+                        if($stream['StreamingHistory']['patron_id']!=''){
+                                /*$patron = $stream['users']['email'];
+                        }
+                        else{*/
+                                $patron = $stream['StreamingHistory']['patron_id'];
+                        }
+                $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+                $data[] = array($key+1, $libraryName, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
+            }
+        }else{
+            foreach($dayStreamingInfo as $key => $stream) {
+                        if($stream['StreamingHistory']['patron_id']!=''){
+                                /*$patron = $stream['users']['email'];
+                        }
+                        else{*/
+                                $patron = $stream['StreamingHistory']['patron_id'];
+                        }
+    //            $libraryName = $this->getAdminTextEncode($library->getLibraryName($stream['StreamingHistory']['library_id']));
+                $data[] = array($key+1, $patron, $this->getAdminTextEncode($stream['songs']['artist']), $this->getAdminTextEncode($stream['songs']['track_title']), date('Y-m-d', strtotime($stream['songs']['createdOn'])));
+            }
+        }
+    } 
+    
+    
+    
+    
+    
+    
     if($this->data['Report']['library_id'] == "all") {
         foreach($patronStreamedDetailedInfo as $key => $patronStreamed) {
                     if($patronStreamed['StreamingHistory']['patron_id']!=''){

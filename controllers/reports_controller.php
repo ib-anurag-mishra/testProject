@@ -1652,8 +1652,7 @@ Class ReportsController extends AppController {
       Desc : actions for streaming report page
      */
 
-    function admin_streamingreport() {
-        
+    function admin_streamingreport() {       
        
          
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
@@ -1726,7 +1725,9 @@ Class ReportsController extends AppController {
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
-                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'day');
+                    //commenting since don't need to display this information
+                    $arr_day_streaming_report = array();
+                    //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'day');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'day');
 
@@ -1761,7 +1762,9 @@ Class ReportsController extends AppController {
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
-                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'week');
+                    //commenting since don't need to display this information
+                    $arr_day_streaming_report = array();
+                    //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'week');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'week');
 
@@ -1784,7 +1787,9 @@ Class ReportsController extends AppController {
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
-                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'month');
+                    //commenting since don't need to display this information
+                    $arr_day_streaming_report = array();
+                    //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'month');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'month');
 
@@ -1808,7 +1813,9 @@ Class ReportsController extends AppController {
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
-                    $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $datesInfo, $territory,'manual');
+                    //commenting since don't need to display this information
+                    $arr_day_streaming_report = array();
+                   // $arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $datesInfo, $territory,'manual');
 
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $datesInfo, $territory,'manual');
 

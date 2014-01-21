@@ -38,6 +38,7 @@ echo "\n";*/
 //$currentDate = '2013-10-14';
 $currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
+echo "\n----------- Start ".date('Y-m-d H:i:s')." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
 $weekFirstDay = date('Y-m-d', strtotime(date('Y' , strtotime($currentDate))."W".date('W' , strtotime($currentDate))."1"));
@@ -775,5 +776,6 @@ else
     echo "\nToday is not either the week first day or the month first day so the report didn't get generated.\n";
 }
 
+echo "\n----------- End ".date('Y-m-d H:i:s')." -----------";
 echo "\n----------- End -----------";
 ?>
