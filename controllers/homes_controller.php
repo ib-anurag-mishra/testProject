@@ -2516,7 +2516,7 @@ STR;
                 }
 
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-                    
+
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
@@ -2558,6 +2558,11 @@ STR;
                 }
                 else
                 {
+                    $logs = $this->Song->getDataSource()->getLog();
+                    $lastLog = end($logs['log']);
+                    $query = $lastLog['query'];
+                    $log_data .=  " Song Mysql query:" . $query;
+
                     $logs = $this->Wishlist->getDataSource()->getLog();
                     $lastLog = end($logs['log']);
                     $query = $lastLog['query'];
@@ -2566,10 +2571,6 @@ STR;
                     $log_data .= "   Some values not found..";
                     $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                     $this->log($log_data, $log_name);
-
-                        $view=new View($this, false);
-                        echo $view->element('sql_dump');
-                        die; 
 
                     echo 'error';
                     exit;
