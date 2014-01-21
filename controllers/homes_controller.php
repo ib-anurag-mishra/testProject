@@ -2567,6 +2567,10 @@ STR;
                     $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                     $this->log($log_data, $log_name);
 
+                        $view=new View($this, false);
+                        echo $view->element('sql_dump');
+                        die; 
+
                     echo 'error';
                     exit;
                 }
@@ -2982,22 +2986,11 @@ STR;
             exit;
         }
 
-        /**
-          creates log file name
-         */
-        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
-        $log_id = md5(time());
-        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
-        
         $id = $_REQUEST['id'];
         $provider = $_REQUEST['provider'];
 
         //get details for this song
         $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-        
-        $log = $this->Song->getDataSource()->getLog(false, false);
-        $log_data .= "  :Song Query Log:".debug($log);
-
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
@@ -3007,7 +3000,13 @@ STR;
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         $insertArr['provider_type'] = $provider;
-       
+
+        /**
+          creates log file name
+         */
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
 
         $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];
