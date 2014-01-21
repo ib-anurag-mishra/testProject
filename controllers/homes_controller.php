@@ -2490,7 +2490,7 @@ STR;
 
     function addToWishlist()
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         //creates log for Add to wishlist method when it is called
 
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
@@ -2520,9 +2520,9 @@ STR;
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
-                $insertArr['ProdID'] = $prodId;
-                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-                $insertArr['album'] = $trackDetails['0']['Song']['Title'];
+//                $insertArr['ProdID'] = $prodId;
+//                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+//                $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
                 $insertArr['provider_type'] = $provider;
