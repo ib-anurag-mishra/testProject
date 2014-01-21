@@ -2521,7 +2521,7 @@ STR;
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
                 $insertArr['ProdID'] = $prodId;
-                $insertArr['artist'] = null; //$trackDetails['0']['Song']['Artist'];
+                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
                 $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
@@ -2532,7 +2532,7 @@ STR;
 
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
-                //$this->Wishlist->create();      //Prepare model to save record
+                $this->Wishlist->create();      //Prepare model to save record
 
                 if ($this->Wishlist->save($insertArr))
                 {
@@ -2540,7 +2540,7 @@ STR;
                 }
                 else
                 {
-                    $log_data .= "  :Mysql Error :" . mysql_error();
+                    $log_data .= "  :Mysql Error :" . mysql_error()." Mysql query:".$this->getDataSource()->error;
                 }
 
                 $this->Wishlist->setDataSource('default');
