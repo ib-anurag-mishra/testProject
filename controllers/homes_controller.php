@@ -2537,30 +2537,38 @@ STR;
                 if ($this->Wishlist->save($insertArr))
                 {
                     $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
+
+
+                    $this->Wishlist->setDataSource('default');
+
+                    //add the wishlist songs in the session array
+                    if ($this->Session->read('wishlistVariArray'))
+                    {
+                        $wishlistVariArray = $this->Session->read('wishlistVariArray');
+                        $wishlistVariArray[] = $prodId;
+                        $this->Session->write('wishlistVariArray', $wishlistVariArray);
+                    }
+
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+
+                    echo "Success";
+                    exit;
                 }
                 else
                 {
                     $logs = $this->Wishlist->getDataSource()->getLog();
                     $lastLog = end($logs['log']);
                     $query = $lastLog['query'];
-                    $log_data .= "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+                    $log_data .= "  :InsertArray :" . serialize($insertArr) . "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+
+                    $log_data .= "   Some values not found..";
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+
+                    echo 'error';
+                    exit;
                 }
-
-                $this->Wishlist->setDataSource('default');
-
-                //add the wishlist songs in the session array
-                if ($this->Session->read('wishlistVariArray'))
-                {
-                    $wishlistVariArray = $this->Session->read('wishlistVariArray');
-                    $wishlistVariArray[] = $prodId;
-                    $this->Session->write('wishlistVariArray', $wishlistVariArray);
-                }
-
-                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                $this->log($log_data, $log_name);
-
-                echo "Success";
-                exit;
             }
             else
             {
