@@ -216,7 +216,7 @@ class Song extends AppModel
         $this->recursive = 2;
         $this->Behaviors->attach('Containable');
         $downloadData = $this->find('all', array(
-            'conditions' => array('Song.ProdID' => $id, 'Song.provider_type' => $provider),
+            'conditions' => array('Song1.ProdID' => $id, 'Song.provider_type' => $provider),
             'fields' => array(
                 'Song.ProdID',
                 'Song.ProductID',
@@ -235,10 +235,11 @@ class Song extends AppModel
         )));
 
         $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
-        $logs = $this->getDataSource()->getLog();
+        $db = $this->getDataSource();
+        $logs = $db->getLog();
         $lastLog = end($logs['log']);
         $query = $lastLog['query'];
-        $log_data = "  :InsertArray During Save:" . serialize($insertArr) . "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+        $log_data = "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
         $this->log($log_data, $log_name);
 
         return $downloadData;
