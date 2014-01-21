@@ -2540,7 +2540,7 @@ STR;
                 }
                 else
                 {
-                    $log_data .= "  :Mysql Error :" . mysql_error()." Mysql query:".$this->getDataSource()->error;
+                    $log_data .= "  :Mysql Error :" . mysql_error()." Mysql query:".$this->Wishlist->getDataSource()->error;
                 }
 
                 $this->Wishlist->setDataSource('default');
