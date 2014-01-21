@@ -2532,7 +2532,7 @@ STR;
 
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
-                $this->Wishlist->create();      //Prepare model to save record
+                //$this->Wishlist->create();      //Prepare model to save record
 
                 if ($this->Wishlist->save($insertArr , true))
                 {
