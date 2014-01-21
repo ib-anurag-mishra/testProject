@@ -50,7 +50,8 @@ Class UsersController extends AppController
 								'soap'=>'plogin',
 								'mndlogin_reference'=>'mndlogin',
 								'mdlogin_reference'=>'mdlogin',
-								'curl_method'=>'clogin');
+								'curl_method'=>'clogin',
+                                                                'capita'=>'capita');
 		return $method_vs_action[$method];
 	}
 	function redirection_manager($library = null)
@@ -4479,10 +4480,7 @@ function login($library = null){
         }
     }
        
-       
-       
-       
-    $this->Session->write("layout_option", 'login');
+                $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4683,7 +4681,7 @@ function login($library = null){
                                                 $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-						$this->Session->write("innovative_https","innovative_https");
+						$this->Session->write("capita","capita");
 						if($existingLibraries['0']['Library']['library_logout_url'] != '' && ($this->Session->read('referral') != '' || $this->Session->read("subdomain") != '')){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}
