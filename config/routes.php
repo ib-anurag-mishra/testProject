@@ -57,8 +57,7 @@
 
 	}
 	else
-	{
-		
+	{		
             Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
 	}
 	Router::connect('/index', array('controller' => 'homes', 'action' => 'index')); 

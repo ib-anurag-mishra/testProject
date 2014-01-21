@@ -54,8 +54,12 @@ Class GenresController extends AppController
          */
         
         echo '<pre>';
-        print_r($this->params);
-        die;
+        $url = explode('/', $this->params['url']['url']);
+        if($url[1] !=='view')
+        {
+            $this->view();
+        }
+       
         
         $country = $this->Session->read('territory');
 
