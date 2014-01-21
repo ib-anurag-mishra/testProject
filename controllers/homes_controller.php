@@ -2540,7 +2540,7 @@ STR;
                 }
                 else
                 {
-                    $log_data .= "  :Mysql Error :" . $this->Wishlist->validationErrors;
+                    $log_data .= "  :Mysql Error :" . serialize($this->Wishlist->validationErrors);
                 }
 
                 $this->Wishlist->setDataSource('default');
