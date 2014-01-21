@@ -2540,7 +2540,10 @@ STR;
                 }
                 else
                 {
-                    $log_data .= "  :Mysql Error :" . mysql_error()." Mysql query:".$this->Wishlist->getDataSource()->error;
+                    $logs = $this->Wishlist->getDataSource()->getLog();
+                    $lastLog = end($logs['log']);
+                    $query = $lastLog['query'];
+                    $log_data .= "  :Mysql Error :" . mysql_error()." Mysql query:".$query;
                 }
 
                 $this->Wishlist->setDataSource('default');
