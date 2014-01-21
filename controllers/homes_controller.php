@@ -2987,6 +2987,10 @@ STR;
 
         //get details for this song
         $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
+        
+        $log = $this->Song->getDataSource()->getLog(false, false);
+        $log_data .= "  :Song Query Log:".debug($log);
+
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
