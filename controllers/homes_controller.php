@@ -2517,6 +2517,13 @@ STR;
 
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
 
+                $logs = $this->Song->getDataSource()->getLog();
+                    $lastLog = end($logs['log']);
+                    $query = $lastLog['query'];
+                    $log_data .=  " Song Mysql query:" . $query;
+                    
+                    
+                    
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
