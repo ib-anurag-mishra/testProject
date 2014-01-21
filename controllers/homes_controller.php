@@ -2519,7 +2519,7 @@ STR;
 
                 $logs = $this->Song->getDataSource()->getLog();
                     $lastLog = end($logs['log']);
-                    $query = $lastLog['query'];
+                    $query = end($logs['log']);
                     $log_data .=  " Song Mysql query:" . $query;
                     
                     
