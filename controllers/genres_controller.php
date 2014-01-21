@@ -55,9 +55,9 @@ Class GenresController extends AppController
         
         echo '<pre>';
         $url = explode('/', $this->params['url']['url']);
-        if($url[1] !=='view')
+        if($url[1] != 'view')
         {
-            $this->view();
+            $this->redirect('/genres/view/');
         }
        
         
