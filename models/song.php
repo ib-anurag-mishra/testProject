@@ -223,7 +223,6 @@ class Song extends AppModel
                 'Song.Title',
                 'Song.SongTitle',
                 'Song.Artist',
-                'Song.ArtistText',
                 'Song.ISRC'
             ),
             'contain' => array(

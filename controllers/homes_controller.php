@@ -2521,7 +2521,7 @@ STR;
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
                 $insertArr['ProdID'] = $prodId;
-                $insertArr['artist'] = ($trackDetails['0']['Song']['Artist'] == null)? $trackDetails['0']['Song']['ArtistText'] : $trackDetails['0']['Song']['Artist'];
+                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
                 $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
