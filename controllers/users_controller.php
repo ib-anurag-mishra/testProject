@@ -712,6 +712,16 @@ function login($library = null){
 					$this->redirect($redirectUrl, null, true);
 				}
 			}
+                        elseif($this->Session->read('capita') && ($this->Session->read('capita') != '')){
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'capita'));
+				}
+			}
 			else{
 			$this->Session->destroy();
 			$this->redirect($this->Auth->logout());
