@@ -213,7 +213,7 @@ class Song extends AppModel
 
     function getdownloaddata($id, $provider)
     {
-        $this->recursive = 2;
+        $this->recursive = -1;
         $this->Behaviors->attach('Containable');
         $downloadData = $this->find('all', array(
             'conditions' => array('Song.ProdID' => $id, 'Song.provider_type' => $provider),
