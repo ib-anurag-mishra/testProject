@@ -192,7 +192,7 @@ function Get_Sales_date($sales_date_array, $country)
     <section class="advanced-search">
         <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage();
                 return false;">
-            <input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
+            <input type="search" name="q" id="query" value="<?php echo htmlentities($keyword); ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type)) ? $type : 'all' ?>" name="type">
             <input type="button" name="submit" id="submit" value="Search" />
         </form>
