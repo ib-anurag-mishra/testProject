@@ -27,7 +27,7 @@
 			}
 			?>
 			<li>
-				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
+				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports1</a>
 				<ul>
 					<li>
 						<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
