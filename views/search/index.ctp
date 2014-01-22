@@ -192,7 +192,7 @@ function Get_Sales_date($sales_date_array, $country)
     <section class="advanced-search">
         <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage();
                 return false;">
-            <input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
+            <input type="search" name="q" id="query" value="<?php echo htmlspecialchars($keyword); ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type)) ? $type : 'all' ?>" name="type">
             <input type="button" name="submit" id="submit" value="Search" />
         </form>
@@ -203,7 +203,7 @@ function Get_Sales_date($sales_date_array, $country)
                 if ($type != 'all')
                 {
                     ?>
-                    <a href="/search/index?q=<?php echo $keyword; ?>&type=all">All Music</a>
+                    <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=all">All Music</a>
                     <?php
                 }
                 else
@@ -220,7 +220,7 @@ function Get_Sales_date($sales_date_array, $country)
                 if ($type != 'album')
                 {
                     ?>
-                    <a href="/search/index?q=<?php echo $keyword; ?>&type=album">Albums</a>
+                    <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=album">Albums</a>
                     <?php
                 }
                 else
@@ -237,7 +237,7 @@ function Get_Sales_date($sales_date_array, $country)
                 if ($type != 'artist')
                 {
                     ?>
-                    <a href="/search/index?q=<?php echo $keyword; ?>&type=artist">Artists</a>
+                    <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=artist">Artists</a>
                     <?php
                 }
                 else
