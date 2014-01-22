@@ -216,7 +216,7 @@ class Song extends AppModel
         $this->recursive = 2;
         $this->Behaviors->attach('Containable');
         $downloadData = $this->find('all', array(
-            'conditions' => array('Song.ProdID' => $id, 'Song.provider_type1' => $provider),
+            'conditions' => array('Song.ProdID' => $id, 'Song.provider_type' => $provider),
             'fields' => array(
                 'Song.ProdID',
                 'Song.ProductID',
