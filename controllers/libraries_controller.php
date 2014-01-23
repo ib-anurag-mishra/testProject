@@ -616,14 +616,14 @@ Class LibrariesController extends AppController
                                                                 }
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
-                                                            echo "<pre>"; print_r($data); die;
+                                                            echo "<pre>"; print_r($data); 
                                                             if (count($data) > 0)
                                                             {
                                                                 $this->Variable->saveAll($data);
                                                             }
                                                         }
                                                     }
-
+                                                    die;
                                                     if ($this->data['Library']['id'] != '' && $this->data['LibraryPurchase']['purchased_order_num'] == "" && $this->data['LibraryPurchase']['purchased_amount'] == "")
                                                     {
 
