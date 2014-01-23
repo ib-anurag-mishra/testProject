@@ -405,23 +405,24 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
-    $(document).ready(function()
-    {
-    <?php
-//doing pagination 
-    if ($this->Session->check('page'))
-    {
-        ?>
-            toScrollArtist(<?= $this->Session->read('page') ?> - 1);
-        <?php
-    }
-    ?>
-
-        var all_album_url = $("#allAlbumUrl").attr('value');
-        showAllAlbumsList(all_album_url);
-
-    });
+        
+        $(document).ready(function()
+        {
+            <?php
+            //doing pagination 
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?> - 1);
+                <?php
+            }
+            ?>
+            var all_album_url = $("#allAlbumUrl").attr('value');
+            showAllAlbumsList(all_album_url);
+        });
+        
     </script>
+
     <?php
 }
 elseif ($this->Session->check('calledAlbum'))
@@ -434,6 +435,17 @@ elseif ($this->Session->check('calledAlbum'))
     ?>
     <script>
         $(document).ready(function() {
+
+            //Paginate the Artist list if it was already done before
+            <?php
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?> - 1);
+                <?php
+            }
+            ?>
+
             var all_album_url = $("#allAlbumUrl").attr('value');
 
             showAllAlbumsList(all_album_url);
@@ -441,16 +453,6 @@ elseif ($this->Session->check('calledAlbum'))
             setTimeout(function() {
                 if ($(document).find('div.album-list-shadow-container'))
                 {
-                    //Paginate the Artist list if it was already done before
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-                        toScrollArtist(<?= $this->Session->read('page') ?> - 1);
-        <?php
-    }
-    ?>
-
                     //focus on selected Artist
                     $("#artistlistrecord li").each(function() {
                         if ($(this).find('a').hasClass('selected'))
@@ -500,33 +502,30 @@ elseif ($this->Session->check('calledAlbum'))
     function toScrollArtist(totalPageCalled)
     {
         totalPageCalled--;
-        
+
         if (totalPageCalled < 0)
         {
-           return false ;
+            scrolltoSelectedArtist();
+            return false;
         }
         else
-        {
-            var total_page_called = totalPageCalled;
-            var to_scroll = $("#artistscroll");
-            var scroll_distance = $("#artistscroll").get(0).scrollHeight;
+        {           
+            var to_scroll = $(document).find("#artistscroll");
+            var scroll_distance = to_scroll.get(0).scrollHeight;
 
-            for (var i = 0; i < total_page_called; i++)
-            {
-                to_scroll.animate({
-                   scrollTop: scroll_distance
-                }, 100);
-                $(document).find('#artist_loader').hide();
-            }
-            
+            to_scroll.animate({
+                scrollTop: scroll_distance
+            }, 100);
+            $(document).find('#artist_loader').hide();
+
             toScrollArtist(totalPageCalled);
         }
-        
+
     }
 
     function scrolltoSelectedArtist()
     {
-        var to_scroll = $("#artistscroll");
+        var to_scroll = $(document).find("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
             {
