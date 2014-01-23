@@ -618,6 +618,7 @@ Class LibrariesController extends AppController
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
                                                            
+                                                            echo "Count: ".count($data);
                                                             if (count($data) > 0)
                                                             {
                                                                 echo "<br>inside Condition:";  echo "<pre>"; print_r($data); 
