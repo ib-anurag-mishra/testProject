@@ -602,6 +602,7 @@ Class LibrariesController extends AppController
                                                     $this->Library->save();
                                                     
                                                     //echo "Count: ".count($this->data['Variable']);
+                                                    print_r($this->data);
                                                     if (count($this->data['Variable']) > 0)
                                                     {
                                                         if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'capita' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
@@ -613,8 +614,8 @@ Class LibrariesController extends AppController
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
-                                                                    
-                                                                  // print_r($data);
+                                                                    print_r($data);
+                                                                   
                                                                 }
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
