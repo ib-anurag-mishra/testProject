@@ -616,29 +616,21 @@ Class LibrariesController extends AppController
                                                                     $data[$k]['library_id'] = $this->Library->id;
                                                                     $data[$k]['authentication_variable_index'] = $this->Library->id;
                                                                     $data[$k]['message_no'] = $this->Library->id;
-                                                                    $data[$k]['created'] = '2013-09-11 03:44:50';
-                                                                    $data[$k]['modified'] = '2013-09-11 03:44:50';
-                                                                   // print_r($data);
+                                                                    $data[$k]['created'] = date("Y-m-d H:i:s");
+                                                                    $data[$k]['modified'] = date("Y-m-d H:i:s");                                                                
                                                                    
                                                                 } 
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
                                                            
-                                                            //echo "Count: ".count($data);
+                                                            
                                                             if (count($data) > 0)
-                                                            {
-                                                                //echo "<br>inside Condition:";  echo "<pre>"; print_r($data); 
-                                                                $Result =   $this->Variable->saveAll($data);
-                                                                $logs = $this->Variable->getDataSource()->getLog();
-                                                                $lastLog = end($logs['log']);
-                                                                $query = $lastLog['query'];
-                                                                //echo "<br>Result: ".$query;
-                                                              //  echo "<br>Query: ".$this->Variable->lastQuery();
-                                                               // echo "executed";
+                                                            {                                                                
+                                                                $this->Variable->saveAll($data);                                                               
                                                             }
                                                         }
                                                     }
-                                                  //  die;
+                                                  
                                                     if ($this->data['Library']['id'] != '' && $this->data['LibraryPurchase']['purchased_order_num'] == "" && $this->data['LibraryPurchase']['purchased_amount'] == "")
                                                     {
 
