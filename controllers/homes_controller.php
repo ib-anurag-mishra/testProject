@@ -2516,7 +2516,7 @@ STR;
                 }
 
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-
+                            
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
@@ -3289,9 +3289,9 @@ STR;
         }
 
 
+
         //get details for this song
         $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
@@ -3301,6 +3301,8 @@ STR;
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         $insertArr['provider_type'] = $provider;
+
+
 
         $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];
@@ -3450,8 +3452,6 @@ STR;
             //save to downloads table
             $this->Download->setDataSource('master');
             $this->Download->create();          //prepare model to insert new record
-
-            $log_data .= "  InsertArray Befor Save:" . $insertArr;
             if ($this->Download->save($insertArr))
             {
                 $downloadStatus = 1;
@@ -3459,7 +3459,6 @@ STR;
                 $this->Download->setDataSource('default');
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-
                 if ($maintainLatestDownload)
                 {
                     $this->LatestDownload->setDataSource('master');
@@ -3483,21 +3482,21 @@ STR;
                 $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
                 $this->Library->query($sql);
                 $this->Library->setDataSource('default');
-
-                $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
-
-                if ($downloadStatus != $latestdownloadStatus)
-                {
-                    $log_data .= ":NotInBothTable";
-                }
             }
             else
             {
-                $log_data .= "  :Mysql Error :" . mysql_error();
-                $this->log($log_data, $log_name);
+                $logs = $this->Download->getDataSource()->getLog();
+                $lastLog = end($logs['log']);
+                $query = $lastLog['query'];
+                $log_data .= "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+            }
+            $this->Download->setDataSource('default');
 
-                echo "invalid|" . $validationResult[1];
-                exit;
+            $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
+
+            if ($downloadStatus != $latestdownloadStatus)
+            {
+                $log_data .= ":NotInBothTable";
             }
 
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
@@ -3514,27 +3513,9 @@ STR;
             }
 
             $this->Videodownload->recursive = -1;
-            $videodownloadsUsed = $this->Videodownload->find('count', array(
-                'conditions' => array(
-                    'library_id' => $libId,
-                    'patron_id' => $patId,
-                    'created BETWEEN ? AND ?' => array(
-                        Configure::read('App.curWeekStartDate'),
-                        Configure::read('App.curWeekEndDate')
-                    )
-                )
-            ));
+            $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
-            $downloadscount = $this->Download->find('count', array(
-                'conditions' => array(
-                    'library_id' => $libId,
-                    'patron_id' => $patId,
-                    'created BETWEEN ? AND ?' => array(
-                        Configure::read('App.curWeekStartDate'),
-                        Configure::read('App.curWeekEndDate')
-                    )
-                )
-            ));
+            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
             $this->Session->write('downloadCount', $downloadsUsed);
 
@@ -3544,9 +3525,8 @@ STR;
         else
         {
             /**
-             * complete records with validation fail
+              complete records with validation fail
              */
-            $log_data .= "---------------Validation Failed-----------------";
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------" . PHP_EOL;
             $this->log($log_data, $log_name);
 
