@@ -622,6 +622,7 @@ Class LibrariesController extends AppController
                                                             {
                                                                 echo "<br>inside Condition:";  echo "<pre>"; print_r($data); 
                                                                 $this->Variable->saveAll($data);
+                                                                echo "<br>Query: ".$this->Variable->lastQuery();
                                                                 echo "executed";
                                                             }
                                                         }
