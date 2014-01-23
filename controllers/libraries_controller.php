@@ -601,14 +601,14 @@ Class LibrariesController extends AppController
                                                     $this->Library->library_type =  $this->data['Library']['library_type'];
                                                     $this->Library->save();
                                                     
-                                                    echo "Count: ".count($this->data['Variable']);
+                                                    //echo "Count: ".count($this->data['Variable']);
                                                     if (count($this->data['Variable']) > 0)
                                                     {
                                                         if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'capita' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
                                                         {
-                                                            echo "in if"; print_r($this->data['Variable']);
+                                                           // echo "in if"; print_r($this->data['Variable']);
                                                             foreach ($this->data['Variable'] as $k => $v)
-                                                            {  echo "<pre>"; print_r($k); print_r($v); 
+                                                            { // echo "<pre>"; print_r($k); print_r($v); 
                                                                 if ($this->data['Variable'][$k]['authentication_variable'] != '' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != '')
                                                                 {
                                                                     $data[$k] = $v;
@@ -622,6 +622,7 @@ Class LibrariesController extends AppController
                                                             {
                                                                 echo "<br>inside Condition:";  echo "<pre>"; print_r($data); 
                                                                 $this->Variable->saveAll($data);
+                                                                echo "executed";
                                                             }
                                                         }
                                                     }
