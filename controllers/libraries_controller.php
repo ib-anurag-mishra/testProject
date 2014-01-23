@@ -614,6 +614,8 @@ Class LibrariesController extends AppController
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
+                                                                    $data[$k]['authentication_variable_index'] = $this->Library->id;
+                                                                    $data[$k]['message_no'] = $this->Library->id;
                                                                     print_r($data);
                                                                    
                                                                 }
