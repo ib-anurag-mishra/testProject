@@ -862,8 +862,6 @@ $('document').ready(function()
     $('.genre-list').bindMouseWheel();
     $('.alphabetical-filter').bindMouseWheel();
     $('.artist-list').bindMouseWheel();
-    $('#artistscroll').bindMouseWheel();
-
     $('.album-list').bindMouseWheel();
 
     /* end genres page */
