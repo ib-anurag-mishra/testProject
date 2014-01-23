@@ -458,7 +458,7 @@ Class LibrariesController extends AppController
                     }
                     elseif ($this->data['Library']['library_authentication_method'] == 'capita')
                     {
-                        //$this->Library->setValidation('library_step1_innovative_var');
+                        $this->Library->setValidation('library_step1_capita');
                     }
                     elseif ($this->data['Library']['library_authentication_method'] == 'innovative_var_name')
                     {
@@ -800,6 +800,10 @@ Class LibrariesController extends AppController
                     elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var')
                     {
                         $this->Library->setValidation('library_step' . $this->data['Library']['libraryStepNum'] . '_innovative_var_name');
+                    }
+                    elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'capita')
+                    {
+                        $this->Library->setValidation('library_step' . $this->data['Library']['libraryStepNum'] . '_capita');
                     }
                     elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var_name')
                     {
