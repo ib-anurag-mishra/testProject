@@ -613,6 +613,7 @@ Class LibrariesController extends AppController
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
+                                                                    echo "<pre>"; print_r($k); print_r($v); print_r($data);
                                                                 }
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
