@@ -620,7 +620,7 @@ Class LibrariesController extends AppController
                                                                     $data[$k]['modified'] = '2013-09-11 03:44:50';
                                                                     print_r($data);
                                                                    
-                                                                }
+                                                                } 
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
                                                            
