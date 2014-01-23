@@ -621,7 +621,8 @@ Class LibrariesController extends AppController
                                                             if (count($data) > 0)
                                                             {
                                                                 echo "<br>inside Condition:";  echo "<pre>"; print_r($data); 
-                                                                $this->Variable->saveAll($data);
+                                                                $Result =   $this->Variable->saveAll($data);
+                                                                echo "<br>Result: ".$Result;
                                                                 echo "<br>Query: ".$this->Variable->lastQuery();
                                                                 echo "executed";
                                                             }
