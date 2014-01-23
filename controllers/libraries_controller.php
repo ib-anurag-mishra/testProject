@@ -613,7 +613,8 @@ Class LibrariesController extends AppController
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
-                                                                   print_r($data);
+                                                                    
+                                                                  // print_r($data);
                                                                 }
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
@@ -623,7 +624,10 @@ Class LibrariesController extends AppController
                                                             {
                                                                 echo "<br>inside Condition:";  echo "<pre>"; print_r($data); 
                                                                 $Result =   $this->Variable->save($data);
-                                                                echo "<br>Result: ".$Result;
+                                                                $logs = $this->Variable->getDataSource()->getLog();
+                                                                $lastLog = end($logs['log']);
+                                                                $query = $lastLog['query'];
+                                                                echo "<br>Result: ".$query;
                                                                 echo "<br>Query: ".$this->Variable->lastQuery();
                                                                 echo "executed";
                                                             }
