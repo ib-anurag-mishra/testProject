@@ -606,14 +606,14 @@ Class LibrariesController extends AppController
                                                     {
                                                         if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'capita' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
                                                         {
-                                                            echo "in if";
+                                                            echo "in if"; print_r($this->data['Variable']);
                                                             foreach ($this->data['Variable'] as $k => $v)
-                                                            { echo "in for";
+                                                            {  echo "<pre>"; print_r($k); print_r($v); 
                                                                 if ($this->data['Variable'][$k]['authentication_variable'] != '' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != '')
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
-                                                                    echo "<pre>"; print_r($k); print_r($v); print_r($data);
+                                                                   print_r($data);
                                                                 }
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
