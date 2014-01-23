@@ -4652,41 +4652,7 @@ function login($library = null){
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
-							$date = time();
-							$values = array(0 => $date, 1 => session_id());
-							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-						} else {
-							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
-							$date = time();
-							$modifiedTime = $userCache[0];
-							if(!($this->Session->read('patron'))){
-								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());
-									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-								}
-								else{
-									$this->Session->destroy('user');
-									//$this -> Session -> setFlash("This account is already active.");
-									//$this->autoRender = false;
-									$this->Cookie->write('msg','This account is already active.');
-									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}
-							} else {
-								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());
-									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-								}
-								else{
-									$this->Session->destroy('user');
-									//$this -> Session -> setFlash("This account is already active.");
-									//$this->autoRender = false;
-									$this->Cookie->write('msg','This account is already active.');
-									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}
-							}
-
-						}*/
+					
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
