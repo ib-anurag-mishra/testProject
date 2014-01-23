@@ -411,6 +411,9 @@ Class LibrariesController extends AppController
                     {
                         $this->User->create();
                     }
+                    
+                    echo "<pre>"; print_r($this->data); die;
+                    
                     $this->User->set($this->data['User']);
                     $this->User->setValidation('library_step' . $this->data['Library']['libraryStepNum']);
                     if ($this->User->validates())
