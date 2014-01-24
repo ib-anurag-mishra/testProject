@@ -33,6 +33,8 @@ curl_close($ch);
 $checkValidXml = null;
 $checkValidXml = simplexml_load_string($start_index_resp);
 
+echo $start_index_resp;
+
 // executes IF for valid xml response
 if($checkValidXml) {
 
@@ -48,6 +50,7 @@ if($checkValidXml) {
   $status_index_resp = curl_exec ( $ch );
   curl_close($ch);
 
+echo $status_index_resp;
   // object type-casted 
   $obj_xml_response = simplexml_load_string($status_index_resp);
   
