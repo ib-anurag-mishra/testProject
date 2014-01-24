@@ -4600,14 +4600,14 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'capita','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
 														)
 													 );
 
 				} else {
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'capita'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
 														)
 													 );
 				}
@@ -4626,6 +4626,8 @@ function login($library = null){
 					//$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
                                         
 					$data['database'] = 'freegal';
+                                        $data['hostname'] = $existingLibraries['0']['Library']['library_host_name'];
+                                        $data['port'] = $existingLibraries['0']['Library']['library_port_no'];
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."capita_validation";
 					}
