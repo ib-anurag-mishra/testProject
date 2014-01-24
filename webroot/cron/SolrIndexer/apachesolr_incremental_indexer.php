@@ -8,6 +8,7 @@
 
 // url to start indexing & preserving old once
 $start_index_url = 'http://192.168.100.24:8080/solr/freegalmusic/dataimport?command=delta-import&clean=false'; 
+
 $start_index_url_video = 'http://192.168.100.24:8080/solr/freegalmusicvideos/dataimport?command=delta-import&clean=false'; 
 
 set_time_limit(0);
@@ -155,6 +156,10 @@ function getOperationStatus($email_list, &$log_data, $log_id){
   $status_index_resp_video = curl_exec ( $chv );
   curl_close($chv);
 
+
+  echo $status_index_resp;
+  echo $status_index_resp_video;
+
   // object type-casted 
   $obj_xml_response = simplexml_load_string($status_index_resp);
   
@@ -165,9 +170,9 @@ function getOperationStatus($email_list, &$log_data, $log_id){
     // valid
     //log
     $log_data .= date('Y-m-d h:i:s').' > Indexing in progress ( Response: '.$status_index_resp.' )'.PHP_EOL;
-    
+    $log_data .= "\n\n";
+    $log_data .= date('Y-m-d h:i:s').' > Indexing in progress ( Response: '.$status_index_resp_video.' )'.PHP_EOL;
     return 1;
-    
   }// if still running
   else{
     
