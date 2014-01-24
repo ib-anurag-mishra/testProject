@@ -84,11 +84,7 @@
                                 if (newitems) {
                                     artistPage++;
                                     $('#artist_loader').hide();
-                                    $('#artistlistrecord').append(newitems);
-                                    if (!scrollArtistDone && artistPage > totalScrolled) {
-                                        scrolltoSelectedArtist();
-                                        scrollArtistDone = true;
-                                    }
+                                    $('#artistlistrecord').append(newitems);                                   
                                 } else {
                                     $('#artist_loader').hide();
                                     return;
