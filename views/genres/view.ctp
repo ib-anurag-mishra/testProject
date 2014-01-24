@@ -84,7 +84,7 @@
                                 if (newitems) {
                                     artistPage++;
                                     $('#artist_loader').hide();
-                                    $('#artistlistrecord').append(newitems);                                   
+                                    $('#artistlistrecord').append(newitems);
                                 } else {
                                     $('#artist_loader').hide();
                                     return;
@@ -407,21 +407,21 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
 
         $(document).ready(function()
         {
-    <?php
-//doing pagination 
-    if ($this->Session->check('page'))
-    {
-        ?>
-                toScrollArtist(<?= $this->Session->read('page') ?>);
-        <?php
-    }
-    else
-    {
-        ?>
-                scrolltoSelectedArtist();
-        <?php
-    }
-    ?>
+            <?php
+            //doing pagination 
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?>);
+                <?php
+            }
+            else
+            {
+                ?>
+                        scrolltoSelectedArtist();
+                <?php
+            }
+            ?>
 
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
@@ -443,14 +443,14 @@ elseif ($this->Session->check('calledAlbum'))
         $(document).ready(function() {
 
             //Paginate the Artist list if it was already done before
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-                toScrollArtist(<?= $this->Session->read('page') ?>);
-        <?php
-    }
-    ?>
+            <?php
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?>);
+                <?php
+            }
+            ?>
 
             var all_album_url = $("#allAlbumUrl").attr('value');
 
@@ -495,15 +495,10 @@ elseif ($this->Session->check('calledAlbum'))
 <script>
 
     $(document).ready(function() {
-        
-    scrollToSelectedGenre();
-    
-        $(document).find('.alphabetical-filter li').each(function() {
-            if ($(this).find('a').hasClass('selected'))
-            {
-                $(this).find('a').focus();
-            }
-        });
+
+        scrollToSelectedGenre();
+        scrollToSelectedAlpha();
+
     });
 
     function toScrollArtist(totalPageCalled)
@@ -511,7 +506,7 @@ elseif ($this->Session->check('calledAlbum'))
 
         for (var i = 2; i <= totalPageCalled; i++) {
             var data = "npage=" + i;
-            var link = webroot + 'genres/ajax_view_pagination/page:' + i + "/<?=$this->Session->read('calledGenre')?>" + "/<?=$this->Session->read('selectedAlpha')?>";
+            var link = webroot + 'genres/ajax_view_pagination/page:' + i + "/<?= $this->Session->read('calledGenre') ?>" + "/<?= $this->Session->read('selectedAlpha') ?>";
             jQuery.ajax({
                 type: "post", // Request method: post, get
                 url: link, // URL to request
@@ -557,7 +552,7 @@ elseif ($this->Session->check('calledAlbum'))
 
     function scrollToSelectedGenre()
     {
-        sleep(200);
+        sleep(100);
         var to_scroll = $(document).find(".genre-list");
         $(document).find(".genre-list li").each(function() {
             if ($(this).find('a').hasClass('selected'))
@@ -573,4 +568,18 @@ elseif ($this->Session->check('calledAlbum'))
         });
     }
 
+    function scrollToSelectedAlpha()
+    {
+        var to_scroll = $(document).find(".alphabetical-filter");
+        $(document).find('.alphabetical-filter li').each(function() {
+            if ($(this).find('a').hasClass('selected'))
+            {
+                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 2000);
+                $(this).find('a').focus();
+            }
+        });
+    }
 </script>
