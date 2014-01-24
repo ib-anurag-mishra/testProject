@@ -525,6 +525,7 @@ elseif ($this->Session->check('calledAlbum'))
 
     function scrolltoSelectedArtist()
     {
+         sleep(2000);
         var to_scroll = $(document).find("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
@@ -532,7 +533,8 @@ elseif ($this->Session->check('calledAlbum'))
                 var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
                 to_scroll.animate({
                     scrollTop: scroll_distance
-                }, 3500);
+                }, 350);
+                
                 $(this).find('a').focus();
 
             }
