@@ -4600,14 +4600,14 @@ function login($library = null){
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'capita','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
 														)
 													 );
 
 				} else {
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'capita'),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
 														)
 													 );
 				}
@@ -4626,6 +4626,8 @@ function login($library = null){
 					//$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
                                         
 					$data['database'] = 'freegal';
+                                        $data['hostname'] = $existingLibraries['0']['Library']['library_host_name'];
+                                        $data['port'] = $existingLibraries['0']['Library']['library_port_no'];
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."capita_validation";
 					}
@@ -4652,41 +4654,7 @@ function login($library = null){
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
-							$date = time();
-							$values = array(0 => $date, 1 => session_id());
-							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-						} else {
-							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
-							$date = time();
-							$modifiedTime = $userCache[0];
-							if(!($this->Session->read('patron'))){
-								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());
-									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-								}
-								else{
-									$this->Session->destroy('user');
-									//$this -> Session -> setFlash("This account is already active.");
-									//$this->autoRender = false;
-									$this->Cookie->write('msg','This account is already active.');
-									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}
-							} else {
-								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());
-									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-								}
-								else{
-									$this->Session->destroy('user');
-									//$this -> Session -> setFlash("This account is already active.");
-									//$this->autoRender = false;
-									$this->Cookie->write('msg','This account is already active.');
-									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}
-							}
-
-						}*/
+					
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
                                                 $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);

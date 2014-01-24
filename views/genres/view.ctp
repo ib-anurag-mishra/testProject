@@ -59,7 +59,8 @@
     $(document).ready(function() {
         var preValue = 1;
         var artistPage = 2;
-
+        var scrollArtistDone = false;
+        var totalScrolled = <?= $this->Session->read('page') ?>
 
         $("#artistscroll").scroll(function() {
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
@@ -83,8 +84,7 @@
                                 if (newitems) {
                                     artistPage++;
                                     $('#artist_loader').hide();
-                                    $('#artistlistrecord').append(newitems);
-
+                                    $('#artistlistrecord').append(newitems);                                   
                                 } else {
                                     $('#artist_loader').hide();
                                     return;
@@ -391,7 +391,6 @@ $totalRows = count($genresAll);
 </section>
 
 
-
 <?php
 /**
  * Below code is used for when user comes from 
@@ -405,23 +404,31 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
-    $(document).ready(function()
-    {
+
+        $(document).ready(function()
+        {
     <?php
 //doing pagination 
     if ($this->Session->check('page'))
     {
         ?>
-            toScrollArtist(<?= $this->Session->read('page') ?> - 1);
+                toScrollArtist(<?= $this->Session->read('page') ?>);
+        <?php
+    }
+    else
+    {
+        ?>
+                scrolltoSelectedArtist();
         <?php
     }
     ?>
 
-        var all_album_url = $("#allAlbumUrl").attr('value');
-        showAllAlbumsList(all_album_url);
+            var all_album_url = $("#allAlbumUrl").attr('value');
+            showAllAlbumsList(all_album_url);
+        });
 
-    });
     </script>
+
     <?php
 }
 elseif ($this->Session->check('calledAlbum'))
@@ -434,6 +441,17 @@ elseif ($this->Session->check('calledAlbum'))
     ?>
     <script>
         $(document).ready(function() {
+
+            //Paginate the Artist list if it was already done before
+    <?php
+    if ($this->Session->check('page'))
+    {
+        ?>
+                toScrollArtist(<?= $this->Session->read('page') ?>);
+        <?php
+    }
+    ?>
+
             var all_album_url = $("#allAlbumUrl").attr('value');
 
             showAllAlbumsList(all_album_url);
@@ -441,16 +459,6 @@ elseif ($this->Session->check('calledAlbum'))
             setTimeout(function() {
                 if ($(document).find('div.album-list-shadow-container'))
                 {
-                    //Paginate the Artist list if it was already done before
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-                        toScrollArtist(<?= $this->Session->read('page') ?> - 1);
-        <?php
-    }
-    ?>
-
                     //focus on selected Artist
                     $("#artistlistrecord li").each(function() {
                         if ($(this).find('a').hasClass('selected'))
@@ -476,7 +484,7 @@ elseif ($this->Session->check('calledAlbum'))
                     var album_url = $("#selectedAlbumUrl").attr('value');
                     showAlbumDetails(album_url);
                 }
-            }, 3000);
+            }, 300);
         });
     </script>
     <?php
@@ -493,47 +501,51 @@ elseif ($this->Session->check('calledAlbum'))
                 $(this).find('a').focus();
             }
         });
-
-        scrolltoSelectedArtist();
     });
 
     function toScrollArtist(totalPageCalled)
     {
-        totalPageCalled--;
-        
-        if (totalPageCalled < 0)
-        {
-           return false ;
-        }
-        else
-        {
-            var total_page_called = totalPageCalled;
-            var to_scroll = $("#artistscroll");
-            var scroll_distance = $("#artistscroll").get(0).scrollHeight;
 
-            for (var i = 0; i < total_page_called; i++)
-            {
-                to_scroll.animate({
-                   scrollTop: scroll_distance
-                }, 100);
-                $(document).find('#artist_loader').hide();
-            }
-            
-            toScrollArtist(totalPageCalled);
+        for (var i = 2; i <= totalPageCalled; i++) {
+            var data = "npage=" + i;
+            var link = webroot + 'genres/ajax_view_pagination/page:' + i + "/<?=$this->Session->read('calledGenre')?>" + "/<?=$this->Session->read('selectedAlpha')?>";
+            jQuery.ajax({
+                type: "post", // Request method: post, get
+                url: link, // URL to request
+                data: data, // post data
+                success: function(newitems) {
+                    if (newitems) {
+                        $('#artist_loader').hide();
+                        $('#artistlistrecord').append(newitems);
+                    } else {
+                        $('#artist_loader').hide();
+                        return;
+                    }
+                },
+                async: false,
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    //alert('No artist list available');
+                }
+            });
         }
-        
+
+        sleep(1000);
+        scrolltoSelectedArtist();
+        return;
     }
 
     function scrolltoSelectedArtist()
     {
-        var to_scroll = $("#artistscroll");
+        sleep(200);
+        var to_scroll = $(document).find("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
             {
                 var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
                 to_scroll.animate({
                     scrollTop: scroll_distance
-                }, 3500);
+                }, 2000);
+
                 $(this).find('a').focus();
 
             }

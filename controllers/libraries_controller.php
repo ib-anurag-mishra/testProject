@@ -410,7 +410,8 @@ Class LibrariesController extends AppController
                     else
                     {
                         $this->User->create();
-                    }
+                    }                                        
+                    
                     $this->User->set($this->data['User']);
                     $this->User->setValidation('library_step' . $this->data['Library']['libraryStepNum']);
                     if ($this->User->validates())
@@ -455,6 +456,10 @@ Class LibrariesController extends AppController
                     elseif ($this->data['Library']['library_authentication_method'] == 'innovative_var')
                     {
                         $this->Library->setValidation('library_step1_innovative_var');
+                    }
+                    elseif ($this->data['Library']['library_authentication_method'] == 'capita')
+                    {
+                        $this->Library->setValidation('library_step1_capita');
                     }
                     elseif ($this->data['Library']['library_authentication_method'] == 'innovative_var_name')
                     {
@@ -596,26 +601,36 @@ Class LibrariesController extends AppController
                                                     $this->Library->library_type =  $this->data['Library']['library_type'];
                                                     $this->Library->save();
                                                     
+                                                    //echo "Count: ".count($this->data['Variable']);
+                                                    
                                                     if (count($this->data['Variable']) > 0)
                                                     {
-                                                        if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
+                                                        if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'capita' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
                                                         {
+                                                           // echo "in if"; print_r($this->data['Variable']);
                                                             foreach ($this->data['Variable'] as $k => $v)
-                                                            {
+                                                            { // echo "<pre>"; print_r($k); print_r($v); 
                                                                 if ($this->data['Variable'][$k]['authentication_variable'] != '' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != '')
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
-                                                                }
+                                                                   //$data[$k]['authentication_variable_index'] = $this->Library->id;
+                                                                    //$data[$k]['message_no'] = $this->Library->id;
+                                                                    $data[$k]['created'] = date("Y-m-d H:i:s");
+                                                                    $data[$k]['modified'] = date("Y-m-d H:i:s");                                                                
+                                                                   
+                                                                } 
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));
+                                                           
+                                                            
                                                             if (count($data) > 0)
-                                                            {
-                                                                $this->Variable->saveAll($data);
+                                                            {                                                                
+                                                                $this->Variable->saveAll($data);                                                               
                                                             }
                                                         }
                                                     }
-
+                                                  
                                                     if ($this->data['Library']['id'] != '' && $this->data['LibraryPurchase']['purchased_order_num'] == "" && $this->data['LibraryPurchase']['purchased_amount'] == "")
                                                     {
 
@@ -796,6 +811,10 @@ Class LibrariesController extends AppController
                     elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var')
                     {
                         $this->Library->setValidation('library_step' . $this->data['Library']['libraryStepNum'] . '_innovative_var_name');
+                    }
+                    elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'capita')
+                    {
+                        $this->Library->setValidation('library_step' . $this->data['Library']['libraryStepNum'] . '_capita');
                     }
                     elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var_name')
                     {
