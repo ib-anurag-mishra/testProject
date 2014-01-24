@@ -495,6 +495,9 @@ elseif ($this->Session->check('calledAlbum'))
 <script>
 
     $(document).ready(function() {
+        
+    scrollToSelectedGenre();
+    
         $(document).find('.alphabetical-filter li').each(function() {
             if ($(this).find('a').hasClass('selected'))
             {
