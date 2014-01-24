@@ -59,7 +59,7 @@
     $(document).ready(function() {
         var preValue = 1;
         var artistPage = 2;
-
+        var scrollArtistDone = false ;
 
         $("#artistscroll").scroll(function() {
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
@@ -84,8 +84,10 @@
                                     artistPage++;
                                     $('#artist_loader').hide();
                                     $('#artistlistrecord').append(newitems);
-
-                                    scrolltoSelectedArtist();
+                                    if(!scrollArtistDone){
+                                        scrolltoSelectedArtist();
+                                        scrollArtistDone=true;
+                                    }
                                 } else {
                                     $('#artist_loader').hide();
                                     return;
