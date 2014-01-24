@@ -500,8 +500,6 @@ elseif ($this->Session->check('calledAlbum'))
 
     function toScrollArtist(totalPageCalled)
     {
-        totalPageCalled--;
-
         if (totalPageCalled < 0)
         {
             scrolltoSelectedArtist();            
@@ -517,6 +515,9 @@ elseif ($this->Session->check('calledAlbum'))
             $(document).find('#artist_loader').hide();
 
             sleep(2000);
+            
+            totalPageCalled--;
+            
             toScrollArtist(totalPageCalled);
         }
         return ;
