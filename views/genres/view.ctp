@@ -505,21 +505,19 @@ elseif ($this->Session->check('calledAlbum'))
         if (totalPageCalled < 0)
         {
             scrolltoSelectedArtist();
-            return false;
         }
         else
         {           
             var to_scroll = $(document).find("#artistscroll");
             var scroll_distance = to_scroll.get(0).scrollHeight;
 
-            to_scroll.animate({
-                scrollTop: scroll_distance
-            }, 100);
+            to_scroll.scrollTop( scroll_distance);
+            
             $(document).find('#artist_loader').hide();
 
             toScrollArtist(totalPageCalled);
         }
-
+        return ;
     }
 
     function scrolltoSelectedArtist()
