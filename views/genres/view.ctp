@@ -529,6 +529,8 @@ elseif ($this->Session->check('calledAlbum'))
             });
         }
 
+        sleep(1000);
+        scrolltoSelectedArtist();
         return;
     }
 
