@@ -614,7 +614,7 @@ Class LibrariesController extends AppController
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
-                                                                   //$data[$k]['authentication_variable_index'] = $this->Library->id;
+                                                                    $data[$k]['authentication_variable_index'] = empty($data[$k]['authentication_variable_index'])?'0':$data[$k]['authentication_variable_index'];
                                                                     //$data[$k]['message_no'] = $this->Library->id;
                                                                     $data[$k]['created'] = date("Y-m-d H:i:s");
                                                                     $data[$k]['modified'] = date("Y-m-d H:i:s");                                                                
