@@ -25,7 +25,7 @@ class Library extends AppModel
             'foreignKey' => 'library_id'
         )
     );
-    var $validates = array(
+    var $validate = array(
         'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
         'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
         'library_domain_name' => array('rule' => 'url', 'allowEmpty' => true, 'message' => 'Please provide a valid Library Domain Name.'),
@@ -41,7 +41,7 @@ class Library extends AppModel
         'library_download_type' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Download Type.'),
         'library_user_download_limit' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library User\'s Download Limit.')
     );
-    var $validationSetss = array(
+    var $validationSets = array(
         'library_step1' => array(
             'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
             'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
