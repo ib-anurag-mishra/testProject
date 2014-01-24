@@ -544,7 +544,7 @@ elseif ($this->Session->check('calledAlbum'))
                 var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
                 to_scroll.animate({
                     scrollTop: scroll_distance
-                }, 350);
+                }, 2000);
 
                 $(this).find('a').focus();
 
