@@ -507,7 +507,7 @@ elseif ($this->Session->check('calledAlbum'))
     {
 
         for (var i = 2; i <= totalPageCalled; i++) {
-            var data = "npage=" + artistPage;
+            var data = "npage=" + i;
             var link = webroot + 'genres/ajax_view_pagination/page:' + i + '/<?= base64_encode($genre); ?>' + '/All';
             jQuery.ajax({
                 type: "post", // Request method: post, get
