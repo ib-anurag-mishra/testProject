@@ -60,6 +60,7 @@
         var preValue = 1;
         var artistPage = 2;
         var scrollArtistDone = false ;
+        var totalScrolled = <?=$this->Session->read('page') ?>
 
         $("#artistscroll").scroll(function() {
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
@@ -86,7 +87,9 @@
                                     $('#artistlistrecord').append(newitems);
                                     if(!scrollArtistDone){
                                         scrolltoSelectedArtist();
-                                        scrollArtistDone=true;
+                                        if(artistPage > totalScrolled ){
+                                            scrollArtistDone=true;
+                                        }
                                     }
                                 } else {
                                     $('#artist_loader').hide();
