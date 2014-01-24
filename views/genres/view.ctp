@@ -404,7 +404,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
-        
+
         $(document).ready(function()
         {
             <?php
@@ -416,10 +416,11 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                 <?php
             }
             ?>
+            scrolltoSelectedArtist();
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
         });
-        
+
     </script>
 
     <?php
@@ -494,18 +495,16 @@ elseif ($this->Session->check('calledAlbum'))
                 $(this).find('a').focus();
             }
         });
-
-        scrolltoSelectedArtist();
     });
 
     function toScrollArtist(totalPageCalled)
     {
         if (totalPageCalled < 0)
         {
-            scrolltoSelectedArtist();            
+            scrolltoSelectedArtist();
         }
         else
-        {           
+        {
             var to_scroll = $(document).find("#artistscroll");
             var scroll_distance = to_scroll.get(0).scrollHeight;
 
@@ -515,17 +514,17 @@ elseif ($this->Session->check('calledAlbum'))
             $(document).find('#artist_loader').hide();
 
             sleep(2000);
-            
+
             totalPageCalled--;
-            
+
             toScrollArtist(totalPageCalled);
         }
-        return ;
+        return;
     }
 
     function scrolltoSelectedArtist()
     {
-         sleep(2000);
+        sleep(2000);
         var to_scroll = $(document).find("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
@@ -534,7 +533,7 @@ elseif ($this->Session->check('calledAlbum'))
                 to_scroll.animate({
                     scrollTop: scroll_distance
                 }, 350);
-                
+
                 $(this).find('a').focus();
 
             }
