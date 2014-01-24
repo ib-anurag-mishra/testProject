@@ -163,7 +163,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 		
 	}
         
-        console.log("inside reportPrevSong");
+        //console.log("inside reportPrevSong");
 //	var prevSongInfoStr = "<p><span style='text-decoration:underline; font-weight:bold'>Prev Song Info:</span></p>" +
 //					  "<p>Playlist ID: " + prevSongObj.playlistId + "</p>" +
 //					  "<p>Song ID: " + prevSongObj.songId + "</p>" +
@@ -267,9 +267,9 @@ function validateSong(songObj, playerEventCode) {
 //	$('.songInfo').html(songInfoStr);
 
 
-	console.log("inside validateSong");
-	console.log("Validate Song:");
-	console.log(songObj);
+	//console.log("inside validateSong");
+	//console.log("Validate Song:");
+	//console.log(songObj);
 	//console.log("streamingResponse is " + streamingResponse);
 	
 	
@@ -288,7 +288,7 @@ function reportLowStreamTime(lsto) {
 	songLength = lsto.songLength
 	songProviderType = lsto.providerType
 	songDuration = lsto.lsld
-	console.log('lsld is ' + lsto.lsld);
+	//console.log('lsld is ' + lsto.lsld);
 	streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,22,songLength,songDuration);	
 	lowStreamTime = lowStreamTime - lsto.lsld;
 	
@@ -325,7 +325,7 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         async: false
     }).done(function(data){
         var result = JSON.parse(data);
-        console.log('result in done is ' + result);
+        //console.log('result in done is ' + result);
         if(result.error){
             var result = [0,"Not able to stream this song due to empty response from component",0,0,0,0];            
         }else if(result.error1){
@@ -349,9 +349,9 @@ function pingTimeJS() {
 
 function streamingValidationJS(responseDataJS) { 
 	
-        console.log('Data Type of responseDataJS:'+typeof(responseDataJS));
+        //console.log('Data Type of responseDataJS:'+typeof(responseDataJS));
 	responseDataJS[5] = 	responseDataJS[5]*1000;
-	console.log('inside streamingValidationJS'+responseDataJS);
+	//console.log('inside streamingValidationJS'+responseDataJS);
 
         if($("#hid_library_unlimited").text()==1)    //  For Patron with unlimited Streaming Limit
         {
@@ -379,7 +379,7 @@ function reportTime(amt) {
 
 function flashConsole(msg) {
 	
-	console.log(msg);
+	//console.log(msg);
 }
 
 function secondstotime(secs)
