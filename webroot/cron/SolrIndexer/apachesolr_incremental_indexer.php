@@ -9,6 +9,8 @@
 // url to start indexing & preserving old once
 $start_index_url = 'http://192.168.100.24:8080/solr/freegalmusic/dataimport?command=delta-import&clean=false'; 
 
+$start_index_url_video = 'http://192.168.100.24:8080/solr/freegalmusicvideos/dataimport?command=delta-import&clean=false'; 
+
 set_time_limit(0);
 
 $sleep_time = 300;
@@ -29,15 +31,30 @@ if(0 === stripos($start_index_url, 'https')) {
 $start_index_resp = curl_exec ( $ch );
 curl_close($ch);
 
+// initiate curl request to trigger indexing
+$chv = curl_init($start_index_url_video);
+curl_setopt($chv, CURLOPT_RETURNTRANSFER, 1);
+if(0 === stripos($start_index_url_video, 'https')) {
+  curl_setopt($chv, CURLOPT_SSL_VERIFYPEER, false);
+}
+$start_index_resp_video = curl_exec ( $chv );
+curl_close($chv);
+
 // object type-casted 
 $checkValidXml = null;
 $checkValidXml = simplexml_load_string($start_index_resp);
+
+echo $start_index_resp;
+
+echo $start_index_resp_video;
 
 // executes IF for valid xml response
 if($checkValidXml) {
 
   // url to start indexing & preserving old once
   $status_index_url = 'http://192.168.100.24:8080/solr/freegalmusic/dataimport?command=status'; 
+
+  $status_index_url_video = 'http://192.168.100.24:8080/solr/freegalmusicvideos/dataimport?command=status'; 
 
   // initiate curl request to get status of indexing
   $ch = curl_init($status_index_url);
@@ -47,6 +64,18 @@ if($checkValidXml) {
   }
   $status_index_resp = curl_exec ( $ch );
   curl_close($ch);
+
+// initiate curl request to get status of indexing
+  $chv = curl_init($status_index_url_video);
+  curl_setopt($chv, CURLOPT_RETURNTRANSFER, 1);
+  if(0 === stripos($status_index_url_video, 'https')) {
+    curl_setopt($chv, CURLOPT_SSL_VERIFYPEER, false);
+  }
+  $status_index_resp_video = curl_exec ( $chv );
+  curl_close($chv);
+
+  echo $status_index_resp;
+  echo $status_index_resp_video;
 
   // object type-casted 
   $obj_xml_response = simplexml_load_string($status_index_resp);
@@ -58,7 +87,8 @@ if($checkValidXml) {
     // valid
     
     $log_data .= date('Y-m-d h:i:s').' > Incremental Indexing Started ( Response: '.$status_index_resp.' )'.PHP_EOL; 
-      
+    $log_data .= "\n\n";
+    $log_data .= date('Y-m-d h:i:s').' > Indexing failed to start ( Response: '.$status_index_resp_video.' )'.PHP_EOL;  
     $msg = 'Incremental Indexing Started ('.$status_index_resp.')';
     mail($email_list, 'Apache Solr Indexer ('.date('Y-m-d h:i').'-'.$log_id.') Status', 'Status :- "'.$msg.'"');
     
@@ -72,6 +102,8 @@ if($checkValidXml) {
     
   }else{
     $log_data .= date('Y-m-d h:i:s').' > Indexing failed to start ( Response: '.$status_index_resp.' )'.PHP_EOL;
+    $log_data .= "\n\n";
+    $log_data .= date('Y-m-d h:i:s').' > Indexing failed to start ( Response: '.$status_index_resp_video.' )'.PHP_EOL;
     $log_data .= date('Y-m-d h:i:s').' > End Time: '.date('Y-m-d h:i:s').PHP_EOL;
     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
 
@@ -83,6 +115,8 @@ if($checkValidXml) {
 else{
    
   $log_data .= date('Y-m-d h:i:s').' > Indexing failed to start ( Response: '.$start_index_resp.' )'.PHP_EOL;
+  $log_data .= "\n\n";
+  $log_data .= date('Y-m-d h:i:s').' > Indexing failed to start ( Response: '.$status_index_resp_video.' )'.PHP_EOL;
   $log_data .= date('Y-m-d h:i:s').' > End Time: '.date('Y-m-d h:i:s').PHP_EOL;
   $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
   
@@ -102,6 +136,8 @@ function getOperationStatus($email_list, &$log_data, $log_id){
   // url to start indexing & preserving old once
   $status_index_url = 'http://192.168.100.24:8080/solr/freegalmusic/dataimport?command=status'; 
 
+  $status_index_url_video = 'http://192.168.100.24:8080/solr/freegalmusicvideos/dataimport?command=status'; 
+
   // initiate curl request to get status of indexing
   $ch = curl_init($status_index_url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -110,6 +146,19 @@ function getOperationStatus($email_list, &$log_data, $log_id){
   }
   $status_index_resp = curl_exec ( $ch );
   curl_close($ch);
+
+  // initiate curl request to get status of indexing
+  $chv = curl_init($status_index_url_video);
+  curl_setopt($chv, CURLOPT_RETURNTRANSFER, 1);
+  if(0 === stripos($status_index_url_video, 'https')) {
+    curl_setopt($chv, CURLOPT_SSL_VERIFYPEER, false);
+  }
+  $status_index_resp_video = curl_exec ( $chv );
+  curl_close($chv);
+
+
+  echo $status_index_resp;
+  echo $status_index_resp_video;
 
   // object type-casted 
   $obj_xml_response = simplexml_load_string($status_index_resp);
@@ -121,9 +170,9 @@ function getOperationStatus($email_list, &$log_data, $log_id){
     // valid
     //log
     $log_data .= date('Y-m-d h:i:s').' > Indexing in progress ( Response: '.$status_index_resp.' )'.PHP_EOL;
-    
+    $log_data .= "\n\n";
+    $log_data .= date('Y-m-d h:i:s').' > Indexing in progress ( Response: '.$status_index_resp_video.' )'.PHP_EOL;
     return 1;
-    
   }// if still running
   else{
     
@@ -146,6 +195,8 @@ function getOperationStatus($email_list, &$log_data, $log_id){
     if( (!empty($total_documents_processed)) && (!empty($total_time)) ) {
       //log
       $log_data .= date('Y-m-d h:i:s').' > Indexing completed ( Response: '.$status_index_resp.' )'.PHP_EOL;
+      $log_data .= "\n\n";
+      $log_data .= date('Y-m-d h:i:s').' > Indexing completed ( Response: '.$status_index_resp_video.' )'.PHP_EOL;
       $log_data .= date('Y-m-d h:i:s').' > End Time: '.date('Y-m-d h:i:s').PHP_EOL;
       $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
       writeToLog($log_data);
@@ -156,6 +207,8 @@ function getOperationStatus($email_list, &$log_data, $log_id){
     else{
       //log
       $log_data .= date('Y-m-d h:i:s').' > Indexing failed to complete ( Response: '.$status_index_resp.' )'.PHP_EOL;
+      $log_data .= "\n\n";
+      $log_data .= date('Y-m-d h:i:s').' > Indexing failed to complete ( Response: '.$status_index_resp_video.' )'.PHP_EOL;
       $log_data .= date('Y-m-d h:i:s').' > End Time: '.date('Y-m-d h:i:s').PHP_EOL;
       $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
       writeToLog($log_data);
