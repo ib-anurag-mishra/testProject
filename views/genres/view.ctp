@@ -85,6 +85,7 @@
                                     $('#artist_loader').hide();
                                     $('#artistlistrecord').append(newitems);
 
+                                    scrolltoSelectedArtist();
                                 } else {
                                     $('#artist_loader').hide();
                                     return;
@@ -507,7 +508,7 @@ elseif ($this->Session->check('calledAlbum'))
     {
         if (totalPageCalled < 1)
         {
-            scrolltoSelectedArtist();
+            return;
         }
         else
         {
@@ -530,7 +531,7 @@ elseif ($this->Session->check('calledAlbum'))
 
     function scrolltoSelectedArtist()
     {
-        sleep(2000);
+        sleep(200);
         var to_scroll = $(document).find("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
