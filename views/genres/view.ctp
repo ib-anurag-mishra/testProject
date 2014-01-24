@@ -415,8 +415,14 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                         toScrollArtist(<?= $this->Session->read('page') ?> - 1);
                 <?php
             }
+            else
+            {
+                ?>
+                        scrolltoSelectedArtist();
+                <?php
+            }
             ?>
-            scrolltoSelectedArtist();
+            
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
         });
@@ -478,7 +484,7 @@ elseif ($this->Session->check('calledAlbum'))
                     var album_url = $("#selectedAlbumUrl").attr('value');
                     showAlbumDetails(album_url);
                 }
-            }, 3000);
+            }, 300);
         });
     </script>
     <?php
@@ -499,7 +505,7 @@ elseif ($this->Session->check('calledAlbum'))
 
     function toScrollArtist(totalPageCalled)
     {
-        if (totalPageCalled < 0)
+        if (totalPageCalled < 1)
         {
             scrolltoSelectedArtist();
         }
@@ -513,7 +519,7 @@ elseif ($this->Session->check('calledAlbum'))
             }, 100);
             $(document).find('#artist_loader').hide();
 
-            sleep(2000);
+            sleep(200);
 
             totalPageCalled--;
 
