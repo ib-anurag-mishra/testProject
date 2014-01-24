@@ -595,6 +595,9 @@ Class LibrariesController extends AppController
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
                                                 
+                                                $this->data['Library']['created'] = date("Y-m-d H:i:s");
+                                                $this->data['Library']['modified'] = date("Y-m-d H:i:s");
+                                                
                                                 if ($this->Library->save($this->data['Library']))
                                                 {                                        
                                                     $this->Library->id =  $this->data['Library']['id'];
