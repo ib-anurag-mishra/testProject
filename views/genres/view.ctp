@@ -517,7 +517,7 @@ elseif ($this->Session->check('calledAlbum'))
         {
             var to_scroll = $(document).find("#artistscroll");
             var last_Artist = $("#artistlistrecord li").parent().offset().top;
-            var scroll_distance = to_scroll.offset().top - last_Artist;
+            var scroll_distance = last_Artist.offset().top - last_Artist;
 
             to_scroll.animate({
                 scrollTop: scroll_distance
