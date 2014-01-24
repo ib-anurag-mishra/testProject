@@ -404,22 +404,22 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
+        
         $(document).ready(function()
         {
-    <?php
-    //doing pagination 
-    if ($this->Session->check('page'))
-    {
-        ?>
-                toScrollArtist(<?= $this->Session->read('page') ?> - 1);
-        <?php
-    }
-    ?>
-
+            <?php
+            //doing pagination 
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?> - 1);
+                <?php
+            }
+            ?>
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
-
         });
+        
     </script>
 
     <?php
@@ -436,14 +436,14 @@ elseif ($this->Session->check('calledAlbum'))
         $(document).ready(function() {
 
             //Paginate the Artist list if it was already done before
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-                toScrollArtist(<?= $this->Session->read('page') ?> - 1);
-        <?php
-    }
-    ?>
+            <?php
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?> - 1);
+                <?php
+            }
+            ?>
 
             var all_album_url = $("#allAlbumUrl").attr('value');
 
@@ -504,7 +504,8 @@ elseif ($this->Session->check('calledAlbum'))
 
         if (totalPageCalled < 0)
         {
-            return;
+            scrolltoSelectedArtist();
+            return false;
         }
         else
         {           
@@ -523,7 +524,7 @@ elseif ($this->Session->check('calledAlbum'))
 
     function scrolltoSelectedArtist()
     {
-        var to_scroll = $("#artistscroll");
+        var to_scroll = $(document).find("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
             {
