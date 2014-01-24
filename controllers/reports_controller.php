@@ -1686,7 +1686,11 @@ Class ReportsController extends AppController
 
     function admin_streamingreport() {
         
-       
+       ini_set('memory_limit', '512M');
+        set_time_limit(0);
+        if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
+            $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }
          
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
