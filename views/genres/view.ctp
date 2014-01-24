@@ -508,7 +508,7 @@ elseif ($this->Session->check('calledAlbum'))
 
         for (var i = 2; i <= totalPageCalled; i++) {
             var data = "npage=" + i;
-            var link = webroot + 'genres/ajax_view_pagination/page:' + i + '/<?= base64_encode($genre); ?>' + '/All';
+            var link = webroot + 'genres/ajax_view_pagination/page:' + i + "/<?=$this->Session->read('calledGenre')?>" + "/<?=$this->Session->read('selectedAlpha')?>";
             jQuery.ajax({
                 type: "post", // Request method: post, get
                 url: link, // URL to request
