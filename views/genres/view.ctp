@@ -552,5 +552,22 @@ elseif ($this->Session->check('calledAlbum'))
         });
     }
 
+    function scrollToSelectedGenre()
+    {
+        sleep(200);
+        var to_scroll = $(document).find("#genre-list");
+        $(document).find("#genre-list li").each(function() {
+            if ($(this).find('a').hasClass('selected'))
+            {
+                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 2000);
+
+                $(this).find('a').focus();
+
+            }
+        });
+    }
 
 </script>
