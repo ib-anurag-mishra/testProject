@@ -299,7 +299,7 @@ class Download extends AppModel
 		}
                 
                 $conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY created DESC");
-                return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email1','patron_id','library_id','SUM(patron_id) as total'),'recursive' => -1)));
+                return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email','patron_id','library_id','SUM(patron_id) as total'),'recursive' => -1)));
                 		
   }
 
