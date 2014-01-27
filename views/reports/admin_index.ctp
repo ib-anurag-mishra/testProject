@@ -337,20 +337,20 @@
                                     <th>Total Number of Tracks Downloaded</th>
                                 </tr>
                                 <?php
-				$i = 1;                                
+				$i = 1;
                                 foreach($patronDownloads as $key => $patronDownload) {
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                                <td><?php
-                                                if(isset($patronDownload['Download']['email']) && $patronDownload['Download']['email']!=''){
-                                                        echo $patronDownload['Download']['email'];
-                                                }else{
-                                                        echo $patronDownload['Download']['patron_id'];
-                                                }?>
-                                                </td>
-                                        <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); ?></td>
-                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Download']['total']:$patronDownload['0']['total']); ?></td>
+										<td><?php
+										if(isset($patronDownload['Downloadpatron']['email']) && $patronDownload['Downloadpatron']['email']!=''){
+											echo $patronDownload['Downloadpatron']['email'];
+										}else{
+											echo $patronDownload['Downloadpatron']['patron_id'];
+										}?>
+										</td>
+                                        <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Downloadpatron']['library_id'])); ?></td>
+                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
 				    $i++;

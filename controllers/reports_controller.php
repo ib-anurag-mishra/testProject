@@ -26,7 +26,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_index() {
-        //Configure::write('debug',2);
+//        Configure::write('debug',2);
         ini_set('memory_limit', '1024M');
         set_time_limit(0);
         //	print_r($this->data);exit;
@@ -130,11 +130,7 @@ Class ReportsController extends AppController {
                     }
 
                     $videoDownloads = $this->Videodownload->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                    $patronDownloads = $this->Download->getPatronsWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                   
-                    
-                    
-                    
+                    $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     if ($library_id != "all") {
                         $patronBothDownloads = $this->Downloadpatron->getWeeksBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     }
@@ -573,7 +569,7 @@ Class ReportsController extends AppController {
                     }
                     $videoDownloads = $this->Videodownload->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
 
-                    $patronDownloads = $this->Download->getPatronsWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     if ($library_id != "all") {
                         $patronBothDownloads = $this->Downloadpatron->getWeeksBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     }
@@ -1003,7 +999,7 @@ Class ReportsController extends AppController {
                     }
                     $videoDownloads = $this->Videodownload->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
 
-                    $patronDownloads = $this->Download->getPatronsWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     if ($library_id != "all") {
                         $patronBothDownloads = $this->Downloadpatron->getWeeksBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     }
