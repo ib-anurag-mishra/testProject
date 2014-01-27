@@ -14,12 +14,6 @@ function getTotalPlayerLoadedTime() {
 	
 }
 
-function returnTotalPlayerLoadedTimeJS(duration) {
-	
-	$('.playerLoaded').html("Player has been loaded for: " + duration + " seconds.");
-	
-}
-
 
 
 
