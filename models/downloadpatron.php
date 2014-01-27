@@ -319,7 +319,7 @@ class Downloadpatron extends AppModel
                 if(isset($endDate) && !strstr($endDate, '23:59:59')) $endDate = $endDate.' 23:59:59';
                 
 		$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY created DESC");
-                return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email','patron_id','library_id','SUM(patron_id) as total'))));
+                return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email1','patron_id','library_id','SUM(patron_id) as total'))));
 	}
         
   /*
