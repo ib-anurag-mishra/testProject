@@ -11,16 +11,16 @@ include 'dbconnect.php';
 Function Name : updateDownloadPatrons
 Description : Function to update downloadpatrons table for download reports
 */
-function updateDownloadPatrons($date){
-  $checkQuery = "SELECT Count(*) as count FROM downloadpatrons WHERE download_date = '".$date."'";
+function updateDownloadPatrons($to,$from){
+  $checkQuery = "SELECT Count(*) as count FROM downloadpatrons WHERE download_date = '".$to."'";
   $checkRes = mysql_query($checkQuery);
   $row = mysql_fetch_array($checkRes);
   if($row['count']!=0){
-    echo "Downloadpatrons data already added for the date ".$date;
-    mailUpdate(1,$date,"Downloadpatrons data already added for the date ".$date);
+    echo "Downloadpatrons data already added for the date ".$to;
+    mailUpdate(1,$date,"Downloadpatrons data already added for the date ".$to);
     return;
   } else {
-    $updateDownloadPatronsQuery = "INSERT INTO downloadpatrons SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded, Download.library_id,Download.patron_id, CASE Download.email WHEN '' THEN NULL ELSE Download.email END AS emailtest, COUNT(patron_id) AS total FROM downloads AS Download WHERE Download.created >= DATE('".$date."') AND Download.created < (DATE('".$date."') + INTERVAL 1 DAY) GROUP BY day_downloaded,patron_id,library_id, emailtest";
+    $updateDownloadPatronsQuery = "INSERT INTO downloadpatrons SELECT date_format(Download.created,'%Y-%m-%d') as day_downloaded, Download.library_id,Download.patron_id, CASE Download.email WHEN '' THEN NULL ELSE Download.email END AS emailtest, COUNT(patron_id) AS total FROM downloads AS Download WHERE Download.created >= DATE('".$to."') AND Download.created < DATE('".$from."') GROUP BY day_downloaded,patron_id,library_id, emailtest";
     if(!mysql_query($updateDownloadPatronsQuery)){
       echo "DownloadPatrons Table Not Updated\n";
       mailUpdate(3,$date,$updateDownloadPatronsQuery);
@@ -30,7 +30,7 @@ function updateDownloadPatrons($date){
     }
   }
 }
-
+die;
 /*
 Function Name : updateDownloadVideoPatrons
 Description : Function to update download_video_patrons table for download reports
@@ -165,8 +165,12 @@ function mailUpdate($response,$date,$query){
 //$dataDate = date('Y-m-d',(time() - 86400));
 $dataDate = date('Y-m-d', strtotime('-1 day', time()));
 echo "==========".$dataDate."============\n";
-updateDownloadPatrons($dataDate);
-updateDownloadGenres($dataDate);
-updateDownloadVideoPatrons($dataDate);
-updateVideoDownloadGenres($dataDate);
+
+$to = '2014-01-15';
+$from = '2014-01-28';
+
+updateDownloadPatrons($to,$from);
+//updateDownloadGenres($dataDate);
+//updateDownloadVideoPatrons($dataDate);
+//updateVideoDownloadGenres($dataDate);
 
