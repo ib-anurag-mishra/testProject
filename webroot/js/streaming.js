@@ -125,7 +125,7 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 function validateSong(songObj, playerEventCode) {
 
 	
-	// properties sent from flash
+	/* properties sent from flash */
 	
 	plaulistId = songObj.playlistId 
 	songId = songObj.songId
@@ -264,11 +264,11 @@ function streamingValidationJS(responseDataJS) {
 	responseDataJS[5] = responseDataJS[5]*1000;
 
 
-        if($("#hid_library_unlimited").text()==1)    //  For Patron with unlimited Streaming Limit
+        if($("#hid_library_unlimited").text()==1)    /*  For Patron with unlimited Streaming Limit */
         {
              document.getElementById('remaining_stream_time').innerHTML = 'UNLIMITED';
         }
-        else                            //  For Patron with  Streaming Limit of 10800 sec
+        else                            /* For Patron with  Streaming Limit of 10800 sec */
         {
              document.getElementById('remaining_stream_time').innerHTML = secondstotime(responseDataJS[2]);
         }
@@ -278,7 +278,7 @@ function streamingValidationJS(responseDataJS) {
 	var flash =	document.getElementById("fmp_player");
 	
 	flash.streamingValidationAS(responseDataJS);
-        //exit;
+        /* exit */
 	
 }
 
