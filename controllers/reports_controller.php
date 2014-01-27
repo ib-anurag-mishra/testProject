@@ -130,7 +130,7 @@ Class ReportsController extends AppController {
                     }
 
                     $videoDownloads = $this->Videodownload->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                    $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                    $patronDownloads = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     if ($library_id != "all") {
                         $patronBothDownloads = $this->Downloadpatron->getWeeksBothDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     }
