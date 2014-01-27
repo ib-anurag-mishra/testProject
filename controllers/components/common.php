@@ -1113,6 +1113,8 @@ STR;
                 $this->log("download data not recevied for " . $territory, "cache");
             }
             $data = array();
+            $ids_provider_type = '';    //for testing
+            
             if ($ids_provider_type != "")
             {
             $video_sql_US_TOP_10 = <<<STR
