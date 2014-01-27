@@ -520,9 +520,8 @@ class HomesController extends AppController
         $country = $this->Session->read('territory');
 
         if (!empty($country))
-        {
-            if(1)
-            //if (($national = Cache::read("national_us_top10_videos" . $territory)) === false)
+        {            
+            if (($national = Cache::read("national_us_top10_videos" . $territory)) === false)
             {
                 $usTop10VideoDownload = $this->Common->getUsTop10Videos($territory);
             }
