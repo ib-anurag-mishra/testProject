@@ -338,8 +338,7 @@
                                 </tr>
                                 <?php
 				$i = 1;
-                                print_r($patronDownloads);
-                                die;
+                                
                                 foreach($patronDownloads as $key => $patronDownload) {
                                 ?>
                                     <tr>
