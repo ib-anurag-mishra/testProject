@@ -1113,7 +1113,8 @@ STR;
                 $this->log("download data not recevied for " . $territory, "cache");
             }
             $data = array();
-
+            if ($ids_provider_type != "")
+            {
             $video_sql_US_TOP_10 = <<<STR
              SELECT 
                      Video.ProdID,
@@ -1149,10 +1150,15 @@ STR;
             $data = $albumInstance->query($video_sql_US_TOP_10);
             $this->log("US top 10 videos for $territory", "cachequery");
             $this->log($video_sql_US_TOP_10, "cachequery");
-            if ($ids_provider_type == "")
+            
+            }
+            else
             {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
+            
+            
+            
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
