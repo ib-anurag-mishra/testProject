@@ -351,7 +351,7 @@ $totalRows = count($genresAll);
                             {
                                 echo " <li>";
                                 $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
-                                $selected = ($ArtistName == $this->Session->read('calledArtist')) ? "class='selected'" : "";
+                                $selected = ($ArtistName == $this->Session->read('calledArtist') && $ArtistName != "") ? "class='selected'" : "";
 
                                 $ArtistName = str_replace("'", '', ($ArtistName));
 
