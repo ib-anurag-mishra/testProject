@@ -76,7 +76,6 @@ class HomesController extends AppController
     {
 
         //Configure::write('debug', 3);
-        
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443)
         {
@@ -221,7 +220,6 @@ class HomesController extends AppController
          */
 
         //print_r( $this->element('sql_dump') );
-
         //print_r($this->Session->read('downloadVariArray'));
     }
 
@@ -229,7 +227,6 @@ class HomesController extends AppController
     function checkStreamingComponent()
     {
 //        Configure::write('debug', 0);
-
 //         $query='select * from streaming_histories where id="3007"';
 //         $obj = mysql_query($query);
 //         
@@ -666,7 +663,7 @@ STR;
 
     function autoComplete()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $country = $this->Session->read('territory');
         $searchKey = '';
         if (isset($_REQUEST['q']) && $_REQUEST['q'] != '')
@@ -2391,7 +2388,7 @@ STR;
 
     function _sendForgotPasswordMail($id, $password)
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->Email->template = 'email/forgotPasswordEmail';
         $this->User->recursive = -1;
         $Patron = $this->User->read(null, $id);
@@ -2492,24 +2489,33 @@ STR;
 
     function addToWishlist()
     {
+        //Configure::write('debug', 2);
+        //creates log for Add to wishlist method when it is called
 
-        //Configure::write('debug', 0);
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+        $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+
         if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']))
         {
-
+            $libraryId = $this->Session->read('library');
+            $patronId = $this->Session->read('patron');
 
             $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $_REQUEST['prodId'])));
             if (!$wishlistCount)
             {
-                $libraryId = $this->Session->read('library');
-                $patronId = $this->Session->read('patron');
-
-                $prodId = $_REQUEST['prodId'];
-                $downloadsDetail = array();
                 //get song details
+                $prodId = $_REQUEST['prodId'];
                 $provider = $_REQUEST['provider'];
+                if ($provider != 'sony')
+                {
+                    $provider = 'ioda';
+                }
 
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
+                            
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
@@ -2518,42 +2524,68 @@ STR;
                 $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-
-                if ($provider != 'sony')
-                {
-                    $provider = 'ioda';
-                }
                 $insertArr['provider_type'] = $provider;
-
                 $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
                 $this->Wishlist->setDataSource('master');
-
                 //insert into wishlist table
-                $this->Wishlist->save($insertArr);
-                $this->Wishlist->setDataSource('default');
-
-
-                //add the wishlist songs in the session array
-                if ($this->Session->read('wishlistVariArray'))
+                $this->Wishlist->create();      //Prepare model to save record
+                //check the inserting values
+                $log_data .= "  :InsertArray Beofre Save:" . serialize($insertArr);
+                if ($this->Wishlist->save($insertArr))
                 {
-                    $wishlistVariArray = $this->Session->read('wishlistVariArray');
-                    $wishlistVariArray[] = $prodId;
-                    $this->Session->write('wishlistVariArray', $wishlistVariArray);
+                    $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
+
+
+                    $this->Wishlist->setDataSource('default');
+
+                    //add the wishlist songs in the session array
+                    if ($this->Session->read('wishlistVariArray'))
+                    {
+                        $wishlistVariArray = $this->Session->read('wishlistVariArray');
+                        $wishlistVariArray[] = $prodId;
+                        $this->Session->write('wishlistVariArray', $wishlistVariArray);
+                    }
+
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+
+                    echo "Success";
+                    exit;
                 }
-                echo "Success";
-                exit;
+                else
+                {
+                    $logs = $this->Wishlist->getDataSource()->getLog();
+                    $lastLog = end($logs['log']);
+                    $query = $lastLog['query'];
+                    $log_data .= "  :InsertArray During Save:" . serialize($insertArr) . "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+
+                    $log_data .= "   Some values not found..";
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+
+                    echo 'error';
+                    exit;
+                }
             }
             else
             {
+                $log_data .= "   TracklistDetails:Track Details not found..";
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
+
                 echo 'error1';
                 exit;
             }
         }
         else
         {
+            $log_data .= "   Some values not found..";
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+            $this->log($log_data, $log_name);
+
             echo 'error';
             exit;
         }
@@ -2567,21 +2599,25 @@ STR;
     function addToWishlistVideo()
     {
 
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+
 
         if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']))
         {
-
+            $libraryId = $this->Session->read('library');
+            $patronId = $this->Session->read('patron');
 
             $wishlistCount = $this->WishlistVideo->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $_REQUEST['prodId'])));
             if (!$wishlistCount)
             {
-                $libraryId = $this->Session->read('library');
-                $patronId = $this->Session->read('patron');
-
                 $prodId = $_REQUEST['prodId'];
-                $downloadsDetail = array();
-                //get song details
                 $provider = $_REQUEST['provider'];
+                if ($provider != 'sony')
+                {
+                    $provider = 'ioda';
+                }
 
                 $trackDetails = $this->Video->getVideoData($prodId, $provider);
                 $insertArr = Array();
@@ -2592,22 +2628,15 @@ STR;
                 $insertArr['album'] = $trackDetails['0']['Video']['Title'];
                 $insertArr['track_title'] = $trackDetails['0']['Video']['VideoTitle'];
                 $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
-
-                if ($provider != 'sony')
-                {
-                    $provider = 'ioda';
-                }
                 $insertArr['provider_type'] = $provider;
-
                 $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
                 $this->WishlistVideo->setDataSource('master');
                 //insert into wishlist table
                 $this->WishlistVideo->save($insertArr);
                 $this->WishlistVideo->setDataSource('default');
-
-
                 //add the wishlist videos ProdID in the session array
                 if ($this->Session->read('wishlistVideoArray'))
                 {
@@ -2616,18 +2645,34 @@ STR;
                     $this->Session->write('wishlistVideoArray', $wishlistVideoArray);
                 }
 
+                $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                        . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . "  :InsertArrayDetails:" . serialize($insertArr);
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
 
                 echo "Success";
                 exit;
             }
             else
             {
+                $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                        . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+                $log_data .= "  :TracklistDetails:Track Details not found..";
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
+
                 echo 'error1';
                 exit;
             }
         }
         else
         {
+            $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                    . "  :ProdID:" . $_REQUEST['prodId'] . "  :ProviderId:" . $_REQUEST['provider'];
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+            $this->log($log_data, $log_name);
+
             echo 'error';
             exit;
         }
@@ -2919,7 +2964,7 @@ STR;
 
     function wishlistDownload()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
 
         $libId = $this->Session->read('library');
@@ -3164,7 +3209,7 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
 
             echo "suces|" . $downloadsUsed;
             exit;
@@ -3181,26 +3226,56 @@ STR;
             exit;
         }
     }
-    
+
     function wishlistDownloadHome()
     {
-       // Configure::write('debug', 0);
-        $this->layout = false; 
-
+        // Configure::write('debug', 0);
+        $this->layout = false;
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        
+
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-        
-        
+        $id = $_REQUEST['id'];
+        $provider = $_REQUEST['provider'];
+
+
+        /**
+         * creates log file name
+         */
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+
+        /**
+         * Check if any of the required parameter is null or not set then log details 
+         * and return and error message to client 
+         */
+        if (empty($prodId) || empty($CdnPath) || empty($SaveAsName) || empty($provider) || empty($libId) || empty($patId))
+        {
+            $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider
+                    . "':DownloadComponentParameters-CDNPath= '" . $CdnPath . "':DownloadComponentParameters-SaveAsName= '" . $SaveAsName
+                    . "':DownloadComponentParameters-id= '" . $id . "':DownloadComponentParameters-Library= '" . $libId
+                    . "':DownloadComponentParameters-PatronId= '" . $patId . "':DownloadCompleteStatus=Fail";
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+            $this->log($log_data, $log_name);
+
+            echo "empty|Something went wrong during download.Please try again later.";
+            exit;
+        }
+
+        /*
+         * if all required field are not null then we continue 
+         * for download and  insert record in download table
+         */
+
         $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));        
-        $finalURL = urlencode($finalSongUrlArr[0]).urlencode($finalSongUrlArr[1]).urlencode($finalSongUrlArr[2]);
-        
-        
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+        $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
+
+
         $downloadsDetail = array();
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
@@ -3212,8 +3287,7 @@ STR;
             exit;
         }
 
-        $id = $_REQUEST['id'];
-        $provider = $_REQUEST['provider'];
+
 
         //get details for this song
         $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
@@ -3227,12 +3301,7 @@ STR;
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         $insertArr['provider_type'] = $provider;
 
-        /**
-          creates log file name
-         */
-        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
-        $log_id = md5(time());
-        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+
 
         $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];
@@ -3381,6 +3450,7 @@ STR;
             $downloadStatus = $latestdownloadStatus = 0;
             //save to downloads table
             $this->Download->setDataSource('master');
+            $this->Download->create();          //prepare model to insert new record
             if ($this->Download->save($insertArr))
             {
                 $downloadStatus = 1;
@@ -3412,9 +3482,14 @@ STR;
                 $this->Library->query($sql);
                 $this->Library->setDataSource('default');
             }
+            else
+            {
+                $logs = $this->Download->getDataSource()->getLog();
+                $lastLog = end($logs['log']);
+                $query = $lastLog['query'];
+                $log_data .= "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+            }
             $this->Download->setDataSource('default');
-
-
 
             $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
 
@@ -3439,8 +3514,8 @@ STR;
             $this->Videodownload->recursive = -1;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
-            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));            
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
             $this->Session->write('downloadCount', $downloadsUsed);
 
             //add the download songs in the session array
@@ -3710,7 +3785,7 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
 
             echo "suces|" . $downloadsUsed;
             exit;
@@ -3727,8 +3802,7 @@ STR;
             exit;
         }
     }
-    
-    
+
     function wishlistVideoDownloadToken()
     {
         //Configure::write('debug', 0);
@@ -3736,18 +3810,18 @@ STR;
 
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        
+
         $prodId = $_REQUEST['prodId'];
         $CdnPath = $_REQUEST['CdnPath'];
         $SaveAsName = $_REQUEST['SaveAsName'];
-        
-        
+
+
         $videoUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
         $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-        $finalURL = urlencode($finalVideoUrlArr[0]).urlencode($finalVideoUrlArr[1]).urlencode($finalVideoUrlArr[2]);
-        
-        
+        $finalURL = urlencode($finalVideoUrlArr[0]) . urlencode($finalVideoUrlArr[1]) . urlencode($finalVideoUrlArr[2]);
+
+
         $downloadsDetail = array();
         $libraryDownload = $this->Downloadsvideos->checkLibraryDownloadVideos($libId);
         $patronDownload = $this->Downloadsvideos->checkPatronDownloadVideos($patId, $libId);
@@ -3978,12 +4052,12 @@ STR;
             $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this->Download->recursive = -1;
             $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed*2) + $downloadscount;
+            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
 
             //updating session for VideoDown load status
-            $this->Common->getVideodownloadStatus( $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate') , true );
-                   
-                
+            $this->Common->getVideodownloadStatus($libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'), true);
+
+
             echo "suces|" . $downloadsUsed . "|" . $finalURL;
             exit;
         }
@@ -4275,7 +4349,7 @@ STR;
     function language()
     {
 
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $language = $_POST['lang'];
         $langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -4416,7 +4490,7 @@ STR;
 
     function convertString()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $str = $_POST['str'];
         echo sha1($str);
@@ -4426,7 +4500,7 @@ STR;
     //Used to get Sample Song url
     function userSample()
     {
-       // Configure::write('debug', 0);
+        // Configure::write('debug', 0);
         $this->layout = false;
         $prodId = $_POST['prodId'];
         $pt = base64_decode($_POST['pt']);
