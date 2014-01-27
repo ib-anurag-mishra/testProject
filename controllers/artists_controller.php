@@ -1240,7 +1240,7 @@ Class ArtistsController extends AppController
 //                        }else{  
             $songs = $this->Song->find('all', array(
                 'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
+                'conditions' => array('Song.ArtistText' => base64_decode($id), "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
                     array('or' =>
                         array(
                             array('Country.StreamingStatus' => 1)
@@ -1543,6 +1543,13 @@ Class ArtistsController extends AppController
             }
         }
 
+        //for login redirect issue
+        if ($album != '')
+        {
+            $this->Session->write('calledAlbum', $album);
+            $this->Session->write('calledProvider', $provider);
+        }
+
         // echo base64_decode($id) . $album;
         // exit;
         $country = $this->Session->read('territory');
@@ -1589,7 +1596,9 @@ Class ArtistsController extends AppController
                                 array('Country.StreamingStatus' => 1)
                             )), $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             }
+
             $val = '';
+            $val_provider_type = '';
 
             foreach ($songs as $k => $v)
             {
@@ -1836,6 +1845,21 @@ Class ArtistsController extends AppController
             }
         }
         $this->set('albumData', $albumData);
+        /**
+         * If user comes to genre page and earlier 
+         * he has selected the Album from list
+         * then it store the Album name in session
+         * for setting the focus in the list on album
+         */
+        if (strlen($album['Album']['AlbumTitle']) >= 40)
+        {
+            $this->Session->write('calledAlbumText', substr($album['Album']['AlbumTitle'], 0, 40) . '...');
+        }
+        else
+        {
+            $this->Session->write('calledAlbumText', $albumData[0]['Album']['AlbumTitle']);
+        }
+
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
             $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
@@ -1911,7 +1935,7 @@ Class ArtistsController extends AppController
                 'Song.provider_type',
                 'Country.SalesDate'),
             'conditions' => array('Song.ArtistText' => base64_decode($id),
-                'Song.DownloadStatus' => 1,
+                'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
                 'Country.Territory' => $country, $cond,
@@ -2100,8 +2124,14 @@ Class ArtistsController extends AppController
         $libId = $this->Session->read('library');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+
+        //for login redirect we are storing the Genre and Artist in Session
+        $this->Session->write('calledGenre', $album);
+        $this->Session->write('calledArtist', base64_decode($id));
+        $this->Session->delete('calledAlbum');
+        $this->Session->delete('calledProvider');
+        
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
@@ -2143,7 +2173,7 @@ Class ArtistsController extends AppController
                         'Files.SourceURL'
                     ),
                 )
-            ), 'order' => array('Album.provider_type' => 'desc'), 'limit' => '100', 'cache' => 'yes', 'chk' => 2
+            ), 'order' => array('Album.provider_type' => 'desc' , 'Album.Title' => 'desc'), 'limit' => '100', 'cache' => 'yes', 'chk' => 2
         );
         if ($this->Session->read('block') == 'yes')
         {
@@ -2166,16 +2196,11 @@ Class ArtistsController extends AppController
         {
             foreach ($albumData as $album_key => $album)
             {
-
-
                 //hide song if library block the explicit content
                 if (($this->Session->read('block') == 'yes') && ($album['Album']['Advisory'] == 'T'))
                 {
                     continue;
                 }
-
-
-
 
                 //get the album image
                 if (empty($album['Files']['CdnPath']))
