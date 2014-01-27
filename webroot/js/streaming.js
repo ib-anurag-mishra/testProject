@@ -8,7 +8,7 @@ swfobject.embedSWF("/swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100",
 
 
 function getTotalPlayerLoadedTime() {
-	var flash =	document.getElementById("fmp_player")[0].outerHTML;
+	var flash =	document.getElementById("fmp_player");
 
 	flash.returnTotalPlayerLoadedTimeAS3();
 	
@@ -26,7 +26,7 @@ function returnTotalPlayerLoadedTimeJS(duration) {
 function pushSongs (newSongArray) {
 
 	
-	var flash =	document.getElementById("fmp_player")[0].outerHTML;
+	var flash =	document.getElementById("fmp_player");
 
 	flash.pushNewSongsFromJS(newSongArray);
 	
@@ -204,7 +204,7 @@ function reportLowStreamTime(lsto) {
 	streamingResponse = callStreamingComponent(songId,songProviderType,plaulistId,22,songLength,songDuration);	
 	lowStreamTime = lowStreamTime - lsto.lsld;
 	
-	var flash =	document.getElementById("fmp_player")[0].outerHTML;
+	var flash =	document.getElementById("fmp_player");
 	flash.reportNewStreamTime(lowStreamTime);
 
 }
@@ -253,7 +253,7 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
 
 function pingTimeJS() {
 	
-	var flash = document.getElementById("fmp_player")[0].outerHTML;
+	var flash = document.getElementById("fmp_player");
 	flash.pingTime();
 	
 }
@@ -304,7 +304,7 @@ function secondstotime(secs)
 $(window).bind('beforeunload', function(){
 
 	
-	var flash =	document.getElementById("fmp_player")[0].outerHTML;
+	var flash =	document.getElementById("fmp_player");
 	
 	flash.windowClosed();	
 	
