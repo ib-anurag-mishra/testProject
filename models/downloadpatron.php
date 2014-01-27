@@ -293,34 +293,30 @@ class Downloadpatron extends AppModel
    Function Name : getWeeksDownloadInformation
    Desc : lists all the downloads for for the selected week
   */
-	function getWeeksDownloadInformation($libraryID, $date, $territory) {
-		if($libraryID == "all") {
-			$all_Ids = '';
-			$sql = "SELECT id from libraries where library_territory = '".$territory."'";
-			$result = mysql_query($sql);
-			while ($row = mysql_fetch_assoc($result)) {
-				$all_Ids = $all_Ids.$row["id"].",";
-			}
-			$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
-		}
-		else {
-			$lib_condition = "and library_id = ".$libraryID;
-		}
-		$date_arr = explode("/", $date);
-		if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
-			$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));
-			$endDate = date('Y-m-d', mktime(0,0,0,$date_arr[0],($date_arr[1]-date('w', mktime(0,0,0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
-		}else{
-			$startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
-			$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
-		}
-                
-                if(isset($startDate) && !strstr($startDate, '00:00:00')) $startDate = $startDate.' 00:00:00';
-                if(isset($endDate) && !strstr($endDate, '23:59:59')) $endDate = $endDate.' 23:59:59';
-                
-		$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY created DESC");
-                return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email','patron_id','library_id','SUM(patron_id) as total'))));
-	}
+    function getWeeksDownloadInformation($libraryID, $date, $territory) {
+            if($libraryID == "all") {
+                    $all_Ids = '';
+                    $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+                    $result = mysql_query($sql);
+                    while ($row = mysql_fetch_assoc($result)) {
+                            $all_Ids = $all_Ids.$row["id"].",";
+                    }
+                    $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
+            }
+            else {
+                    $lib_condition = "and library_id = ".$libraryID;
+            }
+            $date_arr = explode("/", $date);
+            if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
+                    $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));
+                    $endDate = date('Y-m-d', mktime(0,0,0,$date_arr[0],($date_arr[1]-date('w', mktime(0,0,0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+            }else{
+                    $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
+                    $endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+            }
+            $conditions = array('download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY download_date DESC");
+            return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email','patron_id','library_id','SUM(total) as total'))));
+    }
         
   /*
    Function Name : getWeeksDownloadInformation
