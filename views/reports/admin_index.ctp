@@ -350,7 +350,7 @@
                                                 }?>
                                                 </td>
                                         <td><?php echo $this->getTextEncode($library->getLibraryName($patronDownload['Download']['library_id'])); ?></td>
-                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Download']['total']:$patronDownload['Download']['total']); ?></td>
+                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Download']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
 				    $i++;
