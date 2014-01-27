@@ -131,7 +131,7 @@ Class ReportsController extends AppController {
 
                     $videoDownloads = $this->Videodownload->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                     $patronDownloads = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                    print_r($patronDownloads);die;
+                   
                     
                     
                     
