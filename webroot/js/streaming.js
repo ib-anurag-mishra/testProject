@@ -36,6 +36,10 @@ function pushSongs (newSongArray) {
 
 
 function reportPrevSong(prevSongObj, playerEventCode) {
+	/*
+	console.log('playerEventCode in reportPrevSong is ' + playerEventCode);
+	console.log('songDuration in reportPrevSong is ' + prevSongObj.tbpp);
+	*/
 	plaulistId = prevSongObj.playlistId 
 	songId = prevSongObj.songId
 	songLength = prevSongObj.songLength
@@ -117,8 +121,10 @@ function reportPrevSong(prevSongObj, playerEventCode) {
 
 /* this is called before the song is played */ 
 function validateSong(songObj, playerEventCode) {
-
-	
+	/*
+	console.log('playerEventCode in validateSong is ' + playerEventCode);
+	console.log('songDuration in validateSong is ' + prevSongObj.tbpp);
+	*/
 	/* properties sent from flash */
 	
 	plaulistId = songObj.playlistId 
