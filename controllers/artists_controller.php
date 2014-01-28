@@ -967,7 +967,7 @@ Class ArtistsController extends AppController
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
             }
         }
-        echo "<pre>";print_r($albumData);exit;
+        
         $albumSongs = array();
         if (!empty($albumData))
         {
@@ -1103,9 +1103,9 @@ Class ArtistsController extends AppController
             }
         }
 
-        // echo "<pre>";
-        // print_r($albumSongs);
-        // exit;
+         echo "<pre>";
+         print_r($albumSongs);
+         exit;
 
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)
