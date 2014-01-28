@@ -36,6 +36,8 @@ function pushSongs (newSongArray) {
 
 
 function reportPrevSong(prevSongObj, playerEventCode) {
+
+	console.log('playerEventCode is ' + playerEventCode);
 	plaulistId = prevSongObj.playlistId 
 	songId = prevSongObj.songId
 	songLength = prevSongObj.songLength
