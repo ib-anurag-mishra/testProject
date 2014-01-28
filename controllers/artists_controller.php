@@ -803,7 +803,8 @@ Class ArtistsController extends AppController
 
     function view($id = null, $album = null, $provider = null)
     {
-
+        Configure::write("debug" ,2);
+        
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
@@ -975,19 +976,19 @@ Class ArtistsController extends AppController
             {
                 if ($libType != 2)
                 {
+                    echo $album['Album']['ProdID'];
+                    
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
                         array('and' =>
                             array(
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
-                                //array('Song.provider_type = Genre.provider_type'),
                                 array('Song.provider_type = Country.provider_type'),
                                 array('Song.DownloadStatus' => 1),
-                                //	array('Song.TrackBundleCount' => 0),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
                                 array("Song.provider_type" => $provider),
-                                array('Country.Territory' => $country), $cond
+                                array('Country.Territory1' => $country), $cond
                             )
                         ),
                         'fields' => array(
@@ -1032,7 +1033,9 @@ Class ArtistsController extends AppController
                                     'Full_Files.SaveAsName'
                                 )
                             ),
-                        ), 'group' => 'Song.ProdID, Song.provider_type', 'order' => array('Song.sequence_number', 'Song.ProdID')
+                        ), 
+                        'group' => 'Song.ProdID, Song.provider_type', 
+                        'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
                 else
