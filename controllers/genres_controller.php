@@ -55,12 +55,12 @@ Class GenresController extends AppController
         
         //echo '<pre>';
         $url = explode('/', $this->params['url']['url']);
-        if($url[1] != 'view')
+        if ($url[1] != 'view')
         {
             $this->redirect('/genres/view/');
         }
-       
-        
+
+
         $country = $this->Session->read('territory');
 
         //$country = "'".$country."'";
@@ -325,10 +325,10 @@ Class GenresController extends AppController
             $cond = "";
         }
 
-      
-        
+
+
         //login redirect fix if selected 
-        if($this->Session->read('selectedAlpha') == 'All')
+        if ($this->Session->read('selectedAlpha') == 'All')
         {
             $Artist = null;
         }
@@ -336,7 +336,7 @@ Class GenresController extends AppController
         {
             $Artist = $this->Session->read('selectedAlpha');
         }
-        
+
         if ($Artist == 'spl')
         {
             $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
@@ -361,7 +361,18 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('hasOne' => array('Country')));
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
             $this->Song->Behaviors->attach('Containable');
-            $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'", "find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", "Song.FullLength_FIleID != ''", $condition, '1 = 1');
+            $gcondition = array(
+                "Song.provider_type = Genre.provider_type",
+                "Genre.Genre = '$genre'",
+                "find_in_set('\"$country\"',Song.Territory) > 0",
+                'Song.DownloadStatus' => 1,        
+                "Song.Sample_FileID != ''",
+                "TRIM(Song.ArtistText) != ''",
+                "Song.ArtistText IS NOT NULL",
+                "Song.FullLength_FIleID != ''", 
+                $condition, 
+                '1 = 1'
+                );
             $this->paginate = array(
                 'conditions' => $gcondition,
                 'fields' => array('DISTINCT Song.ArtistText'),
@@ -385,7 +396,17 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
             $this->Song->Behaviors->attach('Containable');
             $this->Song->recursive = 0;
-            $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "TRIM(Song.ArtistText) != ''", "Song.ArtistText IS NOT NULL", $condition, '1 = 1 ');
+            $gcondition = array(
+                "find_in_set('\"$country\"',
+                Song.Territory) > 0",
+                'Song.DownloadStatus' => 1,
+                "Song.Sample_FileID != ''",
+                "Song.FullLength_FIleID != ''",
+                "TRIM(Song.ArtistText) != ''",
+                "Song.ArtistText IS NOT NULL",
+                $condition,
+                '1 = 1 '
+            );
 
             $this->paginate = array(
                 'conditions' => $gcondition,
@@ -577,8 +598,8 @@ Class GenresController extends AppController
     function ajax_view_pagination($Genre = null, $Artist = null)
     {
         //pagination value for login redirect issue on genre page
-        $this->Session->write('page' ,$this->params['named']['page']);
-        
+        $this->Session->write('page', $this->params['named']['page']);
+
         $this->layout = 'ajax';
 
         if ($Genre == '')
