@@ -59,9 +59,8 @@
     $(document).ready(function() {
         var preValue = 1;
         var artistPage = 2;
-        var scrollArtistDone = false;
-        var totalScrolled = <?= $this->Session->read('page') ?>
-
+       var selectedAlpha = '<? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?>';
+       
         $("#artistscroll").scroll(function() {
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
@@ -74,7 +73,7 @@
                     if (artistPage <= totalPages) {
 
                         preValue = artistPage;
-                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/All';
+                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/'+selectedAlpha;
 
                         jQuery.ajax({
                             type: "post", // Request method: post, get
@@ -403,27 +402,27 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
     ?>
     <script>
 
-    $(document).ready(function()
-    {
-    <?php
-    //doing pagination 
-    if ($this->Session->check('page'))
-    {
-        ?>
-            toScrollArtist(<?= $this->Session->read('page') ?>);
-        <?php
-    }
-    else
-    {
-        ?>
-            scrolltoSelectedArtist();
-        <?php
-    }
-    ?>
+        $(document).ready(function()
+        {
+            <?php
+            //doing pagination 
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?>);
+                <?php
+            }
+            else
+            {
+                ?>
+                        scrolltoSelectedArtist();
+                <?php
+            }
+            ?>
 
-        var all_album_url = $("#allAlbumUrl").attr('value');
-        showAllAlbumsList(all_album_url);
-    });
+            var all_album_url = $("#allAlbumUrl").attr('value');
+            showAllAlbumsList(all_album_url);
+        });
 
     </script>
 
@@ -441,14 +440,14 @@ elseif ($this->Session->check('calledAlbum'))
         $(document).ready(function() {
 
             //Paginate the Artist list if it was already done before
-    <?php
-    if ($this->Session->check('page'))
-    {
-        ?>
-                toScrollArtist(<?= $this->Session->read('page') ?>);
-        <?php
-    }
-    ?>
+            <?php
+            if ($this->Session->check('page'))
+            {
+                ?>
+                        toScrollArtist(<?= $this->Session->read('page') ?>);
+                <?php
+            }
+            ?>
 
             var all_album_url = $("#allAlbumUrl").attr('value');
 
