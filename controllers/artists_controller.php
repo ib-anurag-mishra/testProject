@@ -827,8 +827,8 @@ Class ArtistsController extends AppController
             }
         }
 
-        // echo base64_decode($id) . $album;
-        // exit;
+        echo base64_decode($id) . $album;
+         exit;
         $country = $this->Session->read('territory');
         $libType = $this->Session->read('library_type');
         if ($this->Session->read('block') == 'yes')
