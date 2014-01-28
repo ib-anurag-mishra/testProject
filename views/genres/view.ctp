@@ -347,9 +347,9 @@ $totalRows = count($genresAll);
                         <?php
                         if (count($genres) > 0)
                         {
-                             echo "<pre>";
-                                print_r($genres);
-                                die;
+//                             echo "<pre>";
+//                                print_r($genres);
+//                                die;
                                 
                             for ($i = 0; $i < count($genres); $i++)
                             {
