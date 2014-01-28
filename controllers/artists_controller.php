@@ -803,7 +803,7 @@ Class ArtistsController extends AppController
 
     function view($id = null, $album = null, $provider = null)
     {
-        Configure::write("debug" ,2);
+        //Configure::write("debug" ,2);
         
         if (count($this->params['pass']) > 1)
         {
@@ -1033,7 +1033,7 @@ Class ArtistsController extends AppController
                             ),
                         ), 
                         'group' => 'Song.ProdID, Song.provider_type', 
-                        'order' => array('Song.sequence_number', 'Song.ProdID1')
+                        'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
                 else
