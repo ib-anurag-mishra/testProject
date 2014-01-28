@@ -988,7 +988,7 @@ Class ArtistsController extends AppController
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
                                 array("Song.provider_type" => $provider),
-                                array('Country.Territory1' => $country), $cond
+                                array('Country.Territory' => $country), $cond
                             )
                         ),
                         'fields' => array(
@@ -1035,7 +1035,7 @@ Class ArtistsController extends AppController
                             ),
                         ), 
                         'group' => 'Song.ProdID, Song.provider_type', 
-                        'order' => array('Song.sequence_number', 'Song.ProdID')
+                        'order' => array('Song.sequence_number', 'Song.ProdID1')
                     ));
                 }
                 else
