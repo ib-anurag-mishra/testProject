@@ -975,9 +975,7 @@ Class ArtistsController extends AppController
             foreach ($albumData as $album)
             {
                 if ($libType != 2)
-                {
-                    echo $album['Album']['ProdID'];
-                    
+                {   
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
                         array('and' =>
@@ -1106,9 +1104,9 @@ Class ArtistsController extends AppController
             }
         }
 
-         echo "<pre>";
-         print_r($albumSongs);
-         exit;
+//         echo "<pre>";
+//         print_r($albumSongs);
+//         exit;
 
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)
