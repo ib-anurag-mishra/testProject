@@ -59,9 +59,8 @@
     $(document).ready(function() {
         var preValue = 1;
         var artistPage = 2;
-        var scrollArtistDone = false;
-        var totalScrolled = <?= $this->Session->read('page') ?>
-
+       var selectedAlpha = <? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?> ;
+       
         $("#artistscroll").scroll(function() {
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
@@ -74,7 +73,7 @@
                     if (artistPage <= totalPages) {
 
                         preValue = artistPage;
-                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/All';
+                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/'+selectedAlpha;
 
                         jQuery.ajax({
                             type: "post", // Request method: post, get
