@@ -827,8 +827,8 @@ Class ArtistsController extends AppController
             }
         }
 
-        echo base64_decode($id) . $album;
-         exit;
+//        echo base64_decode($id) . $album;
+//         exit;
         $country = $this->Session->read('territory');
         $libType = $this->Session->read('library_type');
         if ($this->Session->read('block') == 'yes')
@@ -967,7 +967,7 @@ Class ArtistsController extends AppController
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
             }
         }
-
+        echo "<pre>";print_r($albumData);exit;
         $albumSongs = array();
         if (!empty($albumData))
         {
