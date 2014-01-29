@@ -861,7 +861,7 @@ Class ArtistsController extends AppController
         $val = '';
         $val_provider_type = '';
         $condition = array();
-        
+
         //check if album value is set in url
         if ($album != '')
         {
@@ -1006,7 +1006,7 @@ Class ArtistsController extends AppController
         {
             $provider = $albumData[0]['Album']['provider_type'];
         }
-        
+
 
         //creating the Artist Url
         if (isset($albumData[0]['Song']['ArtistURL']))
@@ -1181,42 +1181,42 @@ Class ArtistsController extends AppController
             $this->set('artistName', base64_decode($id));
         }
         else
-        {           
-            $this->set('artistName',  $albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']);
+        {
+            $this->set('artistName', $albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']);
         }
 
-
-
         //checking the downlaod status for songs in Album
-        $this->Download->recursive = -1;
-        foreach ($albumSongs as $k => $albumSong)
+        if (!empty($albumSongs))
         {
-            foreach ($albumSong as $key => $value)
+            $this->Download->recursive = -1;
+            foreach ($albumSongs as $k => $albumSong)
             {
-                $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
-                if (count($downloadsUsed) > 0)
+                foreach ($albumSong as $key => $value)
                 {
-                    $albumSongs[$k][$key]['Song']['status'] = 'avail';
-                }
-                else
-                {
-                    $albumSongs[$k][$key]['Song']['status'] = 'not';
-                }
-
-                if ($this->Session->read('library_type') == 2)
-                {
-                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-                    if (!empty($filePath))
+                    $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                    if (count($downloadsUsed) > 0)
                     {
-                        $songPath = explode(':', $filePath);
-                        $streamUrl = trim($songPath[1]);
-                        $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
-                        $albumSongs[$k][$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                        $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                    }
+                    else
+                    {
+                        $albumSongs[$k][$key]['Song']['status'] = 'not';
+                    }
+
+                    if ($this->Session->read('library_type') == 2)
+                    {
+                        $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                        if (!empty($filePath))
+                        {
+                            $songPath = explode(':', $filePath);
+                            $streamUrl = trim($songPath[1]);
+                            $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
+                            $albumSongs[$k][$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                        }
                     }
                 }
             }
         }
-
         $this->set('albumSongs', $albumSongs);
     }
 
