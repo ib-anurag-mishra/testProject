@@ -988,9 +988,9 @@ Class ArtistsController extends AppController
         $this->Album->recursive = 2;
         $albumData = $this->paginate('Album'); //getting the Albums for the artist
 
-        echo "<pre>";
-        print_r($albumData);
-        exit;
+//        echo "<pre>";
+//        print_r($albumData);
+//        exit;
         
         if (!empty($albumData))
         {
@@ -1032,7 +1032,9 @@ Class ArtistsController extends AppController
         }
 
         $this->set('albumData', $albumData);
-
+//        echo "<pre>";
+//        print_r($albumData);
+//        exit;       
 
         //getting the songs for album
         $albumSongs = array();
@@ -1177,6 +1179,9 @@ Class ArtistsController extends AppController
             }
         }
 
+//        echo "<pre>";
+//        print_r($albumSongs);
+//        exit;
 
         //if Artist name is not found in URL
         if ($id != "")
@@ -1221,7 +1226,9 @@ Class ArtistsController extends AppController
                 }
             }
         }
+        
         $this->set('albumSongs', $albumSongs);
+
     }
 
     /*
