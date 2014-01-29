@@ -185,9 +185,7 @@ class SearchController extends AppController
                 $set = 0;
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
-			echo $downloadData['LatestDownload']['ProdID']."<br/>";
-			echo $song->ProdID;
-                    if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+		   if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
                     {
                         $songs[$key]->status = 'avail';
                         $set = 1;
