@@ -33,7 +33,7 @@ Class StreamingComponent extends Object
           creates log file name
         */
         
-      echo  $this->streamingLimit = $this->getStreamingLimit($libId);
+        echo  $this->streamingLimit = $this->getStreamingLimit($libId);
         if($this->streamingLimit === false || $this->streamingLimit===0){
             $this->log("error|Not able to stream this song,streaming limit has been over.;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;streamingLimit :".$this->streamingLimit,'streaming');            
             
