@@ -95,7 +95,7 @@ Class ArtistsController extends AppController
                 $this->Song->Behaviors->attach('Containable');
                 foreach ($allAlbum as $k => $v)
                 {
-                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['Featuredartist']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+                    $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $getData['Featuredartist']['territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
                     if (count($recordCount) > 0)
                     {
                         $result[$v['Album']['ProdID']] = $v['Album']['AlbumTitle'];
@@ -879,7 +879,7 @@ Class ArtistsController extends AppController
                         'Song.provider_type'),
                     'conditions' => array(
                         'Song.ArtistText' => base64_decode($id),
-                        'Song.DownloadStatus' => 1,
+                        'Country.DownloadStatus' => 1,
                         "Song.Sample_FileID != ''",
                         "Song.FullLength_FIleID != ''",
                         'Country.Territory' => $country, 
@@ -902,7 +902,7 @@ Class ArtistsController extends AppController
                         'Song.provider_type'),
                     'conditions' => array(
                         'Song.ArtistText' => base64_decode($id),
-                        'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''",
+                        "Song.Sample_FileID != ''",
                         "Song.FullLength_FIleID != ''",
                         'Country.Territory' => $country,
                         'Country.DownloadStatus' => 1,
@@ -1051,7 +1051,7 @@ Class ArtistsController extends AppController
                             array(
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 array('Song.provider_type = Country.provider_type'),
-                                array('Song.DownloadStatus' => 1),
+                                array('Country.DownloadStatus' => 1),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
                                 array("Song.provider_type" => $provider),
@@ -1651,13 +1651,13 @@ Class ArtistsController extends AppController
             {
                 $songs = $this->Song->find('all', array(
                     'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Country.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             }
             else
             {
                 $songs = $this->Song->find('all', array(
                     'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
+                    'conditions' => array('Song.ArtistText' => base64_decode($id), "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
                         array('or' =>
                             array(
                                 array('Country.StreamingStatus' => 1)
@@ -1770,7 +1770,7 @@ Class ArtistsController extends AppController
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 //array('Song.provider_type = Genre.provider_type'),
                                 array('Song.provider_type = Country.provider_type'),
-                                array('Song.DownloadStatus' => 1),
+                                array('Country.DownloadStatus' => 1),
                                 //	array('Song.TrackBundleCount' => 0),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
@@ -2170,7 +2170,7 @@ Class ArtistsController extends AppController
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-            'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1,
+            'conditions' => array('Song.ArtistText' => base64_decode($id), 'Country.DownloadStatus' => 1,
                 "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,
             'order' => array('Song.provider_type DESC')));
@@ -2403,7 +2403,7 @@ Class ArtistsController extends AppController
         $this->Country->setTablePrefix($countryPrefix);
         foreach ($allAlbum as $k => $v)
         {
-            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             if (count($recordCount) > 0)
             {
                 $val = $val . $v['Album']['ProdID'] . ",";
