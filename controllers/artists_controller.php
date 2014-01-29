@@ -1042,10 +1042,7 @@ Class ArtistsController extends AppController
         if (!empty($albumData))
         {
             foreach ($albumData as $album)
-            {
-                echo "<pre>";
-                print_r($album);
-                
+            {   
                 if ($libType != 2)
                 {
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
@@ -1057,8 +1054,8 @@ Class ArtistsController extends AppController
                                 array('Song.DownloadStatus' => 1),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
-                                array("Song.provider_type" => $album['Album']['provider_type']),
-                                array('Country.Territory' => $album['Country']['Territory']),
+                                array("Song.provider_type" => $provider),
+                                array('Country.Territory' => $country),
                                 $cond
                             )
                         ),
@@ -1183,9 +1180,6 @@ Class ArtistsController extends AppController
             }
         }
 
-        echo "<pre>";
-        print_r($albumSongs);
-        exit;
 
         //if Artist name is not found in URL
         if ($id != "")
