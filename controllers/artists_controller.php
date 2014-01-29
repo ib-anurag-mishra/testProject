@@ -859,7 +859,7 @@ Class ArtistsController extends AppController
 
         $val = '';
         $val_provider_type = '';
-        
+
         //check if album value is set in url
         if ($album != '')
         {
@@ -872,47 +872,47 @@ Class ArtistsController extends AppController
             {
                 $songs = $this->Song->find('all', array(
                     'fields' => array(
-                        'DISTINCT Song.ReferenceID', 
+                        'DISTINCT Song.ReferenceID',
                         'Song.provider_type'),
                     'conditions' => array(
-                        'Song.ArtistText' => base64_decode($id), 
-                        'Song.DownloadStatus' => 1, 
-                        "Song.Sample_FileID != ''", 
-                        "Song.FullLength_FIleID != ''", 
-                        'Country.Territory' => $country, $cond), 
+                        'Song.ArtistText' => base64_decode($id),
+                        'Song.DownloadStatus' => 1,
+                        "Song.Sample_FileID != ''",
+                        "Song.FullLength_FIleID != ''",
+                        'Country.Territory' => $country, $cond),
                     'contain' => array(
                         'Country' => array(
                             'fields' => array(
                                 'Country.Territory')
-                            )
-                        ), 
-                    'recursive' => 0, 
+                        )
+                    ),
+                    'recursive' => 0,
                     'limit' => 1)
-                        );
+                );
             }
             else
             {
                 $songs = $this->Song->find('all', array(
                     'fields' => array(
-                        'DISTINCT Song.ReferenceID', 
+                        'DISTINCT Song.ReferenceID',
                         'Song.provider_type'),
                     'conditions' => array(
-                        'Song.ArtistText' => base64_decode($id), 
-                        'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", 
-                        "Song.FullLength_FIleID != ''", 
-                        'Country.Territory' => $country, 
+                        'Song.ArtistText' => base64_decode($id),
+                        'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''",
+                        "Song.FullLength_FIleID != ''",
+                        'Country.Territory' => $country,
                         'Country.DownloadStatus' => 1,
                         array('or' =>
                             array(
                                 array('Country.StreamingStatus' => 1)
-                            )), 
+                            )),
                         $cond
-                        ), 'contain' => array(
-                            'Country' => array(
-                                'fields' => array('Country.Territory')
-                                )), 
+                    ), 'contain' => array(
+                        'Country' => array(
+                            'fields' => array('Country.Territory')
+                        )),
                     'recursive' => 0, 'limit' => 1)
-                        );
+                );
             }
             foreach ($songs as $k => $v)
             {
@@ -921,10 +921,10 @@ Class ArtistsController extends AppController
             }
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
         }
-        
+
         $id = str_replace('@', '/', $id);
         $this->set('artistName', base64_decode($id));
-        
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
@@ -933,7 +933,7 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
-        
+
         $this->paginate = array('conditions' =>
             array('and' =>
                 array(
@@ -941,7 +941,7 @@ Class ArtistsController extends AppController
                     //	array('Album.provider_type = Genre.provider_type'),
                     //	array('Album.provider_type = Country.provider_type'),
                     $condition
-                ), 
+                ),
                 "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
             ),
             'fields' => array(
@@ -974,13 +974,13 @@ Class ArtistsController extends AppController
                         'Files.SourceURL'
                     ),
                 )
-            ), 
-            'order' => array('Country.SalesDate' => 'desc'), 
-            'limit' => '3', 
-            'cache' => 'yes', 
+            ),
+            'order' => array('Country.SalesDate' => 'desc'),
+            'limit' => '3',
+            'cache' => 'yes',
             'chk' => 2
         );
-        
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -991,10 +991,7 @@ Class ArtistsController extends AppController
         }
         $this->Album->recursive = 2;
         $albumData = $this->paginate('Album'); //getting the Albums for the artist
-        echo "<pre>";
-        echo "condition :$condition <br/>";
-        print_r($albumData);
-        
+
         if (!empty($albumData))
         {
             $libType = $this->Session->read('library_type');
@@ -1007,7 +1004,7 @@ Class ArtistsController extends AppController
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
             }
         }
-        
+
         //creating the Artist Url
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
@@ -1017,12 +1014,21 @@ Class ArtistsController extends AppController
         {
             $this->set('artistUrl', "N/A");
         }
+
+        if (isset($albumData['0']['Genre']['Genre']))
+        {
+            $this->set("genre", $albumData['0']['Genre']['Genre']);
+        }
+        else
+        {
+            $this->set("genre", '');
+        }
         
         $this->set('albumData', $albumData);
-        
-        
+
+
         //getting the songs for album
-         $albumSongs = array();
+        $albumSongs = array();
         if (!empty($albumData))
         {
             foreach ($albumData as $album)
@@ -1158,7 +1164,7 @@ Class ArtistsController extends AppController
                 }
             }
         }
-        
+
         //checking the downlaod status for songs in Album
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)
@@ -1188,20 +1194,13 @@ Class ArtistsController extends AppController
                 }
             }
         }
-        
-        
-        
-        if (isset($albumData['0']['Genre']['Genre']))
-        {
-            $this->set("genre", $albumData['0']['Genre']['Genre']);
-        }
-        else
-        {
-             $this->set("genre", '');
-        }
-       
+
+        echo "<pre>";
+        print_r($albumData);
+        echo '<br/>';
+        print_r($albumSongs);
+        exit;
         $this->set('albumSongs', $albumSongs);
-        
     }
 
     /*
