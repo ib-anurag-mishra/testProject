@@ -391,4 +391,4 @@ if (count($albumData) > 0){
 </section>
 
 
-<?php //echo $this->element('sql_dump'); ?>
+<?php echo $this->element('sql_dump'); ?>

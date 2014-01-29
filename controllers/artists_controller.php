@@ -1098,15 +1098,17 @@ Class ArtistsController extends AppController
                                     'Full_Files.SaveAsName'
                                 )
                             ),
-                        ), 'group' => 'Song.ProdID, Song.provider_type', 'order' => array('Song.sequence_number', 'Song.ProdID')
+                        ), 
+                        'group' => 'Song.ProdID, Song.provider_type', 
+                        'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
             }
         }
 
-//         echo "<pre>";
-//         print_r($albumSongs);
-//         exit;
+         echo "<pre>";
+         print_r($albumSongs);
+         exit;
 
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)
