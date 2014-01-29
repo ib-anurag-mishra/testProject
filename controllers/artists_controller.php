@@ -803,8 +803,8 @@ Class ArtistsController extends AppController
 
     function view($id = null, $album = null, $provider = null)
     {
-        Configure::write("debug" ,2);
-        
+        Configure::write("debug", 2);
+
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
@@ -832,6 +832,10 @@ Class ArtistsController extends AppController
 //         exit;
         $country = $this->Session->read('territory');
         $libType = $this->Session->read('library_type');
+
+        $val = '';
+        $val_provider_type = '';
+
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -840,6 +844,7 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
+        
         if ($album != '')
         {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
@@ -874,8 +879,6 @@ Class ArtistsController extends AppController
                                 array('Country.StreamingStatus' => 1)
                             )), $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             }
-            $val = '';
-            $val_provider_type = '';
             foreach ($songs as $k => $v)
             {
                 $val = $val . $v['Song']['ReferenceID'] . ",";
@@ -968,14 +971,14 @@ Class ArtistsController extends AppController
                 $albumData[0]['albumSongs'] = $this->getAlbumSongs(base64_encode($albumData[0]['Album']['ArtistText']), $albumData[0]['Album']['ProdID'], base64_encode($albumData[0]['Album']['provider_type']), 1);
             }
         }
-        
+
         $albumSongs = array();
         if (!empty($albumData))
         {
             foreach ($albumData as $album)
             {
                 if ($libType != 2)
-                {   
+                {
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
                         array('and' =>
@@ -1031,8 +1034,8 @@ Class ArtistsController extends AppController
                                     'Full_Files.SaveAsName'
                                 )
                             ),
-                        ), 
-                        'group' => 'Song.ProdID, Song.provider_type', 
+                        ),
+                        'group' => 'Song.ProdID, Song.provider_type',
                         'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
@@ -1098,17 +1101,17 @@ Class ArtistsController extends AppController
                                     'Full_Files.SaveAsName'
                                 )
                             ),
-                        ), 
-                        'group' => 'Song.ProdID, Song.provider_type', 
-                        'order' => array('Song.sequence_number', 'Song.ProdID')
+                        ),
+                        'group' => 'Song.ProdID, Song.provider_type',
+                        'order' => array('Song.sequence_number', 'Song.ProdID1')
                     ));
                 }
             }
         }
 
-         echo "<pre>";
-         print_r($albumSongs);
-         exit;
+        echo "<pre>";
+        print_r($albumSongs);
+        exit;
 
         $this->Download->recursive = -1;
         foreach ($albumSongs as $k => $albumSong)
@@ -2074,7 +2077,7 @@ Class ArtistsController extends AppController
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
-        
+
 
         $this->layout = false;
         if (count($this->params['pass']) > 1)
@@ -2139,7 +2142,7 @@ Class ArtistsController extends AppController
         $this->Session->write('calledArtist', base64_decode($id));
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
-        
+
 
         if ($this->Session->read('block') == 'yes')
         {
@@ -2182,7 +2185,7 @@ Class ArtistsController extends AppController
                         'Files.SourceURL'
                     ),
                 )
-            ), 'order' => array('Album.provider_type' => 'desc' , 'Album.Title' => 'desc'), 'limit' => '100', 'cache' => 'yes', 'chk' => 2
+            ), 'order' => array('Album.provider_type' => 'desc', 'Album.Title' => 'desc'), 'limit' => '100', 'cache' => 'yes', 'chk' => 2
         );
         if ($this->Session->read('block') == 'yes')
         {
