@@ -530,7 +530,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
 
-                                             if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+                                             //if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+                                                if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
                                                { 
                                                      $streamTime = 'UNLIMITED';
                                                      $libraryunlimited = 1;
