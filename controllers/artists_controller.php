@@ -859,7 +859,8 @@ Class ArtistsController extends AppController
 
         $val = '';
         $val_provider_type = '';
-
+        $condition = array();
+        
         //check if album value is set in url
         if ($album != '')
         {
@@ -922,9 +923,6 @@ Class ArtistsController extends AppController
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
         }
 
-        $id = str_replace('@', '/', $id);
-        $this->set('artistName', base64_decode($id));
-
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
@@ -936,7 +934,7 @@ Class ArtistsController extends AppController
 
         $this->paginate = array('conditions' =>
             array('and' =>
-                array(                   
+                array(
                     $condition
                 ),
                 "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
@@ -1003,11 +1001,22 @@ Class ArtistsController extends AppController
         }
 
         //check for provider if null
-        if($provider == "")
+        if ($provider == "")
         {
-            $provider =  $albumData[0]['Album']['provider_type'];
+            $provider = $albumData[0]['Album']['provider_type'];
         }
-        
+
+        //if Artist name is not found in URL
+        if ($id != "")
+        {
+            $id = str_replace('@', '/', $id);
+            $this->set('artistName', base64_decode($id));
+        }
+        else
+        {
+            $this->set('artistName', $albumData[0]['Album']['ArtistText']);
+        }
+
         //creating the Artist Url
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
@@ -1029,7 +1038,7 @@ Class ArtistsController extends AppController
 
         $this->set('albumData', $albumData);
 
-        
+
         //getting the songs for album
         $albumSongs = array();
         if (!empty($albumData))
@@ -1040,18 +1049,18 @@ Class ArtistsController extends AppController
                 {
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
-                            array('and' =>
-                                array(
-                                    array('Song.ReferenceID' => $album['Album']['ProdID']),
-                                    array('Song.provider_type = Country.provider_type'),
-                                    array('Song.DownloadStatus' => 1),
-                                    array("Song.Sample_FileID != ''"),
-                                    array("Song.FullLength_FIleID != ''"),
-                                    array("Song.provider_type" => $provider),
-                                    array('Country.Territory' => $country), 
-                                    $cond
-                                )
-                            ),
+                        array('and' =>
+                            array(
+                                array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                array('Song.provider_type = Country.provider_type'),
+                                array('Song.DownloadStatus' => 1),
+                                array("Song.Sample_FileID != ''"),
+                                array("Song.FullLength_FIleID != ''"),
+                                array("Song.provider_type" => $provider),
+                                array('Country.Territory' => $country),
+                                $cond
+                            )
+                        ),
                         'fields' => array(
                             'Song.ProdID',
                             'Song.Title',
@@ -1104,26 +1113,26 @@ Class ArtistsController extends AppController
 
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
-                            array('and' =>
-                                array(
-                                    array('Song.ReferenceID' => $album['Album']['ProdID']),
-                                    array('Song.provider_type = Country.provider_type'),
-                                    array("Song.Sample_FileID != ''"),
-                                    array("Song.FullLength_FIleID != ''"),
-                                    array("Song.provider_type" => $provider),
-                                    array('Country.Territory' => $country), 
-                                    $cond
-                                ),
-                                'or' => array(array('and' => array(
-                                    'Country.StreamingStatus' => 1, 
-                                    'Country.StreamingSalesDate <=' => date('Y-m-d')
-                                    ))
-                                    , 
-                                    array('and' => array(
-                                        'Country.DownloadStatus' => 1
-                                        ))
-                                )
+                        array('and' =>
+                            array(
+                                array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                array('Song.provider_type = Country.provider_type'),
+                                array("Song.Sample_FileID != ''"),
+                                array("Song.FullLength_FIleID != ''"),
+                                array("Song.provider_type" => $provider),
+                                array('Country.Territory' => $country),
+                                $cond
                             ),
+                            'or' => array(array('and' => array(
+                                        'Country.StreamingStatus' => 1,
+                                        'Country.StreamingSalesDate <=' => date('Y-m-d')
+                                    ))
+                                ,
+                                array('and' => array(
+                                        'Country.DownloadStatus' => 1
+                                    ))
+                            )
+                        ),
                         'fields' => array(
                             'Song.ProdID',
                             'Song.Title',
@@ -1171,14 +1180,11 @@ Class ArtistsController extends AppController
                         'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
-                 echo "<pre>";   
-                print_r($albumSongs);
-                echo '<br/>';
             }
         }
-        
-         
-        
+
+
+
 
         //checking the downlaod status for songs in Album
         $this->Download->recursive = -1;
@@ -1210,8 +1216,8 @@ Class ArtistsController extends AppController
             }
         }
 
-       
-       
+
+
         $this->set('albumSongs', $albumSongs);
     }
 
