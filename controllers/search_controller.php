@@ -178,14 +178,14 @@ class SearchController extends AppController
                 $songArray[] = $song->ProdID;
             }
 
-            $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+            $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
 
             foreach ($songs as $key => $song)
             {
                 $set = 0;
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
-                    if ($downloadData['Download']['ProdID'] == $song->ProdID)
+                    if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
                     {
                         $songs[$key]->status = 'avail';
                         $set = 1;
