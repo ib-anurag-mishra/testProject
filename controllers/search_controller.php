@@ -185,6 +185,8 @@ class SearchController extends AppController
                 $set = 0;
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
+			echo $downloadData['LatestDownload']['ProdID']."<br/>";
+			echo $song->ProdID;
                     if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
                     {
                         $songs[$key]->status = 'avail';
@@ -605,4 +607,14 @@ class SearchController extends AppController
         $this->set('records', $records);
     }
 
+	function ajaxcheckdownload($prodId, $providerType, $libId, $patId)
+	{
+	    $this->layout = 'ajax';
+            $this->autoRender = false;
+	    $prodId = intval($prodId);
+            $providerType = (($providerType == 'sony' || $providerType == 'ioda') ? $providerType : 'sony'); 
+	    if(!empty($prodId) && !empty($providerType)){
+	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('ProdID' => $prodId), 'provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+	    }    
+	}
 }
