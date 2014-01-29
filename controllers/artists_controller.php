@@ -936,10 +936,7 @@ Class ArtistsController extends AppController
 
         $this->paginate = array('conditions' =>
             array('and' =>
-                array(
-                    //   array('Album.ArtistText' => base64_decode($id)),
-                    //	array('Album.provider_type = Genre.provider_type'),
-                    //	array('Album.provider_type = Country.provider_type'),
+                array(                   
                     $condition
                 ),
                 "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
@@ -1098,29 +1095,28 @@ Class ArtistsController extends AppController
                 else
                 {
 
-                    $albumSongs[$album['Album']['ProdID']] = $this->Song->find(
-                            'all', array(
+                    $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
-                        array('and' =>
-                            array(
-                                array('Song.ReferenceID' => $album['Album']['ProdID']),
-                                array('Song.provider_type = Country.provider_type'),
-                                array("Song.Sample_FileID != ''"),
-                                array("Song.FullLength_FIleID != ''"),
-                                array("Song.provider_type" => $provider),
-                                array('Country.Territory' => $country), 
-                                $cond
-                            ),
-                            'or' => array(array('and' => array(
-                                'Country.StreamingStatus' => 1, 
-                                'Country.StreamingSalesDate <=' => date('Y-m-d')
-                                ))
-                                , 
-                                array('and' => array(
-                                    'Country.DownloadStatus' => 1
+                            array('and' =>
+                                array(
+                                    array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                    array('Song.provider_type = Country.provider_type'),
+                                    array("Song.Sample_FileID != ''"),
+                                    array("Song.FullLength_FIleID != ''"),
+                                    array("Song.provider_type" => $provider),
+                                    array('Country.Territory' => $country), 
+                                    $cond
+                                ),
+                                'or' => array(array('and' => array(
+                                    'Country.StreamingStatus' => 1, 
+                                    'Country.StreamingSalesDate <=' => date('Y-m-d')
                                     ))
-                            )
-                        ),
+                                    , 
+                                    array('and' => array(
+                                        'Country.DownloadStatus' => 1
+                                        ))
+                                )
+                            ),
                         'fields' => array(
                             'Song.ProdID',
                             'Song.Title',
