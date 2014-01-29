@@ -12,7 +12,7 @@ echo $this->Form->create('Library', array('action' => $formAction, 'type' => 'fi
 
 if (empty($getData))
 {
-    print_r($getData);die;
+    
     
     $getData['Library']['id'] = "";
     $getData['Library']['library_admin_id'] = "";
