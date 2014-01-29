@@ -831,8 +831,7 @@ Class ArtistsController extends AppController
             }
         }
 
-        echo base64_decode($id) ." ". $album;
-        exit;
+        
         //reading sessin vlaues
         $country = $this->Session->read('territory');
         $libType = $this->Session->read('library_type');
@@ -989,6 +988,10 @@ Class ArtistsController extends AppController
         $this->Album->recursive = 2;
         $albumData = $this->paginate('Album'); //getting the Albums for the artist
 
+        echo "<pre>";
+        print_r($albumData);
+        exit;
+        
         if (!empty($albumData))
         {
             $libType = $this->Session->read('library_type');
