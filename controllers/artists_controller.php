@@ -1023,7 +1023,7 @@ Class ArtistsController extends AppController
         {
             $this->set("genre", '');
         }
-        
+
         $this->set('albumData', $albumData);
 
 
@@ -1098,21 +1098,27 @@ Class ArtistsController extends AppController
                 else
                 {
 
-                    $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
+                    $albumSongs[$album['Album']['ProdID']] = $this->Song->find(
+                            'all', array(
                         'conditions' =>
                         array('and' =>
                             array(
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
-                                //array('Song.provider_type = Genre.provider_type'),
                                 array('Song.provider_type = Country.provider_type'),
-                                //	array('Song.TrackBundleCount' => 0),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
                                 array("Song.provider_type" => $provider),
-                                array('Country.Territory' => $country), $cond
+                                array('Country.Territory' => $country), 
+                                $cond
                             ),
-                            'or' => array(array('and' => array('Country.StreamingStatus' => 1, 'Country.StreamingSalesDate <=' => date('Y-m-d')))
-                                , array('and' => array('Country.DownloadStatus' => 1))
+                            'or' => array(array('and' => array(
+                                'Country.StreamingStatus' => 1, 
+                                'Country.StreamingSalesDate <=' => date('Y-m-d')
+                                ))
+                                , 
+                                array('and' => array(
+                                    'Country.DownloadStatus' => 1
+                                    ))
                             )
                         ),
                         'fields' => array(
@@ -1195,11 +1201,9 @@ Class ArtistsController extends AppController
             }
         }
 
-        echo "<pre>";
-        print_r($albumData);
-        echo '<br/>';
+        echo "<pre>";    
         print_r($albumSongs);
-        exit;
+       
         $this->set('albumSongs', $albumSongs);
     }
 
