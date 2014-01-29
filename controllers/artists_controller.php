@@ -1023,7 +1023,7 @@ Class ArtistsController extends AppController
 
         $this->set('albumData', $albumData);
 
-
+         echo "<pre>";   
         //getting the songs for album
         $albumSongs = array();
         if (!empty($albumData))
@@ -1164,8 +1164,13 @@ Class ArtistsController extends AppController
                         'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
+                
+                print_r($albumSongs);
             }
         }
+        
+         
+        
 
         //checking the downlaod status for songs in Album
         $this->Download->recursive = -1;
@@ -1197,8 +1202,7 @@ Class ArtistsController extends AppController
             }
         }
 
-        echo "<pre>";    
-        print_r($albumSongs);
+       
        
         $this->set('albumSongs', $albumSongs);
     }
