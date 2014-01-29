@@ -238,9 +238,9 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         var result = JSON.parse(data);
 
         if(result.error){
-            var result = [0,"Not able to stream this song due to empty response from component",0,0,0,0];            
+            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];            
         }else if(result.error1){
-            var result = [0,"Not able to stream this song due to invalid response from component",0,0,0,0];
+            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];
         }
         streamingValidationJS(result);
     })

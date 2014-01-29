@@ -831,8 +831,8 @@ Class ArtistsController extends AppController
             }
         }
 
-//        echo base64_decode($id) . $album;
-//        exit;
+        echo base64_decode($id) ." ". $album;
+        exit;
         //reading sessin vlaues
         $country = $this->Session->read('territory');
         $libType = $this->Session->read('library_type');
@@ -881,7 +881,8 @@ Class ArtistsController extends AppController
                         'Song.DownloadStatus' => 1,
                         "Song.Sample_FileID != ''",
                         "Song.FullLength_FIleID != ''",
-                        'Country.Territory' => $country, $cond),
+                        'Country.Territory' => $country, 
+                        $cond),
                     'contain' => array(
                         'Country' => array(
                             'fields' => array(
