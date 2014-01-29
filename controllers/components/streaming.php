@@ -33,7 +33,9 @@ Class StreamingComponent extends Object
           creates log file name
         */
         
+
         $this->streamingLimit = $this->getStreamingLimit($libId);
+
         if($this->streamingLimit === false || $this->streamingLimit===0){
             $this->log("error|Not able to stream this song,streaming limit has been over.;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;streamingLimit :".$this->streamingLimit,'streaming');            
             
@@ -41,8 +43,7 @@ Class StreamingComponent extends Object
             return array(0,'Not able to stream this song,streaming limit has been over.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
-        
-       
+
         if(!isset($queue_id)) { $queue_id = '0'; }
         
         //set the default value
