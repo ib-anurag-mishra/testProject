@@ -219,7 +219,7 @@ function clearNowstreamingSession(){
 
     })
     .fail(function(){
-        alert('Ajax Call to clear now streaming session has been failed');
+        alert('An Ajax error has occurred. Please reload page.');
     });                                
 
 }
@@ -246,7 +246,7 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
     })
     .fail(function(){
         var errorFlag = 1;
-        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
+        var errorData = [0,"Error in loading song. Please reload the page.",0,0,0,0];
         streamingValidationJS(errorData);
     });
 }
