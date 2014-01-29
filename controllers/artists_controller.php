@@ -843,8 +843,7 @@ Class ArtistsController extends AppController
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
 
-        //setting the values for view
-        $this->set('artistName', base64_decode($id));
+        //setting the values for view        
         $this->set('album', $album);
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
@@ -923,8 +922,77 @@ Class ArtistsController extends AppController
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
         }
         
+        $id = str_replace('@', '/', $id);
+        $this->set('artistName', base64_decode($id));
+        
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Album.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }
+        
+        $this->paginate = array('conditions' =>
+            array('and' =>
+                array(
+                    //   array('Album.ArtistText' => base64_decode($id)),
+                    //	array('Album.provider_type = Genre.provider_type'),
+                    //	array('Album.provider_type = Country.provider_type'),
+                    $condition
+                ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+            ),
+            'fields' => array(
+                'Album.ProdID',
+                'Album.Title',
+                'Album.ArtistText',
+                'Album.AlbumTitle',
+                'Album.Advisory',
+                'Album.Artist',
+                'Album.ArtistURL',
+                'Album.Label',
+                'Album.Copyright',
+                'Album.provider_type'
+            ),
+            'contain' => array(
+                'Genre' => array(
+                    'fields' => array(
+                        'Genre.Genre'
+                    )
+                ),
+                'Country' => array(
+                    'fields' => array(
+                        'Country.Territory'
+                    )
+                ),
+                'Files' => array(
+                    'fields' => array(
+                        'Files.CdnPath',
+                        'Files.SaveAsName',
+                        'Files.SourceURL'
+                    ),
+                )
+            ), 
+            'order' => array('Country.SalesDate' => 'desc'), 
+            'limit' => '3', 
+            'cache' => 'yes', 
+            'chk' => 2
+        );
+        
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Song.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }
+        $this->Album->recursive = 2;
+        $albumData = $this->paginate('Album'); //getting the Albums for the artist
+        
         echo "<pre>";
-        print_r($condition);
+        print_r($albumData);
         exit;
     }
 
