@@ -389,6 +389,3 @@ if (count($albumData) > 0){
         ?>			
     </section>
 </section>
-
-
-<?php echo $this->element('sql_dump'); ?>
