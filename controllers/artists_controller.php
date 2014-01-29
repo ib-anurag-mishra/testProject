@@ -807,6 +807,7 @@ Class ArtistsController extends AppController
 
         $this->layout = 'home';
 
+        //Reading the parameters from URL
         if (count($this->params['pass']) > 1)
         {
             $count = count($this->params['pass']);
@@ -830,9 +831,42 @@ Class ArtistsController extends AppController
             }
         }
 
+//        echo base64_decode($id) . $album;
+//        exit;
+        //reading sessin vlaues
+        $country = $this->Session->read('territory');
+        $libType = $this->Session->read('library_type');
+        $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');
+        
+        //checking the download status for the patron & library
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
 
-        echo base64_decode($id) . $album;
-        exit;
+        //setting the values for view
+        $this->set('artistName', base64_decode($id));
+        $this->set('album', $album);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Song.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }
+        
+        
+        if ($album != '')
+        {
+            $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
+        }
+      
+        echo $condition ;
+        exit();
+        
     }
 
     /*
