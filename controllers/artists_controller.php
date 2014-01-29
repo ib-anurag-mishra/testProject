@@ -1005,6 +1005,19 @@ Class ArtistsController extends AppController
             }
         }
         
+        //creating the Artist Url
+        if (isset($albumData[0]['Song']['ArtistURL']))
+        {
+            $this->set('artistUrl', $albumData[0]['Song']['ArtistURL']);
+        }
+        else
+        {
+            $this->set('artistUrl', "N/A");
+        }
+        
+        $this->set('albumData', $albumData);
+        
+        
         //getting the songs for album
          $albumSongs = array();
         if (!empty($albumData))
@@ -1142,10 +1155,50 @@ Class ArtistsController extends AppController
                 }
             }
         }
-        echo "<pre>";
-        echo "Library_type :$libType <br/>" ;
-        print_r($albumSongs);
-        exit;
+        
+        //checking the downlaod status for songs in Album
+        $this->Download->recursive = -1;
+        foreach ($albumSongs as $k => $albumSong)
+        {
+            foreach ($albumSong as $key => $value)
+            {
+                $downloadsUsed = $this->Download->find('all', array('conditions' => array('ProdID' => $value['Song']['ProdID'], 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))), 'limit' => '1'));
+                if (count($downloadsUsed) > 0)
+                {
+                    $albumSongs[$k][$key]['Song']['status'] = 'avail';
+                }
+                else
+                {
+                    $albumSongs[$k][$key]['Song']['status'] = 'not';
+                }
+
+                if ($this->Session->read('library_type') == 2)
+                {
+                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    if (!empty($filePath))
+                    {
+                        $songPath = explode(':', $filePath);
+                        $streamUrl = trim($songPath[1]);
+                        $albumSongs[$k][$key]['streamUrl'] = $streamUrl;
+                        $albumSongs[$k][$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+                    }
+                }
+            }
+        }
+        
+        
+        
+        if (isset($albumData['0']['Genre']['Genre']))
+        {
+            $this->set("genre", $albumData['0']['Genre']['Genre']);
+        }
+        else
+        {
+             $this->set("genre", '');
+        }
+       
+        $this->set('albumSongs', $albumSongs);
+        
     }
 
     /*
