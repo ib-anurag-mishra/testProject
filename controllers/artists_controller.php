@@ -803,7 +803,7 @@ Class ArtistsController extends AppController
 
     function view($id = null, $album = null, $provider = null)
     {
-        Configure::write("debug", 2);
+        //Configure::write("debug", 2);
 
         $this->layout = 'home';
 
@@ -848,6 +848,7 @@ Class ArtistsController extends AppController
         $this->set('libraryDownload', $libraryDownload);
         $this->set('patronDownload', $patronDownload);
 
+        $cond = "";
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
@@ -1110,7 +1111,6 @@ Class ArtistsController extends AppController
                 }
                 else
                 {
-
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
                         array('and' =>
