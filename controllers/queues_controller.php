@@ -390,19 +390,19 @@ class QueuesController extends AppController
                         $this->QueueDetail->setDataSource('master');
                         $this->QueueDetail->saveAll($decodedAlbumSongs);
                         $this->QueueDetail->setDataSource('default');
-                        echo "Success";
+                        echo "Success|$type";
                         exit;
                     }
                 }
                 else    // Song is not allowed for streaming
                 {
-                    echo 'invalid_for_stream';
+                    echo "invalid_for_stream|$type";
                     exit;
                 }
             }
             else
             {
-                echo 'error';
+                echo "error|$type";
                 exit;
             }
         }
@@ -427,18 +427,18 @@ class QueuesController extends AppController
                     $this->QueueDetail->setDataSource('master');
                     $this->QueueDetail->save($insertArr);
                     $this->QueueDetail->setDataSource('default');
-                    echo "Success";
+                    echo "Success|$type";
                     exit;
                 }
                 else    // Song is not allowed for streaming
                 {
-                    echo 'invalid_for_stream';
+                    echo "invalid_for_stream|$type";
                     exit;
                 }
             }
             else
             {
-                echo 'error';
+                echo "error|$type";
                 exit;
             }
         }

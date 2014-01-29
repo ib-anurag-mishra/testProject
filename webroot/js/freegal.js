@@ -918,11 +918,11 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
                 document.getElementById('wishlist_song_' + prodId).style.display = 'block';
                 return false;
             }
-            else if(msg === 'empty')
+            else if (msg === 'empty')
             {
                 var downloadUsedArr = response.split('|');
                 alert(downloadUsedArr[1]);
-                return false ;
+                return false;
             }
             else
             {
@@ -1338,13 +1338,13 @@ function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
                 $('.afterClick').hide();
                 $('.beforeClick').show();
             }
-            else if(msg === 'empty')
+            else if (msg === 'empty')
             {
                 var downloadUsedArr = response.split('|');
                 alert(downloadUsedArr[1]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
-                return false ;
+                return false;
             }
             else
             {
@@ -1762,7 +1762,10 @@ function addToAlbumTest(queueID, addTo)
 
 function addToQueueResponse(response, type)
 {
-    if (response.length === 6) {
+    var msgs = response.split('|');
+    type = msgs[1];
+
+    if (msgs[0].length === 6) {
         var msg = response.substring(0, 6);
     } else {
         var msg = response.substring(0, 5);
