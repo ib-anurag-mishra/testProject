@@ -35,7 +35,7 @@
                 {
                     $html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' . base64_encode($genre_crumb_name));
                 }
-                $html->addCrumb(__($this->getTextEncode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']), true), '/artists/album/' . str_replace('/', '@', base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist'])) . '/' . base64_encode($genre));
+                $html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/' . str_replace('/', '@', base64_encode($artistName)) . '/' . base64_encode($genre));
                 $html->addCrumb($this->getTextEncode($albumData[0]['Album']['AlbumTitle']), '/artists/view/' . str_replace('/', '@', base64_encode($artistName)) . '/' . $album . '/' . base64_encode($albumData[0]['Album']['provider_type']));
                 echo $html->getCrumbs(' > ', __('Home', true), '/homes');
                 ?>
@@ -131,8 +131,7 @@
                         <div class="play-album-btn"><span></span></div>
 
                     </div>
-                    <div class="album-title">
-                        <?php
+                    <div class="album-title"><?php
                         if (strlen($album['Album']['AlbumTitle']) >= 50)
                         {
                             $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50) . '...';
@@ -229,10 +228,8 @@
 
 
 
-                            <div class="song <?php
-                            echo $class;
-                            echo $cs;
-                            ?>"><?php
+                            <div class="song <?php       echo $class;     echo $cs;  ?>">
+                                <?php
                                      if (strlen($albumSong['Song']['SongTitle']) >= 30)
                                      {
                                          echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';

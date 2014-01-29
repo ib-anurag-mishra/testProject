@@ -1006,17 +1006,7 @@ Class ArtistsController extends AppController
         {
             $provider = $albumData[0]['Album']['provider_type'];
         }
-
-        //if Artist name is not found in URL
-        if ($id != "")
-        {
-            $id = str_replace('@', '/', $id);
-            $this->set('artistName', base64_decode($id));
-        }
-        else
-        {
-            $this->set('artistName', $albumData[0]['Album']['ArtistText']);
-        }
+        
 
         //creating the Artist Url
         if (isset($albumData[0]['Song']['ArtistURL']))
@@ -1184,6 +1174,17 @@ Class ArtistsController extends AppController
         }
 
 
+        //if Artist name is not found in URL
+        if ($id != "")
+        {
+            $id = str_replace('@', '/', $id);
+            $this->set('artistName', base64_decode($id));
+        }
+        else
+        {           
+            $this->set('artistName',  $albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']);
+        }
+
 
 
         //checking the downlaod status for songs in Album
@@ -1215,8 +1216,6 @@ Class ArtistsController extends AppController
                 }
             }
         }
-
-
 
         $this->set('albumSongs', $albumSongs);
     }
