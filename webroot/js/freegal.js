@@ -892,7 +892,7 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistDownloadHome", // URL to request
         data: data, // post data
-        async:false,
+        async: false,
         success: function(response) {
             var msg = response.substring(0, 5);
             if (msg === 'error')
@@ -931,9 +931,9 @@ function wishlistDownloadIEHome(prodId, id, provider, CdnPath, SaveAsName)
     return false;
 }
 
-function toDownload( urlToDownload )
+function toDownload(urlToDownload)
 {
-    window.location.href = urlToDownload ;
+    window.location.href = urlToDownload;
 }
 
 function wishlistVideoDownloadIE(prodId, id, provider)
@@ -1008,18 +1008,18 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
             else if (msg === 'suces')
             {
                 var downloadUsedArr = response.split('|');
-                
+
                 document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                
+
                 location.href = unescape(downloadUsedArr[2]);
                 $('.afterClick').hide();
                 $('.beforeClick').show();
-                
+
                 document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Song. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
                 document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
                 document.getElementById('vdownloading_' + prodId).style.display = 'none';
                 document.getElementById('download_video_' + prodId).style.display = 'block';
-                
+
                 return false;
 
             }

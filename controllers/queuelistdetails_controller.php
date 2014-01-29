@@ -300,7 +300,7 @@ class QueueListDetailsController extends AppController
 
     function getPlaylistData()
     {
-        Configure::write('debug', 0);
+        //Configure::write('debug', 0);
         $prodId = $_POST['prodId'];
         $provider = $_POST['providerType'];
         $eventType = $_POST['eventFired'];
