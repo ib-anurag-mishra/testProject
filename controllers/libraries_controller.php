@@ -239,7 +239,8 @@ Class LibrariesController extends AppController
                         'Library.library_exp_date_format',
                         'Library.is_sip_over_ssh',
                         'Library.library_sip_command',
-                        'Library.library_type'
+                        'Library.library_type',
+                        'Library.library_streaming_hours'
                     ),
                     'contain' => array(
                         'User' => array(
@@ -287,8 +288,16 @@ Class LibrariesController extends AppController
     {
         Configure::write('debug', 0);
         $this->layout = false;
+        
+        
+        
+        
+        
         if ($this->RequestHandler->isAjax())
         {
+            
+            
+            
             if (!empty($this->params['named']['id']))
             {
                 $libraryId = $this->params['named']['id'];
@@ -374,7 +383,8 @@ Class LibrariesController extends AppController
                             'Library.twiter_icon',
                             'Library.youtube_icon',
                             'Library.library_unlimited',
-                             'Library.library_type'
+                            'Library.library_type',
+                            'Library.library_streaming_hours'
                         ),
                         'contain' => array(
                             'User' => array(
@@ -534,6 +544,8 @@ Class LibrariesController extends AppController
                             $this->Library->setValidation('library_step3');
                             if ($this->Library->validates())
                             {
+                                                             
+                                
                                 $this->Library->setValidation('library_step4');
                                 if ($this->Library->validates())
                                 {
@@ -595,6 +607,7 @@ Class LibrariesController extends AppController
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
                                                 
+                                                 
                                                 if ($this->Library->save($this->data['Library']))
                                                 {                                        
                                                     $this->Library->id =  $this->data['Library']['id'];
@@ -681,8 +694,10 @@ Class LibrariesController extends AppController
                                                             $contract['id_library_purchases'] = $this->LibraryPurchase->id;
                                                             $contract['library_id'] = $this->Library->id;
                                                             $this->ContractLibraryPurchase->save($contract);
+                                                           
                                                             $message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
+                                                            
                                                             $this->set('success', compact('message', 'data'));
                                                         }
                                                         else
