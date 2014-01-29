@@ -838,7 +838,7 @@ Class ArtistsController extends AppController
         $libType = $this->Session->read('library_type');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
-        
+
         //checking the download status for the patron & library
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
@@ -857,16 +857,44 @@ Class ArtistsController extends AppController
         {
             $cond = "";
         }
-        
+
+        $val = '';
+        $val_provider_type = '';
         
         if ($album != '')
         {
             $condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
         }
-      
-        echo $condition ;
-        exit();
+        else
+        {
+            $this->Song->Behaviors->attach('Containable');
+            if ($libType != 2)
+            {
+                $songs = $this->Song->find('all', array(
+                    'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
+                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+            }
+            else
+            {
+                $songs = $this->Song->find('all', array(
+                    'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
+                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
+                        array('or' =>
+                            array(
+                                array('Country.StreamingStatus' => 1)
+                            )), $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+            }
+            foreach ($songs as $k => $v)
+            {
+                $val = $val . $v['Song']['ReferenceID'] . ",";
+                $val_provider_type .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "'),";
+            }
+            $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
+        }
         
+        echo "<pre>";
+        print_r($condition);
+        exit;
     }
 
     /*
