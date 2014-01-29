@@ -1002,6 +1002,12 @@ Class ArtistsController extends AppController
             }
         }
 
+        //check for provider if null
+        if($provider == "")
+        {
+            $provider =  $albumData[0]['Album']['provider_type'];
+        }
+        
         //creating the Artist Url
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
@@ -1023,7 +1029,7 @@ Class ArtistsController extends AppController
 
         $this->set('albumData', $albumData);
 
-         echo "<pre>";   
+        
         //getting the songs for album
         $albumSongs = array();
         if (!empty($albumData))
@@ -1034,17 +1040,18 @@ Class ArtistsController extends AppController
                 {
                     $albumSongs[$album['Album']['ProdID']] = $this->Song->find('all', array(
                         'conditions' =>
-                        array('and' =>
-                            array(
-                                array('Song.ReferenceID' => $album['Album']['ProdID']),
-                                array('Song.provider_type = Country.provider_type'),
-                                array('Song.DownloadStatus' => 1),
-                                array("Song.Sample_FileID != ''"),
-                                array("Song.FullLength_FIleID != ''"),
-                                array("Song.provider_type" => $provider),
-                                array('Country.Territory' => $country), $cond
-                            )
-                        ),
+                            array('and' =>
+                                array(
+                                    array('Song.ReferenceID' => $album['Album']['ProdID']),
+                                    array('Song.provider_type = Country.provider_type'),
+                                    array('Song.DownloadStatus' => 1),
+                                    array("Song.Sample_FileID != ''"),
+                                    array("Song.FullLength_FIleID != ''"),
+                                    array("Song.provider_type" => $provider),
+                                    array('Country.Territory' => $country), 
+                                    $cond
+                                )
+                            ),
                         'fields' => array(
                             'Song.ProdID',
                             'Song.Title',
@@ -1164,8 +1171,9 @@ Class ArtistsController extends AppController
                         'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
-                
+                 echo "<pre>";   
                 print_r($albumSongs);
+                echo '<br/>';
             }
         }
         
