@@ -41,6 +41,7 @@ Class StreamingComponent extends Object
             return array(0,'Not able to stream this song,streaming limit has been over.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
             exit;
         }
+        
        
         if(!isset($queue_id)) { $queue_id = '0'; }
         
