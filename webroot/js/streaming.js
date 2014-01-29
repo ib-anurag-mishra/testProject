@@ -308,7 +308,7 @@ function clearNowstreamingSession(){
 
     })
     .fail(function(){
-        alert('Ajax Call to clear now streaming session has been failed');
+        alert('An Ajax error has occurred. Please reload page.');
     });                                
 
 }
@@ -327,15 +327,15 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         var result = JSON.parse(data);
         //console.log('result in done is ' + result);
         if(result.error){
-            var result = [0,"Not able to stream this song due to empty response from component",0,0,0,0];            
+            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];            
         }else if(result.error1){
-            var result = [0,"Not able to stream this song due to invalid response from component",0,0,0,0];
+            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];
         }
         streamingValidationJS(result);
     })
     .fail(function(){
         var errorFlag = 1;
-        var errorData = [0,"Not able to stream this song due to some ineternal server problem",0,0,0,0];
+        var errorData = [0,"Error in loading song. Please reload the page.",0,0,0,0];
         streamingValidationJS(errorData);
     });
 }

@@ -228,10 +228,8 @@
 
 
 
-                            <div class="song <?php
-                            echo $class;
-                            echo $cs;
-                            ?>"><?php
+                            <div class="song <?php       echo $class;     echo $cs;  ?>">
+                                <?php
                                      if (strlen($albumSong['Song']['SongTitle']) >= 30)
                                      {
                                          echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</a>';
