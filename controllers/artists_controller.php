@@ -1137,12 +1137,13 @@ Class ArtistsController extends AppController
                             ),
                         ),
                         'group' => 'Song.ProdID, Song.provider_type',
-                        'order' => array('Song.sequence_number', 'Song.ProdID1')
+                        'order' => array('Song.sequence_number', 'Song.ProdID')
                     ));
                 }
             }
         }
         echo "<pre>";
+        echo "Library_type :$libType <br/>" ;
         print_r($albumSongs);
         exit;
     }
