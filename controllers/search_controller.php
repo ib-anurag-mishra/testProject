@@ -614,7 +614,7 @@ class SearchController extends AppController
 	    $prodId = intval($prodId);
             $providerType = (($providerType == 'sony' || $providerType == 'ioda') ? $providerType : 'sony'); 
 	    if(!empty($prodId) && !empty($providerType)){
-	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('ProdID' => $prodId, 'provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownlaod.ProdID' => $prodId, 'provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
 	    }    
 	}
 }
