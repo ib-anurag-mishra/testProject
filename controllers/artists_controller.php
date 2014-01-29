@@ -830,9 +830,22 @@ Class ArtistsController extends AppController
 
 //        echo base64_decode($id) . $album;
 //         exit;
+        
+        $this->layout = 'home';
+        
         $country = $this->Session->read('territory');
-        $libType = $this->Session->read('library_type');
-
+        $libType = $this->Session->read('library_type');      
+        $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');+
+        
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+        
+         $this->set('artistName', base64_decode($id));
+        $this->set('album', $album);
+        $this->set('libraryDownload', $libraryDownload);
+        $this->set('patronDownload', $patronDownload);
+        
         $val = '';
         $val_provider_type = '';
 
@@ -886,26 +899,21 @@ Class ArtistsController extends AppController
             }
             $condition = array("(Album.ProdID, Album.provider_type) IN (" . rtrim($val_provider_type, ",") . ")");
         }
+        
+        echo "<pre>";
+        print_r($val_provider_type);
+        
         $id = str_replace('@', '/', $id);
-        $this->layout = 'home';
-        $this->set('artistName', base64_decode($id));
-        $this->set('album', $album);
-        $patId = $this->Session->read('patron');
-        $libId = $this->Session->read('library');
-        //$country = "'".$country."'";
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-        $this->set('libraryDownload', $libraryDownload);
-        $this->set('patronDownload', $patronDownload);
+    
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
         }
         else
         {
-
             $cond = "";
         }
+        
         $this->paginate = array('conditions' =>
             array('and' =>
                 array(
@@ -945,8 +953,13 @@ Class ArtistsController extends AppController
                         'Files.SourceURL'
                     ),
                 )
-            ), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3', 'cache' => 'yes', 'chk' => 2
+            ), 
+            'order' => array('Country.SalesDate' => 'desc'), 
+            'limit' => '3', 
+            'cache' => 'yes', 
+            'chk' => 2
         );
+        
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Song.Advisory' => 'F');
