@@ -941,7 +941,8 @@ Class ArtistsController extends AppController
                     //	array('Album.provider_type = Genre.provider_type'),
                     //	array('Album.provider_type = Country.provider_type'),
                     $condition
-                ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+                ), 
+                "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
             ),
             'fields' => array(
                 'Album.ProdID',
@@ -990,7 +991,9 @@ Class ArtistsController extends AppController
         }
         $this->Album->recursive = 2;
         $albumData = $this->paginate('Album'); //getting the Albums for the artist
-        
+        echo "<pre>";
+        echo "condition :$condition <br/>";
+        print_r($albumData);
         
         if (!empty($albumData))
         {
