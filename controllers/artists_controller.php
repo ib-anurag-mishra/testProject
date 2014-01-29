@@ -837,7 +837,7 @@ Class ArtistsController extends AppController
         $libType = $this->Session->read('library_type');
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');
-
+        
         //checking the download status for the patron & library
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
@@ -993,8 +993,7 @@ Class ArtistsController extends AppController
 //        exit;
         
         if (!empty($albumData))
-        {
-            $libType = $this->Session->read('library_type');
+        {            
             if ($libType == 2)
             {
 //                        $albumData[0]['albumSongs'] = $this->requestAction(
@@ -1179,9 +1178,9 @@ Class ArtistsController extends AppController
             }
         }
 
-//        echo "<pre>";
-//        print_r($albumSongs);
-//        exit;
+        echo "<pre>";
+        print_r($albumSongs);
+        exit;
 
         //if Artist name is not found in URL
         if ($id != "")

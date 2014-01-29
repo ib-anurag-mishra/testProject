@@ -4269,7 +4269,7 @@ STR;
 	     $this->Library->Behaviors->attach('Containable');
              $data['library_cond'] = $library_id;
 	
-	     $existingLibraries = $this->Library->find('all',array('conditions' => array('library_status' => 'active','library_authentication_method' => 'capita','library_authentication_num LIKE "%'.$cardNo.'%"'),'fields' => array ('Library.id','Library.library_authentication_method','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
+	     $existingLibraries = $this->Library->find('all',array('conditions' => array('library_status' => 'active','library_authentication_method' => 'capita','Library.id' => $library_id),'fields' => array ('Library.id','Library.library_authentication_method','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no')
 		)
 	     );
 	   $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
