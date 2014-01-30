@@ -2439,6 +2439,27 @@ function showHideGrid(varType) {
     }
 }
 
+function checkAjaxDownload(prodId, providerType){
+    var res = "";
+    
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: '/search/ajaxcheckdownload/'+prodId+"/"+providerType, // URL to request
+        data: "", // post data
+        async:false,
+        success: function(response) {
+            res = response;
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            
+        }
+    });
+    
+    return res;
+    
+    
+}
+
 function showHideGridCommingSoon(varType) {
 
     var top_100_grids = $('.top-100-grids');
