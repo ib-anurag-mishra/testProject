@@ -1915,11 +1915,7 @@ STR;
       case '19':  {
         $resp = $this->mdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
-      case '20':  {
-        $resp = $this->capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
-      }
       break;
-      
       default:
     }
 
