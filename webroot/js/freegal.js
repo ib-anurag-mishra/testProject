@@ -2199,6 +2199,39 @@ function loadAlbumData(albumtData) {
 
 }
 
+function loadNationalAlbumData(artistText,prodId,providerType,albumTitle) {
+
+    artistText = base64_decode(artistText);
+    providerType = base64_decode(providerType);
+    albumTitle = base64_decode(albumTitle);
+    var data = "artistText=" + artistText+"&prodId="+prodId+"&providerType="+providerType+"&albumTitle="+albumTitle;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "artists/getNationalAlbumData", // URL to request
+        data: data, // post data
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                playlist = base64_decode(response.success);
+                playlist = JSON.parse(playlist);
+                if (playlist.length) {
+                    pushSongs(playlist);
+                }
+            } else if (response.error) {
+                console.log(response.error);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log('Ajax call to get album songs has been failed');
+        }
+    });
+    return false;
+
+
+}
+
+
+
 function base64_decode(data) {
     // http://kevin.vanzonneveld.net
     // +   original by: Tyler Akins (http://rumkin.com)
