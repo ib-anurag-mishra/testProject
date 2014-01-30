@@ -1891,7 +1891,12 @@ STR;
 
      case '17':  {
       
-		$auth_method_name = $this->Library->find('first',array('conditions'=>array('id'=>$library_id),'fields' => array('Library.library_authentication_method')));
+	    $auth_method_name = $this->Library->find('first',array(
+	      'conditions' => array('Library.id' => $library_id),
+	      'fields' => array('library_authentication_method'),
+	      'recursive' => -1
+	      )
+	    );
        
 	if($auth_method_name['Library']['library_authentication_method'] == 'capita'){
 	 	$resp = $this->capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
