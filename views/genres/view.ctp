@@ -450,28 +450,56 @@ elseif ($this->Session->check('calledAlbum'))
             ?>
 
             var all_album_url = $("#allAlbumUrl").attr('value');
+            
+            $('#album_details_container').html('');
+            $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;">\n\
+                    <img src="' + webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
 
-            showAllAlbumsList(all_album_url);
-
-            setTimeout(function() {
-                if ($(document).find('div.album-list-shadow-container'))
-                {
-                    //focus on selected Artist
-                    $("#artistlistrecord li").each(function() {
-                        if ($(this).find('a').hasClass('selected'))
-                        {
-                            $(this).find('a').focus();
+            var data = "";
+            $.ajax({
+                type: "post", // Request method: post, get
+                url: webroot + all_album_url, // URL to request
+                data: data, // post data
+                success: function(response) {
+                    $('.album-list-span').html(response);
+                    $('a[title]').qtip({
+                        position: {
+                            corner: {
+                                target: 'topLeft',
+                                tooltip: 'bottomRight'
+                            }
+                        },
+                        style: {
+                            color: '#444',
+                            fontSize: 12,
+                            border: {
+                                color: '#444'
+                            },
+                            width: {
+                                max: 350,
+                                min: 0
+                            },
+                            tip: {
+                                corner: 'bottomRight',
+                                size: {
+                                    x: 5,
+                                    y: 5
+                                }
+                            }
                         }
                     });
-
+                    
                     //scroll to selected album
                     scrollToSelectedAlbum();
-                    
-                    //calling the selected Album Details
-                    var album_url = $("#selectedAlbumUrl").attr('value');
-                    showAlbumDetails(album_url);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    // alert('No album available for this artist.');
                 }
-            }, 300);
+            });
+            
+            //calling the selected Album Details
+            var album_url = $("#selectedAlbumUrl").attr('value');
+            showAlbumDetails(album_url);
         });
     </script>
     <?php
