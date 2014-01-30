@@ -2426,7 +2426,7 @@ function showHideGrid(varType) {
     }
 }
 
-function checkAjaxDownload(prodID, providerType){
+function checkAjaxDownload(prodId, providerType){
     var res = "";
     
     jQuery.ajax({
