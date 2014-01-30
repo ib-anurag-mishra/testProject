@@ -21,7 +21,7 @@ class SearchController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'autocomplete');
+        $this->Auth->allow('index', 'autocomplete','ajaxcheckdownload');
     }
 
     function index($page = 1, $facetPage = 1)
@@ -605,14 +605,38 @@ class SearchController extends AppController
         $this->set('records', $records);
     }
 
-	function ajaxcheckdownload($prodId, $providerType, $libId, $patId)
+	function ajaxcheckdownload($prodId, $providerType)
 	{
 	    $this->layout = 'ajax';
             $this->autoRender = false;
+            $patId = $this->Session->read('patron');
+            $libId = $this->Session->read('library');
+            
 	    $prodId = intval($prodId);
             $providerType = (($providerType == 'sony' || $providerType == 'ioda') ? $providerType : 'sony'); 
-	    if(!empty($prodId) && !empty($providerType)){
-	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownlaod.ProdID' => $prodId, 'provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+	    
+            if(!empty($prodId) && !empty($providerType))
+            {
+	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownlaod.ProdID' => $prodId, 'LatestDownlaod.provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+                $set = 0;
+                foreach ($downloadsUsed as $downloadKey => $downloadData)
+                {
+                    if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+                    {
+                        $set = 1;
+                        break;
+                    }
+                }
+                if($set == 1)
+                {
+                    echo 'true';
+                    exit;
+                }
+                else
+                {
+                    echo 'false';
+                    exit;
+                }
 	    }    
 	}
 }
