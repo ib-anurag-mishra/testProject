@@ -1480,7 +1480,7 @@ Class ReportsController extends AppController {
     }
     
     function admin_getLibraryIdsStream() {
-      //  Configure::write('debug', 0);
+      Configure::write('debug', 2);
               
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
@@ -1515,6 +1515,8 @@ Class ReportsController extends AppController {
         
         echo "<pre>";
         print_r($var);
+        $view = new View();
+        $view->element('sql_dump');
         exit;
         
         foreach ($var as $k => $v) {
