@@ -1529,7 +1529,7 @@ Class ReportsController extends AppController {
         $view=new View($this, false);
             echo $view->element('sql_dump');
             
-            $dbo = $this->getDatasource();
+            $dbo = $this->Library->getDatasource();
   $logs = $dbo->getLog();
   $lastLog = end($logs['log']);
   echo $lastLog['query'];
