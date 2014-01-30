@@ -129,9 +129,6 @@ class HomesController extends AppController
 
 
 
-
-        $ids = '';
-        $ids_provider_type = '';
         //featured artist slideshow code start
         //if(1){
         if (($artists = Cache::read("featured" . $country)) === false)
@@ -190,30 +187,30 @@ class HomesController extends AppController
         /*
          *  Code For Coming Soon --- START
          */
-
-        $territory = $this->Session->read('territory');
-
         if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
         {
-
+            echo "songs from query";
             $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
         else    //  Show From Cache
         {
             $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
         }
+        echo "size: ".mb_strlen(serialize($coming_soon_rs), '8bit');
         $this->set('coming_soon_rs', $coming_soon_rs);
 
         // Videos
         if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false)
         {
+            echo "videos from query";
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
         }
         else    //  Show From Cache
         {
             $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
         }
-
+         echo "size: ".mb_strlen(serialize($coming_soon_videos), '8bit');
+        exit;
         $this->set('coming_soon_videos', $coming_soon_videos);
 
         /*

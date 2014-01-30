@@ -537,8 +537,6 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
     <div class="coming-soon">
         <header class="clearfix">
             <h3>Coming Soon</h3>
-
-
         </header>
         <div class="coming-soon-filter-container clearfix">
             <nav class="category-filter">
@@ -547,12 +545,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active no-ajaxy hp-tabs" onclick="showHideGridCommingSoon('songs')">Songs</a></li>
                     <li><a href="#coming-soon-videos-grid" id="videosIDValComming" class="no-ajaxy hp-tabs" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
                 </ul>
-
             </nav>
             <!-- <a href="#" class="view-all">View All</a> -->
-
-        </div>
-        <?php ?>
+        </div><!-- end songs grid -->
 
 
         <div id="coming-soon-singles-grid" class="horiz-scroll active">
