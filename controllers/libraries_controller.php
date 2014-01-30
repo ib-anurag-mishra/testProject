@@ -610,9 +610,9 @@ Class LibrariesController extends AppController
                                                  
                                                 if ($this->Library->save($this->data['Library']))
                                                 {                                        
-                                                    $this->Library->id =  $this->data['Library']['id'];
-                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
-                                                    $this->Library->save();
+//                                                    $this->Library->id =  $this->data['Library']['id'];
+//                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
+//                                                    $this->Library->save();
                                                     
                                                     //echo "Count: ".count($this->data['Variable']);
                                                     
@@ -938,7 +938,11 @@ Class LibrariesController extends AppController
         echo "{";
         echo "success: '" . $success . "',\n";
         echo "error: '" . $error . "',\n";
+        echo "move_uploaded_file: '" . move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path) . "',\n";
+        echo "tmp_name: '" . $_FILES[$fileElementName]["tmp_name"] . "',\n";
         echo "msg: '" . $msg . "'\n";
+        echo "src: '" . $src . "'\n";
+        echo "dst: '" . $dst . "'\n";
         echo "}";
     }
 
