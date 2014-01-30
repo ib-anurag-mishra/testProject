@@ -2431,7 +2431,7 @@ function checkAjaxDownload(prodId, providerType){
     
     jQuery.ajax({
         type: "post", // Request method: post, get
-        url: webroot + '/search/ajaxcheckdownload/'+prodId+"/"+providerType, // URL to request
+        url: '/search/ajaxcheckdownload/'+prodId+"/"+providerType, // URL to request
         data: "", // post data
         async:false,
         success: function(response) {
