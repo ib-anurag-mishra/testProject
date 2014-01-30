@@ -347,9 +347,9 @@ STR;
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
                     );
                     if(!empty($albumSongs[$value['Albums']['ProdID']])){
-                        $data[$key]['albumSongs'] = TRUE;
+                        $data[$key]['albumSongs'] = 1;
                     }else{
-                        $data[$key]['albumSongs'] = FALSE;
+                        $data[$key]['albumSongs'] = 0;
                     }
                     if(!empty($albumSongs[$value['Albums']['ProdID']])){
                         Cache::write("nationaltopalbum_" . $territory.'_'.$value['Albums']['AlbumTitle'], $albumSongs);
