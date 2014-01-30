@@ -574,10 +574,10 @@ elseif ($this->Session->check('calledAlbum'))
     {
         //focus on selected Album
         $(document).find('div.album-list-shadow-container .album-list').children().each(function() {
-            var album_title = $(this).find('div.album-title').find('a').text();
+            var album_title = $(this).find('div.album-overview-container').attr('id').val();
             var called_Album = '<?php echo $this->Session->read('calledAlbumText') ?>';
 
-            if (album_title === called_Album)
+            if (album_title.localeCompare(called_Album))
             {
                 var to_scroll = $(document).find('div.album-list-shadow-container .album-list');
                 var scroll_distance = $(this).offset().top - $(this).parent().offset().top;

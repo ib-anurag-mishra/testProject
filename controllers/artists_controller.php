@@ -1918,14 +1918,8 @@ Class ArtistsController extends AppController
          * then it store the Album name in session
          * for setting the focus in the list on album
          */
-        if (strlen($album['Album']['AlbumTitle']) >= 40)
-        {
-            $this->Session->write('calledAlbumText', substr($album['Album']['AlbumTitle'], 0, 40) . '...');
-        }
-        else
-        {
-            $this->Session->write('calledAlbumText', $albumData[0]['Album']['AlbumTitle']);
-        }
+        $this->Session->write('calledAlbumText', $album['Album']['ProdID']);
+       
 
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
@@ -2323,7 +2317,7 @@ Class ArtistsController extends AppController
                 $title_album_on_hover = @iconv(mb_detect_encoding($title_album_on_hover), "WINDOWS-1252//IGNORE", $title_album_on_hover);
                 $title_album_on_hover = @iconv(mb_detect_encoding($title_album_on_hover), "UTF-8//IGNORE", $title_album_on_hover);
 
-                $htmlContain .= '<div class="album-overview-container">
+                $htmlContain .= '<div class="album-overview-container" id="'.$album['Album']['ProdID'].'">                                      
                                         <div class="album-image selected">
                                                 <a href="javascript:void(0);" onclick="showAlbumDetails(\'' . $albumURL . '\')"><img src="' . Configure::read('App.Music_Path') . $albumArtwork . '" alt="album-cover-small" width="59" height="59" /></a>
                                         </div>
