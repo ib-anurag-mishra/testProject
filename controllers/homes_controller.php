@@ -117,12 +117,10 @@ class HomesController extends AppController
         // National Top 100 Albums slider        
         if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
         {
-
             $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
         }
         else
         {
-
             $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
         }
         $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
@@ -195,8 +193,7 @@ class HomesController extends AppController
         else    //  Show From Cache
         {
             $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
-        }
-        echo "size: ".mb_strlen(serialize($coming_soon_rs), '8bit');
+        }       
         $this->set('coming_soon_rs', $coming_soon_rs);
 
         // Videos
@@ -204,12 +201,13 @@ class HomesController extends AppController
         {
             echo "videos from query";
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
+            echo"<pre>";print_r($coming_soon_videos);
         }
         else    //  Show From Cache
         {
             $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
         }
-         echo "size: ".mb_strlen(serialize($coming_soon_videos), '8bit');
+        
         exit;
         $this->set('coming_soon_videos', $coming_soon_videos);
 

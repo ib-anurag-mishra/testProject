@@ -748,6 +748,13 @@ STR;
 STR;
 
         $coming_soon_rv = $albumInstance->query($sql_coming_soon_v);
+        
+        //gettign size of array
+        $serialized_data = serialize($coming_soon_rv);
+        $size = strlen($serialized_data);
+        print($size * 8 / 1000);
+
+
         $this->log("coming soon videos $territory", "cachequery");
         $this->log($sql_coming_soon_v, "cachequery");
 
