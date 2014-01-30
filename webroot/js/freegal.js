@@ -1549,9 +1549,9 @@ function approvePatron(libid, patronid)
 
 function declinePatron()
 {
-    jQuery.ajax({
+    $.ajax({
         type: "post", // Request method: post, get
-        url: webroot + "homes/approvePatron", // URL to request
+        url: webroot + "users/logout", // URL to request
         success: function(response) {
             //location.reload();
         },
