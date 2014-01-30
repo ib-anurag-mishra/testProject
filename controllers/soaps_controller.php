@@ -6759,6 +6759,7 @@ STR;
       'mndlogin_reference' => '18',
       'mdlogin_reference' => '19',
       'ezproxy' => '16',
+      'capita' => '20',
 
     );
 
