@@ -1528,12 +1528,10 @@ function checkPatron(libid, patronid)
  }*/
 
 function approvePatron(libid, patronid)
-{
-    var _loaderDiv = $("#loaderDiv");  
+{  
     jQuery.ajax({
         type: "post", // Request method: post, get
-        url: webroot + "user/logout", // URL to request
-        data: data, // post data
+        url: webroot + "user/logout", // URL to request      
         success: function(response) {
            // location.reload();
         },
