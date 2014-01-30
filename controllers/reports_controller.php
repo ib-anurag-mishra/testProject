@@ -1483,7 +1483,7 @@ Class ReportsController extends AppController {
     function admin_getLibraryIdsStream() {
       Configure::write('debug', 2);
       
-        $territory = 'US' ;//$_REQUEST['Territory'];
+        $territory = $_REQUEST['Territory'];
         
         $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
@@ -1522,20 +1522,7 @@ Class ReportsController extends AppController {
                     );
             $data = "<option value='all'>All Libraries</option>";
         }
-        
-        echo "<pre>";
-        
-        print_r($var);
-        
-        $view=new View($this, false);
-            echo $view->element('sql_dump');
-            
-            $dbo = $this->Library->getDatasource();
-  $logs = $dbo->getLog();
-  $lastLog = end($logs['log']);
-  echo $lastLog['query'];
-        exit;
-        
+       
         foreach ($var as $k => $v) {
             
             $selected= '';
