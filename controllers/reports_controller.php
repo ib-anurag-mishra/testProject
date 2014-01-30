@@ -1480,12 +1480,8 @@ Class ReportsController extends AppController {
     }
     
     function admin_getLibraryIdsStream() {
-        Configure::write('debug', 0);
-        echo "<pre>";
-        echo "Consor: ".$this->Session->read("Auth.User.consortium");
-        echo "id: ".$this->Session->read("Auth.User.id");
-        exit;
-        
+      //  Configure::write('debug', 0);
+              
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array(
@@ -1497,7 +1493,7 @@ Class ReportsController extends AppController {
             
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
             
-            $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
+            //$libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
@@ -1516,6 +1512,11 @@ Class ReportsController extends AppController {
                 'recursive' => -1));
             $data = "<option value='all'>All Libraries</option>";
         }
+        
+        echo "<pre>";
+        print_r($var);
+        exit;
+        
         foreach ($var as $k => $v) {
             
             $selected= '';
