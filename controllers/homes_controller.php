@@ -200,8 +200,9 @@ class HomesController extends AppController
         if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false)
         {
             echo "videos from query";
+                echo "size before : ".memory_get_usage();
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
-            echo"<pre>";print_r($coming_soon_videos);
+               echo "size before : ".memory_get_usage();
         }
         else    //  Show From Cache
         {
