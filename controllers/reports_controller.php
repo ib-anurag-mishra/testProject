@@ -1481,10 +1481,9 @@ Class ReportsController extends AppController {
     }
     
     function admin_getLibraryIdsStream() {
-      Configure::write('debug', 2);
+      //Configure::write('debug', 2);
       
-        $territory = $_REQUEST['Territory'];
-        
+        $territory = $_REQUEST['Territory'];        
         $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
@@ -1522,7 +1521,6 @@ Class ReportsController extends AppController {
                     );
             $data = "<option value='all'>All Libraries</option>";
         }
-       
         foreach ($var as $k => $v) {
             
             $selected= '';
@@ -1736,7 +1734,7 @@ Class ReportsController extends AppController {
         
         
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'library_type' => '2'), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
             
