@@ -1515,8 +1515,8 @@ Class ReportsController extends AppController {
         
         echo "<pre>";
         print_r($var);
-        $view = new View();
-        $view->element('sql_dump');
+        $view=new View($this, false);
+            echo $view->element('sql_dump');
         exit;
         
         foreach ($var as $k => $v) {
