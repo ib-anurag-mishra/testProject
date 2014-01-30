@@ -605,7 +605,7 @@ elseif ($this->Session->check('calledAlbum'))
         var called_Album = <?php echo $this->Session->read('calledAlbumText') ?>;
          
         album_list.each(function() {
-            var album_id = $(this).attr('id').val();          
+            var album_id = $(this).attr('id');          
 
             if (album_id === called_Album)
             {
