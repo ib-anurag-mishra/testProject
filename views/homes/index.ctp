@@ -371,7 +371,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         <div class="wishlist-popover">
                                             <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             <?php
-                                            if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                            if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs']))
                                             {
 
                                                // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
