@@ -1553,10 +1553,10 @@ function declinePatron()
         type: "post", // Request method: post, get
         url: webroot + "users/logout", // URL to request
         success: function(response) {
-            location.reload();
+           history.back();
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            location.reload();
+            history.back();
         }
     });
     return false;
