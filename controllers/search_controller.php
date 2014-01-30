@@ -619,6 +619,7 @@ class SearchController extends AppController
             {
 	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownlaod.ProdID' => $prodId, 'LatestDownlaod.provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
                 $set = 0;
+                echo $this->LatestDownload->lastQuery();
                 print_r($downloadUsed);
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
