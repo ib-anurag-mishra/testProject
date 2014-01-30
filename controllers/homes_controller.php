@@ -186,8 +186,7 @@ class HomesController extends AppController
          *  Code For Coming Soon --- START
          */
         if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
-        {
-            echo "songs from query";
+        {echo "songs from query";
             $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
         else    //  Show From Cache
@@ -197,12 +196,11 @@ class HomesController extends AppController
         $this->set('coming_soon_rs', $coming_soon_rs);
 
         // Videos
+        print_r(Cache::read("coming_soon_videos" . $territory));
         if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false)
-        {
+        {          
             echo "videos from query";
-                echo "size before : ".memory_get_usage();
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
-               echo "size before : ".memory_get_usage();
         }
         else    //  Show From Cache
         {
