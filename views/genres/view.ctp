@@ -601,11 +601,13 @@ elseif ($this->Session->check('calledAlbum'))
     function scrollToSelectedAlbum()
     {
         //focus on selected Album
-        $(document).find('div.album-list-shadow-container .album-list').children().each(function() {
-            var album_title = $(this).find('div.album-overview-container').attr('id').val();
-            var called_Album = <?php echo $this->Session->read('calledAlbumText') ?>;
+        var album_list = $(document).find('div.album-list-shadow-container .album-list > div.album-overview-container');
+        var called_Album = <?php echo $this->Session->read('calledAlbumText') ?>;
+         
+        album_list.each(function() {
+            var album_id = $(this).attr('id').val();          
 
-            if (album_title === called_Album)
+            if (album_id === called_Album)
             {
                 var to_scroll = $(document).find('div.album-list-shadow-container .album-list');
                 var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
