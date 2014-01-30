@@ -760,19 +760,18 @@ STR;
                 $coming_soon_rv[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
             
-            Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
+            Cache::write("coming_soon_videos" . $territory, $coming_soon_rv);
             $this->log("cache written for coming soon videos for $territory", "cache");
         }
         else
         {
             $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
-            Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));
+            Cache::write("coming_soon_videos" . $territory, Cache::read("coming_soon_videos" . $territory));
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
         }
 
         $this->log("cache written for coming soon videos for $territory", 'debug');
         //End Caching functionality for coming soon songs
-        echo "coming_soon_videos." . $territory;
         return $coming_soon_rv;
     }
 
