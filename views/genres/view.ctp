@@ -59,8 +59,8 @@
     $(document).ready(function() {
         var preValue = 1;
         var artistPage = 2;
-       var selectedAlpha = '<? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?>';
-       
+        var selectedAlpha = '<? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?>';
+
         $("#artistscroll").scroll(function() {
             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
@@ -73,7 +73,7 @@
                     if (artistPage <= totalPages) {
 
                         preValue = artistPage;
-                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/'+selectedAlpha;
+                        var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/' + selectedAlpha;
 
                         jQuery.ajax({
                             type: "post", // Request method: post, get
@@ -464,19 +464,9 @@ elseif ($this->Session->check('calledAlbum'))
                         }
                     });
 
-                    //focus on selected Album
-                    $(document).find('div.album-list-shadow-container .album-list').children().each(function() {
-                        var album_title = $(this).find('div.album-title').find('a').text();
-                        var called_Album = "<?php echo $this->Session->read('calledAlbumText') ?>";
-                        if (album_title === called_Album)
-                        {
-                            var scrollTo = $(this).find('div.album-title');
-                            var scrollPos = scrollTo.offset().top - $(this).parent().offset().top;
-                            $(document).find('div.album-list-shadow-container .album-list').scrollTop(scrollPos);
-                            //$(this).find('div.album-title').find('a').focus();
-                        }
-                    });
-
+                    //scroll to selected album
+                    scrollToSelectedAlbum();
+                    
                     //calling the selected Album Details
                     var album_url = $("#selectedAlbumUrl").attr('value');
                     showAlbumDetails(album_url);
@@ -576,6 +566,25 @@ elseif ($this->Session->check('calledAlbum'))
                     scrollTop: scroll_distance
                 }, 2000);
                 $(this).find('a').focus();
+            }
+        });
+    }
+
+    function scrollToSelectedAlbum()
+    {
+        //focus on selected Album
+        $(document).find('div.album-list-shadow-container .album-list').children().each(function() {
+            var album_title = $(this).find('div.album-title').find('a').text();
+            var called_Album = '<?php echo $this->Session->read('calledAlbumText') ?>';
+
+            if (album_title === called_Album)
+            {
+                var to_scroll = $(document).find('div.album-list-shadow-container .album-list');
+                var scroll_distance = $(this).offset().top - $(this).parent().offset().top;
+                to_scroll.animate({
+                    scrollTop: scroll_distance
+                }, 2000);
+
             }
         });
     }
