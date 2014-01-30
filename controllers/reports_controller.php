@@ -1493,7 +1493,7 @@ Class ReportsController extends AppController {
                 "conditions" => array(
                     'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
                     'Library.library_territory' => $territory,
-                    'Library.library_type' => 2),  
+                    'Library.library_type = 2'),  
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1)
@@ -1504,7 +1504,8 @@ Class ReportsController extends AppController {
                $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
-                    'Library.library_territory' => $territory), 
+                    'Library.library_territory' => $territory,
+                    'Library.library_type = 2'), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
@@ -1512,8 +1513,9 @@ Class ReportsController extends AppController {
         } else {
          
             $var = $this->Library->find('list', array(
-                'conditions' => array('Library.library_territory' => $territory, 
-                    'Library.library_type' => 2), 
+                'conditions' => array(
+                    'Library.library_territory' => $territory, 
+                    'Library.library_type =2'), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1)
