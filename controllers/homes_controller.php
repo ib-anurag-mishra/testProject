@@ -204,8 +204,7 @@ class HomesController extends AppController
         {
             $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
         }
-        
-        exit;
+       
         $this->set('coming_soon_videos', $coming_soon_videos);
 
         /*
