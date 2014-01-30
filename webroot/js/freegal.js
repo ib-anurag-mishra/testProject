@@ -1528,22 +1528,10 @@ function checkPatron(libid, patronid)
  }*/
 
 function approvePatron(libid, patronid)
-{  
-    jQuery.ajax({
-        type: "post", // Request method: post, get
-        url: webroot + "user/logout", // URL to request      
-        success: function(response) {
-           // location.reload();
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            //location.reload();
-        }
-    });
-    return false;
-}
-
-function declinePatron()
 {
+    var _loaderDiv = $("#loaderDiv");  
+    _loaderDiv.show();
+    var data = "libid=" + libid + "&patronid=" + patronid;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "homes/approvePatron", // URL to request
@@ -1557,6 +1545,24 @@ function declinePatron()
     });
     return false;
 }
+
+
+function declinePatron()
+{
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/approvePatron", // URL to request
+        success: function(response) {
+            //location.reload();
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            //location.reload();
+        }
+    });
+    return false;
+}
+
+
 var isIE = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
 var isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
 var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
