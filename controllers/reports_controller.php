@@ -1475,7 +1475,7 @@ Class ReportsController extends AppController {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 'Library.library_territory' => $_REQUEST['Territory'], 'Library.library_type' => 2), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
         } else {
             
-            $var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory'], 'Library.library_type' => 2), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+            $var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id', 'Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
             $data = "<option value='all'>All Libraries</option>";
         }
         foreach ($var as $k => $v) {
