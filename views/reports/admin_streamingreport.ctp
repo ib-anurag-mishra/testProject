@@ -24,13 +24,14 @@ if (empty($getData)) {
                         <?php
                         if ($libraryID == "") {
                             ?>
-                            <td align="right"><?php echo $this->Form->label('Choose Territory'); ?></td>
+                        <!-- commented as Territory is not required for consortium. As suggested by Micah -->
+<!--                            <td align="right"><?php echo $this->Form->label('Choose Territory'); ?></td>
                             <td align="left">
                                 <?php
                                 echo $this->Form->input('Territory', array('options' => $territory, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
                                 );
                                 ?>
-                            </td>
+                            </td>-->
                             <td align="right"><?php echo $this->Form->label('Select Library'); ?></td>
                             <td align="left">
                                 <div id="allLibrary">
