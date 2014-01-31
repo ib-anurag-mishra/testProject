@@ -2220,7 +2220,12 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
-
+        //for login redirect we are storing the Genre and Artist in Session
+        $this->Session->write('calledGenre', $album);
+        $this->Session->write('calledArtist', $id);
+        $this->Session->delete('calledAlbum');
+        $this->Session->delete('calledProvider');
+        
         $id = str_replace('@', '/', $id);
 
         $this->Song->Behaviors->attach('Containable');
@@ -2254,13 +2259,7 @@ Class ArtistsController extends AppController
         $this->set('artisttext', base64_decode($id));
         $this->set('genre', base64_decode($album));
 
-        //for login redirect we are storing the Genre and Artist in Session
-        $this->Session->write('calledGenre', $album);
-        $this->Session->write('calledArtist', base64_decode($id));
-        $this->Session->delete('calledAlbum');
-        $this->Session->delete('calledProvider');
-
-
+        
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
