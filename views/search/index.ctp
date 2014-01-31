@@ -769,7 +769,7 @@ function Get_Sales_date($sales_date_array, $country)
                                         {
                                             //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                         }
-                                        $album_title = truncate_text($this->getTextEncode($palbum->Title), 30, $this);
+                                        $album_title = truncate_text($this->getTextEncode($palbum->Title), 25, $this);
                                         $title = urlencode($palbum->Title);
                                         $album_genre = str_replace('"', '', $palbum->Genre);
                                         $tilte = urlencode($palbum->Title);
