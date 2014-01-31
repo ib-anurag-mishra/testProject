@@ -1503,7 +1503,6 @@ Class ReportsController extends AppController {
             
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
         
-              echo  $this->Session->read("Auth.User.consortium");
               $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
@@ -1732,7 +1731,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-     Configure::write('debug',2);
+//Configure::write('debug',2);
      
        ini_set('memory_limit', '512M');
         set_time_limit(0);
