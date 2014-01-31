@@ -37,7 +37,7 @@ Class ReportsController extends AppController {
         } else {
             if ($this->data['Report']['Territory'] == '') {
                 //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-                $this->set('libraries', array());
+                $this->set('libraries', $this->admin_getLibraryIds());
             } else {
                 $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             }
@@ -1743,7 +1743,7 @@ Class ReportsController extends AppController {
             if ($this->data['Report']['Territory'] == '') {
                 
                 //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-                $this->set('libraries', array());
+                $this->set('libraries', $this->admin_getLibraryIdsStream());
             } else {
                 
                 $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_type' => '2','Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));

@@ -474,7 +474,7 @@
 		if(empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''))
 		{
 		?>
-			report_load_page();
+			//report_load_page();
 		<?php
 		}
 		?>

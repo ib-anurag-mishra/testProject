@@ -36,9 +36,7 @@ if (empty($getData)) {
                             <td align="left">
                                 <div id="allLibrary">
                                     <?php
-                                    if ($this->Session->read("Auth.User.consortium") == '') {
-                                        $libraries['all'] = "All Libraries";
-                                    }
+                                    if ($this->Session->read("Auth.User.consortium") == '') {   $libraries['all'] = "All Libraries";  }
                                     echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
                                     ?>
                                 </div>
@@ -392,7 +390,7 @@ echo $session->flash();
 if (empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '')) {
     
     ?>
-            report_load_page();
+            //report_load_page();
     <?php
 }
 ?>
