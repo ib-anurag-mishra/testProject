@@ -36,7 +36,7 @@
 							<div id="allLibrary">
                         <?php
                                     if($this->Session->read("Auth.User.consortium") == '') { $libraries['all'] = "All Libraries"; }
-                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
+                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_id']));
                         ?>
                             </div>
 							</td>
