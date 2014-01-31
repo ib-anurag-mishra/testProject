@@ -2216,12 +2216,11 @@ function loadAlbumData(albumtData) {
 
 }
 
-function loadNationalAlbumData(artistText,prodId,providerType,albumTitle) {
+function loadNationalAlbumData(artistText,prodId,providerType) {
 
     artistText = base64_decode(artistText);
     providerType = base64_decode(providerType);
-    albumTitle = base64_decode(albumTitle);
-    var data = "artistText=" + artistText+"&prodId="+prodId+"&providerType="+providerType+"&albumTitle="+albumTitle;
+    var data = "artistText=" + artistText+"&prodId="+prodId+"&providerType="+providerType;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getNationalAlbumData", // URL to request

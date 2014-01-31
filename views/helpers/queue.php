@@ -236,7 +236,7 @@ EOD;
         $artistText = base64_encode($artistText);        
         
         $str = <<<EOD
-       <a onclick="javascript:loadNationalAlbumData('$artistText',$prodId,'$providerType','$albumTitle');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+       <a onclick="javascript:loadNationalAlbumData('$artistText',$prodId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
 EOD;
         return $str;
     } 
