@@ -1797,10 +1797,6 @@ Configure::write('debug',2);
                 $this->Report->setValidation('reports_manual');
             }
             
-          
-            print_r ($this->data);
-            exit;
-            
             /*if ($territory != '') {
                 if ($library_id == 'all') {
                     $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
