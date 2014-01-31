@@ -1503,6 +1503,7 @@ Class ReportsController extends AppController {
             
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
         
+              echo  $this->Session->read("Auth.User.consortium");
               $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
