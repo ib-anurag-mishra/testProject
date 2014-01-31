@@ -560,9 +560,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         }
                                                         else    // if user has streamed one or more time
                                                         {
-                                                            $streamTime = ($maxStreamTime-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
-                                                        }
-                                                                                                           
+                                                            $streamTime = ($maxStreamTime - $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
+                                                        }                                                                                                           
                                                     } 
 
                                                      $streamTime =   gmdate("H:i:s", $streamTime);

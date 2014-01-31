@@ -1220,7 +1220,7 @@ if (empty($getData))
                         <td align="left">
                             <?php
                             $hoursArray = array();
-                            for($ik=0;$ik<=25;$ik++){
+                            for($ik=0;$ik<=24;$ik++){
                                 $hoursArray[$ik] = $ik;
                             }
                             
