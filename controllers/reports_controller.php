@@ -1437,7 +1437,7 @@ Class ReportsController extends AppController {
 
     function admin_getLibraryIds() {
 //        Configure::write('debug', 0);
-         $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
+         //$libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array(
@@ -1450,8 +1450,7 @@ Class ReportsController extends AppController {
                 'recursive' => -1)
                     );
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
-            
-              
+                          
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
@@ -1489,8 +1488,9 @@ Class ReportsController extends AppController {
       //Configure::write('debug', 2);
       
         //$territory = $_REQUEST['Territory'];        
-        $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
+       // $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
+        
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
           
             $var = $this->Library->find("list", array(
@@ -1752,7 +1752,7 @@ Class ReportsController extends AppController {
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             } else {
                 
-                $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_type' => '2','Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+                $this->set('libraries', $this->admin_getLibraryIdsStream());
             }
             $this->set('libraryID', "");
         }
