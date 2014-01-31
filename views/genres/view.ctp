@@ -397,7 +397,7 @@ $totalRows = count($genresAll);
  */
 if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum'))
 {
-    $album_list_url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($this->Session->read('calledArtist'))) . "/" . $this->Session->read('calledGenre');
+    $album_list_url = "artists/album_ajax/" . $this->Session->read('calledArtist') . "/" . $this->Session->read('calledGenre');
     echo "<input type='hidden' id='allAlbumUrl' value='" . $album_list_url . "'  />";
     ?>
     <script>
