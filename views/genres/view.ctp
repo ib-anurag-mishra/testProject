@@ -421,10 +421,7 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
             ?>
 
             var all_album_url = $("#allAlbumUrl").attr('value');
-            showAllAlbumsList(all_album_url);            
-            
-            scrollToSelectedGenre();
-            scrollToSelectedAlpha();
+            showAllAlbumsList(all_album_url);
         });
 
     </script>
@@ -502,10 +499,7 @@ elseif ($this->Session->check('calledAlbum'))
             
             //calling the selected Album Details
             var album_url = $("#selectedAlbumUrl").attr('value');
-            showAlbumDetails(album_url);            
-            
-            scrollToSelectedGenre();
-            scrollToSelectedAlpha();
+            showAlbumDetails(album_url);
         });
     </script>
     <?php
@@ -514,6 +508,12 @@ elseif ($this->Session->check('calledAlbum'))
 
 
 <script>
+
+    $(document).ready(function() {
+        scrollToSelectedGenre();
+        scrollToSelectedAlpha();
+    });
+
     function toScrollArtist(totalPageCalled)
     {
 
@@ -547,7 +547,7 @@ elseif ($this->Session->check('calledAlbum'))
 
     function scrolltoSelectedArtist()
     {
-        sleep(200);
+        sleep(100);
         var to_scroll = $(document).find("#artistscroll");
         $("#artistlistrecord li").each(function() {
             if ($(this).find('a').hasClass('selected'))
