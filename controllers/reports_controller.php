@@ -1772,7 +1772,7 @@ Class ReportsController extends AppController {
                 //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             } else {
-                $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'conditions' => array('Library.library_territory= "' . $this->data['Report']['Territory'] . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+                $this->set('libraries', $this->admin_getLibraryIdsStream());
             }
           
         }
