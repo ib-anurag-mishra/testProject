@@ -1744,7 +1744,7 @@ Configure::write('debug',2);
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'library_type' => '2'), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
-            
+             $territory =  $libraryAdminID["Library"]["library_territory"];
         } else {
            
             if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '') {
@@ -1780,21 +1780,7 @@ Configure::write('debug',2);
                 $this->Report->setValidation('reports_manual');
             }
             
-            $territory = $this->Library->find("first", array(
-                "conditions" =>
-                    array(
-                        'library_admin_id' => $this->Session->read("Auth.User.id"),
-                        'library_type' => '2',
-                        'id' => $library_id
-                    ),
-                'fields' => array(
-                    'id',
-                    'library_name',
-                    'library_territory'
-                ),
-                'recursive' => -1)
-            );
-            echo '<pre>';
+          
             print_r($territory);
             exit;
             
