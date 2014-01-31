@@ -1739,7 +1739,7 @@ Configure::write('debug',2);
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         
-        $libraryAdminID = '';
+        $libraryAdminID = array();
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
         $libraryAdminID = $this->Library->find("first", array(
                    "conditions" => array(
@@ -1759,10 +1759,22 @@ Configure::write('debug',2);
                 //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             } else {
+                $libraryAdminID = $this->Library->find("first", array(
+                   "conditions" => array(
+                       'library_admin_id' => $this->Session->read("Auth.User.id"),
+                       'library_type' => '2'),
+                   'fields' => array(
+                       'id', 'library_name', 'library_territory'
+                   ),
+                   'recursive' => -1)
+               );
+                $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+                $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+                $territory = $libraryAdminID["Library"]["library_territory"];
                 
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             }
-            $this->set('libraryID', "");
+            
         }
         
        
@@ -1777,13 +1789,7 @@ Configure::write('debug',2);
             }
             
             $this->set('library_id', $library_id);
-            if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-                $territory = $libraryAdminID["Library"]["library_territory"];
-            }
-            else
-            {
-                $territory = $libraryAdminID["Library"]["library_territory"];
-            }
+           
             
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
