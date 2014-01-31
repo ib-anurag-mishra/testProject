@@ -1763,7 +1763,7 @@ Class ReportsController extends AppController {
                 'fields' => array('Library.id', 'Library.library_name', 'Library.library_territory'),
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
-            $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+            //$this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
             
             $this->set('libraries', $this->admin_getLibraryIdsStream());
@@ -1779,7 +1779,7 @@ Class ReportsController extends AppController {
 //            {
 //                $this->set('libraries', $this->admin_getLibraryIdsStream());
 //            }
-//            $this->set('libraryID', "");
+           $this->set('libraryID', "");
         }
 
 
