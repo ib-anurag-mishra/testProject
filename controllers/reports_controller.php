@@ -1781,7 +1781,7 @@ Configure::write('debug',2);
             }
             
           
-            print_r($territory);
+            print_r ($this->data);
             exit;
             
             /*if ($territory != '') {
