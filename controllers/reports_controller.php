@@ -1809,9 +1809,6 @@ Class ReportsController extends AppController {
                 $this->Report->setValidation('reports_manual');
             }
 
-            echo $territory;
-            exit;
-
             /* if ($territory != '') {
               if ($library_id == 'all') {
               $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
