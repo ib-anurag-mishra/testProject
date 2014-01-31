@@ -11,9 +11,14 @@ if (empty($getData)) {
 }
 ?>
 <fieldset>
-    <legend>Generate Streaming Report <?php if ($libraryID != "") {
-    echo "for \"" . $this->getTextEncode($libraryname) . "\"";
-} ?></legend>
+    <legend>Generate Streaming Report 
+        <?php
+        if ($libraryID != "")
+        {
+            echo "for \"" . $this->getTextEncode($libraryname) . "\"";
+        }
+        ?>
+    </legend>
     <div class="formFieldsContainer">
         <div class="formFieldsbox">
             <div id="form_step" class="form_steps">
@@ -32,11 +37,14 @@ if (empty($getData)) {
                                 );
                                 ?>
                             </td>-->
-                            <td align="right"><?php echo $this->Form->label('Select Library'); ?></td>
+                        <td align="right"><?php echo $this->Form->label('Select Library'); ?></td>
                             <td align="left">
                                 <div id="allLibrary">
                                     <?php
-                                    if ($this->Session->read("Auth.User.consortium") == '') {   $libraries['all'] = "All Libraries";  }
+                                    if ($this->Session->read("Auth.User.consortium") == '')
+                                    {
+                                        $libraries['all'] = "All Libraries";
+                                    }
                                     echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_id']));
                                     ?>
                                 </div>
@@ -472,4 +480,4 @@ if (!empty($streamingHours)) {
 ?>
 </script>
 
-<?php echo $this->element('sql_dump');?>
+<?php // echo $this->element('sql_dump');?>

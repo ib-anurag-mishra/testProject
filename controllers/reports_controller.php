@@ -1731,7 +1731,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-        Configure::write('debug',2);
+        //Configure::write('debug',2);
 
         ini_set('memory_limit', '512M');
         set_time_limit(0);
