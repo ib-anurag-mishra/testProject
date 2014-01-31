@@ -1759,12 +1759,6 @@ Class ReportsController extends AppController {
         }
         else
         {
-
-//            if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '') {
-//                
-//                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-//                $this->set('libraries', $this->admin_getLibraryIdsStream());
-//            } else {
             $libraryAdminID = $this->Library->find("first", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"),
@@ -1778,8 +1772,14 @@ Class ReportsController extends AppController {
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
             $territory = $libraryAdminID["Library"]["library_territory"];
 
-            $this->set('libraries', $this->admin_getLibraryIdsStream());
-            // }
+            if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '')
+            {
+                $this->set('libraries', $this->admin_getLibraryIdsStream());
+            }
+            else
+            {
+                $this->set('libraries', $this->admin_getLibraryIdsStream());
+            }
         }
 
 
