@@ -203,7 +203,7 @@ class HomesController extends AppController
         }
         else    //  Show From Cache
         {
-           echo 123;
+           
             $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
         }
        
