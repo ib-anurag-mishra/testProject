@@ -1747,7 +1747,7 @@ Configure::write('debug',2);
             
         } else {
            
-            if ($this->data['Report']['Territory'] == '') {
+            if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '') {
                 
                 //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
