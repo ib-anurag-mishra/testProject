@@ -938,7 +938,7 @@ Class LibrariesController extends AppController
         echo "{";
         echo "success: '" . $success . "',\n";
         echo "error: '" . $error . "',\n";        
-        echo "msg: '" . $msg . "'\n";
+        echo "msg: '" . $msg . "'\n";        
         echo "}";
     }
 
