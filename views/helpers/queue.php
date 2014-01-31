@@ -229,10 +229,9 @@ EOD;
      * Description   : This function is used to get stream now mark up replacing play button 
      */
 
-    function getNationalAlbumStreamLabel($artistText,$prodId,$providerType,$albumTitle)
+    function getNationalAlbumStreamLabel($artistText,$prodId,$providerType)
     {
         $providerType = base64_encode($providerType);
-        $albumTitle = base64_encode($albumTitle);
         $artistText = base64_encode($artistText);        
         
         $str = <<<EOD

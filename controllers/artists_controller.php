@@ -1586,7 +1586,9 @@ Class ArtistsController extends AppController
         $territory = $this->Session->read('territory');
         if (($national = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId)) === false)
         {
-            $nationalAlbumSongs = $this->getAlbumSongs(base64_encode($artistText), $prodId, base64_encode($providerType));
+            $nationalAlbumSongs = $this->requestAction(
+                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($artistText), $prodId, base64_encode($providerType)))
+            );
             
             if(!empty($nationalAlbumSongs[$prodId])){
                 Cache::write("nationaltopalbum_" . $territory.'_'.$prodId, $nationalAlbumSongs);
