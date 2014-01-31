@@ -1779,6 +1779,25 @@ Class ReportsController extends AppController {
             } else {
                 $this->Report->setValidation('reports_manual');
             }
+            
+            $territory = $this->Library->find("first", array(
+                "conditions" =>
+                    array(
+                        'library_admin_id' => $this->Session->read("Auth.User.id"),
+                        'library_type' => '2',
+                        'id' => $library_id
+                    ),
+                'fields' => array(
+                    'id',
+                    'library_name',
+                    'library_territory'
+                ),
+                'recursive' => -1)
+            );
+            echo '<pre>';
+            print_r($territory);
+            exit;
+            
             /*if ($territory != '') {
                 if ($library_id == 'all') {
                     $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
