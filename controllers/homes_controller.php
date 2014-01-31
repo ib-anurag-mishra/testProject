@@ -189,8 +189,9 @@ class HomesController extends AppController
         {
             $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
-        else    //  Show From Cache
+        else    
         {
+            //  Show From Cache
             $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
         }       
         $this->set('coming_soon_rs', $coming_soon_rs);
@@ -201,9 +202,9 @@ class HomesController extends AppController
             
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
         }
-        else    //  Show From Cache
+        else    
         {
-           
+            //  Show From Cache
             $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
         }
        
