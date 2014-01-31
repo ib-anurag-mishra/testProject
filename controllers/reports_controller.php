@@ -1754,11 +1754,11 @@ Configure::write('debug',2);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         } else {
            
-            if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '') {
-                
-                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            } else {
+//            if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '') {
+//                
+//                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+//                $this->set('libraries', $this->admin_getLibraryIdsStream());
+//            } else {
                 $libraryAdminID = $this->Library->find("first", array(
                    "conditions" => array(
                        'library_admin_id' => $this->Session->read("Auth.User.id"),
@@ -1773,7 +1773,7 @@ Configure::write('debug',2);
                 $territory = $libraryAdminID["Library"]["library_territory"];
                 
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
-            }
+           // }
             
         }
         
@@ -1796,6 +1796,8 @@ Configure::write('debug',2);
             } else {
                 $this->Report->setValidation('reports_manual');
             }
+            
+            echo $territory;exit;
             
             /*if ($territory != '') {
                 if ($library_id == 'all') {
