@@ -1492,7 +1492,7 @@ Class ReportsController extends AppController {
         $data = '';
         
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-          echo '1';
+        
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
@@ -1503,19 +1503,18 @@ Class ReportsController extends AppController {
                     );
             
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
-          echo '2';
+        
                $var = $this->Library->find("list", array(
-                "conditions" => array(
+                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
-                    'Library.library_type' => 2), 
+                    'Library.library_type = 2' 
+                     ), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
-               echo '<pre>';
-        print_r($var);
-        die;
+              
         } else {
-         echo '3';
+         
             $var = $this->Library->find('list', array(
                 'conditions' => array(
                    // 'Library.library_territory' => $territory, 
@@ -1733,7 +1732,8 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-       
+     Configure::write('debug',2);
+     
        ini_set('memory_limit', '512M');
         set_time_limit(0);
         if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
