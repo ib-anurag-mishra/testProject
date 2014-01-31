@@ -1741,10 +1741,17 @@ Configure::write('debug',2);
         
         
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'library_type' => '2'), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
+        $libraryAdminID = $this->Library->find("first", array(
+                   "conditions" => array(
+                       'library_admin_id' => $this->Session->read("Auth.User.id"),
+                       'library_type' => '2'),
+                   'fields' => array(
+                       'id', 'library_name', 'library_territory'
+                   ),
+                   'recursive' => -1)
+               );
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
-             $territory =  $libraryAdminID["Library"]["library_territory"];
         } else {
            
             if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '') {
@@ -1768,12 +1775,16 @@ Configure::write('debug',2);
             } else {
                 $library_id = $this->data['Report']['library_id'];
             }
+            
             $this->set('library_id', $library_id);
             if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
                 $territory = $libraryAdminID["Library"]["library_territory"];
-            } else {
-                $territory = $this->data['Report']['Territory'];
             }
+            else
+            {
+                $territory = $libraryAdminID["Library"]["library_territory"];
+            }
+            
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             } else {
