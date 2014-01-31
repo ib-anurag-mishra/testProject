@@ -1731,7 +1731,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-//Configure::write('debug',2);
+        Configure::write('debug',2);
 
         ini_set('memory_limit', '512M');
         set_time_limit(0);
@@ -1740,35 +1740,63 @@ Class ReportsController extends AppController {
         }
         
         $libraryAdminID = array();
-        if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'library_type' => '2'), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
+        if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '')
+        {
+            $libraryAdminID = $this->Library->find("first", array(
+                "conditions" => array(
+                    'library_admin_id' => $this->Session->read("Auth.User.id"), 
+                    'library_type' => '2'), 
+                'fields' => array('id', 'library_name', 'library_territory'), 
+                'recursive' => -1));
+            
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
-
-        } else {
-           
-            if ($this->data['Report']['Territory'] == '') {
-                
-                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            } else {
-                
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            }
-            $this->set('libraryID', "");
+        }
+        elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '')
+        {
+            $libraryAdminID = $this->Library->find("first", array(
+                "conditions" => array(
+                    'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
+                    'Library.library_type = 2' ,
+                    'Library.library_id' => $this->data['Report']['library_id']
+                    ), 
+                'fields' => array('Library.id', 'Library.library_name', 'Library.library_territory'),
+                'order' => 'Library.library_name ASC', 
+                'recursive' => -1));
+            $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+            
+            $this->set('libraries', $this->admin_getLibraryIdsStream());
+        }
+        else
+        {
+//            if ($this->data['Report']['Territory'] == '')
+//            {
+//                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+//                $this->set('libraries', $this->admin_getLibraryIdsStream());
+//            }
+//            else
+//            {
+//                $this->set('libraries', $this->admin_getLibraryIdsStream());
+//            }
+//            $this->set('libraryID', "");
         }
 
 
         if (isset($this->data)) {
-            //Configure::write('debug',0); // Otherwise we cannot use this method while developing
+            // Otherwise we cannot use this method while developing
             $all_Ids = '';
             $this->Report->set($this->data);
-            if (isset($_REQUEST['library_id'])) {
+            if (isset($_REQUEST['library_id']))
+            {
                 $library_id = $_REQUEST['library_id'];
-            } else {
+            }
+            else
+            {
                 $library_id = $this->data['Report']['library_id'];
             }
             $this->set('library_id', $library_id);
+            
             if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '')
             {
                 $territory = $libraryAdminID["Library"]["library_territory"];
@@ -1784,6 +1812,7 @@ Class ReportsController extends AppController {
                     $territory = $this->data['Report']['Territory'];
                 }
             }
+            
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             } else {
