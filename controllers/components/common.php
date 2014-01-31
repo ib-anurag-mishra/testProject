@@ -353,7 +353,7 @@ STR;
                     }
                     if(!empty($albumSongs[$value['Albums']['ProdID']])){
                         Cache::write("nationaltopalbum_" . $territory.'_'.$value['Albums']['ProdID'], $albumSongs);
-                        $this->log("cache written for national top album for $territory_".$prodId, "cache");
+                        $this->log("cache written for national top album for $territory".$prodId, "cache");
                     }
                     //}
                 }

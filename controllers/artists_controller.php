@@ -1592,7 +1592,7 @@ Class ArtistsController extends AppController
             
             if(!empty($nationalAlbumSongs[$prodId])){
                 Cache::write("nationaltopalbum_" . $territory.'_'.$prodId, $nationalAlbumSongs);
-                $this->log("cache written for national top album for $territory_".$prodId, "cache");
+                $this->log("cache written for national top album for $territory".$prodId, "cache");
             }            
         }
         else
