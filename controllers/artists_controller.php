@@ -2201,6 +2201,7 @@ Class ArtistsController extends AppController
         {
             $count = count($this->params['pass']);
             $id = $this->params['pass'][0];
+            $this->Session->write('calledArtist', $id);
             for ($i = 1; $i < $count - 1; $i++)
             {
                 if (!is_numeric($this->params['pass'][$i]))
@@ -2222,7 +2223,7 @@ Class ArtistsController extends AppController
 
         //for login redirect we are storing the Genre and Artist in Session
         $this->Session->write('calledGenre', $album);
-        $this->Session->write('calledArtist', $id);
+        
         $this->Session->delete('calledAlbum');
         $this->Session->delete('calledProvider');
         
