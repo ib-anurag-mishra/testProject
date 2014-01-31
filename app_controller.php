@@ -111,8 +111,8 @@ class AppController extends Controller
        
         $this->set('username', $this->Session->read('Auth.User.username'));
         $this->set('genresMenu', $this->Category->find('all', array('cache' => 'no')));
-        $this->set('featuredArtistMenu', $this->Featuredartist->getallartists());
-        $this->set('newArtistMenu', $this->Newartist->getallnewartists());
+//        $this->set('featuredArtistMenu', $this->Featuredartist->getallartists());
+//        $this->set('newArtistMenu', $this->Newartist->getallnewartists());
         $this->set('cdnPath', Configure::read('App.CDN'));
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Last-Modified: ' . gmdate('D, d M Y H:i:S') . ' GMT');
