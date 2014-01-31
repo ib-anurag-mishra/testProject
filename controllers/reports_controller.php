@@ -1739,7 +1739,7 @@ Class ReportsController extends AppController {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         
-        
+        $libraryAdminID = array();
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'library_type' => '2'), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
@@ -1769,10 +1769,20 @@ Class ReportsController extends AppController {
                 $library_id = $this->data['Report']['library_id'];
             }
             $this->set('library_id', $library_id);
-            if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
+            if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '')
+            {
                 $territory = $libraryAdminID["Library"]["library_territory"];
-            } else {
-                $territory = $this->data['Report']['Territory'];
+            }
+            else
+            {
+                if (!isset($this->data['Report']['Territory']))
+                {
+                    $territory = $libraryAdminID["Library"]["library_territory"];
+                }
+                else
+                {
+                    $territory = $this->data['Report']['Territory'];
+                }
             }
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
