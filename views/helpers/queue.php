@@ -223,8 +223,23 @@ EOD;
 EOD;
 
         return $str;
-    }    
+    }  
+    
+    /* Function name : getNationalAlbumStreamLabel
+     * Description   : This function is used to get stream now mark up replacing play button 
+     */
 
+    function getNationalAlbumStreamLabel($artistText,$prodId,$providerType)
+    {
+        $providerType = base64_encode($providerType);
+        $artistText = base64_encode($artistText);        
+        
+        $str = <<<EOD
+       <a onclick="javascript:loadNationalAlbumData('$artistText',$prodId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
+EOD;
+        return $str;
+    } 
+    
     /**
      * Function Name: getSocialNetworkinglinksMarkup
      * Description  : This function is used to get mark up of social networking links 

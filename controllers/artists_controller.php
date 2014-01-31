@@ -23,7 +23,7 @@ Class ArtistsController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData');
+        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
@@ -1508,6 +1508,68 @@ Class ArtistsController extends AppController
             echo json_encode($errorData);
             exit;
         }
+    }
+    
+    function getNationalAlbumData(){
+        
+        Configure::write('debug', 0);
+        $artistText = $_POST['artistText'];
+        $prodId = $_POST['prodId'];
+        $providerType = $_POST['providerType'];
+        $territory = $this->Session->read('territory');
+        if (($national = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId)) === false)
+        {
+            $nationalAlbumSongs = $this->requestAction(
+                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($artistText), $prodId, base64_encode($providerType)))
+            );
+            
+            if(!empty($nationalAlbumSongs[$prodId])){
+                Cache::write("nationaltopalbum_" . $territory.'_'.$prodId, $nationalAlbumSongs);
+                $this->log("cache written for national top album for $territory_".$prodId, "cache");
+            }            
+        }
+        else
+        {
+            $nationalAlbumSongs = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId);
+        }                
+        
+        if (!empty($nationalAlbumSongs[$prodId]))
+        {
+            foreach ($nationalAlbumSongs[$prodId] as $value)
+            {
+                if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle']))
+                {
+
+                    if ($value['Song']['Advisory'] == 'T')
+                    {
+                        $value['Song']['SongTitle'] = $value['Song']['SongTitle'] . ' (Explicit)';
+                    }
+
+                    $playItem = array('playlistId' => 0, 'songId' => $value['Song']['ProdID'], 'providerType' => $value['Song']['provider_type'], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                    $jsonPlayItem = json_encode($playItem);
+                    $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+                    $playListData[] = $jsonPlayItem;
+                }
+            }
+            if (!empty($playListData))
+            {
+                $playList = implode(',', $playListData);
+                if (!empty($playList))
+                {
+                    $playList = base64_encode('[' . $playList . ']');
+                }
+            }
+            $successData = array('success' => $playList);
+            echo json_encode($successData);
+            exit;
+        }
+        else
+        {
+            $errorData = array('error' => 'There are no songs available for streaming');
+            echo json_encode($errorData);
+            exit;
+        }        
+        
     }
 
     /*

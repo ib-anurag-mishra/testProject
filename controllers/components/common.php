@@ -343,9 +343,18 @@ STR;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                    // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                     //{
-                    $data[$key]['albumSongs'] = $this->requestAction(
+                    $albumSongs = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
                     );
+                    if(!empty($albumSongs[$value['Albums']['ProdID']])){
+                        $data[$key]['albumSongs'] = 1;
+                    }else{
+                        $data[$key]['albumSongs'] = 0;
+                    }
+                    if(!empty($albumSongs[$value['Albums']['ProdID']])){
+                        Cache::write("nationaltopalbum_" . $territory.'_'.$value['Albums']['ProdID'], $albumSongs);
+                        $this->log("cache written for national top album for $territory_".$prodId, "cache");
+                    }
                     //}
                 }
 
