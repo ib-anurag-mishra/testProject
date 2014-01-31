@@ -1731,85 +1731,55 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-        Configure::write('debug', 2);
+//Configure::write('debug',2);
 
         ini_set('memory_limit', '512M');
         set_time_limit(0);
-        if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
-        {
+        if ((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         
-        $territory = '';
-        $libraryAdminID = array();
-        if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '')
-        {
-            $libraryAdminID = $this->Library->find("first", array(
-                "conditions" => array(
-                    'library_admin_id' => $this->Session->read("Auth.User.id"),
-                    'library_type' => '2'),
-                'fields' => array(
-                    'id', 'library_name', 'library_territory'
-                ),
-                'recursive' => -1)
-            );
+        
+        if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'library_type' => '2'), 'fields' => array('id', 'library_name', 'library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
-            $territory = $libraryAdminID["Library"]["library_territory"];
-        }
-        else
-        {
-            $libraryAdminID = $this->Library->find("first", array(
-                "conditions" => array(
-                    'Library.library_apikey' => $this->Session->read("Auth.User.consortium"),
-                    'library_type' => '2'),
-                'fields' => array(
-                    'id', 'library_name', 'library_territory'
-                ),
-                'recursive' => -1)
-            );
-            $this->set('libraryID', $libraryAdminID["Library"]["id"]);
-            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
-            $territory = $libraryAdminID["Library"]["library_territory"];
 
-            if (isset($this->data['Report']['Territory']) && $this->data['Report']['Territory'] == '')
-            {
+        } else {
+           
+            if ($this->data['Report']['Territory'] == '') {
+                
+                //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+                $this->set('libraries', $this->admin_getLibraryIdsStream());
+            } else {
+                
                 $this->set('libraries', $this->admin_getLibraryIdsStream());
             }
-            else
-            {
-                $this->set('libraries', $this->admin_getLibraryIdsStream());
-            }
+            $this->set('libraryID', "");
         }
 
 
-        if (isset($this->data))
-        {
+        if (isset($this->data)) {
             //Configure::write('debug',0); // Otherwise we cannot use this method while developing
             $all_Ids = '';
             $this->Report->set($this->data);
-            if (isset($_REQUEST['library_id']))
-            {
+            if (isset($_REQUEST['library_id'])) {
                 $library_id = $_REQUEST['library_id'];
-            }
-            else
-            {
+            } else {
                 $library_id = $this->data['Report']['library_id'];
             }
-
             $this->set('library_id', $library_id);
-
-
-            if ($this->data['Report']['reports_daterange'] != 'manual')
-            {
-                $this->Report->setValidation('reports_date');
+            if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
+                $territory = $libraryAdminID["Library"]["library_territory"];
+            } else {
+                $territory = $this->data['Report']['Territory'];
             }
-            else
-            {
+            if ($this->data['Report']['reports_daterange'] != 'manual') {
+                $this->Report->setValidation('reports_date');
+            } else {
                 $this->Report->setValidation('reports_manual');
             }
-
-            /* if ($territory != '') {
+            /*if ($territory != '') {
               if ($library_id == 'all') {
               $sql = "SELECT id from libraries where library_territory = '" . $territory . "'";
               $result = mysql_query($sql);
@@ -1821,30 +1791,22 @@ Class ReportsController extends AppController {
               } else {
               $this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name', 'Library.library_unlimited', 'Library.library_available_downloads'), 'conditions' => array('Library.id = ' . $library_id, 'Library.library_territory= "' . $territory . '"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
               }
-              } */
-            if ($this->Report->validates())
-            {
-                if ($this->data['Report']['reports_daterange'] == 'day')
-                {
-                    /* $date_arr = explode("/", $this->data['Report']['date']);
-                      $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1]; */
-                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory, 'day');
-                    if ($library_id != "all")
-                    {
+            }*/
+            if ($this->Report->validates()) {
+                if ($this->data['Report']['reports_daterange'] == 'day') {
+                    /*$date_arr = explode("/", $this->data['Report']['date']);
+                    $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];*/
+                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'day');
+                    if ($library_id != "all") {
                         $streamingHours = $streamingInfo[0][0]['total_streamed'];
-                    }
-                    else
-                    {
+                    }else{
                         $streamingHours = $streamingInfo;
                     }
 
-                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory, 'day');
-                    if ($library_id != "all")
-                    {
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'day');
+                    if ($library_id != "all") {
                         $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
-                    }
-                    else
-                    {
+                    }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
@@ -1852,52 +1814,36 @@ Class ReportsController extends AppController {
                     $arr_day_streaming_report = array();
                     //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'day');
 
-                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory, 'day');
+                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'day');
 
-                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory, 'day');
-                }
-                elseif ($this->data['Report']['reports_daterange'] == 'week')
-                {
+                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'day');
+                    
+                } elseif ($this->data['Report']['reports_daterange'] == 'week') {
                     $date_arr = explode("/", $this->data['Report']['date']);
-                    if (date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0)
-                    {
-                        if (mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]) > time())
-                        {
+                    if (date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0) {
+                        if (mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]) > time()) {
                             $compareDate = date('Y-m-d', time());
-                        }
-                        else
-                        {
+                        } else {
                             $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
                         }
-                    }
-                    else
-                    {
-                        if (mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))) + 7, $date_arr[2]) > time())
-                        {
+                    } else {
+                        if (mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))) + 7, $date_arr[2]) > time()) {
                             $compareDate = date('Y-m-d', time());
-                        }
-                        else
-                        {
+                        } else {
                             $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1] - date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))) + 7, $date_arr[2]));
                         }
                     }
-                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory, 'week');
-                    if ($library_id != "all")
-                    {
+                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'week');
+                    if ($library_id != "all") {
                         $streamingHours = $streamingInfo[0][0]['total_streamed'];
-                    }
-                    else
-                    {
+                    }else{
                         $streamingHours = $streamingInfo;
                     }
 
-                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory, 'week');
-                    if ($library_id != "all")
-                    {
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'week');
+                    if ($library_id != "all") {
                         $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
-                    }
-                    else
-                    {
+                    }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
@@ -1905,32 +1851,24 @@ Class ReportsController extends AppController {
                     $arr_day_streaming_report = array();
                     //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'week');
 
-                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory, 'week');
+                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'week');
 
-                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory, 'week');
-                }
-                elseif ($this->data['Report']['reports_daterange'] == 'month')
-                {
+                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'week');
+                } elseif ($this->data['Report']['reports_daterange'] == 'month') {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . date('d', time());
 
-                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory, 'month');
-                    if ($library_id != "all")
-                    {
+                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $this->data['Report']['date'], $territory,'month');
+                    if ($library_id != "all") {
                         $streamingHours = $streamingInfo[0][0]['total_streamed'];
-                    }
-                    else
-                    {
+                    }else{
                         $streamingHours = $streamingInfo;
                     }
 
-                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory, 'month');
-                    if ($library_id != "all")
-                    {
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $this->data['Report']['date'], $territory,'month');
+                    if ($library_id != "all") {
                         $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
-                    }
-                    else
-                    {
+                    }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
@@ -1938,33 +1876,25 @@ Class ReportsController extends AppController {
                     $arr_day_streaming_report = array();
                     //$arr_day_streaming_report = $this->StreamingHistory->getDayStreamingReportingPeriod($library_id, $this->data['Report']['date'], $territory,'month');
 
-                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory, 'month');
+                    $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'month');
 
-                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory, 'month');
-                }
-                elseif ($this->data['Report']['reports_daterange'] == 'manual')
-                {
+                    $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'month');
+                } elseif ($this->data['Report']['reports_daterange'] == 'manual') {
                     $date_arr = explode("/", $this->data['Report']['date_to']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . $date_arr[1];
 //$this->data['Report']['date_from'], $this->data['Report']['date_to']
-                    $datesInfo = array($this->data['Report']['date_from'], $this->data['Report']['date_to']);
-                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id, $datesInfo, $territory, 'manual');
-                    if ($library_id != "all")
-                    {
+                    $datesInfo=array($this->data['Report']['date_from'],$this->data['Report']['date_to']);
+                    $streamingInfo = $this->StreamingHistory->getDaysStreamedInformation($library_id,$datesInfo, $territory,'manual');
+                    if ($library_id != "all") {
                         $streamingHours = $streamingInfo[0][0]['total_streamed'];
-                    }
-                    else
-                    {
+                    }else{
                         $streamingHours = $streamingInfo;
                     }
 
-                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $datesInfo, $territory, 'manual');
-                    if ($library_id != "all")
-                    {
+                    $patronStreaminInfoRes = $this->StreamingHistory->getDaysStreamedByPetronInformation($library_id, $datesInfo, $territory,'manual');
+                    if ($library_id != "all") {
                         $patronStreaminInfo = $patronStreaminInfoRes[0][0]['total_patrons'];
-                    }
-                    else
-                    {
+                    }else{
                         $patronStreaminInfo = $patronStreaminInfoRes;
                     }
 //                    echo "<pre>";print_r($patronStreaminInfo);exit;
