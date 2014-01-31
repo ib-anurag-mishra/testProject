@@ -1492,7 +1492,7 @@ Class ReportsController extends AppController {
         $data = '';
         
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
-          
+          echo '1';
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
@@ -1503,7 +1503,7 @@ Class ReportsController extends AppController {
                     );
             
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
-          
+          echo '2';
                $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
@@ -1513,7 +1513,7 @@ Class ReportsController extends AppController {
                 'recursive' => -1));
                
         } else {
-         
+         echo '3';
             $var = $this->Library->find('list', array(
                 'conditions' => array(
                    // 'Library.library_territory' => $territory, 
@@ -1524,7 +1524,9 @@ Class ReportsController extends AppController {
                     );
             $data = "<option value='all'>All Libraries</option>";
         }
-        
+        echo '<pre>';
+        print_r($var);
+        die;
          return $var;
          
 //        foreach ($var as $k => $v) {
