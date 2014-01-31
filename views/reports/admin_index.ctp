@@ -517,20 +517,20 @@
 		});
 		
 				
-		function report_load_page(){
-			var data = "Territory="+$("#ReportTerritory").val()+"&lib_id=<?=  $library_id; ?>";
-			jQuery.ajax({
-				type: "post",  // Request method: post, get
-				url: webroot+"admin/reports/getLibraryIds", // URL to request
-				data: data,  // post data
-				success: function(response) {
-						$('#allLibrary').text('');
-						$('#allLibrary').html(response);
-				},
-				error:function (XMLHttpRequest, textStatus, errorThrown) {}
-			});
-
-		}
+//		function report_load_page(){
+//			var data = "Territory="+$("#ReportTerritory").val()+"&lib_id=<?=  $library_id; ?>";
+//			jQuery.ajax({
+//				type: "post",  // Request method: post, get
+//				url: webroot+"admin/reports/getLibraryIds", // URL to request
+//				data: data,  // post data
+//				success: function(response) {
+//						$('#allLibrary').text('');
+//						$('#allLibrary').html(response);
+//				},
+//				error:function (XMLHttpRequest, textStatus, errorThrown) {}
+//			});
+//
+//		}
 
     });
     <?php
