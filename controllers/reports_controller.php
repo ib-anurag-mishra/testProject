@@ -1767,7 +1767,7 @@ Class ReportsController extends AppController {
 //            } else {
             $libraryAdminID = $this->Library->find("first", array(
                 "conditions" => array(
-                    'library_admin_id' => $this->Session->read("Auth.User.id"),
+                    'Library.library_apikey' => $this->Session->read("Auth.User.consortium"),
                     'library_type' => '2'),
                 'fields' => array(
                     'id', 'library_name', 'library_territory'
