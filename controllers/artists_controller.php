@@ -23,7 +23,7 @@ Class ArtistsController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData');
+        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
@@ -879,7 +879,7 @@ Class ArtistsController extends AppController
                         'Song.provider_type'),
                     'conditions' => array(
                         'Song.ArtistText' => base64_decode($id),
-                        'Song.DownloadStatus' => 1,
+                        'Country.DownloadStatus' => 1,
                         "Song.Sample_FileID != ''",
                         "Song.FullLength_FIleID != ''",
                         'Country.Territory' => $country, 
@@ -902,7 +902,7 @@ Class ArtistsController extends AppController
                         'Song.provider_type'),
                     'conditions' => array(
                         'Song.ArtistText' => base64_decode($id),
-                        'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''",
+                        "Song.Sample_FileID != ''",
                         "Song.FullLength_FIleID != ''",
                         'Country.Territory' => $country,
                         'Country.DownloadStatus' => 1,
@@ -1051,7 +1051,7 @@ Class ArtistsController extends AppController
                             array(
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 array('Song.provider_type = Country.provider_type'),
-                                array('Song.DownloadStatus' => 1),
+                                array('Country.DownloadStatus' => 1),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
                                 array("Song.provider_type" => $provider),
@@ -1576,6 +1576,68 @@ Class ArtistsController extends AppController
             exit;
         }
     }
+    
+    function getNationalAlbumData(){
+        
+        Configure::write('debug', 0);
+        "artistText=" + artistText+"&prodId"+prodId+"&providerType"+providerType;
+        $artistText = $_POST['artistText'];
+        $prodId = $_POST['prodId'];
+        $providerType = $_POST['providerType'];
+        $albumTitle = $_POST['albumTitle'];
+        $territory = $this->Session->read('territory');
+        if (($national = Cache::read("nationaltopalbum_" . $territory.'_'.$albumTitle)) === false)
+        {
+            $nationalAlbumSongs = $this->getAlbumSongs(base64_encode($artistText), $prodId, base64_encode($providerType));
+            
+            if(!empty($nationalAlbumSongs[$prodId])){
+                Cache::write("nationaltopalbum_" . $territory.'_'.$albumTitle, $nationalAlbumSongs);
+                $this->log("cache written for national top album for $territory_".$albumTitle, "cache");
+            }            
+        }
+        else
+        {
+            $nationalAlbumSongs = Cache::read("nationaltopalbum_" . $territory.'_'.$albumTitle);
+        }                
+        
+        if (!empty($nationalAlbumSongs[$prodId]))
+        {
+            foreach ($nationalAlbumSongs[$prodId] as $value)
+            {
+                if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle']))
+                {
+
+                    if ($value['Song']['Advisory'] == 'T')
+                    {
+                        $value['Song']['SongTitle'] = $value['Song']['SongTitle'] . ' (Explicit)';
+                    }
+
+                    $playItem = array('playlistId' => 0, 'songId' => $value['Song']['ProdID'], 'providerType' => $value['Song']['provider_type'], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                    $jsonPlayItem = json_encode($playItem);
+                    $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+                    $playListData[] = $jsonPlayItem;
+                }
+            }
+            if (!empty($playListData))
+            {
+                $playList = implode(',', $playListData);
+                if (!empty($playList))
+                {
+                    $playList = base64_encode('[' . $playList . ']');
+                }
+            }
+            $successData = array('success' => $playList);
+            echo json_encode($successData);
+            exit;
+        }
+        else
+        {
+            $errorData = array('error' => 'There are no songs available for streaming');
+            echo json_encode($errorData);
+            exit;
+        }        
+        
+    }
 
     /*
       Function Name : album_ajax_view
@@ -1651,13 +1713,13 @@ Class ArtistsController extends AppController
             {
                 $songs = $this->Song->find('all', array(
                     'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Country.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             }
             else
             {
                 $songs = $this->Song->find('all', array(
                     'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-                    'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
+                    'conditions' => array('Song.ArtistText' => base64_decode($id), "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, 'Country.DownloadStatus' => 1,
                         array('or' =>
                             array(
                                 array('Country.StreamingStatus' => 1)
@@ -1770,7 +1832,7 @@ Class ArtistsController extends AppController
                                 array('Song.ReferenceID' => $album['Album']['ProdID']),
                                 //array('Song.provider_type = Genre.provider_type'),
                                 array('Song.provider_type = Country.provider_type'),
-                                array('Song.DownloadStatus' => 1),
+                                array('Country.DownloadStatus' => 1),
                                 //	array('Song.TrackBundleCount' => 0),
                                 array("Song.Sample_FileID != ''"),
                                 array("Song.FullLength_FIleID != ''"),
@@ -1918,14 +1980,8 @@ Class ArtistsController extends AppController
          * then it store the Album name in session
          * for setting the focus in the list on album
          */
-        if (strlen($album['Album']['AlbumTitle']) >= 40)
-        {
-            $this->Session->write('calledAlbumText', substr($album['Album']['AlbumTitle'], 0, 40) . '...');
-        }
-        else
-        {
-            $this->Session->write('calledAlbumText', $albumData[0]['Album']['AlbumTitle']);
-        }
+        $this->Session->write('calledAlbumText', $album['Album']['ProdID']);
+       
 
         if (isset($albumData[0]['Song']['ArtistURL']))
         {
@@ -2145,6 +2201,7 @@ Class ArtistsController extends AppController
         {
             $count = count($this->params['pass']);
             $id = $this->params['pass'][0];
+            $this->Session->write('calledArtist', $id);
             for ($i = 1; $i < $count - 1; $i++)
             {
                 if (!is_numeric($this->params['pass'][$i]))
@@ -2164,13 +2221,18 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
-
+        //for login redirect we are storing the Genre and Artist in Session
+        $this->Session->write('calledGenre', $album);
+        
+        $this->Session->delete('calledAlbum');
+        $this->Session->delete('calledProvider');
+        
         $id = str_replace('@', '/', $id);
 
         $this->Song->Behaviors->attach('Containable');
         $songs = $this->Song->find('all', array(
             'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-            'conditions' => array('Song.ArtistText' => base64_decode($id), 'Song.DownloadStatus' => 1,
+            'conditions' => array('Song.ArtistText' => base64_decode($id), 'Country.DownloadStatus' => 1,
                 "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", 'Country.Territory' => $country, $cond,
                 'Song.provider_type = Country.provider_type'), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,
             'order' => array('Song.provider_type DESC')));
@@ -2198,13 +2260,7 @@ Class ArtistsController extends AppController
         $this->set('artisttext', base64_decode($id));
         $this->set('genre', base64_decode($album));
 
-        //for login redirect we are storing the Genre and Artist in Session
-        $this->Session->write('calledGenre', $album);
-        $this->Session->write('calledArtist', base64_decode($id));
-        $this->Session->delete('calledAlbum');
-        $this->Session->delete('calledProvider');
-
-
+        
         if ($this->Session->read('block') == 'yes')
         {
             $cond = array('Album.Advisory' => 'F');
@@ -2323,7 +2379,7 @@ Class ArtistsController extends AppController
                 $title_album_on_hover = @iconv(mb_detect_encoding($title_album_on_hover), "WINDOWS-1252//IGNORE", $title_album_on_hover);
                 $title_album_on_hover = @iconv(mb_detect_encoding($title_album_on_hover), "UTF-8//IGNORE", $title_album_on_hover);
 
-                $htmlContain .= '<div class="album-overview-container">
+                $htmlContain .= '<div class="album-overview-container" id="'.$album['Album']['ProdID'].'">                                      
                                         <div class="album-image selected">
                                                 <a href="javascript:void(0);" onclick="showAlbumDetails(\'' . $albumURL . '\')"><img src="' . Configure::read('App.Music_Path') . $albumArtwork . '" alt="album-cover-small" width="59" height="59" /></a>
                                         </div>
@@ -2403,7 +2459,7 @@ Class ArtistsController extends AppController
         $this->Country->setTablePrefix($countryPrefix);
         foreach ($allAlbum as $k => $v)
         {
-            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Song.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+            $recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'), 'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'], 'Country.DownloadStatus' => 1, 'TrackBundleCount' => 0, 'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
             if (count($recordCount) > 0)
             {
                 $val = $val . $v['Album']['ProdID'] . ",";

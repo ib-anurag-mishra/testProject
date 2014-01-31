@@ -610,9 +610,9 @@ Class LibrariesController extends AppController
                                                  
                                                 if ($this->Library->save($this->data['Library']))
                                                 {                                        
-                                                    $this->Library->id =  $this->data['Library']['id'];
-                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
-                                                    $this->Library->save();
+//                                                    $this->Library->id =  $this->data['Library']['id'];
+//                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
+//                                                    $this->Library->save();
                                                     
                                                     //echo "Count: ".count($this->data['Variable']);
                                                     
@@ -937,8 +937,8 @@ Class LibrariesController extends AppController
         }
         echo "{";
         echo "success: '" . $success . "',\n";
-        echo "error: '" . $error . "',\n";
-        echo "msg: '" . $msg . "'\n";
+        echo "error: '" . $error . "',\n";        
+        echo "msg: '" . $msg . "'\n";        
         echo "}";
     }
 

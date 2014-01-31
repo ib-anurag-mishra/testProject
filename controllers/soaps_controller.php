@@ -1889,8 +1889,21 @@ STR;
       }
       break;
 
-      case '17':  {
-        $resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+     case '17':  {
+      
+	    $auth_method_name = $this->Library->find('first',array(
+	      'conditions' => array('Library.id' => $library_id),
+	      'fields' => array('library_authentication_method'),
+	      'recursive' => -1
+	      )
+	    );
+       
+	if($auth_method_name['Library']['library_authentication_method'] == 'capita'){
+	 	$resp = $this->capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+  	}
+     	else{
+        	$resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+	}
       }
       break;
 
@@ -1902,11 +1915,7 @@ STR;
       case '19':  {
         $resp = $this->mdloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
       }
-      case '20':  {
-        $resp = $this->capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
-      }
       break;
-      
       default:
     }
 
@@ -6759,6 +6768,7 @@ STR;
       'mndlogin_reference' => '18',
       'mdlogin_reference' => '19',
       'ezproxy' => '16',
+      'capita' => '17',
 
     );
 

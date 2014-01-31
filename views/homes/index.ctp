@@ -360,9 +360,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     <?php
                                     if ($this->Session->read("patron"))
                                     {
-                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                        if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs']))
                                         {
-                                            echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Albums']['ProdID']]);
+                                            echo $this->Queue->getNationalAlbumStreamLabel($value['Song']['ArtistText'],$value['Albums']['ProdID'],$value['Song']['provider_type'],$value['Albums']['AlbumTitle']);
                                             ?> 
                                             <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                             <?php
@@ -371,7 +371,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         <div class="wishlist-popover">
                                             <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                             <?php
-                                            if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Albums']['ProdID']]))
+                                            if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs']))
                                             {
 
                                                // echo $this->Queue->getQueuesListAlbums($this->Session->read('patron'), $value['albumSongs'][$value['Albums']['ProdID']], $value['Albums']['ProdID'], $value['Albums']['provider_type']);
@@ -537,8 +537,6 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
     <div class="coming-soon">
         <header class="clearfix">
             <h3>Coming Soon</h3>
-
-
         </header>
         <div class="coming-soon-filter-container clearfix">
             <nav class="category-filter">
@@ -547,12 +545,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     <li><a href="#coming-soon-singles-grid" id="songsIDValComming" class="active no-ajaxy hp-tabs" onclick="showHideGridCommingSoon('songs')">Songs</a></li>
                     <li><a href="#coming-soon-videos-grid" id="videosIDValComming" class="no-ajaxy hp-tabs" onclick="showHideGridCommingSoon('videos')">Videos</a></li>
                 </ul>
-
             </nav>
             <!-- <a href="#" class="view-all">View All</a> -->
-
-        </div>
-        <?php ?>
+        </div><!-- end songs grid -->
 
 
         <div id="coming-soon-singles-grid" class="horiz-scroll active">

@@ -765,7 +765,7 @@
                     <br />
                     <input type="button" value="Accept" 
                            onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>', '<?php echo base64_encode($this->Session->read('patron')); ?>');"> 
-                    <input type="button" value="Deny" onclick="Javascript: history.back();">
+                    <input type="button" value="Deny" onclick="Javascript: declinePatron();">
                 </div>
             </div>
             <?php

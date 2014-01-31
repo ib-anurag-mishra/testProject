@@ -343,9 +343,18 @@ STR;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                    // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                     //{
-                    $data[$key]['albumSongs'] = $this->requestAction(
+                    $albumSongs = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
                     );
+                    if(!empty($albumSongs[$value['Albums']['ProdID']])){
+                        $data[$key]['albumSongs'] = 1;
+                    }else{
+                        $data[$key]['albumSongs'] = 0;
+                    }
+                    if(!empty($albumSongs[$value['Albums']['ProdID']])){
+                        Cache::write("nationaltopalbum_" . $territory.'_'.$value['Albums']['AlbumTitle'], $albumSongs);
+                        $this->log("cache written for national top album for $territory_".$value['Albums']['AlbumTitle'], "cache");
+                    }
                     //}
                 }
 
@@ -737,7 +746,7 @@ STR;
     ORDER BY Country.SalesDate ASC
     LIMIT 20
 STR;
-
+    
         $coming_soon_rv = $albumInstance->query($sql_coming_soon_v);
         $this->log("coming soon videos $territory", "cachequery");
         $this->log($sql_coming_soon_v, "cachequery");
@@ -750,13 +759,14 @@ STR;
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $coming_soon_rv[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
-            Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
+            
+            Cache::write("coming_soon_videos" . $territory, $coming_soon_rv);
             $this->log("cache written for coming soon videos for $territory", "cache");
         }
         else
         {
             $coming_soon_rv = Cache::read("coming_soon_videos" . $territory);
-            Cache::write("coming_soon_videos." . $territory, Cache::read("coming_soon_videos" . $territory));
+            Cache::write("coming_soon_videos" . $territory, Cache::read("coming_soon_videos" . $territory));
             $this->log("Unable to update coming soon videos for " . $territory, "cache");
         }
 
