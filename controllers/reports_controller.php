@@ -1739,7 +1739,7 @@ Configure::write('debug',2);
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         
-        
+        $libraryAdminID = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
         $libraryAdminID = $this->Library->find("first", array(
                    "conditions" => array(
