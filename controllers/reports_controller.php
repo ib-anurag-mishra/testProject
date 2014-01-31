@@ -1511,7 +1511,9 @@ Class ReportsController extends AppController {
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
-               
+               echo '<pre>';
+        print_r($var);
+        die;
         } else {
          echo '3';
             $var = $this->Library->find('list', array(
@@ -1524,9 +1526,7 @@ Class ReportsController extends AppController {
                     );
             $data = "<option value='all'>All Libraries</option>";
         }
-        echo '<pre>';
-        print_r($var);
-        die;
+        
          return $var;
          
 //        foreach ($var as $k => $v) {
