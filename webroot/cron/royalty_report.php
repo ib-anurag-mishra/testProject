@@ -13,6 +13,9 @@ $arr_dates = array();
 //$arr_dates['month']['to_date'] = date('Y-m-t 23:59:59',strtotime('-31 days'));
 $arr_dates['month']['from_date'] = date("Y-m-01 00:00:00", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-01 00:00:00';
 $arr_dates['month']['to_date'] =  date("Y-m-t 23:59:59", mktime(0,0,0,(date(m)-1), 1, date(Y))); //'2012-10-31 23:59:59';
+
+$fetchRecordsFromTable = 'latest_downloads';
+
 $libraryType = array('ALC'=>'0','Unlimited'=>'1');
 foreach($arr_dates AS $key => $value) {
     foreach($libraryType as $libTypeKey=>$libTypeValue){
@@ -58,21 +61,21 @@ foreach($arr_dates AS $key => $value) {
                 $dates_query_result = mysql_query($dates_query);
 		if(strtotime($q['library_contract_start_date']) <= strtotime($value['from_date'])){
                     if(strtotime($q['library_contract_end_date']) >= strtotime($value['to_date'])){
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$value['from_date']."' AND downloads.created <= '".$value['to_date']."' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$value['from_date']."' AND downloads.created <= '".$value['to_date']."' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
                     }
                     else{
                         //echo "2";
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$value['from_date']."' AND downloads.created <= '".$q['library_contract_end_date']." 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$value['from_date']."' AND downloads.created <= '".$q['library_contract_end_date']." 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
                     }
                 } else {
                     if(strtotime($q['library_contract_end_date']) >= strtotime($value['to_date'])){
                         //echo "3";
-                        $total_download_query = "SELECT library_id, count(*) as total_count From downloads WHERE provider_type='ioda' and downloads.created between '".$q['library_contract_start_date']." 00:00:00' and '".$to_date."' and library_id = ".$q['library_id'];
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$q['library_contract_start_date']." 00:00:00' AND downloads.created <= '".$value['to_date']."' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
+                        $total_download_query = "SELECT library_id, count(*) as total_count From $fetchRecordsFromTable as downloads WHERE provider_type='ioda' and downloads.created between '".$q['library_contract_start_date']." 00:00:00' and '".$to_date."' and library_id = ".$q['library_id'];
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created >= '".$q['library_contract_start_date']." 00:00:00' AND downloads.created <= '".$value['to_date']."' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
                     }
                     else{
                         //echo "4";
-                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created between '".$q['library_contract_start_date']." 00:00:00' and '".$q['library_contract_end_date']." 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
+                        $song_download_query = "select Songs.*,count(Songs.ProdID) as unit_count,Albums.AlbumTitle,Albums.UPC,libraries.library_territory From $fetchRecordsFromTable as downloads JOIN Songs on Songs.ProdID = downloads.ProdID AND Songs.provider_type = 'ioda'  JOIN Albums ON Albums.ProdID = Songs.ReferenceID AND Albums.provider_type = 'ioda' JOIN libraries ON downloads.library_id = libraries.id Where downloads.created between '".$q['library_contract_start_date']." 00:00:00' and '".$q['library_contract_end_date']." 23:59:59' AND downloads.provider_type='ioda' AND libraries.library_territory = '".$row_country[library_territory]."' AND library_id = ".$q['library_id']." GROUP BY Songs.ProdID ";
                     }
                 }
                 
