@@ -419,7 +419,8 @@ if ($this->Session->check('calledArtist') && !$this->Session->check('calledAlbum
                 <?php
             }
             ?>
-
+                    
+            sleep(100);
             var all_album_url = $("#allAlbumUrl").attr('value');
             showAllAlbumsList(all_album_url);
         });
@@ -449,8 +450,8 @@ elseif ($this->Session->check('calledAlbum'))
             }
             ?>
 
-            var all_album_url = $("#allAlbumUrl").attr('value');
-            
+            sleep(100);
+            var all_album_url = $("#allAlbumUrl").attr('value');            
             $('#album_details_container').html('');
             $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;">\n\
                     <img src="' + webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 115px; margin-top: 85px; position: absolute; top: 50%;"/></span>');
@@ -497,6 +498,7 @@ elseif ($this->Session->check('calledAlbum'))
                 }
             });
             
+            sleep(100);
             //calling the selected Album Details
             var album_url = $("#selectedAlbumUrl").attr('value');
             showAlbumDetails(album_url);
