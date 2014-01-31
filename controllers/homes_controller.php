@@ -198,11 +198,12 @@ class HomesController extends AppController
         // Videos
         if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false)
         {  
-            echo 123;
+            
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
         }
         else    //  Show From Cache
         {
+           echo 123;
             $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
         }
        
