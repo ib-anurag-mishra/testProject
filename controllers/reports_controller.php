@@ -1462,24 +1462,27 @@ Class ReportsController extends AppController {
                 'recursive' => -1));
         } else {
             $var = $this->Library->find('list', array(
-                'conditions' => array(
-                    'Library.library_territory' => $_REQUEST['Territory']), 
+//                'conditions' => array(
+//                    'Library.library_territory' => $_REQUEST['Territory']
+//                    ), 
                 'fields' => array('Library.id', 'Library.library_name'),
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
             $data = "<option value='all'>All Libraries</option>";
         }
-        foreach ($var as $k => $v) {
-            
-            $selected= '';
-            if(isset($libValue) && $libValue == $k){
-                 $selected= 'selected';
-            }
-            
-            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
-        }
-        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
-        exit;
+        
+        return $var;
+//        foreach ($var as $k => $v) {
+//            
+//            $selected= '';
+//            if(isset($libValue) && $libValue == $k){
+//                 $selected= 'selected';
+//            }
+//            
+//            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
+//        }
+//        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
+//        exit;
     }
     
     function admin_getLibraryIdsStream() {
@@ -1513,7 +1516,7 @@ Class ReportsController extends AppController {
          
             $var = $this->Library->find('list', array(
                 'conditions' => array(
-                    'Library.library_territory' => $territory, 
+                   // 'Library.library_territory' => $territory, 
                     'Library.library_type =2'), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
@@ -1521,17 +1524,20 @@ Class ReportsController extends AppController {
                     );
             $data = "<option value='all'>All Libraries</option>";
         }
-        foreach ($var as $k => $v) {
-            
-            $selected= '';
-            if(isset($libValue) && $libValue == $k){
-                 $selected= 'selected';
-            }
-            
-            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
-        }
-        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
-        exit;
+        
+         return $var;
+         
+//        foreach ($var as $k => $v) {
+//            
+//            $selected= '';
+//            if(isset($libValue) && $libValue == $k){
+//                 $selected= 'selected';
+//            }
+//            
+//            $data = $data . "<option value=" . $k . " ".$selected.">" . $v . "</option>";
+//        }
+//        print "<select class='select_fields' name='library_id' id='library_id'>" . $data . "</select>";
+//        exit;
     }
 
     function admin_unlimited() {
