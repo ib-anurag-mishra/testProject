@@ -1778,6 +1778,17 @@ Class ReportsController extends AppController {
         }
         else
         {
+            $libraryAdminID = $this->Library->find("first", array(
+                "conditions" => array(                   
+                    'Library.library_type = 2',
+                    'Library.id' => $this->data['Report']['library_id']
+                ),
+                'fields' => array('Library.id', 'Library.library_name', 'Library.library_territory'),
+                'order' => 'Library.library_name ASC',
+                'recursive' => -1));
+            //$this->set('libraryID', $libraryAdminID["Library"]["id"]);
+            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+            
             if ($this->data['Report']['Territory'] == '')
             {
                 //$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
