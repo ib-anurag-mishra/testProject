@@ -177,20 +177,33 @@ class SearchController extends AppController
             {
                 $songArray[] = $song->ProdID;
             }
-
-            $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-
+            
+            if($type == 'video'){
+                $downloadsUsed = $this->LatestVideodownload->find('all', array('conditions' => array('LatestVideodownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+            } else {
+                $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+            }
             foreach ($songs as $key => $song)
             {
                 $set = 0;
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
-		   if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+		   if($type == video)
+                   {
+                    if ($downloadData['LatestVideodownload']['ProdID'] == $song->ProdID)
+                    {
+                        $songs[$key]->status = 'avail';
+                        $set = 1;
+                        break;
+                    } 
+                   } else {
+                   if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
                     {
                         $songs[$key]->status = 'avail';
                         $set = 1;
                         break;
                     }
+                   }
                 }
                 if ($set == 0)
                 {
@@ -617,7 +630,7 @@ class SearchController extends AppController
 	    
             if(!empty($prodId) && !empty($providerType))
             {
-	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownlaod.ProdID' => $prodId, 'LatestDownlaod.provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID' => $prodId, 'LatestDownload.provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
                 $set = 0;
                 echo $this->LatestDownload->lastQuery();
                 print_r($downloadUsed);
