@@ -1443,7 +1443,8 @@ Class ReportsController extends AppController {
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
-                    'Library.library_territory' => $_REQUEST['Territory']), 
+//                    'Library.library_territory' => $_REQUEST['Territory']
+                    ), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1)
@@ -1454,7 +1455,8 @@ Class ReportsController extends AppController {
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
-                    'Library.library_territory' => $_REQUEST['Territory']), 
+//                    'Library.library_territory' => $_REQUEST['Territory']
+                    ), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
                 'recursive' => -1));
@@ -1483,7 +1485,7 @@ Class ReportsController extends AppController {
     function admin_getLibraryIdsStream() {
       //Configure::write('debug', 2);
       
-        $territory = $_REQUEST['Territory'];        
+        //$territory = $_REQUEST['Territory'];        
         $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
@@ -1491,7 +1493,6 @@ Class ReportsController extends AppController {
             $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
-                    'Library.library_territory' => $territory,
                     'Library.library_type = 2'),  
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
@@ -1503,7 +1504,6 @@ Class ReportsController extends AppController {
                $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
-                    'Library.library_territory' => $territory,
                     'Library.library_type = 2'), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
