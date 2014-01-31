@@ -1506,7 +1506,7 @@ Class ReportsController extends AppController {
               $var = $this->Library->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
-                    'Library.library_type' => 2
+                    'Library.library_type = 2' 
                     ), 
                 'fields' => array('Library.id', 'Library.library_name'), 
                 'order' => 'Library.library_name ASC', 
