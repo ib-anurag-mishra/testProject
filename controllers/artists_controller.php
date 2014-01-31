@@ -1580,24 +1580,22 @@ Class ArtistsController extends AppController
     function getNationalAlbumData(){
         
         Configure::write('debug', 0);
-        "artistText=" + artistText+"&prodId"+prodId+"&providerType"+providerType;
         $artistText = $_POST['artistText'];
         $prodId = $_POST['prodId'];
         $providerType = $_POST['providerType'];
-        $albumTitle = $_POST['albumTitle'];
         $territory = $this->Session->read('territory');
-        if (($national = Cache::read("nationaltopalbum_" . $territory.'_'.$albumTitle)) === false)
+        if (($national = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId)) === false)
         {
             $nationalAlbumSongs = $this->getAlbumSongs(base64_encode($artistText), $prodId, base64_encode($providerType));
             
             if(!empty($nationalAlbumSongs[$prodId])){
-                Cache::write("nationaltopalbum_" . $territory.'_'.$albumTitle, $nationalAlbumSongs);
-                $this->log("cache written for national top album for $territory_".$albumTitle, "cache");
+                Cache::write("nationaltopalbum_" . $territory.'_'.$prodId, $nationalAlbumSongs);
+                $this->log("cache written for national top album for $territory_".$prodId, "cache");
             }            
         }
         else
         {
-            $nationalAlbumSongs = Cache::read("nationaltopalbum_" . $territory.'_'.$albumTitle);
+            $nationalAlbumSongs = Cache::read("nationaltopalbum_" . $territory.'_'.$prodId);
         }                
         
         if (!empty($nationalAlbumSongs[$prodId]))

@@ -362,7 +362,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     {
                                         if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs']))
                                         {
-                                            echo $this->Queue->getNationalAlbumStreamLabel($value['Song']['ArtistText'],$value['Albums']['ProdID'],$value['Song']['provider_type'],$value['Albums']['AlbumTitle']);
+                                            echo $this->Queue->getNationalAlbumStreamLabel($value['Song']['ArtistText'],$value['Albums']['ProdID'],$value['Song']['provider_type']);
                                             ?> 
                                             <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                             <?php
