@@ -184,15 +184,9 @@ class StreamingHistory extends AppModel {
                         'alias' => 'lib',
                         'type' => 'left',
                         'conditions' => array('lib.id=StreamingHistory.library_id')
-                    ),
-                    array(
-                        'table' => 'users',
-                        'alias' => 'user',
-                        'type' => 'left',
-                        'conditions' => array('user.id=StreamingHistory.patron_id')
-                    ),
+                    ),                  
                 ),
-                'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons', 'lib.library_name','user.email'),
+                'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons', 'lib.library_name',),
                 'conditions' => array('StreamingHistory.provider_type=countries.provider_type', 'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ', array('StreamingHistory.library_id' => $lib_condition), 'not' => array('StreamingHistory.token_id' => null)),
                 'group' => array('StreamingHistory.library_id'),
                 'recursive' => -1);
@@ -365,10 +359,16 @@ class StreamingHistory extends AppModel {
                         'alias' => 'countries',
                         'type' => 'left',
                         'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
-                    )
+                    ),
+                      array(
+                        'table' => 'users',
+                        'alias' => 'user',
+                        'type' => 'left',
+                        'conditions' => array('user.id=StreamingHistory.patron_id')
+                    ),
                  ),
                 'conditions'=>array('StreamingHistory.createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null),'StreamingHistory.provider_type=countries.provider_type'), 
-                'fields'=>array('StreamingHistory.patron_id','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id'),
+                'fields'=>array('StreamingHistory.patron_id','count(StreamingHistory.ProdID) as total_streamed_songs','StreamingHistory.library_id','user.email'),
                 'group' => array('StreamingHistory.patron_id'),
                 'recursive' => -1));
         }
