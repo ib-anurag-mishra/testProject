@@ -2311,7 +2311,7 @@ function ajaxRedirectRecentDownload() {
 
 
     $.ajax({
-        url: 'homes/my_history',
+        url: '/homes/my_history',
         method: 'post',
         success: function(response) {
             $('.content').html($(response).filter('.content'));
