@@ -970,7 +970,7 @@ class SearchController extends AppController
                 print_r($downloadsUsed);
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
-                    if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+                    if ($downloadData['LatestDownload']['ProdID'] == $prodId && $downloadData['LatestDownload']['provider_type'] == $providerType)
                     {
                         $set = 1;
                         break;
