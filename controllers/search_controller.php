@@ -21,7 +21,7 @@ class SearchController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'autocomplete','ajaxcheckdownload');
+        $this->Auth->allow('index', 'autocomplete','ajaxcheckdownload','index_new');
     }
 
     function index($page = 1, $facetPage = 1)
@@ -616,6 +616,340 @@ class SearchController extends AppController
         //print_r($typeVar); print_r($records); //die;
         $this->set('type', $typeVar);
         $this->set('records', $records);
+    }
+    
+    function index_new($page = 1, $facetPage = 1)
+    {
+        //set_time_limit(0);
+        //echo "<br>Started at ".date("Y-m-d H:i:s");
+        // reset page parameters when serach keyword changes
+        // to check if the search is made from search bar or click on search page
+        $layout = $_GET['layout'];
+
+        if (('' == trim($_GET['q'])) || ('' == trim($_GET['type'])))
+        {
+            unset($_SESSION['SearchReq']);
+        }// unset session when no params
+        if ((isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])))
+        {
+            unset($_SESSION['SearchReq']);
+            $this->redirect(array('controller' => 'search', 'action' => 'index?q=' . $_GET['q'] . '&type=' . $_GET['type']));
+        }//reset session & redirect to 1st page
+        if (('' != trim($_GET['q'])) && ('' != trim($_GET['type'])))
+        {
+            $_SESSION['SearchReq']['word'] = $_GET['q'];
+            $_SESSION['SearchReq']['type'] = $_GET['type'];
+        }//sets values in session
+
+        $queryVar = null;
+        $check_all = null;
+        $sortVar = 'ArtistText';
+        $sortOrder = 'asc';
+
+        if (isset($_GET['q']))
+        {
+            $queryVar = $_GET['q']; // html_entity_decode();
+        }
+        if (isset($_GET['type']))
+        {
+            $type = $_GET['type'];
+            $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer' || $_GET['type'] == 'video') ? $_GET['type'] : 'all');
+        }
+        else
+        {
+            $typeVar = 'all';
+        }
+        $this->set('type', $typeVar);
+
+        if (isset($_GET['sort']))
+        {
+            $sort = $_GET['sort'];
+            $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer') ? $sort : 'artist');
+            switch ($sort)
+            {
+                case 'song':
+                    $sortVar = 'SongTitle';
+                    break;
+                case 'album':
+                    $sortVar = 'Title';
+                    break;
+                case 'genre':
+                    $sortVar = 'Genre';
+                    break;
+                case 'label':
+                    $sortVar = 'Label';
+                    break;
+                case 'video':
+                    $sortVar = 'VideoTitle';
+                    break;
+                case 'artist':
+                    $sortVar = 'ArtistText';
+                    break;
+                case 'composer':
+                    $sortVar = 'Composer';
+                    break;
+                default:
+                    $sortVar = 'ArtistText';
+                    break;
+            }
+        }
+        else
+        {
+            $sort = 'artist';
+        }
+
+        $this->set('sort', $sort);
+
+        if (isset($_GET['sortOrder']))
+        {
+            $sortOrder = $_GET['sortOrder'];
+            $sortOrder = (($sortOrder == 'asc' || $sortOrder == 'desc') ? $sortOrder : 'asc');
+        }
+        else
+        {
+            $sortOrder = 'asc';
+        }
+
+        $this->set('sortOrder', $sortOrder);
+
+
+        if (!empty($queryVar))
+        {
+            //Added code for log search data
+            $insertArr[] = $this->searchrecords($typeVar, $queryVar);
+            $this->Searchrecord->saveAll($insertArr);
+            //End Added code for log search data
+
+            $patId = $this->Session->read('patron');
+            $libId = $this->Session->read('library');
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+            $docs = array();
+
+            $total = 0;
+            $limit = 10;
+
+            if (!isset($page) || $page < 1)
+            {
+                $page = 1;
+            }
+            else
+            {
+                $page = $page;
+            }
+
+            if (!isset($facetPage) || $facetPage < 1)
+            {
+                $facetPage = 1;
+            }
+            else
+            {
+                $facetPage = $facetPage;
+            }
+
+            $country = $this->Session->read('territory');
+            //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
+            $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
+            //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
+
+            $total = $this->Solr->total;
+            $totalPages = ceil($total / $limit);
+
+            if ($total != 0)
+            {
+                /* if($page > $totalPages){
+                  $page = $totalPages;
+                  $this->redirect();
+                  } */
+            }
+
+            /* echo "Microtime : ".microtime();
+              echo "Time : ".date('h:m:s'); */
+
+            $songArray = array();
+            foreach ($songs as $key => $song)
+            {
+                $songArray[] = $song->ProdID;
+            }
+            
+            if($type == 'video'){
+                $downloadsUsed = $this->LatestVideodownload->find('all', array('conditions' => array('LatestVideodownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+            } else {
+                $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID in (' . implode(',', $songArray) . ')', 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+            }
+            foreach ($songs as $key => $song)
+            {
+                $set = 0;
+                foreach ($downloadsUsed as $downloadKey => $downloadData)
+                {
+		   if($type == video)
+                   {
+                    if ($downloadData['LatestVideodownload']['ProdID'] == $song->ProdID)
+                    {
+                        $songs[$key]->status = 'avail';
+                        $set = 1;
+                        break;
+                    } 
+                   } else {
+                   if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+                    {
+                        $songs[$key]->status = 'avail';
+                        $set = 1;
+                        break;
+                    }
+                   }
+                }
+                if ($set == 0)
+                {
+                    $songs[$key]->status = 'not';
+                }
+            }
+            /* echo "Microtime : ".microtime();
+              echo "Time : ".date('h:m:s'); */
+
+            $this->set('songs', $songs);
+            // print_r($songs);
+            // Added code for all functionality
+            // print_r($songs);
+
+            if (!empty($type) && !($type == 'all'))
+            {
+
+                switch ($typeVar)
+                {
+                    case 'album':
+                        // $limit = 24;
+                        $limit = 12;
+//                        echo 'here';
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        // echo "Group Search for Albums Started at ".time();
+                        $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
+//                        echo 'under';
+//                        echo "<pre>";print_r($albums);
+                        //echo "here1 : ".date('d-m-Y h:i:s');
+                        // echo "Group Search for Albums Ended at ".time();
+
+                        $arr_albumStream = array();
+
+                        foreach ($albums as $objKey => $objAlbum)
+                        {
+                            $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                                    array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                            );
+                        }
+//                        echo 'after';
+//                        echo "<pre>";print_r($albums);exit;
+                        //  echo "<pre>"; print_r($albums);
+                        //echo "<br/>here2 : ".date('d-m-Y h:i:s'); exit;
+                        $this->set('albumData', $albums);
+                        $this->set('arr_albumStream', $arr_albumStream);
+
+                        break;
+
+                    case 'genre':
+                        $limit = 30;
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
+                        $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
+                        //print_r($genres); die;
+                        $this->set('genres', $genres);
+                        break;
+
+                    case 'label':
+                        $limit = 18;
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
+                        $labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
+                        $this->set('labels', $labels);
+                        break;
+
+                    case 'artist':
+                        $limit = 18;
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
+                        $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
+                        $this->set('artists', $artists);
+                        break;
+
+                    case 'composer':
+                        $limit = 18;
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
+                        $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
+                        $this->set('composers', $composers);
+                        break;
+                }
+
+                $this->set('totalFacetFound', $totalFacetCount);
+                if (!empty($totalFacetCount))
+                {
+                    $this->set('totalFacetPages', ceil($totalFacetCount / $limit));
+                }
+                else
+                {
+                    $this->set('totalFacetPages', 0);
+                }
+            }
+            else
+            {
+
+                //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
+                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
+                //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
+                $queryArr = null;
+
+                $arr_albumStream = array();
+
+                foreach ($albums as $objKey => $objAlbum)
+                {
+                    $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                    );
+                }
+
+                //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
+                $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
+                //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
+                //echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
+                $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
+                //echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
+                //echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
+                $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
+                //echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
+                // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
+                //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
+                $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
+                //echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
+                // print_r($videos); die;
+                $this->set('albums', $albums);
+                $this->set('arr_albumStream', $arr_albumStream);
+                //$this->set('albumData',$albumData);
+                $this->set('albumData', $albums);
+                $this->set('artists', $artists);
+                $this->set('genres', $genres);
+                //print_r($genres);die;
+                $this->set('composers', $composers);
+                //$this->set('labels', $labels);
+                $this->set('videos', $videos);
+            }
+            $this->set('libraryDownload', $libraryDownload);
+            $this->set('patronDownload', $patronDownload);
+            $this->set('total', $total);
+            $this->set('totalPages', $totalPages);
+            $this->set('currentPage', $page);
+            $this->set('facetPage', $facetPage);
+        }
+        $this->set('keyword', htmlspecialchars($queryVar));
+        //echo "<br>search end- ".date("Y-m-d H:i:s");
+
+        if (isset($this->params['isAjax']) && $this->params['isAjax'] && $layout == 'ajax')
+        {
+            $this->layout = 'ajax';
+            $this->autoLayout = false;
+            $this->autoRender = false;
+            echo $this->render();
+            die;
+        }
+        else
+        {
+            $this->layout = 'home';
+        }
     }
 
 	function ajaxcheckdownload($prodId, $providerType)
