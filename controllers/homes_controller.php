@@ -128,7 +128,7 @@ class HomesController extends AppController
         echo "<pre>";
         echo $territory ;
         //featured artist slideshow code start
-        if(1){
+        if(1)
         //if (($artists = Cache::read("featured" . $country)) === false)
         {
             $featured = $this->Common->getFeaturedArtists($territory);
