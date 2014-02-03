@@ -321,14 +321,17 @@ if (empty($getData)) {
                                             ?>
                                             <tr>
                                                 <td><?php echo $i; ?></td>
-                                                <td><?php
-                                                    if (isset($patronStramed['users']['email']) && $patronStramed['users']['email'] != '')
-                                                    {
-                                                        echo $patronStramed['users']['email'];
-                                                          } else { 
-                                                        echo $patronStramed['StreamingHistory']['patron_id'];
-                                                    }
-                                                    ?>
+                                                <td>
+                                                    <?php
+                                                            if (isset($patronStramed['user']['email']) && $patronStramed['user']['email'] != '')
+                                                            {
+                                                                echo $patronStramed['user']['email'];
+                                                            }
+                                                            else
+                                                            {
+                                                                echo $patronStramed['StreamingHistory']['patron_id'];
+                                                            }
+                                                            ?>
                                                 </td>
                                                 <?php if (!is_numeric($library_id)): ?>
                                                     <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>

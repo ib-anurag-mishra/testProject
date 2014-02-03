@@ -2009,9 +2009,6 @@ Class ReportsController extends AppController {
                 
                 $this->set('patronStreamedDetailedInfo', $patronStreamedInformation);
                 
-                echo "<pre>";
-                print_r($patronStreamedInformation);
-                exit;
                 /* } else {
                   if (!empty($currentPatronDownload)) {
                   foreach ($currentPatronDownload as $patronRecord) {
