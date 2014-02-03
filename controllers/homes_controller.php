@@ -125,11 +125,10 @@ class HomesController extends AppController
         }
         $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
 
-        echo "<pre>";
-        echo $territory ;
+       
         //featured artist slideshow code start
-        if(1)
-        //if (($artists = Cache::read("featured" . $country)) === false)
+        //if(1)
+        if (($artists = Cache::read("featured" . $country)) === false)
         {
             $featured = $this->Common->getFeaturedArtists($territory);
         }
@@ -139,8 +138,7 @@ class HomesController extends AppController
             $featured = Cache::read("featured" . $country);
         }
         $this->set('featuredArtists', $featured);
-        print_r($featured);
-        exit;
+      
         
         /*
           Code OF NEWS Section --- START
