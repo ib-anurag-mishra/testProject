@@ -530,7 +530,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
                                         <?php
 
-                                             if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+
+                                                $maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
+
+                                             //if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+                                                if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
+
                                                { 
                                                      $streamTime = 'UNLIMITED';
                                                      $libraryunlimited = 1;
@@ -543,7 +548,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     
                                                     if(strtotime(date("Y-m-d",strtotime($lastStreamedDate))) != strtotime(date('Y-m-d'))) // if Patron Logs in for first time in day 
                                                     {
-                                                        $streamTime =   10800;                                                        
+                                                        $streamTime =   $maxStreamTime;                                                        
                                                     }
                                                     else
                                                     {
@@ -551,13 +556,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
                                                         if(empty($streamTime))      // if there is no record of patron in streaming_records table i.e. user is streaming for first time
                                                         {
-                                                            $streamTime =   10800;
+                                                            $streamTime =   $maxStreamTime;
                                                         }
                                                         else    // if user has streamed one or more time
                                                         {
-                                                            $streamTime = (10800-$this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
-                                                        }
-                                                                                                           
+                                                            $streamTime = ($maxStreamTime - $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
+                                                        }                                                                                                           
                                                     } 
 
                                                      $streamTime =   gmdate("H:i:s", $streamTime);

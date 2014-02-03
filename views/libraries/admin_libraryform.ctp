@@ -1158,6 +1158,27 @@ if (empty($getData))
                 <h1>User Download Control</h1>
                 <table cellspacing="10" cellpadding="0" border="0">
                     <tr><td id="formError4" class="formError" colspan="2"></td></tr>
+                    
+                    
+                      <tr>
+                        <td width="200" align="left"><?php echo $this->Form->label('Library Streaming is Allowed'); ?></td>
+                        <td  style="font-size:12px;">
+                            <input id="redio1" type="radio" name="data[Library][library_type]" value="2" class="form_fields" <?php
+                            if ($getData['Library']['library_type'] == 2)
+                            {
+                                ?> checked="checked" <?php } ?>> Allowed
+                            <input id="redio2" type="radio" name="data[Library][library_type]" value="1" class="form_fields"  <?php
+                            if ($getData['Library']['library_type'] == 1)
+                            {
+                                ?> checked="checked" <?php } ?>> Not Allowed
+                        </td>
+                    </tr>
+                    
+                    
+                    
+                    
+                    
+                    <tr><td colspan="2"></td></tr>
                     <tr>
                         <td align="left" width="100">
                             <?php echo $this->Form->label('Per Week'); ?>
@@ -1184,6 +1205,22 @@ if (empty($getData))
                         </td>
                     </tr>
                     <tr><td colspan="2"></td></tr>
+                    <tr>
+                        <td align="left" width="150">
+                            <?php echo $this->Form->label('Streaming Hours'); ?>
+                        </td>
+                        <td align="left">
+                            <?php
+                            $hoursArray = array();
+                            for($ik=0;$ik<=24;$ik++){
+                                $hoursArray[$ik] = $ik;
+                            }
+                            
+                            echo $form->input('library_streaming_hours', array('options' => $hoursArray, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_streaming_hours'])
+                            );
+                            ?>&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-size:8%;'><br/>(0 hour means no streaming,24 hours means unlimited streaming)</span>
+                        </td>
+                    </tr>
                     <tr><td colspan="2"></td></tr>
                     <tr><td colspan="2"></td></tr>
                     <tr><td colspan="2"></td></tr>
@@ -1195,8 +1232,7 @@ if (empty($getData))
             <div id="form_step5" class="form_steps" style="display: none;">
                 <h1>Purchase Downloads</h1>
                 <table cellspacing="10" cellpadding="0" border="0">
-                    <tr><td id="formError5" class="formError" colspan="2"></td></tr>
-                    <tr><td colspan="2"></td></tr>
+                    <tr><td id="formError5" class="formError" colspan="2"></td></tr
                     <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Library Download Type'); ?></td>
                         <td  style="font-size:12px;">
@@ -1210,19 +1246,8 @@ if (empty($getData))
                                 ?> checked="checked" <?php } ?>>Unlimited
                         </td>
                     </tr>
-                    <tr>
-                        <td align="right" width="250"><?php echo $this->Form->label('Library Streaming is Allowed'); ?></td>
-                        <td  style="font-size:12px;">
-                            <input id="redio1" type="radio" name="data[Library][library_type]" value="2" class="form_fields" <?php
-                            if ($getData['Library']['library_type'] == 2)
-                            {
-                                ?> checked="checked" <?php } ?>> Allowed
-                            <input id="redio2" type="radio" name="data[Library][library_type]" value="1" class="form_fields"  <?php
-                            if ($getData['Library']['library_type'] == 1)
-                            {
-                                ?> checked="checked" <?php } ?>> Not Allowed
-                        </td>
-                    </tr>
+                    <tr><td colspan="2"></td></tr>                   
+                   
                     <tr>
                         <td align="right" width="250"><?php echo $this->Form->label('Create a New Contract'); ?></td>
                         <td>

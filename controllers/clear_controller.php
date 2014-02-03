@@ -49,6 +49,8 @@ class ClearController extends AppController {
     if(!empty($id)) {
 		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+                $memcache->addServer(Configure::read('App.memcache_ip2'), 11211);
+
 		$key = Configure::read('App.memcache_key').'_library' . $id;
 		$check = memcache_delete($memcache,$key);
 		if($check == true){

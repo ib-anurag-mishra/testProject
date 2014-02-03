@@ -239,7 +239,8 @@ Class LibrariesController extends AppController
                         'Library.library_exp_date_format',
                         'Library.is_sip_over_ssh',
                         'Library.library_sip_command',
-                        'Library.library_type'
+                        'Library.library_type',
+                        'Library.library_streaming_hours'
                     ),
                     'contain' => array(
                         'User' => array(
@@ -287,8 +288,16 @@ Class LibrariesController extends AppController
     {
         Configure::write('debug', 0);
         $this->layout = false;
+        
+        
+        
+        
+        
         if ($this->RequestHandler->isAjax())
         {
+            
+            
+            
             if (!empty($this->params['named']['id']))
             {
                 $libraryId = $this->params['named']['id'];
@@ -374,7 +383,8 @@ Class LibrariesController extends AppController
                             'Library.twiter_icon',
                             'Library.youtube_icon',
                             'Library.library_unlimited',
-                             'Library.library_type'
+                            'Library.library_type',
+                            'Library.library_streaming_hours'
                         ),
                         'contain' => array(
                             'User' => array(
@@ -410,7 +420,8 @@ Class LibrariesController extends AppController
                     else
                     {
                         $this->User->create();
-                    }
+                    }                                        
+                    
                     $this->User->set($this->data['User']);
                     $this->User->setValidation('library_step' . $this->data['Library']['libraryStepNum']);
                     if ($this->User->validates())
@@ -592,9 +603,9 @@ Class LibrariesController extends AppController
                                                 
                                                 if ($this->Library->save($this->data['Library']))
                                                 {                                        
-                                                    $this->Library->id =  $this->data['Library']['id'];
-                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
-                                                    $this->Library->save();
+//                                                    $this->Library->id =  $this->data['Library']['id'];
+//                                                    $this->Library->library_type =  $this->data['Library']['library_type'];
+//                                                    $this->Library->save();
                                                     
                                                     if (count($this->data['Variable']) > 0)
                                                     {
@@ -606,6 +617,10 @@ Class LibrariesController extends AppController
                                                                 {
                                                                     $data[$k] = $v;
                                                                     $data[$k]['library_id'] = $this->Library->id;
+                                                                    $data[$k]['authentication_variable_index'] = empty($data[$k]['authentication_variable_index'])?'0':$data[$k]['authentication_variable_index'];
+                                                                    //$data[$k]['message_no'] = $this->Library->id;
+                                                                    $data[$k]['created'] = date("Y-m-d H:i:s");
+                                                                    $data[$k]['modified'] = date("Y-m-d H:i:s");                                                                
                                                                 }
                                                             }
                                                             $this->Variable->deleteAll(array('library_id' => $this->Library->id));

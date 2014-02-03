@@ -197,6 +197,7 @@ Class UsersController extends AppController
 		if($userType == '1' || $this->Session->read('Auth.User.sales') == 'yes'){
 			$memcache = new Memcache;
 			$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+                        $memcache->addServer(Configure::read('App.memcache_ip2'), 11211);
 			$x = memcache_get($memcache,"librarydownload");
 			if($library == 'special') {
 				foreach($x as $k => $v){
