@@ -172,40 +172,46 @@ class StreamingHistory extends AppModel {
             $lib_condition = $all_Ids;
             $arr_all_library_streaming = array();
             $qryArr=array(
-            'joins' => array(
-                array(
-                    'table' => strtolower($territory).'_countries',
-                    'alias' => 'countries',
-                    'type' => 'left',
-                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory) . '_countries',
+                        'alias' => 'countries',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                    ),
+                    array(
+                        'table' => 'libraries',
+                        'alias' => 'lib',
+                        'type' => 'left',
+                        'conditions' => array('lib.id=StreamingHistory.library_id')
+                    ),
+                    array(
+                        'table' => 'users',
+                        'alias' => 'user',
+                        'type' => 'left',
+                        'conditions' => array('user.id=StreamingHistory.patron_id')
+                    ),
                 ),
-                array(
-                    'table' => 'libraries',
-                    'alias' => 'lib',
-                    'type' => 'left',
-                    'conditions' => array('lib.id=StreamingHistory.library_id')
-                )
-             ),
-            'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons','lib.library_name',),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',array('StreamingHistory.library_id'=>$lib_condition),'not'=>array('StreamingHistory.token_id'=>null)),
-            'group' => array('StreamingHistory.library_id'),
-            'recursive' => -1);
+                'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons', 'lib.library_name','user.email'),
+                'conditions' => array('StreamingHistory.provider_type=countries.provider_type', 'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ', array('StreamingHistory.library_id' => $lib_condition), 'not' => array('StreamingHistory.token_id' => null)),
+                'group' => array('StreamingHistory.library_id'),
+                'recursive' => -1);
 
             return $this->find('all', $qryArr);
         } else {
             $lib_condition = "StreamingHistory.library_id=$libraryID";
             $qryArr=array(
-            'joins' => array(
-                array(
-                    'table' => strtolower($territory).'_countries',
-                    'alias' => 'countries',
-                    'type' => 'left',
-                    'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
-                )
-             ),
-            'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons'),
-            'conditions'=>array('StreamingHistory.provider_type=countries.provider_type','createdOn BETWEEN "'.$startDate.'" and "'.$endDate.'" ',$lib_condition,'not'=>array('StreamingHistory.token_id'=>null)),
-            'recursive' => -1);
+                'joins' => array(
+                    array(
+                        'table' => strtolower($territory) . '_countries',
+                        'alias' => 'countries',
+                        'type' => 'left',
+                        'conditions' => array('StreamingHistory.ProdID=countries.ProdID')
+                    )
+                ),
+                'fields' => array('count(distinct StreamingHistory.patron_id) AS total_patrons'),
+                'conditions' => array('StreamingHistory.provider_type=countries.provider_type', 'createdOn BETWEEN "' . $startDate . '" and "' . $endDate . '" ', $lib_condition, 'not' => array('StreamingHistory.token_id' => null)),
+                'recursive' => -1);
             return $this->find('all', $qryArr);
         }
     }

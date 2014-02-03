@@ -313,30 +313,32 @@ if (empty($getData)) {
                                         <?php endif; ?>
                                         <th>Total Number of Tracks Streamed</th>
                                     </tr>
-    <?php
-    $i = 1;
-    
-    foreach ($patronStreamedDetailedInfo as $key => $patronStramed) {
-        ?>
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php
-                                                if (isset($patronStramed['StreamingHistory']['patron_id']) && $patronStramed['StreamingHistory']['patron_id'] != '') {
-                                                  /*  echo $patronStramed['StreamingHistory']['email'];
-                                                } else {*/
-                                                    echo $patronStramed['StreamingHistory']['patron_id'];
-                                                }
-                                                ?>
-                                            </td>
-                                            <?php if(!is_numeric($library_id)):?>
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
-                                            <?php endif; ?>
-                                            <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
-                                        </tr>
-        <?php
-        $i++;
-    }
-    ?>
+                                        <?php
+                                        $i = 1;
+
+                                        foreach ($patronStreamedDetailedInfo as $key => $patronStramed)
+                                        {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
+                                                <td><?php
+                                                    if (isset($patronStramed['StreamingHistory']['patron_id']) && $patronStramed['StreamingHistory']['patron_id'] != '')
+                                                    {
+                                                        /*  echo $patronStramed['StreamingHistory']['email'];
+                                                          } else { */
+                                                        echo $patronStramed['StreamingHistory']['patron_id'];
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <?php if (!is_numeric($library_id)): ?>
+                                                    <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
+                                                <?php endif; ?>
+                                                <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
+                                            </tr>
+                                            <?php
+                                            $i++;
+                                        }
+                                        ?>
                                 </table>
                             </td>
                         </tr>

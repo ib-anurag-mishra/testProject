@@ -1731,7 +1731,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-        //Configure::write('debug',2);
+        Configure::write('debug',2);
 
         ini_set('memory_limit', '512M');
         set_time_limit(0);
@@ -1913,6 +1913,8 @@ Class ReportsController extends AppController {
                     $patronStreamedInformation = $this->StreamingHistory->getPatronStreamingDay($library_id, $this->data['Report']['date'], $territory,'week');
 
                     $genreDayStremed = $this->StreamingHistory->getDaysGenreStramedInformation($library_id, $this->data['Report']['date'], $territory,'week');
+                    
+                    
                 } elseif ($this->data['Report']['reports_daterange'] == 'month') {
                     $date_arr = explode("/", $this->data['Report']['date']);
                     $compareDate = $date_arr[2] . "-" . $date_arr[0] . "-" . date('d', time());
@@ -1999,8 +2001,14 @@ Class ReportsController extends AppController {
                   } */
                 $this->set('patronStreamedInfo', $patronStreaminInfo);
                 $this->set('dayStreamingInfo', $arr_day_streaming_report);
-                $this->set('patronStreamedDetailedInfo', $patronStreamedInformation);
+                
                 $this->set('genreDayStremedInfo', $genreDayStremed);
+                
+                $this->set('patronStreamedDetailedInfo', $patronStreamedInformation);
+                
+                echo "<pre>";
+                print_r($patronStreamedInformation);
+                exit;
                 /* } else {
                   if (!empty($currentPatronDownload)) {
                   foreach ($currentPatronDownload as $patronRecord) {
