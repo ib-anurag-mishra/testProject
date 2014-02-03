@@ -21,7 +21,7 @@ class SearchController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allow('index', 'autocomplete','ajaxcheckdownload');
+        $this->Auth->allow('index', 'autocomplete','ajaxcheckdownload','index_new');
     }
 
     function index($page = 1, $facetPage = 1)
