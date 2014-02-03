@@ -1497,7 +1497,16 @@ STR;
         $ids = '';
         $ids_provider_type = '';
         $featuredInstance = ClassRegistry::init('Featuredartist');
-        $featured = $featuredInstance->find('all', array('conditions' => array('Featuredartist.territory' => $territory, 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
+        $featured = $featuredInstance->find('all', array(
+            'conditions' => array(
+                'Featuredartist.territory' => $territory,
+                'Featuredartist.language' => Configure::read('App.LANGUAGE')),
+            'recursive' => -1,
+            'order' => array(
+                'Featuredartist.id' => 'desc')
+                )
+        );
+        
         foreach ($featured as $k => $v)
         {
             if ($v['Featuredartist']['album'] != 0)
