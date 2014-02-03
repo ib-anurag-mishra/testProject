@@ -455,15 +455,17 @@ button {
           border-right: 1px solid #b1d3e0;
           -webkit-appearance: none;
           -moz-appearance: none;
-          appearance: none; }
-          /* line 600, ../sass/styles.scss */
+          appearance: none;
+          text-overflow: '';
+          text-indent: 0.01px; }
+          /* line 601, ../sass/styles.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-select:hover {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
             background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 608, ../sass/styles.scss */
+        /* line 609, ../sass/styles.scss */
         .site-header .header-right-col .row-2 .master-search-container::before {
           position: absolute;
           width: 6px;
@@ -472,7 +474,7 @@ button {
           top: 11px;
           background: url(../images/freegal_sprite.png) no-repeat -40px 0;
           content: ""; }
-        /* line 622, ../sass/styles.scss */
+        /* line 623, ../sass/styles.scss */
         .site-header .header-right-col .row-2 .master-search-container::after {
           background: url(../images/freegal_sprite.png) no-repeat -105px 0;
           width: 13px;
@@ -481,14 +483,14 @@ button {
           left: 108px;
           top: 8px;
           content: ""; }
-        /* line 638, ../sass/styles.scss */
+        /* line 639, ../sass/styles.scss */
         .site-header .header-right-col .row-2 .master-search-container .master-search-field-container {
           position: relative;
           display: inline-block;
-          width: 202px;
+          width: 201px;
           height: 27px;
           vertical-align: top; }
-          /* line 650, ../sass/styles.scss */
+          /* line 651, ../sass/styles.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .search-text {
             width: 144px;
             font-size: 12px;
@@ -504,7 +506,7 @@ button {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none; }
-          /* line 670, ../sass/styles.scss */
+          /* line 671, ../sass/styles.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
             background: #d9ebf2;
             font-size: 12px;
@@ -542,17 +544,17 @@ button {
               background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
               background-image: linear-gradient(#d3e8f0, #d5e9f1); }
 
-/* line 696, ../sass/styles.scss */
+/* line 697, ../sass/styles.scss */
 .top-nav {
   background: #52c6ec; }
-  /* line 699, ../sass/styles.scss */
+  /* line 700, ../sass/styles.scss */
   .top-nav ul {
     float: right; }
-  /* line 704, ../sass/styles.scss */
+  /* line 705, ../sass/styles.scss */
   .top-nav li {
     display: block;
     float: left; }
-    /* line 709, ../sass/styles.scss */
+    /* line 710, ../sass/styles.scss */
     .top-nav li a {
       display: block;
       text-transform: uppercase;
@@ -561,7 +563,7 @@ button {
       padding: 10px;
       font-size: 14px; }
 
-/* line 721, ../sass/styles.scss */
+/* line 722, ../sass/styles.scss */
 .left-nav {
   width: 156px;
   position: absolute;
@@ -575,27 +577,27 @@ button {
   box-sizing: border-box;
   background: #fff;
   height: 100%; }
-  /* line 735, ../sass/styles.scss */
+  /* line 736, ../sass/styles.scss */
   .left-nav h2 {
     padding-left: 25px;
     margin-bottom: 15px;
     line-height: 20px;
     font-size: 15px; }
-  /* line 743, ../sass/styles.scss */
+  /* line 744, ../sass/styles.scss */
   .left-nav > .streaming > ul, .left-nav > .my-downloads > ul {
     margin-left: 25px; }
-    /* line 747, ../sass/styles.scss */
+    /* line 748, ../sass/styles.scss */
     .left-nav > .streaming > ul li, .left-nav > .my-downloads > ul li {
       margin-bottom: 15px; }
-      /* line 751, ../sass/styles.scss */
+      /* line 752, ../sass/styles.scss */
       .left-nav > .streaming > ul li a, .left-nav > .my-downloads > ul li a {
         text-decoration: none;
         color: #9f9f9f;
         font-size: 15px; }
-  /* line 767, ../sass/styles.scss */
+  /* line 768, ../sass/styles.scss */
   .left-nav .streaming h2 {
     position: relative; }
-    /* line 773, ../sass/styles.scss */
+    /* line 774, ../sass/styles.scss */
     .left-nav .streaming h2::before {
       content: "";
       position: absolute;
@@ -604,21 +606,21 @@ button {
       background: url(../images/freegal_sprite.png) no-repeat 0 0;
       width: 19px;
       height: 13px; }
-  /* line 788, ../sass/styles.scss */
+  /* line 789, ../sass/styles.scss */
   .left-nav .streaming li ul {
     margin-left: 20px;
     margin-top: 10px;
     display: none; }
-    /* line 793, ../sass/styles.scss */
+    /* line 794, ../sass/styles.scss */
     .left-nav .streaming li ul.active {
       display: block; }
-    /* line 798, ../sass/styles.scss */
+    /* line 799, ../sass/styles.scss */
     .left-nav .streaming li ul li {
       margin-bottom: 10px; }
-  /* line 809, ../sass/styles.scss */
+  /* line 810, ../sass/styles.scss */
   .left-nav .my-downloads h2 {
     position: relative; }
-    /* line 812, ../sass/styles.scss */
+    /* line 813, ../sass/styles.scss */
     .left-nav .my-downloads h2::before {
       position: absolute;
       content: "";
@@ -627,10 +629,10 @@ button {
       background: url(../images/freegal_sprite.png) no-repeat -70px 0;
       width: 20px;
       height: 17px; }
-  /* line 828, ../sass/styles.scss */
+  /* line 829, ../sass/styles.scss */
   .left-nav .announcements h2 {
     position: relative; }
-    /* line 831, ../sass/styles.scss */
+    /* line 832, ../sass/styles.scss */
     .left-nav .announcements h2::before {
       position: absolute;
       content: "";
@@ -639,43 +641,43 @@ button {
       background: url(../images/freegal_sprite.png) no-repeat -90px 0;
       width: 14px;
       height: 18px; }
-  /* line 844, ../sass/styles.scss */
+  /* line 845, ../sass/styles.scss */
   .left-nav .announcements .announcement {
     background: #eeeeee;
     font-size: 14px;
     padding: 10px; }
-    /* line 850, ../sass/styles.scss */
+    /* line 851, ../sass/styles.scss */
     .left-nav .announcements .announcement p {
       padding-bottom: 10px; }
-    /* line 854, ../sass/styles.scss */
+    /* line 855, ../sass/styles.scss */
     .left-nav .announcements .announcement .announcement_header {
       text-decoration: underline;
       font-weight: bold; }
 
-/* line 864, ../sass/styles.scss */
+/* line 865, ../sass/styles.scss */
 .content {
   padding-left: 177px;
   padding-top: 20px;
   height: 3000px;
   min-height: 2000px; }
-  /* line 870, ../sass/styles.scss */
+  /* line 871, ../sass/styles.scss */
   .content .breadcrumbs {
     font-size: 12px;
     color: rgba(0, 0, 0, 0.3);
     margin-bottom: 18px; }
-  /* line 877, ../sass/styles.scss */
+  /* line 878, ../sass/styles.scss */
   .content > h3 {
     font-size: 24px;
     letter-spacing: 1px;
     margin-bottom: 20px; }
 
-/* line 885, ../sass/styles.scss */
+/* line 886, ../sass/styles.scss */
 .hero {
   width: 847px;
   height: 243px;
   background: url(../images/hero.jpg);
   position: relative; }
-  /* line 892, ../sass/styles.scss */
+  /* line 893, ../sass/styles.scss */
   .hero .hero-login {
     position: absolute;
     left: 326px;
@@ -683,20 +685,20 @@ button {
     width: 202px;
     height: 35px;
     background: url(../images/freegal_sprite.png) 0 -163px; }
-    /* line 901, ../sass/styles.scss */
+    /* line 902, ../sass/styles.scss */
     .hero .hero-login:hover {
       background: url(../images/freegal_sprite.png) 0 -198px; }
-    /* line 905, ../sass/styles.scss */
+    /* line 906, ../sass/styles.scss */
     .hero .hero-login:active {
       background: url(../images/freegal_sprite.png) 0 -233px; }
 
-/* line 912, ../sass/styles.scss */
+/* line 913, ../sass/styles.scss */
 .hero-mobile {
   width: 847px;
   height: 50px;
   background: #58c6ea;
   position: relative; }
-  /* line 921, ../sass/styles.scss */
+  /* line 922, ../sass/styles.scss */
   .hero-mobile .info-icon {
     position: absolute;
     left: 14px;
@@ -718,7 +720,7 @@ button {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding-left: 8px; }
-  /* line 940, ../sass/styles.scss */
+  /* line 941, ../sass/styles.scss */
   .hero-mobile .copy {
     position: absolute;
     left: 50px;
@@ -726,7 +728,7 @@ button {
     color: #fff;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px; }
-  /* line 951, ../sass/styles.scss */
+  /* line 952, ../sass/styles.scss */
   .hero-mobile .apple-icon {
     display: block;
     position: absolute;
@@ -735,7 +737,7 @@ button {
     background: url(../images/freegal_sprite.png) -440px -80px;
     width: 20px;
     height: 25px; }
-  /* line 961, ../sass/styles.scss */
+  /* line 962, ../sass/styles.scss */
   .hero-mobile .android-icon {
     display: block;
     position: absolute;
@@ -745,7 +747,7 @@ button {
     width: 22px;
     height: 23px; }
 
-/* line 973, ../sass/styles.scss */
+/* line 974, ../sass/styles.scss */
 .top-albums {
   position: relative;
   margin-top: 20px; }
@@ -775,11 +777,11 @@ button {
       /* line 170, ../sass/styles.scss */
       .top-albums header .see-more:active {
         background: url(../images/freegal_sprite.png) -140px -135px; }
-  /* line 978, ../sass/styles.scss */
+  /* line 979, ../sass/styles.scss */
   .top-albums .top-albums-carousel-container {
     position: relative;
     margin-top: 20px; }
-    /* line 983, ../sass/styles.scss */
+    /* line 984, ../sass/styles.scss */
     .top-albums .top-albums-carousel-container .left-scroll-button {
       width: 37px;
       height: 162px;
@@ -787,13 +789,13 @@ button {
       left: 0;
       top: 0;
       background: url(../images/freegal_sprite.png) -200px 0; }
-      /* line 992, ../sass/styles.scss */
+      /* line 993, ../sass/styles.scss */
       .top-albums .top-albums-carousel-container .left-scroll-button:hover {
         background: url(../images/freegal_sprite.png) -237px 0; }
-      /* line 997, ../sass/styles.scss */
+      /* line 998, ../sass/styles.scss */
       .top-albums .top-albums-carousel-container .left-scroll-button:active {
         background: url(../images/freegal_sprite.png) -275px 0; }
-    /* line 1004, ../sass/styles.scss */
+    /* line 1005, ../sass/styles.scss */
     .top-albums .top-albums-carousel-container .right-scroll-button {
       width: 37px;
       height: 162px;
@@ -801,13 +803,13 @@ button {
       right: 0;
       top: 0;
       background: url(../images/freegal_sprite.png) -320px 0; }
-      /* line 1015, ../sass/styles.scss */
+      /* line 1016, ../sass/styles.scss */
       .top-albums .top-albums-carousel-container .right-scroll-button:hover {
         background: url(../images/freegal_sprite.png) -360px 0; }
-      /* line 1020, ../sass/styles.scss */
+      /* line 1021, ../sass/styles.scss */
       .top-albums .top-albums-carousel-container .right-scroll-button:active {
         background: url(../images/freegal_sprite.png) -400px 0; }
-    /* line 1026, ../sass/styles.scss */
+    /* line 1027, ../sass/styles.scss */
     .top-albums .top-albums-carousel-container .top-albums-carousel {
       margin-top: 10px;
       margin-left: 39px;
@@ -815,38 +817,38 @@ button {
       height: 226px;
       overflow: hidden;
       position: relative; }
-      /* line 1039, ../sass/styles.scss */
+      /* line 1040, ../sass/styles.scss */
       .top-albums .top-albums-carousel-container .top-albums-carousel ul {
         overflow-y: hidden;
         height: 216px;
         width: 4150px; }
-        /* line 1044, ../sass/styles.scss */
+        /* line 1045, ../sass/styles.scss */
         .top-albums .top-albums-carousel-container .top-albums-carousel ul li {
           float: left;
           display: block;
           margin-right: 4px;
           margin-bottom: 10px;
           width: 162px; }
-          /* line 1052, ../sass/styles.scss */
+          /* line 1053, ../sass/styles.scss */
           .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container {
             width: 162px;
             height: 162px;
             position: relative; }
-            /* line 1059, ../sass/styles.scss */
+            /* line 1060, ../sass/styles.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable {
               display: block;
               filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
               opacity: 0; }
-              /* line 1064, ../sass/styles.scss */
+              /* line 1065, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable.active {
                 display: block;
                 filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
                 opacity: 0.5; }
-              /* line 1070, ../sass/styles.scss */
+              /* line 1071, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable:hover {
                 filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
                 opacity: 1; }
-            /* line 1076, ../sass/styles.scss */
+            /* line 1077, ../sass/styles.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .ranking {
               position: absolute;
               right: 6px;
@@ -863,7 +865,7 @@ button {
               background: #fff;
               font-style: italic;
               line-height: 27px; }
-            /* line 1093, ../sass/styles.scss */
+            /* line 1094, ../sass/styles.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .play-btn-icon {
               position: absolute;
               left: 65px;
@@ -871,13 +873,13 @@ button {
               width: 34px;
               height: 34px;
               background: url(../images/freegal_sprite.png) -440px -20px; }
-              /* line 1102, ../sass/styles.scss */
+              /* line 1103, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .play-btn-icon:hover {
                 background: url(../images/freegal_sprite.png) -475px -20px; }
-              /* line 1107, ../sass/styles.scss */
+              /* line 1108, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .play-btn-icon:active {
                 background: url(../images/freegal_sprite.png) -510px -20px; }
-            /* line 1113, ../sass/styles.scss */
+            /* line 1114, ../sass/styles.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon {
               position: absolute;
               left: 5px;
@@ -885,13 +887,13 @@ button {
               width: 28px;
               height: 20px;
               background: url(../images/freegal_sprite.png) -440px 0; }
-              /* line 1124, ../sass/styles.scss */
+              /* line 1125, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon:hover {
                 background: url(../images/freegal_sprite.png) -470px 0; }
-              /* line 1130, ../sass/styles.scss */
+              /* line 1131, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon:active {
                 background: url(../images/freegal_sprite.png) -500px 0; }
-            /* line 1138, ../sass/styles.scss */
+            /* line 1139, ../sass/styles.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul {
               position: absolute;
               left: 6px;
@@ -907,51 +909,51 @@ button {
               border-radius: 5px;
               border: 1px solid #999;
               z-index: 1; }
-              /* line 1150, ../sass/styles.scss */
+              /* line 1151, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul.active {
                 display: block; }
-              /* line 1154, ../sass/styles.scss */
+              /* line 1155, ../sass/styles.scss */
               .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li {
                 display: block;
                 background: #fff;
                 float: none;
                 margin-bottom: 0;
                 width: 100%; }
-                /* line 1160, ../sass/styles.scss */
+                /* line 1161, ../sass/styles.scss */
                 .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a {
                   display: block;
                   padding: 10px;
                   text-decoration: none;
                   color: #000;
                   font-size: 11px; }
-                  /* line 1168, ../sass/styles.scss */
+                  /* line 1169, ../sass/styles.scss */
                   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a:hover {
                     background: #cfeff9;
                     color: #000; }
-                  /* line 1176, ../sass/styles.scss */
+                  /* line 1177, ../sass/styles.scss */
                   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a.create-new-playlist {
                     font-weight: bold; }
-            /* line 1184, ../sass/styles.scss */
+            /* line 1185, ../sass/styles.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container img {
               width: 162px;
               height: 162px;
               -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
               -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
               box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
-  /* line 1207, ../sass/styles.scss */
+  /* line 1208, ../sass/styles.scss */
   .top-albums .album-info {
     font-size: 14px; }
-    /* line 1210, ../sass/styles.scss */
+    /* line 1211, ../sass/styles.scss */
     .top-albums .album-info p {
       margin-top: 5px; }
-      /* line 1214, ../sass/styles.scss */
+      /* line 1215, ../sass/styles.scss */
       .top-albums .album-info p.title {
         font-weight: bold;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         font-size: 13px; }
-      /* line 1222, ../sass/styles.scss */
+      /* line 1223, ../sass/styles.scss */
       .top-albums .album-info p.artist {
         overflow: hidden;
         white-space: nowrap;
@@ -959,7 +961,7 @@ button {
         color: rgba(0, 0, 0, 0.5);
         font-size: 12px; }
 
-/* line 1238, ../sass/styles.scss */
+/* line 1239, ../sass/styles.scss */
 .top-songs {
   position: relative; }
   /* line 143, ../sass/styles.scss */
@@ -1001,10 +1003,10 @@ button {
     background-image: -o-linear-gradient(#f9f9f9, #e9e9e9);
     background-image: linear-gradient(#f9f9f9, #e9e9e9);
     position: relative; }
-  /* line 1245, ../sass/styles.scss */
+  /* line 1246, ../sass/styles.scss */
   .top-songs .top-songs-container {
     margin-top: 20px; }
-  /* line 1250, ../sass/styles.scss */
+  /* line 1251, ../sass/styles.scss */
   .top-songs .top-songs-filter-icon {
     position: absolute;
     left: 10px;
@@ -1012,23 +1014,23 @@ button {
     width: 21px;
     height: 20px;
     background: url(../images/freegal_sprite.png) -440px -55px; }
-    /* line 1259, ../sass/styles.scss */
+    /* line 1260, ../sass/styles.scss */
     .top-songs .top-songs-filter-icon:hover {
       background: url(../images/freegal_sprite.png) -461px -55px; }
-    /* line 1264, ../sass/styles.scss */
+    /* line 1265, ../sass/styles.scss */
     .top-songs .top-songs-filter-icon:active {
       background: url(../images/freegal_sprite.png) -482px -55px; }
-  /* line 1271, ../sass/styles.scss */
+  /* line 1272, ../sass/styles.scss */
   .top-songs .header-container {
     position: relative;
     overflow: visible; }
-    /* line 1276, ../sass/styles.scss */
+    /* line 1277, ../sass/styles.scss */
     .top-songs .header-container div {
       position: absolute;
       font-weight: bold;
       font-size: 12px;
       top: 12px; }
-    /* line 1287, ../sass/styles.scss */
+    /* line 1288, ../sass/styles.scss */
     .top-songs .header-container .top-songs-filter-menu {
       z-index: 1;
       left: 10px;
@@ -1096,41 +1098,41 @@ button {
           -moz-border-radius-bottomright: 5px;
           -webkit-border-bottom-right-radius: 5px;
           border-bottom-right-radius: 5px; }
-      /* line 1293, ../sass/styles.scss */
+      /* line 1294, ../sass/styles.scss */
       .top-songs .header-container .top-songs-filter-menu a {
         font-weight: normal; }
-      /* line 1297, ../sass/styles.scss */
+      /* line 1298, ../sass/styles.scss */
       .top-songs .header-container .top-songs-filter-menu.active {
         display: block; }
-    /* line 1304, ../sass/styles.scss */
+    /* line 1305, ../sass/styles.scss */
     .top-songs .header-container .artist-header {
       left: 275px; }
-    /* line 1315, ../sass/styles.scss */
+    /* line 1316, ../sass/styles.scss */
     .top-songs .header-container .album-header {
       left: 496px; }
-    /* line 1322, ../sass/styles.scss */
+    /* line 1323, ../sass/styles.scss */
     .top-songs .header-container .song-header {
       left: 53px; }
-    /* line 1329, ../sass/styles.scss */
+    /* line 1330, ../sass/styles.scss */
     .top-songs .header-container .time-header {
       left: 755px; }
-    /* line 1336, ../sass/styles.scss */
+    /* line 1337, ../sass/styles.scss */
     .top-songs .header-container .header-border {
       width: 1px;
       height: 35px;
       background: #d2d2d2;
       top: 0;
       position: absolute; }
-      /* line 1344, ../sass/styles.scss */
+      /* line 1345, ../sass/styles.scss */
       .top-songs .header-container .header-border.artist-border {
         left: 487px; }
-      /* line 1350, ../sass/styles.scss */
+      /* line 1351, ../sass/styles.scss */
       .top-songs .header-container .header-border.song-border {
         left: 260px; }
-      /* line 1356, ../sass/styles.scss */
+      /* line 1357, ../sass/styles.scss */
       .top-songs .header-container .header-border.album-border {
         left: 740px; }
-    /* line 1365, ../sass/styles.scss */
+    /* line 1366, ../sass/styles.scss */
     .top-songs .header-container .multi-select-icon {
       position: absolute;
       right: 8px;
@@ -1140,18 +1142,18 @@ button {
       background: url(../images/freegal_sprite.png) -100px -115px;
       filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
       opacity: 0.5; }
-      /* line 1375, ../sass/styles.scss */
+      /* line 1376, ../sass/styles.scss */
       .top-songs .header-container .multi-select-icon.highlighted {
         background: url(../images/freegal_sprite.png) -120px -115px;
         filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
         opacity: 1; }
-        /* line 1379, ../sass/styles.scss */
+        /* line 1380, ../sass/styles.scss */
         .top-songs .header-container .multi-select-icon.highlighted:hover {
           background: url(../images/freegal_sprite.png) -140px -115px; }
-        /* line 1384, ../sass/styles.scss */
+        /* line 1385, ../sass/styles.scss */
         .top-songs .header-container .multi-select-icon.highlighted:active {
           background: url(../images/freegal_sprite.png) -160px -115px; }
-    /* line 1394, ../sass/styles.scss */
+    /* line 1395, ../sass/styles.scss */
     .top-songs .header-container .options-menu {
       position: absolute;
       z-index: 1;
@@ -1220,18 +1222,18 @@ button {
           -moz-border-radius-bottomright: 5px;
           -webkit-border-bottom-right-radius: 5px;
           border-bottom-right-radius: 5px; }
-      /* line 1403, ../sass/styles.scss */
+      /* line 1404, ../sass/styles.scss */
       .top-songs .header-container .options-menu.active {
         display: block; }
-      /* line 1408, ../sass/styles.scss */
+      /* line 1409, ../sass/styles.scss */
       .top-songs .header-container .options-menu .playlist-menu {
         display: none;
         height: 312px;
         overflow-y: scroll; }
-        /* line 1414, ../sass/styles.scss */
+        /* line 1415, ../sass/styles.scss */
         .top-songs .header-container .options-menu .playlist-menu.active {
           display: block; }
-  /* line 1428, ../sass/styles.scss */
+  /* line 1429, ../sass/styles.scss */
   .top-songs .row {
     position: relative;
     height: 40px;
@@ -1241,24 +1243,24 @@ button {
     overflow: visible;
     border-left: 1px solid #d0d0d0;
     border-right: 1px solid #d0d0d0; }
-    /* line 1440, ../sass/styles.scss */
+    /* line 1441, ../sass/styles.scss */
     .top-songs .row a {
       color: #707070;
       text-decoration: none; }
-      /* line 1445, ../sass/styles.scss */
+      /* line 1446, ../sass/styles.scss */
       .top-songs .row a:hover {
         text-decoration: underline; }
-    /* line 1452, ../sass/styles.scss */
+    /* line 1453, ../sass/styles.scss */
     .top-songs .row:nth-child(even) {
       background: #f4f4f4; }
-    /* line 1456, ../sass/styles.scss */
+    /* line 1457, ../sass/styles.scss */
     .top-songs .row:hover, .top-songs .row.highlighted {
       background: #bbe4f1;
       color: #000; }
-      /* line 1462, ../sass/styles.scss */
+      /* line 1463, ../sass/styles.scss */
       .top-songs .row:hover a, .top-songs .row.highlighted a {
         color: #000; }
-  /* line 1469, ../sass/styles.scss */
+  /* line 1470, ../sass/styles.scss */
   .top-songs .play-btn {
     position: absolute;
     left: 10px;
@@ -1276,21 +1278,21 @@ button {
     background-image: -moz-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
     background-image: -o-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
     background-image: radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px); }
-    /* line 1479, ../sass/styles.scss */
+    /* line 1480, ../sass/styles.scss */
     .top-songs .play-btn:hover {
       background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #fdfdfd), color-stop(100%, #ffffff));
       background-image: -webkit-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: -moz-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: -o-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px); }
-    /* line 1484, ../sass/styles.scss */
+    /* line 1485, ../sass/styles.scss */
     .top-songs .play-btn:active {
       background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #ececec), color-stop(100%, #eaeaea));
       background-image: -webkit-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: -moz-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: -o-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px); }
-    /* line 1489, ../sass/styles.scss */
+    /* line 1490, ../sass/styles.scss */
     .top-songs .play-btn::before {
       content: "";
       position: absolute;
@@ -1301,32 +1303,32 @@ button {
       border-left: 6px solid #000;
       border-top: 4px solid transparent;
       border-bottom: 4px solid transparent; }
-  /* line 1504, ../sass/styles.scss */
+  /* line 1505, ../sass/styles.scss */
   .top-songs .ranking {
     position: absolute;
     top: 15px;
     left: 51px; }
-  /* line 1510, ../sass/styles.scss */
+  /* line 1511, ../sass/styles.scss */
   .top-songs .song-name {
     position: absolute;
     left: 74px;
     top: 15px; }
-  /* line 1516, ../sass/styles.scss */
+  /* line 1517, ../sass/styles.scss */
   .top-songs .artist-name {
     position: absolute;
     left: 274px;
     top: 15px; }
-  /* line 1525, ../sass/styles.scss */
+  /* line 1526, ../sass/styles.scss */
   .top-songs .album-name {
     position: absolute;
     left: 496px;
     top: 15px; }
-  /* line 1532, ../sass/styles.scss */
+  /* line 1533, ../sass/styles.scss */
   .top-songs .time {
     position: absolute;
     left: 756px;
     top: 15px; }
-  /* line 1544, ../sass/styles.scss */
+  /* line 1545, ../sass/styles.scss */
   .top-songs .menu-btn {
     position: absolute;
     left: 792px;
@@ -1339,7 +1341,7 @@ button {
     background-image: -moz-linear-gradient(#f9f9f9, #eaeaea);
     background-image: -o-linear-gradient(#f9f9f9, #eaeaea);
     background-image: linear-gradient(#f9f9f9, #eaeaea); }
-    /* line 1554, ../sass/styles.scss */
+    /* line 1555, ../sass/styles.scss */
     .top-songs .menu-btn::before {
       content: "";
       background: url(../images/freegal_sprite.png) -90px -115px;
@@ -1348,21 +1350,21 @@ button {
       top: 6px;
       width: 10px;
       height: 5px; }
-    /* line 1571, ../sass/styles.scss */
+    /* line 1572, ../sass/styles.scss */
     .top-songs .menu-btn:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f6f6f6));
       background-image: -webkit-linear-gradient(#ffffff, #f6f6f6);
       background-image: -moz-linear-gradient(#ffffff, #f6f6f6);
       background-image: -o-linear-gradient(#ffffff, #f6f6f6);
       background-image: linear-gradient(#ffffff, #f6f6f6); }
-    /* line 1576, ../sass/styles.scss */
+    /* line 1577, ../sass/styles.scss */
     .top-songs .menu-btn:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f3f3f3));
       background-image: -webkit-linear-gradient(#eaeaea, #f3f3f3);
       background-image: -moz-linear-gradient(#eaeaea, #f3f3f3);
       background-image: -o-linear-gradient(#eaeaea, #f3f3f3);
       background-image: linear-gradient(#eaeaea, #f3f3f3); }
-  /* line 1582, ../sass/styles.scss */
+  /* line 1583, ../sass/styles.scss */
   .top-songs .row-checkbox {
     -webkit-appearance: none;
     margin: 0;
@@ -1375,10 +1377,10 @@ button {
     height: 9px;
     outline: 0;
     background: url(../images/freegal_sprite.png) -180px -115px; }
-    /* line 1594, ../sass/styles.scss */
+    /* line 1595, ../sass/styles.scss */
     .top-songs .row-checkbox:checked {
       background: url(../images/freegal_sprite.png) -190px -115px; }
-  /* line 1600, ../sass/styles.scss */
+  /* line 1601, ../sass/styles.scss */
   .top-songs .options-menu {
     position: absolute;
     z-index: 1;
@@ -1447,21 +1449,21 @@ button {
         -moz-border-radius-bottomright: 5px;
         -webkit-border-bottom-right-radius: 5px;
         border-bottom-right-radius: 5px; }
-    /* line 1609, ../sass/styles.scss */
+    /* line 1610, ../sass/styles.scss */
     .top-songs .options-menu.active {
       display: block; }
-    /* line 1614, ../sass/styles.scss */
+    /* line 1615, ../sass/styles.scss */
     .top-songs .options-menu .playlist-menu {
       display: none;
       height: 312px;
       overflow-y: scroll; }
-      /* line 1620, ../sass/styles.scss */
+      /* line 1621, ../sass/styles.scss */
       .top-songs .options-menu .playlist-menu.active {
         display: block; }
-  /* line 1631, ../sass/styles.scss */
+  /* line 1632, ../sass/styles.scss */
   .top-songs .pagination-container {
     position: relative; }
-    /* line 1635, ../sass/styles.scss */
+    /* line 1636, ../sass/styles.scss */
     .top-songs .pagination-container button {
       position: absolute;
       width: 18px;
@@ -1476,24 +1478,24 @@ button {
       font-weight: bold;
       font-family: Helvetica, Arial, sans-serif;
       font-size: 12px; }
-      /* line 1647, ../sass/styles.scss */
+      /* line 1648, ../sass/styles.scss */
       .top-songs .pagination-container button:hover {
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f5f5f5));
         background-image: -webkit-linear-gradient(#ffffff, #f5f5f5);
         background-image: -moz-linear-gradient(#ffffff, #f5f5f5);
         background-image: -o-linear-gradient(#ffffff, #f5f5f5);
         background-image: linear-gradient(#ffffff, #f5f5f5); }
-      /* line 1652, ../sass/styles.scss */
+      /* line 1653, ../sass/styles.scss */
       .top-songs .pagination-container button:active {
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f4f4f4));
         background-image: -webkit-linear-gradient(#eaeaea, #f4f4f4);
         background-image: -moz-linear-gradient(#eaeaea, #f4f4f4);
         background-image: -o-linear-gradient(#eaeaea, #f4f4f4);
         background-image: linear-gradient(#eaeaea, #f4f4f4); }
-      /* line 1656, ../sass/styles.scss */
+      /* line 1657, ../sass/styles.scss */
       .top-songs .pagination-container button.beginning {
         right: 221px; }
-        /* line 1660, ../sass/styles.scss */
+        /* line 1661, ../sass/styles.scss */
         .top-songs .pagination-container button.beginning::before {
           content: "";
           position: absolute;
@@ -1502,7 +1504,7 @@ button {
           border-left: 1px solid #000;
           width: 0;
           height: 6px; }
-        /* line 1671, ../sass/styles.scss */
+        /* line 1672, ../sass/styles.scss */
         .top-songs .pagination-container button.beginning::after {
           content: "";
           position: absolute;
@@ -1513,10 +1515,10 @@ button {
           border-bottom: 3px solid transparent;
           left: 7px;
           top: 5px; }
-      /* line 1684, ../sass/styles.scss */
+      /* line 1685, ../sass/styles.scss */
       .top-songs .pagination-container button.prev {
         right: 195px; }
-        /* line 1687, ../sass/styles.scss */
+        /* line 1688, ../sass/styles.scss */
         .top-songs .pagination-container button.prev::after {
           content: "";
           position: absolute;
@@ -1527,25 +1529,25 @@ button {
           border-bottom: 3px solid transparent;
           left: 6px;
           top: 5px; }
-      /* line 1701, ../sass/styles.scss */
+      /* line 1702, ../sass/styles.scss */
       .top-songs .pagination-container button.page-1 {
         right: 169px; }
-      /* line 1705, ../sass/styles.scss */
+      /* line 1706, ../sass/styles.scss */
       .top-songs .pagination-container button.page-2 {
         right: 143px; }
-      /* line 1709, ../sass/styles.scss */
+      /* line 1710, ../sass/styles.scss */
       .top-songs .pagination-container button.page-3 {
         right: 117px; }
-      /* line 1714, ../sass/styles.scss */
+      /* line 1715, ../sass/styles.scss */
       .top-songs .pagination-container button.page-4 {
         right: 91px; }
-      /* line 1719, ../sass/styles.scss */
+      /* line 1720, ../sass/styles.scss */
       .top-songs .pagination-container button.page-5 {
         right: 65px; }
-      /* line 1724, ../sass/styles.scss */
+      /* line 1725, ../sass/styles.scss */
       .top-songs .pagination-container button.next {
         right: 39px; }
-        /* line 1727, ../sass/styles.scss */
+        /* line 1728, ../sass/styles.scss */
         .top-songs .pagination-container button.next::after {
           content: "";
           position: absolute;
@@ -1556,10 +1558,10 @@ button {
           border-bottom: 3px solid transparent;
           left: 6px;
           top: 5px; }
-      /* line 1741, ../sass/styles.scss */
+      /* line 1742, ../sass/styles.scss */
       .top-songs .pagination-container button.last {
         right: 13px; }
-        /* line 1745, ../sass/styles.scss */
+        /* line 1746, ../sass/styles.scss */
         .top-songs .pagination-container button.last::before {
           content: "";
           position: absolute;
@@ -1568,7 +1570,7 @@ button {
           border-right: 1px solid #000;
           width: 0;
           height: 6px; }
-        /* line 1756, ../sass/styles.scss */
+        /* line 1757, ../sass/styles.scss */
         .top-songs .pagination-container button.last::after {
           content: "";
           position: absolute;
@@ -1580,16 +1582,16 @@ button {
           left: 6px;
           top: 5px; }
 
-/* line 1783, ../sass/styles.scss */
+/* line 1784, ../sass/styles.scss */
 .featured-artists {
   margin-top: 20px; }
-  /* line 1785, ../sass/styles.scss */
+  /* line 1786, ../sass/styles.scss */
   .featured-artists h2 {
     font-size: 24px; }
-  /* line 1790, ../sass/styles.scss */
+  /* line 1791, ../sass/styles.scss */
   .featured-artists .featured-artists-grid {
     margin-top: 10px; }
-  /* line 1797, ../sass/styles.scss */
+  /* line 1798, ../sass/styles.scss */
   .featured-artists .featured-grid-item {
     display: block;
     float: left;
@@ -1600,14 +1602,14 @@ button {
     -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
-    /* line 1807, ../sass/styles.scss */
+    /* line 1808, ../sass/styles.scss */
     .featured-artists .featured-grid-item:nth-child(5n) {
       margin-right: 0; }
-    /* line 1812, ../sass/styles.scss */
+    /* line 1813, ../sass/styles.scss */
     .featured-artists .featured-grid-item img {
       width: 167px;
       height: 167px; }
-    /* line 1821, ../sass/styles.scss */
+    /* line 1822, ../sass/styles.scss */
     .featured-artists .featured-grid-item .featured-grid-menu {
       background: black;
       background: rgba(0, 0, 0, 0.8);
@@ -1621,14 +1623,14 @@ button {
       -moz-transition: bottom 500ms;
       -o-transition: bottom 500ms;
       transition: bottom 500ms; }
-      /* line 1836, ../sass/styles.scss */
+      /* line 1837, ../sass/styles.scss */
       .featured-artists .featured-grid-item .featured-grid-menu.active {
         bottom: 0;
         -webkit-transition: bottom 500ms;
         -moz-transition: bottom 500ms;
         -o-transition: bottom 500ms;
         transition: bottom 500ms; }
-      /* line 1842, ../sass/styles.scss */
+      /* line 1843, ../sass/styles.scss */
       .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-name {
         font-size: 14px;
         font-weight: bold;
@@ -1637,7 +1639,7 @@ button {
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         position: relative; }
-      /* line 1854, ../sass/styles.scss */
+      /* line 1855, ../sass/styles.scss */
       .featured-artists .featured-grid-item .featured-grid-menu .featured-album-name {
         font-size: 12px;
         font-style: italic;
@@ -1648,7 +1650,7 @@ button {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box; }
-        /* line 1864, ../sass/styles.scss */
+        /* line 1865, ../sass/styles.scss */
         .featured-artists .featured-grid-item .featured-grid-menu .featured-album-name::before {
           content: "";
           position: absolute;
@@ -1657,30 +1659,30 @@ button {
           left: 4px;
           bottom: 0;
           background: url(../images/featured-menu-border-rpt.png) repeat; }
-      /* line 1877, ../sass/styles.scss */
+      /* line 1878, ../sass/styles.scss */
       .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas {
         margin-top: 5px;
         position: relative; }
-        /* line 1882, ../sass/styles.scss */
+        /* line 1883, ../sass/styles.scss */
         .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button {
           background: #d3d1cf;
           position: relative;
           vertical-align: top; }
-          /* line 1888, ../sass/styles.scss */
+          /* line 1889, ../sass/styles.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button:hover {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f4f4f4));
             background-image: -webkit-linear-gradient(#ffffff, #f4f4f4);
             background-image: -moz-linear-gradient(#ffffff, #f4f4f4);
             background-image: -o-linear-gradient(#ffffff, #f4f4f4);
             background-image: linear-gradient(#ffffff, #f4f4f4); }
-          /* line 1892, ../sass/styles.scss */
+          /* line 1893, ../sass/styles.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button:active {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cccccc), color-stop(100%, #f4f4f4));
             background-image: -webkit-linear-gradient(#cccccc, #f4f4f4);
             background-image: -moz-linear-gradient(#cccccc, #f4f4f4);
             background-image: -o-linear-gradient(#cccccc, #f4f4f4);
             background-image: linear-gradient(#cccccc, #f4f4f4); }
-          /* line 1897, ../sass/styles.scss */
+          /* line 1898, ../sass/styles.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.stream-artist {
             font-size: 11px;
             font-weight: bold;
@@ -1688,12 +1690,12 @@ button {
             height: 20px;
             margin-left: 4px;
             font-family: Helvetica, Arial, sans-serif; }
-          /* line 1908, ../sass/styles.scss */
+          /* line 1909, ../sass/styles.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.more-by-artist {
             width: 30px;
             height: 20px;
             margin-left: 20px; }
-            /* line 1912, ../sass/styles.scss */
+            /* line 1913, ../sass/styles.scss */
             .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.more-by-artist::before {
               background: url(../images/freegal_sprite.png) -180px -20px no-repeat;
               content: "";
@@ -1703,10 +1705,10 @@ button {
               width: 16px;
               height: 14px; }
 
-/* line 1934, ../sass/styles.scss */
+/* line 1935, ../sass/styles.scss */
 .genres-page {
   border: 1px solid #d3d3d3; }
-  /* line 1937, ../sass/styles.scss */
+  /* line 1938, ../sass/styles.scss */
   .genres-page header {
     height: 34px;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e9e9e9));
@@ -1719,7 +1721,7 @@ button {
     position: relative;
     border-bottom: 1px solid #d3d3d3;
     color: #000; }
-  /* line 1947, ../sass/styles.scss */
+  /* line 1948, ../sass/styles.scss */
   .genres-page .genres-header, .genres-page .a-z-header, .genres-page .artist-header {
     height: 34px;
     color: #000;
@@ -1730,52 +1732,52 @@ button {
     font-weight: bold;
     padding-top: 13px;
     float: left; }
-  /* line 1961, ../sass/styles.scss */
+  /* line 1962, ../sass/styles.scss */
   .genres-page .genres-header {
     width: 224px;
     padding-left: 24px;
     border-right: 1px solid #d3d3d3; }
-  /* line 1969, ../sass/styles.scss */
+  /* line 1970, ../sass/styles.scss */
   .genres-page .a-z-header {
     width: 85px;
     border-right: 1px solid #d3d3d3;
     padding-left: 29px; }
-  /* line 1977, ../sass/styles.scss */
+  /* line 1978, ../sass/styles.scss */
   .genres-page .artist-header {
     width: 536px;
     padding-left: 17px; }
-  /* line 1989, ../sass/styles.scss */
+  /* line 1990, ../sass/styles.scss */
   .genres-page .genre-filter-container div {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
-    /* line 1993, ../sass/styles.scss */
+    /* line 1994, ../sass/styles.scss */
     .genres-page .genre-filter-container div li {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-      /* line 1997, ../sass/styles.scss */
+      /* line 1998, ../sass/styles.scss */
       .genres-page .genre-filter-container div li:nth-child(odd) {
         background: #f7f7f7; }
-      /* line 2002, ../sass/styles.scss */
+      /* line 2003, ../sass/styles.scss */
       .genres-page .genre-filter-container div li:nth-child(even) {
         background: #f2f2f2; }
-      /* line 2007, ../sass/styles.scss */
+      /* line 2008, ../sass/styles.scss */
       .genres-page .genre-filter-container div li:hover {
         background: #bde6f3; }
-      /* line 2012, ../sass/styles.scss */
+      /* line 2013, ../sass/styles.scss */
       .genres-page .genre-filter-container div li a {
         display: block;
         font-size: 12px;
         text-decoration: none;
         color: #707070;
         position: relative; }
-        /* line 2021, ../sass/styles.scss */
+        /* line 2022, ../sass/styles.scss */
         .genres-page .genre-filter-container div li a.active {
           font-weight: bold;
           color: #000;
           background: #bde6f3; }
-          /* line 2027, ../sass/styles.scss */
+          /* line 2028, ../sass/styles.scss */
           .genres-page .genre-filter-container div li a.active::before {
             background: url(../images/genre-row-selected.png);
             content: "";
@@ -1784,47 +1786,47 @@ button {
             top: 5px;
             width: 11px;
             height: 11px; }
-        /* line 2039, ../sass/styles.scss */
+        /* line 2040, ../sass/styles.scss */
         .genres-page .genre-filter-container div li a:hover {
           color: #000; }
-  /* line 2050, ../sass/styles.scss */
+  /* line 2051, ../sass/styles.scss */
   .genres-page .genre-column {
     float: left;
     width: 224px;
     height: 616px;
     overflow-y: scroll;
     border-right: 1px solid #d3d3d3; }
-    /* line 2067, ../sass/styles.scss */
+    /* line 2068, ../sass/styles.scss */
     .genres-page .genre-column li a {
       padding: 5px 5px 5px 24px; }
-  /* line 2074, ../sass/styles.scss */
+  /* line 2075, ../sass/styles.scss */
   .genres-page .alpha-artist-list-column {
     float: left;
     height: 616px;
     width: 85px;
     border-right: 1px solid #d3d3d3; }
-    /* line 2080, ../sass/styles.scss */
+    /* line 2081, ../sass/styles.scss */
     .genres-page .alpha-artist-list-column li {
       text-align: center; }
-      /* line 2083, ../sass/styles.scss */
+      /* line 2084, ../sass/styles.scss */
       .genres-page .alpha-artist-list-column li a {
         padding: 5px 5px 5px; }
-  /* line 2092, ../sass/styles.scss */
+  /* line 2093, ../sass/styles.scss */
   .genres-page .artist-column {
     float: left;
     width: 536px;
     height: 616px;
     overflow-y: scroll; }
-    /* line 2098, ../sass/styles.scss */
+    /* line 2099, ../sass/styles.scss */
     .genres-page .artist-column ul {
       -webkit-transition: all 500ms;
       -moz-transition: all 500ms;
       -o-transition: all 500ms;
       transition: all 500ms; }
-    /* line 2105, ../sass/styles.scss */
+    /* line 2106, ../sass/styles.scss */
     .genres-page .artist-column li a {
       padding: 5px 5px 5px 17px; }
-  /* line 2114, ../sass/styles.scss */
+  /* line 2115, ../sass/styles.scss */
   .genres-page .genre-button-container {
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e9e9e9));
     background-image: -webkit-linear-gradient(#f9f9f9, #e9e9e9);
@@ -1836,7 +1838,7 @@ button {
     height: 34px;
     border-top: 1px solid #d3d3d3;
     position: relative; }
-  /* line 2121, ../sass/styles.scss */
+  /* line 2122, ../sass/styles.scss */
   .genres-page .genre-scroll-up {
     background: url(../images/btn-scroll-down.png);
     width: 30px;
@@ -1844,13 +1846,13 @@ button {
     position: absolute;
     left: 10px;
     top: 8px; }
-    /* line 2130, ../sass/styles.scss */
+    /* line 2131, ../sass/styles.scss */
     .genres-page .genre-scroll-up:hover {
       background: url(../images/btn-scroll-down.png) -30px 0; }
-    /* line 2134, ../sass/styles.scss */
+    /* line 2135, ../sass/styles.scss */
     .genres-page .genre-scroll-up:active {
       background: url(../images/btn-scroll-down.png) -60px 0; }
-  /* line 2140, ../sass/styles.scss */
+  /* line 2141, ../sass/styles.scss */
   .genres-page .genre-scroll-down {
     background: url(../images/btn-scroll-up.png);
     width: 30px;
@@ -1858,13 +1860,13 @@ button {
     position: absolute;
     left: 50px;
     top: 8px; }
-    /* line 2148, ../sass/styles.scss */
+    /* line 2149, ../sass/styles.scss */
     .genres-page .genre-scroll-down:hover {
       background: url(../images/btn-scroll-up.png) -30px 0; }
-    /* line 2152, ../sass/styles.scss */
+    /* line 2153, ../sass/styles.scss */
     .genres-page .genre-scroll-down:active {
       background: url(../images/btn-scroll-up.png) -60px 0; }
-  /* line 2158, ../sass/styles.scss */
+  /* line 2159, ../sass/styles.scss */
   .genres-page .artist-scroll-up {
     background: url(../images/btn-scroll-down.png);
     width: 30px;
@@ -1872,13 +1874,13 @@ button {
     position: absolute;
     left: 330px;
     top: 8px; }
-    /* line 2167, ../sass/styles.scss */
+    /* line 2168, ../sass/styles.scss */
     .genres-page .artist-scroll-up:hover {
       background: url(../images/btn-scroll-down.png) -30px 0; }
-    /* line 2171, ../sass/styles.scss */
+    /* line 2172, ../sass/styles.scss */
     .genres-page .artist-scroll-up:active {
       background: url(../images/btn-scroll-down.png) -60px 0; }
-  /* line 2177, ../sass/styles.scss */
+  /* line 2178, ../sass/styles.scss */
   .genres-page .artist-scroll-down {
     background: url(../images/btn-scroll-up.png);
     width: 30px;
@@ -1886,14 +1888,14 @@ button {
     position: absolute;
     left: 370px;
     top: 8px; }
-    /* line 2185, ../sass/styles.scss */
+    /* line 2186, ../sass/styles.scss */
     .genres-page .artist-scroll-down:hover {
       background: url(../images/btn-scroll-up.png) -30px 0; }
-    /* line 2189, ../sass/styles.scss */
+    /* line 2190, ../sass/styles.scss */
     .genres-page .artist-scroll-down:active {
       background: url(../images/btn-scroll-up.png) -60px 0; }
 
-/* line 2203, ../sass/styles.scss */
+/* line 2204, ../sass/styles.scss */
 .search-container {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -1905,7 +1907,7 @@ button {
   border: 1px solid #c9c9c9;
   margin-top: 26px;
   color: #000; }
-  /* line 2211, ../sass/styles.scss */
+  /* line 2212, ../sass/styles.scss */
   .search-container::after {
     content: "";
     position: absolute;
@@ -1914,7 +1916,7 @@ button {
     background: url(../images/freegal_sprite.png) -160px -50px;
     width: 12px;
     height: 11px; }
-  /* line 2222, ../sass/styles.scss */
+  /* line 2223, ../sass/styles.scss */
   .search-container #search-page-search-text {
     margin: 0;
     padding: 0;
@@ -1927,7 +1929,7 @@ button {
     font-weight: bold;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px; }
-  /* line 2233, ../sass/styles.scss */
+  /* line 2234, ../sass/styles.scss */
   .search-container #search-page-go {
     margin: 0;
     padding: 0;
@@ -1952,14 +1954,14 @@ button {
     right: 0;
     top: 0;
     border-left: 1px solid #c9c9c9; }
-    /* line 2246, ../sass/styles.scss */
+    /* line 2247, ../sass/styles.scss */
     .search-container #search-page-go:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #7ed6f4), color-stop(100%, #62c4e4));
       background-image: -webkit-linear-gradient(#7ed6f4, #62c4e4);
       background-image: -moz-linear-gradient(#7ed6f4, #62c4e4);
       background-image: -o-linear-gradient(#7ed6f4, #62c4e4);
       background-image: linear-gradient(#7ed6f4, #62c4e4); }
-    /* line 2251, ../sass/styles.scss */
+    /* line 2252, ../sass/styles.scss */
     .search-container #search-page-go:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #46b2d5), color-stop(100%, #62c4e4));
       background-image: -webkit-linear-gradient(#46b2d5, #62c4e4);
@@ -1967,29 +1969,29 @@ button {
       background-image: -o-linear-gradient(#46b2d5, #62c4e4);
       background-image: linear-gradient(#46b2d5, #62c4e4); }
 
-/* line 2262, ../sass/styles.scss */
+/* line 2263, ../sass/styles.scss */
 .search-results-heading {
   font-size: 24px;
   font-weight: bold;
   font-family: Helvetica, Arial, sans-serif;
   margin-top: 34px; }
 
-/* line 2270, ../sass/styles.scss */
+/* line 2271, ../sass/styles.scss */
 .search-results-text {
   font-size: 12px;
   margin-top: 20px; }
-  /* line 2274, ../sass/styles.scss */
+  /* line 2275, ../sass/styles.scss */
   .search-results-text span {
     font-weight: bold; }
 
-/* line 2280, ../sass/styles.scss */
+/* line 2281, ../sass/styles.scss */
 .category-results {
   margin-top: 40px; }
-  /* line 2283, ../sass/styles.scss */
+  /* line 2284, ../sass/styles.scss */
   .category-results header {
     position: relative;
     height: 44px; }
-    /* line 2288, ../sass/styles.scss */
+    /* line 2289, ../sass/styles.scss */
     .category-results header h3 {
       font-weight: bold;
       font-size: 18px;
@@ -1997,7 +1999,7 @@ button {
       margin-left: 58px;
       position: relative;
       line-height: 44px; }
-      /* line 2296, ../sass/styles.scss */
+      /* line 2297, ../sass/styles.scss */
       .category-results header h3.albums-header::before {
         content: "";
         left: -57px;
@@ -2006,7 +2008,7 @@ button {
         width: 43px;
         height: 44px;
         background: url(../images/freegal_sprite.png) 0 -70px; }
-      /* line 2306, ../sass/styles.scss */
+      /* line 2307, ../sass/styles.scss */
       .category-results header h3.artists-header::before {
         content: "";
         left: -57px;
@@ -2015,7 +2017,7 @@ button {
         width: 43px;
         height: 44px;
         background: url(../images/freegal_sprite.png) -45px -70px; }
-      /* line 2317, ../sass/styles.scss */
+      /* line 2318, ../sass/styles.scss */
       .category-results header h3.composers-header::before {
         content: "";
         left: -57px;
@@ -2024,7 +2026,7 @@ button {
         width: 43px;
         height: 44px;
         background: url(../images/freegal_sprite.png) -90px -70px; }
-      /* line 2328, ../sass/styles.scss */
+      /* line 2329, ../sass/styles.scss */
       .category-results header h3.videos-header::before {
         content: "";
         left: -57px;
@@ -2033,7 +2035,7 @@ button {
         width: 43px;
         height: 44px;
         background: url(../images/freegal_sprite.png) -135px -70px; }
-      /* line 2339, ../sass/styles.scss */
+      /* line 2340, ../sass/styles.scss */
       .category-results header h3.genres-header::before {
         content: "";
         left: -57px;
@@ -2042,7 +2044,7 @@ button {
         width: 43px;
         height: 44px;
         background: url(../images/freegal_sprite.png) 0 -115px; }
-      /* line 2350, ../sass/styles.scss */
+      /* line 2351, ../sass/styles.scss */
       .category-results header h3.songs-header::before {
         content: "";
         left: -57px;
@@ -2051,7 +2053,7 @@ button {
         width: 43px;
         height: 44px;
         background: url(../images/freegal_sprite.png) -45px -115px; }
-    /* line 2363, ../sass/styles.scss */
+    /* line 2364, ../sass/styles.scss */
     .category-results header .see-more {
       position: absolute;
       display: block;
@@ -2061,19 +2063,19 @@ button {
       height: 23px;
       text-indent: -9999px;
       background: url(../images/freegal_sprite.png) -90px -135px; }
-      /* line 2373, ../sass/styles.scss */
+      /* line 2374, ../sass/styles.scss */
       .category-results header .see-more:hover {
         background: url(../images/freegal_sprite.png) -115px -135px; }
-      /* line 2378, ../sass/styles.scss */
+      /* line 2379, ../sass/styles.scss */
       .category-results header .see-more:active {
         background: url(../images/freegal_sprite.png) -140px -135px; }
-  /* line 2387, ../sass/styles.scss */
+  /* line 2388, ../sass/styles.scss */
   .category-results .search-results-list {
     position: relative;
     margin-top: 30px;
     font-size: 14px;
     font-family: Helvetica,Arial,sans-serif; }
-    /* line 2394, ../sass/styles.scss */
+    /* line 2395, ../sass/styles.scss */
     .category-results .search-results-list::before {
       content: "";
       position: absolute;
@@ -2090,7 +2092,7 @@ button {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-    /* line 2406, ../sass/styles.scss */
+    /* line 2407, ../sass/styles.scss */
     .category-results .search-results-list::after {
       content: "";
       position: absolute;
@@ -2107,27 +2109,27 @@ button {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-    /* line 2419, ../sass/styles.scss */
+    /* line 2420, ../sass/styles.scss */
     .category-results .search-results-list li {
       height: 40px;
       line-height: 40px;
       padding-left: 58px;
       border-left: 1px solid #d0d0d0;
       border-right: 1px solid #d0d0d0; }
-      /* line 2429, ../sass/styles.scss */
+      /* line 2430, ../sass/styles.scss */
       .category-results .search-results-list li:nth-child(even) {
         background: #f4f4f4; }
-      /* line 2434, ../sass/styles.scss */
+      /* line 2435, ../sass/styles.scss */
       .category-results .search-results-list li:hover {
         background: #bbe4f1; }
-      /* line 2439, ../sass/styles.scss */
+      /* line 2440, ../sass/styles.scss */
       .category-results .search-results-list li a {
         text-decoration: none;
         color: #000; }
-        /* line 2444, ../sass/styles.scss */
+        /* line 2445, ../sass/styles.scss */
         .category-results .search-results-list li a:hover {
           text-decoration: underline; }
-  /* line 2452, ../sass/styles.scss */
+  /* line 2453, ../sass/styles.scss */
   .category-results .songs-results-list {
     margin-top: 20px; }
     /* line 182, ../sass/styles.scss */
@@ -2143,45 +2145,45 @@ button {
       background-image: -o-linear-gradient(#f9f9f9, #e9e9e9);
       background-image: linear-gradient(#f9f9f9, #e9e9e9);
       position: relative; }
-  /* line 2464, ../sass/styles.scss */
+  /* line 2465, ../sass/styles.scss */
   .category-results .header-container {
     position: relative;
     overflow: visible; }
-    /* line 2469, ../sass/styles.scss */
+    /* line 2470, ../sass/styles.scss */
     .category-results .header-container div {
       position: absolute;
       font-weight: bold;
       font-size: 12px;
       top: 13px; }
-    /* line 2479, ../sass/styles.scss */
+    /* line 2480, ../sass/styles.scss */
     .category-results .header-container .artist-col {
       left: 17px; }
-    /* line 2488, ../sass/styles.scss */
+    /* line 2489, ../sass/styles.scss */
     .category-results .header-container .composer-col {
       left: 245px; }
-    /* line 2497, ../sass/styles.scss */
+    /* line 2498, ../sass/styles.scss */
     .category-results .header-container .album-col {
       left: 445px; }
-    /* line 2504, ../sass/styles.scss */
+    /* line 2505, ../sass/styles.scss */
     .category-results .header-container .song-col {
       left: 645px; }
-    /* line 2511, ../sass/styles.scss */
+    /* line 2512, ../sass/styles.scss */
     .category-results .header-container .header-border {
       width: 1px;
       height: 35px;
       background: #d2d2d2;
       top: 0;
       position: absolute; }
-      /* line 2519, ../sass/styles.scss */
+      /* line 2520, ../sass/styles.scss */
       .category-results .header-container .header-border.artist-border {
         left: 230px; }
-      /* line 2525, ../sass/styles.scss */
+      /* line 2526, ../sass/styles.scss */
       .category-results .header-container .header-border.composer-border {
         left: 430px; }
-      /* line 2531, ../sass/styles.scss */
+      /* line 2532, ../sass/styles.scss */
       .category-results .header-container .header-border.album-border {
         left: 630px; }
-    /* line 2538, ../sass/styles.scss */
+    /* line 2539, ../sass/styles.scss */
     .category-results .header-container .multi-select-icon {
       position: absolute;
       right: 8px;
@@ -2191,18 +2193,18 @@ button {
       background: url(../images/freegal_sprite.png) -100px -115px;
       filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
       opacity: 0.5; }
-      /* line 2548, ../sass/styles.scss */
+      /* line 2549, ../sass/styles.scss */
       .category-results .header-container .multi-select-icon.highlighted {
         background: url(../images/freegal_sprite.png) -120px -115px;
         filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
         opacity: 1; }
-        /* line 2552, ../sass/styles.scss */
+        /* line 2553, ../sass/styles.scss */
         .category-results .header-container .multi-select-icon.highlighted:hover {
           background: url(../images/freegal_sprite.png) -140px -115px; }
-        /* line 2557, ../sass/styles.scss */
+        /* line 2558, ../sass/styles.scss */
         .category-results .header-container .multi-select-icon.highlighted:active {
           background: url(../images/freegal_sprite.png) -160px -115px; }
-    /* line 2567, ../sass/styles.scss */
+    /* line 2568, ../sass/styles.scss */
     .category-results .header-container .options-menu {
       position: absolute;
       z-index: 1;
@@ -2271,18 +2273,18 @@ button {
           -moz-border-radius-bottomright: 5px;
           -webkit-border-bottom-right-radius: 5px;
           border-bottom-right-radius: 5px; }
-      /* line 2576, ../sass/styles.scss */
+      /* line 2577, ../sass/styles.scss */
       .category-results .header-container .options-menu.active {
         display: block; }
-      /* line 2581, ../sass/styles.scss */
+      /* line 2582, ../sass/styles.scss */
       .category-results .header-container .options-menu .playlist-menu {
         display: none;
         height: 312px;
         overflow-y: scroll; }
-        /* line 2587, ../sass/styles.scss */
+        /* line 2588, ../sass/styles.scss */
         .category-results .header-container .options-menu .playlist-menu.active {
           display: block; }
-  /* line 2597, ../sass/styles.scss */
+  /* line 2598, ../sass/styles.scss */
   .category-results .row {
     position: relative;
     height: 40px;
@@ -2292,25 +2294,25 @@ button {
     overflow: visible;
     border-left: 1px solid #d0d0d0;
     border-right: 1px solid #d0d0d0; }
-    /* line 2609, ../sass/styles.scss */
+    /* line 2610, ../sass/styles.scss */
     .category-results .row a {
       color: #707070;
       text-decoration: none; }
-      /* line 2614, ../sass/styles.scss */
+      /* line 2615, ../sass/styles.scss */
       .category-results .row a:hover {
         color: #000;
         text-decoration: underline; }
-    /* line 2622, ../sass/styles.scss */
+    /* line 2623, ../sass/styles.scss */
     .category-results .row:nth-child(even) {
       background: #f4f4f4; }
-    /* line 2626, ../sass/styles.scss */
+    /* line 2627, ../sass/styles.scss */
     .category-results .row:hover, .category-results .row.highlighted {
       background: #bbe4f1;
       color: #000; }
-      /* line 2632, ../sass/styles.scss */
+      /* line 2633, ../sass/styles.scss */
       .category-results .row:hover a, .category-results .row.highlighted a {
         color: #000; }
-  /* line 2638, ../sass/styles.scss */
+  /* line 2639, ../sass/styles.scss */
   .category-results .play-btn {
     position: absolute;
     left: 9px;
@@ -2328,21 +2330,21 @@ button {
     background-image: -moz-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
     background-image: -o-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
     background-image: radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px); }
-    /* line 2648, ../sass/styles.scss */
+    /* line 2649, ../sass/styles.scss */
     .category-results .play-btn:hover {
       background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #fdfdfd), color-stop(100%, #ffffff));
       background-image: -webkit-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: -moz-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: -o-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px); }
-    /* line 2653, ../sass/styles.scss */
+    /* line 2654, ../sass/styles.scss */
     .category-results .play-btn:active {
       background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #ececec), color-stop(100%, #eaeaea));
       background-image: -webkit-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: -moz-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: -o-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px); }
-    /* line 2658, ../sass/styles.scss */
+    /* line 2659, ../sass/styles.scss */
     .category-results .play-btn::before {
       content: "";
       position: absolute;
@@ -2353,27 +2355,27 @@ button {
       border-left: 6px solid #000;
       border-top: 4px solid transparent;
       border-bottom: 4px solid transparent; }
-  /* line 2673, ../sass/styles.scss */
+  /* line 2674, ../sass/styles.scss */
   .category-results .artist-name {
     position: absolute;
     left: 42px;
     top: 15px; }
-  /* line 2683, ../sass/styles.scss */
+  /* line 2684, ../sass/styles.scss */
   .category-results .composer-name {
     position: absolute;
     left: 246px;
     top: 15px; }
-  /* line 2691, ../sass/styles.scss */
+  /* line 2692, ../sass/styles.scss */
   .category-results .album-name {
     position: absolute;
     left: 446px;
     top: 15px; }
-  /* line 2698, ../sass/styles.scss */
+  /* line 2699, ../sass/styles.scss */
   .category-results .song-name {
     position: absolute;
     left: 646px;
     top: 15px; }
-  /* line 2705, ../sass/styles.scss */
+  /* line 2706, ../sass/styles.scss */
   .category-results .menu-btn {
     position: absolute;
     left: 795px;
@@ -2386,7 +2388,7 @@ button {
     background-image: -moz-linear-gradient(#f9f9f9, #eaeaea);
     background-image: -o-linear-gradient(#f9f9f9, #eaeaea);
     background-image: linear-gradient(#f9f9f9, #eaeaea); }
-    /* line 2715, ../sass/styles.scss */
+    /* line 2716, ../sass/styles.scss */
     .category-results .menu-btn::before {
       content: "";
       background: url(../images/freegal_sprite.png) -90px -115px;
@@ -2395,21 +2397,21 @@ button {
       top: 6px;
       width: 10px;
       height: 5px; }
-    /* line 2732, ../sass/styles.scss */
+    /* line 2733, ../sass/styles.scss */
     .category-results .menu-btn:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f6f6f6));
       background-image: -webkit-linear-gradient(#ffffff, #f6f6f6);
       background-image: -moz-linear-gradient(#ffffff, #f6f6f6);
       background-image: -o-linear-gradient(#ffffff, #f6f6f6);
       background-image: linear-gradient(#ffffff, #f6f6f6); }
-    /* line 2737, ../sass/styles.scss */
+    /* line 2738, ../sass/styles.scss */
     .category-results .menu-btn:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f3f3f3));
       background-image: -webkit-linear-gradient(#eaeaea, #f3f3f3);
       background-image: -moz-linear-gradient(#eaeaea, #f3f3f3);
       background-image: -o-linear-gradient(#eaeaea, #f3f3f3);
       background-image: linear-gradient(#eaeaea, #f3f3f3); }
-  /* line 2743, ../sass/styles.scss */
+  /* line 2744, ../sass/styles.scss */
   .category-results .row-checkbox {
     -webkit-appearance: none;
     margin: 0;
@@ -2422,10 +2424,10 @@ button {
     height: 9px;
     outline: 0;
     background: url(../images/freegal_sprite.png) -180px -115px; }
-    /* line 2755, ../sass/styles.scss */
+    /* line 2756, ../sass/styles.scss */
     .category-results .row-checkbox:checked {
       background: url(../images/freegal_sprite.png) -190px -115px; }
-  /* line 2761, ../sass/styles.scss */
+  /* line 2762, ../sass/styles.scss */
   .category-results .options-menu {
     position: absolute;
     z-index: 1;
@@ -2494,21 +2496,21 @@ button {
         -moz-border-radius-bottomright: 5px;
         -webkit-border-bottom-right-radius: 5px;
         border-bottom-right-radius: 5px; }
-    /* line 2770, ../sass/styles.scss */
+    /* line 2771, ../sass/styles.scss */
     .category-results .options-menu.active {
       display: block; }
-    /* line 2775, ../sass/styles.scss */
+    /* line 2776, ../sass/styles.scss */
     .category-results .options-menu .playlist-menu {
       display: none;
       height: 312px;
       overflow-y: scroll; }
-      /* line 2781, ../sass/styles.scss */
+      /* line 2782, ../sass/styles.scss */
       .category-results .options-menu .playlist-menu.active {
         display: block; }
-  /* line 2788, ../sass/styles.scss */
+  /* line 2789, ../sass/styles.scss */
   .category-results .pagination-container {
     position: relative; }
-    /* line 2792, ../sass/styles.scss */
+    /* line 2793, ../sass/styles.scss */
     .category-results .pagination-container button {
       position: absolute;
       width: 18px;
@@ -2523,24 +2525,24 @@ button {
       font-weight: bold;
       font-family: Helvetica, Arial, sans-serif;
       font-size: 12px; }
-      /* line 2804, ../sass/styles.scss */
+      /* line 2805, ../sass/styles.scss */
       .category-results .pagination-container button:hover {
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f5f5f5));
         background-image: -webkit-linear-gradient(#ffffff, #f5f5f5);
         background-image: -moz-linear-gradient(#ffffff, #f5f5f5);
         background-image: -o-linear-gradient(#ffffff, #f5f5f5);
         background-image: linear-gradient(#ffffff, #f5f5f5); }
-      /* line 2809, ../sass/styles.scss */
+      /* line 2810, ../sass/styles.scss */
       .category-results .pagination-container button:active {
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f4f4f4));
         background-image: -webkit-linear-gradient(#eaeaea, #f4f4f4);
         background-image: -moz-linear-gradient(#eaeaea, #f4f4f4);
         background-image: -o-linear-gradient(#eaeaea, #f4f4f4);
         background-image: linear-gradient(#eaeaea, #f4f4f4); }
-      /* line 2813, ../sass/styles.scss */
+      /* line 2814, ../sass/styles.scss */
       .category-results .pagination-container button.beginning {
         right: 221px; }
-        /* line 2817, ../sass/styles.scss */
+        /* line 2818, ../sass/styles.scss */
         .category-results .pagination-container button.beginning::before {
           content: "";
           position: absolute;
@@ -2549,7 +2551,7 @@ button {
           border-left: 1px solid #000;
           width: 0;
           height: 6px; }
-        /* line 2828, ../sass/styles.scss */
+        /* line 2829, ../sass/styles.scss */
         .category-results .pagination-container button.beginning::after {
           content: "";
           position: absolute;
@@ -2560,10 +2562,10 @@ button {
           border-bottom: 3px solid transparent;
           left: 7px;
           top: 5px; }
-      /* line 2841, ../sass/styles.scss */
+      /* line 2842, ../sass/styles.scss */
       .category-results .pagination-container button.prev {
         right: 195px; }
-        /* line 2844, ../sass/styles.scss */
+        /* line 2845, ../sass/styles.scss */
         .category-results .pagination-container button.prev::after {
           content: "";
           position: absolute;
@@ -2574,25 +2576,25 @@ button {
           border-bottom: 3px solid transparent;
           left: 6px;
           top: 5px; }
-      /* line 2858, ../sass/styles.scss */
+      /* line 2859, ../sass/styles.scss */
       .category-results .pagination-container button.page-1 {
         right: 169px; }
-      /* line 2862, ../sass/styles.scss */
+      /* line 2863, ../sass/styles.scss */
       .category-results .pagination-container button.page-2 {
         right: 143px; }
-      /* line 2866, ../sass/styles.scss */
+      /* line 2867, ../sass/styles.scss */
       .category-results .pagination-container button.page-3 {
         right: 117px; }
-      /* line 2871, ../sass/styles.scss */
+      /* line 2872, ../sass/styles.scss */
       .category-results .pagination-container button.page-4 {
         right: 91px; }
-      /* line 2876, ../sass/styles.scss */
+      /* line 2877, ../sass/styles.scss */
       .category-results .pagination-container button.page-5 {
         right: 65px; }
-      /* line 2881, ../sass/styles.scss */
+      /* line 2882, ../sass/styles.scss */
       .category-results .pagination-container button.next {
         right: 39px; }
-        /* line 2884, ../sass/styles.scss */
+        /* line 2885, ../sass/styles.scss */
         .category-results .pagination-container button.next::after {
           content: "";
           position: absolute;
@@ -2603,10 +2605,10 @@ button {
           border-bottom: 3px solid transparent;
           left: 6px;
           top: 5px; }
-      /* line 2898, ../sass/styles.scss */
+      /* line 2899, ../sass/styles.scss */
       .category-results .pagination-container button.last {
         right: 13px; }
-        /* line 2902, ../sass/styles.scss */
+        /* line 2903, ../sass/styles.scss */
         .category-results .pagination-container button.last::before {
           content: "";
           position: absolute;
@@ -2615,7 +2617,7 @@ button {
           border-right: 1px solid #000;
           width: 0;
           height: 6px; }
-        /* line 2913, ../sass/styles.scss */
+        /* line 2914, ../sass/styles.scss */
         .category-results .pagination-container button.last::after {
           content: "";
           position: absolute;
@@ -2627,10 +2629,10 @@ button {
           left: 6px;
           top: 5px; }
 
-/* line 2933, ../sass/styles.scss */
+/* line 2934, ../sass/styles.scss */
 .filter-container {
   margin-top: 20px; }
-  /* line 2935, ../sass/styles.scss */
+  /* line 2936, ../sass/styles.scss */
   .filter-container button {
     float: left;
     border: 1px solid #bbbbbb;
@@ -2645,21 +2647,21 @@ button {
     width: 109px;
     height: 34px;
     margin-right: 12px; }
-    /* line 2947, ../sass/styles.scss */
+    /* line 2948, ../sass/styles.scss */
     .filter-container button:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f4f4f4));
       background-image: -webkit-linear-gradient(#ffffff, #f4f4f4);
       background-image: -moz-linear-gradient(#ffffff, #f4f4f4);
       background-image: -o-linear-gradient(#ffffff, #f4f4f4);
       background-image: linear-gradient(#ffffff, #f4f4f4); }
-    /* line 2952, ../sass/styles.scss */
+    /* line 2953, ../sass/styles.scss */
     .filter-container button:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f4f4f4));
       background-image: -webkit-linear-gradient(#eaeaea, #f4f4f4);
       background-image: -moz-linear-gradient(#eaeaea, #f4f4f4);
       background-image: -o-linear-gradient(#eaeaea, #f4f4f4);
       background-image: linear-gradient(#eaeaea, #f4f4f4); }
-    /* line 2957, ../sass/styles.scss */
+    /* line 2958, ../sass/styles.scss */
     .filter-container button.active {
       color: #fff;
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #4fbcdf), color-stop(100%, #50c1e5));
@@ -2670,86 +2672,86 @@ button {
       border: 1px solid #008fbd;
       text-shadow: 0 0 10px #2096bc; }
 
-/* line 2971, ../sass/styles.scss */
+/* line 2972, ../sass/styles.scss */
 .search-results-albums-carousel {
   position: relative;
   height: 222px;
   margin-top: 15px;
   overflow: hidden; }
-  /* line 2978, ../sass/styles.scss */
+  /* line 2979, ../sass/styles.scss */
   .search-results-albums-carousel button {
     position: absolute;
     top: 0;
     height: 164px;
     width: 37px; }
-    /* line 2984, ../sass/styles.scss */
+    /* line 2985, ../sass/styles.scss */
     .search-results-albums-carousel button.sr-albums-prev {
       left: 0;
       background: url(../images/search-results-albums-carousel-sprite.png) 0 0; }
-      /* line 2989, ../sass/styles.scss */
+      /* line 2990, ../sass/styles.scss */
       .search-results-albums-carousel button.sr-albums-prev:hover {
         background: url(../images/search-results-albums-carousel-sprite.png) -37px 0; }
-      /* line 2994, ../sass/styles.scss */
+      /* line 2995, ../sass/styles.scss */
       .search-results-albums-carousel button.sr-albums-prev:active {
         background: url(../images/search-results-albums-carousel-sprite.png) -74px 0; }
-    /* line 3001, ../sass/styles.scss */
+    /* line 3002, ../sass/styles.scss */
     .search-results-albums-carousel button.sr-albums-next {
       right: 0;
       background: url(../images/search-results-albums-carousel-sprite.png) -185px 0; }
-      /* line 3006, ../sass/styles.scss */
+      /* line 3007, ../sass/styles.scss */
       .search-results-albums-carousel button.sr-albums-next:hover {
         background: url(../images/search-results-albums-carousel-sprite.png) -148px 0; }
-      /* line 3011, ../sass/styles.scss */
+      /* line 3012, ../sass/styles.scss */
       .search-results-albums-carousel button.sr-albums-next:active {
         background: url(../images/search-results-albums-carousel-sprite.png) -111px 0; }
-  /* line 3020, ../sass/styles.scss */
+  /* line 3021, ../sass/styles.scss */
   .search-results-albums-carousel .search-results-albums {
     overflow: hidden;
     margin-left: 42px;
     margin-right: 42px; }
-    /* line 3025, ../sass/styles.scss */
+    /* line 3026, ../sass/styles.scss */
     .search-results-albums-carousel .search-results-albums .album-info {
       margin-top: 5px; }
-    /* line 3029, ../sass/styles.scss */
+    /* line 3030, ../sass/styles.scss */
     .search-results-albums-carousel .search-results-albums ul {
       width: 1740px; }
-    /* line 3034, ../sass/styles.scss */
+    /* line 3035, ../sass/styles.scss */
     .search-results-albums-carousel .search-results-albums li {
       float: left;
       margin-right: 12px; }
-      /* line 3039, ../sass/styles.scss */
+      /* line 3040, ../sass/styles.scss */
       .search-results-albums-carousel .search-results-albums li img {
         width: 162px;
         height: 162px;
         -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
         -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
-    /* line 3046, ../sass/styles.scss */
+    /* line 3047, ../sass/styles.scss */
     .search-results-albums-carousel .search-results-albums p {
       margin-bottom: 2px; }
-    /* line 3050, ../sass/styles.scss */
+    /* line 3051, ../sass/styles.scss */
     .search-results-albums-carousel .search-results-albums .title {
       font-size: 14px;
       font-weight: bold;
       font-family: Helvetica, Arial, sans-serif;
       color: #000; }
-      /* line 3057, ../sass/styles.scss */
+      /* line 3058, ../sass/styles.scss */
       .search-results-albums-carousel .search-results-albums .title a {
         color: #000;
         text-decoration: none; }
-        /* line 3062, ../sass/styles.scss */
+        /* line 3063, ../sass/styles.scss */
         .search-results-albums-carousel .search-results-albums .title a:hover {
           text-decoration: underline; }
-    /* line 3069, ../sass/styles.scss */
+    /* line 3070, ../sass/styles.scss */
     .search-results-albums-carousel .search-results-albums .artist {
       font-size: 14px;
       color: #7d7c7c; }
-    /* line 3075, ../sass/styles.scss */
+    /* line 3076, ../sass/styles.scss */
     .search-results-albums-carousel .search-results-albums .label {
       font-size: 14px;
       color: #7d7c7c; }
 
-/* line 3087, ../sass/styles.scss */
+/* line 3088, ../sass/styles.scss */
 .fmp-container {
   position: fixed;
   bottom: 0;

@@ -595,7 +595,8 @@ button {
 					width: 100px;
 					border-right: 1px solid #b1d3e0;
 					@include appearance(none);
-
+					text-overflow: '';
+					text-indent: 0.01px;
 					
 					&:hover {
 		
@@ -640,7 +641,7 @@ button {
 					
 					position: relative;
 					display: inline-block;
-					width: 202px;
+					width: 201px;
 					height: 27px;
 					vertical-align: top;
 					
