@@ -1731,7 +1731,7 @@ Class ReportsController extends AppController {
      */
 
     function admin_streamingreport() {       
-        Configure::write('debug',2);
+//        /Configure::write('debug',2);
 
         ini_set('memory_limit', '512M');
         set_time_limit(0);
@@ -2009,6 +2009,9 @@ Class ReportsController extends AppController {
                 
                 $this->set('patronStreamedDetailedInfo', $patronStreamedInformation);
                 
+                echo "<pre>";
+                print_r($patronStreamedInformation);
+                exit;
                 /* } else {
                   if (!empty($currentPatronDownload)) {
                   foreach ($currentPatronDownload as $patronRecord) {
