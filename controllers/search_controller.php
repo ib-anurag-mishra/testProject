@@ -966,11 +966,11 @@ class SearchController extends AppController
             {
 	        $downloadsUsed = $this->LatestDownload->find('all', array('conditions' => array('LatestDownload.ProdID' => $prodId, 'LatestDownload.provider_type' => $providerType, 'library_id' => $libId, 'patron_id' => $patId, 'history < 2', 'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
                 $set = 0;
-                echo $this->LatestDownload->lastQuery();
-                print_r($downloadUsed);
+                //echo $this->LatestDownload->lastQuery();
+                //print_r($downloadsUsed);
                 foreach ($downloadsUsed as $downloadKey => $downloadData)
                 {
-                    if ($downloadData['LatestDownload']['ProdID'] == $song->ProdID)
+                    if ($downloadData['LatestDownload']['ProdID'] == $prodId && $downloadData['LatestDownload']['provider_type'] == $providerType)
                     {
                         $set = 1;
                         break;
