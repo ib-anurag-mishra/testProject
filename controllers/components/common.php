@@ -1490,13 +1490,14 @@ STR;
     function getFeaturedArtists($territory)
     {
         set_time_limit(0);
-        $countryPrefix = $this->getCountryPrefix($territory);
-        $albumInstance = ClassRegistry::init('Album');
-        $featured = array();
+        //$countryPrefix = $this->getCountryPrefix($territory);       
+       // $featured = array();
+        
+         $albumInstance = ClassRegistry::init('Album');
         $ids = '';
         $ids_provider_type = '';
         $featuredInstance = ClassRegistry::init('Featuredartist');
-        $featured = $featuredInstance->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'), 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
+        $featured = $featuredInstance->find('all', array('conditions' => array('Featuredartist.territory' => $territory, 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
         foreach ($featured as $k => $v)
         {
             if ($v['Featuredartist']['album'] != 0)
