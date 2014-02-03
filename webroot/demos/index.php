@@ -51,8 +51,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Planet Pit</p>
-											<p class="artist">Pitbull</p>
+											<p class="title"><a href="#">Planet Pit</a></p>
+											<p class="artist"><a href="#">Pitbull</a></p>
 										</div>
 									</li>
 									<li>
@@ -86,8 +86,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Some Hearts</p>
-											<p class="artist">Carrie Underwood</p>
+											<p class="title"><a href="#">Some Hearts</p>
+											<p class="artist"><a href="#">Carrie Underwood</a></p>
 										</div>
 									</li>
 									<li>
@@ -121,8 +121,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Thriller</p>
-											<p class="artist">Michael Jackson</p>
+											<p class="title"><a href="#">Thriller</a></p>
+											<p class="artist"><a href="#">Michael Jackson</a></p>
 										</div>
 									</li>
 									<li>
@@ -156,8 +156,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">All I Ever Wanted</p>
-											<p class="artist">Kelly Clarkson</p>
+											<p class="title"><a href="#">All I Ever Wanted</a></p>
+											<p class="artist"><a href="#">Kelly Clarkson</a></p>
 										</div>
 									</li>
 									<li>
@@ -191,8 +191,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Secondhand Rapture</p>
-											<p class="artist">MSMR</p>
+											<p class="title"><a href="#">Secondhand Rapture</a></p>
+											<p class="artist"><a href="#">MSMR</a></p>
 										</div>
 									</li>
 									<li>
@@ -226,8 +226,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Planet Pit</p>
-											<p class="artist">Pitbull</p>
+											<p class="title"><a href="#">Planet Pit</a></p>
+											<p class="artist"><a href="#">Pitbull</a></p>
 										</div>
 									</li>
 									<li>
@@ -261,8 +261,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Some Hearts</p>
-											<p class="artist">Carrie Underwood</p>
+											<p class="title"><a href="#">Some Hearts</a></p>
+											<p class="artist"><a href="#">Carrie Underwood</a></p>
 										</div>
 									</li>
 									<li>
@@ -296,8 +296,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Thriller</p>
-											<p class="artist">Michael Jackson</p>
+											<p class="title"><a href="#">Thriller</a></p>
+											<p class="artist"><a href="#">Michael Jackson</a></p>
 										</div>
 									</li>
 									<li>
@@ -331,8 +331,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">All I Ever Wanted</p>
-											<p class="artist">Kelly Clarkson</p>
+											<p class="title"><a href="#">All I Ever Wanted</a></p>
+											<p class="artist"><a href="#">Kelly Clarkson</a></p>
 										</div>
 									</li>
 									<li>
@@ -366,8 +366,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Secondhand Rapture</p>
-											<p class="artist">MSMR</p>
+											<p class="title"><a href="#">Secondhand Rapture</a></p>
+											<p class="artist"><a href="#">MSMR</a></p>
 										</div>
 									</li>
 									<li>
@@ -401,8 +401,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Planet Pit</p>
-											<p class="artist">Pitbull</p>
+											<p class="title"><a href="#">Planet Pit</a></p>
+											<p class="artist"><a href="#">Pitbull</a></p>
 										</div>
 									</li>
 									<li>
@@ -436,8 +436,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Some Hearts</p>
-											<p class="artist">Carrie Underwood</p>
+											<p class="title"><a href="#">Some Hearts</a></p>
+											<p class="artist"><a href="#">Carrie Underwood</a></p>
 										</div>
 									</li>
 									<li>
@@ -471,8 +471,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Thriller</p>
-											<p class="artist">Michael Jackson</p>
+											<p class="title"><a href="#">Thriller</a></p>
+											<p class="artist"><a href="#">Michael Jackson</a></p>
 										</div>
 									</li>
 									<li>
@@ -506,8 +506,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">All I Ever Wanted</p>
-											<p class="artist">Kelly Clarkson</p>
+											<p class="title"><a href="#">All I Ever Wanted</a></p>
+											<p class="artist"><a href="#">Kelly Clarkson</a></p>
 										</div>
 									</li>
 									<li>
@@ -541,8 +541,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Secondhand Rapture</p>
-											<p class="artist">MSMR</p>
+											<p class="title"><a href="#">Secondhand Rapture</a></p>
+											<p class="artist"><a href="#">MSMR</a></p>
 										</div>
 									</li>
 									<li>
@@ -576,8 +576,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Planet Pit</p>
-											<p class="artist">Pitbull</p>
+											<p class="title"><a href="#">Planet Pit</a></p>
+											<p class="artist"><a href="#">Pitbull</a></p>
 										</div>
 									</li>
 									<li>
@@ -611,8 +611,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Some Hearts</p>
-											<p class="artist">Carrie Underwood</p>
+											<p class="title"><a href="#">Some Hearts</a></p>
+											<p class="artist"><a href="#">Carrie Underwood</a></p>
 										</div>
 									</li>
 									<li>
@@ -646,8 +646,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Thriller</p>
-											<p class="artist">Michael Jackson</p>
+											<p class="title"><a href="#">Thriller</a></p>
+											<p class="artist"><a href="#">Michael Jackson</a></p>
 										</div>
 									</li>
 									<li>
@@ -681,8 +681,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">All I Ever Wanted</p>
-											<p class="artist">Kelly Clarkson</p>
+											<p class="title"><a href="#">All I Ever Wanted</a></p>
+											<p class="artist"><a href="#">Kelly Clarkson</a></p>
 										</div>
 									</li>
 									<li>
@@ -716,8 +716,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Secondhand Rapture</p>
-											<p class="artist">MSMR</p>
+											<p class="title"><a href="#">Secondhand Rapture</a></p>
+											<p class="artist"><a href="#">MSMR</a></p>
 										</div>
 									</li>
 									<li>
@@ -751,8 +751,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Planet Pit</p>
-											<p class="artist">Pitbull</p>
+											<p class="title"><a href="#">Planet Pit</a></p>
+											<p class="artist"><a href="#">Pitbull</a></p>
 										</div>
 									</li>
 									<li>
@@ -786,8 +786,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Some Hearts</p>
-											<p class="artist">Carrie Underwood</p>
+											<p class="title"><a href="#">Some Hearts</a></p>
+											<p class="artist"><a href="#">Carrie Underwood</a></p>
 										</div>
 									</li>
 									<li>
@@ -821,8 +821,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Thriller</p>
-											<p class="artist">Michael Jackson</p>
+											<p class="title"><a href="#">Thriller</a></p>
+											<p class="artist"><a href="#">Michael Jackson</a></p>
 										</div>
 									</li>
 									<li>
@@ -856,8 +856,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">All I Ever Wanted</p>
-											<p class="artist">Kelly Clarkson</p>
+											<p class="title"><a href="#">All I Ever Wanted</a></p>
+											<p class="artist"><a href="#">Kelly Clarkson</a></p>
 										</div>
 									</li>
 									<li>
@@ -891,8 +891,8 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title">Secondhand Rapture</p>
-											<p class="artist">MSMR</p>
+											<p class="title"><a href="#">Secondhand Rapture</a></p>
+											<p class="artist"><a href="#">MSMR</a></p>
 										</div>
 									</li>
 								</ul>

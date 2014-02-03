@@ -393,7 +393,7 @@ button {
 					z-index: 100;
 					@include border-radius(5px);
 					border: 1px solid #dedddd;
-					width: 218px;
+					width: 195px;
 					display: none;
 					
 
@@ -963,7 +963,7 @@ button {
 		display: block;
 		position: absolute;
 		right:8px;
-		top:15px;
+		top:13px;
 		background:url(../images/freegal_sprite.png) -465px -80px;
 		width: 22px;
 		height: 23px;
@@ -1206,7 +1206,7 @@ button {
 
 	
 	.album-info {
-		font-size: 14px;
+		font-size: 12px;
 		
 		p {
 			
@@ -1217,7 +1217,18 @@ button {
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				font-size: 13px;
+				font-size: 12px;
+
+				a {
+
+					color:#000;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
 			}
 			
 			&.artist {
@@ -1226,7 +1237,18 @@ button {
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				color:rgba(0,0,0,.5);
-				font-size: 12px;						
+				font-size: 12px;
+
+				a {
+
+					color:rgba(0,0,0,.5);
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}						
 			}
 		}
 
@@ -1641,9 +1663,9 @@ button {
 			top:8px;	
 			border:1px solid #d2d2d4;
 			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
-			font-weight: bold;
+			font-weight: normal;
 			font-family: Helvetica, Arial, sans-serif;
-			font-size: 12px;
+			font-size: 11px;
 
 			&:hover {
 
@@ -2263,7 +2285,7 @@ button {
 .search-results-heading {
 
 	font-size: 24px;
-	font-weight: bold;
+	font-weight: normal;
 	font-family: Helvetica, Arial, sans-serif;
 	margin-top: 34px;
 }
@@ -2287,7 +2309,7 @@ button {
 		height: 44px;
 		
 		h3 {
-			font-weight: bold;
+			font-weight: normal;
 			font-size: 18px;
 			font-family: Helvetica,Arial,sans-serif;
 			margin-left: 58px;
@@ -2389,7 +2411,7 @@ button {
 
 		position: relative;
 		margin-top: 30px;
-		font-size: 14px;
+		font-size: 12px;
 		font-family: Helvetica,Arial,sans-serif;
 
 		&::before {
@@ -2798,9 +2820,9 @@ button {
 			top:8px;	
 			border:1px solid #d2d2d4;
 			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
-			font-weight: bold;
+			font-weight: normal;
 			font-family: Helvetica, Arial, sans-serif;
-			font-size: 12px;
+			font-size: 11px;
 
 			&:hover {
 
@@ -3050,7 +3072,7 @@ button {
 		}
 		.title {
 
-			font-size: 14px;
+			font-size: 12px;
 			font-weight: bold;
 			font-family: Helvetica, Arial, sans-serif;
 			color: #000;
@@ -3069,13 +3091,13 @@ button {
 
 		.artist {
 
-			font-size: 14px;
+			font-size: 12px;
 			color:#7d7c7c;
 		}
 
 		.label {
 
-			font-size: 14px;
+			font-size: 12px;
 			color:#7d7c7c;
 		}
 	}
