@@ -423,6 +423,7 @@ class QueueListDetailsController extends AppController
     function createFreegalPlaylist()
     {       
         set_time_limit(0);
+        $this->layout = 'ajax';
         
         $territoriesList = $this->Common->getTerritories(); 
         
