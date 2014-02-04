@@ -360,7 +360,6 @@ STR;
                 }
 
                 Cache::write("nationaltop100albums" . $country, $data);
-
                 $this->log("cache written for national top 100 albums for $territory", "cache");
             }
             else
@@ -1123,7 +1122,8 @@ STR;
                 $this->log("download data not recevied for " . $territory, "cache");
             }
             $data = array();
-
+            if ($ids_provider_type != "")
+            {
             $video_sql_US_TOP_10 = <<<STR
              SELECT 
                      Video.ProdID,
@@ -1159,10 +1159,15 @@ STR;
             $data = $albumInstance->query($video_sql_US_TOP_10);
             $this->log("US top 10 videos for $territory", "cachequery");
             $this->log($video_sql_US_TOP_10, "cachequery");
-            if ($ids_provider_type == "")
+            
+            }
+            else
             {
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
+            
+            
+            
             if (!empty($data))
             {
                 foreach ($data as $key => $value)
@@ -1233,10 +1238,6 @@ STR;
             {
                 $this->log("new release data not recevied for " . $territory, "cache");
             }
-
-
-
-
 
             $data = array();
             $sql_album_new_release = <<<STR
@@ -1488,13 +1489,22 @@ STR;
     function getFeaturedArtists($territory)
     {
         set_time_limit(0);
-        $countryPrefix = $this->getCountryPrefix($territory);
-        $albumInstance = ClassRegistry::init('Album');
-        $featured = array();
+        //$countryPrefix = $this->getCountryPrefix($territory);       
+       // $featured = array();       
+        
         $ids = '';
         $ids_provider_type = '';
         $featuredInstance = ClassRegistry::init('Featuredartist');
-        $featured = $featuredInstance->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'), 'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1, 'order' => array('Featuredartist.id' => 'desc')));
+        $featured = $featuredInstance->find('all', array(
+            'conditions' => array(
+                'Featuredartist.territory' => $territory,
+                'Featuredartist.language' => Configure::read('App.LANGUAGE')),
+            'recursive' => -1,
+            'order' => array(
+                'Featuredartist.id' => 'desc')
+                )
+        );
+        
         foreach ($featured as $k => $v)
         {
             if ($v['Featuredartist']['album'] != 0)
@@ -1519,6 +1529,7 @@ STR;
 
         if ($ids != '')
         {
+            $albumInstance = ClassRegistry::init('Album');
             $albumInstance->recursive = 2;
             $featured = $albumInstance->find('all', array(
                 'joins' => array(
@@ -1534,7 +1545,8 @@ STR;
                         array(
                             "(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")"
                         ),
-                    ), "1 = 1 GROUP BY Album.ProdID"
+                    ), 
+                    "1 = 1 GROUP BY Album.ProdID"
                 ),
                 'fields' => array(
                     'Album.ProdID',
