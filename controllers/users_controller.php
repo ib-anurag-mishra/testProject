@@ -227,9 +227,12 @@ Class UsersController extends AppController
 				$this->set('libraryLimited', 1);
 			}
 		}
-                
-                $reports = new ReportsController();
-                $is_having_streaming_libarry  = $reports->admin_getLibraryIdsStream();
+                             
+                $is_having_streaming_libarry  =  $albumSongs = $this->requestAction(
+                            array(
+                                'controller' => 'reports', 
+                                'action' => 'admin_getLibraryIdsStream' )
+                    );
                 
                 echo "<pre>";
                 print_r($is_having_streaming_libarry);
