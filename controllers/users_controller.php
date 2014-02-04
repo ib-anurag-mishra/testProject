@@ -5,10 +5,12 @@
  Author : m68interactive
  */
 
+App::import('Reports');
+
 Class UsersController extends AppController
 {
 	var $name = 'Users';
-	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language','Streaming');
+	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
 	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Cookie');
 	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language','Consortium','Card','LibrariesTimezone','NotificationSubscriptions');
@@ -225,6 +227,14 @@ Class UsersController extends AppController
 				$this->set('libraryLimited', 1);
 			}
 		}
+                
+                $reports = new ReportsController();
+                $is_having_streaming_libarry  = $reports->admin_getLibraryIdsStream();
+                
+                echo "<pre>";
+                print_r($is_having_streaming_libarry);
+                exit;
+                
 		//takes to the default admin home page
 		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header
 	}
