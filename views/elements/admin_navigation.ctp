@@ -64,9 +64,8 @@
 						</li>
                                                  <li>
                                                         <?php
-                                                        App::import('Reposts');
-                                                        $report = new ReportsController();
-                                                        $is_streaming_library=$report->admin_getLibraryIdsStream();
+                                                      
+                                                        $is_streaming_library=$this->Streaming->admin_getLibraryIdsStream();
                                                         if(!empty($is_streaming_library))
                                                         {
                                                          echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));
