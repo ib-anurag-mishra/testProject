@@ -18,6 +18,15 @@ Class ReportsController extends AppController {
     function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('admin_consortium','admin_streamingreport','admin_downloadStreamingReportAsCsv','admin_getLibraryIdsStream');
+        
+        //checking for Consortium as any library is there or not which is allowed for streaming
+                $is_having_streaming_libarry  = $this->admin_getLibraryIdsStream();
+                if(!empty($is_having_streaming_libarry))
+                {
+                    $this->set('isHavingStreaming' , 1);   
+                }else{
+                      $this->set('isHavingStreaming' , 0);   
+                }
     }
 
     /*
@@ -1739,13 +1748,13 @@ Class ReportsController extends AppController {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         //checking for Consortium as any library is there or not which is allowed for streaming
-                $is_having_streaming_libarry  = $this->admin_getLibraryIdsStream();
-                if(!empty($is_having_streaming_libarry))
-                {
-                    $this->set('isHavingStreaming' , 1);   
-                }else{
-                      $this->set('isHavingStreaming' , 0);   
-                }
+//                $is_having_streaming_libarry  = $this->admin_getLibraryIdsStream();
+//                if(!empty($is_having_streaming_libarry))
+//                {
+//                    $this->set('isHavingStreaming' , 1);   
+//                }else{
+//                      $this->set('isHavingStreaming' , 0);   
+//                }
                 
         $libraryAdminID = array();
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '')
