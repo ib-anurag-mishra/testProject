@@ -1489,7 +1489,7 @@ Class ReportsController extends AppController {
         //$territory = $_REQUEST['Territory'];        
        // $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
         $data = '';
-        
+        $var = array();
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
         
             $var = $this->Library->find("list", array(

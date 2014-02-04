@@ -1491,9 +1491,8 @@ STR;
     {
         set_time_limit(0);
         //$countryPrefix = $this->getCountryPrefix($territory);       
-       // $featured = array();
+       // $featured = array();       
         
-         $albumInstance = ClassRegistry::init('Album');
         $ids = '';
         $ids_provider_type = '';
         $featuredInstance = ClassRegistry::init('Featuredartist');
@@ -1531,6 +1530,7 @@ STR;
 
         if ($ids != '')
         {
+            $albumInstance = ClassRegistry::init('Album');
             $albumInstance->recursive = 2;
             $featured = $albumInstance->find('all', array(
                 'joins' => array(
@@ -1546,7 +1546,8 @@ STR;
                         array(
                             "(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")"
                         ),
-                    ), "1 = 1 GROUP BY Album.ProdID"
+                    ), 
+                    "1 = 1 GROUP BY Album.ProdID"
                 ),
                 'fields' => array(
                     'Album.ProdID',

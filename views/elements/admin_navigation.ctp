@@ -63,8 +63,14 @@
 							<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
 						</li>
                                                  <li>
-						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
-					</li>
+                                                        <?php
+                                                        $report = new ReportsController();
+                                                        if(!empty($report->admin_getLibraryIdsStream()))
+                                                        {
+                                                         echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));
+                                                        }
+                                                        ?>
+                                                </li>
 					</ul>
 				</li>
 			</ul>
