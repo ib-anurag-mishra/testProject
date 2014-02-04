@@ -1484,7 +1484,7 @@ Class ReportsController extends AppController {
 //        exit;
     }
     
-    function admin_getLibraryIdsStream() {
+    public function admin_getLibraryIdsStream() {
           
         //$territory = $_REQUEST['Territory'];        
        // $libValue = isset($_REQUEST['lib_id'])? $_REQUEST['lib_id']:'';
