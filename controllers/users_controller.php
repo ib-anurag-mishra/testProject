@@ -228,6 +228,7 @@ Class UsersController extends AppController
 			}
 		}
                              
+                //checking for Consortium as any library is there or not which is allowed for streaming
                 $is_having_streaming_libarry  = $this->Streaming->admin_getLibraryIdsStream();
                 if(!empty($is_having_streaming_libarry))
                 {

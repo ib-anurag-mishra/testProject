@@ -159,12 +159,13 @@ foreach ($albumData as $album_key => $album):
                         echo '<span class="explicit"> (Explicit)</span>';
                     }
                     ?></div>
-                <div class="artist"><a title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>"href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"><?php
+                <div class="artist">
+                    <a title="<?php echo $this->getTextEncode($albumSong['Song']['Artist']); ?>" href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>">
+                        <?php
                         if (strlen($albumSong['Song']['Artist']) >= 11)
                         {
                             if (strlen($albumSong['Song']['Artist']) >= 30)
                             {
-
                                 $albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 30) . '...';
                             }
                             echo $this->getTextEncode(substr($albumSong['Song']['Artist'], 0, 13));
@@ -173,7 +174,9 @@ foreach ($albumData as $album_key => $album):
                         {
                             echo $this->getTextEncode($albumSong['Song']['Artist']);
                         }
-                        ?></a></div>
+                        ?>
+                    </a>
+                </div>
                 <div class="time"><?php echo $this->Song->getSongDurationTime($albumSong['Song']['FullLength_Duration']); ?></div>
                 <?php
                 if ($this->Session->read('patron'))
