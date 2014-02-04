@@ -1276,7 +1276,7 @@ STR;
                     LIMIT 110
 STR;
 
-                    echo $sql_album_new_release ;
+                
             $data = $songInstance->query($sql_album_new_release);
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_album_new_release, "cachequery");

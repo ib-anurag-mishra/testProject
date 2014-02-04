@@ -2061,11 +2061,12 @@ Class ArtistsController extends AppController
                 'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                 "Song.Sample_FileID != ''",
                 "Song.FullLength_FIleID != ''",
-                'Country.Territory' => $country, $cond,
+                'Country.Territory' => $country, 
+                $cond,
                 'Song.provider_type = Country.provider_type'),
             'contain' => array(
                 'Country' => array(
-                    'fields' => array('Country.Territory')
+                    'fields' => array('Country.Territory', 'Country.DownloadStatus')
                 )),
             'recursive' => 0,
             'order' => array(
