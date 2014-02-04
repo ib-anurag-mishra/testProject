@@ -172,12 +172,7 @@ class HomesController extends AppController
             }
         }
 
-
         $this->set('news', $news_rs);
-
-
-
-
         /*
           Code OF NEWS Section --- END
          */
@@ -191,11 +186,13 @@ class HomesController extends AppController
         }
         else    
         {
-            //  Show From Cache
             $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
         }       
         $this->set('coming_soon_rs', $coming_soon_rs);
-
+        echo "<pre>";
+        print_r($coming_soon_rs);
+        exit;
+        
         // Videos
         if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false)
         {  
