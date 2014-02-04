@@ -180,7 +180,8 @@ class HomesController extends AppController
         /*
          *  Code For Coming Soon --- START
          */
-        if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
+        //if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
+        if(1)
         {
             $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
