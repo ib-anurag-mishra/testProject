@@ -73,7 +73,7 @@ Class CommonComponent extends Object
             if ($maintainLatestDownload)
             {
 
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                $sql = "SELgetNewReleaseAlbumsECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -97,7 +97,7 @@ Class CommonComponent extends Object
             $ids_provider_type = '';
             $albumInstance = ClassRegistry::init('Album');
             $natTopDownloaded = $albumInstance->query($sql);
-            foreach ($natgetNewReleaseAlbumsBackupTopDownloaded as $natTopSong)
+            foreach ($natTopDownloaded as $natTopSong)
             {
                 if (empty($ids))
                 {
@@ -657,13 +657,12 @@ STR;
               INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
               INNER JOIN File ON (Albums.FileID = File.FileID) 
             WHERE
-            ( (Song.DownloadStatus = '1')  )   AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
+            ( (Country.DownloadStatus = '1')  )   AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
             GROUP BY Song.ReferenceID
             ORDER BY Country.SalesDate ASC
             LIMIT 20      
 STR;
 
-              echo $sql_coming_soon_s;
         $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
         //print_r($coming_soon_rs);
 
@@ -1206,10 +1205,6 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-
-            //if ( !empty($country ) && ( $territory == "US" ) ) {   
-
-
             $sql = "SELECT Song.ProdID,Song.ReferenceID,Song.provider_type
                 FROM Songs AS Song
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
@@ -1281,7 +1276,7 @@ STR;
                     LIMIT 110
 STR;
 
-
+                    echo $sql_album_new_release ;
             $data = $songInstance->query($sql_album_new_release);
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_album_new_release, "cachequery");

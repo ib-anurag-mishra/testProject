@@ -180,8 +180,8 @@ class HomesController extends AppController
         /*
          *  Code For Coming Soon --- START
          */
-        //if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
-        if(1)
+        if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
+        //if(1)
         {
             $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
@@ -454,9 +454,7 @@ class HomesController extends AppController
 
     function us_top_10()
     {
-
         // Configure::write('debug', 2);
-
         $this->layout = 'home';
 
         $libId = $this->Session->read('library');
@@ -477,8 +475,7 @@ class HomesController extends AppController
         if (!empty($territory))
         {
             if (($national = Cache::read("national_us_top10_songs" . $territory)) === false)
-            {
-                //if(1) {
+            {                
                 $national_us_top10_record = $this->Common->getUsTop10Songs($territory);
             }
             else
@@ -488,13 +485,9 @@ class HomesController extends AppController
         }
         $this->set('nationalTopDownload', $national_us_top10_record);
 
-
         //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
 
-
-        $country = $this->Session->read('territory');
-
-        if (!empty($country))
+        if (!empty($territory))
         {
             if (($national = Cache::read("national_us_top10_albums" . $territory)) === false)
             {
@@ -509,9 +502,7 @@ class HomesController extends AppController
 
         //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
 
-        $country = $this->Session->read('territory');
-
-        if (!empty($country))
+        if (!empty($territory))
         {            
             if (($national = Cache::read("national_us_top10_videos" . $territory)) === false)
             {
@@ -4720,6 +4711,7 @@ STR;
         //////////////////////////////////Videos/////////////////////////////////////////////////////////            
 
         if (($coming_soon = Cache::read("new_releases_videos" . $territory)) === false)
+        //if(1)
         {
             $coming_soon_videos = $this->Common->getNewReleaseVideos($territory);
         }
@@ -4727,23 +4719,24 @@ STR;
         {
             $coming_soon_videos = Cache::read("new_releases_videos" . $territory);
         }
-
+      
         $this->set('new_releases_videos', $coming_soon_videos);
 
         //print_r($coming_soon_videos);
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
 
-        if (($coming_soon = Cache::read("new_releases_albums" . $territory)) === false)
+        //if (($coming_soon = Cache::read("new_releases_albums" . $territory)) === false)
+        if(1)
         {
-            //if(1){
-
             $new_releases_albums_rs = $this->Common->getNewReleaseAlbums($territory);
         }
         else    //  Show From Cache
         {
             $new_releases_albums_rs = Cache::read("new_releases_albums" . $territory);
         }
-
+          echo "<pre>";
+        print_r($new_releases_albums_rs);
+        exit
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
     }
