@@ -663,7 +663,7 @@ STR;
             LIMIT 20      
 STR;
 
-
+              echo $str;
         $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
         //print_r($coming_soon_rs);
 
