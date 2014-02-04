@@ -762,11 +762,12 @@ Class StreamingComponent extends Object
     
       function admin_getLibraryIdsStream() {
        
+        $LibraryInstance = ClassRegistry::init('Library');
         $data = '';
         $var = array();
         if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
         
-            $var = $this->Library->find("list", array(
+            $var = $LibraryInstance->find("list", array(
                 "conditions" => array(
                     'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
                     'Library.library_type = 2'),  
@@ -777,7 +778,7 @@ Class StreamingComponent extends Object
             
         } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
         
-              $var = $this->Library->find("list", array(
+              $var = $LibraryInstance->find("list", array(
                 "conditions" => array(
                     'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
                     'Library.library_type = 2' 
@@ -788,7 +789,7 @@ Class StreamingComponent extends Object
               
         } else {
          
-            $var = $this->Library->find('list', array(
+             $var = $LibraryInstance->find('list', array(
                 'conditions' => array(
                    // 'Library.library_territory' => $territory, 
                     'Library.library_type =2'), 
