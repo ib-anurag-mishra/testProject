@@ -434,7 +434,7 @@ class QueueListDetailsController extends AppController
         
         
         
-    
+        die;
         
         
     }
