@@ -760,6 +760,48 @@ Class StreamingComponent extends Object
     }
     
     
+      function admin_getLibraryIdsStream() {
+       
+        $data = '';
+        $var = array();
+        if ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
+        
+            $var = $this->Library->find("list", array(
+                "conditions" => array(
+                    'Library.library_admin_id' => $this->Session->read("Auth.User.id"), 
+                    'Library.library_type = 2'),  
+                'fields' => array('Library.id', 'Library.library_name'), 
+                'order' => 'Library.library_name ASC', 
+                'recursive' => -1)
+                    );
+            
+        } elseif ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '') {
+        
+              $var = $this->Library->find("list", array(
+                "conditions" => array(
+                    'Library.library_apikey' => $this->Session->read("Auth.User.consortium"), 
+                    'Library.library_type = 2' 
+                    ), 
+                'fields' => array('Library.id', 'Library.library_name'), 
+                'order' => 'Library.library_name ASC', 
+                'recursive' => -1));
+              
+        } else {
+         
+            $var = $this->Library->find('list', array(
+                'conditions' => array(
+                   // 'Library.library_territory' => $territory, 
+                    'Library.library_type =2'), 
+                'fields' => array('Library.id', 'Library.library_name'), 
+                'order' => 'Library.library_name ASC', 
+                'recursive' => -1)
+                    );
+            $data = "<option value='all'>All Libraries</option>";
+        }
+        
+         return $var;
+        
+    }
 
 }
 ?>
