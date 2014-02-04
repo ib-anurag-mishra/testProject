@@ -63,12 +63,10 @@
 							<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
 						</li>
                                                  <li>
-                                                        <?php
-                                                      
-                                                        $is_streaming_library=$this->Streaming->getLibraryIdsStream();
-                                                        if(!empty($is_streaming_library))
+                                                        <?php                                                      
+                                                        if($isHavingStreaming)
                                                         {
-                                                         echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));
+                                                            echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));
                                                         }
                                                         ?>
                                                 </li>

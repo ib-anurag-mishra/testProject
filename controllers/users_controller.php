@@ -229,10 +229,12 @@ Class UsersController extends AppController
 		}
                              
                 $is_having_streaming_libarry  = $this->Streaming->admin_getLibraryIdsStream();
-                
-                echo "<pre>";
-                print_r($is_having_streaming_libarry);
-                exit;
+                if(!empty($is_having_streaming_libarry))
+                {
+                    $this->set('isHavingStreaming' , 1);   
+                }else{
+                      $this->set('isHavingStreaming' , 0);   
+                }
                 
 		//takes to the default admin home page
 		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header
