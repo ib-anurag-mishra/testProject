@@ -178,9 +178,7 @@ STR;
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
             if (!empty($data))
-            {
-                Cache::delete("national" . $country,"cache2");
-                
+            {   
                 foreach ($data as $key => $value)
                 {
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
@@ -196,6 +194,7 @@ STR;
                         $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
                     }
                 }
+                Cache::delete("national" . $country,"cache2");
                 Cache::write("national" . $country, $data, "cache2");
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             }
