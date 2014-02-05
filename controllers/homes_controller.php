@@ -110,9 +110,8 @@ class HomesController extends AppController
                 
                 $cacheFlag = $this->MemDatas->find('count',array('conditions' => array('territory'=>'US','vari_info != '=>'')));
                 if($cacheFlag > 0){        
-                    $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>'US')));
-                    echo $memDatasArr['MemDatas']['vari_info'];
-                    die;
+                    $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>'US')));                     
+                    
                     $unMemDatasArr = unserialize(base64_decode($memDatasArr['MemDatas']['vari_info']));                    
                     Cache::write("national" . $territory,$unMemDatasArr);
                     $nationalTopDownload = $unMemDatasArr;                    
