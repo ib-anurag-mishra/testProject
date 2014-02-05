@@ -123,6 +123,8 @@ Class DownloadsComponent extends Object
         } else {
             $territory = $mobileTerritory;
         }
+        $prodId='28194771';
+        $providerType = 'sony';
         
         $countryInstance->tablePrefix = strtolower($territory)."_";
         $country = $countryInstance->find('count',array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
