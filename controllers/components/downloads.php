@@ -114,19 +114,25 @@ Class DownloadsComponent extends Object
             return false;
         }
     }
-    
+     /*
+     * Function Name : checkAllowedCountry
+     * Function Description : This function is used to check the song is allowed for this territory or not.
+     */
     function checkAllowedCountry($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null){
+        
+        
+        //add the country model
         $countryInstance = ClassRegistry::init('Country');
         $countryInstance->recursive = -1;
+        //check the country
         if(!$isMobileDownload){
             $territory = $this->Session->read('territory');
         } else {
             $territory = $mobileTerritory;
-        }
-        $prodId='28194771';
-        $providerType = 'sony';
+        }        
         
         $countryInstance->tablePrefix = strtolower($territory)."_";
+        //check the song in the country table or not
         $country = $countryInstance->find('count',array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
         if($country > 0){        
             return true;
@@ -134,19 +140,6 @@ Class DownloadsComponent extends Object
             return false;
         }
 
-
-
-        
-        
-        
-        
-          //$country = $countryInstance->find('first',array('fields'=>'ProdID','Territory','SalesDate','provider_type'),array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
-
-//        if(!empty($country['Country'])){            
-//            return true;
-//        } else {            
-//            return false;
-//        }
     }
     
 
