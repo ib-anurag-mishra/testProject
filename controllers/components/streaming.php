@@ -33,6 +33,17 @@ Class StreamingComponent extends Object
           creates log file name
         */
         
+
+        $this->streamingLimit = $this->getStreamingLimit($libId);
+
+        if($this->streamingLimit === false || $this->streamingLimit===0){
+            $this->log("error|Not able to stream this song,streaming limit has been over.;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;streamingLimit :".$this->streamingLimit,'streaming');            
+            
+            //return the final result array
+            return array(0,'Not able to stream this song,streaming limit has been over.',$currentTimeDuration, 1 ,$timerCallTime,$this->timerCallDuration);           
+            exit;
+        }
+
         if(!isset($queue_id)) { $queue_id = '0'; }
         
         //set the default value
@@ -652,10 +663,10 @@ Class StreamingComponent extends Object
      * @return bool value
     */
     function checkLibraryUnlimited($libId){
+        
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;        
-        $results = $libraryInstance->find('first',array('conditions' => array('library_unlimited = "1"','id' => $libId,'library_user_download_limit > 4'),'fields' => 'id'));
-          
+        $results = $libraryInstance->find('first',array('conditions' => array('library_streaming_hours = "24"','id' => $libId),'fields' => 'id'));          
         if(count($results) > 0 && isset($results['Library']['id']) && $results['Library']['id']!='') {            
             return true;
         }
@@ -663,6 +674,28 @@ Class StreamingComponent extends Object
             return false;
         }        
     }
+    
+    /*
+     Function Name : getStreamingLimit
+     Desc : function used for creating logs for streaming song
+     * 
+     * @param $libID Int  'library id'         
+     * 
+     * @return bool value
+    */
+    function getStreamingLimit($libId){
+        $libraryInstance = ClassRegistry::init('Library');
+        $libraryInstance->recursive = -1;        
+        $results = $libraryInstance->find('first',array('conditions' => array('id' => $libId),'fields' => array('library_streaming_hours','id')));          
+        if(count($results) > 0 && isset($results['Library']['id']) && $results['Library']['id']!='') {            
+            return ($results['Library']['library_streaming_hours'] * 3600);            
+        }
+        else {            
+            return false;
+        }        
+    }
+    
+    
     
     /*
      Function Name : checkTokenExist
