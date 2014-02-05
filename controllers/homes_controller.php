@@ -12,7 +12,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue');
     var $components = array('RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming');
-    var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload', 'Zipcode', 'StreamingHistory');
+    var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload', 'Zipcode', 'StreamingHistory','MemDatas');
 
     /*
       Function Name : beforeFilter
@@ -102,12 +102,33 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national" . $territory)) === false)
+       // if (($national = Cache::read("national" . $territory)) === false)
+        if(1)
         {
-            $nationalTopDownload = $this->Common->getNationalTop100($territory);
+            if($territory == 'US'){
+                
+                $cacheFlag = $this->MemDatas->find('count',array('conditions' => array('territory'=>'US','vari_info != '=>'')));
+                if($cacheFlag > 0){        
+                    $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>'US')));                
+                    $unMemDatasArr = unserialize($memDatasArr['MemDatas']['vari_info']);
+                    Cache::write("national" . $territory,$unMemDatasArr);
+                    $nationalTopDownload = $unMemDatasArr;
+                }else{                
+                    $nationalTopDownload = $this->Common->getNationalTop100($territory);
+                    $nationalTopDownloadSer = serialize($nationalTopDownload);
+                    $memQuery = "update mem_datas  set vari_info='".$nationalTopDownloadSer."'  where territory='US'";
+                    $this->MemDatas->query($memQuery);
+                } 
+                
+            }else{
+                 $nationalTopDownload = $this->Common->getNationalTop100($territory);
+            }    
+                                    
         }
         else
-        {
+        {      
+            
+            
             $nationalTopDownload = Cache::read("national" . $territory);
         }
         $this->set('nationalTopDownload', $nationalTopDownload);

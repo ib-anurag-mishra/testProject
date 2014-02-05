@@ -663,6 +663,7 @@ Class StreamingComponent extends Object
      * @return bool value
     */
     function checkLibraryUnlimited($libId){
+        
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;        
         $results = $libraryInstance->find('first',array('conditions' => array('library_streaming_hours = "24"','id' => $libId),'fields' => 'id'));          
