@@ -4626,8 +4626,7 @@ function login($library = null){
 					//$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
                                         
 					$data['database'] = 'freegal';
-                                        $data['hostname'] = $existingLibraries['0']['Library']['library_host_name'];
-                                        $data['port'] = $existingLibraries['0']['Library']['library_port_no'];
+                                        $data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];                                        
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."capita_validation";
 					}
