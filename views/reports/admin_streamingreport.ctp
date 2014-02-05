@@ -11,9 +11,14 @@ if (empty($getData)) {
 }
 ?>
 <fieldset>
-    <legend>Generate Streaming Report <?php if ($libraryID != "") {
-    echo "for \"" . $this->getTextEncode($libraryname) . "\"";
-} ?></legend>
+    <legend>Generate Streaming Report 
+        <?php
+        if ($libraryID != "")
+        {
+            echo "for \"" . $this->getTextEncode($libraryname) . "\"";
+        }
+        ?>
+    </legend>
     <div class="formFieldsContainer">
         <div class="formFieldsbox">
             <div id="form_step" class="form_steps">
@@ -24,21 +29,23 @@ if (empty($getData)) {
                         <?php
                         if ($libraryID == "") {
                             ?>
-                            <td align="right"><?php echo $this->Form->label('Choose Territory'); ?></td>
+                        <!-- commented as Territory is not required for consortium. As suggested by Micah -->
+<!--                            <td align="right"><?php echo $this->Form->label('Choose Territory'); ?></td>
                             <td align="left">
                                 <?php
                                 echo $this->Form->input('Territory', array('options' => $territory, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
                                 );
                                 ?>
-                            </td>
-                            <td align="right"><?php echo $this->Form->label('Select Library'); ?></td>
+                            </td>-->
+                        <td align="right"><?php echo $this->Form->label('Select Library'); ?></td>
                             <td align="left">
                                 <div id="allLibrary">
                                     <?php
-                                    if ($this->Session->read("Auth.User.consortium") == '') {
+                                    if ($this->Session->read("Auth.User.consortium") == '')
+                                    {
                                         $libraries['all'] = "All Libraries";
                                     }
-                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
+                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_id']));
                                     ?>
                                 </div>
                             </td>
@@ -247,7 +254,7 @@ if (empty($getData)) {
 
     <?php } ?>            
 
-
+<?php if(!empty($dayStreamingInfo)){ ?>
                         <tr><td colspan="6">&nbsp;</td></tr>
                         <tr><th colspan="6" align="center">Library Streaming Report</th></tr>
                         <tr>
@@ -292,7 +299,7 @@ if (empty($getData)) {
                                 </table>
                             </td>
                         </tr>
-
+<?php } ?>
                         <tr><td colspan="6">&nbsp;</td></tr>
                         <tr><th colspan="6" align="center">Patron Streaming Report</th></tr>
                         <tr>
@@ -306,30 +313,35 @@ if (empty($getData)) {
                                         <?php endif; ?>
                                         <th>Total Number of Tracks Streamed</th>
                                     </tr>
-    <?php
-    $i = 1;
-    
-    foreach ($patronStreamedDetailedInfo as $key => $patronStramed) {
-        ?>
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php
-                                                if (isset($patronStramed['StreamingHistory']['patron_id']) && $patronStramed['StreamingHistory']['patron_id'] != '') {
-                                                  /*  echo $patronStramed['StreamingHistory']['email'];
-                                                } else {*/
-                                                    echo $patronStramed['StreamingHistory']['patron_id'];
-                                                }
-                                                ?>
-                                            </td>
-                                            <?php if(!is_numeric($library_id)):?>
-                                            <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
-                                            <?php endif; ?>
-                                            <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
-                                        </tr>
-        <?php
-        $i++;
-    }
-    ?>
+                                        <?php
+                                        $i = 1;
+
+                                        foreach ($patronStreamedDetailedInfo as $key => $patronStramed)
+                                        {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
+                                                <td>
+                                                    <?php
+                                                            if (isset($patronStramed['user']['email']) && $patronStramed['user']['email'] != '')
+                                                            {
+                                                                echo $patronStramed['user']['email'];
+                                                            }
+                                                            else
+                                                            {
+                                                                echo $patronStramed['StreamingHistory']['patron_id'];
+                                                            }
+                                                            ?>
+                                                </td>
+                                                <?php if (!is_numeric($library_id)): ?>
+                                                    <td><?php echo $this->getTextEncode($library->getLibraryName($patronStramed['StreamingHistory']['library_id'])); ?></td>
+                                                <?php endif; ?>
+                                                <td align="center"><?php echo $patronStramed[0]['total_streamed_songs']; ?></td>
+                                            </tr>
+                                            <?php
+                                            $i++;
+                                        }
+                                        ?>
                                 </table>
                             </td>
                         </tr>
@@ -391,7 +403,7 @@ echo $session->flash();
 if (empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != '')) {
     
     ?>
-            report_load_page();
+            //report_load_page();
     <?php
 }
 ?>
@@ -435,21 +447,21 @@ if (empty($library_id) || ($this->Session->read("Auth.User.type_id") == 4 && $th
         });
 
 
-        function report_load_page() {
-            var data = "Territory=" + $("#ReportTerritory").val()+"&lib_id=<?=  $library_id; ?>";
-            jQuery.ajax({
-                type: "post", // Request method: post, get
-                url: webroot + "admin/reports/getLibraryIds", // URL to request
-                data: data, // post data
-                success: function(response) {
-                    $('#allLibrary').text('');
-                    $('#allLibrary').html(response);
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                }
-            });
-
-        }
+//        function report_load_page() {
+//            var data = "Territory=" + $("#ReportTerritory").val()+"&lib_id=<?=  $library_id; ?>";
+//            jQuery.ajax({
+//                type: "post", // Request method: post, get
+//                url: webroot + "admin/reports/getLibraryIds", // URL to request
+//                data: data, // post data
+//                success: function(response) {
+//                    $('#allLibrary').text('');
+//                    $('#allLibrary').html(response);
+//                },
+//                error: function(XMLHttpRequest, textStatus, errorThrown) {
+//                }
+//            });
+//
+//        }
 
     });
 <?php
@@ -473,4 +485,4 @@ if (!empty($streamingHours)) {
 ?>
 </script>
 
-<?php echo $this->element('sql_dump');?>
+<?php //echo $this->element('sql_dump');?>
