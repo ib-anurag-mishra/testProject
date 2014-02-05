@@ -1890,7 +1890,18 @@ STR;
       break;
 
       case '17':  {
-        $resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+	$auth_method_name = $this->Library->find('first',array(
+	      'conditions' => array('Library.id' => $library_id),
+	      'fields' => array('library_authentication_method'),
+	      'recursive' => -1
+	      )
+	    );
+	if($auth_method_name['Library']['library_authentication_method'] == 'capita'){
+	 	$resp = $this->capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+  	}
+	else{
+        	$resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call);
+      	}
       }
       break;
 
@@ -4220,6 +4231,107 @@ STR;
     }
 	}  
   
+/**
+   * Authenticates user by capita method
+   * @param $card
+   * @param $pin
+   * @param $library_id
+   * @param $agent
+   * @return AuthenticationResponseDataType[]
+   */
+
+    private function capitaAuthinticate($card, $pin, $library_id, $agent, $authtype, $cron_call){
+	
+	$card = str_replace(" ","", $card);
+	$card = strtolower($card);
+	$data['card'] = $card;
+	$data['pin'] = $pin;
+    	$patronId = $card;
+	$data['patronId'] = $patronId;
+	$data['wrongReferral'] = '';
+   	$data['referral'] = '';
+          
+	$library_data = $this->authLibraryDetails($library_id);
+
+    	if($card == ''){
+		$response_msg = 'Card number not provided';
+      		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+   	}
+	elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+		$response_msg = 'Invalid Card number';
+      		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+	}
+    	elseif($pin == ''){
+		$response_msg = 'Pin not provided';
+      		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+    	}
+    	else{
+
+      	    if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
+		$response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
+       		 return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+     	     }
+	     $cardNo = substr($card,0,5);
+	     $data['cardNo'] = $cardNo;
+	     $this->Library->recursive = -1;
+	     $this->Library->Behaviors->attach('Containable');
+             $data['library_cond'] = $library_id;
+	
+	     $existingLibraries = $this->Library->find('all',array('conditions' => array('library_status' => 'active','library_authentication_method' => 'capita','Library.id' => $library_id),'fields' => array ('Library.id','Library.library_authentication_method','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language','Library.library_type','Library.library_host_name' ,'Library.library_port_no','Library.library_subdomain')
+		)
+	     );
+	   $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
+	   $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
+	    if(count($existingLibraries) == 0){
+		 $response_msg = 'Invalid credentials provided.';
+    		 return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+	    }
+	    else{
+		$matches = array();
+		$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+		$data['database'] = 'freegal';
+		//$data['hostname'] = $existingLibraries['0']['Library']['library_host_name'];
+               // $data['port'] = $existingLibraries['0']['Library']['library_port_no'];
+		$data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];
+		
+		if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+			$authUrl = Configure::read('App.AuthUrl_AU')."capita_validation";
+		}
+		else{
+			$authUrl = Configure::read('App.AuthUrl')."capita_validation";
+		}
+		$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
+		$resultAnalysis[0] = $result['Posts']['status'];
+		$resultAnalysis[1] = $result['Posts']['message'];
+		if($resultAnalysis[0] == "fail"){
+			$response_msg = $resultAnalysis[1];
+        		return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+		}
+		elseif($resultAnalysis[0] == "success"){
+			$token = md5(time());
+       			$insertArr['patron_id'] = $data['patronId'];
+			$insertArr['library_id'] = $library_id;
+			$insertArr['token'] = $token;
+			$insertArr['auth_time'] = time();
+			$insertArr['agent'] = $agent;
+			$insertArr['auth_method'] = $library_authentication_method;
+			$insertArr['authtype'] = $authtype;
+       	 		$insertArr['card'] = $card;
+        		$insertArr['pin'] = $pin;
+			if(0 == $cron_call) {
+          			$this->AuthenticationToken->save($insertArr);
+        		}
+        
+      			$patron_id = $insertArr['patron_id'];
+        		$response_msg = 'Login Successfull';
+        		return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+		}
+	    }
+		
+	}
+
+    }
+
   /**
    * Function Name : updateUserDetails
    * Desc : To update users details
@@ -6654,6 +6766,7 @@ STR;
       'mndlogin_reference' => '18',
       'mdlogin_reference' => '19',
       'ezproxy' => '16',
+      'capita' => '17',
 
     );
 
