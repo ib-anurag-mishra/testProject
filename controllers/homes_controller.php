@@ -111,13 +111,12 @@ class HomesController extends AppController
                 $cacheFlag = $this->MemDatas->find('count',array('conditions' => array('territory'=>'US','vari_info != '=>'')));
                 if($cacheFlag > 0){        
                     $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>'US')));                
-                    $unMemDatasArr = unserialize($memDatasArr['MemDatas']['vari_info']);
-                    print_r($unMemDatasArr);
+                    $unMemDatasArr = unserialize($memDatasArr['MemDatas']['vari_info']);                    
                     Cache::write("national" . $territory,$unMemDatasArr);
                     $nationalTopDownload = $unMemDatasArr;                    
                 }else{                
                     $nationalTopDownload = $this->Common->getNationalTop100($territory);
-                    $nationalTopDownloadSer = serialize($nationalTopDownload);
+                    $nationalTopDownloadSer = mysql_real_escape_string(serialize($nationalTopDownload));
                     $memQuery = "update mem_datas  set vari_info='".$nationalTopDownloadSer."'  where territory='US'";
                     $this->MemDatas->query($memQuery);
                 } 
