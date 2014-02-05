@@ -107,6 +107,7 @@ class HomesController extends AppController
         {
             if($territory == 'US'){
                 
+                
                 $cacheFlag = $this->MemDatas->find('count',array('conditions' => array('territory'=>'US','vari_info != '=>'')));
                 if($cacheFlag > 0){        
                     $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>'US')));                
