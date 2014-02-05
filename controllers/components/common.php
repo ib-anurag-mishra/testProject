@@ -167,7 +167,7 @@ Class CommonComponent extends Object
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
                 GROUP BY Song.ProdID
                 ORDER BY FIELD(Song.ProdID,$ids) ASC
-                LIMIT 50 
+                LIMIT 100 
 
 STR;
             $data = $albumInstance->query($sql_national_100);
