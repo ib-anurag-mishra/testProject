@@ -4475,7 +4475,7 @@ function login($library = null){
     */
    
    
-   function capita($library = null){
+   function capita($library = null){ 
        
        
     //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
