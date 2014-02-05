@@ -112,6 +112,7 @@ class HomesController extends AppController
                 if($cacheFlag > 0){        
                     $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>'US')));                
                     $unMemDatasArr = unserialize($memDatasArr['MemDatas']['vari_info']);
+                    print_r($unMemDatasArr);
                     Cache::write("national" . $territory,$unMemDatasArr);
                     $nationalTopDownload = $unMemDatasArr;                    
                 }else{                
