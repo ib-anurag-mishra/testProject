@@ -105,12 +105,12 @@ class HomesController extends AppController
         if (($national = Cache::read("national" . $territory)) === false)
         //if(1)
         {
-            if($territory == 'US'){
+            if($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ'){
                 
                 
-                $cacheFlag = $this->MemDatas->find('count',array('conditions' => array('territory'=>'US','vari_info != '=>'')));
+                $cacheFlag = $this->MemDatas->find('count',array('conditions' => array('territory'=>$territory,'vari_info != '=>'')));
                 if($cacheFlag > 0){        
-                    $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>'US')));                     
+                    $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>$territory)));                     
                     
                     $unMemDatasArr = unserialize(base64_decode($memDatasArr['MemDatas']['vari_info']));                    
                     Cache::write("national" . $territory,$unMemDatasArr);
@@ -118,13 +118,13 @@ class HomesController extends AppController
                 }else{                
                     $nationalTopDownload = $this->Common->getNationalTop100($territory);                    
                     $nationalTopDownloadSer = base64_encode(serialize($nationalTopDownload));
-                    $memQuery = "update mem_datas  set vari_info='".$nationalTopDownloadSer."'  where territory='US'";
+                    $memQuery = "update mem_datas  set vari_info='".$nationalTopDownloadSer."'  where territory=$territory";
                     $this->MemDatas->query($memQuery);
                 } 
                 
             }else{
                  $nationalTopDownload = $this->Common->getNationalTop100($territory);
-            }    
+            }  
                                     
         }
         else
