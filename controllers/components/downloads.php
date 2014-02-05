@@ -123,14 +123,28 @@ Class DownloadsComponent extends Object
         } else {
             $territory = $mobileTerritory;
         }
+        
         $countryInstance->tablePrefix = strtolower($territory)."_";
-        $country = $countryInstance->find('first',array('fields'=>'ProdID','Territory','SalesDate','provider_type'),array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
-
-        if(!empty($country['Country'])){            
+        $country = $countryInstance->find('count',array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
+        if($country > 0){        
             return true;
         } else {            
             return false;
         }
+
+
+
+        
+        
+        
+        
+          //$country = $countryInstance->find('first',array('fields'=>'ProdID','Territory','SalesDate','provider_type'),array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory,'DownloadStatus'=>'1', 'SalesDate <= NOW()')));
+
+//        if(!empty($country['Country'])){            
+//            return true;
+//        } else {            
+//            return false;
+//        }
     }
     
 
