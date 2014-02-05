@@ -115,7 +115,7 @@ class HomesController extends AppController
                     Cache::write("national" . $territory,$unMemDatasArr);
                     $nationalTopDownload = $unMemDatasArr;                    
                 }else{                
-                    $nationalTopDownload = $this->Common->getNationalTop100($territory);
+                    $nationalTopDownload = $this->Common->getNationalTop100($territory);                    
                     $nationalTopDownloadSer = mysql_real_escape_string(serialize($nationalTopDownload));
                     $memQuery = "update mem_datas  set vari_info='".$nationalTopDownloadSer."'  where territory='US'";
                     $this->MemDatas->query($memQuery);
