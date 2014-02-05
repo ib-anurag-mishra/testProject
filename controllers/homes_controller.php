@@ -113,6 +113,7 @@ class HomesController extends AppController
                     $unMemDatasArr = unserialize($memDatasArr['MemDatas']['vari_info']);
                     Cache::write("national" . $territory,$unMemDatasArr);
                     $nationalTopDownload = $unMemDatasArr;
+                    
                 }else{                
                     $nationalTopDownload = $this->Common->getNationalTop100($territory);
                     $nationalTopDownloadSer = serialize($nationalTopDownload);
