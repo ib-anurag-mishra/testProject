@@ -28,23 +28,21 @@
 				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
 				<ul>
 					<li>
-						<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
+						<?php echo $html->link('Download Report', array('controller' => 'reports', 'action' => 'index'));?>
 					</li>
-                       
-                                           
-                                      
+                                <?php if ($this->Session->read('AdminlibraryType') === '2') { ?>
+                                         <li>
+                                            <?php echo $html->link('Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
+					</li>  
+                                <?php } ?>         
 					<?php if(isset($libraryLimited)){?>
 					<li>
-						<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
+						<?php echo $html->link('WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
 					</li>
 					<?php } ?>
 				</ul>
 			</li>
-                        <?php if ($this->Session->read('AdminlibraryType') === '2') { ?>
-                         <li>
-                            <?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
-                        </li>
-                        <?php } ?>
+                      
 		</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
@@ -63,8 +61,13 @@
 							<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
 						</li>
                                                  <li>
-						<?php echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));?>
-					</li>
+                                                        <?php                                                      
+                                                        if($isHavingStreaming)
+                                                        {
+                                                            echo $html->link('Library Streaming Report', array('controller' => 'reports', 'action' => 'streamingreport'));
+                                                        }
+                                                        ?>
+                                                </li>
 					</ul>
 				</li>
 			</ul>

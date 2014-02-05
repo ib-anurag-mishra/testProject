@@ -167,7 +167,7 @@ foreach ($albumData as $album_key => $album):
 
                                 $albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 30) . '...';
                             }
-                            echo $this->getTextEncode(substr($albumSong['Song']['Artist'], 0, 13));
+                            echo $this->getTextEncode($albumSong['Song']['Artist']);
                         }
                         else
                         {

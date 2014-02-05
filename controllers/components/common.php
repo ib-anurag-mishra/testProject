@@ -155,7 +155,7 @@ Class CommonComponent extends Object
                         File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                                 LEFT JOIN
                         Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-                                LEFT JOIN
+                                INNER JOIN
                         {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                                 LEFT JOIN
                         PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
@@ -647,6 +647,7 @@ STR;
               Genre.Genre,
               Country.Territory,
               Country.SalesDate,
+              Country.DownloadStatus,
               File.CdnPath,
               File.SourceURL,
               File.SaveAsName
@@ -657,12 +658,11 @@ STR;
               INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
               INNER JOIN File ON (Albums.FileID = File.FileID) 
             WHERE
-            ( (Song.DownloadStatus = '1')  )   AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
+            ( (Country.DownloadStatus = '1')  )   AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
             GROUP BY Song.ReferenceID
             ORDER BY Country.SalesDate ASC
             LIMIT 20      
 STR;
-
 
         $coming_soon_rs = $albumInstance->query($sql_coming_soon_s);
         //print_r($coming_soon_rs);
@@ -1017,7 +1017,7 @@ STR;
            LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
            INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
            INNER JOIN File ON (Albums.FileID = File.FileID) 
-           WHERE ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) )  AND (Country.Territory = '$country')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+           WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) )  AND (Country.Territory = '$country')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
            GROUP BY  Song.ReferenceID
            ORDER BY count(Song.ProdID) DESC
            LIMIT 10  
@@ -1206,14 +1206,10 @@ STR;
         $country = $territory;
         if (!empty($country))
         {
-
-            //if ( !empty($country ) && ( $territory == "US" ) ) {   
-
-
             $sql = "SELECT Song.ProdID,Song.ReferenceID,Song.provider_type
                 FROM Songs AS Song
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-                WHERE  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
+                WHERE  ( (Country.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
                 ORDER BY Country.SalesDate DESC LIMIT 10000";
 
 
@@ -1274,7 +1270,7 @@ STR;
                     LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                     INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                     INNER JOIN File ON (Albums.FileID = File.FileID) 
-                    WHERE ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)))
+                    WHERE ( (Country.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)))
                         AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
                     group by Song.ReferenceID
                     ORDER BY Country.SalesDate DESC
@@ -1321,87 +1317,6 @@ STR;
         {
             $this->log("not able to  written cache for new releases albums for $territory", 'cache');
         }
-    }
-
-    /*
-     * Function Name : getNewReleaseAlbumsBackup
-     * Function Description : This function is used to getNewReleaseAlbums.
-     */
-
-    function getNewReleaseAlbumsBackup($territory)
-    {
-        set_time_limit(0);
-        $countryPrefix = $this->getCountryPrefix($territory);
-        $albumInstance = ClassRegistry::init('Album');
-        //Added caching functionality for new release Albums           
-        $country = $territory;
-        if (!empty($country) && ( $territory == "US" ))
-        {
-
-            $data = array();
-            $sql_album_new_release = <<<STR
-SELECT 
-Song.ProdID,
-Song.ReferenceID,
-Song.Title,
-Song.ArtistText,
-Song.DownloadStatus,
-Song.SongTitle,
-Song.Artist,
-Song.Advisory,
-Song.Sample_Duration,
-Song.FullLength_Duration,
-Song.provider_type,
-Albums.AlbumTitle,
-Genre.Genre,
-Country.Territory,
-Country.SalesDate,
-File.CdnPath,
-File.SourceURL,
-File.SaveAsName,
-Full_Files.CdnPath,
-Full_Files.SaveAsName,
-Full_Files.FileID
-FROM Songs AS Song
-LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
-INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
-INNER JOIN File ON (Albums.FileID = File.FileID) 
-WHERE ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
-group by Song.ReferenceID
-ORDER BY Country.SalesDate DESC
-LIMIT 100
-STR;
-
-
-            $data = $albumInstance->query($sql_album_new_release);
-            $this->log("new release album for $territory", "cachequery");
-            $this->log($sql_album_new_release, "cachequery");
-
-
-            if (!empty($data))
-            {
-                foreach ($data as $key => $value)
-                {
-                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
-                    $album_img = Configure::read('App.Music_Path') . $album_img;
-                    $data[$key]['albumImage'] = $album_img;
-                }
-                Cache::delete("new_releases_albums" . $country);
-                Cache::write("new_releases_albums" . $country, $data);
-                $this->log("cache written for new releases albums for $territory", "cache");
-            }
-            else
-            {
-                $data = Cache::read("new_releases_albums" . $country);
-                Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
-                $this->log("Unable to update new releases albums for " . $territory, "cache");
-            }
-        }
-        $this->log("cache written for new releases albums for $territory", 'debug');
-        //End Caching functionality for new releases albums
-        return $data;
     }
 
     /*
@@ -1639,6 +1554,7 @@ STR;
             Song.Genre,
             Country.Territory,
             Country.SalesDate,
+            Country.DownloadStatus,
             Sample_Files.CdnPath,
             Sample_Files.SaveAsName,
             Full_Files.CdnPath,
@@ -1661,7 +1577,7 @@ STR;
             latest_downloads.ProdID = Song.ProdID 
             AND latest_downloads.provider_type = Song.provider_type 
             AND Song.Genre LIKE '%" . mysql_real_escape_string($genre) . "%'
-            AND Song.DownloadStatus = '1'               
+            AND Country.DownloadStatus = '1'               
             AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
         GROUP BY latest_downloads.ProdID
         ORDER BY countProduct DESC
@@ -1687,6 +1603,7 @@ STR;
           Song.Genre,
           Country.Territory,
           Country.SalesDate,
+          Country.DownloadStatus,
           Sample_Files.CdnPath,
           Sample_Files.SaveAsName,
           Full_Files.CdnPath,
@@ -1709,7 +1626,7 @@ STR;
           downloads.ProdID = Song.ProdID 
           AND downloads.provider_type = Song.provider_type 
           AND Song.Genre LIKE '%" . mysql_real_escape_string($genre) . "%'           
-          AND Song.DownloadStatus = '1' 			
+          AND Country.DownloadStatus = '1' 			
           AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
       GROUP BY downloads.ProdID
       ORDER BY countProduct DESC
@@ -2093,6 +2010,7 @@ STR;
                     Country.SalesDate,
                     Country.StreamingSalesDate,
                     Country.StreamingStatus,
+                    Country.DownloadStatus,
                     Sample_Files.CdnPath,
                     Sample_Files.SaveAsName,
                     Full_Files.CdnPath,
@@ -2108,7 +2026,7 @@ STR;
             LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
             INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
             INNER JOIN File ON (Albums.FileID = File.FileID)
-            WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+            WHERE (Country.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
             GROUP BY Song.ReferenceID
             ORDER BY count(Song.ReferenceID) DESC
             LIMIT 10
