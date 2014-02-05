@@ -117,7 +117,7 @@ class HomesController extends AppController
                     $nationalTopDownload = $unMemDatasArr;                    
                 }else{                
                     $nationalTopDownload = $this->Common->getNationalTop100($territory);
-                    $nationalTopDownloadSer = addslashes(serialize($nationalTopDownload));
+                    $nationalTopDownloadSer = serialize($nationalTopDownload);
                     $memQuery = "update mem_datas  set vari_info='".$nationalTopDownloadSer."'  where territory='US'";
                     $this->MemDatas->query($memQuery);
                 } 
