@@ -73,7 +73,7 @@ Class CommonComponent extends Object
             if ($maintainLatestDownload)
             {
 
-                $sql = "SELgetNewReleaseAlbumsECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '" . $country . "' 
@@ -1276,7 +1276,7 @@ STR;
                     LIMIT 110
 STR;
 
-                
+
             $data = $songInstance->query($sql_album_new_release);
             $this->log("new release album for $territory", "cachequery");
             $this->log($sql_album_new_release, "cachequery");
