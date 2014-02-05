@@ -5,8 +5,6 @@
  Author : m68interactive
  */
 
-App::import('Reports');
-
 Class UsersController extends AppController
 {
 	var $name = 'Users';

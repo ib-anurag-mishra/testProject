@@ -1,5 +1,4 @@
 <?php
-
 /*
   File Name : reports_controller.php
   File Description : Report controller page
@@ -1849,7 +1848,6 @@ Class ReportsController extends AppController {
                     $territory = $this->data['Report']['Territory'];
                 }
             }
-            
             if ($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             } else {

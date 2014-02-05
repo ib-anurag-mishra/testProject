@@ -102,7 +102,7 @@ Class StreamingComponent extends Object
              //$this->redirect(array('controller' => 'homes', 'action' => 'index'));
             $this->log("error|Not able to stream this song,token is empty;songDuration :".$songDuration." ;ProdID :".$prodId." ;Provider : ".$provider." ;library id : ".$libId." ;user id : ".$patId." ;token id : ".$token_id,'streaming');            
              //return the final result array
-            return array(0,'Not able to stream this song.Request token is empty.',$currentTimeDuration, 44 ,$timerCallTime,$this->timerCallDuration);  
+            return array(0,'Error in loading song. Please reload the page.',$currentTimeDuration, 44 ,$timerCallTime,$this->timerCallDuration);  
             exit;
         }
         
