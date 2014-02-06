@@ -184,7 +184,7 @@ EOD;
         $sourceUrl = base64_encode($sourceUrl);
         $songLength = base64_encode($songLength);
         $str = <<<EOD
-       <a onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText',$songLength,$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>        
+       <a onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>        
 EOD;
         return $str;
     }    
