@@ -424,12 +424,12 @@ class QueueListDetailsController extends AppController
     { 
         $this->layout = 'ajax';
         
-        $handle = @fopen("/../webroot/allCacheKeys.txt", "r");
+        $handle = fopen($_SERVER['DOCUMENT_ROOT']."/app/webroot/allCacheKeys.txt", "r");
         if ($handle) 
          {
             while (($buffer = fgets($handle, 4096)) !== false) 
             {
-                echo $buffer;
+                echo "<br>".$buffer;
             }
             
             if (!feof($handle)) 
