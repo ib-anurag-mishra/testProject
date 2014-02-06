@@ -238,15 +238,15 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         var result = JSON.parse(data);
 
         if(result.error){
-            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];            
+            var result = [0,"An error has occurred. Please reload the page.",0,0,0,0];            
         }else if(result.error1){
-            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];
+            var result = [0,"An error has occurred. Please reload the page.",0,0,0,0];
         }
         streamingValidationJS(result);
     })
     .fail(function(){
         var errorFlag = 1;
-        var errorData = [0,"Error in loading song. Please reload the page.",0,0,0,0];
+        var errorData = [0,"An error has occurred. Please reload the page.",0,0,0,0];
         streamingValidationJS(errorData);
     });
 }
@@ -283,10 +283,6 @@ function streamingValidationJS(responseDataJS) {
 }
 
 
-
-
-
-
 function secondstotime(secs)
 {
     var t = new Date(1970,0,1);
@@ -302,7 +298,7 @@ function secondstotime(secs)
 
 
 $(window).bind('beforeunload', function(){
-
+	/*alert("About to leave tab...");*/
 	
 	var flash =	document.getElementById("fmp_player");
 	
