@@ -1973,7 +1973,17 @@ button {
 
 
 .genres-page {
-	border:1px solid #d3d3d3;
+	position: relative;
+
+	> h3 {
+		font-size: 24px;
+		letter-spacing: 1px;
+		margin-bottom: 20px;
+	}
+
+	@extend %faq-link;
+	
+	.genres-container { border: 1px solid #d3d3d3; }
 	
 	header {
 		height: 34px;
