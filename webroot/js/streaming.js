@@ -238,17 +238,17 @@ function callStreamingComponent(prodId,providerType,queueId,eventFired,songLengt
         async: false
     }).done(function(data){
         var result = JSON.parse(data);
-        
+
         if(result.error){
-            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];            
+            var result = [0,"An error has occurred. Please reload the page.",0,0,0,0];            
         }else if(result.error1){
-            var result = [0,"Error in loading song. Please reload the page.",0,0,0,0];
+            var result = [0,"An error has occurred. Please reload the page.",0,0,0,0];
         }
         streamingValidationJS(result);
     })
     .fail(function(){
         var errorFlag = 1;
-        var errorData = [0,"Error in loading song. Please reload the page.",0,0,0,0];
+        var errorData = [0,"An error has occurred. Please reload the page.",0,0,0,0];
         streamingValidationJS(errorData);
     });
 }
