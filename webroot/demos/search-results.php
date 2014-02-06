@@ -4,16 +4,20 @@
 ?>
 					<div class="breadcrumbs">Home > Search Results</div>
 					<section class="search-results-page">
-						<div class="filter-container clearfix">
-							<button class="active">All Music</button><button>Albums</button><button>Artists</button><button>Composers</button><button>Videos</button><button>Genres</button><button>Songs</button>
-						</div>
-						<div class="search-container">
-							<input type="text" id="search-page-search-text">
-							<input type="submit" id="search-page-go" value="Go">
-						</div>
-
+						<div class="faq-link">Need Help? Visit our <a href="#">FAQ Section.</a></div>
 						<div class="search-results-heading">Results for your search "shakira"</div>
 						<div class="search-results-text"><span>4</span> Albums, <span>5</span> Artists, <span>5</span> Composers, <span>5</span> Videos, <span>5</span> Genres, <span>681</span> Songs</div>
+						<div class="refine-text">Not what you're looking for? Refine your search below.</div>
+						<div class="filter-container clearfix">
+							<button class="active">All Music</button><button>Albums</button><button>Artists</button><button>Composers</button><button>Videos</button><button>Genres</button><button>Songs</button>
+							<div class="search-container">
+								<input type="text" id="search-page-search-text">
+								<input type="submit" id="search-page-go" value="Go">
+							</div>
+						</div>
+
+
+
 						<section class="category-results album-results">
 							<header>
 								<h3 class="albums-header">Albums</h3>
@@ -25,6 +29,32 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
+												
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -35,6 +65,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira2.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -45,6 +100,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira3.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -55,6 +135,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira4.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -65,6 +170,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -75,6 +205,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira2.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -85,6 +240,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira3.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -95,6 +275,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira4.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -105,6 +310,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -115,6 +345,31 @@
 										<li>
 											<div class="album-cover-container">
 												<a href="#"><img src="images/album-result-shakira2.jpg" /></a>
+												<button class="play-btn-icon toggleable"></button>
+		 										<button class="playlist-menu-icon toggleable"></button>
+												<button class="wishlist-icon toggleable"></button>
+												<ul>
+													<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+													<li><a href="#">David's Favorites</a></li>
+													<li><a href="#">Pop</a></li>
+													<li><a href="#">Day After Christmas</a></li>
+													<li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+													<li><a href="#">80's</a></li>
+													<li><a href="#">90's</a></li>
+													<li><a href="#">Country</a></li>
+													<li><a href="#">Rock</a></li>
+													<li><a href="#">Metal</a></li>
+													<li><a href="#">Breakup Songs</a></li>
+													<li><a href="#">New Years</a></li>
+													<li><a href="#">Christmas</a></li>
+													<li><a href="#">Summer</a></li>
+													<li><a href="#">Road Trip</a></li>
+													<li><a href="#">Christian</a></li>
+													<li><a href="#">Cleaning</a></li>
+													<li><a href="#">Workout</a></li>
+													<li><a href="#">Running</a></li>
+													<li><a href="#">Romantic</a></li>
+												</ul> 
 											</div>
 											<div class="album-info">
 												<p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
@@ -205,6 +460,8 @@
 									<button class="multi-select-icon"></button>
 									<section class="options-menu">
 										<ul>
+											<li><a href="#" class="select-all">Select All</a></li>
+											<li><a href="#" class="clear-all">Clear All</a></li>
 											<li><a href="#">Add to Wishlist</a></li>
 											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
 										</ul>

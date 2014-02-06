@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width" />
-		<link href="stylesheets/styles.css" rel="stylesheet" type="text/css" />
+		<link href="css/freegal40.css" rel="stylesheet" type="text/css" />
 	</head>
 		
 	<body>
