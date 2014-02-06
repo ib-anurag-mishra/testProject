@@ -374,7 +374,7 @@ function Get_Sales_date($sales_date_array, $country)
 
                                                     //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                                 }
-                                                $album_title = truncate_text($this->getTextEncode($palbum->Title), 25, $this, false);
+                                                $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
                                                 $album_genre = str_replace('"', '', $palbum->Genre);
                                                 $album_label = $palbum->Label;
                                                 $tilte = urlencode($palbum->Title);
@@ -771,7 +771,7 @@ function Get_Sales_date($sales_date_array, $country)
                                         {
                                             //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                         }
-                                        $album_title = truncate_text($this->getTextEncode($palbum->Title), 25, $this, false);
+                                        $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
                                         $title = urlencode($palbum->Title);
                                         $album_genre = str_replace('"', '', $palbum->Genre);
                                         $tilte = urlencode($palbum->Title);
