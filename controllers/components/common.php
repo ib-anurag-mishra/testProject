@@ -186,14 +186,14 @@ STR;
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
 
-                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
-                    if (!empty($filePath))
-                    {
-                        $songPath = explode(':', $filePath);
-                        $streamUrl = trim($songPath[1]);
-                        $data[$key]['streamUrl'] = $streamUrl;
-                        $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
-                    }
+//                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+//                    if (!empty($filePath))
+//                    {
+//                        $songPath = explode(':', $filePath);
+//                        $streamUrl = trim($songPath[1]);
+//                        $data[$key]['streamUrl'] = $streamUrl;
+//                        $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
+//                    }
                 }
                 Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");

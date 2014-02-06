@@ -169,6 +169,24 @@ EOD;
 EOD;
         return $str;
     }
+    
+    
+    /* Function name : getNationalsongsStreamNowLabel
+     * Description   : This function is used to get stream now mark up replacing play button 
+     */
+
+    function getNationalsongsStreamNowLabel($cdnPath, $sourceUrl,$songTitle, $artistText, $songLength, $songProdId, $providerType)
+    {
+
+        $songTitle = base64_encode($songTitle);
+        $artistText = base64_encode($artistText);
+        $cdnPath = base64_encode($cdnPath);
+        $sourceUrl = base64_encode($sourceUrl);
+        $str = <<<EOD
+       <a onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText',$songLength,$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>        
+EOD;
+        return $str;
+    }    
 
     /* Function name : getAlbumStreamNowLabel
      * Description   : This function is used to get stream now mark up replacing play button 

@@ -23,7 +23,7 @@ Class ArtistsController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData');
+        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
@@ -1633,6 +1633,37 @@ Class ArtistsController extends AppController
         else
         {
             $errorData = array('error' => 'There are no songs available for streaming');
+            echo json_encode($errorData);
+            exit;
+        }        
+        
+    }
+    
+    /*
+     * Function Name : getSongStreamUrl
+     * Description   : This function is used to get song stream Url 
+     * 
+     */    
+    function getSongStreamUrl(){
+        Configure::write('debug', 0);
+        $cdnPath = $_POST['cdnPath'];
+        $sourceUrl = $_POST['sourceUrl'];
+        $songLength = $_POST['songLength'];
+        if (!empty($cdnPath) && !empty($sourceUrl) && !empty($songLength))
+        {
+            $data = array();
+            $filePath = shell_exec('perl files/tokengen_streaming ' . $cdnPath . "/" . $sourceUrl);
+            $songPath = explode(':', $filePath);
+            $streamUrl = trim($songPath[1]);
+            $data['streamUrl'] = $streamUrl;
+            $data['totalseconds'] = $this->Streaming->getSeconds($songLength);
+            $successData = array('success' => $data);
+            echo json_encode($successData);
+            exit;
+        }
+        else
+        {
+            $errorData = array('error' => 'Required parameters are missing');
             echo json_encode($errorData);
             exit;
         }        
