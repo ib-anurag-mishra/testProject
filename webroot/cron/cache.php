@@ -14,5 +14,16 @@
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
     $result = curl_exec($ch);echo $result;
-    curl_close($ch);exit; 
+    curl_close($ch);
+
+
+    $CacheBackupurl = "http://www.freegalmusic.com/Resetcache/genrateXML";
+    print $CacheBackupUrl;
+    $ch2=curl_init();
+    curl_setopt($ch2, CURLOPT_URL, $CacheBackupUrl);
+    curl_setopt($ch2, CURLOPT_SSLVERSION, 3);
+    curl_setopt($ch2, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch2, CURLOPT_RETURNTRANSFER,1);
+    $result = curl_exec($ch2);echo $result;
+    curl_close($ch2);exit;
 ?>
