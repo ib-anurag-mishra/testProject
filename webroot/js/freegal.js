@@ -2183,6 +2183,7 @@ function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLengt
     playlistId = (playlistId === undefined) ? 0 : playlistId;
     cdnPath = base64_decode(cdnPath);
     sourceUrl = base64_decode(sourceUrl);
+    songLength = base64_decode(songLength);
     var data = "cdnPath=" + cdnPath+"&sourceUrl="+sourceUrl+"&songLength="+songLength;
     jQuery.ajax({
         type: "post", // Request method: post, get
