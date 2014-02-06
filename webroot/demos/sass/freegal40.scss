@@ -13,7 +13,7 @@
 @import "compass/css3/opacity";
 @import "compass/css3/text-shadow";
 @import "compass/css3/appearance";
-
+@import "compass/css3/inline-block";
 
 
 $default-transition-duration: 500ms;
@@ -2285,10 +2285,11 @@ button {
 		@extend %form-reset;
 		height: 32px;
 		margin-left: 50px;
-		width: 238px;
+		width: 237px;
 		font-weight: bold;
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
+
 	}
 
 	#search-page-go {
@@ -3014,7 +3015,9 @@ button {
 		padding-left:10px;
 		padding-right:10px;
 		height: 32px;
-		margin-right: 12px;
+		margin-right: 11px;
+		display: block;
+		@include box-sizing(border-box);
 
 		&:hover {
 

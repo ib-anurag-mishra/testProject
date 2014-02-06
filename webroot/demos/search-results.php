@@ -9,11 +9,14 @@
 						<div class="search-results-text"><span>4</span> Albums, <span>5</span> Artists, <span>5</span> Composers, <span>5</span> Videos, <span>5</span> Genres, <span>681</span> Songs</div>
 						<div class="refine-text">Not what you're looking for? Refine your search below.</div>
 						<div class="filter-container clearfix">
-							<button class="active">All Music</button><button>Albums</button><button>Artists</button><button>Composers</button><button>Videos</button><button>Genres</button><button>Songs</button>
-							<div class="search-container">
-								<input type="text" id="search-page-search-text">
-								<input type="submit" id="search-page-go" value="Go">
-							</div>
+							<button class="active">All Music</button>
+							<button>Albums</button>
+							<button>Artists</button>
+							<button>Composers</button>
+							<button>Videos</button>
+							<button>Genres</button>
+							<button>Songs</button>
+							<div class="search-container"><input type="text" id="search-page-search-text"><input type="submit" id="search-page-go" value="Go"></div>
 						</div>
 
 
