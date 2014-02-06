@@ -136,14 +136,16 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
     return $pagination_str;
 }
 
-function truncate_text($text, $char_count, $obj = null)
+function truncate_text($text, $char_count, $obj = null, $truncateByWord = true)
 {
 
     if (strlen($text) > $char_count)
     {
         $modified_text = substr($text, 0, $char_count);
-        $modified_text = substr($modified_text, 0, strrpos($modified_text, " ", 0));
-        $modified_text = substr($modified_text, 0, $char_count) . "...";
+        if($truncateByWord == true){
+            $modified_text = substr($modified_text, 0, strrpos($modified_text, " ", 0));
+            $modified_text = substr($modified_text, 0, $char_count) . "...";
+        }
     }
     else
     {
@@ -372,7 +374,7 @@ function Get_Sales_date($sales_date_array, $country)
 
                                                     //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                                 }
-                                                $album_title = truncate_text($this->getTextEncode($palbum->Title), 30, $this);
+                                                $album_title = truncate_text($this->getTextEncode($palbum->Title), 25, $this, false);
                                                 $album_genre = str_replace('"', '', $palbum->Genre);
                                                 $album_label = $palbum->Label;
                                                 $tilte = urlencode($palbum->Title);
@@ -769,7 +771,7 @@ function Get_Sales_date($sales_date_array, $country)
                                         {
                                             //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                         }
-                                        $album_title = truncate_text($this->getTextEncode($palbum->Title), 25, $this);
+                                        $album_title = truncate_text($this->getTextEncode($palbum->Title), 25, $this, false);
                                         $title = urlencode($palbum->Title);
                                         $album_genre = str_replace('"', '', $palbum->Genre);
                                         $tilte = urlencode($palbum->Title);
