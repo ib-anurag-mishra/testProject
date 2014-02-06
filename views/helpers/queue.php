@@ -163,6 +163,7 @@ EOD;
 
         $songTitle = base64_encode($songTitle);
         $artistText = base64_encode($artistText);
+        $songLength = base64_encode($songLength);
 
         $str = <<<EOD
        <a onclick="loadSong('$streamUrl','$songTitle','$artistText',$songLength,$songProdId,'$providerType');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>        
