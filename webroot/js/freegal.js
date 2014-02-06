@@ -2184,7 +2184,11 @@ function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLengt
     cdnPath = base64_decode(cdnPath);
     sourceUrl = base64_decode(sourceUrl);
     songLength = base64_decode(songLength);
-    var data = "cdnPath=" + cdnPath+"&sourceUrl="+sourceUrl+"&songLength="+songLength;
+    songTitle = base64_decode(songTitle);
+    artistName = base64_decode(artistName);
+    providerType = base64_decode(providerType);
+    
+    var data = "cdnPath=" + cdnPath+"&sourceUrl="+sourceUrl+"&songLength="+songLength+"&songTitle="+songTitle+"&artistName="+artistName+"&providerType="+providerType+"&playlistId="+playlistId+"&prodId="+prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getSongStreamUrl", // URL to request
@@ -2195,22 +2199,7 @@ function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLengt
                 playlist = base64_decode(response.success);
                 playlist = JSON.parse(playlist);
                 if (playlist.length) {
-                    var newSong = [
-                        {
-                            playlistId: playlistId,
-                            songId: prodId,
-                            providerType: providerType,
-                            label: base64_decode(songTitle),
-                            songTitle: base64_decode(songTitle),
-                            artistName: base64_decode(artistName),
-                            songLength: playlist['totalseconds'],
-                            data: playlist['streamUrl']
-                        }
-                    ];
-
-                    //console.log(newSong);
-                    pushSongs(newSong);                    
-                    
+                    pushSongs(playlist);
                 }
             } else if (response.error) {
                 console.log(response.error);

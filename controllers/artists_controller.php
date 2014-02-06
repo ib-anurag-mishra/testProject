@@ -1649,15 +1649,32 @@ Class ArtistsController extends AppController
         $cdnPath = $_POST['cdnPath'];
         $sourceUrl = $_POST['sourceUrl'];
         $songLength = $_POST['songLength'];
+        $songTitle = $_POST['songTitle'];
+        $providerType = $_POST['providerType'];
+        $playlistId = $_POST['playlistId'];
+        $prodId = $_POST['prodId'];
+        $artistName = $_POST['artistName'];
         if (!empty($cdnPath) && !empty($sourceUrl) && !empty($songLength))
         {
             $data = array();
             $filePath = shell_exec('perl files/tokengen_streaming ' . $cdnPath . "/" . $sourceUrl);
             $songPath = explode(':', $filePath);
             $streamUrl = trim($songPath[1]);
-            $data['streamUrl'] = $streamUrl;
-            $data['totalseconds'] = $this->Streaming->getSeconds($songLength);
-            $successData = array('success' => $data);
+            $songStreamUrl = $streamUrl;
+            $totalseconds = $this->Streaming->getSeconds($songLength);
+            $playItem = array('playlistId' => $playlistId, 'songId' => $prodId, 'providerType' => $providerType, 'label' => $songTitle, 'songTitle' => $songTitle, 'artistName' => $artistName, 'songLength' => $totalseconds, 'data' => $songStreamUrl);
+            $jsonPlayItem = json_encode($playItem);
+            $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+            $playListData[] = $jsonPlayItem;            
+            if (!empty($playListData))
+            {
+                $playList = implode(',', $playListData);
+                if (!empty($playList))
+                {
+                    $playList = base64_encode('[' . $playList . ']');
+                }
+            }
+            $successData = array('success' => $playList);
             echo json_encode($successData);
             exit;
         }
