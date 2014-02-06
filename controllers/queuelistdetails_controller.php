@@ -25,7 +25,7 @@ class QueueListDetailsController extends AppController
             }
             else  //  Before Login
             {
-                     $this->Auth->allow('');
+                     $this->Auth->allow('deleteCacheVar');
             }
     }
 
@@ -420,25 +420,30 @@ class QueueListDetailsController extends AppController
      * Description   : This function is used to retrieve Top 100 songs released in 2013
      */
     
-    function createFreegalPlaylist()
-    {       
-        set_time_limit(0);
+    function deleteCacheVar()
+    { 
         $this->layout = 'ajax';
         
-        $territoriesList = $this->Common->getTerritories(); 
-        
-        foreach($territoriesList as $territory)
-        {
-           echo "Territory: ".$territory; 
+        $handle = fopen($_SERVER['DOCUMENT_ROOT']."/app/webroot/allCacheKeys.txt", "r");
+        if ($handle) 
+         {
+            while (($buffer = fgets($handle, 4096)) !== false) 
+            {
+                echo "<br>".$buffer;
+            }
+            
+            if (!feof($handle)) 
+            {
+                echo "Error: unexpected fgets() fail\n";
+            }
+            
+            fclose($handle);
         }
-        
-        
         
         die;
         
-        
     }
-
+    
 }
 
 ?>
