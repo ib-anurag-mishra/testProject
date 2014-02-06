@@ -2186,7 +2186,6 @@ function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLengt
     songLength = base64_decode(songLength);
     songTitle = base64_decode(songTitle);
     artistName = base64_decode(artistName);
-    providerType = base64_decode(providerType);
     
     var data = "cdnPath=" + cdnPath+"&sourceUrl="+sourceUrl+"&songLength="+songLength+"&songTitle="+songTitle+"&artistName="+artistName+"&providerType="+providerType+"&playlistId="+playlistId+"&prodId="+prodId;
     jQuery.ajax({
