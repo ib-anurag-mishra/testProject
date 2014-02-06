@@ -60,15 +60,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 /* line 21, ../sass/freegal40.scss */
 body {
-  font-family: Arial,Helvetica,sans-serif; }
+  font-family: Arial, Helvetica, sans-serif; }
 
-/* line 26, ../sass/freegal40.scss */
+/* line 23, ../sass/freegal40.scss */
 img {
   margin: 0;
   padding: 0;
   display: block; }
 
-/* line 32, ../sass/freegal40.scss */
+/* line 29, ../sass/freegal40.scss */
 .clearfix:after {
   content: ".";
   display: block;
@@ -77,11 +77,15 @@ img {
   line-height: 0;
   height: 0; }
 
-/* line 49, ../sass/freegal40.scss */
+/* line 39, ../sass/freegal40.scss */
+select::-ms-expand {
+  display: none; }
+
+/* line 48, ../sass/freegal40.scss */
 .explicit {
   color: #eb212e; }
 
-/* line 55, ../sass/freegal40.scss */
+/* line 51, ../sass/freegal40.scss */
 .search-container #search-page-search-text, .search-container #search-page-go {
   margin: 0;
   padding: 0;
@@ -89,31 +93,33 @@ img {
   -webkit-appearance: none;
   outline: 0; }
 
-/* line 64, ../sass/freegal40.scss */
+/* line 60, ../sass/freegal40.scss */
 button {
   margin: 0;
   padding: 0;
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   border: 0;
   cursor: pointer;
   outline: 0; }
 
-/* line 76, ../sass/freegal40.scss */
+/* line 72, ../sass/freegal40.scss */
 .search-results-page .faq-link {
   position: absolute;
   right: 0;
   top: 0;
   font-size: 10px;
   color: #333333; }
-  /* line 84, ../sass/freegal40.scss */
+  /* line 80, ../sass/freegal40.scss */
   .search-results-page .faq-link a {
     color: #008fbd;
     text-decoration: none; }
-    /* line 89, ../sass/freegal40.scss */
+    /* line 85, ../sass/freegal40.scss */
     .search-results-page .faq-link a:hover {
       text-decoration: underline; }
 
-/* line 98, ../sass/freegal40.scss */
+/* line 94, ../sass/freegal40.scss */
 .site-header .header-right-col .row-2 .login, .site-header .header-right-col .row-2 .browse, .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
   background: #d9ebf2;
   font-size: 12px;
@@ -127,14 +133,14 @@ button {
   background-image: -o-linear-gradient(#daecf2, #d3e8f0);
   background-image: linear-gradient(#daecf2, #d3e8f0);
   cursor: pointer; }
-  /* line 106, ../sass/freegal40.scss */
+  /* line 102, ../sass/freegal40.scss */
   .site-header .header-right-col .row-2 .login:hover, .site-header .header-right-col .row-2 .browse:hover, .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go:hover {
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
     background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
     background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
     background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
     background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-  /* line 111, ../sass/freegal40.scss */
+  /* line 107, ../sass/freegal40.scss */
   .site-header .header-right-col .row-2 .login:active, .site-header .header-right-col .row-2 .browse:active, .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go:active {
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d3e8f0), color-stop(100%, #d5e9f1));
     background-image: -webkit-linear-gradient(#d3e8f0, #d5e9f1);
@@ -142,7 +148,7 @@ button {
     background-image: -o-linear-gradient(#d3e8f0, #d5e9f1);
     background-image: linear-gradient(#d3e8f0, #d5e9f1); }
 
-/* line 124, ../sass/freegal40.scss */
+/* line 120, ../sass/freegal40.scss */
 .top-songs .header-container .top-songs-filter-menu ul, .top-songs .header-container .options-menu ul, .top-songs .options-menu ul, .category-results .header-container .options-menu ul, .category-results .options-menu ul {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -150,10 +156,10 @@ button {
   -o-border-radius: 5px;
   border-radius: 5px;
   border: 1px solid #bdbdbd; }
-  /* line 128, ../sass/freegal40.scss */
+  /* line 124, ../sass/freegal40.scss */
   .top-songs .header-container .top-songs-filter-menu ul:nth-child(2), .top-songs .options-menu ul:nth-child(2), .category-results .options-menu ul:nth-child(2) {
     margin-top: 1px; }
-  /* line 135, ../sass/freegal40.scss */
+  /* line 131, ../sass/freegal40.scss */
   .top-songs .header-container .top-songs-filter-menu ul li a, .top-songs .header-container .options-menu ul li a, .top-songs .options-menu ul li a, .category-results .header-container .options-menu ul li a, .category-results .options-menu ul li a {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 11px;
@@ -171,12 +177,12 @@ button {
     -ms-border-radius: 0;
     -o-border-radius: 0;
     border-radius: 0; }
-    /* line 148, ../sass/freegal40.scss */
+    /* line 144, ../sass/freegal40.scss */
     .top-songs .header-container .top-songs-filter-menu ul li a:hover, .top-songs .options-menu ul li a:hover, .category-results .options-menu ul li a:hover {
       color: #000;
       background: #cfeff9;
       text-decoration: none; }
-  /* line 158, ../sass/freegal40.scss */
+  /* line 154, ../sass/freegal40.scss */
   .top-songs .header-container .top-songs-filter-menu ul li:nth-child(1) a, .top-songs .options-menu ul li:nth-child(1) a, .category-results .options-menu ul li:nth-child(1) a {
     -moz-border-radius-bottomleft: 0;
     -webkit-border-bottom-left-radius: 0;
@@ -190,7 +196,7 @@ button {
     -moz-border-radius-topright: 5px;
     -webkit-border-top-right-radius: 5px;
     border-top-right-radius: 5px; }
-  /* line 167, ../sass/freegal40.scss */
+  /* line 163, ../sass/freegal40.scss */
   .top-songs .header-container .top-songs-filter-menu ul li:last-child a, .top-songs .options-menu ul li:last-child a, .category-results .options-menu ul li:last-child a {
     -moz-border-radius-topleft: 0;
     -webkit-border-top-left-radius: 0;
@@ -205,20 +211,20 @@ button {
     -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px; }
 
-/* line 182, ../sass/freegal40.scss */
+/* line 178, ../sass/freegal40.scss */
 .top-albums, .top-songs {
   position: relative; }
-  /* line 184, ../sass/freegal40.scss */
+  /* line 180, ../sass/freegal40.scss */
   .top-albums header, .top-songs header {
     height: 25px;
     position: relative; }
-    /* line 188, ../sass/freegal40.scss */
+    /* line 184, ../sass/freegal40.scss */
     .top-albums header h2, .top-songs header h2 {
       font-size: 24px;
       position: absolute;
       left: 0;
       top: 0; }
-    /* line 196, ../sass/freegal40.scss */
+    /* line 192, ../sass/freegal40.scss */
     .top-albums header .see-more, .top-songs header .see-more {
       position: absolute;
       display: block;
@@ -228,14 +234,14 @@ button {
       height: 23px;
       text-indent: -9999px;
       background: url(../images/freegal_sprite.png) -90px -135px; }
-      /* line 206, ../sass/freegal40.scss */
+      /* line 202, ../sass/freegal40.scss */
       .top-albums header .see-more:hover, .top-songs header .see-more:hover {
         background: url(../images/freegal_sprite.png) -115px -135px; }
-      /* line 211, ../sass/freegal40.scss */
+      /* line 207, ../sass/freegal40.scss */
       .top-albums header .see-more:active, .top-songs header .see-more:active {
         background: url(../images/freegal_sprite.png) -140px -135px; }
 
-/* line 226, ../sass/freegal40.scss */
+/* line 222, ../sass/freegal40.scss */
 .top-songs .header-container, .category-results .songs-results-list .header-container, .top-songs .pagination-container, .category-results .songs-results-list .pagination-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -249,7 +255,7 @@ button {
   background-image: linear-gradient(#f9f9f9, #e9e9e9);
   position: relative; }
 
-/* line 238, ../sass/freegal40.scss */
+/* line 234, ../sass/freegal40.scss */
 .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .play-btn-icon, .search-results-albums-carousel .search-results-albums .album-cover-container .play-btn-icon {
   position: absolute;
   left: 65px;
@@ -257,13 +263,13 @@ button {
   width: 34px;
   height: 34px;
   background: url(../images/freegal_sprite.png) -440px -20px; }
-  /* line 249, ../sass/freegal40.scss */
+  /* line 245, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .play-btn-icon:hover, .search-results-albums-carousel .search-results-albums .album-cover-container .play-btn-icon:hover {
     background: url(../images/freegal_sprite.png) -475px -20px; }
-  /* line 254, ../sass/freegal40.scss */
+  /* line 250, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .play-btn-icon:active, .search-results-albums-carousel .search-results-albums .album-cover-container .play-btn-icon:active {
     background: url(../images/freegal_sprite.png) -510px -20px; }
-/* line 261, ../sass/freegal40.scss */
+/* line 257, ../sass/freegal40.scss */
 .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon, .search-results-albums-carousel .search-results-albums .album-cover-container .playlist-menu-icon {
   position: absolute;
   left: 5px;
@@ -271,13 +277,13 @@ button {
   width: 28px;
   height: 20px;
   background: url(../images/freegal_sprite.png) -440px 0; }
-  /* line 272, ../sass/freegal40.scss */
+  /* line 268, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon:hover, .search-results-albums-carousel .search-results-albums .album-cover-container .playlist-menu-icon:hover {
     background: url(../images/freegal_sprite.png) -470px 0; }
-  /* line 278, ../sass/freegal40.scss */
+  /* line 274, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .playlist-menu-icon:active, .search-results-albums-carousel .search-results-albums .album-cover-container .playlist-menu-icon:active {
     background: url(../images/freegal_sprite.png) -500px 0; }
-/* line 286, ../sass/freegal40.scss */
+/* line 282, ../sass/freegal40.scss */
 .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .wishlist-icon, .search-results-albums-carousel .search-results-albums .album-cover-container .wishlist-icon {
   position: absolute;
   left: 35px;
@@ -285,19 +291,19 @@ button {
   width: 26px;
   height: 20px;
   background: url(../images/freegal_sprite.png) -220px -200px; }
-  /* line 297, ../sass/freegal40.scss */
+  /* line 293, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .wishlist-icon:hover, .search-results-albums-carousel .search-results-albums .album-cover-container .wishlist-icon:hover {
     background: url(../images/freegal_sprite.png) -250px -200px; }
-  /* line 303, ../sass/freegal40.scss */
+  /* line 299, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .wishlist-icon:active, .search-results-albums-carousel .search-results-albums .album-cover-container .wishlist-icon:active {
     background: url(../images/freegal_sprite.png) -280px -200px; }
-  /* line 308, ../sass/freegal40.scss */
+  /* line 304, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .wishlist-icon.added-to-wishlist, .search-results-albums-carousel .search-results-albums .album-cover-container .wishlist-icon.added-to-wishlist {
     background: url(../images/freegal_sprite.png) -310px -200px; }
-    /* line 312, ../sass/freegal40.scss */
+    /* line 308, ../sass/freegal40.scss */
     .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .wishlist-icon.added-to-wishlist:hover, .search-results-albums-carousel .search-results-albums .album-cover-container .wishlist-icon.added-to-wishlist:hover {
       background: url(../images/freegal_sprite.png) -340px -200px; }
-/* line 320, ../sass/freegal40.scss */
+/* line 316, ../sass/freegal40.scss */
 .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul, .search-results-albums-carousel .search-results-albums .album-cover-container > ul {
   position: absolute;
   left: 6px;
@@ -313,106 +319,106 @@ button {
   border-radius: 5px;
   border: 1px solid #999;
   z-index: 1; }
-  /* line 332, ../sass/freegal40.scss */
+  /* line 328, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul.active, .search-results-albums-carousel .search-results-albums .album-cover-container > ul.active {
     display: block; }
-  /* line 336, ../sass/freegal40.scss */
+  /* line 332, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li, .search-results-albums-carousel .search-results-albums .album-cover-container > ul > li {
     display: block;
     background: #fff;
     float: none;
     margin-bottom: 0;
     width: 100%; }
-    /* line 342, ../sass/freegal40.scss */
+    /* line 338, ../sass/freegal40.scss */
     .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a, .search-results-albums-carousel .search-results-albums .album-cover-container > ul > li a {
       display: block;
       padding: 10px;
       text-decoration: none;
       color: #000;
       font-size: 11px; }
-      /* line 350, ../sass/freegal40.scss */
+      /* line 346, ../sass/freegal40.scss */
       .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a:hover, .search-results-albums-carousel .search-results-albums .album-cover-container > ul > li a:hover {
         background: #cfeff9;
         color: #000; }
-      /* line 358, ../sass/freegal40.scss */
+      /* line 354, ../sass/freegal40.scss */
       .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container > ul > li a.create-new-playlist, .search-results-albums-carousel .search-results-albums .album-cover-container > ul > li a.create-new-playlist {
         font-weight: bold; }
 
-/* line 371, ../sass/freegal40.scss */
+/* line 367, ../sass/freegal40.scss */
 .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable, .search-results-albums-carousel .search-results-albums .album-cover-container .toggleable {
   display: block;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0; }
-  /* line 376, ../sass/freegal40.scss */
+  /* line 372, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable.active, .search-results-albums-carousel .search-results-albums .album-cover-container .toggleable.active {
     display: block;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
     opacity: 0.5; }
-  /* line 382, ../sass/freegal40.scss */
+  /* line 378, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable:hover, .search-results-albums-carousel .search-results-albums .album-cover-container .toggleable:hover {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1; }
 
-/* line 392, ../sass/freegal40.scss */
+/* line 388, ../sass/freegal40.scss */
 .inner-wrapper, .content-wrapper {
   width: 1024px;
   margin: 0 auto;
   position: relative; }
 
-/* line 400, ../sass/freegal40.scss */
+/* line 396, ../sass/freegal40.scss */
 .site-header {
   position: relative;
   height: 108px; }
-  /* line 405, ../sass/freegal40.scss */
+  /* line 401, ../sass/freegal40.scss */
   .site-header .logo {
     width: 350px;
     height: 72px;
     position: absolute;
     left: 0;
     top: 20px; }
-  /* line 419, ../sass/freegal40.scss */
+  /* line 415, ../sass/freegal40.scss */
   .site-header .header-right-col {
     position: absolute;
     right: 0;
     top: 20px; }
-    /* line 427, ../sass/freegal40.scss */
+    /* line 423, ../sass/freegal40.scss */
     .site-header .header-right-col .row-1 {
       margin-bottom: 16px; }
-      /* line 433, ../sass/freegal40.scss */
+      /* line 429, ../sass/freegal40.scss */
       .site-header .header-right-col .row-1 .streaming-arrows-icon {
         float: right;
         width: 19px;
         height: 13px;
         background: url(../images/freegal_sprite.png) no-repeat; }
-      /* line 442, ../sass/freegal40.scss */
+      /* line 438, ../sass/freegal40.scss */
       .site-header .header-right-col .row-1 .streaming-time-remaining {
         float: right;
         font-size: 12px;
         border-right: 1px solid #dcdcdc;
         padding-right: 10px;
         margin-left: 10px; }
-      /* line 451, ../sass/freegal40.scss */
+      /* line 447, ../sass/freegal40.scss */
       .site-header .header-right-col .row-1 .forgot-password {
         float: right;
         color: #cccccc;
         font-size: 10px;
         line-height: 12px;
         margin-left: 10px; }
-        /* line 459, ../sass/freegal40.scss */
+        /* line 455, ../sass/freegal40.scss */
         .site-header .header-right-col .row-1 .forgot-password a {
           color: #66ccff;
           text-decoration: none; }
-    /* line 467, ../sass/freegal40.scss */
+    /* line 463, ../sass/freegal40.scss */
     .site-header .header-right-col .row-2 {
       width: 670px; }
-      /* line 472, ../sass/freegal40.scss */
+      /* line 468, ../sass/freegal40.scss */
       .site-header .header-right-col .row-2 .download-count-container {
         float: right;
         position: relative;
         width: 60px;
         height: 30px;
         font-size: 13px; }
-        /* line 480, ../sass/freegal40.scss */
+        /* line 476, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .download-count-container::before {
           content: "";
           width: 1px;
@@ -421,7 +427,7 @@ button {
           top: 8px;
           position: absolute;
           background: #dcdcdc; }
-        /* line 490, ../sass/freegal40.scss */
+        /* line 486, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .download-count-container .music-note-icon {
           width: 15px;
           height: 19px;
@@ -429,12 +435,12 @@ button {
           position: absolute;
           left: 12px;
           top: 6px; }
-        /* line 502, ../sass/freegal40.scss */
+        /* line 498, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .download-count-container .download-count {
           position: absolute;
           right: 0;
           top: 10px; }
-      /* line 514, ../sass/freegal40.scss */
+      /* line 510, ../sass/freegal40.scss */
       .site-header .header-right-col .row-2 .login {
         float: right;
         -webkit-border-radius: 20px;
@@ -444,14 +450,14 @@ button {
         border-radius: 20px;
         padding: 6px 10px;
         margin: 4px 4px 4px 20px; }
-      /* line 528, ../sass/freegal40.scss */
+      /* line 524, ../sass/freegal40.scss */
       .site-header .header-right-col .row-2 .my-account-menu-container {
         float: right;
         position: relative;
         width: 137px;
         height: 30px;
         margin-left: 6px; }
-        /* line 544, ../sass/freegal40.scss */
+        /* line 540, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu {
           width: 135px;
           height: 30px;
@@ -464,7 +470,7 @@ button {
           cursor: pointer;
           background: #fff;
           position: relative; }
-          /* line 556, ../sass/freegal40.scss */
+          /* line 552, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu::before {
             position: absolute;
             content: "";
@@ -473,7 +479,7 @@ button {
             background: url(../images/freegal_sprite.png) no-repeat -20px 0;
             left: 8px;
             top: 6px; }
-          /* line 567, ../sass/freegal40.scss */
+          /* line 563, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu::after {
             position: absolute;
             content: "";
@@ -482,10 +488,10 @@ button {
             background: url(../images/freegal_sprite.png) no-repeat -40px 0;
             right: 16px;
             top: 14px; }
-          /* line 580, ../sass/freegal40.scss */
+          /* line 576, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .my-account-menu:hover {
             border: 1px solid #dedddd; }
-        /* line 588, ../sass/freegal40.scss */
+        /* line 584, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown {
           position: absolute;
           left: 0;
@@ -499,13 +505,13 @@ button {
           border: 1px solid #dedddd;
           width: 195px;
           display: none; }
-          /* line 601, ../sass/freegal40.scss */
+          /* line 597, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown.active {
             display: block; }
-          /* line 606, ../sass/freegal40.scss */
+          /* line 602, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item {
             background: #fff; }
-            /* line 610, ../sass/freegal40.scss */
+            /* line 606, ../sass/freegal40.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:first-child {
               -moz-border-radius-topleft: 5px;
               -webkit-border-top-left-radius: 5px;
@@ -513,7 +519,7 @@ button {
               -moz-border-radius-topright: 5px;
               -webkit-border-top-right-radius: 5px;
               border-top-right-radius: 5px; }
-              /* line 614, ../sass/freegal40.scss */
+              /* line 610, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:first-child a {
                 -moz-border-radius-topleft: 5px;
                 -webkit-border-top-left-radius: 5px;
@@ -521,7 +527,7 @@ button {
                 -moz-border-radius-topright: 5px;
                 -webkit-border-top-right-radius: 5px;
                 border-top-right-radius: 5px; }
-            /* line 622, ../sass/freegal40.scss */
+            /* line 618, ../sass/freegal40.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:last-child {
               -moz-border-radius-bottomleft: 5px;
               -webkit-border-bottom-left-radius: 5px;
@@ -529,7 +535,7 @@ button {
               -moz-border-radius-bottomright: 5px;
               -webkit-border-bottom-right-radius: 5px;
               border-bottom-right-radius: 5px; }
-              /* line 626, ../sass/freegal40.scss */
+              /* line 622, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item:last-child a {
                 -moz-border-radius-bottomleft: 5px;
                 -webkit-border-bottom-left-radius: 5px;
@@ -537,7 +543,7 @@ button {
                 -moz-border-radius-bottomright: 5px;
                 -webkit-border-bottom-right-radius: 5px;
                 border-bottom-right-radius: 5px; }
-            /* line 635, ../sass/freegal40.scss */
+            /* line 631, ../sass/freegal40.scss */
             .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a {
               display: block;
               text-decoration: none;
@@ -545,7 +551,7 @@ button {
               padding: 10px 5px 10px 35px;
               font-size: 12px;
               position: relative; }
-              /* line 649, ../sass/freegal40.scss */
+              /* line 645, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications::before {
                 position: absolute;
                 left: 10px;
@@ -554,10 +560,10 @@ button {
                 height: 10px;
                 content: "";
                 background: url(../images/freegal_sprite.png) no-repeat -120px 0; }
-              /* line 662, ../sass/freegal40.scss */
+              /* line 658, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover {
                 background: #dcedf3; }
-                /* line 665, ../sass/freegal40.scss */
+                /* line 661, ../sass/freegal40.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#notifications:hover::before {
                   position: absolute;
                   left: 10px;
@@ -566,7 +572,7 @@ button {
                   height: 10px;
                   content: "";
                   background: url(../images/freegal_sprite.png) no-repeat -135px 0; }
-              /* line 685, ../sass/freegal40.scss */
+              /* line 681, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password::before {
                 position: absolute;
                 left: 10px;
@@ -575,10 +581,10 @@ button {
                 height: 13px;
                 content: "";
                 background: url(../images/freegal_sprite.png) no-repeat -150px 0; }
-              /* line 696, ../sass/freegal40.scss */
+              /* line 692, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover {
                 background: #dcedf3; }
-                /* line 699, ../sass/freegal40.scss */
+                /* line 695, ../sass/freegal40.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#change-password:hover::before {
                   position: absolute;
                   left: 10px;
@@ -587,7 +593,7 @@ button {
                   height: 13px;
                   content: "";
                   background: url(../images/freegal_sprite.png) no-repeat -165px 0; }
-              /* line 718, ../sass/freegal40.scss */
+              /* line 714, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout::before {
                 position: absolute;
                 left: 10px;
@@ -596,10 +602,10 @@ button {
                 height: 13px;
                 content: "";
                 background: url(../images/freegal_sprite.png) no-repeat -180px 0; }
-              /* line 729, ../sass/freegal40.scss */
+              /* line 725, ../sass/freegal40.scss */
               .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover {
                 background: #dcedf3; }
-                /* line 731, ../sass/freegal40.scss */
+                /* line 727, ../sass/freegal40.scss */
                 .site-header .header-right-col .row-2 .my-account-menu-container .account-menu-dropdown .dropdown-item a#logout:hover::before {
                   position: absolute;
                   left: 10px;
@@ -608,7 +614,7 @@ button {
                   height: 13px;
                   content: "";
                   background: url(../images/freegal_sprite.png) no-repeat -190px 0; }
-      /* line 754, ../sass/freegal40.scss */
+      /* line 750, ../sass/freegal40.scss */
       .site-header .header-right-col .row-2 .browse {
         float: right;
         -webkit-border-radius: 20px;
@@ -622,7 +628,7 @@ button {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box; }
-      /* line 770, ../sass/freegal40.scss */
+      /* line 766, ../sass/freegal40.scss */
       .site-header .header-right-col .row-2 .master-search-container {
         float: right;
         -webkit-border-radius: 20px;
@@ -640,7 +646,7 @@ button {
         background-image: -moz-linear-gradient(#eeeeee, #fcfcfc 25%, #fafafa 90%);
         background-image: -o-linear-gradient(#eeeeee, #fcfcfc 25%, #fafafa 90%);
         background-image: linear-gradient(#eeeeee, #fcfcfc 25%, #fafafa 90%); }
-        /* line 782, ../sass/freegal40.scss */
+        /* line 778, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .master-search-container .master-search-select {
           margin: 0;
           border: 0;
@@ -667,20 +673,21 @@ button {
           background-image: -o-linear-gradient(#daecf2, #d3e8f0);
           background-image: linear-gradient(#daecf2, #d3e8f0);
           width: 100px;
+          height: 27px;
           border-right: 1px solid #b1d3e0;
           -webkit-appearance: none;
           -moz-appearance: none;
           appearance: none;
           text-overflow: '';
           text-indent: 0.01px; }
-          /* line 801, ../sass/freegal40.scss */
+          /* line 798, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-select:hover {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e7f3f7), color-stop(100%, #d4e8f0));
             background-image: -webkit-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -moz-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: -o-linear-gradient(#e7f3f7, #d4e8f0);
             background-image: linear-gradient(#e7f3f7, #d4e8f0); }
-        /* line 809, ../sass/freegal40.scss */
+        /* line 806, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .master-search-container::before {
           position: absolute;
           width: 6px;
@@ -689,7 +696,7 @@ button {
           top: 11px;
           background: url(../images/freegal_sprite.png) no-repeat -40px 0;
           content: ""; }
-        /* line 823, ../sass/freegal40.scss */
+        /* line 820, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .master-search-container::after {
           background: url(../images/freegal_sprite.png) no-repeat -105px 0;
           width: 13px;
@@ -698,14 +705,14 @@ button {
           left: 108px;
           top: 8px;
           content: ""; }
-        /* line 839, ../sass/freegal40.scss */
+        /* line 836, ../sass/freegal40.scss */
         .site-header .header-right-col .row-2 .master-search-container .master-search-field-container {
           position: relative;
           display: inline-block;
           width: 201px;
           height: 27px;
           vertical-align: top; }
-          /* line 851, ../sass/freegal40.scss */
+          /* line 848, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .search-text {
             width: 144px;
             font-size: 12px;
@@ -721,7 +728,7 @@ button {
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none; }
-          /* line 871, ../sass/freegal40.scss */
+          /* line 868, ../sass/freegal40.scss */
           .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
             -webkit-border-radius: 20px;
             -moz-border-radius: 20px;
@@ -731,19 +738,20 @@ button {
             padding: 6px 10px;
             position: absolute;
             right: -1px;
-            top: 0; }
+            top: 0;
+            height: 27px; }
 
-/* line 898, ../sass/freegal40.scss */
+/* line 895, ../sass/freegal40.scss */
 .top-nav {
   background: #52c6ec; }
-  /* line 901, ../sass/freegal40.scss */
+  /* line 898, ../sass/freegal40.scss */
   .top-nav ul {
     float: right; }
-  /* line 906, ../sass/freegal40.scss */
+  /* line 903, ../sass/freegal40.scss */
   .top-nav li {
     display: block;
     float: left; }
-    /* line 911, ../sass/freegal40.scss */
+    /* line 908, ../sass/freegal40.scss */
     .top-nav li a {
       display: block;
       text-transform: uppercase;
@@ -752,7 +760,7 @@ button {
       padding: 10px;
       font-size: 14px; }
 
-/* line 923, ../sass/freegal40.scss */
+/* line 920, ../sass/freegal40.scss */
 .left-nav {
   width: 156px;
   position: absolute;
@@ -766,27 +774,27 @@ button {
   box-sizing: border-box;
   background: #fff;
   height: 100%; }
-  /* line 937, ../sass/freegal40.scss */
+  /* line 934, ../sass/freegal40.scss */
   .left-nav h2 {
     padding-left: 25px;
     margin-bottom: 15px;
     line-height: 20px;
     font-size: 15px; }
-  /* line 945, ../sass/freegal40.scss */
+  /* line 942, ../sass/freegal40.scss */
   .left-nav > .streaming > ul, .left-nav > .my-downloads > ul {
     margin-left: 25px; }
-    /* line 949, ../sass/freegal40.scss */
+    /* line 946, ../sass/freegal40.scss */
     .left-nav > .streaming > ul li, .left-nav > .my-downloads > ul li {
       margin-bottom: 15px; }
-      /* line 953, ../sass/freegal40.scss */
+      /* line 950, ../sass/freegal40.scss */
       .left-nav > .streaming > ul li a, .left-nav > .my-downloads > ul li a {
         text-decoration: none;
         color: #9f9f9f;
         font-size: 15px; }
-  /* line 969, ../sass/freegal40.scss */
+  /* line 966, ../sass/freegal40.scss */
   .left-nav .streaming h2 {
     position: relative; }
-    /* line 975, ../sass/freegal40.scss */
+    /* line 972, ../sass/freegal40.scss */
     .left-nav .streaming h2::before {
       content: "";
       position: absolute;
@@ -795,21 +803,21 @@ button {
       background: url(../images/freegal_sprite.png) no-repeat 0 0;
       width: 19px;
       height: 13px; }
-  /* line 990, ../sass/freegal40.scss */
+  /* line 987, ../sass/freegal40.scss */
   .left-nav .streaming li ul {
     margin-left: 20px;
     margin-top: 10px;
     display: none; }
-    /* line 995, ../sass/freegal40.scss */
+    /* line 992, ../sass/freegal40.scss */
     .left-nav .streaming li ul.active {
       display: block; }
-    /* line 1000, ../sass/freegal40.scss */
+    /* line 997, ../sass/freegal40.scss */
     .left-nav .streaming li ul li {
       margin-bottom: 10px; }
-  /* line 1011, ../sass/freegal40.scss */
+  /* line 1008, ../sass/freegal40.scss */
   .left-nav .my-downloads h2 {
     position: relative; }
-    /* line 1014, ../sass/freegal40.scss */
+    /* line 1011, ../sass/freegal40.scss */
     .left-nav .my-downloads h2::before {
       position: absolute;
       content: "";
@@ -818,10 +826,10 @@ button {
       background: url(../images/freegal_sprite.png) no-repeat -70px 0;
       width: 20px;
       height: 17px; }
-  /* line 1030, ../sass/freegal40.scss */
+  /* line 1027, ../sass/freegal40.scss */
   .left-nav .announcements h2 {
     position: relative; }
-    /* line 1033, ../sass/freegal40.scss */
+    /* line 1030, ../sass/freegal40.scss */
     .left-nav .announcements h2::before {
       position: absolute;
       content: "";
@@ -830,44 +838,44 @@ button {
       background: url(../images/freegal_sprite.png) no-repeat -90px 0;
       width: 14px;
       height: 18px; }
-  /* line 1046, ../sass/freegal40.scss */
+  /* line 1043, ../sass/freegal40.scss */
   .left-nav .announcements .announcement {
     background: #eeeeee;
     font-size: 14px;
     padding: 10px; }
-    /* line 1052, ../sass/freegal40.scss */
+    /* line 1049, ../sass/freegal40.scss */
     .left-nav .announcements .announcement p {
       padding-bottom: 10px; }
-    /* line 1056, ../sass/freegal40.scss */
+    /* line 1053, ../sass/freegal40.scss */
     .left-nav .announcements .announcement .announcement_header {
       text-decoration: underline;
       font-weight: bold; }
 
-/* line 1066, ../sass/freegal40.scss */
+/* line 1063, ../sass/freegal40.scss */
 .content {
   padding-left: 177px;
   padding-top: 20px;
   height: 3000px;
   min-height: 2000px; }
-  /* line 1072, ../sass/freegal40.scss */
+  /* line 1069, ../sass/freegal40.scss */
   .content .breadcrumbs {
     font-size: 12px;
     color: rgba(0, 0, 0, 0.3);
     margin-bottom: 18px; }
-  /* line 1079, ../sass/freegal40.scss */
+  /* line 1076, ../sass/freegal40.scss */
   .content > h3 {
     font-size: 24px;
     letter-spacing: 1px;
     margin-bottom: 20px; }
 
-/* line 1088, ../sass/freegal40.scss */
+/* line 1085, ../sass/freegal40.scss */
 .top-albums {
   margin-top: 20px; }
-  /* line 1094, ../sass/freegal40.scss */
+  /* line 1091, ../sass/freegal40.scss */
   .top-albums .top-albums-carousel-container {
     position: relative;
     margin-top: 20px; }
-    /* line 1099, ../sass/freegal40.scss */
+    /* line 1096, ../sass/freegal40.scss */
     .top-albums .top-albums-carousel-container .left-scroll-button {
       width: 25px;
       height: 162px;
@@ -875,13 +883,13 @@ button {
       left: 0;
       top: 0;
       background: url(../images/freegal_sprite.png) -550px 0; }
-      /* line 1108, ../sass/freegal40.scss */
+      /* line 1105, ../sass/freegal40.scss */
       .top-albums .top-albums-carousel-container .left-scroll-button:hover {
         background: url(../images/freegal_sprite.png) -580px 0; }
-      /* line 1113, ../sass/freegal40.scss */
+      /* line 1110, ../sass/freegal40.scss */
       .top-albums .top-albums-carousel-container .left-scroll-button:active {
         background: url(../images/freegal_sprite.png) -610px 0; }
-    /* line 1120, ../sass/freegal40.scss */
+    /* line 1117, ../sass/freegal40.scss */
     .top-albums .top-albums-carousel-container .right-scroll-button {
       width: 25px;
       height: 162px;
@@ -889,13 +897,13 @@ button {
       right: 0;
       top: 0;
       background: url(../images/freegal_sprite.png) -650px 0; }
-      /* line 1131, ../sass/freegal40.scss */
+      /* line 1128, ../sass/freegal40.scss */
       .top-albums .top-albums-carousel-container .right-scroll-button:hover {
         background: url(../images/freegal_sprite.png) -680px 0; }
-      /* line 1136, ../sass/freegal40.scss */
+      /* line 1133, ../sass/freegal40.scss */
       .top-albums .top-albums-carousel-container .right-scroll-button:active {
         background: url(../images/freegal_sprite.png) -710px 0; }
-    /* line 1142, ../sass/freegal40.scss */
+    /* line 1139, ../sass/freegal40.scss */
     .top-albums .top-albums-carousel-container .top-albums-carousel {
       margin-top: 10px;
       margin-left: 28px;
@@ -903,24 +911,24 @@ button {
       height: 226px;
       overflow: hidden;
       position: relative; }
-      /* line 1155, ../sass/freegal40.scss */
+      /* line 1152, ../sass/freegal40.scss */
       .top-albums .top-albums-carousel-container .top-albums-carousel ul {
         overflow-y: hidden;
         height: 216px;
         width: 4125px; }
-        /* line 1160, ../sass/freegal40.scss */
+        /* line 1157, ../sass/freegal40.scss */
         .top-albums .top-albums-carousel-container .top-albums-carousel ul li {
           float: left;
           display: block;
           margin-right: 3px;
           margin-bottom: 10px;
           width: 162px; }
-          /* line 1168, ../sass/freegal40.scss */
+          /* line 1165, ../sass/freegal40.scss */
           .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container {
             width: 162px;
             height: 162px;
             position: relative; }
-            /* line 1178, ../sass/freegal40.scss */
+            /* line 1175, ../sass/freegal40.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .ranking {
               position: absolute;
               right: 6px;
@@ -937,49 +945,49 @@ button {
               background: #fff;
               font-style: italic;
               line-height: 20px; }
-            /* line 1199, ../sass/freegal40.scss */
+            /* line 1196, ../sass/freegal40.scss */
             .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container img {
               width: 162px;
               height: 162px; }
-  /* line 1222, ../sass/freegal40.scss */
+  /* line 1219, ../sass/freegal40.scss */
   .top-albums .album-info {
     font-size: 13px; }
-    /* line 1225, ../sass/freegal40.scss */
+    /* line 1222, ../sass/freegal40.scss */
     .top-albums .album-info p {
       margin-top: 5px; }
-      /* line 1229, ../sass/freegal40.scss */
+      /* line 1226, ../sass/freegal40.scss */
       .top-albums .album-info p.title {
         font-weight: bold;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         font-size: 13px; }
-        /* line 1236, ../sass/freegal40.scss */
+        /* line 1233, ../sass/freegal40.scss */
         .top-albums .album-info p.title a {
           color: #008fbd;
           text-decoration: none; }
-          /* line 1241, ../sass/freegal40.scss */
+          /* line 1238, ../sass/freegal40.scss */
           .top-albums .album-info p.title a:hover {
             text-decoration: underline; }
-      /* line 1248, ../sass/freegal40.scss */
+      /* line 1245, ../sass/freegal40.scss */
       .top-albums .album-info p.artist {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         color: rgba(0, 0, 0, 0.5);
         font-size: 12px; }
-        /* line 1257, ../sass/freegal40.scss */
+        /* line 1254, ../sass/freegal40.scss */
         .top-albums .album-info p.artist a {
           color: rgba(0, 0, 0, 0.5);
           text-decoration: none; }
-          /* line 1262, ../sass/freegal40.scss */
+          /* line 1259, ../sass/freegal40.scss */
           .top-albums .album-info p.artist a:hover {
             text-decoration: underline; }
 
-/* line 1285, ../sass/freegal40.scss */
+/* line 1282, ../sass/freegal40.scss */
 .top-songs .top-songs-container {
   margin-top: 20px; }
-/* line 1290, ../sass/freegal40.scss */
+/* line 1287, ../sass/freegal40.scss */
 .top-songs .top-songs-filter-icon {
   position: absolute;
   left: 10px;
@@ -987,63 +995,63 @@ button {
   width: 21px;
   height: 20px;
   background: url(../images/freegal_sprite.png) -440px -55px; }
-  /* line 1299, ../sass/freegal40.scss */
+  /* line 1296, ../sass/freegal40.scss */
   .top-songs .top-songs-filter-icon:hover {
     background: url(../images/freegal_sprite.png) -461px -55px; }
-  /* line 1304, ../sass/freegal40.scss */
+  /* line 1301, ../sass/freegal40.scss */
   .top-songs .top-songs-filter-icon:active {
     background: url(../images/freegal_sprite.png) -482px -55px; }
-/* line 1311, ../sass/freegal40.scss */
+/* line 1308, ../sass/freegal40.scss */
 .top-songs .header-container {
   position: relative;
   overflow: visible; }
-  /* line 1316, ../sass/freegal40.scss */
+  /* line 1313, ../sass/freegal40.scss */
   .top-songs .header-container div {
     position: absolute;
     font-weight: bold;
     font-size: 12px;
     top: 12px; }
-  /* line 1327, ../sass/freegal40.scss */
+  /* line 1324, ../sass/freegal40.scss */
   .top-songs .header-container .top-songs-filter-menu {
     z-index: 1;
     left: 10px;
     top: 27px;
     display: none; }
-    /* line 1334, ../sass/freegal40.scss */
+    /* line 1331, ../sass/freegal40.scss */
     .top-songs .header-container .top-songs-filter-menu a {
       font-weight: normal; }
-    /* line 1338, ../sass/freegal40.scss */
+    /* line 1335, ../sass/freegal40.scss */
     .top-songs .header-container .top-songs-filter-menu.active {
       display: block; }
-  /* line 1345, ../sass/freegal40.scss */
+  /* line 1342, ../sass/freegal40.scss */
   .top-songs .header-container .artist-header {
     left: 275px; }
-  /* line 1356, ../sass/freegal40.scss */
+  /* line 1353, ../sass/freegal40.scss */
   .top-songs .header-container .album-header {
     left: 496px; }
-  /* line 1363, ../sass/freegal40.scss */
+  /* line 1360, ../sass/freegal40.scss */
   .top-songs .header-container .song-header {
     left: 53px; }
-  /* line 1370, ../sass/freegal40.scss */
+  /* line 1367, ../sass/freegal40.scss */
   .top-songs .header-container .time-header {
     left: 755px; }
-  /* line 1377, ../sass/freegal40.scss */
+  /* line 1374, ../sass/freegal40.scss */
   .top-songs .header-container .header-border {
     width: 1px;
     height: 35px;
     background: #d2d2d2;
     top: 0;
     position: absolute; }
-    /* line 1385, ../sass/freegal40.scss */
+    /* line 1382, ../sass/freegal40.scss */
     .top-songs .header-container .header-border.artist-border {
       left: 487px; }
-    /* line 1391, ../sass/freegal40.scss */
+    /* line 1388, ../sass/freegal40.scss */
     .top-songs .header-container .header-border.song-border {
       left: 260px; }
-    /* line 1397, ../sass/freegal40.scss */
+    /* line 1394, ../sass/freegal40.scss */
     .top-songs .header-container .header-border.album-border {
       left: 740px; }
-  /* line 1406, ../sass/freegal40.scss */
+  /* line 1403, ../sass/freegal40.scss */
   .top-songs .header-container .multi-select-icon {
     position: absolute;
     right: 8px;
@@ -1053,36 +1061,36 @@ button {
     background: url(../images/freegal_sprite.png) -100px -115px;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
     opacity: 0.5; }
-    /* line 1416, ../sass/freegal40.scss */
+    /* line 1413, ../sass/freegal40.scss */
     .top-songs .header-container .multi-select-icon.highlighted {
       background: url(../images/freegal_sprite.png) -120px -115px;
       filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
       opacity: 1; }
-      /* line 1420, ../sass/freegal40.scss */
+      /* line 1417, ../sass/freegal40.scss */
       .top-songs .header-container .multi-select-icon.highlighted:hover {
         background: url(../images/freegal_sprite.png) -140px -115px; }
-      /* line 1425, ../sass/freegal40.scss */
+      /* line 1422, ../sass/freegal40.scss */
       .top-songs .header-container .multi-select-icon.highlighted:active {
         background: url(../images/freegal_sprite.png) -160px -115px; }
-  /* line 1435, ../sass/freegal40.scss */
+  /* line 1432, ../sass/freegal40.scss */
   .top-songs .header-container .options-menu {
     position: absolute;
     z-index: 1;
     right: 8px;
     top: 28px;
     display: none; }
-    /* line 1445, ../sass/freegal40.scss */
+    /* line 1442, ../sass/freegal40.scss */
     .top-songs .header-container .options-menu.active {
       display: block; }
-    /* line 1450, ../sass/freegal40.scss */
+    /* line 1447, ../sass/freegal40.scss */
     .top-songs .header-container .options-menu .playlist-menu {
       display: none;
       height: 312px;
       overflow-y: scroll; }
-      /* line 1456, ../sass/freegal40.scss */
+      /* line 1453, ../sass/freegal40.scss */
       .top-songs .header-container .options-menu .playlist-menu.active {
         display: block; }
-/* line 1470, ../sass/freegal40.scss */
+/* line 1467, ../sass/freegal40.scss */
 .top-songs .row {
   position: relative;
   height: 40px;
@@ -1092,24 +1100,24 @@ button {
   overflow: visible;
   border-left: 1px solid #d0d0d0;
   border-right: 1px solid #d0d0d0; }
-  /* line 1482, ../sass/freegal40.scss */
+  /* line 1479, ../sass/freegal40.scss */
   .top-songs .row a {
     color: #707070;
     text-decoration: none; }
-    /* line 1487, ../sass/freegal40.scss */
+    /* line 1484, ../sass/freegal40.scss */
     .top-songs .row a:hover {
       text-decoration: underline; }
-  /* line 1494, ../sass/freegal40.scss */
+  /* line 1491, ../sass/freegal40.scss */
   .top-songs .row:nth-child(even) {
     background: #f4f4f4; }
-  /* line 1498, ../sass/freegal40.scss */
+  /* line 1495, ../sass/freegal40.scss */
   .top-songs .row:hover, .top-songs .row.highlighted {
     background: #bbe4f1;
     color: #000; }
-    /* line 1504, ../sass/freegal40.scss */
+    /* line 1501, ../sass/freegal40.scss */
     .top-songs .row:hover a, .top-songs .row.highlighted a {
       color: #000; }
-/* line 1511, ../sass/freegal40.scss */
+/* line 1508, ../sass/freegal40.scss */
 .top-songs .play-btn {
   position: absolute;
   left: 10px;
@@ -1127,21 +1135,21 @@ button {
   background-image: -moz-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
   background-image: -o-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
   background-image: radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px); }
-  /* line 1521, ../sass/freegal40.scss */
+  /* line 1518, ../sass/freegal40.scss */
   .top-songs .play-btn:hover {
     background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #fdfdfd), color-stop(100%, #ffffff));
     background-image: -webkit-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
     background-image: -moz-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
     background-image: -o-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
     background-image: radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px); }
-  /* line 1526, ../sass/freegal40.scss */
+  /* line 1523, ../sass/freegal40.scss */
   .top-songs .play-btn:active {
     background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #ececec), color-stop(100%, #eaeaea));
     background-image: -webkit-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
     background-image: -moz-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
     background-image: -o-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
     background-image: radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px); }
-  /* line 1531, ../sass/freegal40.scss */
+  /* line 1528, ../sass/freegal40.scss */
   .top-songs .play-btn::before {
     content: "";
     position: absolute;
@@ -1152,32 +1160,32 @@ button {
     border-left: 6px solid #000;
     border-top: 4px solid transparent;
     border-bottom: 4px solid transparent; }
-/* line 1546, ../sass/freegal40.scss */
+/* line 1543, ../sass/freegal40.scss */
 .top-songs .ranking {
   position: absolute;
   top: 15px;
   left: 51px; }
-/* line 1552, ../sass/freegal40.scss */
+/* line 1549, ../sass/freegal40.scss */
 .top-songs .song-name {
   position: absolute;
   left: 74px;
   top: 15px; }
-/* line 1558, ../sass/freegal40.scss */
+/* line 1555, ../sass/freegal40.scss */
 .top-songs .artist-name {
   position: absolute;
   left: 274px;
   top: 15px; }
-/* line 1567, ../sass/freegal40.scss */
+/* line 1564, ../sass/freegal40.scss */
 .top-songs .album-name {
   position: absolute;
   left: 496px;
   top: 15px; }
-/* line 1574, ../sass/freegal40.scss */
+/* line 1571, ../sass/freegal40.scss */
 .top-songs .time {
   position: absolute;
   left: 756px;
   top: 15px; }
-/* line 1586, ../sass/freegal40.scss */
+/* line 1583, ../sass/freegal40.scss */
 .top-songs .menu-btn {
   position: absolute;
   left: 792px;
@@ -1190,7 +1198,7 @@ button {
   background-image: -moz-linear-gradient(#f9f9f9, #eaeaea);
   background-image: -o-linear-gradient(#f9f9f9, #eaeaea);
   background-image: linear-gradient(#f9f9f9, #eaeaea); }
-  /* line 1596, ../sass/freegal40.scss */
+  /* line 1593, ../sass/freegal40.scss */
   .top-songs .menu-btn::before {
     content: "";
     background: url(../images/freegal_sprite.png) -90px -115px;
@@ -1199,21 +1207,21 @@ button {
     top: 6px;
     width: 10px;
     height: 5px; }
-  /* line 1613, ../sass/freegal40.scss */
+  /* line 1610, ../sass/freegal40.scss */
   .top-songs .menu-btn:hover {
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f6f6f6));
     background-image: -webkit-linear-gradient(#ffffff, #f6f6f6);
     background-image: -moz-linear-gradient(#ffffff, #f6f6f6);
     background-image: -o-linear-gradient(#ffffff, #f6f6f6);
     background-image: linear-gradient(#ffffff, #f6f6f6); }
-  /* line 1618, ../sass/freegal40.scss */
+  /* line 1615, ../sass/freegal40.scss */
   .top-songs .menu-btn:active {
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f3f3f3));
     background-image: -webkit-linear-gradient(#eaeaea, #f3f3f3);
     background-image: -moz-linear-gradient(#eaeaea, #f3f3f3);
     background-image: -o-linear-gradient(#eaeaea, #f3f3f3);
     background-image: linear-gradient(#eaeaea, #f3f3f3); }
-/* line 1624, ../sass/freegal40.scss */
+/* line 1621, ../sass/freegal40.scss */
 .top-songs .row-checkbox {
   -webkit-appearance: none;
   margin: 0;
@@ -1226,31 +1234,31 @@ button {
   height: 9px;
   outline: 0;
   background: url(../images/freegal_sprite.png) -180px -115px; }
-  /* line 1636, ../sass/freegal40.scss */
+  /* line 1633, ../sass/freegal40.scss */
   .top-songs .row-checkbox:checked {
     background: url(../images/freegal_sprite.png) -190px -115px; }
-/* line 1642, ../sass/freegal40.scss */
+/* line 1639, ../sass/freegal40.scss */
 .top-songs .options-menu {
   position: absolute;
   z-index: 1;
   right: 33px;
   top: 31px;
   display: none; }
-  /* line 1653, ../sass/freegal40.scss */
+  /* line 1650, ../sass/freegal40.scss */
   .top-songs .options-menu.active {
     display: block; }
-  /* line 1658, ../sass/freegal40.scss */
+  /* line 1655, ../sass/freegal40.scss */
   .top-songs .options-menu .playlist-menu {
     display: none;
     height: 312px;
     overflow-y: scroll; }
-    /* line 1664, ../sass/freegal40.scss */
+    /* line 1661, ../sass/freegal40.scss */
     .top-songs .options-menu .playlist-menu.active {
       display: block; }
-/* line 1675, ../sass/freegal40.scss */
+/* line 1672, ../sass/freegal40.scss */
 .top-songs .pagination-container {
   position: relative; }
-  /* line 1679, ../sass/freegal40.scss */
+  /* line 1676, ../sass/freegal40.scss */
   .top-songs .pagination-container button {
     position: absolute;
     width: 18px;
@@ -1265,24 +1273,24 @@ button {
     font-weight: normal;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 11px; }
-    /* line 1691, ../sass/freegal40.scss */
+    /* line 1688, ../sass/freegal40.scss */
     .top-songs .pagination-container button:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f5f5f5));
       background-image: -webkit-linear-gradient(#ffffff, #f5f5f5);
       background-image: -moz-linear-gradient(#ffffff, #f5f5f5);
       background-image: -o-linear-gradient(#ffffff, #f5f5f5);
       background-image: linear-gradient(#ffffff, #f5f5f5); }
-    /* line 1696, ../sass/freegal40.scss */
+    /* line 1693, ../sass/freegal40.scss */
     .top-songs .pagination-container button:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f4f4f4));
       background-image: -webkit-linear-gradient(#eaeaea, #f4f4f4);
       background-image: -moz-linear-gradient(#eaeaea, #f4f4f4);
       background-image: -o-linear-gradient(#eaeaea, #f4f4f4);
       background-image: linear-gradient(#eaeaea, #f4f4f4); }
-    /* line 1700, ../sass/freegal40.scss */
+    /* line 1697, ../sass/freegal40.scss */
     .top-songs .pagination-container button.beginning {
       right: 221px; }
-      /* line 1704, ../sass/freegal40.scss */
+      /* line 1701, ../sass/freegal40.scss */
       .top-songs .pagination-container button.beginning::before {
         content: "";
         position: absolute;
@@ -1291,7 +1299,7 @@ button {
         border-left: 1px solid #000;
         width: 0;
         height: 6px; }
-      /* line 1715, ../sass/freegal40.scss */
+      /* line 1712, ../sass/freegal40.scss */
       .top-songs .pagination-container button.beginning::after {
         content: "";
         position: absolute;
@@ -1302,10 +1310,10 @@ button {
         border-bottom: 3px solid transparent;
         left: 7px;
         top: 5px; }
-    /* line 1728, ../sass/freegal40.scss */
+    /* line 1725, ../sass/freegal40.scss */
     .top-songs .pagination-container button.prev {
       right: 195px; }
-      /* line 1731, ../sass/freegal40.scss */
+      /* line 1728, ../sass/freegal40.scss */
       .top-songs .pagination-container button.prev::after {
         content: "";
         position: absolute;
@@ -1316,25 +1324,25 @@ button {
         border-bottom: 3px solid transparent;
         left: 6px;
         top: 5px; }
-    /* line 1745, ../sass/freegal40.scss */
+    /* line 1742, ../sass/freegal40.scss */
     .top-songs .pagination-container button.page-1 {
       right: 169px; }
-    /* line 1749, ../sass/freegal40.scss */
+    /* line 1746, ../sass/freegal40.scss */
     .top-songs .pagination-container button.page-2 {
       right: 143px; }
-    /* line 1753, ../sass/freegal40.scss */
+    /* line 1750, ../sass/freegal40.scss */
     .top-songs .pagination-container button.page-3 {
       right: 117px; }
-    /* line 1758, ../sass/freegal40.scss */
+    /* line 1755, ../sass/freegal40.scss */
     .top-songs .pagination-container button.page-4 {
       right: 91px; }
-    /* line 1763, ../sass/freegal40.scss */
+    /* line 1760, ../sass/freegal40.scss */
     .top-songs .pagination-container button.page-5 {
       right: 65px; }
-    /* line 1768, ../sass/freegal40.scss */
+    /* line 1765, ../sass/freegal40.scss */
     .top-songs .pagination-container button.next {
       right: 39px; }
-      /* line 1771, ../sass/freegal40.scss */
+      /* line 1768, ../sass/freegal40.scss */
       .top-songs .pagination-container button.next::after {
         content: "";
         position: absolute;
@@ -1345,10 +1353,10 @@ button {
         border-bottom: 3px solid transparent;
         left: 6px;
         top: 5px; }
-    /* line 1785, ../sass/freegal40.scss */
+    /* line 1782, ../sass/freegal40.scss */
     .top-songs .pagination-container button.last {
       right: 13px; }
-      /* line 1789, ../sass/freegal40.scss */
+      /* line 1786, ../sass/freegal40.scss */
       .top-songs .pagination-container button.last::before {
         content: "";
         position: absolute;
@@ -1357,7 +1365,7 @@ button {
         border-right: 1px solid #000;
         width: 0;
         height: 6px; }
-      /* line 1800, ../sass/freegal40.scss */
+      /* line 1797, ../sass/freegal40.scss */
       .top-songs .pagination-container button.last::after {
         content: "";
         position: absolute;
@@ -1369,16 +1377,16 @@ button {
         left: 6px;
         top: 5px; }
 
-/* line 1827, ../sass/freegal40.scss */
+/* line 1824, ../sass/freegal40.scss */
 .featured-artists {
   margin-top: 20px; }
-  /* line 1829, ../sass/freegal40.scss */
+  /* line 1826, ../sass/freegal40.scss */
   .featured-artists h2 {
     font-size: 24px; }
-  /* line 1834, ../sass/freegal40.scss */
+  /* line 1831, ../sass/freegal40.scss */
   .featured-artists .featured-artists-grid {
     margin-top: 10px; }
-  /* line 1841, ../sass/freegal40.scss */
+  /* line 1838, ../sass/freegal40.scss */
   .featured-artists .featured-grid-item {
     display: block;
     float: left;
@@ -1389,14 +1397,14 @@ button {
     -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
-    /* line 1851, ../sass/freegal40.scss */
+    /* line 1848, ../sass/freegal40.scss */
     .featured-artists .featured-grid-item:nth-child(5n) {
       margin-right: 0; }
-    /* line 1856, ../sass/freegal40.scss */
+    /* line 1853, ../sass/freegal40.scss */
     .featured-artists .featured-grid-item img {
       width: 167px;
       height: 167px; }
-    /* line 1865, ../sass/freegal40.scss */
+    /* line 1862, ../sass/freegal40.scss */
     .featured-artists .featured-grid-item .featured-grid-menu {
       background: black;
       background: rgba(0, 0, 0, 0.8);
@@ -1410,14 +1418,14 @@ button {
       -moz-transition: bottom 500ms;
       -o-transition: bottom 500ms;
       transition: bottom 500ms; }
-      /* line 1880, ../sass/freegal40.scss */
+      /* line 1877, ../sass/freegal40.scss */
       .featured-artists .featured-grid-item .featured-grid-menu.active {
         bottom: 0;
         -webkit-transition: bottom 500ms;
         -moz-transition: bottom 500ms;
         -o-transition: bottom 500ms;
         transition: bottom 500ms; }
-      /* line 1886, ../sass/freegal40.scss */
+      /* line 1883, ../sass/freegal40.scss */
       .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-name {
         font-size: 14px;
         font-weight: bold;
@@ -1426,7 +1434,7 @@ button {
         -moz-box-sizing: border-box;
         box-sizing: border-box;
         position: relative; }
-      /* line 1898, ../sass/freegal40.scss */
+      /* line 1895, ../sass/freegal40.scss */
       .featured-artists .featured-grid-item .featured-grid-menu .featured-album-name {
         font-size: 12px;
         font-style: italic;
@@ -1437,7 +1445,7 @@ button {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box; }
-        /* line 1908, ../sass/freegal40.scss */
+        /* line 1905, ../sass/freegal40.scss */
         .featured-artists .featured-grid-item .featured-grid-menu .featured-album-name::before {
           content: "";
           position: absolute;
@@ -1446,30 +1454,30 @@ button {
           left: 4px;
           bottom: 0;
           background: url(../images/featured-menu-border-rpt.png) repeat; }
-      /* line 1921, ../sass/freegal40.scss */
+      /* line 1918, ../sass/freegal40.scss */
       .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas {
         margin-top: 5px;
         position: relative; }
-        /* line 1926, ../sass/freegal40.scss */
+        /* line 1923, ../sass/freegal40.scss */
         .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button {
           background: #d3d1cf;
           position: relative;
           vertical-align: top; }
-          /* line 1932, ../sass/freegal40.scss */
+          /* line 1929, ../sass/freegal40.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button:hover {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f4f4f4));
             background-image: -webkit-linear-gradient(#ffffff, #f4f4f4);
             background-image: -moz-linear-gradient(#ffffff, #f4f4f4);
             background-image: -o-linear-gradient(#ffffff, #f4f4f4);
             background-image: linear-gradient(#ffffff, #f4f4f4); }
-          /* line 1936, ../sass/freegal40.scss */
+          /* line 1933, ../sass/freegal40.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button:active {
             background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cccccc), color-stop(100%, #f4f4f4));
             background-image: -webkit-linear-gradient(#cccccc, #f4f4f4);
             background-image: -moz-linear-gradient(#cccccc, #f4f4f4);
             background-image: -o-linear-gradient(#cccccc, #f4f4f4);
             background-image: linear-gradient(#cccccc, #f4f4f4); }
-          /* line 1941, ../sass/freegal40.scss */
+          /* line 1938, ../sass/freegal40.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.stream-artist {
             font-size: 11px;
             font-weight: bold;
@@ -1477,12 +1485,12 @@ button {
             height: 20px;
             margin-left: 4px;
             font-family: Helvetica, Arial, sans-serif; }
-          /* line 1952, ../sass/freegal40.scss */
+          /* line 1949, ../sass/freegal40.scss */
           .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.more-by-artist {
             width: 30px;
             height: 20px;
             margin-left: 20px; }
-            /* line 1956, ../sass/freegal40.scss */
+            /* line 1953, ../sass/freegal40.scss */
             .featured-artists .featured-grid-item .featured-grid-menu .featured-artist-ctas button.more-by-artist::before {
               background: url(../images/freegal_sprite.png) -180px -20px no-repeat;
               content: "";
@@ -1492,10 +1500,10 @@ button {
               width: 16px;
               height: 14px; }
 
-/* line 1978, ../sass/freegal40.scss */
+/* line 1975, ../sass/freegal40.scss */
 .genres-page {
   border: 1px solid #d3d3d3; }
-  /* line 1981, ../sass/freegal40.scss */
+  /* line 1978, ../sass/freegal40.scss */
   .genres-page header {
     height: 34px;
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e9e9e9));
@@ -1508,7 +1516,7 @@ button {
     position: relative;
     border-bottom: 1px solid #d3d3d3;
     color: #000; }
-  /* line 1991, ../sass/freegal40.scss */
+  /* line 1988, ../sass/freegal40.scss */
   .genres-page .genres-header, .genres-page .a-z-header, .genres-page .artist-header {
     height: 34px;
     color: #000;
@@ -1519,52 +1527,52 @@ button {
     font-weight: bold;
     padding-top: 13px;
     float: left; }
-  /* line 2005, ../sass/freegal40.scss */
+  /* line 2002, ../sass/freegal40.scss */
   .genres-page .genres-header {
     width: 224px;
     padding-left: 24px;
     border-right: 1px solid #d3d3d3; }
-  /* line 2013, ../sass/freegal40.scss */
+  /* line 2010, ../sass/freegal40.scss */
   .genres-page .a-z-header {
     width: 85px;
     border-right: 1px solid #d3d3d3;
     padding-left: 29px; }
-  /* line 2021, ../sass/freegal40.scss */
+  /* line 2018, ../sass/freegal40.scss */
   .genres-page .artist-header {
     width: 536px;
     padding-left: 17px; }
-  /* line 2033, ../sass/freegal40.scss */
+  /* line 2030, ../sass/freegal40.scss */
   .genres-page .genre-filter-container div {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
-    /* line 2037, ../sass/freegal40.scss */
+    /* line 2034, ../sass/freegal40.scss */
     .genres-page .genre-filter-container div li {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-      /* line 2041, ../sass/freegal40.scss */
+      /* line 2038, ../sass/freegal40.scss */
       .genres-page .genre-filter-container div li:nth-child(odd) {
         background: #f7f7f7; }
-      /* line 2046, ../sass/freegal40.scss */
+      /* line 2043, ../sass/freegal40.scss */
       .genres-page .genre-filter-container div li:nth-child(even) {
         background: #f2f2f2; }
-      /* line 2051, ../sass/freegal40.scss */
+      /* line 2048, ../sass/freegal40.scss */
       .genres-page .genre-filter-container div li:hover {
         background: #bde6f3; }
-      /* line 2056, ../sass/freegal40.scss */
+      /* line 2053, ../sass/freegal40.scss */
       .genres-page .genre-filter-container div li a {
         display: block;
         font-size: 12px;
         text-decoration: none;
         color: #707070;
         position: relative; }
-        /* line 2065, ../sass/freegal40.scss */
+        /* line 2062, ../sass/freegal40.scss */
         .genres-page .genre-filter-container div li a.active {
           font-weight: bold;
           color: #000;
           background: #bde6f3; }
-          /* line 2071, ../sass/freegal40.scss */
+          /* line 2068, ../sass/freegal40.scss */
           .genres-page .genre-filter-container div li a.active::before {
             background: url(../images/genre-row-selected.png);
             content: "";
@@ -1573,47 +1581,47 @@ button {
             top: 5px;
             width: 11px;
             height: 11px; }
-        /* line 2083, ../sass/freegal40.scss */
+        /* line 2080, ../sass/freegal40.scss */
         .genres-page .genre-filter-container div li a:hover {
           color: #000; }
-  /* line 2094, ../sass/freegal40.scss */
+  /* line 2091, ../sass/freegal40.scss */
   .genres-page .genre-column {
     float: left;
     width: 224px;
     height: 616px;
     overflow-y: scroll;
     border-right: 1px solid #d3d3d3; }
-    /* line 2111, ../sass/freegal40.scss */
+    /* line 2108, ../sass/freegal40.scss */
     .genres-page .genre-column li a {
       padding: 5px 5px 5px 24px; }
-  /* line 2118, ../sass/freegal40.scss */
+  /* line 2115, ../sass/freegal40.scss */
   .genres-page .alpha-artist-list-column {
     float: left;
     height: 616px;
     width: 85px;
     border-right: 1px solid #d3d3d3; }
-    /* line 2124, ../sass/freegal40.scss */
+    /* line 2121, ../sass/freegal40.scss */
     .genres-page .alpha-artist-list-column li {
       text-align: center; }
-      /* line 2127, ../sass/freegal40.scss */
+      /* line 2124, ../sass/freegal40.scss */
       .genres-page .alpha-artist-list-column li a {
         padding: 5px 5px 5px; }
-  /* line 2136, ../sass/freegal40.scss */
+  /* line 2133, ../sass/freegal40.scss */
   .genres-page .artist-column {
     float: left;
     width: 536px;
     height: 616px;
     overflow-y: scroll; }
-    /* line 2142, ../sass/freegal40.scss */
+    /* line 2139, ../sass/freegal40.scss */
     .genres-page .artist-column ul {
       -webkit-transition: all 500ms;
       -moz-transition: all 500ms;
       -o-transition: all 500ms;
       transition: all 500ms; }
-    /* line 2149, ../sass/freegal40.scss */
+    /* line 2146, ../sass/freegal40.scss */
     .genres-page .artist-column li a {
       padding: 5px 5px 5px 17px; }
-  /* line 2158, ../sass/freegal40.scss */
+  /* line 2155, ../sass/freegal40.scss */
   .genres-page .genre-button-container {
     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e9e9e9));
     background-image: -webkit-linear-gradient(#f9f9f9, #e9e9e9);
@@ -1625,7 +1633,7 @@ button {
     height: 34px;
     border-top: 1px solid #d3d3d3;
     position: relative; }
-  /* line 2165, ../sass/freegal40.scss */
+  /* line 2162, ../sass/freegal40.scss */
   .genres-page .genre-scroll-up {
     background: url(../images/btn-scroll-down.png);
     width: 30px;
@@ -1633,13 +1641,13 @@ button {
     position: absolute;
     left: 10px;
     top: 8px; }
-    /* line 2174, ../sass/freegal40.scss */
+    /* line 2171, ../sass/freegal40.scss */
     .genres-page .genre-scroll-up:hover {
       background: url(../images/btn-scroll-down.png) -30px 0; }
-    /* line 2178, ../sass/freegal40.scss */
+    /* line 2175, ../sass/freegal40.scss */
     .genres-page .genre-scroll-up:active {
       background: url(../images/btn-scroll-down.png) -60px 0; }
-  /* line 2184, ../sass/freegal40.scss */
+  /* line 2181, ../sass/freegal40.scss */
   .genres-page .genre-scroll-down {
     background: url(../images/btn-scroll-up.png);
     width: 30px;
@@ -1647,13 +1655,13 @@ button {
     position: absolute;
     left: 50px;
     top: 8px; }
-    /* line 2192, ../sass/freegal40.scss */
+    /* line 2189, ../sass/freegal40.scss */
     .genres-page .genre-scroll-down:hover {
       background: url(../images/btn-scroll-up.png) -30px 0; }
-    /* line 2196, ../sass/freegal40.scss */
+    /* line 2193, ../sass/freegal40.scss */
     .genres-page .genre-scroll-down:active {
       background: url(../images/btn-scroll-up.png) -60px 0; }
-  /* line 2202, ../sass/freegal40.scss */
+  /* line 2199, ../sass/freegal40.scss */
   .genres-page .artist-scroll-up {
     background: url(../images/btn-scroll-down.png);
     width: 30px;
@@ -1661,13 +1669,13 @@ button {
     position: absolute;
     left: 330px;
     top: 8px; }
-    /* line 2211, ../sass/freegal40.scss */
+    /* line 2208, ../sass/freegal40.scss */
     .genres-page .artist-scroll-up:hover {
       background: url(../images/btn-scroll-down.png) -30px 0; }
-    /* line 2215, ../sass/freegal40.scss */
+    /* line 2212, ../sass/freegal40.scss */
     .genres-page .artist-scroll-up:active {
       background: url(../images/btn-scroll-down.png) -60px 0; }
-  /* line 2221, ../sass/freegal40.scss */
+  /* line 2218, ../sass/freegal40.scss */
   .genres-page .artist-scroll-down {
     background: url(../images/btn-scroll-up.png);
     width: 30px;
@@ -1675,21 +1683,21 @@ button {
     position: absolute;
     left: 370px;
     top: 8px; }
-    /* line 2229, ../sass/freegal40.scss */
+    /* line 2226, ../sass/freegal40.scss */
     .genres-page .artist-scroll-down:hover {
       background: url(../images/btn-scroll-up.png) -30px 0; }
-    /* line 2233, ../sass/freegal40.scss */
+    /* line 2230, ../sass/freegal40.scss */
     .genres-page .artist-scroll-down:active {
       background: url(../images/btn-scroll-up.png) -60px 0; }
 
-/* line 2245, ../sass/freegal40.scss */
+/* line 2242, ../sass/freegal40.scss */
 .search-results-page .refine-text {
   font-family: Helvetica,Arial,sans-serif;
   font-weight: bold;
   font-size: 12px;
   margin-top: 33px; }
 
-/* line 2255, ../sass/freegal40.scss */
+/* line 2252, ../sass/freegal40.scss */
 .search-container {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -1701,7 +1709,7 @@ button {
   border: 1px solid #c9c9c9;
   color: #000;
   float: left; }
-  /* line 2264, ../sass/freegal40.scss */
+  /* line 2261, ../sass/freegal40.scss */
   .search-container::after {
     content: "";
     position: absolute;
@@ -1710,7 +1718,7 @@ button {
     background: url(../images/freegal_sprite.png) -160px -50px;
     width: 12px;
     height: 11px; }
-  /* line 2275, ../sass/freegal40.scss */
+  /* line 2272, ../sass/freegal40.scss */
   .search-container #search-page-search-text {
     height: 32px;
     margin-left: 50px;
@@ -1718,7 +1726,7 @@ button {
     font-weight: bold;
     font-family: Helvetica, Arial, sans-serif;
     font-size: 14px; }
-  /* line 2287, ../sass/freegal40.scss */
+  /* line 2284, ../sass/freegal40.scss */
   .search-container #search-page-go {
     cursor: pointer;
     height: 32px;
@@ -1738,14 +1746,14 @@ button {
     right: 0;
     top: 0;
     border-left: 1px solid #c9c9c9; }
-    /* line 2301, ../sass/freegal40.scss */
+    /* line 2298, ../sass/freegal40.scss */
     .search-container #search-page-go:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #7ed6f4), color-stop(100%, #62c4e4));
       background-image: -webkit-linear-gradient(#7ed6f4, #62c4e4);
       background-image: -moz-linear-gradient(#7ed6f4, #62c4e4);
       background-image: -o-linear-gradient(#7ed6f4, #62c4e4);
       background-image: linear-gradient(#7ed6f4, #62c4e4); }
-    /* line 2306, ../sass/freegal40.scss */
+    /* line 2303, ../sass/freegal40.scss */
     .search-container #search-page-go:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #46b2d5), color-stop(100%, #62c4e4));
       background-image: -webkit-linear-gradient(#46b2d5, #62c4e4);
@@ -1753,29 +1761,29 @@ button {
       background-image: -o-linear-gradient(#46b2d5, #62c4e4);
       background-image: linear-gradient(#46b2d5, #62c4e4); }
 
-/* line 2317, ../sass/freegal40.scss */
+/* line 2314, ../sass/freegal40.scss */
 .search-results-heading {
   font-size: 22px;
   font-weight: bold;
   font-family: Helvetica, Arial, sans-serif;
   margin-top: 34px; }
 
-/* line 2325, ../sass/freegal40.scss */
+/* line 2322, ../sass/freegal40.scss */
 .search-results-text {
   font-size: 13px;
   margin-top: 12px; }
-  /* line 2329, ../sass/freegal40.scss */
+  /* line 2326, ../sass/freegal40.scss */
   .search-results-text span {
     font-weight: bold; }
 
-/* line 2335, ../sass/freegal40.scss */
+/* line 2332, ../sass/freegal40.scss */
 .category-results {
   margin-top: 40px; }
-  /* line 2338, ../sass/freegal40.scss */
+  /* line 2335, ../sass/freegal40.scss */
   .category-results header {
     position: relative;
     height: 25px; }
-    /* line 2343, ../sass/freegal40.scss */
+    /* line 2340, ../sass/freegal40.scss */
     .category-results header h3 {
       font-weight: normal;
       font-size: 16px;
@@ -1783,7 +1791,7 @@ button {
       margin-left: 36px;
       position: relative;
       padding-top: 5px; }
-      /* line 2351, ../sass/freegal40.scss */
+      /* line 2348, ../sass/freegal40.scss */
       .category-results header h3.albums-header::before {
         content: "";
         left: -36px;
@@ -1792,7 +1800,7 @@ button {
         width: 25px;
         height: 25px;
         background: url(../images/freegal_sprite.png) -220px -170px; }
-      /* line 2361, ../sass/freegal40.scss */
+      /* line 2358, ../sass/freegal40.scss */
       .category-results header h3.artists-header::before {
         content: "";
         left: -36px;
@@ -1801,7 +1809,7 @@ button {
         width: 25px;
         height: 25px;
         background: url(../images/freegal_sprite.png) -250px -170px; }
-      /* line 2372, ../sass/freegal40.scss */
+      /* line 2369, ../sass/freegal40.scss */
       .category-results header h3.composers-header::before {
         content: "";
         left: -36px;
@@ -1810,7 +1818,7 @@ button {
         width: 25px;
         height: 25px;
         background: url(../images/freegal_sprite.png) -280px -170px; }
-      /* line 2383, ../sass/freegal40.scss */
+      /* line 2380, ../sass/freegal40.scss */
       .category-results header h3.videos-header::before {
         content: "";
         left: -36px;
@@ -1819,7 +1827,7 @@ button {
         width: 25px;
         height: 25px;
         background: url(../images/freegal_sprite.png) -310px -170px; }
-      /* line 2394, ../sass/freegal40.scss */
+      /* line 2391, ../sass/freegal40.scss */
       .category-results header h3.genres-header::before {
         content: "";
         left: -36px;
@@ -1828,7 +1836,7 @@ button {
         width: 25px;
         height: 25px;
         background: url(../images/freegal_sprite.png) -340px -170px; }
-      /* line 2405, ../sass/freegal40.scss */
+      /* line 2402, ../sass/freegal40.scss */
       .category-results header h3.songs-header::before {
         content: "";
         left: -36px;
@@ -1837,7 +1845,7 @@ button {
         width: 25px;
         height: 25px;
         background: url(../images/freegal_sprite.png) -370px -170px; }
-    /* line 2418, ../sass/freegal40.scss */
+    /* line 2415, ../sass/freegal40.scss */
     .category-results header .see-more {
       position: absolute;
       display: block;
@@ -1847,19 +1855,19 @@ button {
       height: 23px;
       text-indent: -9999px;
       background: url(../images/freegal_sprite.png) -90px -135px; }
-      /* line 2428, ../sass/freegal40.scss */
+      /* line 2425, ../sass/freegal40.scss */
       .category-results header .see-more:hover {
         background: url(../images/freegal_sprite.png) -115px -135px; }
-      /* line 2433, ../sass/freegal40.scss */
+      /* line 2430, ../sass/freegal40.scss */
       .category-results header .see-more:active {
         background: url(../images/freegal_sprite.png) -140px -135px; }
-  /* line 2442, ../sass/freegal40.scss */
+  /* line 2439, ../sass/freegal40.scss */
   .category-results .search-results-list {
     position: relative;
     margin-top: 30px;
     font-size: 12px;
     font-family: Helvetica,Arial,sans-serif; }
-    /* line 2449, ../sass/freegal40.scss */
+    /* line 2446, ../sass/freegal40.scss */
     .category-results .search-results-list::before {
       content: "";
       position: absolute;
@@ -1876,7 +1884,7 @@ button {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-    /* line 2461, ../sass/freegal40.scss */
+    /* line 2458, ../sass/freegal40.scss */
     .category-results .search-results-list::after {
       content: "";
       position: absolute;
@@ -1893,68 +1901,68 @@ button {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
       box-sizing: border-box; }
-    /* line 2474, ../sass/freegal40.scss */
+    /* line 2471, ../sass/freegal40.scss */
     .category-results .search-results-list li {
       height: 40px;
       line-height: 40px;
       padding-left: 36px;
       border-left: 1px solid #d0d0d0;
       border-right: 1px solid #d0d0d0; }
-      /* line 2484, ../sass/freegal40.scss */
+      /* line 2481, ../sass/freegal40.scss */
       .category-results .search-results-list li:nth-child(even) {
         background: #f4f4f4; }
-      /* line 2489, ../sass/freegal40.scss */
+      /* line 2486, ../sass/freegal40.scss */
       .category-results .search-results-list li:hover {
         background: #bbe4f1; }
-      /* line 2494, ../sass/freegal40.scss */
+      /* line 2491, ../sass/freegal40.scss */
       .category-results .search-results-list li a {
         text-decoration: none;
         color: #000; }
-        /* line 2499, ../sass/freegal40.scss */
+        /* line 2496, ../sass/freegal40.scss */
         .category-results .search-results-list li a:hover {
           text-decoration: underline; }
-  /* line 2507, ../sass/freegal40.scss */
+  /* line 2504, ../sass/freegal40.scss */
   .category-results .songs-results-list {
     margin-top: 20px; }
-  /* line 2520, ../sass/freegal40.scss */
+  /* line 2517, ../sass/freegal40.scss */
   .category-results .header-container {
     position: relative;
     overflow: visible; }
-    /* line 2525, ../sass/freegal40.scss */
+    /* line 2522, ../sass/freegal40.scss */
     .category-results .header-container div {
       position: absolute;
       font-weight: bold;
       font-size: 12px;
       top: 13px; }
-    /* line 2535, ../sass/freegal40.scss */
+    /* line 2532, ../sass/freegal40.scss */
     .category-results .header-container .artist-col {
       left: 17px; }
-    /* line 2544, ../sass/freegal40.scss */
+    /* line 2541, ../sass/freegal40.scss */
     .category-results .header-container .composer-col {
       left: 245px; }
-    /* line 2553, ../sass/freegal40.scss */
+    /* line 2550, ../sass/freegal40.scss */
     .category-results .header-container .album-col {
       left: 445px; }
-    /* line 2560, ../sass/freegal40.scss */
+    /* line 2557, ../sass/freegal40.scss */
     .category-results .header-container .song-col {
       left: 645px; }
-    /* line 2567, ../sass/freegal40.scss */
+    /* line 2564, ../sass/freegal40.scss */
     .category-results .header-container .header-border {
       width: 1px;
       height: 35px;
       background: #d2d2d2;
       top: 0;
       position: absolute; }
-      /* line 2575, ../sass/freegal40.scss */
+      /* line 2572, ../sass/freegal40.scss */
       .category-results .header-container .header-border.artist-border {
         left: 230px; }
-      /* line 2581, ../sass/freegal40.scss */
+      /* line 2578, ../sass/freegal40.scss */
       .category-results .header-container .header-border.composer-border {
         left: 430px; }
-      /* line 2587, ../sass/freegal40.scss */
+      /* line 2584, ../sass/freegal40.scss */
       .category-results .header-container .header-border.album-border {
         left: 630px; }
-    /* line 2594, ../sass/freegal40.scss */
+    /* line 2591, ../sass/freegal40.scss */
     .category-results .header-container .multi-select-icon {
       position: absolute;
       right: 8px;
@@ -1964,40 +1972,40 @@ button {
       background: url(../images/freegal_sprite.png) -100px -115px;
       filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
       opacity: 0.5; }
-      /* line 2604, ../sass/freegal40.scss */
+      /* line 2601, ../sass/freegal40.scss */
       .category-results .header-container .multi-select-icon:hover {
         filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
         opacity: 1; }
-      /* line 2609, ../sass/freegal40.scss */
+      /* line 2606, ../sass/freegal40.scss */
       .category-results .header-container .multi-select-icon.highlighted {
         background: url(../images/freegal_sprite.png) -120px -115px;
         filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
         opacity: 1; }
-        /* line 2613, ../sass/freegal40.scss */
+        /* line 2610, ../sass/freegal40.scss */
         .category-results .header-container .multi-select-icon.highlighted:hover {
           background: url(../images/freegal_sprite.png) -140px -115px; }
-        /* line 2619, ../sass/freegal40.scss */
+        /* line 2616, ../sass/freegal40.scss */
         .category-results .header-container .multi-select-icon.highlighted:active {
           background: url(../images/freegal_sprite.png) -160px -115px; }
-    /* line 2629, ../sass/freegal40.scss */
+    /* line 2626, ../sass/freegal40.scss */
     .category-results .header-container .options-menu {
       position: absolute;
       z-index: 1;
       right: 8px;
       top: 28px;
       display: none; }
-      /* line 2639, ../sass/freegal40.scss */
+      /* line 2636, ../sass/freegal40.scss */
       .category-results .header-container .options-menu.active {
         display: block; }
-      /* line 2644, ../sass/freegal40.scss */
+      /* line 2641, ../sass/freegal40.scss */
       .category-results .header-container .options-menu .playlist-menu {
         display: none;
         height: 312px;
         overflow-y: scroll; }
-        /* line 2650, ../sass/freegal40.scss */
+        /* line 2647, ../sass/freegal40.scss */
         .category-results .header-container .options-menu .playlist-menu.active {
           display: block; }
-  /* line 2660, ../sass/freegal40.scss */
+  /* line 2657, ../sass/freegal40.scss */
   .category-results .row {
     position: relative;
     height: 40px;
@@ -2007,25 +2015,25 @@ button {
     overflow: visible;
     border-left: 1px solid #d0d0d0;
     border-right: 1px solid #d0d0d0; }
-    /* line 2672, ../sass/freegal40.scss */
+    /* line 2669, ../sass/freegal40.scss */
     .category-results .row a {
       color: #707070;
       text-decoration: none; }
-      /* line 2677, ../sass/freegal40.scss */
+      /* line 2674, ../sass/freegal40.scss */
       .category-results .row a:hover {
         color: #000;
         text-decoration: underline; }
-    /* line 2685, ../sass/freegal40.scss */
+    /* line 2682, ../sass/freegal40.scss */
     .category-results .row:nth-child(even) {
       background: #f4f4f4; }
-    /* line 2689, ../sass/freegal40.scss */
+    /* line 2686, ../sass/freegal40.scss */
     .category-results .row:hover, .category-results .row.highlighted {
       background: #bbe4f1;
       color: #000; }
-      /* line 2695, ../sass/freegal40.scss */
+      /* line 2692, ../sass/freegal40.scss */
       .category-results .row:hover a, .category-results .row.highlighted a {
         color: #000; }
-  /* line 2701, ../sass/freegal40.scss */
+  /* line 2698, ../sass/freegal40.scss */
   .category-results .play-btn {
     position: absolute;
     left: 9px;
@@ -2043,21 +2051,21 @@ button {
     background-image: -moz-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
     background-image: -o-radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px);
     background-image: radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px); }
-    /* line 2711, ../sass/freegal40.scss */
+    /* line 2708, ../sass/freegal40.scss */
     .category-results .play-btn:hover {
       background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #fdfdfd), color-stop(100%, #ffffff));
       background-image: -webkit-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: -moz-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: -o-radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px);
       background-image: radial-gradient(45px 45px, #fdfdfd 10px, #ffffff 30px); }
-    /* line 2716, ../sass/freegal40.scss */
+    /* line 2713, ../sass/freegal40.scss */
     .category-results .play-btn:active {
       background-image: -webkit-gradient(radial, 45px 45px, 0, 45px 45px, 30, color-stop(33.33333%, #ececec), color-stop(100%, #eaeaea));
       background-image: -webkit-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: -moz-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: -o-radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px);
       background-image: radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px); }
-    /* line 2721, ../sass/freegal40.scss */
+    /* line 2718, ../sass/freegal40.scss */
     .category-results .play-btn::before {
       content: "";
       position: absolute;
@@ -2068,27 +2076,27 @@ button {
       border-left: 6px solid #000;
       border-top: 4px solid transparent;
       border-bottom: 4px solid transparent; }
-  /* line 2736, ../sass/freegal40.scss */
+  /* line 2733, ../sass/freegal40.scss */
   .category-results .artist-name {
     position: absolute;
     left: 42px;
     top: 15px; }
-  /* line 2746, ../sass/freegal40.scss */
+  /* line 2743, ../sass/freegal40.scss */
   .category-results .composer-name {
     position: absolute;
     left: 246px;
     top: 15px; }
-  /* line 2754, ../sass/freegal40.scss */
+  /* line 2751, ../sass/freegal40.scss */
   .category-results .album-name {
     position: absolute;
     left: 446px;
     top: 15px; }
-  /* line 2761, ../sass/freegal40.scss */
+  /* line 2758, ../sass/freegal40.scss */
   .category-results .song-name {
     position: absolute;
     left: 646px;
     top: 15px; }
-  /* line 2768, ../sass/freegal40.scss */
+  /* line 2765, ../sass/freegal40.scss */
   .category-results .menu-btn {
     position: absolute;
     left: 795px;
@@ -2101,7 +2109,7 @@ button {
     background-image: -moz-linear-gradient(#f9f9f9, #eaeaea);
     background-image: -o-linear-gradient(#f9f9f9, #eaeaea);
     background-image: linear-gradient(#f9f9f9, #eaeaea); }
-    /* line 2778, ../sass/freegal40.scss */
+    /* line 2775, ../sass/freegal40.scss */
     .category-results .menu-btn::before {
       content: "";
       background: url(../images/freegal_sprite.png) -90px -115px;
@@ -2110,21 +2118,21 @@ button {
       top: 6px;
       width: 10px;
       height: 5px; }
-    /* line 2795, ../sass/freegal40.scss */
+    /* line 2792, ../sass/freegal40.scss */
     .category-results .menu-btn:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f6f6f6));
       background-image: -webkit-linear-gradient(#ffffff, #f6f6f6);
       background-image: -moz-linear-gradient(#ffffff, #f6f6f6);
       background-image: -o-linear-gradient(#ffffff, #f6f6f6);
       background-image: linear-gradient(#ffffff, #f6f6f6); }
-    /* line 2800, ../sass/freegal40.scss */
+    /* line 2797, ../sass/freegal40.scss */
     .category-results .menu-btn:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f3f3f3));
       background-image: -webkit-linear-gradient(#eaeaea, #f3f3f3);
       background-image: -moz-linear-gradient(#eaeaea, #f3f3f3);
       background-image: -o-linear-gradient(#eaeaea, #f3f3f3);
       background-image: linear-gradient(#eaeaea, #f3f3f3); }
-  /* line 2806, ../sass/freegal40.scss */
+  /* line 2803, ../sass/freegal40.scss */
   .category-results .row-checkbox {
     -webkit-appearance: none;
     margin: 0;
@@ -2137,31 +2145,31 @@ button {
     height: 9px;
     outline: 0;
     background: url(../images/freegal_sprite.png) -180px -115px; }
-    /* line 2818, ../sass/freegal40.scss */
+    /* line 2815, ../sass/freegal40.scss */
     .category-results .row-checkbox:checked {
       background: url(../images/freegal_sprite.png) -190px -115px; }
-  /* line 2824, ../sass/freegal40.scss */
+  /* line 2821, ../sass/freegal40.scss */
   .category-results .options-menu {
     position: absolute;
     z-index: 1;
     right: 33px;
     top: 31px;
     display: none; }
-    /* line 2834, ../sass/freegal40.scss */
+    /* line 2831, ../sass/freegal40.scss */
     .category-results .options-menu.active {
       display: block; }
-    /* line 2839, ../sass/freegal40.scss */
+    /* line 2836, ../sass/freegal40.scss */
     .category-results .options-menu .playlist-menu {
       display: none;
       height: 312px;
       overflow-y: scroll; }
-      /* line 2845, ../sass/freegal40.scss */
+      /* line 2842, ../sass/freegal40.scss */
       .category-results .options-menu .playlist-menu.active {
         display: block; }
-  /* line 2852, ../sass/freegal40.scss */
+  /* line 2849, ../sass/freegal40.scss */
   .category-results .pagination-container {
     position: relative; }
-    /* line 2856, ../sass/freegal40.scss */
+    /* line 2853, ../sass/freegal40.scss */
     .category-results .pagination-container button {
       position: absolute;
       width: 18px;
@@ -2176,24 +2184,24 @@ button {
       font-weight: normal;
       font-family: Helvetica, Arial, sans-serif;
       font-size: 11px; }
-      /* line 2868, ../sass/freegal40.scss */
+      /* line 2865, ../sass/freegal40.scss */
       .category-results .pagination-container button:hover {
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f5f5f5));
         background-image: -webkit-linear-gradient(#ffffff, #f5f5f5);
         background-image: -moz-linear-gradient(#ffffff, #f5f5f5);
         background-image: -o-linear-gradient(#ffffff, #f5f5f5);
         background-image: linear-gradient(#ffffff, #f5f5f5); }
-      /* line 2873, ../sass/freegal40.scss */
+      /* line 2870, ../sass/freegal40.scss */
       .category-results .pagination-container button:active {
         background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f4f4f4));
         background-image: -webkit-linear-gradient(#eaeaea, #f4f4f4);
         background-image: -moz-linear-gradient(#eaeaea, #f4f4f4);
         background-image: -o-linear-gradient(#eaeaea, #f4f4f4);
         background-image: linear-gradient(#eaeaea, #f4f4f4); }
-      /* line 2877, ../sass/freegal40.scss */
+      /* line 2874, ../sass/freegal40.scss */
       .category-results .pagination-container button.beginning {
         right: 221px; }
-        /* line 2881, ../sass/freegal40.scss */
+        /* line 2878, ../sass/freegal40.scss */
         .category-results .pagination-container button.beginning::before {
           content: "";
           position: absolute;
@@ -2202,7 +2210,7 @@ button {
           border-left: 1px solid #000;
           width: 0;
           height: 6px; }
-        /* line 2892, ../sass/freegal40.scss */
+        /* line 2889, ../sass/freegal40.scss */
         .category-results .pagination-container button.beginning::after {
           content: "";
           position: absolute;
@@ -2213,10 +2221,10 @@ button {
           border-bottom: 3px solid transparent;
           left: 7px;
           top: 5px; }
-      /* line 2905, ../sass/freegal40.scss */
+      /* line 2902, ../sass/freegal40.scss */
       .category-results .pagination-container button.prev {
         right: 195px; }
-        /* line 2908, ../sass/freegal40.scss */
+        /* line 2905, ../sass/freegal40.scss */
         .category-results .pagination-container button.prev::after {
           content: "";
           position: absolute;
@@ -2227,25 +2235,25 @@ button {
           border-bottom: 3px solid transparent;
           left: 6px;
           top: 5px; }
-      /* line 2922, ../sass/freegal40.scss */
+      /* line 2919, ../sass/freegal40.scss */
       .category-results .pagination-container button.page-1 {
         right: 169px; }
-      /* line 2926, ../sass/freegal40.scss */
+      /* line 2923, ../sass/freegal40.scss */
       .category-results .pagination-container button.page-2 {
         right: 143px; }
-      /* line 2930, ../sass/freegal40.scss */
+      /* line 2927, ../sass/freegal40.scss */
       .category-results .pagination-container button.page-3 {
         right: 117px; }
-      /* line 2935, ../sass/freegal40.scss */
+      /* line 2932, ../sass/freegal40.scss */
       .category-results .pagination-container button.page-4 {
         right: 91px; }
-      /* line 2940, ../sass/freegal40.scss */
+      /* line 2937, ../sass/freegal40.scss */
       .category-results .pagination-container button.page-5 {
         right: 65px; }
-      /* line 2945, ../sass/freegal40.scss */
+      /* line 2942, ../sass/freegal40.scss */
       .category-results .pagination-container button.next {
         right: 39px; }
-        /* line 2948, ../sass/freegal40.scss */
+        /* line 2945, ../sass/freegal40.scss */
         .category-results .pagination-container button.next::after {
           content: "";
           position: absolute;
@@ -2256,10 +2264,10 @@ button {
           border-bottom: 3px solid transparent;
           left: 6px;
           top: 5px; }
-      /* line 2962, ../sass/freegal40.scss */
+      /* line 2959, ../sass/freegal40.scss */
       .category-results .pagination-container button.last {
         right: 13px; }
-        /* line 2966, ../sass/freegal40.scss */
+        /* line 2963, ../sass/freegal40.scss */
         .category-results .pagination-container button.last::before {
           content: "";
           position: absolute;
@@ -2268,7 +2276,7 @@ button {
           border-right: 1px solid #000;
           width: 0;
           height: 6px; }
-        /* line 2977, ../sass/freegal40.scss */
+        /* line 2974, ../sass/freegal40.scss */
         .category-results .pagination-container button.last::after {
           content: "";
           position: absolute;
@@ -2280,10 +2288,10 @@ button {
           left: 6px;
           top: 5px; }
 
-/* line 2997, ../sass/freegal40.scss */
+/* line 2994, ../sass/freegal40.scss */
 .filter-container {
   margin-top: 20px; }
-  /* line 2999, ../sass/freegal40.scss */
+  /* line 2996, ../sass/freegal40.scss */
   .filter-container button {
     float: left;
     border: 1px solid #bbbbbb;
@@ -2299,21 +2307,21 @@ button {
     padding-right: 10px;
     height: 32px;
     margin-right: 12px; }
-    /* line 3012, ../sass/freegal40.scss */
+    /* line 3009, ../sass/freegal40.scss */
     .filter-container button:hover {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f4f4f4));
       background-image: -webkit-linear-gradient(#ffffff, #f4f4f4);
       background-image: -moz-linear-gradient(#ffffff, #f4f4f4);
       background-image: -o-linear-gradient(#ffffff, #f4f4f4);
       background-image: linear-gradient(#ffffff, #f4f4f4); }
-    /* line 3017, ../sass/freegal40.scss */
+    /* line 3014, ../sass/freegal40.scss */
     .filter-container button:active {
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eaeaea), color-stop(100%, #f4f4f4));
       background-image: -webkit-linear-gradient(#eaeaea, #f4f4f4);
       background-image: -moz-linear-gradient(#eaeaea, #f4f4f4);
       background-image: -o-linear-gradient(#eaeaea, #f4f4f4);
       background-image: linear-gradient(#eaeaea, #f4f4f4); }
-    /* line 3022, ../sass/freegal40.scss */
+    /* line 3019, ../sass/freegal40.scss */
     .filter-container button.active {
       color: #fff;
       background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #37a1c3), color-stop(25%, #4ebfe3));
@@ -2324,119 +2332,119 @@ button {
       border: 1px solid #008fbd;
       text-shadow: 0 0 10px #2096bc; }
 
-/* line 3036, ../sass/freegal40.scss */
+/* line 3033, ../sass/freegal40.scss */
 .search-results-page {
   position: relative; }
 
-/* line 3042, ../sass/freegal40.scss */
+/* line 3039, ../sass/freegal40.scss */
 .search-results-albums-carousel {
   position: relative;
   height: 222px;
   margin-top: 15px;
   overflow: hidden; }
-  /* line 3049, ../sass/freegal40.scss */
+  /* line 3046, ../sass/freegal40.scss */
   .search-results-albums-carousel > button {
     position: absolute;
     top: 0;
     height: 162px;
     width: 25px; }
-    /* line 3055, ../sass/freegal40.scss */
+    /* line 3052, ../sass/freegal40.scss */
     .search-results-albums-carousel > button.sr-albums-prev {
       left: 0;
       background: url(../images/freegal_sprite.png) -550px 0; }
-      /* line 3060, ../sass/freegal40.scss */
+      /* line 3057, ../sass/freegal40.scss */
       .search-results-albums-carousel > button.sr-albums-prev:hover {
         background: url(../images/freegal_sprite.png) -580px 0; }
-      /* line 3065, ../sass/freegal40.scss */
+      /* line 3062, ../sass/freegal40.scss */
       .search-results-albums-carousel > button.sr-albums-prev:active {
         background: url(../images/freegal_sprite.png) -610px 0; }
-    /* line 3072, ../sass/freegal40.scss */
+    /* line 3069, ../sass/freegal40.scss */
     .search-results-albums-carousel > button.sr-albums-next {
       right: 0;
       background: url(../images/freegal_sprite.png) -650px 0; }
-      /* line 3077, ../sass/freegal40.scss */
+      /* line 3074, ../sass/freegal40.scss */
       .search-results-albums-carousel > button.sr-albums-next:hover {
         background: url(../images/freegal_sprite.png) -680px 0; }
-      /* line 3082, ../sass/freegal40.scss */
+      /* line 3079, ../sass/freegal40.scss */
       .search-results-albums-carousel > button.sr-albums-next:active {
         background: url(../images/freegal_sprite.png) -710px 0; }
-  /* line 3091, ../sass/freegal40.scss */
+  /* line 3088, ../sass/freegal40.scss */
   .search-results-albums-carousel .search-results-albums {
     overflow: hidden;
     margin-left: 28px;
     margin-right: 28px; }
-    /* line 3096, ../sass/freegal40.scss */
+    /* line 3093, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums .album-cover-container {
       position: relative;
       width: 162px;
       height: 162px; }
-    /* line 3109, ../sass/freegal40.scss */
+    /* line 3106, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums .album-info {
       margin-top: 5px; }
-    /* line 3113, ../sass/freegal40.scss */
+    /* line 3110, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums ul {
       width: 1650px; }
-    /* line 3118, ../sass/freegal40.scss */
+    /* line 3115, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums li {
       float: left;
       margin-right: 3px; }
-      /* line 3123, ../sass/freegal40.scss */
+      /* line 3120, ../sass/freegal40.scss */
       .search-results-albums-carousel .search-results-albums li img {
         width: 162px;
         height: 162px; }
-    /* line 3130, ../sass/freegal40.scss */
+    /* line 3127, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums p {
       margin-bottom: 2px; }
-    /* line 3134, ../sass/freegal40.scss */
+    /* line 3131, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums .title {
       font-size: 13px;
       font-weight: bold;
       font-family: Helvetica, Arial, sans-serif;
       color: #000; }
-      /* line 3141, ../sass/freegal40.scss */
+      /* line 3138, ../sass/freegal40.scss */
       .search-results-albums-carousel .search-results-albums .title a {
         color: #008fbd;
         text-decoration: none; }
-        /* line 3146, ../sass/freegal40.scss */
+        /* line 3143, ../sass/freegal40.scss */
         .search-results-albums-carousel .search-results-albums .title a:hover {
           text-decoration: underline; }
-    /* line 3153, ../sass/freegal40.scss */
+    /* line 3150, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums .artist {
       font-size: 12px;
       color: #7d7c7c; }
-    /* line 3159, ../sass/freegal40.scss */
+    /* line 3156, ../sass/freegal40.scss */
     .search-results-albums-carousel .search-results-albums .label {
       font-size: 12px;
       color: #7d7c7c; }
 
-/* line 3169, ../sass/freegal40.scss */
+/* line 3166, ../sass/freegal40.scss */
 footer {
   height: 98px;
   background: url(../images/footer-bkg.gif) repeat;
   color: #000;
   font-size: 12px;
   padding-bottom: 100px; }
-  /* line 3177, ../sass/freegal40.scss */
+  /* line 3174, ../sass/freegal40.scss */
   footer .inner-wrapper {
     height: 98px;
     position: relative;
     width: 1215px;
     margin: 0 auto; }
-    /* line 3184, ../sass/freegal40.scss */
+    /* line 3181, ../sass/freegal40.scss */
     footer .inner-wrapper .legal {
       position: absolute;
       left: 75px;
       top: 25px; }
-    /* line 3190, ../sass/freegal40.scss */
+    /* line 3187, ../sass/freegal40.scss */
     footer .inner-wrapper .footer-nav {
       position: absolute;
       right: 0;
       top: 25px; }
-      /* line 3196, ../sass/freegal40.scss */
+      /* line 3193, ../sass/freegal40.scss */
       footer .inner-wrapper .footer-nav li {
         display: block;
         float: left; }
-        /* line 3201, ../sass/freegal40.scss */
+        /* line 3198, ../sass/freegal40.scss */
         footer .inner-wrapper .footer-nav li a {
           display: block;
           padding-left: 6px;
@@ -2444,30 +2452,30 @@ footer {
           color: #000;
           text-decoration: none;
           border-right: 1px solid #000; }
-        /* line 3211, ../sass/freegal40.scss */
+        /* line 3208, ../sass/freegal40.scss */
         footer .inner-wrapper .footer-nav li:last-child a {
           border-right: 0; }
-    /* line 3218, ../sass/freegal40.scss */
+    /* line 3215, ../sass/freegal40.scss */
     footer .inner-wrapper .languages {
       position: absolute;
       right: 0;
       top: 60px; }
-      /* line 3224, ../sass/freegal40.scss */
+      /* line 3221, ../sass/freegal40.scss */
       footer .inner-wrapper .languages li {
         display: block;
         float: left; }
-        /* line 3229, ../sass/freegal40.scss */
+        /* line 3226, ../sass/freegal40.scss */
         footer .inner-wrapper .languages li a {
           display: block;
           padding-left: 6px;
           padding-right: 6px;
           color: #000;
           text-decoration: none; }
-        /* line 3239, ../sass/freegal40.scss */
+        /* line 3236, ../sass/freegal40.scss */
         footer .inner-wrapper .languages li:nth-child(2) a, footer .inner-wrapper .languages li:nth-child(3) a, footer .inner-wrapper .languages li:nth-child(4) a {
           border-right: 1px solid #000; }
 
-/* line 3253, ../sass/freegal40.scss */
+/* line 3250, ../sass/freegal40.scss */
 .fmp-container {
   position: fixed;
   bottom: 0;

@@ -3,6 +3,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width" />
 		<link href="css/freegal40.css" rel="stylesheet" type="text/css" />
+		<script src="js/html5shiv.js"></script>
 	</head>
 		
 	<body>
