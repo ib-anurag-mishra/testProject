@@ -144,8 +144,8 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true)
         $modified_text = substr($text, 0, $char_count);
         if($truncateByWord == true){
             $modified_text = substr($modified_text, 0, strrpos($modified_text, " ", 0));
-            $modified_text = substr($modified_text, 0, $char_count) . "...";
         }
+        $modified_text = substr($modified_text, 0, $char_count) . "...";
     }
     else
     {
