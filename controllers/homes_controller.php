@@ -131,30 +131,26 @@ class HomesController extends AppController
         
         $this->set('nationalTopDownload', $nationalTopDownload);
 
+        $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
 
         // National Top 100 Albums slider        
-        if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
+        if ( $nationalTopAlbums === false)
         {
             $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
         }
-        else
-        {
-            $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
-        }
+       
         $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
 
        
         //featured artist slideshow code start
-        //if(1)
-        if (($artists = Cache::read("featured" . $country)) === false)
+        
+        $featured = Cache::read("featured" . $country);
+        
+        if ($featured === false)
         {
             $featured = $this->Common->getFeaturedArtists($territory);
         }
-        else
-        {
-            //fetched all the information from the cache
-            $featured = Cache::read("featured" . $country);
-        }
+       
         $this->set('featuredArtists', $featured);
       
         
@@ -174,7 +170,9 @@ class HomesController extends AppController
         //first check lenguage and territory set or not        
         if ($this->Session->read('territory') && $this->Session->read('Config.language'))
         {
-            if (($newsInfo = Cache::read($newCacheVarName)) === false)
+            $news_rs = Cache::read($newCacheVarName);
+            
+            if ($news_rs=== false)
             {
                 //if cache not set then run the queries
                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
@@ -183,11 +181,7 @@ class HomesController extends AppController
                 ));
                 Cache::write($newCacheVarName, $news_rs);
             }
-            else
-            {
-                //get all the information from the cache for news
-                $news_rs = Cache::read($newCacheVarName);
-            }
+            
         }
 
         $this->set('news', $news_rs);
@@ -198,28 +192,27 @@ class HomesController extends AppController
         /*
          *  Code For Coming Soon --- START
          */
-        if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
+        
+        $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
+        
+        if ($coming_soon_rs === false)
         //if(1)
         {
             $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
-        else    
-        {
-            $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
-        }       
+              
         $this->set('coming_soon_rs', $coming_soon_rs);
        
         // Videos
-        if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false)
+         
+        $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
+         
+        if ($coming_soon_videos === false)
         {  
             
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
         }
-        else    
-        {
-            //  Show From Cache
-            $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
-        }
+        
        
         $this->set('coming_soon_videos', $coming_soon_videos);
 
