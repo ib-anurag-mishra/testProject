@@ -258,16 +258,16 @@ button::-moz-focus-inner {
 		top:65px;
 		width: 34px;
 		height: 34px;
-		background: url(../images/freegal_sprite.png) -440px -20px;
+		background: url(../images/freegal_sprite.png) -400px -20px;
 
 		&:hover {
 		
-			background: url(../images/freegal_sprite.png) -475px -20px;
+			background: url(../images/freegal_sprite.png) -435px -20px;
 		}
 
 		&:active {
 		
-			background: url(../images/freegal_sprite.png) -510px -20px;
+			background: url(../images/freegal_sprite.png) -470px -20px;
 		}
 
 	}
@@ -279,19 +279,19 @@ button::-moz-focus-inner {
 		top: 5px;
 		width: 28px;
 		height: 20px;
-		background: url(../images/freegal_sprite.png) -440px 0;
+		background: url(../images/freegal_sprite.png) -400px 0;
 
 
 	
 		&:hover {
 			
-			background: url(../images/freegal_sprite.png) -470px 0;
+			background: url(../images/freegal_sprite.png) -430px 0;
 
 		}
 		
 		&:active {
 			
-			background: url(../images/freegal_sprite.png) -500px 0;
+			background: url(../images/freegal_sprite.png) -460px 0;
 		}
 
 
@@ -304,28 +304,28 @@ button::-moz-focus-inner {
 		top:5px;
 		width: 26px;
 		height:20px;
-		background: url(../images/freegal_sprite.png) -220px -200px;
+		background: url(../images/freegal_sprite.png) 0 -100px;
 
 
 	
 		&:hover {
 			
-			background: url(../images/freegal_sprite.png) -250px -200px;
+			background: url(../images/freegal_sprite.png) -30px -100px;
 
 		}
 		
 		&:active {
 			
-			background: url(../images/freegal_sprite.png) -280px -200px;
+			background: url(../images/freegal_sprite.png) -30px -100px;
 		}
 
 		&.added-to-wishlist {
 
-			background: url(../images/freegal_sprite.png) -310px -200px;
+			background: url(../images/freegal_sprite.png) -90px -100px;
 
 			&:hover {
 			
-				background: url(../images/freegal_sprite.png) -340px -200px;
+				background: url(../images/freegal_sprite.png) -120px -100px;
 
 			}
 		}		
@@ -1117,15 +1117,15 @@ button::-moz-focus-inner {
 			position: absolute;
 			left: 0;
 			top:0;
-			background: url(../images/freegal_sprite.png) -550px 0;
+			background: url(../images/freegal_sprite.png) -200px 0;
 			
 			&:hover {
-				background: url(../images/freegal_sprite.png) -580px 0;
+				background: url(../images/freegal_sprite.png) -230px 0;
 				
 			}
 			
 			&:active {
-				background: url(../images/freegal_sprite.png) -610px 0;
+				background: url(../images/freegal_sprite.png) -260px 0;
 				
 			}
 
@@ -1140,16 +1140,16 @@ button::-moz-focus-inner {
 			top:0;
 			
 			
-			background: url(../images/freegal_sprite.png) -650px 0;
+			background: url(../images/freegal_sprite.png) -300px 0;
 			
 			&:hover {
 				
-				background: url(../images/freegal_sprite.png) -680px 0;
+				background: url(../images/freegal_sprite.png) -330px 0;
 			}
 			
 			&:active {
 				
-				background: url(../images/freegal_sprite.png) -710px 0;
+				background: url(../images/freegal_sprite.png) -360px 0;
 			}
 		}
 		
@@ -1308,15 +1308,15 @@ button::-moz-focus-inner {
 		top:6px;
 		width: 21px;
 		height: 20px;
-		background:url(../images/freegal_sprite.png) -440px -55px;
+		background:url(../images/freegal_sprite.png) -400px -55px;
 
 		&:hover {
-			background:url(../images/freegal_sprite.png) -461px -55px;
+			background:url(../images/freegal_sprite.png) -421px -55px;
 
 		}
 
 		&:active {
-			background:url(../images/freegal_sprite.png) -482px -55px;
+			background:url(../images/freegal_sprite.png) -442px -55px;
 
 		}
 	}
@@ -1424,20 +1424,20 @@ button::-moz-focus-inner {
 			top:9px;
 			width: 17px;
 			height: 17px;
-			background:url(../images/freegal_sprite.png) -100px -115px;
+			background:url(../images/freegal_sprite.png) -10px -20px;
 			@include opacity(.5);
 
 			&.highlighted {
-				background:url(../images/freegal_sprite.png) -120px -115px;
+				background:url(../images/freegal_sprite.png) -30px -20px;
 				@include opacity(1);
 				
 				&:hover {
-					background:url(../images/freegal_sprite.png) -140px -115px;
+					background:url(../images/freegal_sprite.png) -50px -20px;
 
 				}
 
 				&:active {
-					background:url(../images/freegal_sprite.png) -160px -115px;
+					background:url(../images/freegal_sprite.png) -70px -20px;
 
 				}
 
@@ -1611,7 +1611,7 @@ button::-moz-focus-inner {
 
 			
 			content: "";
-			background:url(../images/freegal_sprite.png) -90px -115px;
+			background:url(../images/freegal_sprite.png) 0 -20px;
 			position: absolute;
 			left:4px;
 			top:6px;
@@ -1646,10 +1646,10 @@ button::-moz-focus-inner {
 		width: 9px;
 		height: 9px;
 		outline:0;
-		background:url(../images/freegal_sprite.png) -180px -115px;
+		background:url(../images/freegal_sprite.png) -90px -20px;
 		&:checked {
 
-			background:url(../images/freegal_sprite.png) -190px -115px;
+			background:url(../images/freegal_sprite.png) -100px -20px;
 		}
 	}
 
@@ -2094,7 +2094,7 @@ button::-moz-focus-inner {
 
 						&::before {
 
-							background:url(../images/freegal_sprite.png) -190px -115px;
+							background:url(../images/freegal_sprite.png) -100px -20px;
 							content: "";
 							position:absolute;
 							left:8px;
@@ -2192,75 +2192,78 @@ button::-moz-focus-inner {
 	}
 	.genre-scroll-up {
 
-		background: url(../images/btn-scroll-down.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:10px;
 		top:8px;
-
+		background: url(../images/freegal_sprite.png) -400px -115px;
 		&:hover {
 
-			background: url(../images/btn-scroll-down.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -115px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-down.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -115px;
 		}
 	}
 
 	.genre-scroll-down {
 
-		background: url(../images/btn-scroll-up.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:50px;
 		top:8px;
+		background: url(../images/freegal_sprite.png) -400px -140px;
 		&:hover {
 
-			background: url(../images/btn-scroll-up.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -140px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-up.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -140px;
 		}
 	}
 
 	.artist-scroll-up {
 
-		background: url(../images/btn-scroll-down.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:330px;
 		top:8px;
 
+		background: url(../images/freegal_sprite.png) -400px -115px;
 		&:hover {
 
-			background: url(../images/btn-scroll-down.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -115px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-down.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -115px;
 		}
 	}
 
 	.artist-scroll-down {
 
-		background: url(../images/btn-scroll-up.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:370px;
 		top:8px;
+		background: url(../images/freegal_sprite.png) -400px -140px;
 		&:hover {
 
-			background: url(../images/btn-scroll-up.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -140px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-up.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -140px;
 		}
 	}
 
@@ -2388,7 +2391,7 @@ button::-moz-focus-inner {
 				position: absolute;
 				width: 25px;
 				height: 25px;
-				background:url(../images/freegal_sprite.png) -220px -170px;
+				background:url(../images/freegal_sprite.png) 0 -70px;
 			}
 			&.artists-header::before {
 
@@ -2398,7 +2401,7 @@ button::-moz-focus-inner {
 				position: absolute;
 				width: 25px;
 				height: 25px;
-				background:url(../images/freegal_sprite.png) -250px -170px;
+				background:url(../images/freegal_sprite.png) -30px -70px;
 			}
 
 			&.composers-header::before {
@@ -2409,7 +2412,7 @@ button::-moz-focus-inner {
 				position: absolute;
 				width: 25px;
 				height: 25px;
-				background:url(../images/freegal_sprite.png) -280px -170px;
+				background:url(../images/freegal_sprite.png) -60px -70px;
 			}
 
 			&.videos-header::before {
@@ -2420,7 +2423,7 @@ button::-moz-focus-inner {
 				position: absolute;
 				width: 25px;
 				height: 25px;
-				background:url(../images/freegal_sprite.png) -310px -170px;
+				background:url(../images/freegal_sprite.png) -90px -70px;
 			}
 
 			&.genres-header::before {
@@ -2431,7 +2434,7 @@ button::-moz-focus-inner {
 				position: absolute;
 				width: 25px;
 				height: 25px;
-				background:url(../images/freegal_sprite.png) -340px -170px;
+				background:url(../images/freegal_sprite.png) -120px -70px;
 			}
 
 			&.songs-header::before {
@@ -2441,7 +2444,7 @@ button::-moz-focus-inner {
 				position: absolute;
 				width: 25px;
 				height: 25px;
-				background:url(../images/freegal_sprite.png) -370px -170px;
+				background:url(../images/freegal_sprite.png) -150px -70px;
 
 			}
 
@@ -2456,15 +2459,15 @@ button::-moz-focus-inner {
 			width: 23px;
 			height: 23px;
 			text-indent: -9999px;
-			background:url(../images/freegal_sprite.png) -90px -135px;
+			background:url(../images/freegal_sprite.png) 0 -40px;
 			&:hover {
-				background:url(../images/freegal_sprite.png) -115px -135px;
+				background:url(../images/freegal_sprite.png) -25px -40px;
 
 			}
 
 			&:active {
 
-				background:url(../images/freegal_sprite.png) -140px -135px;
+				background:url(../images/freegal_sprite.png) -50px -40px;
 
 			}
 
@@ -2630,7 +2633,7 @@ button::-moz-focus-inner {
 			top:9px;
 			width: 17px;
 			height: 17px;
-			background:url(../images/freegal_sprite.png) -100px -115px;
+			background:url(../images/freegal_sprite.png) -10px -20px;
 			@include opacity(.5);
 
 			&:hover {
@@ -2639,17 +2642,17 @@ button::-moz-focus-inner {
 			}
 
 			&.highlighted {
-				background:url(../images/freegal_sprite.png) -120px -115px;
+				background:url(../images/freegal_sprite.png) -30px -20px;
 				@include opacity(1);
 				
 				&:hover {
-					background:url(../images/freegal_sprite.png) -140px -115px;
+					background:url(../images/freegal_sprite.png) -50px -20px;
 
 
 				}
 
 				&:active {
-					background:url(../images/freegal_sprite.png) -160px -115px;
+					background:url(../images/freegal_sprite.png) -70px -20px;
 
 				}
 
@@ -2811,7 +2814,7 @@ button::-moz-focus-inner {
 
 			
 			content: "";
-			background:url(../images/freegal_sprite.png) -90px -115px;
+			background:url(../images/freegal_sprite.png) 0 -20px;
 			position: absolute;
 			left:4px;
 			top:6px;
@@ -2846,10 +2849,10 @@ button::-moz-focus-inner {
 		width: 9px;
 		height: 9px;
 		outline:0;
-		background:url(../images/freegal_sprite.png) -180px -115px;
+		background:url(../images/freegal_sprite.png) -90px -20px;
 		&:checked {
 
-			background:url(../images/freegal_sprite.png) -190px -115px;
+			background:url(../images/freegal_sprite.png) -100px -20px;
 		}
 	}
 
@@ -3094,15 +3097,15 @@ button::-moz-focus-inner {
 		&.sr-albums-prev {
 
 			left:0;
-			background:url(../images/freegal_sprite.png) -550px 0;
+			background:url(../images/freegal_sprite.png) -200px 0;
 
 			&:hover {
-				background:url(../images/freegal_sprite.png) -580px 0;
+				background:url(../images/freegal_sprite.png) -230px 0;
 
 			}
 
 			&:active {
-				background:url(../images/freegal_sprite.png) -610px 0;
+				background:url(../images/freegal_sprite.png) -260px 0;
 
 			}
 
@@ -3111,15 +3114,15 @@ button::-moz-focus-inner {
 		&.sr-albums-next {
 
 			right:0;
-			background:url(../images/freegal_sprite.png) -650px 0;
+			background:url(../images/freegal_sprite.png) -300px 0;
 
 			&:hover {
-				background:url(../images/freegal_sprite.png) -680px 0;
+				background:url(../images/freegal_sprite.png) -330px 0;
 
 			}
 
 			&:active {
-				background:url(../images/freegal_sprite.png) -710px 0;
+				background:url(../images/freegal_sprite.png) -360px 0;
 
 			}
 
