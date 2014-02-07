@@ -101,9 +101,10 @@ class HomesController extends AppController
         }
 
 
+         $nationalTopDownload = Cache::read("national" . $territory);
+        
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national" . $territory)) === false)
-        //if(1)
+        if ($nationalTopDownload === false)        
         {
             if($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ')
             {
@@ -127,10 +128,7 @@ class HomesController extends AppController
                 $nationalTopDownload = $this->Common->getNationalTop100($territory);
             }                                    
         }
-        else
-        {
-            $nationalTopDownload = Cache::read("national" . $territory);
-        }
+        
         $this->set('nationalTopDownload', $nationalTopDownload);
 
 
