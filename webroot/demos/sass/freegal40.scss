@@ -18,6 +18,16 @@
 
 $default-transition-duration: 500ms;
 
+*,
+*:before,
+*:after { 
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box; 
+	   		box-sizing: border-box;
+}
+
+
+
 body { font-family: Arial, Helvetica, sans-serif; }
 
 img {
@@ -64,8 +74,16 @@ button {
 	@include appearance(none);
 	border: 0;
 	cursor: pointer;
-	outline: 0;
+	outline: none;
+	overflow:visible;
 }
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
+
+
 
 %faq-link {
 
@@ -136,7 +154,7 @@ button {
 				background:#fff;
 				padding: 10px;
 				text-decoration: none;
-				@include box-sizing(border-box);
+				
 				width: 175px;
 				
 				@include border-radius(0);
@@ -220,7 +238,7 @@ button {
 %gray-container-style {
 
 	.header-container,.pagination-container {
-		@include box-sizing(border-box);
+		
 		height: 36px;
 		border:1px solid #d0d0d0;
 		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
@@ -757,7 +775,7 @@ button {
 
 				margin: 0 0 0 20px;
 				width: 140px;
-				@include box-sizing(border-box);
+				
 				
 
 				
@@ -927,7 +945,6 @@ button {
 	padding-top: 26px;
 	border-right: 1px solid #e5e5e4;
 	padding-right: 10px;
-	@include box-sizing(border-box);
 	background: #fff;
 	height: 100%;
 	
@@ -1885,7 +1902,7 @@ button {
 				font-size: 14px;
 				font-weight: bold;
 				padding: 5px;
-				@include box-sizing(border-box);
+				
 				
 				position: relative;
 				
@@ -1900,7 +1917,7 @@ button {
 				padding-left:5px;
 				padding-right:5px;
 				padding-bottom:10px;
-				@include box-sizing(border-box);
+				
 
 				&::before {
 					
@@ -2000,7 +2017,7 @@ button {
 		height:34px;
 		color: #000;
 		
-		@include box-sizing(border-box);
+		
 		
 		font-size: 12px;
 		font-weight: bold;
@@ -2039,11 +2056,11 @@ button {
 
 		div {
 
-			@include box-sizing(border-box);
+			
 
 			li {
 				
-				@include box-sizing(border-box);
+				
 
 				&:nth-child(odd) {
 
@@ -2077,13 +2094,13 @@ button {
 
 						&::before {
 
-							background:url(../images/genre-row-selected.png);
+							background:url(../images/freegal_sprite.png) -190px -115px;
 							content: "";
 							position:absolute;
 							left:8px;
 							top:5px;
-							width: 11px;
-							height: 11px;
+							width: 9px;
+							height: 9px;
 						}
 					}
 
@@ -2118,6 +2135,8 @@ button {
 			a {
 
 				padding:5px 5px 5px 24px;
+
+
 			}
 		}
 	}
@@ -2264,10 +2283,10 @@ button {
 	@include border-radius(20px);
 	position:relative;
 	height: 32px;
-	border:1px solid #c9c9c9;
+	border: 1px solid #c9c9c9;
 	
-	color:#000;
-	float: left;
+	color: #000;
+	float: right;
 	&::after {
 
 		content: "";
@@ -2283,7 +2302,7 @@ button {
 
 		
 		@extend %form-reset;
-		height: 32px;
+		height: 30px;
 		margin-left: 50px;
 		width: 237px;
 		font-weight: bold;
@@ -2296,13 +2315,13 @@ button {
 		
 		@extend %form-reset;
 		cursor:pointer;
-		height: 32px;
+		height: 30px;
 		width: 55px;
 		color:#fff;
 		@include background-image(linear-gradient(#63c9eb, #58bee0));
 		@include border-radius(20px);
 		position:absolute;
-		right: 0;
+		right: -1px;
 		top:0;
 		border-left:1px solid #c9c9c9;
 
@@ -2464,7 +2483,7 @@ button {
 			height: 7px;
 			border:1px solid #d0d0d0;
 			@include background-image(linear-gradient(#fff, #ededed));
-			@include box-sizing(border-box);
+			
 		}
 		&::after {
 
@@ -2476,7 +2495,7 @@ button {
 			height: 7px;
 			border:1px solid #d0d0d0;
 			@include background-image(linear-gradient(#fff, #ededed));
-			@include box-sizing(border-box);
+			
 		}
 
 		li {
@@ -3015,9 +3034,14 @@ button {
 		padding-left:10px;
 		padding-right:10px;
 		height: 32px;
-		margin-right: 11px;
+		margin-right: 12px;
 		display: block;
-		@include box-sizing(border-box);
+
+		&.last {
+
+			margin-right: 0;
+		}
+		
 
 		&:hover {
 

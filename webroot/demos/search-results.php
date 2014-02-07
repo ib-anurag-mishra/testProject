@@ -15,8 +15,11 @@
 							<button>Composers</button>
 							<button>Videos</button>
 							<button>Genres</button>
-							<button>Songs</button>
-							<div class="search-container"><input type="text" id="search-page-search-text"><input type="submit" id="search-page-go" value="Go"></div>
+							<button class="last">Songs</button>
+							<div class="search-container">
+								<input type="text" id="search-page-search-text">
+								<input type="submit" id="search-page-go" value="Go">
+							</div>
 						</div>
 
 
