@@ -2100,27 +2100,52 @@ Class ArtistsController extends AppController
 
 
         $this->Song->Behaviors->attach('Containable');
-        $songs = $this->Song->find('all', array(
-            'fields' => array(
-                'DISTINCT Song.ReferenceID',
-                'Song.provider_type',
-                'Country.SalesDate'),
-            'conditions' => array('Song.ArtistText' => base64_decode($id),
-                'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
-                "Song.Sample_FileID != ''",
-                "Song.FullLength_FIleID != ''",
-                'Country.Territory' => $country, 
-                $cond,
-                'Song.provider_type = Country.provider_type'),
-            'contain' => array(
-                'Country' => array(
-                    'fields' => array('Country.Territory', 'Country.DownloadStatus')
-                )),
-            'recursive' => 0,
-            'order' => array(
-                'Country.SalesDate DESC'
-            ))
-        );
+//        $songs = $this->Song->find('all', array(
+//            'fields' => array(
+//                'DISTINCT Song.ReferenceID',
+//                'Song.provider_type',
+//                'Country.SalesDate'),
+//            'conditions' => array('Song.ArtistText' => base64_decode($id),
+//                'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
+//                "Song.Sample_FileID != ''",
+//                "Song.FullLength_FIleID != ''",
+//                'Country.Territory' => $country, 
+//                $cond,
+//                'Song.provider_type = Country.provider_type'),
+//            'contain' => array(
+//                'Country' => array(
+//                    'fields' => array('Country.Territory', 'Country.DownloadStatus')
+//                )),
+//            'recursive' => 0,
+//            'order' => array(
+//                'Country.SalesDate DESC'
+//            ))
+//        );
+        
+         $this->paginate = array(
+                        'conditions' => array('Song.ArtistText' => base64_decode($id),
+                                            'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
+                                            "Song.Sample_FileID != ''",
+                                            "Song.FullLength_FIleID != ''",
+                                            'Country.Territory' => $country, 
+                                            $cond,
+                                            'Song.provider_type = Country.provider_type'),
+                        'fields' => array( 'DISTINCT Song.ReferenceID',
+                                            'Song.provider_type',
+                                            'Country.SalesDate'),                        
+                        'contain' => array('Country' => array(
+                                                                'fields' => array('Country.Territory', 'Country.DownloadStatus')
+                                            )),
+                        'order' =>  array(
+                                            'Country.SalesDate DESC'
+                                         ),                        
+                        'cache' => 'yes',
+                        'chk' => 2
+                    );
+        
+            $this->paginate['limit'] = 50;
+            $this->Song->recursive = 0;
+            $songs = $this->paginate('Song');
 
         $val = '';
         $val_provider_type = '';

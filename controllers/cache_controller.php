@@ -552,7 +552,7 @@ class CacheController extends AppController {
   }     
         
         
-  function deleteCacheVar()
+  /*function deleteCacheVar()
     { 
         $this->layout = 'ajax';
         
@@ -562,8 +562,8 @@ class CacheController extends AppController {
             while (($buffer = fgets($handle, 4096)) !== false) 
             {
                 echo "<br>".$buffer;
-                
-                echo "<br>Deleted: ". $buffer . " ".Cache::delete("app_test_albums-9e0ae598dc119bf88790e6abe4fc5200");
+                Cache::delete("app_test_albums-9e0ae598dc119bf88790e6abe4fc5200");
+                echo "<br>Deleted: ". $buffer . " ";
                 die;
             }
             
@@ -577,7 +577,7 @@ class CacheController extends AppController {
         
         die;
         
-    }      
+    }    */  
   
         
         
