@@ -4746,11 +4746,11 @@ STR;
                     $this->Session->write('downloadVariArray', $downloadVariArray);
                 }
 
-                //update library table
-                $this->Library->setDataSource('master');
-                $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
-                $this->Library->query($sql);
-                $this->Library->setDataSource('default'); 
+//                //update library table
+//                $this->Library->setDataSource('master');
+//                $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
+//                $this->Library->query($sql);
+//                $this->Library->setDataSource('default'); 
                 
                 if ($id > 0)
                 {
