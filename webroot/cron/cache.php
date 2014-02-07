@@ -17,7 +17,7 @@
     curl_close($ch);
 
 
-    $CacheBackupurl = "http://www.freegalmusic.com/Resetcache/genrateXML";
+    $CacheBackupUrl = "http://www.freegalmusic.com/Resetcache/genrateXML";
     print $CacheBackupUrl;
     $ch2=curl_init();
     curl_setopt($ch2, CURLOPT_URL, $CacheBackupUrl);
