@@ -144,15 +144,13 @@ class HomesController extends AppController
        
         //featured artist slideshow code start
         
-        if (($artists = Cache::read("featured" . $country)) === false)
+        $featured = Cache::read("featured" . $country);
+        
+        if ($featured === false)
         {
             $featured = $this->Common->getFeaturedArtists($territory);
         }
-        else
-        {
-            //fetched all the information from the cache
-            $featured = Cache::read("featured" . $country);
-        }
+       
         $this->set('featuredArtists', $featured);
       
         
