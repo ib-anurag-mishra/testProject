@@ -1,6 +1,9 @@
 
 				</section>
 			</div>
+			<div class="fmp-container">
+				<div id="alt"></div>
+			</div>
 			<footer>
 				<div class="inner-wrapper">
 					<div class="legal">&copy; 2013 Library Ideas, LLC All Rights Reserved</div>
@@ -24,9 +27,8 @@
 					</ul>
 				</div>
 			</footer>
-			<div class="fmp-container">
-				<div id="alt"></div>
-			</div>
+			<div class="filler"></div>
+
 		</div>
 		<script type="text/javascript" src="js/freegal40-libraries.js"></script>
 

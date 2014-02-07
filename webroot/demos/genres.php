@@ -504,14 +504,16 @@ include 'header-sidebar.php';
 
 									</ul>
 								</div>
+
+							</div>
+							<div class="genre-button-container">
+								<button class="genre-scroll-up"></button>
+								<button class="genre-scroll-down"></button>
+								<button class="artist-scroll-up"></button>
+								<button class="artist-scroll-down"></button>
 							</div>
 						</section>
-						<div class="genre-button-container">
-							<button class="genre-scroll-up"></button>
-							<button class="genre-scroll-down"></button>
-							<button class="artist-scroll-up"></button>
-							<button class="artist-scroll-down"></button>
-						</div>
+
 					</section>
 
 

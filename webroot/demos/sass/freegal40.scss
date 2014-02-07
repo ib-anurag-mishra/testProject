@@ -2185,7 +2185,9 @@ button::-moz-focus-inner {
 		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
 		@include filter-gradient(#f9f9f9, #e9e9e9);
 		height: 34px;
-		border-top:1px solid #d3d3d3;
+		border-left:1px solid #d3d3d3;
+		border-right:1px solid #d3d3d3;
+		border-bottom:1px solid #d3d3d3;
 		position:relative;
 	}
 	.genre-scroll-up {
@@ -2305,6 +2307,7 @@ button::-moz-focus-inner {
 		height: 30px;
 		margin-left: 50px;
 		width: 237px;
+		
 		font-weight: bold;
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
@@ -2323,7 +2326,9 @@ button::-moz-focus-inner {
 		position:absolute;
 		right: -1px;
 		top:0;
-		border-left:1px solid #c9c9c9;
+		// border-left:1px solid #c9c9c9;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 12px;
 
 		&:hover {
 			@include background-image(linear-gradient(#7ed6f4, #62c4e4));
@@ -3292,6 +3297,9 @@ footer {
 	background: url(../images/player-bkg.jpg) repeat;
 	height: 100px;
 	text-align: center;	
+	z-index: 1;
 
 	
 }
+
+.filler { height: 100px; }
