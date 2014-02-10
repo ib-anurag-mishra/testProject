@@ -2143,7 +2143,7 @@ Class ArtistsController extends AppController
 //                        'chk' => 2
 //                    );
         
-           $songs = array(
+           $songs = $this->Songs->findSongs('all', array(
                         'conditions' => array('Song.ArtistText' => base64_decode($id),
                                             'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                                             "Song.Sample_FileID != ''",
@@ -2176,7 +2176,8 @@ Class ArtistsController extends AppController
                                             'Country.SalesDate' => 'desc'
                                          ),                        
                         'cache' => 'yes'                        
-                    );
+                    )
+                );
             
 
         $val = '';
