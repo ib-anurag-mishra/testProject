@@ -415,30 +415,6 @@ class QueueListDetailsController extends AppController
         die;
     }
     
-    /**
-     * function name : createFreegalPlaylist
-     * Description   : This function is used to retrieve Top 100 songs released in 2013
-     */
-    
-    function createFreegalPlaylist()
-    {       
-        set_time_limit(0);
-        $this->layout = 'ajax';
-        
-        $territoriesList = $this->Common->getTerritories(); 
-        
-        foreach($territoriesList as $territory)
-        {
-           echo "Territory: ".$territory; 
-        }
-        
-        
-        
-        die;
-        
-        
-    }
-
 }
 
 ?>

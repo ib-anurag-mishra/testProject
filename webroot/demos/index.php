@@ -2,15 +2,7 @@
 <?php
 include 'header-sidebar.php';
 ?>
-					<section class="hero">
-						<button class="hero-login"></button>
-					</section>
-					<section class="hero-mobile">
-						<div class="info-icon">i</div>
-						<div class="copy">We have now gone mobile! Check out the App Store or Google Play for your free App download!</div>
-						<a class="apple-icon" href="#"></a>
-						<a class="android-icon" href="#"></a>
-					</section>
+
 					<section class="top-albums">
 						<header>
 							<h2>Top Albums</h2>
@@ -22,10 +14,11 @@ include 'header-sidebar.php';
 								<ul class="clearfix">
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/pitbull.jpg"  />
+											<a href="#"><img src="images/album-covers/pitbull.jpg"  /></a>
 											<div class="ranking">1</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
+											<button class="wishlist-icon toggleable"></button>
 
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
@@ -51,17 +44,17 @@ include 'header-sidebar.php';
 											</ul>
 										</div>
 										<div class="album-info">
-											<p class="title"><a href="#">Planet Pit</a></p>
+											<p class="title"><a href="#">Planet Pit</a><span class="explicit"> (Explicit)</span></p>
 											<p class="artist"><a href="#">Pitbull</a></p>
 										</div>
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/carrie-underwood.jpg"  />
+											<a href="#"><img src="images/album-covers/carrie-underwood.jpg"  /></a>
 											<div class="ranking">2</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon added-to-wishlist toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -92,11 +85,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/michaeljackson.jpg"  />
+											<a href="#"><img src="images/album-covers/michaeljackson.jpg"  /></a>
 											<div class="ranking">3</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -127,11 +120,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/kellyclarkson.jpg"  />
+											<a href="#"><img src="images/album-covers/kellyclarkson.jpg"  /></a>
 											<div class="ranking">4</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -162,11 +155,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/msmr.jpg"  />
+											<a href="#"><img src="images/album-covers/msmr.jpg"  /></a>
 											<div class="ranking">5</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -197,11 +190,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/pitbull.jpg"  />
+											<a href="#"><img src="images/album-covers/pitbull.jpg"  /></a>
 											<div class="ranking">6</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -232,11 +225,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/carrie-underwood.jpg"  />
+											<a href="#"><img src="images/album-covers/carrie-underwood.jpg"  /></a>
 											<div class="ranking">7</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -267,11 +260,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/michaeljackson.jpg" />
+											<a href="#"><img src="images/album-covers/michaeljackson.jpg" /></a>
 											<div class="ranking">8</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -302,11 +295,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/kellyclarkson.jpg" />
+											<a href="#"><img src="images/album-covers/kellyclarkson.jpg" /></a>
 											<div class="ranking">9</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -337,11 +330,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/msmr.jpg" />
+											<a href="#"><img src="images/album-covers/msmr.jpg" /></a>
 											<div class="ranking">10</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -372,11 +365,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/pitbull.jpg" />
+											<a href="#"><img src="images/album-covers/pitbull.jpg" /></a>
 											<div class="ranking">11</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -407,11 +400,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/carrie-underwood.jpg" />
+											<a href="#"><img src="images/album-covers/carrie-underwood.jpg" /></a>
 											<div class="ranking">12</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -442,11 +435,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/michaeljackson.jpg" />
+											<a href="#"><img src="images/album-covers/michaeljackson.jpg" /></a>
 											<div class="ranking">13</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -477,11 +470,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/kellyclarkson.jpg" />
+											<a href="#"><img src="images/album-covers/kellyclarkson.jpg" /></a>
 											<div class="ranking">14</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -512,11 +505,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/msmr.jpg"  />
+											<a href="#"><img src="images/album-covers/msmr.jpg"  /></a>
 											<div class="ranking">15</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -547,11 +540,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/pitbull.jpg" />
+											<a href="#"><img src="images/album-covers/pitbull.jpg" /></a>
 											<div class="ranking">16</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -582,11 +575,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/carrie-underwood.jpg" />
+											<a href="#"><img src="images/album-covers/carrie-underwood.jpg" /></a>
 											<div class="ranking">17</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -617,11 +610,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/michaeljackson.jpg" />
+											<a href="#"><img src="images/album-covers/michaeljackson.jpg" /></a>
 											<div class="ranking">18</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -652,11 +645,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/kellyclarkson.jpg" />
+											<a href="#"><img src="images/album-covers/kellyclarkson.jpg" /></a>
 											<div class="ranking">19</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -687,11 +680,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/msmr.jpg" />
+											<a href="#"><img src="images/album-covers/msmr.jpg" /></a>
 											<div class="ranking">20</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -722,11 +715,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/pitbull.jpg" />
+											<a href="#"><img src="images/album-covers/pitbull.jpg" /></a>
 											<div class="ranking">21</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -757,11 +750,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/carrie-underwood.jpg" />
+											<a href="#"><img src="images/album-covers/carrie-underwood.jpg" /></a>
 											<div class="ranking">22</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -792,11 +785,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/michaeljackson.jpg" />
+											<a href="#"><img src="images/album-covers/michaeljackson.jpg" /></a>
 											<div class="ranking">23</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -827,11 +820,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/kellyclarkson.jpg" />
+											<a href="#"><img src="images/album-covers/kellyclarkson.jpg" /></a>
 											<div class="ranking">24</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -862,11 +855,11 @@ include 'header-sidebar.php';
 									</li>
 									<li>
 										<div class="album-cover-container">
-											<img src="images/album-covers/msmr.jpg" />
+											<a href="#"><img src="images/album-covers/msmr.jpg" /></a>
 											<div class="ranking">25</div>
 											<button class="play-btn-icon toggleable"></button>
 											<button class="playlist-menu-icon toggleable"></button>
-
+											<button class="wishlist-icon toggleable"></button>
 											<ul>
 												<li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
 												<li><a href="#">David's Favorites</a></li>
@@ -930,6 +923,8 @@ include 'header-sidebar.php';
 								<button class="multi-select-icon"></button>
 								<section class="options-menu">
 									<ul>
+										<li><a href="#" class="select-all">Select All</a></li>
+										<li><a href="#" class="clear-all">Clear All</a></li>										
 										<li><a href="#">Add to Wishlist</a></li>
 										<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
 									</ul>
@@ -1322,6 +1317,406 @@ include 'header-sidebar.php';
 								<div class="row">
 									<button class="play-btn"></button>
 									<div class="ranking">10</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">11</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">12</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">13</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">14</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">15</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">16</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">17</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">18</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">19</div>
+									<div class="song-name"><a href="#">Say Something</a></div>
+									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+									<div class="time">3:23</div>
+									<button class="menu-btn"></button>
+									<section class="options-menu">
+										<ul>
+											<li><a href="#">Download</a></li>
+											<li><a href="#">Add to Wishlist</a></li>
+											<li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+										</ul>
+										<ul class="playlist-menu">
+											<li><a href="#">Create New Playlist</a></li>
+											<li><a href="#">Playlist 1</a></li>
+											<li><a href="#">Playlist 2</a></li>
+											<li><a href="#">Playlist 3</a></li>
+											<li><a href="#">Playlist 4</a></li>
+											<li><a href="#">Playlist 5</a></li>
+											<li><a href="#">Playlist 6</a></li>
+											<li><a href="#">Playlist 7</a></li>
+											<li><a href="#">Playlist 8</a></li>
+											<li><a href="#">Playlist 9</a></li>
+											<li><a href="#">Playlist 10</a></li>
+											<li><a href="#">Playlist 11</a></li>
+											<li><a href="#">Playlist 12</a></li>
+											<li><a href="#">Playlist 13</a></li>
+											<li><a href="#">Playlist 14</a></li>
+											<li><a href="#">Playlist 15</a></li>
+											<li><a href="#">Playlist 16</a></li>
+											<li><a href="#">Playlist 17</a></li>
+											<li><a href="#">Playlist 18</a></li>
+											<li><a href="#">Playlist 19</a></li>
+											<li><a href="#">Playlist 20</a></li>
+										</ul>											
+									</section>
+									<input type="checkbox" class="row-checkbox">
+								</div>
+								<div class="row">
+									<button class="play-btn"></button>
+									<div class="ranking">20</div>
 									<div class="song-name"><a href="#">Say Something</a></div>
 									<div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
 									<div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
@@ -2664,39 +3059,9 @@ include 'header-sidebar.php';
 							-->
 						</div>
 					</section>
-				</section>	
-			</div>
-			<footer>
-				<div class="inner-wrapper">
-					<div class="legal">&copy; 2013 Library Ideas, LLC All Rights Reserved</div>
-					<ul class="footer-nav clearfix">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Music Videos</a></li>
-						<li><a href="#">Most Popular</a></li>
-						<li><a href="#">New Release</a></li>
-						<li><a href="#">Genres</a></li>
-						<li><a href="#">Terms &amp; Conditions</a></li>
-						<li><a href="#">FAQ</a></li>
-					</ul>
-					
-					<ul class="languages clearfix">
-						<li>Also available in</li>
-						<li><a href="#">English</a></li>
-						<li><a href="#">Espanol</a></li>
-						<li><a href="#">Francais</a></li>
-						<li><a href="#">Italiano</a></li>
 
-					</ul>
-				</div>
-			</footer>
-			<div class="fmp-container">
-				<div id="alt"></div>
-			</div>
 
-		</div>
-		<script src="javascripts/libraries.js"></script>
-		<script src="javascripts/site.js"></script>
-	</body>
-		
 
-</html>
+<?php
+include 'footer.php'; 
+?>

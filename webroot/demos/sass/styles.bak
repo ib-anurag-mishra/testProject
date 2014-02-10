@@ -1,0 +1,89 @@
+/*
+.hero {
+
+	width:847px;
+	height:243px;
+	background:url(../images/hero.jpg);
+	position: relative;
+
+	.hero-login {
+
+		position: absolute;
+		left: 326px;
+		top:178px;
+		width: 202px;
+		height: 35px;
+		background:url(../images/freegal_sprite.png) 0 -163px;
+
+		&:hover {
+
+			background:url(../images/freegal_sprite.png) 0 -198px;
+		}
+		&:active {
+
+			background:url(../images/freegal_sprite.png) 0 -233px;
+		}
+	}
+}
+
+.hero-mobile {
+
+	width:847px;
+	height:50px;
+	background:#58c6ea;
+	position: relative;
+
+
+
+	.info-icon {
+
+		position: absolute;
+		left:14px;
+		top:14px;
+		background:#fff;
+		@include border-radius(12px);
+		width: 24px;
+		height: 24px;
+		color:#58c6ea;
+		
+		line-height: 24px;
+		font-style: italic;
+		font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
+		font-size: 20px;
+		@include box-sizing(border-box);
+		padding-left:8px;
+	}
+
+	.copy {
+
+		position: absolute;
+		left:50px;
+		top:20px;
+		color: #fff;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		
+	}
+
+	.apple-icon {
+		display: block;
+		position: absolute;
+		right:42px;
+		top:12px;
+		background:url(../images/freegal_sprite.png) -440px -80px;
+		width: 20px;
+		height: 25px;
+	}
+
+	.android-icon {
+		display: block;
+		position: absolute;
+		right:8px;
+		top:13px;
+		background:url(../images/freegal_sprite.png) -465px -80px;
+		width: 22px;
+		height: 23px;
+	}
+
+}
+*/

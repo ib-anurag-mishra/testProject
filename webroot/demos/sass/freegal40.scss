@@ -13,20 +13,28 @@
 @import "compass/css3/opacity";
 @import "compass/css3/text-shadow";
 @import "compass/css3/appearance";
+@import "compass/css3/inline-block";
 
 
 $default-transition-duration: 500ms;
 
-body {
-
-	font-family:Arial,Helvetica,sans-serif;
+*,
+*:before,
+*:after { 
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box; 
+	   		box-sizing: border-box;
 }
+
+
+
+body { font-family: Arial, Helvetica, sans-serif; }
 
 img {
 
-	margin:0;
-	padding:0;
-	display:block;
+	margin: 0;
+	padding: 0;
+	display: block;
 }
 .clearfix:after {
 	content: ".";
@@ -38,28 +46,70 @@ img {
 
 }
 
-@mixin form-reset {
+select::-ms-expand { display: none; }
 
-	margin:0;
-	padding:0;
-	border:0;
-	-webkit-appearance:none;
-	outline:0;
+
+$blue-link: #008fbd;
+$explicit-color:#eb212e;
+
+
+
+
+.explicit { color: $explicit-color; }
+
+
+%form-reset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	-webkit-appearance: none;
+	outline: 0;
+
 }
 
 button {
 
-	margin:0;
-	padding:0;
-	-webkit-appearance:none;
-	border:0;
-	cursor:pointer;
-	outline:0;
+	margin: 0;
+	padding: 0;
+	@include appearance(none);
+	border: 0;
+	cursor: pointer;
+	outline: none;
+	overflow:visible;
 }
 
-@mixin header-button-style {
-	
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
 
+
+
+%faq-link {
+
+	.faq-link {
+
+		position: absolute;
+		right: 0;
+		top: 0;
+		font-size: 10px;
+		color: #333333;
+
+		a {
+
+			color: #008fbd;
+			text-decoration: none;
+
+			&:hover {
+
+				text-decoration: underline;
+			}
+		}
+
+	}
+}
+
+%header-button-style {
 	background:#d9ebf2;
 	font-size:12px;
 	color: #527988;
@@ -77,11 +127,14 @@ button {
 		@include background-image(linear-gradient(#d3e8f0, #d5e9f1));
 	}
 
-
 }
 
-@mixin options-menu-style {
-	
+
+
+
+
+%options-menu-style {
+
 	ul {
 		@include border-radius(5px);
 		border:1px solid #bdbdbd;
@@ -101,7 +154,7 @@ button {
 				background:#fff;
 				padding: 10px;
 				text-decoration: none;
-				@include box-sizing(border-box);
+				
 				width: 175px;
 				
 				@include border-radius(0);
@@ -138,7 +191,9 @@ button {
 
 }
 
-@mixin homepage-header {
+
+
+%homepage-header {
 	position: relative;
 	header {
 
@@ -178,16 +233,175 @@ button {
 
 }
 
-@mixin gray-container-style {
+
+
+%gray-container-style {
+
 	.header-container,.pagination-container {
-		@include box-sizing(border-box);
+		
 		height: 36px;
 		border:1px solid #d0d0d0;
 		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
 		position: relative;
 
-	}
+	}	
 }
+
+%album-cover-menu-and-icons {
+
+	.play-btn-icon {
+
+							
+
+		position: absolute;
+		left:65px;
+		top:65px;
+		width: 34px;
+		height: 34px;
+		background: url(../images/freegal_sprite.png) -400px -20px;
+
+		&:hover {
+		
+			background: url(../images/freegal_sprite.png) -435px -20px;
+		}
+
+		&:active {
+		
+			background: url(../images/freegal_sprite.png) -470px -20px;
+		}
+
+	}
+
+	.playlist-menu-icon {
+		
+		position: absolute;
+		left: 5px;
+		top: 5px;
+		width: 28px;
+		height: 20px;
+		background: url(../images/freegal_sprite.png) -400px 0;
+
+
+	
+		&:hover {
+			
+			background: url(../images/freegal_sprite.png) -430px 0;
+
+		}
+		
+		&:active {
+			
+			background: url(../images/freegal_sprite.png) -460px 0;
+		}
+
+
+	}
+
+	.wishlist-icon {
+
+		position: absolute;
+		left:35px;
+		top:5px;
+		width: 26px;
+		height:20px;
+		background: url(../images/freegal_sprite.png) 0 -100px;
+
+
+	
+		&:hover {
+			
+			background: url(../images/freegal_sprite.png) -30px -100px;
+
+		}
+		
+		&:active {
+			
+			background: url(../images/freegal_sprite.png) -30px -100px;
+		}
+
+		&.added-to-wishlist {
+
+			background: url(../images/freegal_sprite.png) -90px -100px;
+
+			&:hover {
+			
+				background: url(../images/freegal_sprite.png) -120px -100px;
+
+			}
+		}		
+	}
+
+	> ul {
+		
+		position: absolute;
+		left: 6px;
+		top:26px;
+		width: 177px;
+		max-height: 131px;
+		overflow-y: scroll;
+		display: none;
+		@include border-radius(5px);
+		border:1px solid #999;
+		z-index: 1;
+		&.active {
+			
+			display: block;
+		}
+		> li {
+			display: block;
+			background: #fff;
+			float: none;
+			margin-bottom: 0;
+			width: 100%;
+			a {
+				display: block;
+				padding:10px;
+				
+				text-decoration: none;
+				color:#000;
+				font-size: 11px;
+				
+				&:hover {
+					
+					background:#cfeff9;
+					
+					color: #000;
+					
+				}
+				
+				&.create-new-playlist {
+					
+					font-weight: bold;
+				}
+			}
+
+		}
+	}	
+
+}
+
+
+%toggleable {
+	.toggleable {
+
+		display: block;
+		@include opacity(0);
+
+		&.active {
+			
+			display: block;
+			@include opacity(.5);
+		}
+
+		&:hover {
+
+			@include opacity(1);
+		}	
+	}
+
+}
+
+
 
 .inner-wrapper,.content-wrapper {
 
@@ -314,7 +528,7 @@ button {
 			.login {
 				
 				float: right;
-				@include header-button-style;
+				@extend %header-button-style;
 				@include border-radius(20px);
 				padding:6px 10px;
 
@@ -554,14 +768,14 @@ button {
 			.browse {
 				
 				float: right;
-				@include header-button-style;
+				@extend %header-button-style;
 				@include border-radius(20px);
 
 				padding:6px 10px;
 
 				margin: 0 0 0 20px;
 				width: 140px;
-				@include box-sizing(border-box);
+				
 				
 
 				
@@ -593,6 +807,7 @@ button {
 					@include border-bottom-right-radius(0);
 					@include background-image(linear-gradient(#daecf2, #d3e8f0));
 					width: 100px;
+					height: 27px;
 					border-right: 1px solid #b1d3e0;
 					@include appearance(none);
 					text-overflow: '';
@@ -669,13 +884,14 @@ button {
 					}
 					
 					.go {
-						@include header-button-style;
+						
+						@extend %header-button-style;
 						@include border-radius(20px);
 						padding: 6px 10px;
 						position: absolute;
 						right: -1px;
 						top:0;
-
+						height: 27px;
 
 						
 					}
@@ -729,7 +945,6 @@ button {
 	padding-top: 26px;
 	border-right: 1px solid #e5e5e4;
 	padding-right: 10px;
-	@include box-sizing(border-box);
 	background: #fff;
 	height: 100%;
 	
@@ -883,97 +1098,11 @@ button {
 	}
 }
 
-.hero {
-
-	width:847px;
-	height:243px;
-	background:url(../images/hero.jpg);
-	position: relative;
-
-	.hero-login {
-
-		position: absolute;
-		left: 326px;
-		top:178px;
-		width: 202px;
-		height: 35px;
-		background:url(../images/freegal_sprite.png) 0 -163px;
-
-		&:hover {
-
-			background:url(../images/freegal_sprite.png) 0 -198px;
-		}
-		&:active {
-
-			background:url(../images/freegal_sprite.png) 0 -233px;
-		}
-	}
-}
-
-.hero-mobile {
-
-	width:847px;
-	height:50px;
-	background:#58c6ea;
-	position: relative;
-
-
-
-	.info-icon {
-
-		position: absolute;
-		left:14px;
-		top:14px;
-		background:#fff;
-		@include border-radius(12px);
-		width: 24px;
-		height: 24px;
-		color:#58c6ea;
-		
-		line-height: 24px;
-		font-style: italic;
-		font-family: Garamond, Baskerville, "Baskerville Old Face", "Hoefler Text", "Times New Roman", serif;
-		font-size: 20px;
-		@include box-sizing(border-box);
-		padding-left:8px;
-	}
-
-	.copy {
-
-		position: absolute;
-		left:50px;
-		top:20px;
-		color: #fff;
-		font-family: Helvetica, Arial, sans-serif;
-		font-size: 14px;
-		
-	}
-
-	.apple-icon {
-		display: block;
-		position: absolute;
-		right:42px;
-		top:12px;
-		background:url(../images/freegal_sprite.png) -440px -80px;
-		width: 20px;
-		height: 25px;
-	}
-
-	.android-icon {
-		display: block;
-		position: absolute;
-		right:8px;
-		top:13px;
-		background:url(../images/freegal_sprite.png) -465px -80px;
-		width: 22px;
-		height: 23px;
-	}
-
-}
 
 .top-albums {
 
-	@include homepage-header;
+	
+	@extend %homepage-header;
 
 	margin-top:20px;
 	.top-albums-carousel-container {
@@ -983,7 +1112,7 @@ button {
 		
 		.left-scroll-button {
 			
-			width: 37px;
+			width: 25px;
 			height: 162px;
 			position: absolute;
 			left: 0;
@@ -991,12 +1120,12 @@ button {
 			background: url(../images/freegal_sprite.png) -200px 0;
 			
 			&:hover {
-				background: url(../images/freegal_sprite.png) -237px 0;
+				background: url(../images/freegal_sprite.png) -230px 0;
 				
 			}
 			
 			&:active {
-				background: url(../images/freegal_sprite.png) -275px 0;
+				background: url(../images/freegal_sprite.png) -260px 0;
 				
 			}
 
@@ -1004,31 +1133,31 @@ button {
 		
 		.right-scroll-button {
 			
-			width: 37px;
+			width: 25px;
 			height: 162px;
 			position: absolute;
 			right: 0;
 			top:0;
 			
 			
-			background: url(../images/freegal_sprite.png) -320px 0;
+			background: url(../images/freegal_sprite.png) -300px 0;
 			
 			&:hover {
 				
-				background: url(../images/freegal_sprite.png) -360px 0;
+				background: url(../images/freegal_sprite.png) -330px 0;
 			}
 			
 			&:active {
 				
-				background: url(../images/freegal_sprite.png) -400px 0;
+				background: url(../images/freegal_sprite.png) -360px 0;
 			}
 		}
 		
 		.top-albums-carousel {
 			
 			margin-top: 10px;
-			margin-left: 39px;
-			margin-right: 39px;
+			margin-left: 28px;
+			margin-right: 28px;
 			height: 226px;
 			overflow:hidden;
 			position: relative;
@@ -1040,13 +1169,13 @@ button {
 			ul {
 				overflow-y: hidden;
 				height: 216px;
-				width: 4150px;
+				width: 4125px;
 				
 				li {
 					
 					float: left;
 					display: block;
-					margin-right: 4px;
+					margin-right: 3px;
 					margin-bottom: 10px;
 					width: 162px;
 					
@@ -1057,22 +1186,8 @@ button {
 						
 						position: relative;
 						
-						.toggleable {
+						@extend %toggleable;
 
-							display: block;
-							@include opacity(0);
-
-							&.active {
-								
-								display: block;
-								@include opacity(.5);
-							}
-
-							&:hover {
-
-								@include opacity(1);
-							}	
-						}
 
 						.ranking {
 
@@ -1080,113 +1195,26 @@ button {
 							right: 6px;
 							top:6px;;
 							text-align: center;
-							width: 50px;
-							height: 27px;
+							width: 40px;
+							height: 20px;
 							@include opacity(.75);
 							color:#000;
-							font-size: 18px;
+							font-size: 16px;
 							font-family: Helvetica, Arial, sans-serif;
 							font-weight: bold;
 							background:#fff;
 							font-style: italic;
-							line-height: 27px;
+							line-height: 20px;
 						}
-						.play-btn-icon {
 
-							position: absolute;
-							left:65px;
-							top:65px;
-							width: 34px;
-							height: 34px;
-							background: url(../images/freegal_sprite.png) -440px -20px;
-
-							&:hover {
-							
-								background: url(../images/freegal_sprite.png) -475px -20px;
-							}
-
-							&:active {
-							
-								background: url(../images/freegal_sprite.png) -510px -20px;
-							}
-						}
-						
-						.playlist-menu-icon {
-							
-							position: absolute;
-							left: 5px;
-							top: 5px;
-							width: 28px;
-							height: 20px;
-							background: url(../images/freegal_sprite.png) -440px 0;
+						@extend %album-cover-menu-and-icons;
 
 
-						
-							&:hover {
-								
-								background: url(../images/freegal_sprite.png) -470px 0;
-
-							}
-							
-							&:active {
-								
-								background: url(../images/freegal_sprite.png) -500px 0;
-							}
-
-
-						}
-						
-						> ul {
-							
-							position: absolute;
-							left: 6px;
-							top:26px;
-							width: 177px;
-							max-height: 131px;
-							overflow-y: scroll;
-							display: none;
-							@include border-radius(5px);
-							border:1px solid #999;
-							z-index: 1;
-							&.active {
-								
-								display: block;
-							}
-							> li {
-								display: block;
-								background: #fff;
-								float: none;
-								margin-bottom: 0;
-								width: 100%;
-								a {
-									display: block;
-									padding:10px;
-									
-									text-decoration: none;
-									color:#000;
-									font-size: 11px;
-									
-									&:hover {
-										
-										background:#cfeff9;
-										
-										color: #000;
-										
-									}
-									
-									&.create-new-playlist {
-										
-										font-weight: bold;
-									}
-								}
-				
-							}
-						}
 						img {
 							
 							width: 162px;
 							height: 162px;
-							@include box-shadow(0 0 4px rgba(0,0,0,.5));
+							
 							
 						}
 					}
@@ -1206,7 +1234,7 @@ button {
 
 	
 	.album-info {
-		font-size: 12px;
+		font-size: 13px;
 		
 		p {
 			
@@ -1217,11 +1245,11 @@ button {
 				overflow: hidden;
 				white-space: nowrap;
 				text-overflow: ellipsis;
-				font-size: 12px;
+				font-size: 13px;
 
 				a {
 
-					color:#000;
+					color:$blue-link;
 					text-decoration: none;
 
 					&:hover {
@@ -1238,6 +1266,7 @@ button {
 				text-overflow: ellipsis;
 				color:rgba(0,0,0,.5);
 				font-size: 12px;
+				
 
 				a {
 
@@ -1247,6 +1276,7 @@ button {
 					&:hover {
 
 						text-decoration: underline;
+
 					}
 				}						
 			}
@@ -1260,10 +1290,11 @@ button {
 
 .top-songs {
 
-	@include homepage-header;
+	
+	@extend %homepage-header;
 
-
-	@include gray-container-style;
+	
+	@extend %gray-container-style;
 
 	.top-songs-container {
 
@@ -1277,15 +1308,15 @@ button {
 		top:6px;
 		width: 21px;
 		height: 20px;
-		background:url(../images/freegal_sprite.png) -440px -55px;
+		background:url(../images/freegal_sprite.png) -400px -55px;
 
 		&:hover {
-			background:url(../images/freegal_sprite.png) -461px -55px;
+			background:url(../images/freegal_sprite.png) -421px -55px;
 
 		}
 
 		&:active {
-			background:url(../images/freegal_sprite.png) -482px -55px;
+			background:url(../images/freegal_sprite.png) -442px -55px;
 
 		}
 	}
@@ -1308,7 +1339,8 @@ button {
 
 
 		.top-songs-filter-menu {
-			@include options-menu-style;
+			
+			@extend %options-menu-style;
 			z-index: 1;
 			left:10px;
 			top:27px;
@@ -1392,20 +1424,20 @@ button {
 			top:9px;
 			width: 17px;
 			height: 17px;
-			background:url(../images/freegal_sprite.png) -100px -115px;
+			background:url(../images/freegal_sprite.png) -10px -20px;
 			@include opacity(.5);
 
 			&.highlighted {
-				background:url(../images/freegal_sprite.png) -120px -115px;
+				background:url(../images/freegal_sprite.png) -30px -20px;
 				@include opacity(1);
 				
 				&:hover {
-					background:url(../images/freegal_sprite.png) -140px -115px;
+					background:url(../images/freegal_sprite.png) -50px -20px;
 
 				}
 
 				&:active {
-					background:url(../images/freegal_sprite.png) -160px -115px;
+					background:url(../images/freegal_sprite.png) -70px -20px;
 
 				}
 
@@ -1416,7 +1448,8 @@ button {
 
 		.options-menu {
 
-			@include options-menu-style;
+			
+			@extend %options-menu-style;
 			position: absolute;
 			z-index: 1;
 			right: 8px;
@@ -1578,7 +1611,7 @@ button {
 
 			
 			content: "";
-			background:url(../images/freegal_sprite.png) -90px -115px;
+			background:url(../images/freegal_sprite.png) 0 -20px;
 			position: absolute;
 			left:4px;
 			top:6px;
@@ -1613,16 +1646,18 @@ button {
 		width: 9px;
 		height: 9px;
 		outline:0;
-		background:url(../images/freegal_sprite.png) -180px -115px;
+		background:url(../images/freegal_sprite.png) -90px -20px;
 		&:checked {
 
-			background:url(../images/freegal_sprite.png) -190px -115px;
+			background:url(../images/freegal_sprite.png) -100px -20px;
 		}
 	}
 
 	.options-menu {
 
-		@include options-menu-style;
+		
+		@extend %options-menu-style;
+
 		position: absolute;
 		z-index: 1;
 		right: 33px;
@@ -1867,7 +1902,7 @@ button {
 				font-size: 14px;
 				font-weight: bold;
 				padding: 5px;
-				@include box-sizing(border-box);
+				
 				
 				position: relative;
 				
@@ -1882,7 +1917,7 @@ button {
 				padding-left:5px;
 				padding-right:5px;
 				padding-bottom:10px;
-				@include box-sizing(border-box);
+				
 
 				&::before {
 					
@@ -1955,7 +1990,17 @@ button {
 
 
 .genres-page {
-	border:1px solid #d3d3d3;
+	position: relative;
+
+	> h3 {
+		font-size: 24px;
+		letter-spacing: 1px;
+		margin-bottom: 20px;
+	}
+
+	@extend %faq-link;
+	
+	.genres-container { border: 1px solid #d3d3d3; }
 	
 	header {
 		height: 34px;
@@ -1972,7 +2017,7 @@ button {
 		height:34px;
 		color: #000;
 		
-		@include box-sizing(border-box);
+		
 		
 		font-size: 12px;
 		font-weight: bold;
@@ -2011,11 +2056,11 @@ button {
 
 		div {
 
-			@include box-sizing(border-box);
+			
 
 			li {
 				
-				@include box-sizing(border-box);
+				
 
 				&:nth-child(odd) {
 
@@ -2049,13 +2094,13 @@ button {
 
 						&::before {
 
-							background:url(../images/genre-row-selected.png);
+							background:url(../images/freegal_sprite.png) -100px -20px;
 							content: "";
 							position:absolute;
 							left:8px;
 							top:5px;
-							width: 11px;
-							height: 11px;
+							width: 9px;
+							height: 9px;
 						}
 					}
 
@@ -2090,6 +2135,8 @@ button {
 			a {
 
 				padding:5px 5px 5px 24px;
+
+
 			}
 		}
 	}
@@ -2138,80 +2185,85 @@ button {
 		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
 		@include filter-gradient(#f9f9f9, #e9e9e9);
 		height: 34px;
-		border-top:1px solid #d3d3d3;
+		border-left:1px solid #d3d3d3;
+		border-right:1px solid #d3d3d3;
+		border-bottom:1px solid #d3d3d3;
 		position:relative;
 	}
 	.genre-scroll-up {
 
-		background: url(../images/btn-scroll-down.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:10px;
 		top:8px;
-
+		background: url(../images/freegal_sprite.png) -400px -115px;
 		&:hover {
 
-			background: url(../images/btn-scroll-down.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -115px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-down.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -115px;
 		}
 	}
 
 	.genre-scroll-down {
 
-		background: url(../images/btn-scroll-up.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:50px;
 		top:8px;
+		background: url(../images/freegal_sprite.png) -400px -140px;
 		&:hover {
 
-			background: url(../images/btn-scroll-up.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -140px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-up.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -140px;
 		}
 	}
 
 	.artist-scroll-up {
 
-		background: url(../images/btn-scroll-down.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:330px;
 		top:8px;
 
+		background: url(../images/freegal_sprite.png) -400px -115px;
 		&:hover {
 
-			background: url(../images/btn-scroll-down.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -115px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-down.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -115px;
 		}
 	}
 
 	.artist-scroll-down {
 
-		background: url(../images/btn-scroll-up.png);
+		
 		width: 30px;
 		height: 20px;
 		position:absolute;
 		left:370px;
 		top:8px;
+		background: url(../images/freegal_sprite.png) -400px -140px;
 		&:hover {
 
-			background: url(../images/btn-scroll-up.png) -30px 0;
+			background: url(../images/freegal_sprite.png) -435px -140px;
 		}
 		&:active {
 
-			background: url(../images/btn-scroll-up.png) -60px 0;
+			background: url(../images/freegal_sprite.png) -470px -140px;
 		}
 	}
 
@@ -2219,7 +2271,15 @@ button {
 }
 
 .search-results-page {
+	@extend %faq-link;
 
+	.refine-text {
+
+		font-family: Helvetica,Arial,sans-serif;
+		font-weight: bold;
+		font-size: 12px;
+		margin-top: 33px;
+	}
 	
 }
 
@@ -2227,10 +2287,11 @@ button {
 
 	@include border-radius(20px);
 	position:relative;
-	height: 34px;
-	border:1px solid #c9c9c9;
-	margin-top:26px;
-	color:#000;
+	height: 32px;
+	border: 1px solid #c9c9c9;
+	
+	color: #000;
+	float: right;
 	&::after {
 
 		content: "";
@@ -2244,27 +2305,33 @@ button {
 	
 	#search-page-search-text {
 
-		@include form-reset;
-		height: 34px;
+		
+		@extend %form-reset;
+		height: 30px;
 		margin-left: 50px;
-		width: 500px;
+		width: 237px;
+		
 		font-weight: bold;
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
+
 	}
 
 	#search-page-go {
-		@include form-reset;
+		
+		@extend %form-reset;
 		cursor:pointer;
-		height: 34px;
+		height: 30px;
 		width: 55px;
 		color:#fff;
 		@include background-image(linear-gradient(#63c9eb, #58bee0));
 		@include border-radius(20px);
 		position:absolute;
-		right: 0;
+		right: -1px;
 		top:0;
-		border-left:1px solid #c9c9c9;
+		// border-left:1px solid #c9c9c9;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 12px;
 
 		&:hover {
 			@include background-image(linear-gradient(#7ed6f4, #62c4e4));
@@ -2284,16 +2351,16 @@ button {
 
 .search-results-heading {
 
-	font-size: 24px;
-	font-weight: normal;
+	font-size: 22px;
+	font-weight: bold;
 	font-family: Helvetica, Arial, sans-serif;
 	margin-top: 34px;
 }
 
 .search-results-text {
 
-	font-size:12px;
-	margin-top:20px;
+	font-size:13px;
+	margin-top:12px;
 	span {
 
 		font-weight: bold;
@@ -2306,78 +2373,78 @@ button {
 	header {
 
 		position: relative;
-		height: 44px;
+		height: 25px;
 		
 		h3 {
 			font-weight: normal;
-			font-size: 18px;
+			font-size: 16px;
 			font-family: Helvetica,Arial,sans-serif;
-			margin-left: 58px;
+			margin-left: 36px;
 			position: relative;
-			line-height:44px;
+			padding-top:5px;
 
 			&.albums-header::before {
 
 				content: "";
-				left: -57px;
+				left: -36px;
 				top:0;
 				position: absolute;
-				width: 43px;
-				height: 44px;
+				width: 25px;
+				height: 25px;
 				background:url(../images/freegal_sprite.png) 0 -70px;
 			}
 			&.artists-header::before {
 
 				content: "";
-				left: -57px;
+				left: -36px;
 				top:0;
 				position: absolute;
-				width: 43px;
-				height: 44px;
-				background:url(../images/freegal_sprite.png) -45px -70px;
+				width: 25px;
+				height: 25px;
+				background:url(../images/freegal_sprite.png) -30px -70px;
 			}
 
 			&.composers-header::before {
 
 				content: "";
-				left: -57px;
+				left: -36px;
 				top:0;
 				position: absolute;
-				width: 43px;
-				height: 44px;
-				background:url(../images/freegal_sprite.png) -90px -70px;
+				width: 25px;
+				height: 25px;
+				background:url(../images/freegal_sprite.png) -60px -70px;
 			}
 
 			&.videos-header::before {
 
 				content: "";
-				left: -57px;
+				left: -36px;
 				top:0;
 				position: absolute;
-				width: 43px;
-				height: 44px;
-				background:url(../images/freegal_sprite.png) -135px -70px;
+				width: 25px;
+				height: 25px;
+				background:url(../images/freegal_sprite.png) -90px -70px;
 			}
 
 			&.genres-header::before {
 
 				content: "";
-				left: -57px;
+				left: -36px;
 				top:0;
 				position: absolute;
-				width: 43px;
-				height: 44px;
-				background:url(../images/freegal_sprite.png) 0 -115px;
+				width: 25px;
+				height: 25px;
+				background:url(../images/freegal_sprite.png) -120px -70px;
 			}
 
 			&.songs-header::before {
 				content: "";
-				left: -57px;
+				left: -36px;
 				top:0;
 				position: absolute;
-				width: 43px;
-				height: 44px;
-				background:url(../images/freegal_sprite.png) -45px -115px;
+				width: 25px;
+				height: 25px;
+				background:url(../images/freegal_sprite.png) -150px -70px;
 
 			}
 
@@ -2388,19 +2455,19 @@ button {
 			position: absolute;
 			display: block;
 			right:0;
-			bottom:14px;
+			bottom:0;
 			width: 23px;
 			height: 23px;
 			text-indent: -9999px;
-			background:url(../images/freegal_sprite.png) -90px -135px;
+			background:url(../images/freegal_sprite.png) 0 -40px;
 			&:hover {
-				background:url(../images/freegal_sprite.png) -115px -135px;
+				background:url(../images/freegal_sprite.png) -25px -40px;
 
 			}
 
 			&:active {
 
-				background:url(../images/freegal_sprite.png) -140px -135px;
+				background:url(../images/freegal_sprite.png) -50px -40px;
 
 			}
 
@@ -2424,7 +2491,7 @@ button {
 			height: 7px;
 			border:1px solid #d0d0d0;
 			@include background-image(linear-gradient(#fff, #ededed));
-			@include box-sizing(border-box);
+			
 		}
 		&::after {
 
@@ -2436,14 +2503,14 @@ button {
 			height: 7px;
 			border:1px solid #d0d0d0;
 			@include background-image(linear-gradient(#fff, #ededed));
-			@include box-sizing(border-box);
+			
 		}
 
 		li {
 
 			height: 40px;
 			line-height: 40px;
-			padding-left:58px;
+			padding-left:36px;
 			border-left:1px solid #d0d0d0;
 			border-right:1px solid #d0d0d0;
 
@@ -2477,7 +2544,8 @@ button {
 
 
 
-		@include gray-container-style;
+		
+		@extend %gray-container-style;
 
 
 	}
@@ -2565,20 +2633,26 @@ button {
 			top:9px;
 			width: 17px;
 			height: 17px;
-			background:url(../images/freegal_sprite.png) -100px -115px;
+			background:url(../images/freegal_sprite.png) -10px -20px;
 			@include opacity(.5);
 
+			&:hover {
+
+				@include opacity(1);
+			}
+
 			&.highlighted {
-				background:url(../images/freegal_sprite.png) -120px -115px;
+				background:url(../images/freegal_sprite.png) -30px -20px;
 				@include opacity(1);
 				
 				&:hover {
-					background:url(../images/freegal_sprite.png) -140px -115px;
+					background:url(../images/freegal_sprite.png) -50px -20px;
+
 
 				}
 
 				&:active {
-					background:url(../images/freegal_sprite.png) -160px -115px;
+					background:url(../images/freegal_sprite.png) -70px -20px;
 
 				}
 
@@ -2589,7 +2663,8 @@ button {
 
 		.options-menu {
 
-			@include options-menu-style;
+			
+			@extend %options-menu-style;
 			position: absolute;
 			z-index: 1;
 			right: 8px;
@@ -2739,7 +2814,7 @@ button {
 
 			
 			content: "";
-			background:url(../images/freegal_sprite.png) -90px -115px;
+			background:url(../images/freegal_sprite.png) 0 -20px;
 			position: absolute;
 			left:4px;
 			top:6px;
@@ -2774,16 +2849,17 @@ button {
 		width: 9px;
 		height: 9px;
 		outline:0;
-		background:url(../images/freegal_sprite.png) -180px -115px;
+		background:url(../images/freegal_sprite.png) -90px -20px;
 		&:checked {
 
-			background:url(../images/freegal_sprite.png) -190px -115px;
+			background:url(../images/freegal_sprite.png) -100px -20px;
 		}
 	}
 
 	.options-menu {
 
-		@include options-menu-style;
+		
+		@extend %options-menu-style;
 		position: absolute;
 		z-index: 1;
 		right: 33px;
@@ -2960,12 +3036,20 @@ button {
 		float: left;
 		border:1px solid #bbbbbb;
 		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
-		font-size: 14px;
+		font-size: 12px;
 		font-family: Helvetica, Arial, sans-serif;
 		font-weight: bold;
-		width: 109px;
-		height: 34px;
+		padding-left:10px;
+		padding-right:10px;
+		height: 32px;
 		margin-right: 12px;
+		display: block;
+
+		&.last {
+
+			margin-right: 0;
+		}
+		
 
 		&:hover {
 
@@ -2980,7 +3064,8 @@ button {
 		&.active {
 
 			color: #fff;
-			@include background-image(linear-gradient(#4fbcdf, #50c1e5));
+			
+			@include background-image(linear-gradient(#37a1c3, #4ebfe3 25%));
 			border:1px solid #008fbd;
 			
 			
@@ -2990,7 +3075,12 @@ button {
 	}
 }
 
+.search-results-page {
 
+	position: relative;
+
+
+}
 .search-results-albums-carousel	{
 
 	position: relative;
@@ -2998,24 +3088,24 @@ button {
 	margin-top:15px;
 	overflow:hidden;
 
-	button {
+	> button {
 
 		position: absolute;
 		top:0;
-		height: 164px;
-		width: 37px;
+		height: 162px;
+		width: 25px;
 		&.sr-albums-prev {
 
 			left:0;
-			background:url(../images/search-results-albums-carousel-sprite.png) 0 0;
+			background:url(../images/freegal_sprite.png) -200px 0;
 
 			&:hover {
-				background:url(../images/search-results-albums-carousel-sprite.png) -37px 0;
+				background:url(../images/freegal_sprite.png) -230px 0;
 
 			}
 
 			&:active {
-				background:url(../images/search-results-albums-carousel-sprite.png) -74px 0;
+				background:url(../images/freegal_sprite.png) -260px 0;
 
 			}
 
@@ -3024,15 +3114,15 @@ button {
 		&.sr-albums-next {
 
 			right:0;
-			background:url(../images/search-results-albums-carousel-sprite.png) -185px 0;
+			background:url(../images/freegal_sprite.png) -300px 0;
 
 			&:hover {
-				background:url(../images/search-results-albums-carousel-sprite.png) -148px 0;
+				background:url(../images/freegal_sprite.png) -330px 0;
 
 			}
 
 			&:active {
-				background:url(../images/search-results-albums-carousel-sprite.png) -111px 0;
+				background:url(../images/freegal_sprite.png) -360px 0;
 
 			}
 
@@ -3042,8 +3132,21 @@ button {
 
 	.search-results-albums {
 		overflow: hidden;
-		margin-left: 42px;
-		margin-right: 42px;
+		margin-left: 28px;
+		margin-right: 28px;
+
+		.album-cover-container {
+
+			position: relative;
+			width: 162px;
+			height: 162px;
+
+			@extend %toggleable;
+			@extend %album-cover-menu-and-icons;
+
+
+
+		}
 
 		.album-info {
 
@@ -3051,19 +3154,19 @@ button {
 		}
 		ul {
 
-			width: 1740px;
+			width: 1650px;
 		}
 
 		li {
 
 			float: left;
-			margin-right: 12px;
+			margin-right: 3px;
 
 			img {
 
 				width: 162px;
 				height: 162px;
-				@include box-shadow(0 0 4px rgba(0,0,0,.5));
+				
 			}
 		}
 		p {
@@ -3072,14 +3175,14 @@ button {
 		}
 		.title {
 
-			font-size: 12px;
+			font-size: 13px;
 			font-weight: bold;
 			font-family: Helvetica, Arial, sans-serif;
 			color: #000;
 
 			a {
 
-				color:#000;
+				color:$blue-link;
 				text-decoration: none;
 
 				&:hover {
@@ -3105,6 +3208,88 @@ button {
 
 
 	
+footer {
+	
+	height: 98px;
+	background: url(../images/footer-bkg.gif) repeat;
+	color: #000;
+	font-size: 12px;
+	padding-bottom: 100px;
+	
+	.inner-wrapper {
+		
+		height: 98px;
+		position: relative;
+		width: 1215px;
+		margin: 0 auto;
+		
+		.legal {
+			position: absolute;
+			left: 75px;
+			top:25px;
+		}
+		
+		.footer-nav {
+		
+			position: absolute;
+			right: 0;
+			top:25px;
+			
+			li {
+				
+				display: block;
+				float: left;
+				
+				a {
+					
+					display: block;
+					padding-left: 6px;
+					padding-right: 6px;
+					color: #000;
+					text-decoration: none;
+					border-right: 1px solid #000;
+				}
+				
+				&:last-child a {
+					
+					border-right: 0;
+				}
+			}
+		}
+		
+		.languages {
+		
+			position: absolute;
+			right: 0;
+			top:60px;
+			
+			li {
+				
+				display: block;
+				float: left;
+				
+				a {
+					
+					display: block;
+					padding-left: 6px;
+					padding-right: 6px;
+					color: #000;
+					text-decoration: none;
+					
+				}
+				
+				&:nth-child(2) a,&:nth-child(3) a,&:nth-child(4) a {
+					
+					border-right: 1px solid #000;
+				}
+			}
+			
+			
+			
+		}
+	}
+}
+
 
 
 .fmp-container {
@@ -3115,6 +3300,9 @@ button {
 	background: url(../images/player-bkg.jpg) repeat;
 	height: 100px;
 	text-align: center;	
+	z-index: 1;
 
 	
 }
+
+.filler { height: 100px; }

@@ -11,36 +11,37 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/stylesheets\/print.css" : {
+    "\/images\/album-covers\/kellyclarkson.jpg" : {
       "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-covers\/kellyclarkson.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-covers\/kellyclarkson.jpg",
+      "initialSize" : 5085,
+      "fileType" : 4096
+    },
+    "\/images\/search-results-albums-carousel-sprite.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/search-results-albums-carousel-sprite.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/search-results-albums-carousel-sprite.png",
+      "initialSize" : 4388,
+      "fileType" : 8192
+    },
+    "\/js\/freegal40-site.js" : {
+      "ignoreWasSetByUser" : 1,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/print.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/sass\/ie.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/ie.scss",
-      "outputStyle" : 3,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/stylesheets\/ie.css",
-      "fileType" : 4,
-      "debugStyle" : 0
-    },
-    "\/javascripts\/swfobject.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/swfobject.js",
+      "inputAbbreviatedPath" : "\/js\/freegal40-site.js",
       "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/swfobject-ck.js",
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/js\/freegal40-site-ck.js",
       "fileType" : 64
     },
     "\/images\/freegal-logo.png" : {
@@ -54,302 +55,15 @@
       "initialSize" : 12176,
       "fileType" : 8192
     },
-    "\/sass\/screen.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+    "\/js\/freegal40-libraries.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/screen.scss",
-      "outputStyle" : 3,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/stylesheets\/screen.css",
-      "fileType" : 4,
-      "debugStyle" : 0
-    },
-    "\/sass\/styles.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/styles.scss",
-      "outputStyle" : 3,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/stylesheets\/styles.css",
-      "fileType" : 4,
-      "debugStyle" : 0
-    },
-    "\/images\/featured-menu-border-rpt.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/featured-menu-border-rpt.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/featured-menu-border-rpt.png",
-      "initialSize" : 979,
-      "fileType" : 8192
-    },
-    "\/images\/album-covers\/msmr.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-covers\/msmr.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-covers\/msmr.jpg",
-      "initialSize" : 10290,
-      "fileType" : 4096
-    },
-    "\/images\/btn-scroll-down.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/btn-scroll-down.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/btn-scroll-down.png",
-      "initialSize" : 2024,
-      "fileType" : 8192
-    },
-    "\/javascripts\/html5shiv.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/html5shiv.js",
+      "inputAbbreviatedPath" : "\/js\/freegal40-libraries.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/html5shiv-ck.js",
-      "fileType" : 64
-    },
-    "\/genres.php" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/genres.php",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
-    "\/images\/genre-row-selected.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/genre-row-selected.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/genre-row-selected.png",
-      "initialSize" : 1281,
-      "fileType" : 8192
-    },
-    "\/images\/search-results-albums-carousel-sprite.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/search-results-albums-carousel-sprite.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/search-results-albums-carousel-sprite.png",
-      "initialSize" : 4388,
-      "fileType" : 8192
-    },
-    "\/images\/btn-scroll-up.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/btn-scroll-up.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/btn-scroll-up.png",
-      "initialSize" : 1968,
-      "fileType" : 8192
-    },
-    "\/images\/album-covers\/michaeljackson.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-covers\/michaeljackson.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-covers\/michaeljackson.jpg",
-      "initialSize" : 7394,
-      "fileType" : 4096
-    },
-    "\/images\/player-bkg.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/player-bkg.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/player-bkg.jpg",
-      "initialSize" : 3165,
-      "fileType" : 4096
-    },
-    "\/javascripts\/jquery-1.10.2.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/jquery-1.10.2.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/jquery-1.10.2-ck.js",
-      "fileType" : 64
-    },
-    "\/images\/album-result-shakira2.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-result-shakira2.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-result-shakira2.jpg",
-      "initialSize" : 9329,
-      "fileType" : 4096
-    },
-    "\/stylesheets\/screen.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/screen.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/config.rb" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/config.rb",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 32768
-    },
-    "\/stylesheets\/styles.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/styles.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/images\/album-covers\/kellyclarkson.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-covers\/kellyclarkson.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-covers\/kellyclarkson.jpg",
-      "initialSize" : 5085,
-      "fileType" : 4096
-    },
-    "\/javascripts\/libraries.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/libraries.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/libraries-ck.js",
-      "fileType" : 64
-    },
-    "\/javascripts\/modernizr.custom.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/modernizr.custom.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 1,
-      "outputAbbreviatedPath" : "\/javascripts\/modernizr.custom-ck.js",
-      "fileType" : 64
-    },
-    "\/images\/album-covers\/pitbull.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-covers\/pitbull.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-covers\/pitbull.jpg",
-      "initialSize" : 6879,
-      "fileType" : 4096
-    },
-    "\/stylesheets\/ie.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/stylesheets\/ie.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
-    "\/images\/album-result-shakira3.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-result-shakira3.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-result-shakira3.jpg",
-      "initialSize" : 9931,
-      "fileType" : 4096
-    },
-    "\/images\/album-result-shakira.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-result-shakira.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-result-shakira.jpg",
-      "initialSize" : 9828,
-      "fileType" : 4096
-    },
-    "\/images\/album-covers\/carrie-underwood.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-covers\/carrie-underwood.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-covers\/carrie-underwood.jpg",
-      "initialSize" : 9135,
-      "fileType" : 4096
-    },
-    "\/header-sidebar.php" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/header-sidebar.php",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
-    "\/images\/album-result-shakira4.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/album-result-shakira4.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/album-result-shakira4.jpg",
-      "initialSize" : 9183,
-      "fileType" : 4096
-    },
-    "\/javascripts\/site.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/javascripts\/site.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/javascripts\/site-ck.js",
+      "outputAbbreviatedPath" : "\/js\/freegal40-libraries-ck.js",
       "fileType" : 64
     },
     "\/images\/hero.jpg" : {
@@ -363,16 +77,134 @@
       "initialSize" : 45204,
       "fileType" : 4096
     },
-    "\/images\/carousel-sprite.png" : {
+    "\/js\/jquery-1.10.2.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/js\/jquery-1.10.2.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/js\/jquery-1.10.2-ck.js",
+      "fileType" : 64
+    },
+    "\/sass\/freegal40.scss" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/images\/carousel-sprite.png",
+      "inputAbbreviatedPath" : "\/sass\/freegal40.scss",
+      "outputStyle" : 3,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/css\/freegal40.css",
+      "fileType" : 4,
+      "debugStyle" : 0
+    },
+    "\/js\/swfobject.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/js\/swfobject.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/js\/swfobject-ck.js",
+      "fileType" : 64
+    },
+    "\/genres.php" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/genres.php",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/index.php" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/index.php",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/js\/html5shiv.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/js\/html5shiv.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/js\/html5shiv-ck.js",
+      "fileType" : 64
+    },
+    "\/images\/featured-menu-border-rpt.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/featured-menu-border-rpt.png",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/images\/carousel-sprite.png",
-      "initialSize" : 4082,
+      "outputAbbreviatedPath" : "\/images\/featured-menu-border-rpt.png",
+      "initialSize" : 979,
       "fileType" : 8192
+    },
+    "\/images\/album-result-shakira4.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-result-shakira4.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-result-shakira4.jpg",
+      "initialSize" : 9183,
+      "fileType" : 4096
+    },
+    "\/js\/site.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/js\/site.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/js\/site-ck.js",
+      "fileType" : 64
+    },
+    "\/js\/modernizr.custom.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/js\/modernizr.custom.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 1,
+      "outputAbbreviatedPath" : "\/js\/modernizr.custom-ck.js",
+      "fileType" : 64
+    },
+    "\/images\/album-covers\/pitbull.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-covers\/pitbull.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-covers\/pitbull.jpg",
+      "initialSize" : 6879,
+      "fileType" : 4096
+    },
+    "\/images\/album-covers\/michaeljackson.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-covers\/michaeljackson.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-covers\/michaeljackson.jpg",
+      "initialSize" : 7394,
+      "fileType" : 4096
     },
     "\/footer.php" : {
       "ignoreWasSetByUser" : 0,
@@ -382,6 +214,108 @@
       "inputAbbreviatedPath" : "\/footer.php",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/index.html.bak.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/index.html.bak.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/images\/album-covers\/carrie-underwood.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-covers\/carrie-underwood.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-covers\/carrie-underwood.jpg",
+      "initialSize" : 9135,
+      "fileType" : 4096
+    },
+    "\/images\/album-result-shakira2.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-result-shakira2.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-result-shakira2.jpg",
+      "initialSize" : 9329,
+      "fileType" : 4096
+    },
+    "\/config.rb" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/config.rb",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 32768
+    },
+    "\/images\/album-result-shakira.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-result-shakira.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-result-shakira.jpg",
+      "initialSize" : 9828,
+      "fileType" : 4096
+    },
+    "\/header-sidebar.php" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/header-sidebar.php",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/images\/album-covers\/msmr.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-covers\/msmr.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-covers\/msmr.jpg",
+      "initialSize" : 10290,
+      "fileType" : 4096
+    },
+    "\/css\/freegal40.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/css\/freegal40.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
+    "\/images\/player-bkg.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/player-bkg.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/player-bkg.jpg",
+      "initialSize" : 3165,
+      "fileType" : 4096
+    },
+    "\/images\/album-result-shakira3.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/images\/album-result-shakira3.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/images\/album-result-shakira3.jpg",
+      "initialSize" : 9931,
+      "fileType" : 4096
     },
     "\/images\/freegal_sprite.png" : {
       "ignoreWasSetByUser" : 0,
@@ -393,27 +327,6 @@
       "outputAbbreviatedPath" : "\/images\/freegal_sprite.png",
       "initialSize" : 17322,
       "fileType" : 8192
-    },
-    "\/index.php" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/index.php",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
-    "\/sass\/print.scss" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/sass\/print.scss",
-      "outputStyle" : 3,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/stylesheets\/print.css",
-      "fileType" : 4,
-      "debugStyle" : 0
     }
   },
   "manualImportLinks" : [

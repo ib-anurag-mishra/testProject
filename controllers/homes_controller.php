@@ -101,9 +101,10 @@ class HomesController extends AppController
         }
 
 
+         $nationalTopDownload = Cache::read("national" . $territory);
+        
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national" . $territory)) === false)
-        //if(1)
+        if ($nationalTopDownload === false)        
         {
             if($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ')
             {
@@ -127,36 +128,29 @@ class HomesController extends AppController
                 $nationalTopDownload = $this->Common->getNationalTop100($territory);
             }                                    
         }
-        else
-        {
-            $nationalTopDownload = Cache::read("national" . $territory);
-        }
+        
         $this->set('nationalTopDownload', $nationalTopDownload);
 
+        $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
 
         // National Top 100 Albums slider        
-        if (($national = Cache::read("nationaltop100albums" . $territory)) === false)
+        if ( $nationalTopAlbums === false)
         {
             $nationalTopAlbums = $this->Common->getNationalTop100Albums($territory);
         }
-        else
-        {
-            $nationalTopAlbums = Cache::read("nationaltop100albums" . $territory);
-        }
+       
         $this->set('nationalTopAlbumsDownload', $nationalTopAlbums);
 
        
         //featured artist slideshow code start
-        //if(1)
-        if (($artists = Cache::read("featured" . $country)) === false)
+        
+        $featured = Cache::read("featured" . $country);
+        
+        if ($featured === false)
         {
             $featured = $this->Common->getFeaturedArtists($territory);
         }
-        else
-        {
-            //fetched all the information from the cache
-            $featured = Cache::read("featured" . $country);
-        }
+       
         $this->set('featuredArtists', $featured);
       
         
@@ -176,7 +170,9 @@ class HomesController extends AppController
         //first check lenguage and territory set or not        
         if ($this->Session->read('territory') && $this->Session->read('Config.language'))
         {
-            if (($newsInfo = Cache::read($newCacheVarName)) === false)
+            $news_rs = Cache::read($newCacheVarName);
+            
+            if ($news_rs=== false)
             {
                 //if cache not set then run the queries
                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
@@ -185,11 +181,7 @@ class HomesController extends AppController
                 ));
                 Cache::write($newCacheVarName, $news_rs);
             }
-            else
-            {
-                //get all the information from the cache for news
-                $news_rs = Cache::read($newCacheVarName);
-            }
+            
         }
 
         $this->set('news', $news_rs);
@@ -200,28 +192,27 @@ class HomesController extends AppController
         /*
          *  Code For Coming Soon --- START
          */
-        if (($coming_soon = Cache::read("coming_soon_songs" . $territory)) === false)
+        
+        $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
+        
+        if ($coming_soon_rs === false)
         //if(1)
         {
             $coming_soon_rs = $this->Common->getComingSoonSongs($territory);
         }
-        else    
-        {
-            $coming_soon_rs = Cache::read("coming_soon_songs" . $territory);
-        }       
+              
         $this->set('coming_soon_rs', $coming_soon_rs);
        
         // Videos
-        if (($coming_soon = Cache::read("coming_soon_videos" . $territory)) === false)
+         
+        $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
+         
+        if ($coming_soon_videos === false)
         {  
             
             $coming_soon_videos = $this->Common->getComingSoonVideos($territory);
         }
-        else    
-        {
-            //  Show From Cache
-            $coming_soon_videos = Cache::read("coming_soon_videos" . $territory);
-        }
+        
        
         $this->set('coming_soon_videos', $coming_soon_videos);
 
@@ -3228,312 +3219,6 @@ STR;
         }
     }
 
-    function wishlistDownloadHome()
-    {
-        // Configure::write('debug', 0);
-        $this->layout = false;
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
-
-        $prodId = $_REQUEST['prodId'];
-        $CdnPath = $_REQUEST['CdnPath'];
-        $SaveAsName = $_REQUEST['SaveAsName'];
-        $id = $_REQUEST['id'];
-        $provider = $_REQUEST['provider'];
-
-
-        /**
-         * creates log file name
-         */
-        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
-        $log_id = md5(time());
-        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
-
-        /**
-         * Check if any of the required parameter is null or not set then log details 
-         * and return and error message to client 
-         */
-        if (empty($prodId) || empty($CdnPath) || empty($SaveAsName) || empty($provider) || empty($libId) || empty($patId))
-        {
-            $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider
-                    . "':DownloadComponentParameters-CDNPath= '" . $CdnPath . "':DownloadComponentParameters-SaveAsName= '" . $SaveAsName
-                    . "':DownloadComponentParameters-id= '" . $id . "':DownloadComponentParameters-Library= '" . $libId
-                    . "':DownloadComponentParameters-PatronId= '" . $patId . "':DownloadCompleteStatus=Fail";
-            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-            $this->log($log_data, $log_name);
-
-            echo "empty|Something went wrong during download.Please try again later.";
-            exit;
-        }
-
-        /*
-         * if all required field are not null then we continue 
-         * for download and  insert record in download table
-         */
-
-        $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
-        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
-        $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
-
-
-        $downloadsDetail = array();
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
-
-        //check for download availability
-        if ($libraryDownload != '1' || $patronDownload != '1')
-        {
-            echo "error";
-            exit;
-        }
-
-
-
-        //get details for this song
-        $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-        $insertArr = Array();
-        $insertArr['library_id'] = $libId;
-        $insertArr['patron_id'] = $patId;
-        $insertArr['ProdID'] = $prodId;
-        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-        $insertArr['provider_type'] = $provider;
-
-
-
-        $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
-        $checkValidation = $Setting['Siteconfig']['svalue'];
-        if ($checkValidation == 1)
-        {
-
-            $validationResult = $this->Downloads->validateDownload($prodId, $provider);
-
-            /**
-              records download component request & response
-             */
-            $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider . "':DownloadComponentResponse-Status='" . $validationResult[0] . "':DownloadComponentResponse-Msg='" . $validationResult[1] . "':DownloadComponentResponse-ErrorTYpe='" . $validationResult[2] . "'";
-
-            $checked = "true";
-            $validationPassed = $validationResult[0];
-            $validationPassedMessage = (($validationResult[0] == 0) ? 'false' : 'true');
-            $validationMessage = $validationResult[1];
-        }
-        else
-        {
-            $checked = "false";
-            $validationPassed = true;
-            $validationPassedMessage = "Not Checked";
-            $validationMessage = '';
-        }
-
-        //$user = $this->Auth->user();
-        $user = $this->Session->read('Auth.User.id');
-        if (empty($user))
-        {
-            $user = $this->Session->read('patron');
-        }
-        if ($validationPassed == true)
-        {
-            $this->log("Validation Checked : " . $checked . " Valdition Passed : " . $validationPassedMessage . " Validation Message : " . $validationMessage . " for ProdID :" . $prodId . " and Provider : " . $provider . " for library id : " . $this->Session->read('library') . " and user id : " . $user, 'download');
-
-            if ($this->Session->read('referral_url') && ($this->Session->read('referral_url') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'referral_url';
-            }
-            elseif ($this->Session->read('innovative') && ($this->Session->read('innovative') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative';
-            }
-            elseif ($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'mdlogin_reference';
-            }
-            elseif ($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'mndlogin_reference';
-            }
-            elseif ($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var';
-            }
-            elseif ($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_name';
-            }
-            elseif ($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_https_name';
-            }
-            elseif ($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_https';
-            }
-            elseif ($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
-            }
-            elseif ($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_https';
-            }
-            elseif ($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_wo_pin';
-            }
-            elseif ($this->Session->read('sip2') && ($this->Session->read('sip2') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2';
-            }
-            elseif ($this->Session->read('sip') && ($this->Session->read('sip') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip';
-            }
-            elseif ($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'innovative_var_wo_pin';
-            }
-            elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2_var';
-            }
-            elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2_var_wo_pin';
-            }
-            elseif ($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'sip2_var_wo_pin';
-            }
-            elseif ($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'ezproxy';
-            }
-            elseif ($this->Session->read('soap') && ($this->Session->read('soap') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'soap';
-            }
-            elseif ($this->Session->read('curl_method') && ($this->Session->read('curl_method') != ''))
-            {
-                $insertArr['email'] = '';
-                $insertArr['user_login_type'] = 'curl_method';
-            }
-            else
-            {
-                $insertArr['email'] = $this->Session->read('patronEmail');
-                $insertArr['user_login_type'] = 'user_account';
-            }
-
-            $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-            $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-
-            $downloadStatus = $latestdownloadStatus = 0;
-            //save to downloads table
-            $this->Download->setDataSource('master');
-            $this->Download->create();          //prepare model to insert new record
-            if ($this->Download->save($insertArr))
-            {
-                $downloadStatus = 1;
-                $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-                $this->Download->setDataSource('default');
-                $siteConfigData = $this->Album->query($siteConfigSQL);
-                $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-                if ($maintainLatestDownload)
-                {
-                    $this->LatestDownload->setDataSource('master');
-                    if ($this->LatestDownload->save($insertArr))
-                    {
-                        $latestdownloadStatus = 1;
-                    }
-                    $this->LatestDownload->setDataSource('default');
-                }
-
-                //add the download songs in the session array
-                if ($this->Session->read('downloadVariArray'))
-                {
-                    $downloadVariArray = $this->Session->read('downloadVariArray');
-                    $downloadVariArray[] = $prodId . '~' . $provider;
-                    $this->Session->write('downloadVariArray', $downloadVariArray);
-                }
-
-                //update library table
-                $this->Library->setDataSource('master');
-                $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
-                $this->Library->query($sql);
-                $this->Library->setDataSource('default');
-            }
-            else
-            {
-                $logs = $this->Download->getDataSource()->getLog();
-                $lastLog = end($logs['log']);
-                $query = $lastLog['query'];
-                $log_data .= "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
-            }
-            $this->Download->setDataSource('default');
-
-            $log_data .= ":SaveParameters-LibID='" . $insertArr['library_id'] . "':SaveParameters-Patron='" . $insertArr['patron_id'] . "':SaveParameters-ProdID='" . $insertArr['ProdID'] . "':SaveParameters-ProductID='" . $insertArr['ProductID'] . "':SaveParameters-ISRC='" . $insertArr['ISRC'] . "':SaveParameters-Artist='" . $insertArr['artist'] . "':SaveParameters-SongTitle='" . $insertArr['track_title'] . "':SaveParameters-UserLoginType='" . $insertArr['user_login_type'] . "':SaveParameters-ProviderType='" . $provider . "':SaveParameters-Email='" . $insertArr['email'] . "':SaveParameters-UserAgent='" . $insertArr['user_agent'] . "':SaveParameters-IP='" . $insertArr['ip'] . "':SaveParametersStatus-Download='" . $downloadStatus . "':SaveParametersStatus-LatestDownload='" . $latestdownloadStatus . "'";
-
-            if ($downloadStatus != $latestdownloadStatus)
-            {
-                $log_data .= ":NotInBothTable";
-            }
-
-            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-
-            $this->log($log_data, $log_name);
-
-
-            if ($id > 0)
-            {
-                //delete from wishlist table
-                $deleteSongId = $id;
-                $this->Wishlist->delete($deleteSongId);
-                //get no of downloads for this week
-            }
-
-            $this->Videodownload->recursive = -1;
-            $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $this->Download->recursive = -1;
-            $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-            $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
-            $this->Session->write('downloadCount', $downloadsUsed);
-
-            echo "suces|" . $downloadsUsed . "|" . $finalURL;
-            exit;
-        }
-        else
-        {
-            /**
-              complete records with validation fail
-             */
-            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------" . PHP_EOL;
-            $this->log($log_data, $log_name);
-
-            echo "invalid|" . $validationResult[1];
-            exit;
-        }
-    }
 
     /*
       Function Name : wishlistVideoDownload
@@ -4754,6 +4439,373 @@ STR;
       
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
+    }
+    
+    
+    /*
+     * Function Name : wishlistDownloadHome
+     * Desc : This function is responsible for download functionality for both songs and video  
+     * 
+     * @param   prodId  int 'ProdID'
+     * @param   CdnPath varchar 'CdnPath'
+     * @param   SaveAsName  varchar 'SaveAsName'
+     * @param   provider    varchar 'provider'
+     * @param   id    int   'id'
+     * 
+     * 
+     * @return string 
+     */
+    function wishlistDownloadHome()
+    {
+        // Configure::write('debug', 0);
+        
+        //set the layout fales because this is ajax call
+        $this->layout = false;
+        
+        //get all required variables
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
+        $prodId = $_REQUEST['prodId'];
+        $CdnPath = $_REQUEST['CdnPath'];
+        $SaveAsName = $_REQUEST['SaveAsName'];
+        $id = $_REQUEST['id'];
+        $provider = $_REQUEST['provider'];
+
+        //start the logs        
+        $log_name = 'stored_procedure_web_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+
+        /*
+         * Check if any of the required parameter is null or not set then log details and return and error message to client         *
+         */         
+         
+        if (empty($prodId) || empty($CdnPath) || empty($SaveAsName) || empty($provider) || empty($libId) || empty($patId))
+        {
+            $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider
+                    . "':DownloadComponentParameters-CDNPath= '" . $CdnPath . "':DownloadComponentParameters-SaveAsName= '" . $SaveAsName
+                    . "':DownloadComponentParameters-id= '" . $id . "':DownloadComponentParameters-Library= '" . $libId
+                    . "':DownloadComponentParameters-PatronId= '" . $patId . "':DownloadCompleteStatus=Fail";
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+            $this->log($log_data, $log_name);
+
+            echo "empty|Something went wrong during download.Please try again later.";
+            exit;
+        }
+
+        /*
+         * if all required field are not null then we continue 
+         * for download and  insert record in download table
+         */
+
+        $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
+        $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
+
+
+        $downloadsDetail = array();
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
+
+        //check for download availability
+        if ($libraryDownload != '1' || $patronDownload != '1')
+        {
+            echo "error";
+            exit;
+        }
+
+
+
+        //get details for this song
+        $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
+        $insertArr = Array();
+        $insertArr['library_id'] = $libId;
+        $insertArr['patron_id'] = $patId;
+        $insertArr['ProdID'] = $prodId;
+        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
+        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+        $insertArr['provider_type'] = $provider;
+
+
+        //check the validation
+        $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
+        $checkValidation = $Setting['Siteconfig']['svalue'];
+        if ($checkValidation == 1)
+        {
+
+            $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+
+            /**
+              records download component request & response
+             */
+            $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider . "':DownloadComponentResponse-Status='" . $validationResult[0] . "':DownloadComponentResponse-Msg='" . $validationResult[1] . "':DownloadComponentResponse-ErrorTYpe='" . $validationResult[2] . "'";
+
+            $checked = "true";
+            $validationPassed = $validationResult[0];
+            $validationPassedMessage = (($validationResult[0] == 0) ? 'false' : 'true');
+            $validationMessage = $validationResult[1];
+        }
+        else
+        {
+            $checked = "false";
+            $validationPassed = true;
+            $validationPassedMessage = "Not Checked";
+            $validationMessage = '';
+        }
+
+        //$user = $this->Auth->user();
+        $user = $this->Session->read('Auth.User.id');
+        if (empty($user))
+        {
+            $user = $this->Session->read('patron');
+        }
+        
+        //if validation pass than
+        if ($validationPassed == true)
+        {
+            $this->log("Validation Checked : " . $checked . " Valdition Passed : " . $validationPassedMessage . " Validation Message : " . $validationMessage . " for ProdID :" . $prodId . " and Provider : " . $provider . " for library id : " . $this->Session->read('library') . " and user id : " . $user, 'download');
+
+            if ($this->Session->read('referral_url') && ($this->Session->read('referral_url') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'referral_url';
+            }
+            elseif ($this->Session->read('innovative') && ($this->Session->read('innovative') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative';
+            }
+            elseif ($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'mdlogin_reference';
+            }
+            elseif ($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'mndlogin_reference';
+            }
+            elseif ($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_var';
+            }
+            elseif ($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_var_name';
+            }
+            elseif ($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_var_https_name';
+            }
+            elseif ($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_var_https';
+            }
+            elseif ($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
+            }
+            elseif ($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_https';
+            }
+            elseif ($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_wo_pin';
+            }
+            elseif ($this->Session->read('sip2') && ($this->Session->read('sip2') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'sip2';
+            }
+            elseif ($this->Session->read('sip') && ($this->Session->read('sip') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'sip';
+            }
+            elseif ($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'innovative_var_wo_pin';
+            }
+            elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'sip2_var';
+            }
+            elseif ($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'sip2_var_wo_pin';
+            }
+            elseif ($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'sip2_var_wo_pin';
+            }
+            elseif ($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'ezproxy';
+            }
+            elseif ($this->Session->read('soap') && ($this->Session->read('soap') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'soap';
+            }
+            elseif ($this->Session->read('curl_method') && ($this->Session->read('curl_method') != ''))
+            {
+                $insertArr['email'] = '';
+                $insertArr['user_login_type'] = 'curl_method';
+            }
+            else
+            {
+                $insertArr['email'] = $this->Session->read('patronEmail');
+                $insertArr['user_login_type'] = 'user_account';
+            }
+
+            $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+            $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+            
+            
+            $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+            $siteConfigData = $this->Album->query($siteConfigSQL);
+            $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
+
+            if ($maintainLatestDownload)
+            {
+                $this->log("sonyproc_new called", 'download');
+                $procedure = 'sonyproc_new';
+                $sql = "CALL sonyproc_new('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+            }
+            else
+            {
+                $this->log("sonyproc_ioda called", 'download');
+                $procedure = 'sonyproc_ioda';
+                $sql = "CALL sonyproc_ioda('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+            }
+
+            
+            $this->Library->query($sql);
+            $sql = "SELECT @ret";
+            $data = $this->Library->query($sql);
+            $return = $data[0][0]['@ret'];
+
+            $log_data .= ":StoredProcedureParameters-LibID='" . $libId . "':StoredProcedureParameters-Patron='" . $patId . "':StoredProcedureParameters-ProdID='" . $prodId . "':StoredProcedureParameters-ProductID='" . $trackDetails['0']['Song']['ProductID'] . "':StoredProcedureParameters-ISRC='" . $trackDetails['0']['Song']['ISRC'] . "':StoredProcedureParameters-Artist='" . addslashes($trackDetails['0']['Song']['Artist']) . "':StoredProcedureParameters-SongTitle='" . addslashes($trackDetails['0']['Song']['SongTitle']) . "':StoredProcedureParameters-UserLoginType='" . $insertArr['user_login_type'] . "':StoredProcedureParameters-ProviderType='" . $insertArr['provider_type'] . "':StoredProcedureParameters-Email='" . $insertArr['email'] . "':StoredProcedureParameters-UserAgent='" . addslashes($insertArr['user_agent']) . "':StoredProcedureParameters-IP='" . $insertArr['ip'] . "':StoredProcedureParameters-CurWeekStartDate='" . Configure::read('App.curWeekStartDate') . "':StoredProcedureParameters-CurWeekEndDate='" . Configure::read('App.curWeekEndDate') . "':StoredProcedureParameters-Name='" . $procedure . "':StoredProcedureParameters-@ret='" . $return . "'";
+
+            //check the new entry is available in the latest download table or not
+            if (is_numeric($return))
+            {
+                $this->LatestDownload->setDataSource('master');
+                $data = $this->LatestDownload->find('count', array(
+                    'conditions' => array(
+                        "LatestDownload.library_id " => $libId,
+                        "LatestDownload.patron_id " => $patId,
+                        "LatestDownload.ProdID " => $prodId,
+                        "LatestDownload.provider_type " => $insertArr['provider_type'],
+                        "DATE(LatestDownload.created) " => date('Y-m-d'),
+                    ),
+                    'recursive' => -1,
+                ));
+
+                if (0 === $data)
+                {
+                    $log_data .= ":NotInLD";
+                }
+
+                if (false === $data)
+                {
+                    $log_data .= ":SelectLDFail";
+                }
+                
+                
+                $this->LatestDownload->setDataSource('default');
+            }     
+            
+            $this->Library->setDataSource('default');
+            
+            //if stored procedure run correctly and retrun numric value
+            if (is_numeric($return))
+            {
+
+                //add the download songs in the session array
+                if ($this->Session->read('downloadVariArray'))
+                {
+                    $downloadVariArray = $this->Session->read('downloadVariArray');
+                    $downloadVariArray[] = $prodId . '~' . $provider;
+                    $this->Session->write('downloadVariArray', $downloadVariArray);
+                }
+
+//                //update library table
+//                $this->Library->setDataSource('master');
+//                $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
+//                $this->Library->query($sql);
+//                $this->Library->setDataSource('default'); 
+                
+                if ($id > 0)
+                {
+                    //delete from wishlist table
+                    $deleteSongId = $id;
+                    $this->Wishlist->delete($deleteSongId);
+                    //get no of downloads for this week
+                }
+
+                $this->Videodownload->recursive = -1;
+                $videodownloadsUsed = $this->Videodownload->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+                $this->Download->recursive = -1;
+                $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+                $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
+                $this->Session->write('downloadCount', $downloadsUsed);
+                
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
+
+                echo "suces|" . $downloadsUsed . "|" . $finalURL;
+                exit;             
+                
+            }else{
+                
+                //check if this songs is already downloaded
+                if ($return == 'incld')
+                {
+                    $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later.".$return;
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);                
+                    echo "empty|You have already downloaded this song. Get it from your recent downloads.";
+                    exit;                 
+                    
+                }
+                
+                
+                //if store procedure return something else                 
+                $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later.".$return;
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);                
+                
+                echo "empty|Something went wrong during download.Please try again later.";
+                exit; 
+            }           
+        }
+        else
+        {
+            //if validation fail than
+            $log_data .= PHP_EOL . "invalid|" .$validationResult[1];
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------" . PHP_EOL;
+            $this->log($log_data, $log_name);
+
+            echo "invalid|" . $validationResult[1];
+            exit;
+        }
     }
 
 }
