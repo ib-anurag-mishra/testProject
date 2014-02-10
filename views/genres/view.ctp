@@ -448,6 +448,12 @@ elseif ($this->Session->check('calledAlbum'))
                         toScrollArtist(<?= $this->Session->read('page') ?>);
                 <?php
             }
+            else
+            {
+                ?>
+                    scrolltoSelectedArtist();
+               <?php 
+            }
             ?>
 
             sleep(100);
