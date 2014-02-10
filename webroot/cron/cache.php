@@ -6,7 +6,7 @@
     $memcache->addServer('10.178.4.51', 11211);
     $memcache->addServer('10.208.2.226', 11211);
    // $url = "http://198.101.168.184/cache/runCache";
-    $url = "http://www.freegalmusic.com/cache/runCache";
+    $url = "http://10.209.128.244/cache/runCache";
     print $url;
     $ch=curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -17,7 +17,7 @@
     curl_close($ch);
 
 
-    $CacheBackupurl = "http://www.freegalmusic.com/Resetcache/genrateXML";
+    $CacheBackupUrl = "http://10.209.128.244/Resetcache/genrateXML";
     print $CacheBackupUrl;
     $ch2=curl_init();
     curl_setopt($ch2, CURLOPT_URL, $CacheBackupUrl);
