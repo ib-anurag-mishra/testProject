@@ -2051,6 +2051,7 @@ Class ArtistsController extends AppController
     function album($id = null, $album = null, $provider = null)
     {
         //Configure::write('debug', 2);
+         ini_set('memory_limit', '512M');
 
         $country = $this->Session->read('territory');
         $patId = $this->Session->read('patron');
