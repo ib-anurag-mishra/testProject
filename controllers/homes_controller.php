@@ -4723,6 +4723,7 @@ STR;
                 $procedure = 'sonyproc_ioda';
                 $sql = "CALL sonyproc_ioda('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
             }
+            
             $this->LatestDownload->setDataSource('master');
             
             $this->Library->query($sql);
