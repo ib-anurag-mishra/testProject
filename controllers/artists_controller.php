@@ -2122,7 +2122,28 @@ Class ArtistsController extends AppController
 //            ))
 //        );
         
-         $this->paginate = array(
+//         $this->paginate = array(
+//                        'conditions' => array('Song.ArtistText' => base64_decode($id),
+//                                            'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
+//                                            "Song.Sample_FileID != ''",
+//                                            "Song.FullLength_FIleID != ''",
+//                                            'Country.Territory' => $country, 
+//                                            $cond,
+//                                            'Song.provider_type = Country.provider_type'),
+//                        'fields' => array( 'DISTINCT Song.ReferenceID',
+//                                            'Song.provider_type',
+//                                            'Country.SalesDate'),                        
+//                        'contain' => array('Country' => array(
+//                                                                'fields' => array('Country.Territory', 'Country.DownloadStatus')
+//                                            )),
+//                        'order' =>  array(
+//                                            'Country.SalesDate DESC'
+//                                         ),                        
+//                        'cache' => 'yes',
+//                        'chk' => 2
+//                    );
+        
+           $songs = array(
                         'conditions' => array('Song.ArtistText' => base64_decode($id),
                                             'Country.DownloadStatus' => 1, /* Changed on 16/01/2014 from Song.DownloadStatus to Country.DownloadStatus */
                                             "Song.Sample_FileID != ''",
@@ -2133,19 +2154,30 @@ Class ArtistsController extends AppController
                         'fields' => array( 'DISTINCT Song.ReferenceID',
                                             'Song.provider_type',
                                             'Country.SalesDate'),                        
-                        'contain' => array('Country' => array(
-                                                                'fields' => array('Country.Territory', 'Country.DownloadStatus')
-                                            )),
+                        'contain' => array('Genre' => array(
+                                                'fields' => array(
+                                                    'Genre.Genre'
+                                                )
+                                            ),
+                                            'Country' => array(
+                                                'fields' => array(
+                                                    'Country.Territory'
+                                                )
+                                            ),
+                                            'Files' => array(
+                                                'fields' => array(
+                                                    'Files.CdnPath',
+                                                    'Files.SaveAsName',
+                                                    'Files.SourceURL'
+                                                ),
+                                            )
+                                            ),
                         'order' =>  array(
-                                            'Country.SalesDate DESC'
+                                            'Country.SalesDate' => 'desc'
                                          ),                        
-                        'cache' => 'yes',
-                        'chk' => 2
+                        'cache' => 'yes'                        
                     );
-        
-            $this->paginate['limit'] = 25;
-            $this->Song->recursive = 0;
-            $songs = $this->paginate('Song');
+            
 
         $val = '';
         $val_provider_type = '';
