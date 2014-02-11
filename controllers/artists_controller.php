@@ -935,8 +935,7 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
-        if(!empty($val_provider_type))
-        {
+
         
                 $this->paginate = array('conditions' =>
                     array('and' =>
@@ -992,7 +991,7 @@ Class ArtistsController extends AppController
                 }
                 $this->Album->recursive = 2;
                 $albumData = $this->paginate('Album'); //getting the Albums for the artist
-         }
+       
 //        echo "<pre>";
 //        print_r($albumData);
 //        exit;
