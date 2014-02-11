@@ -805,12 +805,20 @@ Class ArtistsController extends AppController
     {
         //Configure::write("debug", 2);
 
-        if (count($this->params['pass']) >= 4)
+        if (count($this->params['pass']) >= 4)      /*  if 4 or more paramerters are passed in url */
         {            
              $this->log("4 or more Parameters passed in URL artists/view/: ".  serialize($this->params['pass']), "cache");
              exit;
         }
         
+        
+        /*if ($this->Session->read('lib_status') == 'invalid')
+        {
+            $this->Session->setFlash("The library you are trying to access is not registered with us");   
+            $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+            die;
+        }*/
+       
         
         $this->layout = 'home';
 
