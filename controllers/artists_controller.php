@@ -805,6 +805,13 @@ Class ArtistsController extends AppController
     {
         //Configure::write("debug", 2);
 
+        if (count($this->params['pass']) >= 4)
+        {            
+             $this->log("4 or more Parameters passed in URL artists/view/: ".  serialize($this->params['pass']), "cache");
+             exit;
+        }
+        
+        
         $this->layout = 'home';
 
         //Reading the parameters from URL
