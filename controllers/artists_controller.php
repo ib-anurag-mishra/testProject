@@ -935,61 +935,64 @@ Class ArtistsController extends AppController
             $cond = "";
         }
 
-        $this->paginate = array('conditions' =>
-            array('and' =>
-                array(
-                    $condition
-                ),
-                "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
-            ),
-            'fields' => array(
-                'Album.ProdID',
-                'Album.Title',
-                'Album.ArtistText',
-                'Album.AlbumTitle',
-                'Album.Advisory',
-                'Album.Artist',
-                'Album.ArtistURL',
-                'Album.Label',
-                'Album.Copyright',
-                'Album.provider_type'
-            ),
-            'contain' => array(
-                'Genre' => array(
-                    'fields' => array(
-                        'Genre.Genre'
-                    )
-                ),
-                'Country' => array(
-                    'fields' => array(
-                        'Country.Territory'
-                    )
-                ),
-                'Files' => array(
-                    'fields' => array(
-                        'Files.CdnPath',
-                        'Files.SaveAsName',
-                        'Files.SourceURL'
+        if(!empty($val_provider_type))
+        {
+        
+                $this->paginate = array('conditions' =>
+                    array('and' =>
+                        array(
+                            $condition
+                        ),
+                        "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
                     ),
-                )
-            ),
-            'order' => array('Country.SalesDate' => 'desc'),
-            'limit' => '3',
-            'cache' => 'yes',
-            'chk' => 2
-        );
+                    'fields' => array(
+                        'Album.ProdID',
+                        'Album.Title',
+                        'Album.ArtistText',
+                        'Album.AlbumTitle',
+                        'Album.Advisory',
+                        'Album.Artist',
+                        'Album.ArtistURL',
+                        'Album.Label',
+                        'Album.Copyright',
+                        'Album.provider_type'
+                    ),
+                    'contain' => array(
+                        'Genre' => array(
+                            'fields' => array(
+                                'Genre.Genre'
+                            )
+                        ),
+                        'Country' => array(
+                            'fields' => array(
+                                'Country.Territory'
+                            )
+                        ),
+                        'Files' => array(
+                            'fields' => array(
+                                'Files.CdnPath',
+                                'Files.SaveAsName',
+                                'Files.SourceURL'
+                            ),
+                        )
+                    ),
+                    'order' => array('Country.SalesDate' => 'desc'),
+                    'limit' => '3',
+                    'cache' => 'yes',
+                    'chk' => 2
+                );
 
-        if ($this->Session->read('block') == 'yes')
-        {
-            $cond = array('Song.Advisory' => 'F');
-        }
-        else
-        {
-            $cond = "";
-        }
-        $this->Album->recursive = 2;
-        $albumData = $this->paginate('Album'); //getting the Albums for the artist
-
+                if ($this->Session->read('block') == 'yes')
+                {
+                    $cond = array('Song.Advisory' => 'F');
+                }
+                else
+                {
+                    $cond = "";
+                }
+                $this->Album->recursive = 2;
+                $albumData = $this->paginate('Album'); //getting the Albums for the artist
+         }
 //        echo "<pre>";
 //        print_r($albumData);
 //        exit;
