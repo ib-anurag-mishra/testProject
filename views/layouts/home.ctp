@@ -58,7 +58,10 @@
 
         echo $javascript->link(
                 array(                    
-                    'freegal','ajaxify-html5.js' ,'site.js'
+//                    'freegal',
+                    'freegal40-libraries',
+                    'ajaxify-html5.js' ,
+                    'site.js'
                 )
         );
         

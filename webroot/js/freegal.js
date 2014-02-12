@@ -2534,7 +2534,6 @@ $(document).ready(function()
         if (playlist.length) {
             pushSongs(playlist);
         }
-
     });
 
     $(document).on('click', '.play-album-btn', function() {
