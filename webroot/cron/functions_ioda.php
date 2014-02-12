@@ -214,7 +214,7 @@ function sendFile($src,$dst)
 	$SFTP_PORT = SFTP_PORT;
 	$SFTP_USER = SFTP_USER;
 	$SFTP_PASS = SFTP_PASS;
-	$CdnPath = '/published/freegalmusic_reports/ioda_reports/';
+	$CdnPath = '/published/freegalmusic/prod/EN/ioda_reports/';
         
 	if(!($con = ssh2_connect($SFTP_HOST,$SFTP_PORT)))
 	{
