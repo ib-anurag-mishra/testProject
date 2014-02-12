@@ -1251,7 +1251,7 @@ Class ArtistsController extends AppController
       Desc : For getting songs related to an Album
      */
 
-    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null)
+    function getAlbumSongs($id = null, $album = null, $provider = null, $ajax = null, $territory = null)
     {
         //Configure::write('debug' , 2);
 
@@ -1287,7 +1287,11 @@ Class ArtistsController extends AppController
 
         // echo base64_decode($id) . $album;
         // exit;
-        $country = $this->Session->read('territory');
+        if(!empty($territory)){
+            $country = $territory;    
+        }else{
+            $country = $this->Session->read('territory');
+        }
         $libType = $this->Session->read('library_type');
         if ($this->Session->read('block') == 'yes')
         {
