@@ -459,5 +459,4 @@ class StreamingHistory extends AppModel {
     }
 
 }
-
 ?>

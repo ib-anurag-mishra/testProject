@@ -129,7 +129,9 @@ function userDownloadIE(prodId)
     });
     return false;
 }
-function changeLang(type) { //alert("http://jeffersonlibrary.freegaldev.com/"+webroot+"homes/language");
+
+function changeLang(type) 
+{ //alert("http://jeffersonlibrary.freegaldev.com/"+webroot+"homes/language");
     var language = type;
     var data = "lang=" + language;
     $.ajax({
@@ -294,7 +296,6 @@ function userDownloadIE_top(prodId)
     });
     return false;
 }
-
 
 function userDownloadAll(prodId)
 {
@@ -520,7 +521,6 @@ function userDownloadOthers_toptab(prodId, downloadUrl1, downloadUrl2, downloadU
     return false;
 }
 
-
 function userDownloadOthers_safari(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
 {
     $('.beforeClick').hide();
@@ -644,6 +644,7 @@ function addQtip_top(prodId) {
         }
     });
 }
+
 function addQtip_toptab(prodId) {
     $('#songtab_' + prodId).qtip({
         content: "You have already downloaded this song. Get it from your recent downloads.",
@@ -988,7 +989,6 @@ function wishlistVideoDownloadIE(prodId, id, provider)
     return false;
 }
 
-
 function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
 {
     $('.beforeClick').hide();
@@ -1041,9 +1041,6 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
     });
     return false;
 }
-
-
-
 
 function historyDownload(id, libID, patronID, CdnPath, SaveAsName)
 {
@@ -1546,7 +1543,6 @@ function approvePatron(libid, patronid)
     return false;
 }
 
-
 function declinePatron()
 {
     $.ajax({
@@ -1640,7 +1636,8 @@ function ControlVersion()
 }
 
 // JavaScript helper required to detect Flash Player PlugIn version information
-function GetSwfVer() {
+function GetSwfVer() 
+{
     // NS/Opera version >= 3 check for Flash plugin in plugin array
     var flashVer = -1;
 
@@ -1953,7 +1950,6 @@ function addToQueue(songProdId, songProviderType, albumProdId, albumProviderType
     return false;
 }
 
-
 function addAlbumSongsToQueue(albumSongsToBeAdded)
 {
 
@@ -2052,8 +2048,8 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
     return false;
 }
 
-
-function removeSong(pdId, divId) {
+function removeSong(pdId, divId) 
+{
 
     var data = "songId=" + pdId;
     jQuery.ajax({
@@ -2154,10 +2150,8 @@ function removeSong(pdId, divId) {
     return false;
 }
 
-
-
-
-function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType, playlistId) {
+function loadSong(songFile, songTitle, artistName, songLength, prodId, providerType, playlistId) 
+{
     //console.log('load song contains');
     playlistId = (playlistId === undefined) ? 0 : playlistId;
     var newSong = [
@@ -2178,8 +2172,8 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 
 }
 
-
-function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLength, prodId, providerType, playlistId) {
+function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLength, prodId, providerType, playlistId)
+{
     playlistId = (playlistId === undefined) ? 0 : playlistId;
     cdnPath = base64_decode(cdnPath);
     sourceUrl = base64_decode(sourceUrl);
@@ -2212,7 +2206,8 @@ function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLengt
     
 }
 
-function loadAlbumSong(albumSongs) {
+function loadAlbumSong(albumSongs) 
+{
     playlist = base64_decode(albumSongs);
     playlist = JSON.parse(playlist);
     if (playlist.length) {
@@ -2220,8 +2215,8 @@ function loadAlbumSong(albumSongs) {
     }
 }
 
-
-function loadAlbumData(albumtData) {
+function loadAlbumData(albumtData) 
+{
 
     //albumtData = JSON.parse(albumtData);
     var data = "albumtData=" + albumtData;
@@ -2250,7 +2245,8 @@ function loadAlbumData(albumtData) {
 
 }
 
-function loadNationalAlbumData(artistText,prodId,providerType) {
+function loadNationalAlbumData(artistText,prodId,providerType) 
+{
 
     artistText = base64_decode(artistText);
     providerType = base64_decode(providerType);
@@ -2280,9 +2276,8 @@ function loadNationalAlbumData(artistText,prodId,providerType) {
 
 }
 
-
-
-function base64_decode(data) {
+function base64_decode(data) 
+{
     // http://kevin.vanzonneveld.net
     // +   original by: Tyler Akins (http://rumkin.com)
     // +   improved by: Thunder.m
@@ -2339,7 +2334,8 @@ function base64_decode(data) {
 }
 
 //load the artist list via ajax    
-function load_artist(link, id_serial, genre_name) {
+function load_artist(link, id_serial, genre_name) 
+{
 
     $('.album-list-span').html('');
     $('#album_details_container').html('');
@@ -2360,7 +2356,8 @@ function load_artist(link, id_serial, genre_name) {
 }
 
 //load the albums list via ajax 
-function showAllAlbumsList(albumListURL) {
+function showAllAlbumsList(albumListURL) 
+{
 
     $('#album_details_container').html('');
     $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;">\n\
@@ -2407,7 +2404,8 @@ function showAllAlbumsList(albumListURL) {
 }
 
 //load the albums details via ajax
-function showAlbumDetails(albumDetailURL) {
+function showAlbumDetails(albumDetailURL) 
+{
 
     $('#album_details_container').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="' + webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block;left: 50%;margin-left: 398px;margin-top: 3px;position: absolute;top: 50%;"/></span>');
 
@@ -2454,7 +2452,8 @@ function showAlbumDetails(albumDetailURL) {
     });
 }
 
-function showHideGrid(varType) {
+function showHideGrid(varType) 
+{
 
     var top_100_grids = $('.top-100-grids');
     var top_100_songs_grid = $('#top-100-songs-grid');
@@ -2476,7 +2475,8 @@ function showHideGrid(varType) {
     }
 }
 
-function checkAjaxDownload(prodId, providerType){
+function checkAjaxDownload(prodId, providerType)
+{
     var res = "";
     
     jQuery.ajax({
@@ -2497,7 +2497,8 @@ function checkAjaxDownload(prodId, providerType){
     
 }
 
-function showHideGridCommingSoon(varType) {
+function showHideGridCommingSoon(varType) 
+{
 
     var top_100_grids = $('.top-100-grids');
     var coming_soon_singles_grid = $('#coming-soon-singles-grid');
@@ -2524,7 +2525,8 @@ function showHideGridCommingSoon(varType) {
 
 }
 
-$(document).ready(function() {
+$(document).ready(function() 
+{
 
     $(document).on('click', '.play-queue-btn', function() {
         playlist = $('#playlist_data').text();
