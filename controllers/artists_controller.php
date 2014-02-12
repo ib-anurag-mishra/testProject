@@ -1288,7 +1288,13 @@ Class ArtistsController extends AppController
         // echo base64_decode($id) . $album;
         // exit;
         if(!empty($territory)){
-            $country = $territory;    
+            $country = $territory;
+            $album = $this->params['pass'][1];
+            $provider = base64_decode($this->params['pass'][2]);
+            $id = $this->params['pass'][0];
+            //$countryPrefix = strtolower($country) . "_";
+           // $this->Country->setTablePrefix($countryPrefix);
+            $countryPrefix = $this->Common->getCountryPrefix($country);  // This is to add prefix to countries table when calling through cron
         }else{
             $country = $this->Session->read('territory');
         }
