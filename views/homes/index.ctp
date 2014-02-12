@@ -119,8 +119,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 //                                                    $nationalTopDownload[$i]['streamUrl'] = $streamUrl;
 //                                                    $nationalTopDownload[$i]['totalseconds'] = $this->Queue->getSeconds($nationalTopDownload[$i]['Song']['FullLength_Duration']);
 //                                                }
-
-                                                echo $this->Queue->getStreamNowLabel($nationalTopDownload[$i]['streamUrl'], $song_title, $nationalTopDownload[$i]['Song']['ArtistText'], $nationalTopDownload[$i]['totalseconds'], $nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
+                                                echo $this->Queue->getNationalsongsStreamNowLabel($nationalTopDownload[$i]['Full_Files']['CdnPath'],$nationalTopDownload[$i]['Full_Files']['SaveAsName'], $song_title, $nationalTopDownload[$i]['Song']['ArtistText'], $nationalTopDownload[$i]['Song']['FullLength_Duration'], $nationalTopDownload[$i]['Song']['ProdID'], $nationalTopDownload[$i]['Song']['provider_type']);
                                             } //echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("' . $nationalTopDownload[$i]['streamUrl'] . '", "' . $song_title . '","' . $nationalTopDownload[$i]['Song']['ArtistText'] . '",' . $nationalTopDownload[$i]['totalseconds'] . ',"' . $nationalTopDownload[$i]['Song']['ProdID'] . '","' . $nationalTopDownload[$i]['Song']['provider_type'] . '");'));
                                             else if ($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d'))
                                             {

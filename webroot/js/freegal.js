@@ -2144,6 +2144,40 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 
 }
 
+
+function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLength, prodId, providerType, playlistId) {
+    playlistId = (playlistId === undefined) ? 0 : playlistId;
+    cdnPath = base64_decode(cdnPath);
+    sourceUrl = base64_decode(sourceUrl);
+    songLength = base64_decode(songLength);
+    songTitle = base64_decode(songTitle);
+    artistName = base64_decode(artistName);
+    
+    var data = "cdnPath=" + cdnPath+"&sourceUrl="+sourceUrl+"&songLength="+songLength+"&songTitle="+songTitle+"&artistName="+artistName+"&providerType="+providerType+"&playlistId="+playlistId+"&prodId="+prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "artists/getSongStreamUrl", // URL to request
+        data: data, // post data
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                playlist = base64_decode(response.success);
+                playlist = JSON.parse(playlist);
+                if (playlist.length) {
+                    pushSongs(playlist);
+                }
+            } else if (response.error) {
+                console.log(response.error);
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log('Ajax call to get album songs has been failed');
+        }
+    });
+    return false;    
+    
+}
+
 function loadAlbumSong(albumSongs) {
     playlist = base64_decode(albumSongs);
     playlist = JSON.parse(playlist);
