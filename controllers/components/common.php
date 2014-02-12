@@ -344,7 +344,7 @@ STR;
                    // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                     //{
                     $albumSongs = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
                     if(!empty($albumSongs[$value['Albums']['ProdID']])){
                         $data[$key]['albumSongs'] = 1;
@@ -1041,7 +1041,7 @@ STR;
                     // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                     //{
                     $data[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
                     //}
                 }
@@ -1292,7 +1292,7 @@ STR;
                     // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                     //{
                     $data[$key]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])))
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type']),0,$country))
                     );
                     //}
                 }
@@ -1511,7 +1511,7 @@ STR;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
                     $featured[$k]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type'])))
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),0,$territory))
                     );
                // }
             }
