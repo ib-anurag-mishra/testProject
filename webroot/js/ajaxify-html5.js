@@ -279,12 +279,13 @@
                     //$.getScript(webroot + 'css/freegal_styles.css');
 
                     //$.getScript(scriptPath + '/js/freegal.js');
-                    $.getScript(webroot + 'js/site.js');
-                    $.getScript(webroot + 'js/freegal.js');
+                    //$.getScript(webroot + 'js/site.js');
+                    //$.getScript(webroot + 'js/freegal.js');
                     //$.getScript(webroot + 'js/audioPlayer.js');
-                    $.getScript(scriptPath + '/js/recent-downloads.js');
+                    //$.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
-
+                    $.getScript(webroot+'js/freegal40-libraries.js');
+                    
                     $('.loader').fadeOut(50);
                     $('#content').find('.loader').remove();
                 },
