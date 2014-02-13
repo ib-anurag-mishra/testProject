@@ -726,6 +726,7 @@ echo "<pre>";print_r($additionalParams);*/
                 }
     
                 $query = $query . ' AND Territory:' . $country . $cond;
+                return $query;
                 
                 if ($page == 1) {
                     $start = 0;
