@@ -263,7 +263,7 @@ class Apache_Solr_Service
 	private function _sendRawPost($url, $rawPost, $contentType = 'text/xml; charset=UTF-8')
 	{
         
-        // echo $url;
+         echo $url;
 		//ensure content type is correct
 		stream_context_set_option($this->_postContext, 'http', 'header', 'Content-Type: ' . $contentType. "\r\n");
 
