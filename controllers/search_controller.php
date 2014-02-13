@@ -26,7 +26,6 @@ class SearchController extends AppController
 
     function index($page = 1, $facetPage = 1)
     {
-        Configure::write('debug', 2);
         //set_time_limit(0);
         //echo "<br>Started at ".date("Y-m-d H:i:s");
         // reset page parameters when serach keyword changes
@@ -132,7 +131,7 @@ class SearchController extends AppController
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
             $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
             $docs = array();
-                      
+
             $total = 0;
             $limit = 10;
 
@@ -158,9 +157,7 @@ class SearchController extends AppController
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-            echo '<pre>';
-            echo "$songs";
-            exit();
+
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
