@@ -342,7 +342,7 @@ $(document).ready(function()
         $(this).find('.top-10-download-now-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-    
+
     $('.more-videos-scrollable .video-thumb-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.download-now-button').css({opacity: 1});
@@ -742,9 +742,9 @@ $(document).ready(function()
     $('.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable').bindMouseWheel();
 
     $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
-    
+
     $('.saved-queues-page .playlist-filter-container .playlist-filter-button').addClass('active');
-    
+
     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
 
     $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').on('mouseenter', function() {
@@ -787,7 +787,7 @@ $(document).ready(function()
 
         $(this).removeClass('active');
     });
-    
+
     $(document).on('mousedown', '.saved-queues-page .playlist-filter-container .create-playlist-button', function(e) {
         $(this).addClass('pressed');
     });
@@ -821,7 +821,7 @@ $(document).ready(function()
 
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-    
+
     $(document).on('click', '.gear-icon', function(e) {
         $('.queue-options').addClass('active');
     });
@@ -891,7 +891,7 @@ $(document).ready(function()
 
 
 
-    /************* Wishlist javascripts ***********************/    
+    /************* Wishlist javascripts ***********************/
     $('.my-wishlist-page .my-wishlist-scrollable').bindMouseWheel();
 
     $('.my-wishlist-page .my-video-wishlist-scrollable').bindMouseWheel();
@@ -1110,7 +1110,7 @@ $(document).ready(function()
 
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-  
+
     $(document).on('mouseleave', '.my-wishlist-page .wishlist-popover', function(e) {
         $(this).removeClass('active');
     });
@@ -1795,7 +1795,7 @@ function userDownloadAll(prodId)
     $('#form' + prodId).submit();
     setTimeout("location.reload(true)", 7000);
 }
-function addQtip(prodId) 
+function addQtip(prodId)
 {
     $('#song_' + prodId).qtip({
         content: "You have already downloaded this song. Get it from your recent downloads.",
@@ -2433,7 +2433,7 @@ function wishlistDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, download
     return false;
 }
 function wishlistDownloadOthersHome(prodId, id, CdnPath, SaveAsName, provider)
-{    
+{
     $('.beforeClick').hide();
     $('.afterClick').show();
     document.getElementById('downloading_' + prodId).style.display = 'block';
@@ -2712,7 +2712,7 @@ function ControlVersion()
     return version;
 }
 // JavaScript helper required to detect Flash Player PlugIn version information
-function GetSwfVer() 
+function GetSwfVer()
 {
     // NS/Opera version >= 3 check for Flash plugin in plugin array
     var flashVer = -1;
@@ -3083,7 +3083,7 @@ function addAlbumSongsToQueue(albumSongsToBeAdded)
     });
     return false;
 }
-function removeSong(pdId, divId) 
+function removeSong(pdId, divId)
 {
     var data = "songId=" + pdId;
     jQuery.ajax({
@@ -3201,7 +3201,7 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
     pushSongs(newSong);
 
 }
-function loadNationalTopSong(cdnPath, sourceUrl, songTitle, artistName, songLength, prodId, providerType, playlistId) 
+function loadNationalTopSong(cdnPath, sourceUrl, songTitle, artistName, songLength, prodId, providerType, playlistId)
 {
     playlistId = (playlistId === undefined) ? 0 : playlistId;
     cdnPath = base64_decode(cdnPath);
@@ -3233,7 +3233,7 @@ function loadNationalTopSong(cdnPath, sourceUrl, songTitle, artistName, songLeng
     });
     return false;
 }
-function loadAlbumSong(albumSongs) 
+function loadAlbumSong(albumSongs)
 {
     playlist = base64_decode(albumSongs);
     playlist = JSON.parse(playlist);
@@ -3241,7 +3241,7 @@ function loadAlbumSong(albumSongs)
         pushSongs(playlist);
     }
 }
-function loadAlbumData(albumtData) 
+function loadAlbumData(albumtData)
 {
     var data = "albumtData=" + albumtData;
     jQuery.ajax({
@@ -3266,7 +3266,7 @@ function loadAlbumData(albumtData)
     });
     return false;
 }
-function loadNationalAlbumData(artistText, prodId, providerType) 
+function loadNationalAlbumData(artistText, prodId, providerType)
 {
     artistText = base64_decode(artistText);
     providerType = base64_decode(providerType);
@@ -3293,7 +3293,7 @@ function loadNationalAlbumData(artistText, prodId, providerType)
     });
     return false;
 }
-function base64_decode(data) 
+function base64_decode(data)
 {
     // http://kevin.vanzonneveld.net
     // +   original by: Tyler Akins (http://rumkin.com)
@@ -3370,7 +3370,7 @@ function load_artist(link, id_serial, genre_name)
     });
 }
 //load the albums list via ajax 
-function showAllAlbumsList(albumListURL) 
+function showAllAlbumsList(albumListURL)
 {
     $('#album_details_container').html('');
     $('.album-list-span').html('<span id="mydiv" style="height: 250px; width: 250px; position: relative; background-color: gray;">\n\
@@ -3463,7 +3463,7 @@ function showAlbumDetails(albumDetailURL)
 }
 function showHideGrid(varType)
 {
-   // var top_100_grids = $('.top-100-grids');
+    // var top_100_grids = $('.top-100-grids');
     var top_100_songs_grid = $('#top-100-songs-grid');
     var top_100_videos_grid = $('#top-100-videos-grid');
     var songsIDVal = $('#songsIDVal');
@@ -3481,9 +3481,9 @@ function showHideGrid(varType)
         top_100_videos_grid.addClass('active');
     }
 }
-function showHideGridCommingSoon(varType) 
+function showHideGridCommingSoon(varType)
 {
- //   var top_100_grids = $('.top-100-grids');
+    //   var top_100_grids = $('.top-100-grids');
     var coming_soon_singles_grid = $('#coming-soon-singles-grid');
     var coming_soon_videos_grid = $('#coming-soon-videos-grid');
     var songsIDValComming = $('#songsIDValComming');
@@ -3503,7 +3503,7 @@ function showHideGridCommingSoon(varType)
         coming_soon_videos_grid.addClass('active');
     }
 }
-function documentHtml(html) 
+function documentHtml(html)
 {
     // Prepare
     var result = String(html)
@@ -3515,7 +3515,7 @@ function documentHtml(html)
     // Return
     return $.trim(result);
 }
-function callSearchAjax() 
+function callSearchAjax()
 {
     $("#headerSearchSubmit").click(function(event) {
         ajaxSearch();
@@ -3542,7 +3542,7 @@ function resetNavigation()
     faq07.removeClass('active');
     home07.removeClass('active');
 }
-function ajaxSearch() 
+function ajaxSearch()
 {
     resetNavigation();
     var loading_div = "<div class='loader'>";
@@ -3589,7 +3589,7 @@ function ajaxSearch()
     return false;
 }
 // code to ajaxify MyAccount form start
-function callMyAccountAjax() 
+function callMyAccountAjax()
 {
     $("#btnMyAccount").click(function(event) {
         ajaxMyAccount();
@@ -3751,7 +3751,7 @@ function ajaxNotification()
     if ($content.length === 0) {
         $content = $body;
     }
- 
+
     if ($('#UserSendNewsLetterCheck').val()) {
         USendNewsLetterCheck = $('#UserSendNewsLetterCheck').val();
     }
@@ -3880,7 +3880,7 @@ function getQueueList(ProdID, type, addTo)
     });
     return false;
 }
-function computeVisibleHeight($t) 
+function computeVisibleHeight($t)
 {
     var top = $t.position().top;
     var windowHeight = $(window).height();
@@ -3981,145 +3981,6 @@ function userDownloadIE(prodId)
                 }
                 document.getElementById('song_' + prodId).style.display = 'block';
                 addQtip(prodId);
-            }
-            else
-            {
-                alert("You have been logged out from the system. Please login again.");
-                location.reload();
-                return false;
-            }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-        }
-    });
-    return false;
-}
-function userDownloadOthers(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
-{
-    $('.beforeClick').hide();
-    $('.afterClick').show();
-    document.getElementById('downloading_' + prodId).style.display = 'block';
-    document.getElementById('song_' + prodId).style.display = 'none';
-    document.getElementById('download_loader_' + prodId).style.display = 'block';
-    var finalURL = downloadUrl1;
-    finalURL += downloadUrl2;
-    finalURL += downloadUrl3;
-    var data = "prodId=" + prodId;
-    id = prodId;
-    jQuery.ajax({
-        type: "post", // Request method: post, get
-        url: webroot + "homes/userDownload", // URL to request
-        data: data, // post data
-        success: function(response) {
-            var msg = response.substring(0, 5);
-            if (msg === 'error')
-            {
-                alert("Your download limit has exceeded.");
-                //location.reload();
-                return false;
-            }
-            else if (msg === 'incld')
-            {
-                alert("You have already downloaded this song.Get it from your recent downloads");
-                document.getElementById('download_loader_' + prodId).style.display = 'none';
-                document.getElementById('downloading_' + prodId).style.display = 'none';
-                document.getElementById('song_' + prodId).innerHTML = '';
-                if (languageSet === 'en') {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-                } else {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-                }
-                document.getElementById('song_' + prodId).style.display = 'block';
-                addQtip_top(prodId);
-                $('.afterClick').hide();
-                $('.beforeClick').show();
-                return false;
-            }
-            else if (msg === 'suces')
-            {
-                var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                document.getElementById('download_loader_' + prodId).style.display = 'none';
-                document.getElementById('downloading_' + prodId).style.display = 'none';
-                document.getElementById('song_' + prodId).innerHTML = '';
-                if (languageSet === 'en') {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-                } else {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-                }
-                document.getElementById('song_' + prodId).style.display = 'block';
-                addQtip(prodId);
-                location.href = unescape(finalURL);
-                $('.afterClick').hide();
-                $('.beforeClick').show();
-            }
-            else
-            {
-                alert("You have been logged out from the system. Please login again.");
-                location.reload();
-                return false;
-            }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-        }
-    });
-    return false;
-}
-function userDownloadIE_top(prodId)
-{
-    $('.beforeClick').hide();
-    $('.afterClick').show();
-    document.getElementById('download_loader_' + prodId).style.display = 'block';
-    document.getElementById('downloading_' + prodId).style.display = 'block';
-    document.getElementById('song_' + prodId).style.display = 'none';
-    var data = "prodId=" + prodId;
-    id = prodId;
-    jQuery.ajax({
-        type: "post", // Request method: post, get
-        url: webroot + "homes/userDownload", // URL to request
-        data: data, // post data
-        success: function(response) {
-            var msg = response.substring(0, 5);
-            if (msg === 'error')
-            {
-                alert("Your download limit has exceeded.");
-                //location.reload();
-                return false;
-            }
-            else if (msg === 'incld')
-            {
-                alert("You have already downloaded this song.Get it from your recent downloads");
-                document.getElementById('download_loader_' + prodId).style.display = 'none';
-                document.getElementById('downloading_' + prodId).style.display = 'none';
-                document.getElementById('song_' + prodId).innerHTML = '';
-                if (languageSet === 'en') {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-                } else {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-                }
-                document.getElementById('song_' + prodId).style.display = 'block';
-                addQtip_top(prodId);
-                $('.afterClick').hide();
-                $('.beforeClick').show();
-                return false;
-            }
-            else if (msg === 'suces')
-            {
-                $('.afterClick').hide();
-                $('.beforeClick').show();
-                var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-                document.getElementById('download_loader_' + prodId).style.display = 'none';
-                document.getElementById('downloading_' + prodId).style.display = 'none';
-                document.getElementById('song_' + prodId).innerHTML = '';
-                if (languageSet === 'en') {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-                } else {
-                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-                }
-                document.getElementById('song_' + prodId).style.display = 'block';
-                addQtip_top(prodId);
-
             }
             else
             {
