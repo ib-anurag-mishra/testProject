@@ -112,7 +112,7 @@ Class QueueComponent extends Object
                     array('QueueList.status' => 1),
                     array('QueueDetail.queue_id' => $queueID),
                     array('Countries.StreamingStatus' => 1),
-                    array('Countries.StreamingSalesDate' => date('Y-m-d')),
+                    array('Countries.StreamingSalesDate <=' => date('Y-m-d')),
                     array('Countries.DownloadStatus' => 1)
                 ),
                /* 'or' => array(array('and' => array('Countries.StreamingStatus' => 1, 'Countries.StreamingSalesDate <=' => date('Y-m-d')))
