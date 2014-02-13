@@ -56,7 +56,7 @@
             array(
                 'freegal40-libraries',
                 'newfreegal',
-                'ajaxify-html5.js',
+     //           'ajaxify-html5.js',
     //                    'site.js'
             )
             );
