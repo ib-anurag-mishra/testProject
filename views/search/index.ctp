@@ -856,8 +856,8 @@ function Get_Sales_date($sales_date_array, $country)
                                     foreach ($artists as $artist)
                                     {
                                         $tilte = urlencode($artist->ArtistText);
-                                        $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
-                                        $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))), array('title' => $this->getTextEncode($artist->ArtistText)));
+                                        $artist_name_text = truncate_text($artist->ArtistText, 30, $this);
+                                        $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))), array('title' => $artist->ArtistText));
                                         if (!empty($artist_name_text))
                                         {
                                             ?>
@@ -899,11 +899,11 @@ function Get_Sales_date($sales_date_array, $country)
                             foreach ($composers as $composer)
                             {
                                 $tilte = urlencode($composer->Composer);
-                                $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
+                                $composer_name = truncate_text($composer->Composer, 30, $this);
                                 if (!empty($composer_name))
                                 {
                                     ?>
-                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
+                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $composer_name); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
                                     <?php
                                 }
                             }
@@ -931,8 +931,8 @@ function Get_Sales_date($sales_date_array, $country)
                             foreach ($videos as $video)
                             {
                                 $tilte = urlencode($video->VideoTitle);
-                                $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
-                                $name = $this->getTextEncode($video->VideoTitle);
+                                $video_name_text = truncate_text($video->VideoTitle, 30, $this);
+                                $name = $video->VideoTitle;
                                 // $count = $video->numFound;
                                 ?>
                                 <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
@@ -963,7 +963,7 @@ function Get_Sales_date($sales_date_array, $country)
                             {
                                 $genre_name = str_replace('"', '', $genre->Genre);
                                 $tilte = urlencode($genre_name);
-                                $genre_name_text = truncate_text($this->getTextEncode($genre_name), 30, $this);
+                                $genre_name_text = truncate_text($genre_name, 30, $this);
                                 $name = $genre->Genre;
                                 $count = $genre->numFound;
                                 if (!empty($genre_name_text))
