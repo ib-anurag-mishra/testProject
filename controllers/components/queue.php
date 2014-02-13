@@ -110,11 +110,14 @@ Class QueueComponent extends Object
             'conditions' => array('and' =>
                 array(
                     array('QueueList.status' => 1),
-                    array('QueueDetail.queue_id' => $queueID)
+                    array('QueueDetail.queue_id' => $queueID),
+                    array('Countries.StreamingStatus' => 1),
+                    array('Countries.StreamingSalesDate <=' => date('Y-m-d')),
+                    array('Countries.DownloadStatus' => 1)
                 ),
-                'or' => array(array('and' => array('Countries.StreamingStatus' => 1, 'Countries.StreamingSalesDate <=' => date('Y-m-d')))
+               /* 'or' => array(array('and' => array('Countries.StreamingStatus' => 1, 'Countries.StreamingSalesDate <=' => date('Y-m-d')))
                     , array('and' => array('Countries.DownloadStatus' => 1))
-                )
+                )*/     // Commented to shown only songs which are available for (Streaming and Downloading)
             )
                 )
         );

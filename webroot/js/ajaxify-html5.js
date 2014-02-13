@@ -284,7 +284,7 @@
                     //$.getScript(webroot + 'js/audioPlayer.js');
                     //$.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
-                    $.getScript(webroot+'js/freegal40-libraries.js');
+                    $.getScript(webroot+'js/newfreegal.js');
                     
                     $('.loader').fadeOut(50);
                     $('#content').find('.loader').remove();
