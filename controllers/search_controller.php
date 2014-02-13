@@ -132,6 +132,9 @@ class SearchController extends AppController
             $patronDownload = $this->Downloads->checkPatronDownload($patId, $libId);
             $docs = array();
 
+            echo "<pre>";
+            print_r($insertArr);
+                      
             $total = 0;
             $limit = 10;
 
@@ -157,7 +160,11 @@ class SearchController extends AppController
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-
+            
+              echo "<b/> query : $queryVar <br/> ";
+              print_r($songs);
+              exit;
+              
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
@@ -297,9 +304,6 @@ class SearchController extends AppController
 
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
-                echo "<pre>";
-                print_r($albums);
-                die;
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 $queryArr = null;
 
