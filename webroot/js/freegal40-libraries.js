@@ -67,7 +67,6 @@ $(document).ready(function()
     top_100_songs_grid.addClass('active');
     grid_view_button.addClass('active');
     grids.addClass('active');
-
     preview.on('mousedown', function(e) {
         e.preventDefault();
 
@@ -78,7 +77,6 @@ $(document).ready(function()
 
         $(this).removeClass('active');
     });
-
     coming_soon_singles_grid.addClass('active');
     filter_text.on('keyup', function() {
         filter_results.show();
@@ -91,7 +89,6 @@ $(document).ready(function()
 
 
     });
-
     whats_happening_filter_text.on('keyup', function() {
         whats_happening_filter_results.show();
 
@@ -113,7 +110,7 @@ $(document).ready(function()
         e.preventDefault();
     });
 
-    /* clickoffs */
+    /************* clickoffs ***************/
     $(document).mouseup(function(e) {
 
         var container = $('.wishlist-popover');
@@ -164,8 +161,7 @@ $(document).ready(function()
 
 
     });
-    /* end clickoffs */
-
+    /************* end clickoffs ************/
 
     if ($('li.most-popular').position() != 'undefined') {
         var most_popular_position = $('li.most-popular').position();
@@ -175,47 +171,37 @@ $(document).ready(function()
         $('.most-popular-sub-nav').css('width', most_popular_width);
 
     }
-
-
-
+    
     /**************** end lazyload initalizations *****************/
     $('#top-100-albums-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('#top-100-albums-grid')
     });
-
     $('#top-100-songs-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('#top-100-songs-grid')
     });
-
     $('#top-100-videos-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('#top-100-videos-grid')
     });
-
     $('#coming-soon-singles-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('#coming-soon-singles-grid')
     });
-
     $('#coming-soon-videos-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('#coming-soon-videos-grid')
     });
-
     $('#featured-video-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('#featured-video-grid .lazy')
     });
-
     $('.video-top-genres-grid .lazy').lazyload({
         effect: 'fadeIn',
         container: $('.video-top-genres-grid')
     });
     /**************** end lazyload initalizations *****************/
-
-
     $('.tooltip a').hover(
             function() {
                 plays_tooltip.show();
@@ -224,26 +210,20 @@ $(document).ready(function()
                 plays_tooltip.hide();
             }
     );
-
-
     /*********************Genreal Javascript ************************/
     $('.library-list-scrollable').bindMouseWheel();
-
     $('.playlist-options').bindMouseWheel();
-
     $('.album-cover-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-100-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
     });
-
     $('.album-cover-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.song-cover-container').on('mouseenter', function() {
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
@@ -252,7 +232,6 @@ $(document).ready(function()
         $(this).find('.preview').css({opacity: 1});
         $(this).find('.album-preview').css({opacity: 1});
     });
-
     $('.song-cover-container').on('mouseleave', function() {
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
@@ -262,16 +241,13 @@ $(document).ready(function()
         $(this).find('.album-preview').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.single-cover-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
     });
-
     $('.single-cover-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.video-cover-container').on('mouseenter', function() {
         $(this).find('.top-video-login-button').css({opacity: 1});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
@@ -279,7 +255,6 @@ $(document).ready(function()
         $(this).find('.preview').css({opacity: 1});
         $(this).find('.album-preview').css({opacity: 1});
     });
-
     $('.video-cover-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-100-download-now-button').css({opacity: 0});
@@ -288,7 +263,6 @@ $(document).ready(function()
         $(this).find('.album-preview').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.album-container').on('mouseleave', function() {
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
@@ -297,7 +271,6 @@ $(document).ready(function()
         $(this).find('.top-10-download-now-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.album-container').on('mouseenter', function() {
         $('.preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
@@ -307,111 +280,91 @@ $(document).ready(function()
         $(this).find('.top-100-download-now-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
     });
-
     $('.hero-image-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.download-now-button').css({opacity: 1});
     });
-
     $('.hero-image-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.download-now-button').css({opacity: 0});
     });
-
     $('.video-thumbnail-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.featured-video-download-now-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
     });
-
     $('.video-thumbnail-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.featured-video-download-now-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.videos-scrollable .video-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-10-download-now-button').css({opacity: 1});
 
     });
-
     $('.videos-scrollable .video-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-10-download-now-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.more-videos-scrollable .video-thumb-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.download-now-button').css({opacity: 1});
     });
-
     $('.more-videos-scrollable .video-thumb-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.download-now-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.top-videos-scrollable .video-thumb-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.download-now-button').css({opacity: 1});
     });
-
     $('.top-videos-scrollable .video-thumb-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.download-now-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.top-music-video-cover-container').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.top-video-login-button').css({opacity: 1});
         $(this).find('.preview').css({opacity: 1});
     });
-
     $('.top-music-video-cover-container').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.top-video-login-button').css({opacity: 0});
         $(this).find('.preview').css({opacity: 0});
     });
-
     $('.tracklist-shadow-container .tracklist-scrollable').on('mouseenter', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 1});
     });
-
     $('.tracklist-shadow-container .tracklist-scrollable').on('mouseleave', function() {
         $(this).find('.add-to-playlist-button').css({opacity: 0});
     });
-
     $('.add-to-queue').on('mouseenter', function() {
         if ($('.playlist-options').hasClass('active')) {
             $('.playlist-options').removeClass('active');
         }
     });
-
     $('.add-to-wishlist').on('mouseenter', function() {
         if ($('.playlist-options').hasClass('active')) {
             $('.playlist-options').removeClass('active');
         }
     });
-
     $('.wishlist-popover').on('mouseleave', '.playlist-options', function() {
         $('.playlist-options').removeClass('active');
     });
-
     $('.add-to-playlist').on('mouseenter', function() {
         $('.playlist-options').addClass('active');
     });
-
     $(document).on('hover', '.wishlist-popover > a', function(e) {
         e.preventDefault();
         if ($('.playlist-options').hasClass('active')) {
             $('.playlist-options').removeClass('active');
         }
     });
-
     $(document).on('scroll', function() {
         var st = $(this).scrollTop();
         if (st > lastScrollTop) {
@@ -435,21 +388,14 @@ $(document).ready(function()
             music_player_container.css({bottom: 0});
         }
     });
-
     $(document).on('mouseleave', '.account-options-menu', function(e) {
         $('.account-options-menu').removeClass('active');
     });
-
     $(document).on('mousewheel', '.playlist-options', function(e) {
         $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         return false;
     });
     /*********************Genreal Javascript ************************/
-
-
-
-
-
 
     /******************** Play button click event *******************/
     $(document).on('click', '.play-queue-btn', function() {
@@ -459,7 +405,6 @@ $(document).ready(function()
             pushSongs(playlist);
         }
     });
-
     $(document).on('click', '.play-album-btn', function() {
         playlist = $('#playlist_data').text();
         playlist = JSON.parse(playlist);
@@ -468,10 +413,6 @@ $(document).ready(function()
         }
     });
     /******************** Play button click event *******************/
-
-
-
-
 
     /******************** Add to Playlist event *******************/
     $(document).on('click', '.add-to-playlist-button', function(e) {
@@ -495,24 +436,14 @@ $(document).ready(function()
     });
     /******************** Add to Playlist event *******************/
 
-
-
-
-
     /********************* site login page **********************/
     $(document).on('mousedown', '.site-login input[type="submit"]', function(e) {
         $(this).addClass('selected');
     });
-
     $(document).on('mouseup', '.site-login input[type="submit"]', function(e) {
         $(this).removeClass('selected');
     });
     /********************* site login page **********************/
-
-
-
-
-
 
     /************** overlays **********************/
     $(document).on('click', '.rename-queue', function(e) {
@@ -521,14 +452,12 @@ $(document).ready(function()
         $('.rename-queue-dialog-box').addClass('active');
         $('.rename-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
-
     $(document).on('click', '.delete-queue', function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
         $('.delete-queue-dialog-box').addClass('active');
         $('.delete-queue-dialog-box').css('margin-top', 100 + $(document).scrollTop());
     });
-
     $(document).on('click', ".create-new-queue , .create-new-queue-btn", function(e) {
         e.preventDefault();
         $('.queue-overlay').addClass('active');
@@ -544,7 +473,6 @@ $(document).ready(function()
             createLinkThis = null;
         }
     });
-
     $(document).on('click', '.close,.text-close', function(e) {
         $('.queue-overlay').removeClass('active');
         $('.rename-queue-dialog-box').removeClass('active');
@@ -553,27 +481,14 @@ $(document).ready(function()
     });
     /*********************** end overlays **************************/
 
-
-
-
-
-
-
     /*************** notifications page ************************/
     $('.notifications-page input[type="submit"]').on('mousedown', function(e) {
         $(this).addClass('clicked');
     });
-
     $('.notifications-page input[type="submit"]').on('mouseup', function(e) {
         $(this).removeClass('clicked');
     });
     /*************** notifications page ************************/
-
-
-
-
-
-
 
     /************* my top 10 page **************/
     $('.songs-scrollable .song-container').on('mouseleave', function() {
@@ -584,7 +499,6 @@ $(document).ready(function()
         $(this).find('.preview').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.songs-scrollable .song-container').on('mouseenter', function() {
         $('.album-preview').css({opacity: 0});
         $('.preview').css({opacity: 0});
@@ -596,34 +510,26 @@ $(document).ready(function()
     });
     /************* my top 10 page **************/
 
-
-
     /***************** my account page *********************/
     $('.my-account-page input[type="submit"]').on('mousedown', function(e) {
         $(this).addClass('clicked');
     });
-
     $('.my-account-page input[type="submit"]').on('mouseup', function(e) {
         $(this).removeClass('clicked');
     });
     /***************** my account page *********************/
 
-
-
     /****************Home Page************************/
     $('.news .whats-happening #whats-happening-grid .post-excerpt').bindMouseWheel();
-
     $('.news .featured .featured-grid .featured-album-detail').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
         $(this).find('.album-preview').css({opacity: 1});
     });
-
     $('.news .featured .featured-grid .featured-album-detail').on('mouseleave', '.album-cover-container', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $(document).on('click', '.announcements h4 a', function(e) {
         e.preventDefault();
         if ($(poll).hasClass('active')) {
@@ -633,43 +539,32 @@ $(document).ready(function()
 
         }
     });
-
     /****************Home Page************************/
-
 
 
     /************* Start Genres javascripts ***********************/
     $('.genre-list').bindMouseWheel();
-
     $('.alphabetical-filter').bindMouseWheel();
-
     $('.artist-list').bindMouseWheel();
-
     $('.album-list').bindMouseWheel();
-
     $('.genres-page .album-detail-container').on('mouseenter', '.add-to-playlist', function() {
         $('.playlist-options').addClass('active');
     });
-
     $('.genres-page .album-detail-container').on('mouseenter', '.album-detail', function() {
         $('.album-preview').css({opacity: 1});
     });
-
     $('.genres-page .album-detail-container').on('mouseleave', '.album-detail', function() {
         $('.album-preview').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $(document).on('mouseenter', '.album-cover-image', function() {
         $(this).find('.preview').css('opacity', 100);
         $(this).find('.add-to-playlist-button').css('opacity', 100);
     });
-
     $(document).on('mouseleave', '.album-cover-image', function() {
         $(this).find('.preview').css('opacity', 0);
         $(this).find('.add-to-playlist-button').css('opacity', 0);
     });
-
     $(document).on('click', '.genre-list a', function(e) {
         var genre_type = $(this).data('genre');
         $('.genre-list a').removeClass('selected');
@@ -677,30 +572,25 @@ $(document).ready(function()
         $('.artist-list a').removeClass('selected');
         $(this).addClass('selected');
     });
-
     $(document).on('click', '.alphabetical-filter a', function() {
         var letter = $(this).data('letter');
         $('.alphabetical-filter a').removeClass('selected');
         $('.artist-list a').removeClass('selected');
         $(this).addClass('selected');
     });
-
     $(document).on('click', '.artist-list a', function() {
         var artist = $(this).data('artist');
         $('.artist-list a').removeClass('selected');
         $(this).addClass('selected');
         $(this).css("cursor", "pointer");
     });
-
     $(document).on('click', '.album-image a', function() {
         $('.album-image').removeClass('selected');
         $(this).parent('.album-image').addClass('selected');
     });
-
     $(document).on('mousedown', '.more-by', function() {
         $(this).css('background', 'url(images/genres/more-by-click.jpg)')
     });
-
     $(document).on('click', '.genres-page .tracklist .preview', function() {
         $('.tracklist').removeClass('playing');
         $('.preview').removeClass('playing');
@@ -714,39 +604,26 @@ $(document).ready(function()
         $(this).siblings('.artist').addClass('playing');
         $(this).siblings('.time').addClass('playing');
     });
-
     $(document).on('mouseleave', '.genres-page .album-detail-container .album-detail .album-cover-image', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $(document).on('mouseleave', '.genres-page .album-detail-container .tracklist-container .tracklist', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $(document).on('click', '.tracklist .preview', function(e) {
         e.preventDefault();
     });
-
     $(document).on('click', '.tracklist .add-to-playlist-button', function(e) {
         e.preventDefault();
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-
     /************* End Genres javascripts ***********************/
-
-
-
-
 
     /********************** Start now streaming/queue detail page ******************/
     $('.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable').bindMouseWheel();
-
     $('.saved-queues-page .playlists-scrollable').bindMouseWheel();
-
     $('.saved-queues-page .playlist-filter-container .playlist-filter-button').addClass('active');
-
     $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').slice(0, 4).addClass('top');
-
     $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').on('mouseenter', function() {
         $(this).find('.album-title').addClass('hovered');
         $(this).find('.artist-name').addClass('hovered');
@@ -756,7 +633,6 @@ $(document).ready(function()
         $(this).find('.delete-btn').addClass('hovered');
         $(this).find('.add-to-wishlist-button').addClass('hovered');
     });
-
     $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').on('mouseleave', function() {
         $(this).find('.album-title').removeClass('hovered');
         $(this).find('.artist-name').removeClass('hovered');
@@ -766,35 +642,27 @@ $(document).ready(function()
         $(this).find('.delete-btn').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
     });
-
     $('.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview').on('mouseenter', function() {
         $(this).removeClass('hovered').addClass('blue-bkg');
     });
-
     $('.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview').on('mouseleave', function() {
         $(this).removeClass('blue-bkg').addClass('hovered');
     });
-
     $('.now-streaming-page .now-playing-container .wishlist-popover,.queue-detail-page .now-playing-container .wishlist-popover').on('mouseleave', function() {
         $(this).removeClass('active');
     });
-
     $('.queue-options').on('mouseleave', function() {
         $('.queue-options').removeClass('active');
     });
-
     $('.saved-queues-page .wishlist-popover').on('mouseleave', function() {
         $(this).removeClass('active');
     });
-
     $(document).on('mousedown', '.saved-queues-page .playlist-filter-container .create-playlist-button', function(e) {
         $(this).addClass('pressed');
     });
-
     $(document).on('mouseup', '.saved-queues-page .playlist-filter-container .create-playlist-button', function(e) {
         $(this).removeClass('pressed');
     });
-
     $(document).on('click', '.saved-queues-page .filter-button', function(e) {
         if ($(this).hasClass('active')) {
             if ($(this).hasClass('toggled')) {
@@ -807,19 +675,15 @@ $(document).ready(function()
             $(this).addClass('active');
         }
     });
-
     $(document).on('click', '.saved-queues-page .add-to-playlist-button', function(e) {
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-
     $(document).on('click', '.gear-icon', function(e) {
         $('.queue-options').addClass('active');
     });
-
     $(document).on('mouseenter', '.playlist-options', function() {
         $('.queue-detail-page .playlist-scrollable').unbind('mousewheel');
     });
-
     $(document).on('scroll', '.now-streaming-page .playlist-scrollable,.queue-detail-page .playlist-scrollable', function(e) {
         $('.now-streaming-page .playlist-scrollable .wishlist-popover,.queue-detail-page .playlist-scrollable .wishlist-popover').removeClass('top');
         $('.now-streaming-page .playlist-scrollable .row,.queue-detail-page .playlist-scrollable .row').each(function(e) {
@@ -828,7 +692,6 @@ $(document).ready(function()
             }
         });
     });
-
     $(document).on('click', '.now-streaming-page .playlist-scrollable .row .preview,.queue-detail-page .playlist-scrollable .row .preview', function(e) {
         if ($(this).hasClass('playing')) {
             $(this).removeClass('playing');
@@ -858,7 +721,6 @@ $(document).ready(function()
             $(this).siblings('.add-to-wishlist-button').addClass('playing');
         }
     });
-
     $(document).on('click', '.now-streaming-page .now-playing-container .add-to-wishlist-button,.queue-detail-page .now-playing-container .add-to-wishlist-button', function(e) {
         e.preventDefault();
         var queuelist = $(document).find('.playlist-options-test').html();
@@ -870,28 +732,17 @@ $(document).ready(function()
             $(this).siblings('.wishlist-popover').removeClass('active');
             $(this).find('.add-to-playlist-button').css({opacity: .5});
         } else {
-
             $(this).siblings('.wishlist-popover').addClass('active');
         }
     });
     /********************** End now streaming/queue detail page ******************/
 
-
-
-
-
-
     /************* Wishlist javascripts ***********************/
     $('.my-wishlist-page .my-wishlist-scrollable').bindMouseWheel();
-
     $('.my-wishlist-page .my-video-wishlist-scrollable').bindMouseWheel();
-
     $('.my-wishlist-page .date-filter-button').addClass('active');
-
     $('.my-wishlist-page .music-filter-button').addClass('active');
-
     $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
-
     $('.songdelete').click(function(e) {
         e.preventDefault();
         var parent = $(this).parent();
@@ -909,7 +760,6 @@ $(document).ready(function()
             }
         });
     });
-
     $('.videodelete').click(function(e) {
         e.preventDefault();
         var parent = $(this).parent();
@@ -928,21 +778,18 @@ $(document).ready(function()
             }
         });
     });
-
     $('.video-filter-button').click(function() {
         $(this).addClass('active');
         $('.music-filter-button').removeClass('active');
         $('.my-wishlist-shadow-container').hide();
         $('.my-video-wishlist-shadow-container').show();
     });
-
     $('.music-filter-button').click(function() {
         $(this).addClass('active');
         $('.video-filter-button').removeClass('active');
         $('.my-video-wishlist-shadow-container').hide();
         $('.my-wishlist-shadow-container').show();
     });
-
     $('.my-wishlist-page .my-wishlist-filter-container div.filter').on('click', function(e) {
         e.preventDefault();
         if ($(this).hasClass('date-filter-button')) {
@@ -968,7 +815,6 @@ $(document).ready(function()
             $('#sortForm #sortOrder').val('asc');
         }
     });
-
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
         e.preventDefault();
         if ($(this).hasClass('active')) {
@@ -982,12 +828,10 @@ $(document).ready(function()
             $(this).addClass('active');
         }
     });
-
     $('.my-wishlist-page .my-wishlist-scrollable').bind('mousewheel', function(e) {
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);     
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         return false;
     });
-
     $('.my-wishlist-page .my-wishlist-scrollable').on('scroll', function(e) {
         $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').removeClass('top');
         $('.my-wishlist-page .my-wishlist-scrollable .row').each(function(e) {
@@ -1005,17 +849,14 @@ $(document).ready(function()
 
         });
     });
-
     $('.my-wishlist-page .my-video-wishlist-scrollable').bind('mousewheel', function(e) {
-        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);       
+        $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
         return false;
     });
-
     $('.my-wishlist-page .add-to-wishlist-button').on('click', function(e) {
         e.preventDefault();
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-
     $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave', function() {
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
@@ -1025,7 +866,6 @@ $(document).ready(function()
         $(this).find('.preview').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
     });
-
     $('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
@@ -1035,17 +875,13 @@ $(document).ready(function()
         $(this).find('.preview').addClass('hovered');
         $(this).find('.add-to-wishlist-button').addClass('hovered');
     });
-
     $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseenter', function(e) {
         $(this).removeClass('hovered').addClass('blue-bkg');
     });
-
     $('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseleave', function() {
         $(this).removeClass('blue-bkg').addClass('hovered');
     });
-
     $('.recent-downloads-filter-container .date-filter-button , .recent-downloads-filter-container .song-filter-button , .recent-downloads-filter-container .artist-filter-button ,.recent-downloads-filter-container .album-filter-button , .recent-downloads-filter-container .download-button').off('click');
-
     $('.my-wishlist-page .my-wishlist-scrollable').on('scroll', function(e) {
         $('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').removeClass('top');
         $('.my-wishlist-page .my-wishlist-scrollable .row').each(function(e) {
@@ -1054,7 +890,6 @@ $(document).ready(function()
             }
         });
     });
-
     $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
@@ -1065,7 +900,6 @@ $(document).ready(function()
         $(this).find('.delete-btn').addClass('hovered');
         $(this).find('.add-to-wishlist-button').addClass('hovered');
     });
-
     $('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseleave', function() {
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
@@ -1076,16 +910,13 @@ $(document).ready(function()
         $(this).find('.delete-btn').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
     });
-
     $(document).on('click', '.my-wishlist-page .add-to-wishlist-button', function(e) {
         e.preventDefault();
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-
     $(document).on('mouseleave', '.my-wishlist-page .wishlist-popover', function(e) {
         $(this).removeClass('active');
     });
-
     $(document).on('click', '.my-wishlist-page .my-wishlist-scrollable .row .preview', function(e) {
 
         if ($(this).hasClass('playing')) {
@@ -1124,12 +955,24 @@ $(document).ready(function()
     });
     /************* Wishlist javascripts ***********************/
 
-
-
-
-
-
     /*************** search results page *******************/
+    $('.search-page .tracklist-scrollable').bindMouseWheel();
+    $('.search-page .advanced-artists-scrollable').bindMouseWheel();
+    $('.search-page .advanced-composers-scrollable').bindMouseWheel();
+    $('.search-page .advanced-genres-scrollable').bindMouseWheel();
+    $('.search-page .advanced-labels-scrollable').bindMouseWheel();
+    $('.search-page .wishlist-popover').slice(0, 3).addClass('top');
+    $('.search-page .tracklist').slice(0, 3).addClass('current');
+    $('.search-page .tracklist-scrollable').on('scroll', function(e) {
+        $('.search-page .wishlist-popover').removeClass('top');
+        $('.search-page .tracklist').removeClass('current');
+        $('.search-page .tracklist').each(function(e) {
+            if ($(this).position().top >= -22 && $(this).position().top <= 110) {
+                $(this).addClass('current');
+                $(this).find('.wishlist-popover').addClass('top');
+            }
+        });
+    });
     $('.search-page .tracklist .preview').on('click', function(e) {
         $('.tracklist').removeClass('playing');
         $('.preview').removeClass('playing');
@@ -1149,74 +992,40 @@ $(document).ready(function()
         $(this).siblings('.download').addClass('playing');
         $(this).siblings('.composer').addClass('playing');
     });
-
-    $('.search-page .tracklist-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-artists-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-composers-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-genres-scrollable').bindMouseWheel();
-
-    $('.search-page .advanced-labels-scrollable').bindMouseWheel();
-
-    $('.search-page .wishlist-popover').slice(0, 3).addClass('top');
-
-    $('.search-page .tracklist').slice(0, 3).addClass('current');
-
-    $('.search-page .tracklist-scrollable').on('scroll', function(e) {
-        $('.search-page .wishlist-popover').removeClass('top');
-        $('.search-page .tracklist').removeClass('current');
-        $('.search-page .tracklist').each(function(e) {
-            if ($(this).position().top >= -22 && $(this).position().top <= 110) {
-                $(this).addClass('current');
-                $(this).find('.wishlist-popover').addClass('top');
-            }
-        });
-    });
-
     $('.search-page .advanced-search #submit').on('mousedown', function(e) {
         $(this).addClass('clicked');
     });
-
     $('.search-page .advanced-search #submit').on('mouseup', function(e) {
         $(this).removeClass('clicked');
     });
-
     $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
         $(this).find('.album-preview').css({opacity: 1});
     });
-
     $('.search-page .advanced-search-results.row-1 .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseleave', '.album-cover-container', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.search-page .advanced-search-results-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseenter', '.album-cover-container', function() {
         $('.album-preview').css({opacity: 0});
         $(this).find('.album-preview').css({opacity: 1});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
     });
-
     $('.search-page .advanced-search-results-albums .advanced-albums-shadow-container .advanced-albums-scrollable').on('mouseleave', '.album-cover-container', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.search-page .advanced-search-results-albums .advanced-albums .advanced-albums-shadow-container .advanced-albums-scrollable .album-cover-container').on('mouseenter', '.add-to-playlist', function() {
         $(this).find('.playlist-options').addClass('active');
     });
-
     $(document).on('mouseleave', '.search-page .tracklist-container .tracklist', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $(document).on('click', '.tracklist-header span', function(e) {
         if ($(this).hasClass('active')) {
             if ($(this).hasClass('toggled')) {
@@ -1229,28 +1038,18 @@ $(document).ready(function()
             $(this).addClass('active');
         }
     });
-
     $(document).on('click', '.pagination a', function(e) {
         var target = $(this).attr('href');
     });
     /*************** search results page *******************/
 
-
-
-
-
-
     /*************** downloads page ****************/
     $('.recent-downloads-page .recent-downloads-scrollable').bindMouseWheel();
-
     $('.recent-downloads-page .recent-video-downloads-scrollable').bindMouseWheel();
-
     $('.recent-downloads-page .wishlist-popover').on('mouseleave', function() {
         $(this).removeClass('active');
     });
-
     $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').slice(0, 3).addClass('top');
-
     $('.recent-downloads-page .recent-downloads-scrollable').on('scroll', function(e) {
         $('.recent-downloads-page .recent-downloads-scrollable .wishlist-popover').removeClass('top');
         $('.recent-downloads-page .recent-downloads-scrollable .row').each(function(e) {
@@ -1259,7 +1058,6 @@ $(document).ready(function()
             }
         });
     });
-
     $('.recent-downloads-page .recent-downloads-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
@@ -1269,7 +1067,6 @@ $(document).ready(function()
         $(this).find('.preview').addClass('hovered');
         $(this).find('.add-to-wishlist-button').addClass('hovered');
     });
-
     $('.recent-downloads-page .recent-downloads-scrollable .row').on('mouseleave', function() {
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
@@ -1279,7 +1076,6 @@ $(document).ready(function()
         $(this).find('.preview').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
     });
-
     $('.recent-downloads-page .recent-video-downloads-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
@@ -1289,7 +1085,6 @@ $(document).ready(function()
         $(this).find('.preview').addClass('hovered');
         $(this).find('.add-to-wishlist-button').addClass('hovered');
     });
-
     $('.recent-downloads-page .recent-video-downloads-scrollable .row').on('mouseleave', function() {
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
@@ -1299,15 +1094,12 @@ $(document).ready(function()
         $(this).find('.preview').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
     });
-
     $('.recent-downloads-page .recent-downloads-scrollable .row .preview').on('mouseenter', function() {
         $(this).removeClass('hovered').addClass('blue-bkg');
     });
-
     $('.recent-downloads-page .recent-downloads-scrollable .row .preview').on('mouseleave', function() {
         $(this).removeClass('blue-bkg').addClass('hovered');
     });
-
     $(document).on('click', '.recent-downloads-page .recent-downloads-scrollable .row .preview', function(e) {
         if ($(this).hasClass('playing')) {
             $(this).removeClass('playing');
@@ -1343,24 +1135,15 @@ $(document).ready(function()
             $(this).siblings('.download').addClass('playing');
         }
     });
-
     $(document).on('click', '.recent-downloads-page .add-to-wishlist-button', function(e) {
         e.preventDefault();
         $(this).siblings('.wishlist-popover').addClass('active');
     });
     /*************** downloads page ****************/
 
-
-
-
-
-
-
     /********************** history page ********************/
     $('.history-page .history-scrollable').bindMouseWheel();
-
     $('.history-page .history-scrollable .wishlist-popover').slice(0, 3).addClass('top');
-
     $('.history-page .history-scrollable .row').on('mouseenter', function() {
         $(this).find('.date').addClass('hovered');
         $(this).find('.album-title').addClass('hovered');
@@ -1370,7 +1153,6 @@ $(document).ready(function()
         $(this).find('.preview').addClass('hovered');
         $(this).find('.add-to-wishlist-button').addClass('hovered');
     });
-
     $('.history-page .history-scrollable .row').on('mouseleave', function() {
         $(this).find('.date').removeClass('hovered');
         $(this).find('.album-title').removeClass('hovered');
@@ -1380,24 +1162,19 @@ $(document).ready(function()
         $(this).find('.preview').removeClass('hovered');
         $(this).find('.add-to-wishlist-button').removeClass('hovered');
     });
-
     $('.history-page .history-scrollable .row .preview').on('mouseenter', function() {
         $(this).removeClass('hovered').addClass('blue-bkg');
     });
-
     $('.history-page .history-scrollable .row .preview').on('mouseleave', function() {
         $(this).removeClass('blue-bkg').addClass('hovered');
     });
-
     $(document).on('click', '.history-page .add-to-wishlist-button', function(e) {
         e.preventDefault();
         $(this).siblings('.wishlist-popover').addClass('active');
     });
-
     $(document).on('mouseleave', '.history-page .wishlist-popover', function(e) {
         $(this).removeClass('active');
     });
-
     $(document).on('scroll', '.history-page .history-scrollable', function(e) {
         $('.history-page .history-scrollable .wishlist-popover').removeClass('top');
         $('.history-page .history-scrollable .row').each(function(e) {
@@ -1406,7 +1183,6 @@ $(document).ready(function()
             }
         });
     });
-
     $(document).on('click', '.history-page .history-scrollable .row .preview', function(e) {
         if ($(this).hasClass('playing')) {
             $(this).removeClass('playing');
@@ -1444,33 +1220,19 @@ $(document).ready(function()
     });
     /********************** history page ********************/
 
-
-
-
-
-
-
     /***************** artist page **********************/
     var totalASLiWidth = 0;
-
     $('.artist-page .album-scrollable ul li').each(function() {
         totalASLiWidth = totalASLiWidth + $(this).outerWidth(true);
     });
-
     $('.artist-page .album-scrollable ul').css({width: totalASLiWidth + 5});
-
     var totalVSLiWidth = 0;
-
     $('.artist-page .videos-scrollable ul li').each(function() {
         totalVSLiWidth = totalVSLiWidth + $(this).outerWidth(true);
     });
-
     $('.artist-page .videos-scrollable ul').css({width: totalVSLiWidth + 5});
-
     $('.artist-page .tracklist-scrollable').bindMouseWheel();
-
     $('.artist-page .tracklist-scrollable .wishlist-popover').slice(0, 3).addClass('top');
-
     $(document).on('scroll', '.artist-page .tracklist-scrollable', function(e) {
         $('.artist-page .tracklist-scrollable .wishlist-popover').removeClass('top');
         $('.artist-page .tracklist-scrollable .tracklist').each(function(e) {
@@ -1479,7 +1241,6 @@ $(document).ready(function()
             }
         });
     });
-
     $(document).on('click', '.artist-page .tracklist-scrollable .tracklist .preview', function(e) {
         if ($(this).hasClass('playing')) {
             $(this).removeClass('playing');
@@ -1515,7 +1276,6 @@ $(document).ready(function()
             $(this).siblings('.download').addClass('playing');
         }
     });
-
     $(document).on('click', '.artist-page .album-shadow-container div.paging span a', function(event) {
         // Add a class loading to the container box
         var loading_div = "<div class='loader'>";
@@ -1533,27 +1293,19 @@ $(document).ready(function()
     });
     /***************** artist page **********************/
 
-
-
-
-
-
     /************* albums page ***************/
     $('.albums-page .album-detail-container').on('mouseenter', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 1});
         $(this).find('.add-to-playlist-button').css({opacity: 1});
     });
-
     $('.albums-page .album-detail-container').on('mouseleave', '.album-cover-image', function() {
         $(this).find('.album-preview').css({opacity: 0});
         $(this).find('.add-to-playlist-button').css({opacity: 0});
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $('.albums-page .album-detail-container .tracklist-container').on('mouseleave', '.tracklist', function() {
         $(this).find('.wishlist-popover').removeClass('active');
     });
-
     $(document).on('click', '.albums-page .tracklist .preview', function(e) {
 
 
@@ -1571,11 +1323,6 @@ $(document).ready(function()
         $(this).siblings('.time').addClass('playing');
     });
     /************* albums page ***************/
-
-
-
-
-
 
     /********************* FAQ page **********************/
     $('.faq-container').on('click', 'li a', function(e) {
@@ -1615,26 +1362,20 @@ $(document).ready(function()
         }
 
     });
-
     $('.site-nav .most-popular a').on('mouseenter', function(e) {
         e.preventDefault();
 
         $('.most-popular-sub-nav').addClass('active');
     });
-
     $('.most-popular-sub-nav').on('mouseleave', function() {
         $('.most-popular-sub-nav').removeClass('active');
 
     });
-
     $('.site-nav .regular').on('mouseenter', function() {
         $('.most-popular-sub-nav').removeClass('active');
 
     });
     /********************* FAQ page **********************/
-
-
-
 
     /********* manage notification code js **********/
     $('#UserSendNewsLetterCheck').click(function() {
@@ -3793,563 +3534,560 @@ function computeVisibleHeight($t)
         return windowHeight - (top - scrollTop);
     }
 }
+function userDownloadIE(prodId)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('download_loader_' + prodId).style.display = 'block';
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('song_' + prodId).style.display = 'none';
+    var data = "prodId=" + prodId;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/userDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'incld')
+            {
+                alert("You have already downloaded this song.Get it from your recent downloads");
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip_top(prodId);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip(prodId);
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function userDownloadOthers(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('song_' + prodId).style.display = 'none';
+    document.getElementById('download_loader_' + prodId).style.display = 'block';
+    var finalURL = downloadUrl1;
+    finalURL += downloadUrl2;
+    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/userDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'incld')
+            {
+                alert("You have already downloaded this song.Get it from your recent downloads");
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip_top(prodId);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip(prodId);
+                location.href = unescape(finalURL);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function userDownloadIE_top(prodId)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('download_loader_' + prodId).style.display = 'block';
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('song_' + prodId).style.display = 'none';
+    var data = "prodId=" + prodId;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/userDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'incld')
+            {
+                alert("You have already downloaded this song.Get it from your recent downloads");
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip_top(prodId);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip_top(prodId);
 
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function userDownloadOthers_top(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('song_' + prodId).style.display = 'none';
+    document.getElementById('download_loader_' + prodId).style.display = 'block';
+    var finalURL = downloadUrl1;
+    finalURL += downloadUrl2;
+    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/userDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'incld')
+            {
+                alert("You have already downloaded this song.Get it from your recent downloads");
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip_top(prodId);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('song_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip_top(prodId);
+                location.href = unescape(finalURL);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function userDownloadIE_toptab(prodId)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('download_loader_' + prodId).style.display = 'block';
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('songtab_' + prodId).style.display = 'none';
+    var data = "prodId=" + prodId;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/userDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'incld')
+            {
+                alert("You have already downloaded this song.Get it from your recent downloads");
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('songtab_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('songtab_' + prodId).style.display = 'block';
+                addQtip_toptab(prodId);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('songtab_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('songtab_' + prodId).style.display = 'block';
+                addQtip_toptab(prodId);
 
-//currently not used in website
-//function userDownloadIE(prodId)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('download_loader_' + prodId).style.display = 'block';
-//    document.getElementById('downloading_' + prodId).style.display = 'block';
-//    document.getElementById('song_' + prodId).style.display = 'none';
-//    var data = "prodId=" + prodId;
-//    id = prodId;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/userDownload", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("Your download limit has exceeded.");
-//                //location.reload();
-//                return false;
-//            }
-//            else if (msg === 'incld')
-//            {
-//                alert("You have already downloaded this song.Get it from your recent downloads");
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip_top(prodId);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                return false;
-//            }
-//            else if (msg === 'suces')
-//            {
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                var downloadUsedArr = response.split('|');
-//                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip(prodId);
-//            }
-//            else
-//            {
-//                alert("You have been logged out from the system. Please login again.");
-//                location.reload();
-//                return false;
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function userDownloadOthers(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('downloading_' + prodId).style.display = 'block';
-//    document.getElementById('song_' + prodId).style.display = 'none';
-//    document.getElementById('download_loader_' + prodId).style.display = 'block';
-//    var finalURL = downloadUrl1;
-//    finalURL += downloadUrl2;
-//    finalURL += downloadUrl3;
-//    var data = "prodId=" + prodId;
-//    id = prodId;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/userDownload", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("Your download limit has exceeded.");
-//                //location.reload();
-//                return false;
-//            }
-//            else if (msg === 'incld')
-//            {
-//                alert("You have already downloaded this song.Get it from your recent downloads");
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip_top(prodId);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                return false;
-//            }
-//            else if (msg === 'suces')
-//            {
-//                var downloadUsedArr = response.split('|');
-//                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip(prodId);
-//                location.href = unescape(finalURL);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//            }
-//            else
-//            {
-//                alert("You have been logged out from the system. Please login again.");
-//                location.reload();
-//                return false;
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function userDownloadIE_top(prodId)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('download_loader_' + prodId).style.display = 'block';
-//    document.getElementById('downloading_' + prodId).style.display = 'block';
-//    document.getElementById('song_' + prodId).style.display = 'none';
-//    var data = "prodId=" + prodId;
-//    id = prodId;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/userDownload", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("Your download limit has exceeded.");
-//                //location.reload();
-//                return false;
-//            }
-//            else if (msg === 'incld')
-//            {
-//                alert("You have already downloaded this song.Get it from your recent downloads");
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip_top(prodId);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                return false;
-//            }
-//            else if (msg === 'suces')
-//            {
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                var downloadUsedArr = response.split('|');
-//                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip_top(prodId);
-//
-//            }
-//            else
-//            {
-//                alert("You have been logged out from the system. Please login again.");
-//                location.reload();
-//                return false;
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function userDownloadOthers_top(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('downloading_' + prodId).style.display = 'block';
-//    document.getElementById('song_' + prodId).style.display = 'none';
-//    document.getElementById('download_loader_' + prodId).style.display = 'block';
-//    var finalURL = downloadUrl1;
-//    finalURL += downloadUrl2;
-//    finalURL += downloadUrl3;
-//    var data = "prodId=" + prodId;
-//    id = prodId;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/userDownload", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("Your download limit has exceeded.");
-//                //location.reload();
-//                return false;
-//            }
-//            else if (msg === 'incld')
-//            {
-//                alert("You have already downloaded this song.Get it from your recent downloads");
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip_top(prodId);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                return false;
-//            }
-//            else if (msg === 'suces')
-//            {
-//                var downloadUsedArr = response.split('|');
-//                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('song_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip_top(prodId);
-//                location.href = unescape(finalURL);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//            }
-//            else
-//            {
-//                alert("You have been logged out from the system. Please login again.");
-//                location.reload();
-//                return false;
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function userDownloadIE_toptab(prodId)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('download_loader_' + prodId).style.display = 'block';
-//    document.getElementById('downloading_' + prodId).style.display = 'block';
-//    document.getElementById('songtab_' + prodId).style.display = 'none';
-//    var data = "prodId=" + prodId;
-//    id = prodId;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/userDownload", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("Your download limit has exceeded.");
-//                //location.reload();
-//                return false;
-//            }
-//            else if (msg === 'incld')
-//            {
-//                alert("You have already downloaded this song.Get it from your recent downloads");
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('songtab_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('songtab_' + prodId).style.display = 'block';
-//                addQtip_toptab(prodId);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                return false;
-//            }
-//            else if (msg === 'suces')
-//            {
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                var downloadUsedArr = response.split('|');
-//                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('songtab_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('songtab_' + prodId).style.display = 'block';
-//                addQtip_toptab(prodId);
-//
-//            }
-//            else
-//            {
-//                alert("You have been logged out from the system. Please login again.");
-//                location.reload();
-//                return false;
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function userDownloadOthers_toptab(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('downloading_' + prodId).style.display = 'block';
-//    document.getElementById('songtab_' + prodId).style.display = 'none';
-//    document.getElementById('download_loader_' + prodId).style.display = 'block';
-//    var finalURL = downloadUrl1;
-//    finalURL += downloadUrl2;
-//    finalURL += downloadUrl3;
-//    var data = "prodId=" + prodId;
-//    id = prodId;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/userDownload", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("Your download limit has exceeded.");
-//                //location.reload();
-//                return false;
-//            }
-//            else if (msg === 'incld')
-//            {
-//                alert("You have already downloaded this song.Get it from your recent downloads");
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('songtab_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('songtab_' + prodId).style.display = 'block';
-//                addQtip_toptab(prodId);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                return false;
-//            }
-//            else if (msg === 'suces')
-//            {
-//                var downloadUsedArr = response.split('|');
-//                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                document.getElementById('songtab_' + prodId).innerHTML = '';
-//                if (languageSet === 'en') {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('songtab_' + prodId).style.display = 'block';
-//                addQtip_toptab(prodId);
-//                location.href = unescape(finalURL);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//            }
-//            else
-//            {
-//                alert("You have been logged out from the system. Please login again.");
-//                location.reload();
-//                return false;
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function userDownloadOthers_safari(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('downloading_' + prodId).style.display = 'block';
-//    document.getElementById('song_' + prodId).style.display = 'none';
-//    document.getElementById('download_loader_' + prodId).style.display = 'block';
-//    var finalURL = downloadUrl1;
-//    finalURL += downloadUrl2;
-//    finalURL += downloadUrl3;
-//    var data = "prodId=" + prodId;
-//    id = prodId;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/userDownload", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("Your download limit has exceeded.");
-//                //location.reload();
-//                return false;
-//            }
-//            else if (msg === 'incld')
-//            {
-//                alert("You have already downloaded this song.Get it from your recent downloads");
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                $('.download_links_' + prodId).html('');
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip_top(prodId);
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                return false;
-//            }
-//            else if (msg === 'suces')
-//            {
-//                $('.afterClick').hide();
-//                $('.beforeClick').show();
-//                var downloadUsedArr = response.split('|');
-//                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
-//                document.getElementById('download_loader_' + prodId).style.display = 'none';
-//                document.getElementById('downloading_' + prodId).style.display = 'none';
-//                $('.download_links_' + prodId).html('');
-//                if (languageSet === 'en') {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-//                } else {
-//                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
-//                }
-//                document.getElementById('song_' + prodId).style.display = 'block';
-//                addQtip(prodId);
-//                location.href = unescape(finalURL);
-//            }
-//            else
-//            {
-//                alert("You have been logged out from the system. Please login again.");
-//                location.reload();
-//                return false;
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function addToWishlist_top(prodId, providerType)
-//{
-//    $('.beforeClick').hide();
-//    $('.afterClick').show();
-//    document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
-//    var data = "prodId=" + prodId + "&provider=" + providerType;
-//    jQuery.ajax({
-//        type: "post", // Request method: post, get
-//        url: webroot + "homes/addToWishlist", // URL to request
-//        data: data, // post data
-//        success: function(response) {
-//            var msg = response.substring(0, 5);
-//            if (msg === 'error')
-//            {
-//                alert("You can not add more songs to your wishlist.");
-//                location.reload();
-//                return false;
-//            }
-//            else
-//            {
-//                var msg = response.substring(0, 7);
-//                if (msg === 'Success')
-//                {
-//                    $('.beforeClick').show();
-//                    $('.afterClick').hide();
-//                    if (languageSet === 'en') {
-//                        document.getElementById('wishlist_top' + prodId).innerHTML = 'Added to Wishlist';
-//                    } else {
-//                        document.getElementById('wishlist_top' + prodId).innerHTML = 'Añadido a su Lista Deseost';
-//                    }
-//                    document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
-//                }
-//                else
-//                {
-//                    alert("You have been logged out from the system. Please login again.");
-//                    location.reload();
-//                    return false;
-//                }
-//            }
-//        },
-//        error: function(XMLHttpRequest, textStatus, errorThrown) {
-//        }
-//    });
-//    return false;
-//}
-//function videoDownloadAll(prodId)
-//{
-//    hidVideoValue = $("#hid_VideoDownloadStatus").val();
-//    if (hidVideoValue === 1) {
-//        var r = confirm('A video download will use up 2 of your available downloads. Are you sure you want to continue?');
-//        if (r === true)
-//        {
-//            $('.beforeClick').hide();
-//            $('.afterClick').show();
-//            document.getElementById('downloading_' + prodId).style.display = 'block';
-//            document.getElementById('song_' + prodId).style.display = 'none';
-//            document.getElementById('download_loader_' + prodId).style.display = 'block';
-//            $('#form' + prodId).submit();
-//            setTimeout("location.reload(true)", 7000);
-//        }
-//        else
-//        {
-//            return;
-//        }
-//    }
-//    else
-//    {
-//        alert('Sorry, you do not have enough credits to download a video.');
-//    }
-//}
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function userDownloadOthers_toptab(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('songtab_' + prodId).style.display = 'none';
+    document.getElementById('download_loader_' + prodId).style.display = 'block';
+    var finalURL = downloadUrl1;
+    finalURL += downloadUrl2;
+    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/userDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'incld')
+            {
+                alert("You have already downloaded this song.Get it from your recent downloads");
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('songtab_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('songtab_' + prodId).style.display = 'block';
+                addQtip_toptab(prodId);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                document.getElementById('songtab_' + prodId).innerHTML = '';
+                if (languageSet === 'en') {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('songtab_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('songtab_' + prodId).style.display = 'block';
+                addQtip_toptab(prodId);
+                location.href = unescape(finalURL);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function userDownloadOthers_safari(prodId, downloadUrl1, downloadUrl2, downloadUrl3)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('downloading_' + prodId).style.display = 'block';
+    document.getElementById('song_' + prodId).style.display = 'none';
+    document.getElementById('download_loader_' + prodId).style.display = 'block';
+    var finalURL = downloadUrl1;
+    finalURL += downloadUrl2;
+    finalURL += downloadUrl3;
+    var data = "prodId=" + prodId;
+    id = prodId;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/userDownload", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("Your download limit has exceeded.");
+                //location.reload();
+                return false;
+            }
+            else if (msg === 'incld')
+            {
+                alert("You have already downloaded this song.Get it from your recent downloads");
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                $('.download_links_' + prodId).html('');
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip_top(prodId);
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                return false;
+            }
+            else if (msg === 'suces')
+            {
+                $('.afterClick').hide();
+                $('.beforeClick').show();
+                var downloadUsedArr = response.split('|');
+                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                document.getElementById('download_loader_' + prodId).style.display = 'none';
+                document.getElementById('downloading_' + prodId).style.display = 'none';
+                $('.download_links_' + prodId).html('');
+                if (languageSet === 'en') {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+                } else {
+                    document.getElementById('song_' + prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+                }
+                document.getElementById('song_' + prodId).style.display = 'block';
+                addQtip(prodId);
+                location.href = unescape(finalURL);
+            }
+            else
+            {
+                alert("You have been logged out from the system. Please login again.");
+                location.reload();
+                return false;
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function addToWishlist_top(prodId, providerType)
+{
+    $('.beforeClick').hide();
+    $('.afterClick').show();
+    document.getElementById('wishlist_loader_' + prodId).style.display = 'block';
+    var data = "prodId=" + prodId + "&provider=" + providerType;
+    jQuery.ajax({
+        type: "post", // Request method: post, get
+        url: webroot + "homes/addToWishlist", // URL to request
+        data: data, // post data
+        success: function(response) {
+            var msg = response.substring(0, 5);
+            if (msg === 'error')
+            {
+                alert("You can not add more songs to your wishlist.");
+                location.reload();
+                return false;
+            }
+            else
+            {
+                var msg = response.substring(0, 7);
+                if (msg === 'Success')
+                {
+                    $('.beforeClick').show();
+                    $('.afterClick').hide();
+                    if (languageSet === 'en') {
+                        document.getElementById('wishlist_top' + prodId).innerHTML = 'Added to Wishlist';
+                    } else {
+                        document.getElementById('wishlist_top' + prodId).innerHTML = 'Añadido a su Lista Deseost';
+                    }
+                    document.getElementById('wishlist_loader_' + prodId).style.display = 'none';
+                }
+                else
+                {
+                    alert("You have been logged out from the system. Please login again.");
+                    location.reload();
+                    return false;
+                }
+            }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return false;
+}
+function videoDownloadAll(prodId)
+{
+    hidVideoValue = $("#hid_VideoDownloadStatus").val();
+    if (hidVideoValue === 1) {
+        var r = confirm('A video download will use up 2 of your available downloads. Are you sure you want to continue?');
+        if (r === true)
+        {
+            $('.beforeClick').hide();
+            $('.afterClick').show();
+            document.getElementById('downloading_' + prodId).style.display = 'block';
+            document.getElementById('song_' + prodId).style.display = 'none';
+            document.getElementById('download_loader_' + prodId).style.display = 'block';
+            $('#form' + prodId).submit();
+            setTimeout("location.reload(true)", 7000);
+        }
+        else
+        {
+            return;
+        }
+    }
+    else
+    {
+        alert('Sorry, you do not have enough credits to download a video.');
+    }
+}
