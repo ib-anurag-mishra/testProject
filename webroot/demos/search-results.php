@@ -3,7 +3,7 @@
 	include 'header-sidebar.php';
 ?>
 					<div class="breadcrumbs">Home > Search Results</div>
-					<section class="search-results-page">
+					<section class="search-results-all-page">
 						<div class="faq-link">Need Help? Visit our <a href="#">FAQ Section.</a></div>
 						<div class="search-results-heading">Results for your search "shakira"</div>
 						<div class="search-results-text"><span>4</span> Albums, <span>5</span> Artists, <span>5</span> Composers, <span>5</span> Videos, <span>5</span> Genres, <span>681</span> Songs</div>
@@ -29,7 +29,7 @@
 								<h3 class="albums-header">Albums</h3>
 								<a class="see-more" href="#">See More</a>
 							</header>
-							<div class="search-results-albums-carousel">
+							<div class="search-results-all-albums-carousel">
 								<div class="search-results-albums">
 									<ul class="clearfix">
 										<li>

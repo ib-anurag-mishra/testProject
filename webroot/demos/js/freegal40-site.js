@@ -60,6 +60,29 @@ $(document).ready(function(){
         $(this).siblings('ul').toggleClass('active');
     });
 
+    $('.left-scroll-button,.wishlist-icon').on('mouseenter',function(){
+        
+
+        $('.album-cover-container ul').removeClass('active');
+        
+
+    });
+
+    $('.top-albums-carousel>ul>li').on('mouseleave',function(){
+
+        $('.album-cover-container ul').removeClass('active');
+    });
+
+    $('.top-songs-filter-icon').on('mouseleave',function(e){
+
+        if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
+
+            $('.top-songs-filter-menu').removeClass('active');
+        }
+
+    });
+
+
     var ulPosition;
 
     
@@ -273,6 +296,15 @@ $(document).ready(function(){
 
     });
 
+    $('.multi-select-icon').on('mouseleave',function(e){
+
+       if (e.offsetX > $(this).width() || e.offsetY < 0) {
+
+            $('.options-menu').removeClass('active');
+            $(this).removeClass('highlighted');
+        }
+    });
+
     $('.select-all').on('click',function(e){
         e.preventDefault();
         $('.row-checkbox').each(function(){
@@ -295,6 +327,16 @@ $(document).ready(function(){
 
         $(this).siblings('.options-menu').addClass('active');
     });
+
+    $('.menu-btn').on('mouseleave',function(e){
+
+        if (e.offsetX > $(this).width() || e.offsetY < 0) {
+
+            $('.options-menu').removeClass('active');
+        }
+    });
+
+
 
     $('.top-songs-filter-icon').on('click',function(){
         $(this).siblings('.top-songs-filter-menu').toggleClass('active');
