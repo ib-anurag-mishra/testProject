@@ -41,8 +41,7 @@
         <!--<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
 <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>-->
 <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results1.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        -->
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>    -->
 
         <?php
         echo $this->Html->css(
@@ -64,6 +63,9 @@
         ?>
         
       <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
+      
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>    
+        
         <?php
         if ($this->Session->read("patron"))
         {
