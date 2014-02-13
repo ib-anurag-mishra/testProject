@@ -3625,12 +3625,12 @@ typeof JSON!="object"&&(JSON={}),function(){"use strict";function f(e){return e<
                     //$.getScript(webroot + 'css/freegal_styles.css');
 
                     //$.getScript(scriptPath + '/js/freegal.js');
-                    //$.getScript(webroot + 'js/site.js');
-                    //$.getScript(webroot + 'js/freegal.js');
+                    $.getScript(webroot + 'js/site.js');
+                    $.getScript(webroot + 'js/freegal.js');
                     //$.getScript(webroot + 'js/audioPlayer.js');
-                    //$.getScript(scriptPath + '/js/recent-downloads.js');
+                    $.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
-                    $.getScript(webroot+'js/newfreegal.js');
+                  
                     
                     $('.loader').fadeOut(50);
                     $('#content').find('.loader').remove();

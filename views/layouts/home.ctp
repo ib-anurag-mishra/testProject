@@ -55,15 +55,15 @@
         echo $javascript->link(
             array(
                 'freegal40-libraries',
-                'newfreegal',
-     //           'ajaxify-html5.js',
-    //                    'site.js'
-            )
+                'freegal',
+                'site.js',
+                'recent-downloads',
+     //           'ajaxify-html5.js',                
+                )
             );
         ?>
         
-      <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
-      
+      <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>      
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>    
         
         <?php
