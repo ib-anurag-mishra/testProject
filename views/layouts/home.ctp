@@ -59,7 +59,7 @@
         echo $javascript->link(
                 array(                    
 //                    'freegal',
-                    'freegal40-libraries',
+                    'newfreegal',
                     'ajaxify-html5.js' ,
 //                    'site.js'
                 )
