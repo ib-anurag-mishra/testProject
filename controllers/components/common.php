@@ -179,6 +179,7 @@ STR;
             $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
             $MemDatas->setDataSource('master');
             $MemDatas->query($memQuery);
+            
             $MemDatas->setDataSource('default');
             
             
