@@ -171,6 +171,20 @@ Class CommonComponent extends Object
 
 STR;
             $data = $albumInstance->query($sql_national_100);
+            
+            $MemDatas = ClassRegistry::init('MemDatas');
+
+            //update the mem datas table
+            $nationalTopDownloadSer = base64_encode(serialize($data));
+            $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
+            $MemDatas->setDataSource('master');
+            $MemDatas->query($memQuery);
+            $MemDatas->setDataSource('default');
+            
+            
+            
+            
+            
             $this->log("National top 100 songs for " . $territory, "cachequery");
             $this->log($sql_national_100, "cachequery");
             if ($ids_provider_type == "")

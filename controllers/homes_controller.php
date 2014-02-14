@@ -4702,7 +4702,8 @@ STR;
             $return = $data[0][0]['@ret'];
 
             $log_data .= ":StoredProcedureParameters-LibID='" . $libId . "':StoredProcedureParameters-Patron='" . $patId . "':StoredProcedureParameters-ProdID='" . $prodId . "':StoredProcedureParameters-ProductID='" . $trackDetails['0']['Song']['ProductID'] . "':StoredProcedureParameters-ISRC='" . $trackDetails['0']['Song']['ISRC'] . "':StoredProcedureParameters-Artist='" . addslashes($trackDetails['0']['Song']['Artist']) . "':StoredProcedureParameters-SongTitle='" . addslashes($trackDetails['0']['Song']['SongTitle']) . "':StoredProcedureParameters-UserLoginType='" . $insertArr['user_login_type'] . "':StoredProcedureParameters-ProviderType='" . $insertArr['provider_type'] . "':StoredProcedureParameters-Email='" . $insertArr['email'] . "':StoredProcedureParameters-UserAgent='" . addslashes($insertArr['user_agent']) . "':StoredProcedureParameters-IP='" . $insertArr['ip'] . "':StoredProcedureParameters-CurWeekStartDate='" . Configure::read('App.curWeekStartDate') . "':StoredProcedureParameters-CurWeekEndDate='" . Configure::read('App.curWeekEndDate') . "':StoredProcedureParameters-Name='" . $procedure . "':StoredProcedureParameters-@ret='" . $return . "'";
-
+            $log_data .= ":StoredProcedureParameters-HTTP_REFERER='" . $_SERVER['HTTP_REFERER'];
+            
             //check the new entry is available in the latest download table or not
             if (is_numeric($return))
             {
