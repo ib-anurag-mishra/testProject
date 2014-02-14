@@ -337,7 +337,7 @@ class QueuesController extends AppController
 //        echo "<br>Query: ".$this->StreamingHistory->lastQuery();
         //  echo '<pre>'; print_r($streamingResults);
 
-        $this->set('streamingData', $streamingResults);
+              $this->set('streamingData', $streamingResults);
 
         $this->set('sort', $sort);
         $this->set('sortOrder', $sortOrder);
