@@ -24,7 +24,7 @@
 
 						<header>
 							<h3 class="composers-header">Composers</h3>
-							<a class="see-more" href="#">See More</a>
+							
 						</header>
 						<div class="search-results-list">
 							<ul>

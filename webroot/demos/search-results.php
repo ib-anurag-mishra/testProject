@@ -27,7 +27,7 @@
 						<section class="category-results album-results">
 							<header>
 								<h3 class="albums-header">Albums</h3>
-								<a class="see-more" href="#">See More</a>
+								
 							</header>
 							<div class="search-results-all-albums-carousel">
 								<div class="search-results-albums">
@@ -393,7 +393,7 @@
 						<section class="category-results artist-results">
 							<header>
 								<h3 class="artists-header">Artists</h3>
-								<a class="see-more" href="#">See More</a>
+								
 							</header>
 							<div class="search-results-list">
 								<ul>
@@ -408,7 +408,7 @@
 						<section class="category-results composers-results">
 							<header>
 								<h3 class="composers-header">Composers</h3>
-								<a class="see-more" href="#">See More</a>
+								
 							</header>
 							<div class="search-results-list">
 								<ul>
@@ -423,7 +423,7 @@
 						<section class="category-results videos-results">
 							<header>
 								<h3 class="videos-header">Videos</h3>
-								<a class="see-more" href="#">See More</a>
+								
 							</header>
 							<div class="search-results-list">
 								<ul>
@@ -438,7 +438,7 @@
 						<section class="category-results genres-results">
 							<header>
 								<h3 class="genres-header">Genres</h3>
-								<a class="see-more" href="#">See More</a>
+								
 							</header>
 							<div class="search-results-list">
 								<ul>

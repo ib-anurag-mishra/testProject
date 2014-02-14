@@ -24,7 +24,7 @@
 
 						<header>
 							<h3 class="videos-header">Videos</h3>
-							<a class="see-more" href="#">See More</a>
+							
 						</header>
 						<div class="video-result-container">
 							<div class="video-thumb">

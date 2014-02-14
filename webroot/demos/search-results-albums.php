@@ -24,7 +24,7 @@
 
 						<header>
 							<h3 class="albums-header">Albums</h3>
-							<a class="see-more" href="#">See More</a>
+							
 						</header>
 						<div class="album-detail-container">
 							<div class="cover-image">

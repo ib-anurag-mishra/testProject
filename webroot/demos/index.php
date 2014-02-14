@@ -6,7 +6,7 @@ include 'header-sidebar.php';
 					<section class="top-albums">
 						<header>
 							<h2>Top Albums</h2>
-							<a href="#" class="see-more"></a>
+							
 						</header>
 						<div class="top-albums-carousel-container">
 							
@@ -899,7 +899,7 @@ include 'header-sidebar.php';
 					<section class="top-songs">
 						<header>
 							<h2>Top Singles</h2>
-							<a href="#" class="see-more"></a>
+							
 						</header>
 						
 						<div class="top-songs-container clearfix">
@@ -1783,7 +1783,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1798,7 +1798,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1813,7 +1813,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1828,7 +1828,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1843,7 +1843,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1858,7 +1858,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1873,7 +1873,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1888,7 +1888,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1903,7 +1903,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1918,7 +1918,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1933,7 +1933,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1948,7 +1948,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1963,7 +1963,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1978,7 +1978,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -1993,7 +1993,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2008,7 +2008,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2023,7 +2023,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2038,7 +2038,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2053,7 +2053,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2068,7 +2068,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2086,7 +2086,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2101,7 +2101,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2116,7 +2116,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2131,7 +2131,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>
@@ -2146,7 +2146,7 @@ include 'header-sidebar.php';
 										Baptized
 									</div>
 									<div class="featured-artist-ctas">
-										<button class="stream-artist">Stream Album</button><button class="more-by-artist"></button>
+										<button class="stream-artist">Stream Album</button><a class="more-by-artist" href="#"></a>
 										
 									</div>
 								</div>

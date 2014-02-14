@@ -35,6 +35,14 @@ $(document).ready(function(){
         
     });
 
+    $('.my-account-menu').on('mouseleave',function(e){
+
+         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
+
+            $('.account-menu-dropdown').removeClass('active');
+        }       
+    });
+
     $('.album-cover-container ul').bindMouseWheel();
     $('.album-cover-container ul').on('mouseleave',function(){
         $(this).removeClass('active');

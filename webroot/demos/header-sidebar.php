@@ -46,7 +46,7 @@
 								
 								
 							</div>
-							<button class="browse">Browse Artist A-Z</button>
+							<a class="browse" href="#">Browse Artist A-Z</a>
 							<div class="master-search-container">
 								<select name="master-search-select" class="master-search-select">
 									<option value="all">Search All</option>
@@ -58,7 +58,7 @@
 								<div class="master-search-field-container">
 									
 									<input type="search" placeholder="Press enter or go..." class="search-text">
-									<button class="go">Go</button>
+									<a class="go" href="#">Go</a>
 									
 								</div>
 
