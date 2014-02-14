@@ -171,16 +171,15 @@ Class CommonComponent extends Object
 
 STR;
             $data = $albumInstance->query($sql_national_100);
-            
-            $MemDatas = ClassRegistry::init('MemDatas');
-
             //update the mem datas table
-            $nationalTopDownloadSer = base64_encode(serialize($data));
-            $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
-            $MemDatas->setDataSource('master');
-            $MemDatas->query($memQuery);
-            
-            $MemDatas->setDataSource('default');
+            $MemDatas = ClassRegistry::init('MemDatas');
+            if(!empty($data)){                
+                $nationalTopDownloadSer = base64_encode(serialize($data));
+                $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
+                $MemDatas->setDataSource('master');
+                $MemDatas->query($memQuery);
+                $MemDatas->setDataSource('default');
+            }
             
             
             
