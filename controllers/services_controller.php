@@ -931,6 +931,7 @@ class ServicesController extends AppController {
 				$this->Session->write("patron", $patronId);
 				$this->Session->write("consortium", $consortium[0]['Consortium']['consortium_name']);
 				$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+				$this->Session->write("library_type", $existingLibraries['0']['Library']['library_type']);
 				if($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative'){
 					$this->Session->write("innovative","innovative");
 				}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_var'){
