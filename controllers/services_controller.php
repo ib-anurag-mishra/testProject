@@ -745,7 +745,6 @@ class ServicesController extends AppController {
 	}
     
 	function login(){
-		print_r($this->params['pass']);
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
 												array('consortium_key' => $this->params['pass'][0])
@@ -987,12 +986,10 @@ class ServicesController extends AppController {
 					$this ->Session->write("block", 'no');
 				}
 				if(isset($nopin)){
-				    echo "redirect1"; die;
                                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/artists/view/'.$this->params['pass'][4].'/'.$this->params['pass'][3].'/'.$this->params['pass']['5']); 
                                    exit;                                     
 					//$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3], $this->params['pass']['5']));
 				}else{
-				    echo "redirect2"; die;
 					//$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][5], $this->params['pass'][4], $this->params['pass']['6']));				
                                     $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/artists/view/'.$this->params['pass'][5].'/'.$this->params['pass'][4].'/'.$this->params['pass']['6']); 
                                     exit;
