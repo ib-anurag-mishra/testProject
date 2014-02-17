@@ -5954,7 +5954,7 @@ STR;
     //End 
 
  
-    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+    for( $cnt = 0; $cnt < (count($data)); $cnt++ ) {
       
       if(!(empty($data[$cnt]['QueueList']['queue_name']))) { 
             
