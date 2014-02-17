@@ -4873,6 +4873,7 @@ function login($library = null){
 					//$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
                                         
 					$data['database'] = 'freegal';
+                                        $data['library_host_name'] = $existingLibraries['0']['Library']['library_host_name'];
                                         $data['library_authentication_url'] = $existingLibraries['0']['Library']['library_authentication_url'];                                        
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."symws_validation";
