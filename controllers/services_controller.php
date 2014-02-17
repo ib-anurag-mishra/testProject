@@ -745,6 +745,7 @@ class ServicesController extends AppController {
 	}
     
 	function login(){
+		print_r($this->params['pass']); die;
 		$consortium = $this->Consortium->find('all',array(
                                                 'conditions' => 
 												array('consortium_key' => $this->params['pass'][0])
