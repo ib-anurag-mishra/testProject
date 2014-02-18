@@ -7,6 +7,12 @@
 ?>    
 
 <style>
+    
+    header.clearfix{
+        border: none;
+        background: none;
+        margin-bottom: 10px;
+    }
     .content{
        padding-left: 0;
        padding-top: 0; 
@@ -155,13 +161,13 @@ $totalRows = count($genresAll);
         <span><?php echo $html->getCrumbs('>', __('Home', true), '/homes'); ?></span>
     </div>
 
-    <header class="clearfix">
+    <header class="clearfix" >
         <h2> <?php echo __('Search for your favorite music.', true); ?></h2>
         <div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' => 'index')); ?></div>
     </header>
 
     <div class="genres-container">
-        <header>
+        <header style="margin-bottom:0px;">
 	 	<div class="genres-header">Genres</div>
 		<div class="a-z-header">A - Z</div>
 		<div class="artist-header">Artist</div>
