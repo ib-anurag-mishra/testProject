@@ -81,7 +81,7 @@ class HomesController extends AppController
         {
             $this->redirect('http://' . $_SERVER['HTTP_HOST'] . '/index');
         }
-        $this->layout = 'home_new';
+        $this->layout = 'home';
         // Local Top Downloads functionality
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
