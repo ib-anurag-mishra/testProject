@@ -149,6 +149,8 @@ button::-moz-focus-inner {
 	ul {
 		@include border-radius(5px);
 		border:1px solid #bdbdbd;
+		background:#fff;
+		overflow-y: scroll;
 	
 		&:nth-child(2) {
 
@@ -167,6 +169,7 @@ button::-moz-focus-inner {
 				text-decoration: none;
 				
 				width: 175px;
+				
 				
 				@include border-radius(0);
 
@@ -568,7 +571,7 @@ sub { top: 0.4em; }
 			padding: 10px;
 
 			line-height: 16px;
-			@include box-shadow(0 0 3px #ccc);
+			@include box-shadow(0 0 4px #aaa);
 
 			&.active {
 
