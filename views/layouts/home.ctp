@@ -48,9 +48,11 @@
         <?php
         echo $this->Html->css(
                 array(
+                    'freegal40',
                     'freegal_styles',
                     'jquery.autocomplete',
-                    'colorbox',
+                    'colorbox'
+                        
                 )
         );
 
@@ -58,7 +60,7 @@
 
         echo $javascript->link(
                 array(                    
-                    'freegal','ajaxify-html5.js', 'site.js'
+                    'freegal','ajaxify-html5.js', 'site.js','freegal40-libraries','html5shiv','freegal40-site'
                 )
         );
         
