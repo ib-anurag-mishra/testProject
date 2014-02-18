@@ -316,7 +316,6 @@ $(document).ready(function() {
 if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-            
         $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
@@ -329,8 +328,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		$width = 166;
 	}
 }
-
-         
     
 ?>
     <div class="queue-overlay">
@@ -534,7 +531,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                 </li>
                                                                 <?php } ?>
                                                                 <li class="dropdown-item">
-                                                                        <?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?>
+                                                                        <?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy','id' => 'logout'));?>
                                                                 </li>
                                                         </ul>
 
