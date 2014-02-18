@@ -8,6 +8,11 @@
 
 <style>
     
+    .genres-page .alpha-artist-list-column li {
+         padding-top: 5px;
+         padding-bottom: 5px;
+       }
+    
     header.clearfix{
         border: none;
         background: none;
