@@ -1,9 +1,13 @@
 
-				</section>
-			</div>
+						</section>
+					</div> <!-- end .wrapper -->
+				</div> <!-- end #content -->
+			</div> <!-- end #container -->
+			
 			<div class="fmp-container">
 				<div id="alt"></div>
 			</div>
+			<style></style>
 			<footer>
 				<div class="inner-wrapper">
 					<div class="legal">&copy; 2013 Library Ideas, LLC All Rights Reserved</div>
@@ -29,7 +33,10 @@
 			</footer>
 			<div class="filler"></div>
 
-		</div>
+			</div>
+		</div> <!-- end #border-background -->
+		<div id="cboxOverlay"></div>
+		<div id="colorBox"></div>
 		<script type="text/javascript" src="js/freegal40-libraries.js"></script>
 
 		<script type="text/javascript" src="js/freegal40-site.js"></script>
