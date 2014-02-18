@@ -93,31 +93,31 @@ class CacheController extends AppController {
         foreach($territoriesList as $territory){
             
             
-            $this->setNewsCache($territory);
-            $this->Common->getGenres($territory);
+//            $this->setNewsCache($territory);
+//            $this->Common->getGenres($territory);
             $this->Common->getNationalTop100($territory);
-            $this->Common->getFeaturedVideos($territory);
-            $this->Common->getTopVideoDownloads($territory);
-            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
-            $this->Common->getNationalTop100Albums($territory);
-            $this->Common->getComingSoonSongs($territory);
-            $this->Common->getComingSoonVideos($territory);
-            $this->Common->getUsTop10Songs($territory);
-            $this->Common->getUsTop10Albums($territory);
-            $this->Common->getUsTop10Videos($territory);
-            $this->Common->getNewReleaseAlbums($territory);
-            $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
-            $this->getArtistText($territory);
-            $this->Common->getDefaultQueues($territory);   
+//            $this->Common->getFeaturedVideos($territory);
+//            $this->Common->getTopVideoDownloads($territory);
+//            //$this->Common->getNationalTop100Videos($territory); //National top 100 videos are removed and instead albums are shownn
+//            $this->Common->getNationalTop100Albums($territory);
+//            $this->Common->getComingSoonSongs($territory);
+//            $this->Common->getComingSoonVideos($territory);
+//            $this->Common->getUsTop10Songs($territory);
+//            $this->Common->getUsTop10Albums($territory);
+//            $this->Common->getUsTop10Videos($territory);
+//            $this->Common->getNewReleaseAlbums($territory);
+//            $this->Common->getNewReleaseVideos($territory);
+//            $this->Common->getFeaturedArtists($territory);
+//            $this->Common->getDifferentGenreData($territory);
+//            $this->getArtistText($territory);
+//            $this->Common->getDefaultQueues($territory);   
             
         }
-       $this->Common->setLibraryTopTenCache();
-       $this->Common->setVideoCacheVar();    
-       $this->setAppMyMusicVideoList(); 
-       $this->setAnnouncementCache();
-       $this->setTopArtist();
+//       $this->Common->setLibraryTopTenCache();
+//       $this->Common->setVideoCacheVar();    
+//       $this->setAppMyMusicVideoList(); 
+//       $this->setAnnouncementCache();
+//       $this->setTopArtist();
 
     }
     
