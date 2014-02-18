@@ -18,6 +18,7 @@
         echo $this->Html->meta('icon');
         //echo $javascript->link('ImageDisableRightClick');
         echo $this->Html->css('freegal_styles');
+        echo $this->Html->css('freegal40');
           echo $this->Html->css('jquery.autocomplete');
           echo $html->css('colorbox');
           echo $javascript->link('jquery.min');
