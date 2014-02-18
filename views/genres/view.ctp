@@ -152,11 +152,16 @@ $totalRows = count($genresAll);
         <div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' => 'index')); ?></div>
     </header>
 
-
+    <div class="genres-container">
+        <header>
+	 	<div class="genres-header">Genres</div>
+		<div class="a-z-header">A - Z</div>
+		<div class="artist-header">Artist</div>
+							</header>
     <section class="genre-filter-container clearfix">
-        <div class="genre-shadow-container">
-            <h3>Genre</h3>
-            <div class="genre-list">
+       <!-- <div class="genre-shadow-container">
+            <h3>Genre</h3> -->
+            <div class="genre-column">
                 <ul>
                     <li>
                         <a class="genre_list_item_all <?php echo ($genre == 'All') ? 'selected' : '' ?>" href="javascript:void(0)" data-genre="All Artists" id="genre_list_item_0" 
@@ -211,16 +216,15 @@ $totalRows = count($genresAll);
 
                 </ul>
             </div>
-        </div>
+       <!-- </div>  -->
 
+      <!--  <div class="border"></div> -->
 
-        <div class="border"></div>
+       <div id="ajax_artistlist_content">      
 
-        <div id="ajax_artistlist_content">     
-
-            <div class="alphabetical-shadow-container">
-                <h3><?php __('Artist'); ?></h3>
-                <div class="alphabetical-filter">
+           <!-- <div class="alphabetical-shadow-container"> -->
+               <!-- <h3><?php// __('Artist'); ?></h3> -->
+                <div class="alpha-artist-list-column">
                     <ul>
                         <li><a   href="javascript:void(0);" <?php
                             if ($selectedAlpha == "All")
@@ -336,12 +340,12 @@ $totalRows = count($genresAll);
                                 ?>class="selected" <?php } ?>  data-letter="Z"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Z', '', '')">Z</a></li>
                     </ul>
                 </div>
-            </div>
+           <!-- </div> -->
 
 
-            <div class="artist-list-shadow-container">
-                <h3></h3>
-                <div class="artist-list" id="artistscroll">					
+          <!--  <div class="artist-list-shadow-container">
+                <h3></h3> -->
+                <div class="artist-column" id="artistscroll">					
                     <ul id="artistlistrecord">						                                            
                         <?php
                         if (count($genres) > 0)
@@ -373,16 +377,18 @@ $totalRows = count($genresAll);
                     </ul>
                     <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
                 </div>
-            </div>
+          <!--  </div> -->
         </div>
 
-        <div class="border"></div>
+       <!-- <div class="border"></div> -->
 
-        <span class="album-list-span"></span>
+       <!-- <span class="album-list-span"></span> -->
 
     </section>
+        
+    </div>
 
-    <section class="album-detail-container clearfix" id='album_details_container'></section>
+    <!--<section class="album-detail-container clearfix" id='album_details_container'></section> -->
 
 
 </section>
