@@ -7,7 +7,15 @@
 ?>    
 
 <style>
-
+    .content{
+       padding-left: 0;
+       padding-top: 0; 
+    }
+    
+    .genres-page .genre-filter-container{
+        height: auto;    
+    }
+    
     .genre_list_item{
         cursor: pointer;
         display:block;
@@ -387,6 +395,13 @@ $totalRows = count($genresAll);
     </section>
         
     </div>
+    <div class="genre-button-container">
+	<button class="genre-scroll-up"></button>
+	<button class="genre-scroll-down"></button>
+	<button class="artist-scroll-up"></button>
+        <button class="artist-scroll-down"></button>
+   </div>
+    
 
     <!--<section class="album-detail-container clearfix" id='album_details_container'></section> -->
 
