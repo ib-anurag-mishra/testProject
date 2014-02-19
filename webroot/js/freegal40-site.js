@@ -29,6 +29,18 @@ swfobject.embedSWF("swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", 
 
 $(document).ready(function(){
 
+    $('.music-note-icon').on('mouseenter',function(){
+        
+        $('.plays-tooltip').addClass('active');
+
+    });
+
+    $('.music-note-icon').on('mouseleave',function(){
+        
+        $('.plays-tooltip').removeClass('active');
+
+    });   
+
     $('.my-account-menu').on('click',function(){
         
         $('.account-menu-dropdown').toggleClass('active');

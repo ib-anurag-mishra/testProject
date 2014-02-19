@@ -508,14 +508,16 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         </div>
                                         <?php } ?>
                                         <div class="row-2 clearfix">
-                                            <?php if($this->Session->read("patron")){ ?>
+                                            <?php if($this->Session->read("patron")){
+                                                $class = ' logged-in';
+                                            ?>
                                                 <div class="download-count-container">
                                                         <div class="download-count"><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>
                                                         <div class="music-note-icon"></div>
                                                 </div>
-
-                                                <div class="my-account-menu-container">
-
+                                             <?php } ?>    
+                                                <div class="my-account-menu-container<?php echo $class ?>">
+                                                     <?php if($this->Session->read("patron")){  ?>
                                                         <button class="my-account-menu">My Account</button>
 
                                                         <ul class="account-menu-dropdown">
@@ -534,34 +536,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                         <?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy','id' => 'logout'));?>
                                                                 </li>
                                                         </ul>
-
-
+                                                     <?php } else { 
+                                                                    $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+                                                                    if($library != 'www' && $library != 'freading' && $library != '50'){
+                                                                        echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'login'));
+                                                                    } else {
+                                                                        echo $html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'login'));
+                                                                    }
+                                                     } ?>           
                                                 </div>
-                                              <?php } else { ?>
-                                                        <div class="weekly-downloads-container clearfix">
-                                                            <div class="label">
-                                                                <?php 
-                                                                     $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
-                                                                     if($library != 'www' && $library != 'freading' && $library != '50'){
-                                                                         echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
-                                                                     } else {
-                                                                         echo $html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
-                                                                     }
-                                                                ?>
-
-                                                            </div>
-
-                                                                 <div class="small-divider"></div>
-                                                                 <div class="tooltip">
-                                                                         <a href="javascript:void(0)"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
-                                                                 </div>
-                                                                 <div class="account-options-menu">                                            
-
-                                                                     <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?></div>
-                                                                 </div>
-                                                                 <div class="play-count"><span id='downloads_used'>0</span></div>     
-                                                        </div> 
-                                              <?php } ?>  
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view'),array('class' => 'browse')); ?>
                                                 <div class="master-search-container">
                                                     <form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">							
@@ -630,6 +613,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                         </div>
 
                                 </div>
+                                <?php if($this->Session->read("patron")){ ?>
+                                    <div class="plays-tooltip">
+                                            The download usage counter is located in the upper right corner of freegalmusic.com displaying your weekly allotment. For instance, 1/3 means that you have a weekly limit of 3 downloads, and you have used 1 of those downloads. The download counter resets each week at Monday 12:01 AM (Eastern Time, USA).	
+                                    </div>
+                                <?php  } ?>
                         </div>
                 </header>
 			<!-- site nav -->
