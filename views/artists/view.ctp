@@ -138,10 +138,10 @@
                         $albumTextLenght = strlen($album['Album']['AlbumTitle']);
                         $albumTextValue =$album['Album']['AlbumTitle'];
                         if ($albumTextLenght >= 50){
-                            $albumTextValue = substr($album['Album']['AlbumTitle'], 0, 50) . '...'; 
-                            if($this->getTextEncode($albumTextValue)){
-                                    $albumTextValue = $this->getTextEncode($albumTextValue);
-                            }
+                            $albumTextValue = substr($album['Album']['AlbumTitle'], 0, 50) . '...';                             
+                        }
+                        if($this->getTextEncode($albumTextValue)){
+                                $albumTextValue = $this->getTextEncode($albumTextValue);
                         }
             
                         ?>
@@ -264,12 +264,12 @@
                             <?php
                                    //check the artist value exist or not
                                     $artistTextLenght = strlen($albumSong['Song']['Artist']);
-                                    $artistTextValue ='';
+                                    $artistTextValue =$albumSong['Song']['Artist'];
                                     if ($artistTextLenght >= 30){
-                                        $artistTextValue = substr($albumSong['Song']['Artist'], 0, 30) . '...'; 
-                                        if($this->getTextEncode($artistTextValue)){
-                                             $artistTextValue = $this->getTextEncode($artistTextValue);
-                                        }
+                                        $artistTextValue = substr($albumSong['Song']['Artist'], 0, 30) . '...';                                        
+                                    }
+                                    if($this->getTextEncode($artistTextValue)){
+                                            $artistTextValue = $this->getTextEncode($artistTextValue);
                                     }
                             ?>
                             <div class="artist">
