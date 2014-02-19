@@ -236,7 +236,12 @@
                                      }
                                      else
                                      {
-                                         echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $albumSong['Song']['SongTitle'] . '</a>';
+                                         if($this->getTextEncode($albumSong['Song']['SongTitle'])){
+                                               echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '</a>';
+                                         }else{
+                                               echo '<a style="text-decoration:none;" title="' . $albumSong['Song']['SongTitle'] . '">' . $albumSong['Song']['SongTitle'] . '</a>';
+                                         }
+                                         
                                      }
                                      if ($albumSong['Song']['Advisory'] == 'T')
                                      {
