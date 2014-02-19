@@ -548,7 +548,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view'),array('class' => 'browse')); ?>
                                                 <div class="master-search-container">
                                                     <form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">							
-                                                        <select name="master-search-select" class="master-search-select">
+                                                        <select name="type" id="master-filter" class="master-search-select">
                                                                 <option value="all">Search All</option>
                                                                 <option value="artist">Artist</option>
                                                                 <option value="album">Album</option>
