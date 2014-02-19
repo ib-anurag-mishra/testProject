@@ -62,8 +62,8 @@
                 array(                    
                     'freegal','ajaxify-html5.js', 'site.js',
                     'freegal40-libraries',
-                    'html5shiv',
-                    //'freegal40-site'
+                    //'html5shiv',
+                    'freegal40-site'
                 )
         );
         
