@@ -136,7 +136,7 @@
                     
                         //check the album title value exist or not
                         $albumTextLenght = strlen($album['Album']['AlbumTitle']);
-                        $albumTextValue ='';
+                        $albumTextValue =$album['Album']['AlbumTitle'];
                         if ($albumTextLenght >= 50){
                             $albumTextValue = substr($album['Album']['AlbumTitle'], 0, 50) . '...'; 
                             if($this->getTextEncode($albumTextValue)){
