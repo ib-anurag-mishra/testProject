@@ -29,8 +29,7 @@
 
 										<!-- not visible when logged out --> <div class="streaming-time-remaining">Streaming Time Remaining 3:00:00</div>
 										<!-- not visible when logged out --> <div class="streaming-arrows-icon"></div>
-										<div class="apple-icon"></div>
-										<div class="android-icon"></div>
+
 										
 										
 									</div>
