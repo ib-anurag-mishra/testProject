@@ -438,7 +438,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
                                                                 <div class="forgot-password">Forgot your password? <a href="/homes/forgot_password">Click here to reset it.</a></div>
                                                         <?php }  
-                                                        } 
+                                                        }else if($this->Session->read("patron")){
+                                                                if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
+                                                                 <div class="forgot-password">Need to change your password? <a href="/users/my_account">Click here to reset it.</a></div>
+                                                       <?php    }
+                                                        }
                                                        if($this->Session->read("patron")){ 
                                                             $maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
 
