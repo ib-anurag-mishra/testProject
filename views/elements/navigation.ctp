@@ -433,80 +433,74 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108" /></a></h1>
                                     <?php } ?>					
                                     <div class="header-right-col">
-                                        <?php if($this->Session->read("patron")){ ?>
                                         <div class="row-1 clearfix">
-                                                <?php if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
-                                                            <div class="forgot-password">Forgot your password? <a href="/users/my_account">Click here to reset it.</a></div>
-                                                <?php } ?>
-
-                                                <?php
-
-
-                                                    $maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
-
-                                                 //if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
-                                                    if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
-
-                                                   { 
-                                                         $streamTime = 'UNLIMITED';
-                                                         $libraryunlimited = 1;
-
-                                                   }else if($this->Session->read('library_type')==2){
-                                                       $libraryunlimited = 0;
-
-                                                        $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
-                                                        $todaysDate         =   date("Y-m-d");                                                    
-
-                                                        if(strtotime(date("Y-m-d",strtotime($lastStreamedDate))) != strtotime(date('Y-m-d'))) // if Patron Logs in for first time in day 
-                                                        {
-                                                            $streamTime =   $maxStreamTime;                                                        
-                                                        }
-                                                        else
-                                                        {
-                                                            $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
-
-                                                            if(empty($streamTime))      // if there is no record of patron in streaming_records table i.e. user is streaming for first time
-                                                            {
-                                                                $streamTime =   $maxStreamTime;
-                                                            }
-                                                            else    // if user has streamed one or more time
-                                                            {
-                                                                $streamTime = ($maxStreamTime - $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
-                                                            }                                                                                                           
+                                                <?php if(!$this->Session->read("patron")){ 
+                                                            if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
+                                                                <div class="forgot-password">Forgot your password? <a href="/homes/forgot_password">Click here to reset it.</a></div>
+                                                        <?php }  
                                                         } 
+                                                       if($this->Session->read("patron")){ 
+                                                            $maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
 
-                                                         $streamTime =   gmdate("H:i:s", $streamTime);
-                                                   }   
-                                                ?>
-                                                    <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryunlimited; ?></span>
-                                                    <?php if($this->Session->read('library_type')==2){ ?>
-                                                        <div class="streaming-time-remaining">Streaming Time Remaining <?php echo $streamTime; ?></div>    
-                                                    <?php
-                                                        }
-                                                    //  Hidden variable to be used in site.js for alerting user before video download
+                                                         //if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+                                                            if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
 
-                                                        if(($downloadCount+1)<$libraryInfo['Library']['library_user_download_limit'])
-                                                        {
-                                                            ?>
-                                                                <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="1" />
-                                                            <?php
-                                                        }
-                                                        else
-                                                        {
-                                                              ?>
-                                                                <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="0" />
-                                                            <?php
-                                                        }
+                                                           { 
+                                                                 $streamTime = 'UNLIMITED';
+                                                                 $libraryunlimited = 1;
+
+                                                           }else if($this->Session->read('library_type')==2){
+                                                               $libraryunlimited = 0;
+
+                                                                $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
+                                                                $todaysDate         =   date("Y-m-d");                                                    
+
+                                                                if(strtotime(date("Y-m-d",strtotime($lastStreamedDate))) != strtotime(date('Y-m-d'))) // if Patron Logs in for first time in day 
+                                                                {
+                                                                    $streamTime =   $maxStreamTime;                                                        
+                                                                }
+                                                                else
+                                                                {
+                                                                    $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+
+                                                                    if(empty($streamTime))      // if there is no record of patron in streaming_records table i.e. user is streaming for first time
+                                                                    {
+                                                                        $streamTime =   $maxStreamTime;
+                                                                    }
+                                                                    else    // if user has streamed one or more time
+                                                                    {
+                                                                        $streamTime = ($maxStreamTime - $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
+                                                                    }                                                                                                           
+                                                                } 
+
+                                                                 $streamTime =   gmdate("H:i:s", $streamTime);
+                                                           }
+                                                        ?>
+                                                        <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryunlimited; ?></span>
+                                                        <?php if($this->Session->read('library_type')==2){ ?>
+                                                            <div class="streaming-time-remaining">Streaming Time Remaining <?php echo $streamTime; ?></div>    
+                                                        <?php
+                                                            }
+                                                        //  Hidden variable to be used in site.js for alerting user before video download
+
+                                                            if(($downloadCount+1)<$libraryInfo['Library']['library_user_download_limit'])
+                                                            {
+                                                                ?>
+                                                                    <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="1" />
+                                                                <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                  ?>
+                                                                    <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="0" />
+                                                                <?php
+                                                            }
 
 
-                                                ?>                                                                    
-                                                <div class="streaming-arrows-icon"></div>
-                                                <div class="apple-icon"></div>
-                                                <div class="android-icon"></div>
-
-
+                                                    ?>                                                                    
+                                                    <div class="streaming-arrows-icon"></div>
+                                             <?php } ?>   
                                         </div>
-                                        <?php } ?>
                                         <div class="row-2 clearfix">
                                             <?php if($this->Session->read("patron")){
                                                 $class = ' logged-in';
