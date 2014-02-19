@@ -494,10 +494,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                   ?>
                                                                     <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="0" />
                                                                 <?php
-                                                            }
-                                                    if($this->Session->read('library_type')==2){ ?>
+                                                            } ?>
+                                                    <?php if($this->Session->read('library_type')==2){ ?>
                                                         <div class="streaming-arrows-icon"></div>
-                                                <?php}
+                                                <?php }
                                               } ?>   
                                         </div>
                                         <div class="row-2 clearfix">
