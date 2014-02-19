@@ -232,7 +232,7 @@
                                 <?php
                                      if (strlen($albumSong['Song']['SongTitle']) >= 30)
                                      {
-                                         echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 50)) . '...</a>';
+                                         echo '<a style="text-decoration:none;" title="' . $this->getTextEncode($albumSong['Song']['SongTitle']) . '">' . substr($albumSong['Song']['SongTitle'], 0, 30) . '...</a>';
                                      }
                                      else
                                      {
