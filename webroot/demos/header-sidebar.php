@@ -7,6 +7,15 @@
 	</head>
 		
 	<body>
+		<!--[if lt IE 9]>
+		<div class="browser-update">
+			<a href="#" class="bu-close"></a>
+			<a href="http://www.google.com/chrome" class="chrome"></a>
+			<a href="http://www.mozilla.org/en-US/firefox/new/" class="ff"></a>
+			<a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" class="ie"></a>
+			<a href="http://www.apple.com/downloads/" class="safari"></a>
+		</div>
+		<![endif]-->
 		<div id="audioPixel">
 			<div id="audioflash"></div>
 		</div>
@@ -60,6 +69,7 @@
 										</div>
 										<a class="browse" href="#">Browse Artist A-Z</a>
 										<div class="master-search-container">
+											
 											<select name="master-search-select" class="master-search-select">
 												<option value="all">Search All</option>
 												<option value="artist">Artist</option>
@@ -67,9 +77,9 @@
 												<option value="genre">Genre</option>
 												<option value="composer">Composer</option>
 											</select>
+
 											<div class="master-search-field-container">
-												
-												<input type="search" placeholder="Press enter or go..." class="search-text">
+												<input type="text" placeholder="Press enter or go..." class="search-text">
 												<a class="go" href="#">Go</a>
 												
 											</div>
