@@ -167,7 +167,7 @@ Class CommonComponent extends Object
                         (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
                 GROUP BY Song.ProdID
                 ORDER BY FIELD(Song.ProdID,$ids) ASC
-                LIMIT 75 
+                LIMIT 100 
 
 STR;
             $data = $albumInstance->query($sql_national_100);
@@ -194,14 +194,21 @@ STR;
 //                        $data[$key]['totalseconds'] = $this->Streaming->getSeconds($value['Song']['FullLength_Duration']);
 //                    }
                 }
-                Cache::delete("national" . $country,"cache2");
-                Cache::write("national" . $country, $data, "cache2");
+                //update the mem datas table
+                $MemDatas = ClassRegistry::init('MemDatas');
+                $nationalTopDownloadSer = base64_encode(serialize($data));
+                $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
+                $MemDatas->setDataSource('master');
+                $MemDatas->query($memQuery);
+                $MemDatas->setDataSource('default');
+                
+                Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             }
             else
             {
-                $data = Cache::read("national" . $country, "cache2");
-                Cache::write("national" . $country, Cache::read("national" . $country, "cache2"), "cache2");
+                $data = Cache::read("national" . $country);
+                Cache::write("national" . $country, Cache::read("national" . $country));
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
         }
