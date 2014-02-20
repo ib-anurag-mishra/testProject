@@ -3,6 +3,9 @@
 	<head>
 		<meta name="viewport" content="width=device-width" />
 		<link href="css/freegal40.css" rel="stylesheet" type="text/css" />
+		<!--[if IE 8]>
+		<link href="css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
+		<![endif]-->
 		<script src="js/html5shiv.js"></script>
 	</head>
 		
@@ -60,15 +63,16 @@
 										</div>
 										<a class="browse" href="#">Browse Artist A-Z</a>
 										<div class="master-search-container">
-											
-											<select name="master-search-select" class="master-search-select">
-												<option value="all">Search All</option>
-												<option value="artist">Artist</option>
-												<option value="album">Album</option>
-												<option value="genre">Genre</option>
-												<option value="composer">Composer</option>
-											</select>
-
+											<div class="select-arrow-ie8"></div>
+											<div class="select-arrow-fix">
+												<select name="master-search-select" class="master-search-select">
+													<option value="all">Search All</option>
+													<option value="artist">Artist</option>
+													<option value="album">Album</option>
+													<option value="genre">Genre</option>
+													<option value="composer">Composer</option>
+												</select>
+											</div>
 											<div class="master-search-field-container">
 												<input type="text" placeholder="Press enter or go..." class="search-text">
 												<a class="go" href="#">Go</a>
