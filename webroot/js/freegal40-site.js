@@ -24,9 +24,6 @@ var flashvars = {};
 var params = {};
 var attributes = {};
 attributes.id = "fmp_player";
-swfobject.switchOffAutoHideShow();
-swfobject.embedSWF("swf/fmp.swf?"+(Math.random()*1000000), "alt", "960", "100", "9.0.0", false, flashvars, params, attributes);
-
 $(document).ready(function(){
 
     $('.music-note-icon').on('mouseenter',function(){
