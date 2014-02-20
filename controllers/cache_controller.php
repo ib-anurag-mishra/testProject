@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video','Genre', 'Videodownload','LatestVideodownload','QueueList', 'Territory','News','Language','MemDatas');
     var $components = array('Queue','Common','Email');
     
     function cacheLogin() {
@@ -107,9 +107,10 @@ class CacheController extends AppController {
             $this->Common->getNewReleaseAlbums($territory);
             $this->Common->getNewReleaseVideos($territory);
             $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);            
-            $this->Common->getDefaultQueues($territory);  
-            //$this->getArtistText($territory);
+            $this->Common->getDifferentGenreData($territory);
+            $this->getArtistText($territory);
+            $this->Common->getDefaultQueues($territory);   
+            
         }
        $this->Common->setLibraryTopTenCache();
        $this->Common->setVideoCacheVar();    
