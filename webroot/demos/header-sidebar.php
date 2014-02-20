@@ -7,15 +7,6 @@
 	</head>
 		
 	<body>
-		<!--[if lt IE 9]>
-		<div class="browser-update">
-			<a href="#" class="bu-close"></a>
-			<a href="http://www.google.com/chrome" class="chrome"></a>
-			<a href="http://www.mozilla.org/en-US/firefox/new/" class="ff"></a>
-			<a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" class="ie"></a>
-			<a href="http://www.apple.com/downloads/" class="safari"></a>
-		</div>
-		<![endif]-->
 		<div id="audioPixel">
 			<div id="audioflash"></div>
 		</div>
