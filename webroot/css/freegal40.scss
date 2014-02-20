@@ -535,12 +535,78 @@ sup, sub {
 }
 sub { top: 0.4em; }
 
+
+.browser-update {
+
+
+	background: url(../img/browser-update-v2.jpg);
+	width: 640px;
+	height: 460px;
+	margin: 10px auto;
+	border:1px solid #ddd;
+	position: relative;
+
+	&.closed {
+
+		display: none;
+	}
+
+	.bu-close {
+		position: absolute;
+		right: 12px;
+		top: 10px;
+		display: block;
+		width: 11px;
+		height: 13px;
+
+	}
+
+	.chrome {
+		position: absolute;
+		left: 40px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+	}
+
+	.ff {
+		position: absolute;
+		left: 180px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+
+	}
+
+	.ie {
+		position: absolute;
+		left: 324px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+
+	}
+
+	.safari {
+		position: absolute;
+		left: 468px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+
+	}
+
+
+}
+
 .wrapper {
 
 	position: relative;
 
 
 }
+
+
 
 .inner-wrapper,.content-wrapper {
 
@@ -1012,7 +1078,8 @@ sub { top: 0.4em; }
 				@include background-image(linear-gradient(#eee, #fcfcfc 25%, #fafafa 90%));
 				
 
-				
+
+
 				.master-search-select {
 					margin: 0;
 					border:0;
@@ -1063,7 +1130,7 @@ sub { top: 0.4em; }
 					width: 13px;
 					height: 13px;
 					position: absolute;
-					left: 108px;
+					left: 107px;
 					top: 8px;
 					content: "";
 					
@@ -1098,6 +1165,7 @@ sub { top: 0.4em; }
 						border:0;
 						outline: 0;
 						@include appearance(none);
+						padding-left: 4px;
 						
 
 
