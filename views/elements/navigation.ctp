@@ -558,7 +558,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 								<option value="video">Videos</option>
                                                         </select>
                                                         <div class="master-search-field-container">
-                                                                <input type="search" placeholder="Press enter or go..." class="search-text" id="search-text" name="q">
+                                                                <input type="text" placeholder="Press enter or go..." class="search-text" id="search-text" name="q">
                                                                 <a class="go" href="javascript:void(0)" id="headerSearchSubmit">Go</a>
                                                         </div>
                                                     </form>    
