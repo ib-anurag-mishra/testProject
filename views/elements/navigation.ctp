@@ -614,9 +614,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
                                 </div>
                                 <?php if($this->Session->read("patron")){ ?>
-                                    <div class="plays-tooltip">
+<!--                                    <div class="plays-tooltip">
                                             The download usage counter is located in the upper right corner of freegalmusic.com displaying your weekly allotment. For instance, 1/3 means that you have a weekly limit of 3 downloads, and you have used 1 of those downloads. The download counter resets each week at Monday 12:01 AM (Eastern Time, USA).	
-                                    </div>
+                                    </div>-->
                                 <?php  } ?>
                         </div>
                 </header>                        
