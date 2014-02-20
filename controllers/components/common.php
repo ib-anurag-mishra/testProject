@@ -171,6 +171,8 @@ Class CommonComponent extends Object
 
 STR;
             $data = $albumInstance->query($sql_national_100);
+             
+            
             $this->log("National top 100 songs for " . $territory, "cachequery");
             $this->log($sql_national_100, "cachequery");
             if ($ids_provider_type == "")
@@ -178,7 +180,8 @@ STR;
                 $this->log("ids_provider_type is set blank for " . $territory, "cache");
             }
             if (!empty($data))
-            {   
+            {
+               
                 foreach ($data as $key => $value)
                 {
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
