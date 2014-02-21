@@ -548,15 +548,19 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view'),array('class' => 'browse')); ?>
                                                 <div class="master-search-container">
                                                     <form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">							
-                                                        <select name="type" id="master-filter" class="master-search-select">
-								<option value="all">Search All</option>
-								<option value="album">Albums</option>
-								<option value="artist">Artists</option>
-								<option value="composer">Composers</option>
-								<option value="genre">Genres</option>
-								<option value="song">Songs</option>
-								<option value="video">Videos</option>
-                                                        </select>
+                                                        <div class="select-arrow-ie8"></div>
+                                                        <div class="select-arrow-fix">
+                                                                <select name="type" id="master-filter" class="master-search-select">
+                                                                    <option value="all">Search All</option>
+                                                                    <option value="album">Albums</option>
+                                                                    <option value="artist">Artists</option>
+                                                                    <option value="composer">Composers</option>
+                                                                    <option value="genre">Genres</option>
+                                                                    <option value="song">Songs</option>
+                                                                    <option value="video">Videos</option>
+                                                                </select>
+                                                        </div>
+
                                                         <div class="master-search-field-container">
                                                                 <input type="text" placeholder="Press enter or go..." class="search-text" id="search-text" name="q">
                                                                 <a class="go" href="javascript:void(0)" id="headerSearchSubmit">Go</a>

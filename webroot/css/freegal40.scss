@@ -435,7 +435,7 @@ button::-moz-focus-inner {
 		font-size: 12px;
 		font-family: Helvetica,Arial,sans-serif;
 
-		&::before {
+		&:before {
 
 			content: "";
 			position: absolute;
@@ -447,7 +447,7 @@ button::-moz-focus-inner {
 			@include background-image(linear-gradient(#fff, #ededed));
 			
 		}
-		&::after {
+		&:after {
 
 			content: "";
 			position: absolute;
@@ -510,7 +510,7 @@ button::-moz-focus-inner {
 		position: relative;
 
 
-		&::before {
+		&:before {
 
 			content: "";
 			position: absolute;
@@ -644,7 +644,7 @@ sub { top: 0.4em; }
 				display: block;
 			}
 
-			&::after {
+			&:after {
 				background: #fafafa;
 				-webkit-box-shadow: -2px -2px 3px #ccc;
 				-moz-box-shadow: -2px -2px 3px #ccc;
@@ -744,7 +744,7 @@ sub { top: 0.4em; }
 				width: 60px;
 				height: 30px;
 				font-size: 13px;
-				&::before {
+				&:before {
 
 					content: "";
 					width: 1px;
@@ -850,7 +850,7 @@ sub { top: 0.4em; }
 					background: none;
 					position: relative;
 					
-					&::before {
+					&:before {
 						
 						position: absolute;
 						content: "";
@@ -861,7 +861,7 @@ sub { top: 0.4em; }
 						top:6px;
 					}
 					
-					&::after {
+					&:after {
 						position: absolute;
 						content: "";
 						width: 6px;
@@ -943,7 +943,7 @@ sub { top: 0.4em; }
 							&#notifications {
 
 								
-								&::before {
+								&:before {
 									
 									position: absolute;
 									left: 10px;
@@ -959,7 +959,7 @@ sub { top: 0.4em; }
 								&:hover {
 									
 									background: #dcedf3;
-									&::before {
+									&:before {
 										position: absolute;
 										left: 10px;
 										top: 10px;
@@ -979,7 +979,7 @@ sub { top: 0.4em; }
 								
 						
 							
-								&::before {
+								&:before {
 									
 									position: absolute;
 									left: 10px;
@@ -993,7 +993,7 @@ sub { top: 0.4em; }
 								&:hover {
 									background: #dcedf3;
 									
-									&::before {
+									&:before {
 										
 										position: absolute;
 										left: 10px;
@@ -1012,7 +1012,7 @@ sub { top: 0.4em; }
 							&#logout {
 								
 								
-								&::before {
+								&:before {
 									
 									position: absolute;
 									left: 10px;
@@ -1025,7 +1025,7 @@ sub { top: 0.4em; }
 								
 								&:hover {
 									background: #dcedf3;
-									&::before {
+									&:before {
 										
 										position: absolute;
 										left: 10px;
@@ -1074,27 +1074,38 @@ sub { top: 0.4em; }
 				
 				position: relative;
 				width: 306px;
-				
+				height: 27px;
 				@include background-image(linear-gradient(#eee, #fcfcfc 25%, #fafafa 90%));
 				
 
+				.select-arrow-fix {
 
+					display: inline-block;
+					width: 100px;
+					height: 27px;
+					overflow: hidden;
+					border-right: 1px solid #b1d3e0;
+
+				}
 
 				.master-search-select {
+
 					margin: 0;
 					border:0;
 					outline: 0;
-					// padding: 6px 18px;
 					padding: 6px 0 6px 16px;
 					color: #527988;
 					font-size: 12px;
 					cursor:pointer;
+					// -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#daecf2', EndColorStr='#d3e8f0')";
+					background: #daecf2;
 					@include border-top-left-radius(20px);
 					@include border-bottom-left-radius(20px);
 					@include border-top-right-radius(0);
 					@include border-bottom-right-radius(0);
 					@include background-image(linear-gradient(#daecf2, #d3e8f0));
-					width: 100px;
+					// width: 100px;
+					width: 120px;
 					height: 27px;
 					border-right: 1px solid #b1d3e0;
 					@include appearance(none);
@@ -1109,7 +1120,7 @@ sub { top: 0.4em; }
 				}
 
 				
-				&::before {
+				&:before {
 					
 					position: absolute;
 					width: 6px;
@@ -1119,11 +1130,14 @@ sub { top: 0.4em; }
 					background: url(../img/freegal_sprite.png) no-repeat -40px 0;
 					content: "";
 					
+
+					
+					
 					
 
 				}
 				
-				&::after {
+				&:after {
 					
 					
 					background: url(../img/freegal_sprite.png) no-repeat -105px 0;
@@ -1131,13 +1145,14 @@ sub { top: 0.4em; }
 					width: 13px;
 					height: 13px;
 					position: absolute;
-					left: 107px;
 					top: 8px;
 					content: "";
-					
+					right:186px;
+				
 				
 
 				}
+
 				
 				.master-search-field-container {
 					
@@ -1247,7 +1262,7 @@ sub { top: 0.4em; }
 	background: #fff;
 	height: 100%;
 
-	&::before {
+	&:before {
 
 		content: "";
 		position:absolute;
@@ -1298,7 +1313,7 @@ sub { top: 0.4em; }
 			position: relative;
 			
 			
-			&::before {
+			&:before {
 				
 				content: "";
 				position: absolute;
@@ -1337,7 +1352,7 @@ sub { top: 0.4em; }
 		h2 {
 			
 			position: relative;
-			&::before {
+			&:before {
 				
 				position: absolute;
 				content: "";
@@ -1356,7 +1371,7 @@ sub { top: 0.4em; }
 		h2 {
 			position: relative;
 
-			&::before {
+			&:before {
 				
 				position: absolute;
 				content: "";
@@ -1854,7 +1869,7 @@ sub { top: 0.4em; }
 			@include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
 		}		
 
-		&::before {
+		&:before {
 
 			content: "";
 			position: absolute;
@@ -1919,7 +1934,7 @@ sub { top: 0.4em; }
 		border:1px solid #cacaca;
 		@include background-image(linear-gradient(#f9f9f9, #eaeaea));
 
-		&::before {
+		&:before {
 
 			
 			content: "";
@@ -2027,7 +2042,7 @@ sub { top: 0.4em; }
 
 				right:221px;
 
-				&::before {
+				&:before {
 
 					content: "";
 					position: absolute;
@@ -2038,7 +2053,7 @@ sub { top: 0.4em; }
 					height:6px;
 				}
 
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -2054,7 +2069,7 @@ sub { top: 0.4em; }
 			&.prev {
 
 				right:195px;
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -2094,7 +2109,7 @@ sub { top: 0.4em; }
 			&.next {
 
 				right:39px;
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -2112,7 +2127,7 @@ sub { top: 0.4em; }
 
 				right: 13px;
 
-				&::before {
+				&:before {
 
 					content: "";
 					position: absolute;
@@ -2123,7 +2138,7 @@ sub { top: 0.4em; }
 					height:6px;
 				}
 
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -2231,7 +2246,7 @@ sub { top: 0.4em; }
 				padding-bottom:10px;
 				
 
-				&::before {
+				&:before {
 					
 					content: "";
 					position: absolute;
@@ -2289,7 +2304,7 @@ sub { top: 0.4em; }
 					right: 4px;
 					top: 0;
 					background: #d3d1cf;
-					&::before {
+					&:before {
 						
 						background: url(../img/freegal_sprite.png) -180px -20px no-repeat;
 						content: "";
@@ -2413,7 +2428,7 @@ sub { top: 0.4em; }
 						color: #000;
 						background:#bde6f3;
 
-						&::before {
+						&:before {
 
 							background:url(../img/freegal_sprite.png) -100px -20px;
 							content: "";
@@ -2602,7 +2617,7 @@ sub { top: 0.4em; }
 	background:#fff;
 	color: #000;
 	float: right;
-	&::after {
+	&:after {
 
 		content: "";
 		position:absolute;
@@ -2693,7 +2708,7 @@ sub { top: 0.4em; }
 			position: relative;
 			padding-top:5px;
 
-			&.albums-header::before {
+			&.albums-header:before {
 
 				content: "";
 				left: -36px;
@@ -2703,7 +2718,7 @@ sub { top: 0.4em; }
 				height: 25px;
 				background:url(../img/freegal_sprite.png) 0 -70px;
 			}
-			&.artists-header::before {
+			&.artists-header:before {
 
 				content: "";
 				left: -36px;
@@ -2714,7 +2729,7 @@ sub { top: 0.4em; }
 				background:url(../img/freegal_sprite.png) -30px -70px;
 			}
 
-			&.composers-header::before {
+			&.composers-header:before {
 
 				content: "";
 				left: -36px;
@@ -2725,7 +2740,7 @@ sub { top: 0.4em; }
 				background:url(../img/freegal_sprite.png) -60px -70px;
 			}
 
-			&.videos-header::before {
+			&.videos-header:before {
 
 				content: "";
 				left: -36px;
@@ -2736,7 +2751,7 @@ sub { top: 0.4em; }
 				background:url(../img/freegal_sprite.png) -90px -70px;
 			}
 
-			&.genres-header::before {
+			&.genres-header:before {
 
 				content: "";
 				left: -36px;
@@ -2747,7 +2762,7 @@ sub { top: 0.4em; }
 				background:url(../img/freegal_sprite.png) -120px -70px;
 			}
 
-			&.songs-header::before {
+			&.songs-header:before {
 				content: "";
 				left: -36px;
 				top:0;
@@ -2980,7 +2995,7 @@ sub { top: 0.4em; }
 			@include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
 		}		
 
-		&::before {
+		&:before {
 
 			content: "";
 			position: absolute;
@@ -3037,7 +3052,7 @@ sub { top: 0.4em; }
 		border:1px solid #cacaca;
 		@include background-image(linear-gradient(#f9f9f9, #eaeaea));
 
-		&::before {
+		&:before {
 
 			
 			content: "";
@@ -3140,7 +3155,7 @@ sub { top: 0.4em; }
 
 				right:221px;
 
-				&::before {
+				&:before {
 
 					content: "";
 					position: absolute;
@@ -3151,7 +3166,7 @@ sub { top: 0.4em; }
 					height:6px;
 				}
 
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -3167,7 +3182,7 @@ sub { top: 0.4em; }
 			&.prev {
 
 				right:195px;
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -3207,7 +3222,7 @@ sub { top: 0.4em; }
 			&.next {
 
 				right:39px;
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -3225,7 +3240,7 @@ sub { top: 0.4em; }
 
 				right: 13px;
 
-				&::before {
+				&:before {
 
 					content: "";
 					position: absolute;
@@ -3236,7 +3251,7 @@ sub { top: 0.4em; }
 					height:6px;
 				}
 
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -3276,7 +3291,7 @@ sub { top: 0.4em; }
 			position: relative;
 			padding-top:5px;
 
-			&.albums-header::before {
+			&.albums-header:before {
 
 				content: "";
 				left: -36px;
@@ -3470,7 +3485,7 @@ sub { top: 0.4em; }
 			position: relative;
 			padding-top:5px;
 
-			&.artists-header::before {
+			&.artists-header:before {
 
 				content: "";
 				left: -36px;
@@ -3512,7 +3527,7 @@ sub { top: 0.4em; }
 			position: relative;
 			padding-top:5px;
 
-			&.composers-header::before {
+			&.composers-header:before {
 
 				content: "";
 				left: -36px;
@@ -3555,7 +3570,7 @@ sub { top: 0.4em; }
 			position: relative;
 			padding-top:5px;
 
-			&.videos-header::before {
+			&.videos-header:before {
 
 				content: "";
 				left: -36px;
@@ -3731,7 +3746,7 @@ sub { top: 0.4em; }
 			position: relative;
 			padding-top:5px;
 
-			&.genres-header::before {
+			&.genres-header:before {
 
 				content: "";
 				left: -36px;
@@ -3773,7 +3788,7 @@ sub { top: 0.4em; }
 			position: relative;
 			padding-top:5px;
 
-			&.songs-header::before {
+			&.songs-header:before {
 
 				content: "";
 				left: -36px;
@@ -4035,7 +4050,7 @@ sub { top: 0.4em; }
 			@include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
 		}		
 
-		&::before {
+		&:before {
 
 			content: "";
 			position: absolute;
@@ -4092,7 +4107,7 @@ sub { top: 0.4em; }
 		border:1px solid #cacaca;
 		@include background-image(linear-gradient(#f9f9f9, #eaeaea));
 
-		&::before {
+		&:before {
 
 			
 			content: "";
@@ -4197,7 +4212,7 @@ sub { top: 0.4em; }
 
 				right:221px;
 
-				&::before {
+				&:before {
 
 					content: "";
 					position: absolute;
@@ -4208,7 +4223,7 @@ sub { top: 0.4em; }
 					height:6px;
 				}
 
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -4224,7 +4239,7 @@ sub { top: 0.4em; }
 			&.prev {
 
 				right:195px;
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -4264,7 +4279,7 @@ sub { top: 0.4em; }
 			&.next {
 
 				right:39px;
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -4282,7 +4297,7 @@ sub { top: 0.4em; }
 
 				right: 13px;
 
-				&::before {
+				&:before {
 
 					content: "";
 					position: absolute;
@@ -4293,7 +4308,7 @@ sub { top: 0.4em; }
 					height:6px;
 				}
 
-				&::after {
+				&:after {
 
 					content: "";
 					position: absolute;
@@ -4603,7 +4618,7 @@ sub { top: 0.4em; }
 			margin: 0 auto;
 			cursor: pointer;
 
-			&::before {
+			&:before {
 				position: absolute;
 				content: "";
 				right: 10px;
@@ -4750,7 +4765,7 @@ sub { top: 0.4em; }
 		position: relative;
 		display: block;
 
-		&::before {
+		&:before {
 
 			content: "";
 			position: absolute;
@@ -4836,7 +4851,7 @@ sub { top: 0.4em; }
 
 			position:relative;
 
-			&::before {
+			&:before {
 				position: absolute;
 				content: "";
 				left:305px;
