@@ -181,7 +181,7 @@ STR;
             }
             if (!empty($data))
             {
-                Cache::delete("national" . $country);
+               
                 foreach ($data as $key => $value)
                 {
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
@@ -2546,8 +2546,8 @@ STR;
             $libId = $val['Library']['id'];
             $country = $val['Library']['library_territory'];
             $this->getLibraryTopTenSongs($country, $libId);
-            $this->getLibraryTop10Albums($country, $libId);
-            $this->getLibraryTop10Videos($country, $libId);
+           // $this->getLibraryTop10Albums($country, $libId);
+           // $this->getLibraryTop10Videos($country, $libId);
         }
     }
 

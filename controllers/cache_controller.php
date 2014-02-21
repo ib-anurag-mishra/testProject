@@ -81,6 +81,7 @@ class CacheController extends AppController {
         }
     }   
     
+    
     /*
      * @func runCache
      * @desc This function is used to call all functions for setting cache variables
@@ -122,15 +123,12 @@ class CacheController extends AppController {
     }
     
     /*
-     * Function Name : setAnnouncementCache
-     * Function Description : This function is used to set announcment Cache.
-     * all this function query must be same as queries written in app controller for announcement.
+     * Function Name : setLibraryTopTen
+     * Function Description : This function is used to set Library Top Ten on Cache. 
      */
-    function setAnnouncementCache(){
-        $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
-        $announcment_rs = $this->Album->query($announcment_query);
-        Cache::write("announcementCache",$announcment_rs);
-   
+    function setLibraryTopTen(){
+         set_time_limit(0);
+        $this->Common->setLibraryTopTenCache();   
     }
     
      /*
