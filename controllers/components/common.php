@@ -2540,14 +2540,19 @@ STR;
             'recursive' => -1
                 )
         );
+        //calling Songs,Albums and videos individual
 
         foreach ($libraryDetails AS $key => $val)
         {
-            $libId = $val['Library']['id'];
-            $country = $val['Library']['library_territory'];
-            $this->getLibraryTopTenSongs($country, $libId);
-           // $this->getLibraryTop10Albums($country, $libId);
-           // $this->getLibraryTop10Videos($country, $libId);
+           // $this->getLibraryTopTenSongs($val['Library']['library_territory'], $val['Library']['id']);          
+        }        
+        foreach ($libraryDetails AS $key => $val)
+        {                     
+            $this->getLibraryTop10Albums($val['Library']['library_territory'], $val['Library']['id']);
+        }
+        foreach ($libraryDetails AS $key => $val)
+        {
+            $this->getLibraryTop10Videos($val['Library']['library_territory'], $val['Library']['id']);
         }
     }
 
