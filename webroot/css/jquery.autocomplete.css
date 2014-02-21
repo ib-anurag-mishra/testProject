@@ -41,9 +41,10 @@
 .ac_odd div,.ac_even div {
 	
 	font-size: 11px;
+	padding: 10px 5px;
 }
 
-.ac_odd .ac_first,.ac_even .ac_first {
+/*.ac_odd .ac_first,.ac_even .ac_first {
 
 	padding: 10px 10px 5px 10px;
 }
@@ -52,7 +53,7 @@
 
 	padding: 5px 10px 10px 10px;
 }
-
+*/
 .ac_results li:hover {
 	background: #cfeff9;
 	color: #000;
