@@ -43,12 +43,12 @@
 	font-size: 11px;
 }
 
-.ac_odd .first,.ac_even .first {
+.ac_odd .ac_first,.ac_even .ac_first {
 
 	padding: 10px 10px 5px 10px;
 }
 
-.ac_odd .second,.ac_even .second {
+.ac_odd .ac_second,.ac_even .ac_second {
 
 	padding: 5px 10px 10px 10px;
 }
