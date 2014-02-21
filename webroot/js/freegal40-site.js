@@ -1,32 +1,7 @@
-(function($) {
 
-    $.fn.bindMouseWheel = function() {
-
-        return this.each(function() {
-
-            $(this).bind('mousewheel', function(e) {
-
-                $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-                //prevent page fom scrolling
-                return false;
-
-            });
-
-
-        });
-
-    };
-
-
-}(jQuery));
-
-var flashvars = {};
-var params = {};
-var attributes = {};
-attributes.id = "fmp_player";
 $(document).ready(function(){
 
-    $('.ac_results ul').bindMouseWheel();
+    $('.ac_results').bindMouseWheel();
 
     $('.music-note-icon').on('mouseenter',function(){
         
