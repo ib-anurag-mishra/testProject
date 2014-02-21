@@ -504,12 +504,12 @@ class SearchController extends AppController
 
                             if (preg_match($regex, $record))
                             {
-                                $str = "<div style='width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'>" . $record . "</div>|" . $record . "|" . $rank;
+                                $str = "<div style='width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='width:$widthRight;text-align:left;'>" . $record . "</div>|" . $record . "|" . $rank;
                                 array_unshift($records, $str);
                             }
                             else
                             {
-                                $records[] = "<div style='width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='float:right;width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                                $records[] = "<div style='width:$widthLeft;text-align:left;font-weight:bold;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div style='width:$widthRight;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
                             }
                             $rank++;
                             //}
