@@ -32,7 +32,13 @@
 	*/
 	line-height: 16px;
 	overflow: hidden;
+	color:#444;
 }
+.ac_results li:hover {
+
+	color:#fff;
+}
+
 
 .ac_loading {
 	background: white url('indicator.gif') right center no-repeat;
