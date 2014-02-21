@@ -426,7 +426,7 @@ $.Autocompleter.defaults = {
 	formatItem: function(row) { return row[0]; },
 	formatMatch: null,
 	autoFill: false,
-	width: 177,
+	width: 0,
 	multiple: false,
 	multipleSeparator: ", ",
 	highlight: function(value, term) {
