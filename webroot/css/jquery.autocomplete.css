@@ -9,8 +9,8 @@
 	border-radius: 5px;*/
 
 
-	-webkit-bottom-left-border-radius:5px;
-	-webkit-bottom-right-border-radius:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
 }
 
 .ac_results ul {
