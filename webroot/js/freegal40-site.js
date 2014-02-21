@@ -26,7 +26,7 @@ var attributes = {};
 attributes.id = "fmp_player";
 $(document).ready(function(){
 
-    $('.ac_results').bindMouseWheel();
+    $('.ac_results ul').bindMouseWheel();
 
     $('.music-note-icon').on('mouseenter',function(){
         
