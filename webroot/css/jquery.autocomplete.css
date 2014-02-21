@@ -39,10 +39,20 @@
 }
 
 .ac_odd div,.ac_even div {
-
-	padding: 10px;
+	
 	font-size: 11px;
 }
+
+.ac_odd .first,.ac_even .first {
+
+	padding: 10px 10px 5px 10px;
+}
+
+.ac_odd .second,.ac_even .second {
+
+	padding: 5px 10px 10px 10px;
+}
+
 .ac_results li:hover {
 	background: #cfeff9;
 	color: #000;
