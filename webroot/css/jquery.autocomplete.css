@@ -37,6 +37,12 @@
 	overflow: hidden;
 	color:#444;
 }
+
+.ac_odd li div,.ac_even li div {
+
+	padding: 10px;
+	font-size: 11px;
+}
 .ac_results li:hover {
 
 	color:#fff;
