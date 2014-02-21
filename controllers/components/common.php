@@ -2544,7 +2544,7 @@ STR;
 
         foreach ($libraryDetails AS $key => $val)
         {
-           // $this->getLibraryTopTenSongs($val['Library']['library_territory'], $val['Library']['id']);          
+            $this->getLibraryTopTenSongs($val['Library']['library_territory'], $val['Library']['id']);          
         }        
         foreach ($libraryDetails AS $key => $val)
         {                     

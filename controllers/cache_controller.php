@@ -91,8 +91,7 @@ class CacheController extends AppController {
         //Configure::write('debug', 2);
        
         $territoriesList = $this->Common->getTerritories();       
-        foreach($territoriesList as $territory){
-            
+        foreach($territoriesList as $territory){            
             
             $this->setNewsCache($territory);
             $this->Common->getGenres($territory);
@@ -109,8 +108,7 @@ class CacheController extends AppController {
             $this->Common->getNewReleaseAlbums($territory);
             $this->Common->getNewReleaseVideos($territory);
             $this->Common->getFeaturedArtists($territory);
-            $this->Common->getDifferentGenreData($territory);
-            $this->getArtistText($territory);
+            $this->Common->getDifferentGenreData($territory);            
             $this->Common->getDefaultQueues($territory);   
             
         }
@@ -119,6 +117,11 @@ class CacheController extends AppController {
        $this->setAppMyMusicVideoList(); 
        $this->setAnnouncementCache();
        $this->setTopArtist();
+       
+       //adding this variable individual
+       foreach($territoriesList as $territory){
+            $this->getArtistText($territory);
+       }       
 
     }
     
