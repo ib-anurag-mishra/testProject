@@ -2253,6 +2253,7 @@ $('document').ready(function() {
                 minChars: 3,
                 cacheLength: 10,
                 autoFill: false,
+                width:177,
                 extraParams: {
                     type: 'all'
                 },
