@@ -504,12 +504,12 @@ class SearchController extends AppController
 
                             if (preg_match($regex, $record))
                             {
-                                $str = "<div class='ac_first' style='width:$widthLeft;font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div class='ac_second' style='width:$widthRight;font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|" . $rank;
+                                $str = "<div class='ac_first' style='font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'>" . $record . "</div>|" . $record . "|" . $rank;
                                 array_unshift($records, $str);
                             }
                             else
                             {
-                                $records[] = "<div class='ac_first' style='width:$widthLeft;font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div  class='ac_second' style='width:$widthRight;font-family:Helvetica,Arial,sans-serif;'> " . $record . "</div>|" . $record . "|" . $rank;
+                                $records[] = "<div class='ac_first' style='font-weight:bold;font-family:Helvetica,Arial,sans-serif;'>" . (!empty($imageData) ? $imageData . "<br/>" : "") . ucfirst($name) . "</div><div  class='ac_second' style='font-family:Helvetica,Arial,sans-serif;'> " . $record . "</div>|" . $record . "|" . $rank;
                             }
                             $rank++;
                             //}
