@@ -576,6 +576,7 @@ $.Autocompleter.Cache = function(options) {
 };
 
 $.Autocompleter.Select = function (options, input, select, config) {
+	options.width = 177;
 	var CLASSES = {
 		ACTIVE: "ac_over"
 	};
