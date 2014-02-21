@@ -203,8 +203,7 @@ STR;
                 $memQuery = "update mem_datas set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
                 $MemDatas->setDataSource('master');
                 $MemDatas->query($memQuery);
-                $MemDatas->setDataSource('default');
-                 print_r($data); die;
+                $MemDatas->setDataSource('default');               
                 Cache::write("national" . $country, $data);
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             }
