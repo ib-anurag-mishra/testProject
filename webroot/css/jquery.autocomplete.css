@@ -4,10 +4,13 @@
 	background-color: white;
 	overflow: hidden;
 	z-index: 99999;
-	-webkit-border-radius:5px;
+/*	-webkit-border-radius:5px;
 	-moz-border-radius:5px;
-	border-radius: 5px;
-	
+	border-radius: 5px;*/
+
+
+	-webkit-bottomleft-border-radius:5px;
+	-webkit-bottomright-border-radius:5px;
 }
 
 .ac_results ul {
