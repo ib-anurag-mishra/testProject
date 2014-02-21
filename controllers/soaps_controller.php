@@ -392,7 +392,7 @@ class SoapsController extends AppController {
 					),
           'order' => array('FIELD(Album.ProdID, '.$val.') ASC'), 
           'chk' => 2,
-          'cache' => 'yes'
+         // 'cache' => 'yes'
 		  ));
       
       if(empty($albumData)) {
