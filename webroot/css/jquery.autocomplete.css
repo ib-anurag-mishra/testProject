@@ -44,8 +44,8 @@
 	font-size: 11px;
 }
 .ac_results li:hover {
-
-	color:#fff;
+	background: #cfeff9;
+	color: #fff;
 }
 
 
