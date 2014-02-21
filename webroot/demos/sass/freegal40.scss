@@ -1301,6 +1301,11 @@ sub { top: 0.4em; }
 			}
 		}
 	}
+
+	> .streaming > ul > li > ul > li > a,> .my-downloads > ul > li > ul > li > a {
+
+		color: #000;
+	}
 	
 
 
