@@ -1,6 +1,6 @@
 .ac_results {
 	padding: 0px;
-	border: 1px solid black;
+	border: 1px solid #bbb;
 	background-color: white;
 	overflow: hidden;
 	z-index: 99999;
