@@ -55,9 +55,7 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
-        <!--[if IE 8]>
-        <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
-        <![endif]-->
+
         <?php
         echo $this->Html->css(
                 array(
@@ -81,6 +79,9 @@
         );
         
         ?>
+        <!--[if IE 8]>
+        <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
+        <![endif]-->        
 
         <?php 
         if ($this->Session->read('library') && $this->Session->read('library') != '')
