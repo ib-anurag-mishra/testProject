@@ -790,7 +790,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         
                                                         if($temp_text!="")
                                                         {
-                                                            $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                            // $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                            $announcment_class  =   "display:block;";
                                                         }
                                                         else
                                                         {
