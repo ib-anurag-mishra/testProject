@@ -512,7 +512,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 $class = ' logged-in';
                                             ?>
                                                 <div class="download-count-container">
-                                                        <div class="download-count"><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>
+                                                        <div class="download-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>
                                                         <div class="music-note-icon"></div>
                                                 </div>
                                              <?php } ?>    
