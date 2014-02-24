@@ -393,7 +393,7 @@ if (empty($getData))
                         <td align="left"><?php echo $this->Form->input('library_soap_url', array('label' => false, 'value' => $getData['Library']['library_soap_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
                     </tr>					
                     <tr id="sip_host" <?php
-                    if ($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin")
+                    if ($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "symws" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin")
                     {
                         ?>style="display:none;"<?php } ?>>
                         <td align="right" width="250"><?php echo $this->Form->label(null, 'Library Host Name'); ?></td>
