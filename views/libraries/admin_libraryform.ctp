@@ -166,6 +166,10 @@ if (empty($getData))
                                 {
                                     echo "<label>Capita</label>";
                                 }
+                                elseif ($getData['Library']['library_authentication_method'] == "symws")
+                                {
+                                    echo "<label>Symphony WS</label>";
+                                }
                                 elseif ($getData['Library']['library_authentication_method'] == "innovative_var_name")
                                 {
                                     echo "<label>Innovative Var Name</label>";
@@ -262,7 +266,7 @@ if (empty($getData))
                                         'innovative_https' => 'Innovative HTTPS',
                                         'innovative_var_https' => 'Innovative Var HTTPS',
                                         'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
-                                        'innovative_var_wo_pin' => 'Innovative Var w/o PIN', 'mdlogin_reference' => 'MDLogin', 'mndlogin_reference' => 'MNDLogin',  'capita' => 'Capita'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
+                                        'innovative_var_wo_pin' => 'Innovative Var w/o PIN', 'mdlogin_reference' => 'MDLogin', 'mndlogin_reference' => 'MNDLogin',  'capita' => 'Capita', 'symws' => 'Symphony WS'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
                                         )
                                 );
                                 ?>
@@ -362,7 +366,7 @@ if (empty($getData))
                         </td>
                     </tr>					
                     <tr id="innovative1" <?php
-                    if ($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "capita" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" &&
+                    if ($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "capita" && $getData['Library']['library_authentication_method'] != "symws" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" &&
                             $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" &&
                             $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" &&
                             $getData['Library']['library_authentication_method'] != "innovative_var_https_name" &&
@@ -375,7 +379,7 @@ if (empty($getData))
                         <td align="left"><?php echo $this->Form->input('library_authentication_num', array('label' => false, 'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
                     </tr>
                     <tr id="innovative2" <?php
-                    if ($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "capita"   && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" && $getData['Library']['library_authentication_method'] != "innovative_var_https_name")
+                    if ($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "capita" && $getData['Library']['library_authentication_method'] != "symws"   && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" && $getData['Library']['library_authentication_method'] != "innovative_var_https_name")
                     {
                         ?>style="display:none;"<?php } ?>>
                         <td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication URL'); ?></td>
@@ -588,7 +592,7 @@ if (empty($getData))
                         <td aligh="left"><?php echo $this->Form->input('library_ezproxy_logout', array('label' => false, 'value' => $getData['Library']['library_ezproxy_logout'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
                     </tr>					
                     <tr><td colspan="2" id="innv_var" <?php
-                        if ($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "capita" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" && $getData['Library']['library_authentication_method'] != "innovative_var_https_name")
+                        if ($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "capita" && $getData['Library']['library_authentication_method'] != "symws" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" && $getData['Library']['library_authentication_method'] != "innovative_var_https_name")
                         {
                             ?>style="display:none;"<?php } ?>>
                             <input type="hidden" id="dropDown">
@@ -1533,6 +1537,39 @@ if (isset($javascript))
                                                     $("#curl_db").hide();
                                                 }
                                                 else if ($(this).val() == 'capita') {
+                                                    $("#allurl").show();
+                                                    $("#referral_url").hide();
+                                                    $("#innovative1").show();
+                                                    $("#innovative2").show();
+                                                    $("#innv_var").show();
+                                                    //$("#innovative_var_pin").hide();
+                                                    //$("#variable").hide();						
+                                                    $("#sip_host").hide();
+                                                    $("#sip_port").hide();
+                                                    $("#sip_pin").hide();
+                                                    $("#sip_login").hide();
+                                                    $("#sip_location").hide();
+                                                    $("#sip_terminal").hide();
+                                                    $("#sip_version").hide();
+                                                    $("#sip_password").hide();
+                                                    $("#sip_error").hide();
+                                                    $("#sip_institution").hide();
+                                                    $("#ezproxy_secret").hide();
+                                                    $("#ezproxy_referral").hide();
+                                                    $("#ezproxy_name").hide();
+                                                    $("#ezproxy_logout").hide();
+                                                    $("#soap").hide();
+                                                    $("#block_explicit").show();
+                                                    $("#msgNo").hide();
+                                                    $("#space").hide();
+                                                    $("#24_message").hide();
+                                                    $("#sip_over_ssh").hide();
+                                                    $("#ssh_command").hide();
+                                                    $("#64_message").hide();
+                                                    $("#curl_url").hide();
+                                                    $("#curl_db").hide();
+                                                }
+                                                else if ($(this).val() == 'symws') {
                                                     $("#allurl").show();
                                                     $("#referral_url").hide();
                                                     $("#innovative1").show();

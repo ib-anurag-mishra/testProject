@@ -471,6 +471,10 @@ Class LibrariesController extends AppController
                     {
                         $this->Library->setValidation('library_step1_capita');
                     }
+                    elseif ($this->data['Library']['library_authentication_method'] == 'symws')
+                    {
+                        $this->Library->setValidation('library_step1_symws');
+                    }
                     elseif ($this->data['Library']['library_authentication_method'] == 'innovative_var_name')
                     {
                         $this->Library->setValidation('library_step1_innovative_var_name');
@@ -618,7 +622,7 @@ Class LibrariesController extends AppController
                                                     
                                                     if (count($this->data['Variable']) > 0)
                                                     {
-                                                        if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'capita' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
+                                                        if ($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'capita' || $this->data['Library']['library_authentication_method'] == 'symws' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name')
                                                         {
                                                            // echo "in if"; print_r($this->data['Variable']);
                                                             foreach ($this->data['Variable'] as $k => $v)
@@ -830,6 +834,10 @@ Class LibrariesController extends AppController
                     elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'capita')
                     {
                         $this->Library->setValidation('library_step' . $this->data['Library']['libraryStepNum'] . '_capita');
+                    }
+                    elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'symws')
+                    {
+                        $this->Library->setValidation('library_step' . $this->data['Library']['libraryStepNum'] . '_symws');
                     }
                     elseif ($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var_name')
                     {
