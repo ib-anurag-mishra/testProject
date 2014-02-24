@@ -393,22 +393,23 @@ if (empty($getData))
                         <td align="left"><?php echo $this->Form->input('library_soap_url', array('label' => false, 'value' => $getData['Library']['library_soap_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
                     </tr>					
                     <tr id="sip_host" <?php
-                    if ($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "symws" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin")
+                    if ($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin")
+                    {
+                        ?>style="display:none;"<?php } ?>>
+                        <td align="right" width="250"><?php echo $this->Form->label(null, 'Library Host Name'); ?></td>
+                        <td align="left"><?php echo $this->Form->input('library_host_name', array('label' => false, 'value' => $getData['Library']['library_host_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
+                    </tr>
+                    
+                    <tr id="client_id" <?php
+                    if ($getData['Library']['library_authentication_method'] != "symws")
                     {
                         ?>style="display:none;"<?php } ?>>
                         <td align="right" width="250">
-                            <?php   if($getData['Library']['library_authentication_method']=="symws")
-                                    {
-                                        echo $this->Form->label(null, 'Client ID');
-                                    }
-                                    else 
-                                    {
-                                        echo $this->Form->label(null, 'Library Host Name');  
-                                    }
-                             ?>
+                            <?php echo $this->Form->label(null, 'Client ID'); ?>
                         </td>
                         <td align="left"><?php echo $this->Form->input('library_host_name', array('label' => false, 'value' => $getData['Library']['library_host_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
                     </tr>
+                    
                     <tr id="sip_port" <?php
                     if ($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin")
                     {
@@ -1587,7 +1588,8 @@ if (isset($javascript))
                                                     $("#innv_var").show();
                                                     //$("#innovative_var_pin").hide();
                                                     //$("#variable").hide();						
-                                                    $("#sip_host").show();
+                                                    $("#sip_host").hide();
+                                                    $("#client_id").show();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
                                                     $("#sip_login").hide();
