@@ -416,7 +416,7 @@ $('document').ready(function()
     });
 
     $('.tracklist-shadow-container .tracklist-scrollable').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.add-to-playlist-button').css({opacity: .5});
 
     });
 
