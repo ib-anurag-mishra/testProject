@@ -1,4 +1,5 @@
 <IfModule mod_rewrite.c>
-  order allow,deny
-  deny from all
+	order deny,allow
+	allow from 10.209.128.244	
+	deny from all
 </IfModule>
