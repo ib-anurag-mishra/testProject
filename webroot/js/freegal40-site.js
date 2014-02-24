@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 
-    $('.ac_results').on('mouseenter',function(){
+    $('.site-header').on('mouseenter','.ac_results',function(){
         $(this).bind('mousewheel', function(e) {
 
             $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
@@ -22,7 +22,7 @@ $(document).ready(function(){
         
         $('.plays-tooltip').removeClass('active');
 
-    });   
+    });
 
     $('.my-account-menu').on('click',function(){
         
@@ -35,7 +35,7 @@ $(document).ready(function(){
          if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
 
             $('.account-menu-dropdown').removeClass('active');
-        }       
+        }
     });
 
     $('.album-cover-container ul').bindMouseWheel();
@@ -219,7 +219,7 @@ $(document).ready(function(){
 
         $('.artist-column').animate({
             scrollTop: artistScrollAmount
-        });        
+        });
 
     });
 
@@ -230,7 +230,7 @@ $(document).ready(function(){
         $('.search-results-albums').animate({
 
             scrollLeft:currentScrollLeft
-        })
+        });
 
 
     });
@@ -244,7 +244,7 @@ $(document).ready(function(){
         $('.search-results-albums').animate({
 
             scrollLeft:currentScrollLeft
-        })
+        });
 
     });
 
