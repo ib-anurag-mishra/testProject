@@ -1577,7 +1577,7 @@ if (isset($javascript))
                                                     $("#innv_var").show();
                                                     //$("#innovative_var_pin").hide();
                                                     //$("#variable").hide();						
-                                                    $("#sip_host").hide();
+                                                    $("#sip_host").show();
                                                     $("#sip_port").hide();
                                                     $("#sip_pin").hide();
                                                     $("#sip_login").hide();
