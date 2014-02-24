@@ -1,16 +1,7 @@
 
 $(document).ready(function(){
 
-    $('.body').on('mouseenter','.ac_results ul',function(){
-        $(this).bind('mousewheel', function(e) {
 
-            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
-            //prevent page fom scrolling
-            return false;
-
-        });
-
-    });
 
     $('.music-note-icon').on('mouseenter',function(){
         
