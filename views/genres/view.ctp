@@ -13,11 +13,12 @@
         background: none;
         margin-bottom: 10px;
     }
-    .content{
-       padding-left: 0;
-       padding-top: 0; 
+
+   .genres-page{
+	margin-top: 0px;
+	margin-left: 0px;
     }
-    
+
     .genres-page .genre-filter-container{
         height: auto;    
     }
