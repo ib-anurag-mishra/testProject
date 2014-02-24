@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 
-    $('.site-header').on('mouseenter','.ac_results ul',function(){
+    $('.body').on('mouseenter','.ac_results ul',function(){
         $(this).bind('mousewheel', function(e) {
 
             $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
