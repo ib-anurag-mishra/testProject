@@ -396,7 +396,17 @@ if (empty($getData))
                     if ($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "symws" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin")
                     {
                         ?>style="display:none;"<?php } ?>>
-                        <td align="right" width="250"><?php echo $this->Form->label(null, 'Library Host Name'); ?></td>
+                        <td align="right" width="250">
+                            <?php   if($getData['Library']['library_authentication_method']=="symws")
+                                    {
+                                        echo $this->Form->label(null, 'Client ID');
+                                    }
+                                    else 
+                                    {
+                                        echo $this->Form->label(null, 'Library Host Name');  
+                                    }
+                             ?>
+                        </td>
                         <td align="left"><?php echo $this->Form->input('library_host_name', array('label' => false, 'value' => $getData['Library']['library_host_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50)); ?></td>
                     </tr>
                     <tr id="sip_port" <?php
