@@ -667,77 +667,9 @@
         ?>
         </noscript>
 
-        <?php
-        //echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); die;
-
-        if ($_SERVER['REQUEST_URI'] == '/index' || $_SERVER['REQUEST_URI'] == '')
-        {
-            $body_class = 'page-news';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/videos')
-        {
-            $body_class = 'page-videos';
-        }
-        else if ((strstr($_SERVER['REQUEST_URI'], '/videos/details/')) != '')
-        {
-            $body_class = 'page-videos-details';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10')
-        {
-            $body_class = 'page-my-lib-top-10';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/homes/us_top_10')
-        {
-            $body_class = 'page-us-top-10';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/homes/new_releases')
-        {
-            $body_class = 'page-new-releases';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/questions')
-        {
-            $body_class = 'page-questions';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/genres/view')
-        {
-            $body_class = 'page-genres';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/homes/my_history')
-        {
-            $body_class = 'page-my-history';
-        }
-        else if ((strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/queue_details')) != '')
-        {
-            $body_class = 'page-queue-details';
-        }
-        else if ((strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/now_streaming')) != '')
-        {
-            $body_class = 'page-now-streaming';
-        }
-        else if ($_SERVER['REQUEST_URI'] == '/homes/my_wishlist')
-        {
-            $body_class = 'page-my-wishlist';
-        }
-        else if ((strstr($_SERVER['REQUEST_URI'], '/search/index')) != '')
-        {
-            $body_class = 'page-search-index';
-        }
-        else if ((strstr($_SERVER['REQUEST_URI'], '/artists/view')) != '')
-        {
-            $body_class = 'page-artists-view';
-        }
-        else if ((strstr($_SERVER['REQUEST_URI'], '/users/')) != '')
-        {
-            $body_class = 'page-users-login';
-        }
-        else
-        {
-            $body_class = 'page-news';
-        }
-        ?> 
     </head>
 
-    <body class="<?php echo $body_class; ?>">
+    <body>
 
 
         <div id="audioPixel"><div id="audioflash"></div></div>
