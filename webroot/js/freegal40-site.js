@@ -171,7 +171,7 @@ $(document).ready(function(){
             scrollTop: genreScrollAmount
         });
     });
-    
+
 
     $('.genre-scroll-up').on('click',function(){
 
@@ -210,6 +210,38 @@ $(document).ready(function(){
 
 
     var artistScollAmount;
+
+    $(document).on('click','.artist-scroll-up',function(){
+
+        var currentScrollTop = $('.artist-column').scrollTop();
+        var artistListHeight = $('.artist-column ul').height();
+        var artistColumnHeight = $('.artist-column').height();
+
+        artistScrollAmount = currentScrollTop + artistColumnHeight;
+
+
+
+        $('.artist-column').animate({
+            scrollTop: artistScrollAmount
+        });
+    });
+
+    $(document).on('click','.artist-scroll-down',function(){
+        var currentScrollTop = $('.artist-column').scrollTop();
+        var artistListHeight = $('.artist-column ul').height();
+        var artistColumnHeight = $('.artist-column').height();
+
+        artistScrollAmount = currentScrollTop - artistColumnHeight;
+
+
+
+        $('.artist-column').animate({
+            scrollTop: artistScrollAmount
+        });
+
+    });
+
+
     $('.artist-scroll-up').on('click',function(){
 
 
