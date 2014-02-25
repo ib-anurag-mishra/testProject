@@ -2306,7 +2306,9 @@ function base64_decode(data) {
 
 //load the artist list via ajax    
 function load_artist(link, id_serial, genre_name) {
-
+    if(genre_name){
+    $('.genre-column a').removeClass('active');
+        $(this).addClass('active'); }
     $('.album-list-span').html('');
     $('#album_details_container').html('');
     $('#ajax_artistlist_content').html('<span id="mydiv" style="height: 250px;width: 250px;position: relative;background-color: gray;"><img src="' + webroot + 'app/webroot/img/AjaxLoader.gif" style="display: block; left: 50%; margin-left: 147px; margin-top: 85px; position: absolute; top: 50%;"/></span>');

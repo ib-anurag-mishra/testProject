@@ -122,9 +122,9 @@ $(document).ready(function(){
 
 
     $('.genre-column a').on('click',function(e){
-        e.preventDefault();
-        $('.genre-column a').removeClass('active');
-        $(this).addClass('active');
+       // e.preventDefault();
+       // $('.genre-column a').removeClass('active');
+       // $(this).addClass('active');
 
     });
 
