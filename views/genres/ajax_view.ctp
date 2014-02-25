@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/js/ajaxify-html5.js"></script> 
 <script> 
 var ajaxartistPage = 2;
 var preValue= 1;
