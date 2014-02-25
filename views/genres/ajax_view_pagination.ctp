@@ -1,4 +1,4 @@
-	                                   
+<script type="text/javascript" src="/js/ajaxify-html5.js"></script>	                                   
 <?php
 
 if (count($genres) > 0)
