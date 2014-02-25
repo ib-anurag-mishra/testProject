@@ -141,6 +141,38 @@ $(document).ready(function(){
 
 
     var genreScrollAmount;
+
+    $(document).on('click','.genre-scroll-up',function(){
+        var currentScrollTop = $('.genre-column').scrollTop();
+        var genreListHeight = $('.genre-column ul').height();
+        var genreColumnHeight = $('.genre-column').height();
+
+        genreScrollAmount = currentScrollTop + genreColumnHeight;
+
+
+
+        $('.genre-column').animate({
+            scrollTop: genreScrollAmount
+        });
+
+    });
+
+    $(document).on('click','.genre-scroll-down',function(){
+
+        var currentScrollTop = $('.genre-column').scrollTop();
+        var genreListHeight = $('.genre-column ul').height();
+        var genreColumnHeight = $('.genre-column').height();
+
+        genreScrollAmount = currentScrollTop - genreColumnHeight;
+
+
+
+        $('.genre-column').animate({
+            scrollTop: genreScrollAmount
+        });
+    });
+
+
     $('.genre-scroll-up').on('click',function(){
 
         var currentScrollTop = $('.genre-column').scrollTop();
@@ -178,6 +210,38 @@ $(document).ready(function(){
 
 
     var artistScollAmount;
+
+    $(document).on('click','.artist-scroll-up',function(){
+
+        var currentScrollTop = $('.artist-column').scrollTop();
+        var artistListHeight = $('.artist-column ul').height();
+        var artistColumnHeight = $('.artist-column').height();
+
+        artistScrollAmount = currentScrollTop + artistColumnHeight;
+
+
+
+        $('.artist-column').animate({
+            scrollTop: artistScrollAmount
+        });
+    });
+
+    $(document).on('click','.artist-scroll-down',function(){
+        var currentScrollTop = $('.artist-column').scrollTop();
+        var artistListHeight = $('.artist-column ul').height();
+        var artistColumnHeight = $('.artist-column').height();
+
+        artistScrollAmount = currentScrollTop - artistColumnHeight;
+
+
+
+        $('.artist-column').animate({
+            scrollTop: artistScrollAmount
+        });
+
+    });
+
+
     $('.artist-scroll-up').on('click',function(){
 
 
