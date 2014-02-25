@@ -36,7 +36,10 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.cycle.all.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
+
         <?php
+        /*
         if ($this->Session->read("patron"))
         {
             if ($this->Session->read('library_type') == '2')
@@ -46,7 +49,9 @@
             <?php
             }
 
-        }?>        
+        }
+        */
+        ?>        
 <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
 <!--		<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>-->
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
