@@ -410,13 +410,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             if($libraryInfo['Library']['library_home_url'] != "") {
                                             ?>
                                                 <div style="width:350px;">
-                                                <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img style="max-width:100%;" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;"></a>
+                                                <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img style="max-width:100%; padding-top:20px;" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;"></a>
                                                 </div>
                                                 <?php
                                             }else{
                                                 ?>
                                                 <div style="width:350px;">
-                                                <img style="max-width:100%;" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;" />
+                                                <img style="max-width:100%; padding-top:20px;" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;" />
                                             </div>
                                                 <?php
                                             }
