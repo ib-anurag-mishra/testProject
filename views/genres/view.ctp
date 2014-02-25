@@ -66,12 +66,6 @@
         position: absolute;
         top: 50%;
     }
-    
-    .content {
-        min-height: 1300px;
-        padding-left: 150px !important;
-        padding-top: 20px;
-    }    
 
 </style>
 
