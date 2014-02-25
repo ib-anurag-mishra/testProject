@@ -7,7 +7,22 @@
 ?>    
 
 <style>
+    
+    header.clearfix{
+        border: none;
+        background: none;
+        margin-bottom: 10px;
+    }
 
+   .genres-page{
+	margin-top: 0px;
+	margin-left: 0px;
+    }
+
+    .genres-page .genre-filter-container{
+        height: auto;    
+    }
+    
     .genre_list_item{
         cursor: pointer;
         display:block;
@@ -158,11 +173,16 @@ $totalRows = count($genresAll);
         <div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' => 'index')); ?></div>
     </header>
 
-
+    <div class="genres-container">
+        <header style="margin-bottom:0px;">
+	 	<div class="genres-header">Genres</div>
+		<div class="a-z-header">A - Z</div>
+		<div class="artist-header">Artist</div>
+							</header>
     <section class="genre-filter-container clearfix">
-        <div class="genre-shadow-container">
-            <h3>Genre</h3>
-            <div class="genre-list">
+       <!-- <div class="genre-shadow-container">
+            <h3>Genre</h3> -->
+            <div class="genre-column">
                 <ul>
                     <li>
                         <a class="genre_list_item_all <?php echo ($genre == 'All') ? 'selected' : '' ?>" href="javascript:void(0)" data-genre="All Artists" id="genre_list_item_0" 
@@ -217,16 +237,15 @@ $totalRows = count($genresAll);
 
                 </ul>
             </div>
-        </div>
+       <!-- </div>  -->
 
+      <!--  <div class="border"></div> -->
 
-        <div class="border"></div>
+       <div id="ajax_artistlist_content">      
 
-        <div id="ajax_artistlist_content">     
-
-            <div class="alphabetical-shadow-container">
-                <h3><?php __('Artist'); ?></h3>
-                <div class="alphabetical-filter">
+           <!-- <div class="alphabetical-shadow-container"> -->
+               <!-- <h3><?php// __('Artist'); ?></h3> -->
+                <div class="alpha-artist-list-column">
                     <ul>
                         <li><a   href="javascript:void(0);" <?php
                             if ($selectedAlpha == "All")
@@ -342,12 +361,12 @@ $totalRows = count($genresAll);
                                 ?>class="selected" <?php } ?>  data-letter="Z"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Z', '', '')">Z</a></li>
                     </ul>
                 </div>
-            </div>
+           <!-- </div> -->
 
 
-            <div class="artist-list-shadow-container">
-                <h3></h3>
-                <div class="artist-list" id="artistscroll">					
+          <!--  <div class="artist-list-shadow-container">
+                <h3></h3> -->
+                <div class="artist-column" id="artistscroll">					
                     <ul id="artistlistrecord">						                                            
                         <?php
                         if (count($genres) > 0)
@@ -361,7 +380,9 @@ $totalRows = count($genresAll);
                                     $selected = (str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) == $this->Session->read('calledArtist')) ? "class='selected'" : "";
                                     $ArtistName = str_replace("'", '', ($ArtistName));
                                     $url = "artists/album_ajax/" . str_replace('/', '@', base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                    echo "<a href=\"javascript:void(0);\" onclick=\"showAllAlbumsList('" . $url . "')\" data-artist='" . $ArtistName . "'" . " $selected >";
+                                    ?>
+                                    <a href="/artists/album/<?php echo str_replace('/', '@', base64_encode($ArtistName)); ?>/<?= base64_encode($genre) ?>">
+                                        <?php
                                     echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
                                     echo '</a>';
                                     echo '</li>';
@@ -379,16 +400,25 @@ $totalRows = count($genresAll);
                     </ul>
                     <span id="artist_loader" style="display:none;"   ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
                 </div>
-            </div>
+          <!--  </div> -->
         </div>
 
-        <div class="border"></div>
+       <!-- <div class="border"></div> -->
 
-        <span class="album-list-span"></span>
+       <!-- <span class="album-list-span"></span> -->
 
     </section>
+        
+    </div>
+    <div class="genre-button-container">
+	<button class="genre-scroll-up"></button>
+	<button class="genre-scroll-down"></button>
+	<button class="artist-scroll-up"></button>
+        <button class="artist-scroll-down"></button>
+   </div>
+    
 
-    <section class="album-detail-container clearfix" id='album_details_container'></section>
+    <!--<section class="album-detail-container clearfix" id='album_details_container'></section> -->
 
 
 </section>
