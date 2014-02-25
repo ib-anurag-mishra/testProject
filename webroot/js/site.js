@@ -416,7 +416,7 @@ $('document').ready(function()
     });
 
     $('.tracklist-shadow-container .tracklist-scrollable').on('mouseleave', function() {
-        $(this).find('.add-to-playlist-button').css({opacity: 0});
+        $(this).find('.add-to-playlist-button').css({opacity: .5});
 
     });
 
@@ -1878,6 +1878,10 @@ function resetNavigation() {
     sidebar_anchor.removeClass('active');
     var sidebar_sub_nav_07 = $('.sidebar-sub-nav');
     sidebar_sub_nav_07.removeClass('active');
+    var stream_sidebar_sub_nav_07 = $('.stream-sidebar-sub-nav');
+    stream_sidebar_sub_nav_07.removeClass('active'); 
+    var queue_sidebar_sub_nav_07 = $('.queue-sidebar-sub-nav');
+    queue_sidebar_sub_nav_07.removeClass('active');     
     var sidebar_freegalqueues = $('.leftfqueuesclass');
     sidebar_freegalqueues.removeClass('active');
 
@@ -2253,6 +2257,7 @@ $('document').ready(function() {
                 minChars: 3,
                 cacheLength: 10,
                 autoFill: false,
+                width:177,
                 extraParams: {
                     type: 'all'
                 },

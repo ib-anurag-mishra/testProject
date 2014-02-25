@@ -233,32 +233,29 @@ body {
 .content {
 
 	
-	.box-sizing;
-	float:      right;
-	height:     auto;
-	width:      85%;
-	position: relative;
+	//.box-sizing;
+	//float:      right;
+	//height:     auto;
+	//width:      85%;
+	//position: relative;
 
-	padding-bottom: 200px;
-	min-height: 800px; /* added 080313 */
+	//padding-bottom: 200px;
+	//min-height: 800px; /* added 080313 */
 
-	.videos,.genres-page,.saved-queues-page,.queue-detail-page,.now-streaming-page {
+	//.videos,.genres-page,.saved-queues-page,.queue-detail-page,.now-streaming-page {
 		
-		min-height: 1200px;
-	}
+		//min-height: 1200px;
+	//}
 
 
 }
+
 
 .content-wrapper {
 
 	position: relative;
 	margin: 0 auto;
 	width:  1024px;
-
-
-	
-
 }
 
 
@@ -508,6 +505,43 @@ img {
 
 		
 		.sidebar-sub-nav {
+			display:      none;
+			padding-left: 10px;
+			
+			a {
+				
+				color:           rgba(0,0,0,.8);
+			}
+			
+			&.active {
+				
+				
+				
+				display: block;
+				
+			}
+			
+		}
+		.stream-sidebar-sub-nav {
+			display:      none;
+			padding-left: 10px;
+			
+			a {
+				
+				color:           rgba(0,0,0,.8);
+			}
+			
+			&.active {
+				
+				
+				
+				display: block;
+				
+			}
+			
+		}
+
+		.queue-sidebar-sub-nav {
 			display:      none;
 			padding-left: 10px;
 			
@@ -1510,8 +1544,8 @@ img {
 /* videos page */
 .videos {
 	
-	margin-top: 25px;
-	margin-left: 20px;
+	// margin-top: 25px;
+	// margin-left: 20px;
 	width: 850px;
 	
 	
@@ -2302,8 +2336,8 @@ img {
 /* my-top-100 */
 .my-top-100-page {
 	
-	margin-left: 20px;
-	margin-top: 20px;
+	// margin-left: 20px;
+	// margin-top: 20px;
 	height: 1400px;
 	.breadcrumbs {
 		
@@ -5907,8 +5941,8 @@ img {
 /* faq page */
 .faq {
 	
-	margin-top: 20px;
-	margin-left: 20px;
+	// margin-top: 20px;
+	// margin-left: 20px;
 
 	.breadcrumbs {
 		
@@ -5992,8 +6026,8 @@ img {
 
 /* albums page */
 .albums-page {
-	margin-top: 20px;
-	margin-left: 40px;
+	// margin-top: 20px;
+	// margin-left: 40px;
 	
 	.breadcrumbs {
 		
@@ -6045,7 +6079,7 @@ img {
                                         text-decoration: none;
                                         text-transform: uppercase;
                                         width: 124px;
-                                        left: 105px;
+                                        left: 242px;
                                         top: 170px;
                                 }
                         
@@ -6055,7 +6089,7 @@ img {
                                         position: absolute;
                                         
                                         top: 270px;
-                                        left: 260px;
+                                        left: 395px;
                                         height: 25px;
                                         width:26px;
                                         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -6072,7 +6106,7 @@ img {
 
                                                 display: none;
                                                 position: absolute;
-                                                left: 166px;
+                                                left: 395px;
                                                 top: 238px;
                                                 font-size: 12px;
                                                 z-index: 100;
@@ -6558,8 +6592,8 @@ img {
 .artist-page {
 	
 	
-	margin-left: 20px;
-	margin-top: 20px;
+	// margin-left: 20px;
+	// margin-top: 20px;
 	
 	
 	.breadcrumbs {
@@ -8680,8 +8714,8 @@ img {
 /* video details page */
 .individual-videos-page {
 	
-	margin-left: 20px;
-	margin-top: 20px;
+	// margin-left: 20px;
+	// margin-top: 20px;
 	
 	.breadcrumbs {
 		
@@ -9786,8 +9820,8 @@ img {
 	
 	
 	
-	margin-left: 20px;
-	margin-top: 20px;
+	// margin-left: 20px;
+	// margin-top: 20px;
 	height: 1400px;
 	
 	.breadcrumbs {
@@ -10043,7 +10077,7 @@ img {
 			
 			.download-button {
 				
-				width: 124px;
+				width: 121px;
 			}
 
 			
@@ -10125,7 +10159,7 @@ img {
 					.date {
 						position: absolute;
 						left: 10px;
-						top:24px;
+						top:14px;
 						font-size: 12px;
 						
 						&.playing {
@@ -10146,7 +10180,7 @@ img {
 						
 						position: absolute;
 						left: 85px;
-						top:21px;
+						top:11px;
 						
 				
 						display: block;
@@ -10203,7 +10237,7 @@ img {
 						width: 128px;
 						position: absolute;
 						left: 114px;
-						top: 10px;
+						top: 0;
 						
 						&.playing {
 							
@@ -10349,6 +10383,7 @@ img {
 						width: 165px;
 						position: absolute;
 						left: 572px;
+						top: 0;
 						
 						&.playing {
 							
@@ -10388,7 +10423,7 @@ img {
 						width: 158px;
 						position: absolute;
 						left: 394px;
-						
+						top:0;
 						&.playing {
 							
 							font-weight: bold;
@@ -10445,7 +10480,7 @@ img {
 						position: absolute;
 						
 						left: 737px;
-						top:24px;
+						top:14px;
 						font-size: 12px;
 						
 						
@@ -10481,7 +10516,7 @@ img {
 						height: 17px;
 						position: absolute;
 						right: 15px;
-						top:22px;
+						top:12px;
 						opacity: .5;
 						
 						&:hover,&.hovered {
@@ -10578,7 +10613,7 @@ img {
 					.date {
 						position: absolute;
 						left: 10px;
-						top:24px;
+						top:14px;
 						font-size: 12px;
 						
 						&.playing {
@@ -10599,7 +10634,7 @@ img {
 						height: 40px;
 						width: 40px;
 						left: 98px;
-						top:10px;
+						top:5px;
 						
 						.preview {
 							
@@ -10671,7 +10706,7 @@ img {
 						width: 128px;
 						position: absolute;
 						left: 184px;
-						top: 10px;
+						top: 5px;
 						
 						&.playing {
 							
@@ -10811,7 +10846,7 @@ img {
 						width: 147px;
 						position: absolute;
 						left: 572px;
-						
+						top: 0;
 						&.playing {
 							
 							font-weight: bold;
@@ -10844,7 +10879,7 @@ img {
 						width: 158px;
 						position: absolute;
 						left: 394px;
-						
+						top: 0;
 						&.playing {
 							
 							font-weight: bold;
@@ -10894,7 +10929,7 @@ img {
 						position: absolute;
 						
 						left: 737px;
-						top:24px;
+						top:14px;
 						font-size: 12px;
 						
 						a {
@@ -10916,7 +10951,7 @@ img {
 						height: 17px;
 						position: absolute;
 						right: 15px;
-						top:22px;
+						top:12px;
 						opacity: .5;
 						
 						&:hover,&.hovered {
@@ -10953,7 +10988,7 @@ img {
 
 
 	.box-sizing;
-	padding: 10px 0 20px 20px;
+	// padding: 10px 0 20px 20px;
 	position: relative;
 	
 	.grids {
@@ -11606,7 +11641,7 @@ img {
 					
 					.playlist-options {
 						position: absolute;
-						left:121px;
+						left:117px;
 						top:0;
 						display: none;
 						background: #fff;
@@ -11649,12 +11684,12 @@ img {
 					
 					.add-to-playlist {
 							
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 105px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 105px center #999;
 						}
 					}
 				}
@@ -11917,12 +11952,12 @@ img {
 					
 					.add-to-playlist {
 							
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 105px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 105px center #999;
 						}
 					}
 				}
@@ -13388,8 +13423,8 @@ img {
 	
 	
 	
-	margin-left: 20px;
-	margin-top: 20px;
+	// margin-left: 20px;
+	// margin-top: 20px;
 	
 	
 	.breadcrumbs {
@@ -13544,7 +13579,7 @@ img {
 			
 			&.artist-filter-button {
 				
-				width: 177px;
+				width: 174px;
 				height: 39px;
 
 			}
@@ -13558,7 +13593,7 @@ img {
 			}
 			
 			&.download-button {
-				width: 85px;
+				width: 83px;
 				height: 39px;
 				
 				&:after {
@@ -13647,7 +13682,7 @@ img {
 					.date {
 						position: absolute;
 						left: 10px;
-						top:24px;
+						top:14px;
 						font-size: 12px;
 						
 						&.playing {
@@ -13666,7 +13701,7 @@ img {
 						
 						position: absolute;
 						left: 105px;
-						top:20px;
+						top:10px;
 						display: block;
 						width: 19px;
 						height: 19px;
@@ -13716,7 +13751,7 @@ img {
 						width: 244px;
 						position: absolute;
 						left: 136px;
-						top: 10px;
+						top: 0;
 						
 						&.playing {
 							
@@ -13862,7 +13897,8 @@ img {
 						width: 147px;
 						position: absolute;
 						left: 580px; /* changed 080613 */
-						
+						top:0;
+
 						&.playing {
 							
 							font-weight: bold;
@@ -13901,7 +13937,7 @@ img {
 						width: 158px;
 						position: absolute;
 						left: 404px;
-						
+						top: 0;
 						&.playing {
 							
 							font-weight: bold;
@@ -13957,7 +13993,7 @@ img {
 						position: absolute;
 						
 						left: 777px;
-						top:25px;
+						top:15px;
 						font-size: 12px;
 						
 						
@@ -14068,7 +14104,7 @@ img {
 					.date {
 						position: absolute;
 						left: 10px;
-						top:24px;
+						top:14px;
 						font-size: 12px;
 						
 						&.playing {
@@ -14090,7 +14126,7 @@ img {
 						height: 40px;
 						width: 40px;
 						left: 98px;
-						top:10px;
+						top:5px;
 						
 						.preview {
 							
@@ -14162,7 +14198,7 @@ img {
 						width: 167px; /* changed 080713 */
 						position: absolute;
 						left: 184px;
-						top: 10px;
+						top: 0;
 						
 						&.playing {
 							
@@ -14303,7 +14339,7 @@ img {
 						width: 147px;
 						position: absolute;
 						left: 585px;
-						
+						top: 0;
 						&.playing {
 							
 							font-weight: bold;
@@ -14337,7 +14373,8 @@ img {
 						width: 158px;
 						position: absolute;
 						left: 404px;
-						
+						top: 0;
+
 						&.playing {
 							
 							font-weight: bold;
@@ -14389,7 +14426,7 @@ img {
 						position: absolute;
 						
 						left: 777px;
-						top:25px;
+						top:15px;
 						font-size: 12px;
 
 						a {
@@ -14796,8 +14833,8 @@ img {
 /* search results page */
 .search-page {
 
-	margin-top: 20px;
-	margin-left: 20px;
+	// margin-top: 20px;
+	// margin-left: 20px;
 	
 	.breadcrumbs {
 		
@@ -15576,7 +15613,7 @@ img {
 		
 		.advanced-composers {
 			float: left;
-			width: 270px;
+			width: 267px;
 			margin-right: 20px;
 			header {
 				
@@ -16493,7 +16530,7 @@ img {
 			
 			&.download {
 				
-				width: 79px;
+				width: 76px;
 				
 				@media screen and (max-width:1024px) {
 					
@@ -16509,7 +16546,8 @@ img {
 	
 	.tracklist-shadow-container {
 		position: relative;
-		
+		overflow-y: hidden;
+		height: 440px;
 		&:after {
 				
 			position: absolute;
@@ -16530,14 +16568,14 @@ img {
 			overflow-y: hidden;
 			
 			height: 440px;
-			margin-right: -10px;
-			padding-right: 10px;
+			// margin-right: -10px;
+			// padding-right: 10px;
 			
 			
-			&:hover {
+			// &:hover {
 				
-				overflow-y: scroll;	
-			}
+			// 	overflow-y: scroll;	
+			// }
 			
 			
 			
@@ -17677,8 +17715,8 @@ img {
 	
 	
 	
-	margin-left: 20px;
-	margin-top: 20px;
+	// margin-left: 20px;
+	// margin-top: 20px;
 	
 	
 	.breadcrumbs {
@@ -18303,7 +18341,7 @@ img {
 			
 			.time-filter-button {
 				
-				width: 65px;
+				width: 62px;
 			}
 
 			
@@ -18347,7 +18385,7 @@ img {
 					.row {
 						padding-top: 10px;
 						padding-bottom: 10px;
-						height: 20px;
+						height: 40px;
 						padding-left: 10px;
 						position: relative;
 						
@@ -18704,8 +18742,8 @@ img {
 
 .queue-detail-page {
 
-	margin-left: 20px;
-	margin-top: 20px;
+	// margin-left: 20px;
+	// margin-top: 20px;
 
 	.breadcrumbs {
 		
@@ -18919,7 +18957,7 @@ img {
 			
 			.song-filter-button {
 				
-				width: 356px;
+				width: 353px;
 			}
 			
 			
@@ -19014,7 +19052,7 @@ img {
 					.row {
 						padding-top: 10px;
 						padding-bottom: 10px;
-						height: 20px;
+						height: 40px;
 						padding-left: 10px;
 						position: relative;
 						

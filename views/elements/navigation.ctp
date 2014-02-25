@@ -395,236 +395,237 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
     </div>
     <div class="wrapper">
 			<!-- site header -->
-			<header class="site-header">                                    
-                                    <div>
+                <header class="site-header">
+                        <div class="inner-wrapper">
+                                    <?php
+                                    $url = $_SERVER['SERVER_NAME'];
+                                    $host = explode('.', $url);
+                                    $subdomains = array_slice($host, 0, count($host) - 2 );									
+                                    $subdomains = $subdomains[0] ;  
+
+                                    if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){
+                                        if($libraryInfo['Library']['library_image_name'] != "") {
+                                            ?>
                                             <?php
-                                            $url = $_SERVER['SERVER_NAME'];
-                                            $host = explode('.', $url);
-                                            $subdomains = array_slice($host, 0, count($host) - 2 );									
-                                            $subdomains = $subdomains[0] ;  
-
-                                            if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){
-                                                if($libraryInfo['Library']['library_image_name'] != "") {
-                                                    ?>
-                                                    <?php
-                                                    if($libraryInfo['Library']['library_home_url'] != "") {
-                                                    ?>
-                                                        <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;"></a>
-                                                        <?php
-                                                    }else{
-                                                        ?>
-                                                        <img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;" />
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                    <?php
-                                                } elseif(!$libraryInfo['Library']['show_library_name']) {
-                                                    if($libraryInfo['Library']['library_home_url'] != "") {
-                                                ?>
-                                                   <div style="padding-top: 45px;"><a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><?php echo $libraryInfo['Library']['library_name']; ?></a></div>
-                                                <?php
-                                                    } else { ?>
-                                                   <div style="padding-top: 45px;"><?php echo $libraryInfo['Library']['library_name']; ?></div>
-                                                   <?php
-                                                    }
-                                                } else {
-                                                ?>
-                                                <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
-                                               <?php }
-	                                    } else {
+                                            if($libraryInfo['Library']['library_home_url'] != "") {
                                             ?>
-                                            <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108" /></a></h1>
-                                           <?php } ?>
-                                        </div>
-					<div class="master-music-search-wrapper">
-						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">							
-                            <select name="type" id="master-filter">
-								<option value="all">Search All</option>
-								<option value="album">Albums</option>
-								<option value="artist">Artists</option>
-								<option value="composer">Composers</option>
-								<option value="genre">Genres</option>
-								<option value="song">Songs</option>
-								<option value="video">Videos</option>
-							</select>
-							<input type="text" id="search-text" name="q" value="" />							
-                            <!-- <input type="hidden" name="type" id="header-search-type" value="all" /> -->
-						</form>
-						<!-- onclick="document.getElementById('HomeSearchForm').submit()" -->
-                        <button id="headerSearchSubmit"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="13" height="13"></button>
-                                                <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
-					</div>
-					<div class="master-music-search-results">
-						<ul>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/adele.jpg" alt="adele">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)">21</a></span><span class="song-title"><a href="javascript:void(0)"></a></span></p>
-									<p class="artist"><a href="javascript:void(0)">Adele</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/pitbull.jpg" alt="pitbull">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">Mr. Worldwide</a></span></p>
-									<p class="artist"><a href="javascript:void(0)">Pitbull</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/carrie-underwood.jpg" alt="carrie-underwood">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">Before He Cheats</a></span></p>
-									<p class="artist"><a href="javascript:void(0)">Carrie Underwood</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/kelly-clarkson.jpg" alt="kelly-clarkson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">All I Ever Wanted</a></span></p>
-									<p class="artist"><a href="javascript:void(0)">Kelly Clarkson</a></p>
-								</div>
-							</li>
-							<li>
-								<div class="master-search-results-image">
-									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/michael-jackson.jpg" alt="michael-jackson">
-								</div>
-								<div class="master-search-results-detail">
-									<p class="song-album-info"><span class="album-title"><a href="javascript:void(0)">Thriller</a></span><span class="song-title"><a href="javascript:void(0)"></a></span></p>
-									<p class="artist"><a href="javascript:void(0)">Michael Jackson</a></p>
-								</div>
-							</li>
-						</ul>
-					</div>
-					
-				<?php if($this->Session->read("patron")){ ?>
-				<div class="weekly-downloads-container clearfix">
-					<div class="label">
-						<p>My Account</p>
-					</div>
-                                        <a class="select-arrow" href="javascript:void(0);"></a>
-					<div class="small-divider"></div>
-					<div class="tooltip">
-						<a href="javascript:void(0);" class="no-ajaxy"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
-					</div>
-                                        <div class="account-options-menu">                                            
-                                            <?php 
-                                                if($libraryInfo['Library']['library_authentication_method'] == "user_account")
-                                                {  
-                                                    echo "<div>".$html->link(__('Change Password', true), array('controller' => 'users', 'action' => 'my_account'))."</div>";                                                
-                                                } 
-                                                if($isLibaryExistInTimzone ==1)
-                                                { 
-                                                    echo "<div>".$html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'manage_notification'))."</div>";
-                                                }
-                                            ?>
-                                            <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?></div>
-                                        </div>
-					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
-                                        <?php
-
-
-                                                $maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
-
-                                             //if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
-                                                if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
-
-                                               { 
-                                                     $streamTime = 'UNLIMITED';
-                                                     $libraryunlimited = 1;
-
-                                               }else if($this->Session->read('library_type')==2){
-                                                   $libraryunlimited = 0;
-
-                                                    $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
-                                                    $todaysDate         =   date("Y-m-d");                                                    
-                                                    
-                                                    if(strtotime(date("Y-m-d",strtotime($lastStreamedDate))) != strtotime(date('Y-m-d'))) // if Patron Logs in for first time in day 
-                                                    {
-                                                        $streamTime =   $maxStreamTime;                                                        
-                                                    }
-                                                    else
-                                                    {
-                                                        $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
-
-                                                        if(empty($streamTime))      // if there is no record of patron in streaming_records table i.e. user is streaming for first time
-                                                        {
-                                                            $streamTime =   $maxStreamTime;
-                                                        }
-                                                        else    // if user has streamed one or more time
-                                                        {
-                                                            $streamTime = ($maxStreamTime - $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
-                                                        }                                                                                                           
-                                                    } 
-
-                                                     $streamTime =   gmdate("H:i:s", $streamTime);
-                                               }   
-                                        ?>
-                                                <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryunlimited; ?></span>
-                                                <?php if($this->Session->read('library_type')==2){ ?>
-                                                    <div class="stream-time" ><span>Streaming Time Remaining:&nbsp;</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div> 
+                                                <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;"></a>
                                                 <?php
-                                                    }
-                                                //  Hidden variable to be used in site.js for alerting user before video download
-                                        
-                                                    if(($downloadCount+1)<$libraryInfo['Library']['library_user_download_limit'])
-                                                    {
-                                                        ?>
-                                                            <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="1" />
-                                                        <?php
-                                                    }
-                                                    else
-                                                    {
-                                                          ?>
-                                                            <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="0" />
-                                                        <?php
-                                                    }
-                                        
-                                        
-                                        ?>
-				</div>
-
-				<div class="plays-tooltip">
-					<div class="tooltip-content">
-						<p>The download usage counter is located in the upper right corner of freegalmusic.com displaying your weekly allotment. For instance, 1/3 means that you have a weekly limit of 3 downloads, and you have used 1 of those downloads. The download counter resets each week at Monday 12:01 AM (Eastern Time, USA).</p>
-					</div>
-				</div>
-                                <?php  }else{ ?>
-                               <div class="weekly-downloads-container clearfix">
-                                   <div class="label">
-                                       <?php 
-                                            $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
-                                            if($library != 'www' && $library != 'freading' && $library != '50'){
-                                                echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
-                                            } else {
-                                                echo $html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
+                                            }else{
+                                                ?>
+                                                <img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>" style="padding-top: 20px;" />
+                                                <?php
                                             }
-                                       ?>
-                                       
-                                   </div>
-                                    
-					<div class="small-divider"></div>
-					<div class="tooltip">
-						<a href="javascript:void(0)"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
-					</div>
-                                        <div class="account-options-menu">                                            
-                                            
-                                            <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy'));?></div>
+                                            ?>
+                                            <?php
+                                        } elseif(!$libraryInfo['Library']['show_library_name']) {
+                                            if($libraryInfo['Library']['library_home_url'] != "") {
+                                        ?>
+                                           <div style="padding-top: 45px;"><a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><?php echo $libraryInfo['Library']['library_name']; ?></a></div>
+                                        <?php
+                                            } else { ?>
+                                           <div style="padding-top: 45px;"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+                                           <?php
+                                            }
+                                        } else {
+                                        ?>
+                                        <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
+                                       <?php }
+                                    } else {
+                                    ?>
+                                    <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108" /></a></h1>
+                                    <?php } ?>					
+                                    <div class="header-right-col">
+                                        <div class="row-1 clearfix">
+                                                <?php if(!$this->Session->read("patron")){ 
+                                                            if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
+                                                                <div class="forgot-password">Forgot your password? <a href="/homes/forgot_password">Click here to reset it.</a></div>
+                                                        <?php }  
+                                                        }else if($this->Session->read("patron")){
+                                                                if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
+                                                                 <div class="forgot-password">Need to change your password? <a href="/users/my_account">Click here to reset it.</a></div>
+                                                       <?php    }
+                                                        }
+                                                       if($this->Session->read("patron")){ 
+                                                            $maxStreamTime    =   $libraryInfo['Library']['library_streaming_hours']*60*60;
+
+                                                         //if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_unlimited']==1 && $libraryInfo['Library']['library_user_download_limit']> 4)
+                                                            if($this->Session->read('library_type')==2 && $libraryInfo['Library']['library_streaming_hours']==24)
+
+                                                           { 
+                                                                 $streamTime = 'UNLIMITED';
+                                                                 $libraryunlimited = 1;
+
+                                                           }else if($this->Session->read('library_type')==2){
+                                                               $libraryunlimited = 0;
+
+                                                                $lastStreamedDate   =   $this->Streaming->getLastStreamDate($this->Session->read('library'),$this->Session->read('patron'));
+                                                                $todaysDate         =   date("Y-m-d");                                                    
+
+                                                                if(strtotime(date("Y-m-d",strtotime($lastStreamedDate))) != strtotime(date('Y-m-d'))) // if Patron Logs in for first time in day 
+                                                                {
+                                                                    $streamTime =   $maxStreamTime;                                                        
+                                                                }
+                                                                else
+                                                                {
+                                                                    $streamTime = $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'));
+
+                                                                    if(empty($streamTime))      // if there is no record of patron in streaming_records table i.e. user is streaming for first time
+                                                                    {
+                                                                        $streamTime =   $maxStreamTime;
+                                                                    }
+                                                                    else    // if user has streamed one or more time
+                                                                    {
+                                                                        $streamTime = ($maxStreamTime - $this->Streaming->getTotalStreamTime($this->Session->read('library'),$this->Session->read('patron'))); 
+                                                                    }                                                                                                           
+                                                                } 
+
+                                                                 $streamTime =   gmdate("H:i:s", $streamTime);
+                                                           }
+                                                        ?>
+                                                        <span id="hid_library_unlimited" style="display:none;"><?php echo $libraryunlimited; ?></span>
+                                                        <?php if($this->Session->read('library_type')==2){ ?>
+                                                            <div class="streaming-time-remaining">Streaming Time Remaining:&nbsp;</span><span id="remaining_stream_time"><?php echo $streamTime; ?></span></div>    
+                                                        <?php
+                                                            }
+                                                        //  Hidden variable to be used in site.js for alerting user before video download
+
+                                                            if(($downloadCount+1)<$libraryInfo['Library']['library_user_download_limit'])
+                                                            {
+                                                                ?>
+                                                                    <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="1" />
+                                                                <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                  ?>
+                                                                    <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="0" />
+                                                                <?php
+                                                            } ?>
+                                                    <?php if($this->Session->read('library_type')==2){ ?>
+                                                        <div class="streaming-arrows-icon"></div>
+                                                <?php }
+                                              } ?>   
                                         </div>
-					<div class="play-count"><span id='downloads_used'>0</span></div>     
-                               </div>
+                                        <div class="row-2 clearfix">
+                                            <?php if($this->Session->read("patron")){
+                                                $class = ' logged-in';
+                                            ?>
+                                                <div class="download-count-container">
+                                                        <div class="download-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>
+                                                        <div class="music-note-icon"></div>
+                                                </div>
+                                             <?php } ?>    
+                                                <div class="my-account-menu-container<?php echo $class ?>">
+                                                     <?php if($this->Session->read("patron")){  ?>
+                                                        <button class="my-account-menu">My Account</button>
+
+                                                        <ul class="account-menu-dropdown">
+                                                                <?php 
+                                                                if($isLibaryExistInTimzone ==1){ ?> 
+                                                                <li class="dropdown-item">
+                                                                        <a href="/users/manage_notification" id="notifications">Notifications</a>
+                                                                </li>                                                                            
+                                                                <?php }   
+                                                                if($libraryInfo['Library']['library_authentication_method'] == "user_account"){?>
+                                                                <li class="dropdown-item">
+                                                                        <a href="/users/my_account" id="change-password">Change Password</a>
+                                                                </li>
+                                                                <?php } ?>
+                                                                <li class="dropdown-item">
+                                                                        <?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'),array('class' =>'no-ajaxy','id' => 'logout'));?>
+                                                                </li>
+                                                        </ul>
+                                                     <?php } else { 
+                                                                    $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+                                                                    if($library != 'www' && $library != 'freading' && $library != '50'){
+                                                                        echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'login'));
+                                                                    } else {
+                                                                        echo $html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'login'));
+                                                                    }
+                                                     } ?>           
+                                                </div>
+                                                <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view'),array('class' => 'browse')); ?>
+                                                <div class="master-search-container">
+                                                    <form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8" onsubmit="ajaxSearch(); return false;">							
+                                                        <div class="select-arrow-ie8"></div>
+                                                        <div class="select-arrow-fix">
+                                                                <select name="type" id="master-filter" class="master-search-select">
+                                                                    <option value="all">Search All</option>
+                                                                    <option value="album">Albums</option>
+                                                                    <option value="artist">Artists</option>
+                                                                    <option value="composer">Composers</option>
+                                                                    <option value="genre">Genres</option>
+                                                                    <option value="song">Songs</option>
+                                                                    <option value="video">Videos</option>
+                                                                </select>
+                                                        </div>
+
+                                                        <div class="master-search-field-container">
+                                                                <input type="text" placeholder="Press enter or go..." class="search-text" id="search-text" name="q">
+                                                                <a class="go" href="javascript:void(0)" id="headerSearchSubmit">Go</a>
+                                                        </div>
+                                                    </form>    
+                                                </div>
+                                                <div class="master-music-search-results">
+                                                        <ul>
+                                                                <li>
+                                                                        <div class="master-search-results-image">
+                                                                                <img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/adele.jpg" alt="adele">
+                                                                        </div>
+                                                                        <div class="master-search-results-detail">
+                                                                                <p class="song-album-info"><span class="album-title"><a href="javascript:void(0)">21</a></span><span class="song-title"><a href="javascript:void(0)"></a></span></p>
+                                                                                <p class="artist"><a href="javascript:void(0)">Adele</a></p>
+                                                                        </div>
+                                                                </li>
+                                                                <li>
+                                                                        <div class="master-search-results-image">
+                                                                                <img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/pitbull.jpg" alt="pitbull">
+                                                                        </div>
+                                                                        <div class="master-search-results-detail">
+                                                                                <p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">Mr. Worldwide</a></span></p>
+                                                                                <p class="artist"><a href="javascript:void(0)">Pitbull</a></p>
+                                                                        </div>
+                                                                </li>
+                                                                <li>
+                                                                        <div class="master-search-results-image">
+                                                                                <img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/carrie-underwood.jpg" alt="carrie-underwood">
+                                                                        </div>
+                                                                        <div class="master-search-results-detail">
+                                                                                <p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">Before He Cheats</a></span></p>
+                                                                                <p class="artist"><a href="javascript:void(0)">Carrie Underwood</a></p>
+                                                                        </div>
+                                                                </li>
+                                                                <li>
+                                                                        <div class="master-search-results-image">
+                                                                                <img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/kelly-clarkson.jpg" alt="kelly-clarkson">
+                                                                        </div>
+                                                                        <div class="master-search-results-detail">
+                                                                                <p class="song-album-info"><span class="album-title"><a href="javascript:void(0)"></a></span><span class="song-title"><a href="javascript:void(0)">All I Ever Wanted</a></span></p>
+                                                                                <p class="artist"><a href="javascript:void(0)">Kelly Clarkson</a></p>
+                                                                        </div>
+                                                                </li>
+                                                                <li>
+                                                                        <div class="master-search-results-image">
+                                                                                <img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/michael-jackson.jpg" alt="michael-jackson">
+                                                                        </div>
+                                                                        <div class="master-search-results-detail">
+                                                                                <p class="song-album-info"><span class="album-title"><a href="javascript:void(0)">Thriller</a></span><span class="song-title"><a href="javascript:void(0)"></a></span></p>
+                                                                                <p class="artist"><a href="javascript:void(0)">Michael Jackson</a></p>
+                                                                        </div>
+                                                                </li>
+                                                        </ul>
+                                                </div>
+                                        </div>
+
+                                </div>
+                                <?php if($this->Session->read("patron")){ ?>
+                                    <div class="plays-tooltip">
+                                            The download usage counter is located in the upper right corner of freegalmusic.com displaying your weekly allotment. For instance, 1/3 means that you have a weekly limit of 3 downloads, and you have used 1 of those downloads. The download counter resets each week at Monday 12:01 AM (Eastern Time, USA).	
+                                    </div>
                                 <?php  } ?>
-                                    
-                                    
-			</header>
-                        
+                        </div>
+                </header>                        
                        
 			<!-- site nav -->
 		<nav class="site-nav">
@@ -738,122 +739,59 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         
 			<div class="content-wrapper clearfix">	
                             
-					<section class="left-sidebar">
-                                            <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
-                                                    <li>
-                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css,"id"=>'leftmusicVideo07',"onclick"=>"setUpperNavigation('leftmusicVideo07')")); ?>
-                                                    </li>                                                    
-                                                    <li>
-                                                            <a class="sidebar-anchor"  style="cursor:pointer" href="javascript:void(0);" ><?php __('Most Popular'); ?></a>
-                                                            <ul class="<?php echo $ul_class; ?>">
-                                                                <?php if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){ ?>
-                                                                        <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css,"id"=>'leftmylib07',"onclick"=>"setUpperNavigation('leftmylib07')")); ?></li>
-                                                                <?php } else {
-                                                                        if($this->Session->read("patron")){ ?>
-                                                                            <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css,"id"=>'leftmylib07',"onclick"=>"setUpperNavigation('leftmylib07')")); ?></li>
-                                                                  <?php } 
-                                                                      } ?>
-                                                                <li>
-                                                                        <?php echo $html->link(__($this->Session->read('territory').' Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'),array('class'=>$us_top_css,"id"=>'ustoplib07',"onclick"=>"setUpperNavigation('ustoplib07')")); ?>
-                                                                </li>
-                                                            </ul>
-                                                    </li>  
-                                                    <li>
-                                                            <?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases'),array('class'=>$new_releases_css,"id"=>'leftnewrelease07',"onclick"=>"setUpperNavigation('leftnewrelease07')")); ?>
-                                                    </li> 
-                                            </ul>
+					<section class="left-nav">
                                           <?php if($this->Session->read("patron")){ ?>
                                             <?php if($this->Session->read('library_type') == '2') {
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
-                                            <ul class="streaming sidebar-nav">
-                                                    <h3>Streaming</h3>								
-                                                    <?php if(!empty($defaultQueues)){  ?>
-                                                    
-                                                    <li>
-                                                            <a href="javascript:void(0)" class="sidebar-anchor"><?php __('Freegal Playlists'); ?></a>
-                                                            <ul class="sidebar-sub-nav">
-                                                                <?php foreach($defaultQueues as $key => $value){
-                                                                    $fqueuesid = 'leftfqueues_'.$value['QueueList']['queue_id'].'_07';
-                                                                    ?>
-                                                                    <li><a class="leftfqueuesclass" id="<?=$fqueuesid?>" onclick="setUpperNavigation('<?=$fqueuesid?>')" href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>/<?php echo base64_encode($value['QueueList']['queue_name']);?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
-                                                                <?php } ?>    
-                                                            </ul>
-                                                    </li>
-                                                    <?php } ?>
-                                                    <li>
-                                                            <a href="javascript:void(0);" class="sidebar-anchor saved-queue"><?php __('My Playlists'); ?></a>
-                                                            <ul class="sidebar-sub-nav">
+                                            <div class="streaming">
+                                                    <h2>Streaming</h2>
+                                                    <ul>
+                                                        <?php if(!empty($defaultQueues)){  ?>
+
+                                                        <li>
+                                                                <a href="javascript:void(0)" class="sidebar-anchor"><?php __('Freegal Playlists'); ?></a>
+                                                                <ul class="stream-sidebar-sub-nav">
+                                                                    <?php foreach($defaultQueues as $key => $value){
+                                                                        $fqueuesid = 'leftfqueues_'.$value['QueueList']['queue_id'].'_07';
+                                                                        ?>
+                                                                        <li><a class="leftfqueuesclass" id="<?=$fqueuesid?>" onclick="setUpperNavigation('<?=$fqueuesid?>')" href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>/<?php echo base64_encode($value['QueueList']['queue_name']);?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
+                                                                    <?php } ?>    
+                                                                </ul>
+                                                        </li>
+                                                        <?php } ?>
+                                                        <li>
+                                                                <a href="javascript:void(0);" class="sidebar-anchor saved-queue"><?php __('My Playlists'); ?></a>
+                                                                <ul class="queue-sidebar-sub-nav">
 
 
-                                                                    <li><a id="leftnowstreaming07" onclick="setUpperNavigation('leftnowstreaming07')" href="/queuelistdetails/now_streaming"><?php __('Now Streaming'); ?></a></li>
-                                                                    <li><a id="leftsavedqueues07" onclick="setUpperNavigation('leftsavedqueues07')" href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Create and Store Playlists'); ?></a></li>
-                                                            </ul>
-                                                    </li>
-                                                    <li>
-                                                            <a href="/queues/my_streaming_history" class="sidebar-anchor"><?php __('History'); ?></a>
-                                                    </li>
-                                            </ul>
+                                                                        <li><a id="leftnowstreaming07" onclick="setUpperNavigation('leftnowstreaming07')" href="/queuelistdetails/now_streaming"><?php __('Now Streaming'); ?></a></li>
+                                                                        <li><a id="leftsavedqueues07" onclick="setUpperNavigation('leftsavedqueues07')" href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Create and Store Playlists'); ?></a></li>
+                                                                </ul>
+                                                        </li>
+                                                        <li>
+                                                                <a href="/queues/my_streaming_history" class="sidebar-anchor"><?php __('History'); ?></a>
+                                                        </li> 
+                                                    </ul>
+                                            </div>
                                             <?php } ?>
-                                            <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
-                                                    <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css,"id"=>'leftmyhistory07',"onclick"=>"setUpperNavigation('leftmyhistory07')")); ?></li>
-                                                    <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
-                                                    <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css,"id"=>'leftmywishlist07',"onclick"=>"setUpperNavigation('leftmywishlist07')")); ?></li>
-                                                    <?php /* } */ ?>     
-                                            </ul>
-                                           <?php                                                                                             
-
-                                                   /* if($this->Session->read("lId")==602 || $this->Session->read("lId")==85 || $this->Session->read("lId")==486)                                                   
-                                                    {                                                         
-                                                        ?>    
-                                                             <div class="announcements">
-                                                                <h4><?php __('Announcements'); ?></h4>
-                                                                <div class="poll1" style="display:block;height:350px;">                                                                                                                                                                       
-                                                                 Register for the Great Fall Concert Ticket Giveaway<br><br>
-                                                                 One entry only<br><br>
-                                                                 <?php echo $html->link(__('More Info', true), array('controller' => 'registerconcerts','action'=>'great_fall_concert'));?><br> 
-                                                                 
-                                                                 <?php                                                                    
-                                                                        if($register_concert_id=='') // If User has  not registered for concert
-                                                                        {
-                                                                  ?>
-
-                                                                <span id="FailureMessage"></span> <br> 
-                                                                <form  id="FormRegisterConcert" method="post">
-                                                                    <label for="UserEmail">First Name :</label>
-                                                                    <?php echo $this->Form->input('first_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?> <br><br>
-                                                                    <label for="UserEmail">Last Name :</label>
-                                                                    <?php echo $this->Form->input('last_name', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 2px 2px 0px; float:right;') ); ?> <br><br><br><br>                                                                  
-                                                                    <!-- <label for="UserEmail">Library Card :</label> -->
-                                                                    <?php //echo $this->Form->input('library_card', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?>                                                                     
-                                                                    <label for="UserEmail">Phone :</label>                                                                    
-                                                                    <?php echo $this->Form->input('phone_no', array('label' => false, 'div' => false, 'style' => 'width:120px; padding:4px 6px 2px 0px;') ); ?> <br>    
-                                                                    <input type="hidden" name="library_id" value="<?php echo $this->Session->read("lId"); ?>" /><br>
-                                                                    <input type="submit" class="save" value="Submit" />
-                                                                </form>
-                                                                        <?php 
-                                                                                $reutrn_message='';
-                                                                          }
-                                                                          else
-                                                                          {
-                                                                                $reutrn_message='<br><font style="color:green;">Thanks for entering the Great Fall Concert Ticket Giveaway.</font><br><br>Contest runs Nov 1 - Dec 7, 2013.'; 
-                                                                          }
-                                                                          ?>
-                                                                    <span id="ReturnMessage" ><?php echo $reutrn_message; ?></span>
-                                                                
-                                                                 </div>
-                                                            </div>
-                                            
-                                            
-                                                        <?php
-                                                    }
-                                                    else    // For other Libraries
-                                                    {   */
+                                            <div class="my-downloads">
+                                                    <h2><?php __('My Downloads'); ?></h2>
+                                                    <ul>
+                                                        <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css,"id"=>'leftmyhistory07',"onclick"=>"setUpperNavigation('leftmyhistory07')")); ?></li>
+                                                        <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
+                                                        <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css,"id"=>'leftmywishlist07',"onclick"=>"setUpperNavigation('leftmywishlist07')")); ?></li>
+                                                        <?php /* } */ ?> 
+                                                    </ul>
+                                            </div>
+                                             <?php } ?>
+                                             <?php                                                                                             
                                                         $temp_text  =   strip_tags($announcment_value);
                                                         
                                                         if($temp_text!="")
                                                         {
-                                                            $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                            // $announcment_class  =   "display:block;overflow-y:scroll;";
+                                                            $announcment_class  =   "display:block;";
                                                         }
                                                         else
                                                         {
@@ -861,18 +799,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                         }
                                                         
                                                         ?>
-                                                                <div class="announcements">
-                                                                <h4><?php __('Announcements'); ?></h4>
-                                                                <div class="poll1" style="<?php echo $announcment_class; ?>">
-                                                                    <?php echo $announcment_value; ?>
-                                                                </div>
-                                                                </div>
-                                            
-                                                        <?php
-                                                 //  }
-                                                    
-                                            ?>
-                                            <?php } ?>
+                                                        <div class="announcements">
+                                                        <h2><?php __('Announcements'); ?></h2>
+                                                        <div class="announcement" style="<?php echo $announcment_class; ?>">
+                                                            <?php echo $announcment_value; ?>
+                                                        </div>
+                                                        </div>
 					</section>					
 					<div class="content" style="<?php echo $section_class; ?>">
                                             <span class="ajaxmessage44" id="ajaxflashMessage44"></span>

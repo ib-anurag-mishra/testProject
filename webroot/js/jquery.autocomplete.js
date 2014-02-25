@@ -617,6 +617,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 		
 		if( options.width > 0 )
 			element.css("width", options.width);
+
 			
 		needsInit = false;
 	} 

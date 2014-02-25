@@ -1,0 +1,55 @@
+.site-header .header-right-col .row-2 .master-search-container,
+.site-header .header-right-col .row-2 .browse {
+	
+	border:1px solid #dedddd;
+}
+
+
+.site-header .header-right-col .row-2 .master-search-container .select-arrow-fix,
+.site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
+
+	height: 25px;
+}
+
+.site-header .header-right-col .row-2 .master-search-container .master-search-select {
+
+	height: 26px;
+}
+
+.site-header .header-right-col .row-2 .master-search-container .master-search-field-container {
+
+	width: 199px;
+}
+
+.site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
+
+	border-left: 1px solid #dedddd;	
+}
+
+
+.select-arrow-ie8 {
+	display: block;
+	position: absolute;
+	width: 6px;
+	height: 5px;
+	line-height: 5px;
+	left: 86px;
+	top:11px;
+	background: url(../img/freegal_sprite.png) no-repeat -40px 0;
+
+}
+
+.site-header .header-right-col .row-2 .master-search-container .master-search-field-container .search-text {
+
+	line-height: 27px;
+}
+
+.site-header .inner-wrapper .plays-tooltip {
+
+	border:1px solid #aaa;
+}
+
+.site-header .inner-wrapper .plays-tooltip:after {
+
+	display: none;
+}

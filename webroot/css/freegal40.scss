@@ -1,0 +1,4981 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3/images";
+@import "compass/css3/box-sizing";
+@import "compass/css3/transition";
+@import "compass/utilities/general/hacks";
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
+@import "compass/css3/opacity";
+@import "compass/css3/text-shadow";
+@import "compass/css3/appearance";
+@import "compass/css3/inline-block";
+
+
+$default-transition-duration: 500ms;
+
+*,
+*:before,
+*:after { 
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box; 
+	   		box-sizing: border-box;
+}
+
+
+
+body { 
+	font-family: Arial, Helvetica, sans-serif;
+	background: url(../img/site-bkg.jpg) repeat; 
+}
+
+img {
+
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+
+}
+
+select::-ms-expand { display: none; }
+
+
+$blue-link: #008fbd;
+$explicit-color:#eb212e;
+$dark-blue: #58c6ea;
+
+
+
+
+.explicit { color: $explicit-color; }
+
+
+%form-reset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	-webkit-appearance: none;
+	outline: 0;
+
+}
+
+button {
+
+	margin: 0;
+	padding: 0;
+	@include appearance(none);
+	border: 0;
+	cursor: pointer;
+	outline: none;
+	overflow:visible;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
+
+
+
+.faq-link {
+
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 10px;
+	color: #333333;
+
+	a {
+
+		color: #66ccff;
+		text-decoration: none;
+
+		&:hover {
+
+			text-decoration: underline;
+		}
+	}
+
+}
+
+
+
+.refine-text {
+
+	font-family: Helvetica,Arial,sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	margin-top: 33px;
+}
+
+%header-button-style {
+	background:#d9ebf2;
+	font-size:12px;
+	color: #527988;
+	@include box-shadow(0 0 0 1px #b6cbd1);
+	@include background-image(linear-gradient(#daecf2, #d3e8f0));
+	cursor: pointer;
+	
+	&:hover {
+		
+		@include background-image(linear-gradient(#e7f3f7, #d4e8f0));
+	}
+	
+	&:active {
+		
+		@include background-image(linear-gradient(#d3e8f0, #d5e9f1));
+	}
+
+}
+
+
+
+
+
+%options-menu-style {
+
+	ul {
+		@include border-radius(5px);
+		border:1px solid #bdbdbd;
+		background:#fff;
+		overflow-y: scroll;
+	
+		&:nth-child(2) {
+
+			margin-top: 1px;
+		}
+
+		li {
+
+			a {
+				font-family:Helvetica, Arial, sans-serif;
+				font-size:11px;
+				color:#444444;
+				display: block;
+				background:#fff;
+				padding: 10px;
+				text-decoration: none;
+				
+				width: 175px;
+				
+				
+				@include border-radius(0);
+
+				&:hover {
+
+					color:#000;
+					background:#cfeff9;
+					text-decoration: none;
+
+				}	
+
+			}
+
+			&:nth-child(1) a {
+
+				@include border-bottom-left-radius(0);
+				@include border-bottom-right-radius(0);
+				@include border-top-left-radius(5px);
+				@include border-top-right-radius(5px);
+
+			}
+
+			&:last-child a {
+
+				@include border-top-left-radius(0);
+				@include border-top-right-radius(0);
+				@include border-bottom-left-radius(5px);
+				@include border-bottom-right-radius(5px);
+			}
+		}
+	}
+
+
+}
+
+
+
+%see-more {
+
+	.see-more {
+
+		position: absolute;
+		display: block;
+		right:0;
+		bottom:0;
+		width: 23px;
+		height: 23px;
+		text-indent: -9999px;
+		background:url(../img/freegal_sprite.png) 0 -40px;
+		&:hover {
+			background:url(../img/freegal_sprite.png) -25px -40px;
+
+		}
+
+		&:active {
+
+			background:url(../img/freegal_sprite.png) -50px -40px;
+
+		}
+
+	}	
+}
+
+%homepage-header {
+	position: relative;
+	header {
+
+		height: 25px;
+		position: relative;
+		h2 {
+			
+			font-size: 24px;
+
+		}
+
+
+	}
+
+}
+
+
+
+%gray-container-style {
+
+	.header-container,.pagination-container {
+		
+		height: 36px;
+		border:1px solid #d0d0d0;
+		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
+		position: relative;
+
+	}	
+}
+
+%gray-bar {
+		height: 36px;
+		border:1px solid #d0d0d0;
+		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
+		position: relative;
+
+}
+
+%album-cover-menu-and-icons {
+
+	.play-btn-icon {
+
+							
+
+		position: absolute;
+		left:65px;
+		top:65px;
+		width: 34px;
+		height: 34px;
+		background: url(../img/freegal_sprite.png) -400px -20px;
+
+		&:hover {
+		
+			background: url(../img/freegal_sprite.png) -435px -20px;
+		}
+
+		&:active {
+		
+			background: url(../img/freegal_sprite.png) -470px -20px;
+		}
+
+	}
+
+	.playlist-menu-icon {
+		
+		position: absolute;
+		left: 5px;
+		top: 5px;
+		width: 28px;
+		height: 20px;
+		background: url(../img/freegal_sprite.png) -400px 0;
+
+
+	
+		&:hover {
+			
+			background: url(../img/freegal_sprite.png) -430px 0;
+
+		}
+		
+		&:active {
+			
+			background: url(../img/freegal_sprite.png) -460px 0;
+		}
+
+
+	}
+
+	.wishlist-icon {
+
+		position: absolute;
+		left:35px;
+		top:5px;
+		width: 26px;
+		height:20px;
+		background: url(../img/freegal_sprite.png) 0 -100px;
+
+
+	
+		&:hover {
+			
+			background: url(../img/freegal_sprite.png) -30px -100px;
+
+		}
+		
+		&:active {
+			
+			background: url(../img/freegal_sprite.png) -30px -100px;
+		}
+
+		&.added-to-wishlist {
+
+			background: url(../img/freegal_sprite.png) -90px -100px;
+
+			&:hover {
+			
+				background: url(../img/freegal_sprite.png) -120px -100px;
+
+			}
+		}		
+	}
+
+	> ul {
+		
+		position: absolute;
+		left: 6px;
+		top:26px;
+		width: 177px;
+		max-height: 131px;
+		overflow-y: scroll;
+		display: none;
+		@include border-radius(5px);
+		border:1px solid #999;
+		z-index: 1;
+		&.active {
+			
+			display: block;
+		}
+		> li {
+			display: block;
+			background: #fff;
+			float: none;
+			margin-bottom: 0;
+			width: 100%;
+			a {
+				display: block;
+				padding:10px;
+				
+				text-decoration: none;
+				color:#000;
+				font-size: 11px;
+				
+				&:hover {
+					
+					background:#cfeff9;
+					
+					color: #000;
+					
+				}
+				
+				&.create-new-playlist {
+					
+					font-weight: bold;
+				}
+			}
+
+		}
+	}	
+
+}
+
+
+%toggleable {
+	.toggleable {
+
+		display: block;
+		@include opacity(0);
+
+		&.active {
+			
+			display: block;
+			@include opacity(.5);
+		}
+
+		&:hover {
+
+			@include opacity(1);
+		}	
+	}
+
+}
+
+%search-results-list {
+
+	.search-results-list {
+
+		position: relative;
+		margin-top: 30px;
+		font-size: 12px;
+		font-family: Helvetica,Arial,sans-serif;
+
+		&:before {
+
+			content: "";
+			position: absolute;
+			top:-7px;
+			left:0;
+			width: 100%;
+			height: 7px;
+			border:1px solid #d0d0d0;
+			@include background-image(linear-gradient(#fff, #ededed));
+			
+		}
+		&:after {
+
+			content: "";
+			position: absolute;
+			bottom:-7px;
+			left:0;
+			width: 100%;
+			height: 7px;
+			border:1px solid #d0d0d0;
+			@include background-image(linear-gradient(#fff, #ededed));
+			
+		}
+
+		li {
+
+			height: 40px;
+			line-height: 40px;
+			padding-left:36px;
+			border-left:1px solid #d0d0d0;
+			border-right:1px solid #d0d0d0;
+
+
+
+			&:nth-child(even) {
+				background:#f4f4f4;
+
+			}
+
+			&:hover {
+
+				background:#bbe4f1;
+			}
+
+			a {
+
+				text-decoration: none;
+				color:#000;
+
+				&:hover {
+
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+}
+
+@mixin label($width:100px) {
+	
+	.label {
+
+		
+		width: $width;
+		height: 50px;
+		background:$dark-blue;
+		color:#fff;
+		font-size: 16px;
+		padding-left:56px;
+		line-height: 50px;
+		position: relative;
+
+
+		&:before {
+
+			content: "";
+			position: absolute;
+			background:url(../img/freegal_sprite.png) -80px -40px;
+			width: 24px;
+			height: 24px;
+			left:20px;
+			top:12px;
+		}
+
+
+
+	}	
+
+}
+
+sup, sub {
+   vertical-align: baseline;
+   position: relative;
+   top: -0.4em;
+   font-size: 10px;
+}
+sub { top: 0.4em; }
+
+
+.browser-update {
+
+
+	background: url(../img/browser-update-v2.jpg);
+	width: 640px;
+	height: 460px;
+	margin: 10px auto;
+	border:1px solid #ddd;
+	position: relative;
+
+	&.closed {
+
+		display: none;
+	}
+
+	.bu-close {
+		position: absolute;
+		right: 12px;
+		top: 10px;
+		display: block;
+		width: 11px;
+		height: 13px;
+
+	}
+
+	.chrome {
+		position: absolute;
+		left: 40px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+	}
+
+	.ff {
+		position: absolute;
+		left: 180px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+
+	}
+
+	.ie {
+		position: absolute;
+		left: 324px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+
+	}
+
+	.safari {
+		position: absolute;
+		left: 468px;
+		top: 204px;
+		width: 136px;
+		height: 186px;
+
+	}
+
+
+}
+
+.wrapper {
+
+	position: relative;
+
+
+}
+
+
+
+.inner-wrapper,.content-wrapper {
+
+	width:1024px;
+	margin:0 auto;
+	position:relative;
+}
+
+
+.site-header {
+	position: relative;
+	height: 108px;
+	
+	.inner-wrapper {
+		
+		.plays-tooltip {
+
+			position: absolute;
+			right: 0;
+			top: 95px;
+			background: #fafafa;
+			color: #707070;
+			display: none;
+			font-size: 12px;
+			height: 85px;
+			width: 500px;
+			z-index: 102;
+			padding: 10px;
+
+			line-height: 16px;
+			@include box-shadow(0 0 4px #aaa);
+
+			&.active {
+
+				display: block;
+			}
+
+			&:after {
+				background: #fafafa;
+				-webkit-box-shadow: -2px -2px 3px #ccc;
+				-moz-box-shadow: -2px -2px 3px #ccc;
+				box-shadow: -2px -2px 3px #ccc;
+				content: "";
+				display: block;
+				height: 15px;
+				position: absolute;
+				right: 32px;
+				top: -8px;
+				-ms-transform: rotate(45deg);
+				-moz-transform: rotate(45deg);
+				-webkit-transform: rotate(45deg);
+				transform: rotate(45deg);
+				width: 15px;
+				z-index: 11;
+
+
+			}
+
+
+		}
+	}
+
+	.logo {
+		
+		
+		
+		width: 350px;
+		height: 72px;
+		position: absolute;
+		left: 0;
+		top:20px;
+
+		
+
+	}
+	
+	.header-right-col {
+		
+		position: absolute;
+		right: 0;
+		top:20px;
+		
+
+		
+		.row-1 {
+			
+			
+			margin-bottom: 16px;
+			
+			
+			.streaming-arrows-icon {
+				
+				float: right;
+				width: 19px;
+				height: 13px;
+				background: url(../img/freegal_sprite.png) no-repeat;
+				
+			}
+			
+			.streaming-time-remaining {
+				
+				float: right;
+				font-size: 12px;
+				border-right: 1px solid #dcdcdc;
+				padding-right: 10px;
+				margin-left: 10px;
+			}
+			
+			.forgot-password {
+				
+				float: right;
+				color:#cccccc;
+				font-size: 10px;
+				line-height: 12px;
+				margin-left: 10px;
+				
+				a {
+					
+					color:#66ccff;
+					text-decoration: none;
+				}
+			}
+		}
+		
+		.row-2 {
+			
+			
+			width: 670px;
+			
+			.download-count-container {
+				float: right;
+				
+
+				position: relative;
+				width: 60px;
+				height: 30px;
+				font-size: 13px;
+				&:before {
+
+					content: "";
+					width: 1px;
+					height: 16px;
+					left: 0;
+					top:8px;
+					position: absolute;
+					background:#dcdcdc;
+				}
+				.music-note-icon {
+					
+					width: 15px;
+					height: 19px;
+					background: url(../img/freegal_sprite.png) no-repeat -50px 0;
+					position: absolute;
+					left: 12px;
+					top:6px;
+					
+
+				}
+				
+				.download-count {
+					
+					position: absolute;
+					right: 0;
+					top:10px;
+				}
+				
+			}
+
+			
+
+			
+			.login {
+				
+				float: right;
+				@extend %header-button-style;
+				@include border-radius(20px);
+				padding:6px 10px;
+
+				margin: 4px 4px 4px 20px;
+				
+
+
+				
+			}
+			
+			.my-account-menu-container {
+				
+				float: right;
+				position: relative;
+				
+				
+
+				
+				height: 30px;
+				margin-left: 6px;
+				
+				width: 57px;
+
+				&.logged-in {
+					width: 137px;
+
+				}
+
+				
+				.login {
+					@include border-radius(0);
+					@include box-shadow(none);
+					padding: 0;
+					margin: 0;
+					color:#000;
+					color: rgba(0,0,0,.5);
+					float: left;
+					font-size: 14px;
+					height: 26px;
+					line-height: 26px;
+					margin-right: 10px;
+					margin-top: 1px;
+					text-align: center;
+					vertical-align: top;
+					border:0;
+					background: transparent;
+					float: right;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
+
+				
+				.my-account-menu {
+					
+					
+
+					width: 135px;
+					height: 30px;
+					@include border-radius(5px);
+					border: 1px solid transparent;
+					cursor: pointer;
+					background: none;
+					position: relative;
+					
+					&:before {
+						
+						position: absolute;
+						content: "";
+						width: 18px;
+						height: 18px;
+						background: url(../img/freegal_sprite.png) no-repeat -20px 0;
+						left: 8px;
+						top:6px;
+					}
+					
+					&:after {
+						position: absolute;
+						content: "";
+						width: 6px;
+						height: 4px;
+						background: url(../img/freegal_sprite.png) no-repeat -40px 0;
+						right: 16px;
+						top:14px;						
+						
+					}
+					
+
+					
+					&:hover {
+						
+						border: 1px solid #dedddd;
+					}
+				}
+				
+
+				
+				.account-menu-dropdown {
+					
+					position: absolute;
+					left: 0;
+					top:35px;
+					z-index: 100;
+					@include border-radius(5px);
+					border: 1px solid #dedddd;
+					width: 195px;
+					display: none;
+					
+
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					.dropdown-item {
+						
+						background: #fff;
+						
+						&:first-child {
+							@include border-top-left-radius(5px);
+							@include border-top-right-radius(5px);
+							
+							a {
+								
+								@include border-top-left-radius(5px);
+								@include border-top-right-radius(5px);	
+							}
+							
+						}
+						
+						&:last-child {
+							@include border-bottom-left-radius(5px);
+							@include border-bottom-right-radius(5px);
+							
+							a {
+								
+								@include border-bottom-left-radius(5px);
+								@include border-bottom-right-radius(5px);	
+							}
+							
+							
+						}
+						
+						a {
+							
+							display: block;
+							text-decoration: none;
+							color: #212121;
+							padding: 10px 5px 10px 35px;
+							
+							font-size: 12px;
+							
+							position: relative;
+							
+							&#notifications {
+
+								
+								&:before {
+									
+									position: absolute;
+									left: 10px;
+									top: 10px;
+									width: 13px;
+									height: 10px;
+									content: "";
+									background: url(../img/freegal_sprite.png) no-repeat -120px 0;
+								}
+								
+								
+
+								&:hover {
+									
+									background: #dcedf3;
+									&:before {
+										position: absolute;
+										left: 10px;
+										top: 10px;
+										width: 13px;
+										height: 10px;
+										content: "";
+										background: url(../img/freegal_sprite.png) no-repeat -135px 0;
+										
+									}
+									
+								}
+
+								
+							}
+							
+							&#change-password {
+								
+						
+							
+								&:before {
+									
+									position: absolute;
+									left: 10px;
+									top:8px;
+									width: 11px;
+									height: 13px;
+									content: "";
+									background: url(../img/freegal_sprite.png) no-repeat -150px 0;
+								}
+								
+								&:hover {
+									background: #dcedf3;
+									
+									&:before {
+										
+										position: absolute;
+										left: 10px;
+										top:8px;
+										width: 11px;
+										height: 13px;
+										content: "";
+										background: url(../img/freegal_sprite.png) no-repeat -165px 0;
+									}
+									
+									
+								}								
+								
+							}
+							
+							&#logout {
+								
+								
+								&:before {
+									
+									position: absolute;
+									left: 10px;
+									top:8px;
+									width: 10px;
+									height: 13px;
+									content: "";
+									background: url(../img/freegal_sprite.png) no-repeat -180px 0;
+								}
+								
+								&:hover {
+									background: #dcedf3;
+									&:before {
+										
+										position: absolute;
+										left: 10px;
+										top:8px;
+										width: 10px;
+										height: 13px;
+										content: "";
+										background: url(../img/freegal_sprite.png) no-repeat -190px 0;
+									}
+									
+									
+								}	
+								
+							}
+						}						
+					}
+
+				}
+				
+
+			}
+			
+			.browse {
+				
+				float: right;
+				@extend %header-button-style;
+				@include border-radius(20px);
+
+				padding:8px 10px;
+
+				margin: 0 0 0 20px;
+				width: 140px;
+				display: block;
+				text-decoration: none;
+				text-align: center;
+				
+				
+
+				
+			}
+			
+			.master-search-container {
+				float: right;
+				@include border-radius(20px);
+				@include box-shadow(0 0 0 1px #b6cbd1);
+				
+				position: relative;
+				width: 306px;
+				height: 27px;
+				@include background-image(linear-gradient(#eee, #fcfcfc 25%, #fafafa 90%));
+				
+
+				.select-arrow-fix {
+
+					display: inline-block;
+					width: 100px;
+					height: 27px;
+					overflow: hidden;
+					border-right: 1px solid #b1d3e0;
+
+				}
+
+				.master-search-select {
+
+					margin: 0;
+					border:0;
+					outline: 0;
+					padding: 6px 0 6px 16px;
+					color: #527988;
+					font-size: 12px;
+					cursor:pointer;
+					// -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#daecf2', EndColorStr='#d3e8f0')";
+					background: #daecf2;
+					@include border-top-left-radius(20px);
+					@include border-bottom-left-radius(20px);
+					@include border-top-right-radius(0);
+					@include border-bottom-right-radius(0);
+					@include background-image(linear-gradient(#daecf2, #d3e8f0));
+					// width: 100px;
+					width: 120px;
+					height: 27px;
+					border-right: 1px solid #b1d3e0;
+					@include appearance(none);
+					text-overflow: '';
+					text-indent: 0.01px;
+					
+					&:hover {
+		
+						@include background-image(linear-gradient(#e7f3f7, #d4e8f0));
+					}
+					
+				}
+
+				
+				&:before {
+					
+					position: absolute;
+					width: 6px;
+					height: 5px;
+					left: 86px;
+					top:11px;
+					background: url(../img/freegal_sprite.png) no-repeat -40px 0;
+					content: "";
+					
+
+					
+					
+					
+
+				}
+				
+				&:after {
+					
+					
+					background: url(../img/freegal_sprite.png) no-repeat -105px 0;
+					
+					width: 13px;
+					height: 13px;
+					position: absolute;
+					top: 8px;
+					content: "";
+					right:186px;
+				
+				
+
+				}
+
+				
+				.master-search-field-container {
+					
+					
+					position: relative;
+					display: inline-block;
+					width: 201px;
+					height: 27px;
+					vertical-align: top;
+					
+					
+
+					
+					.search-text {
+						
+						
+						width: 144px;
+						font-size: 12px;
+						background: none;
+						height: 27px;
+						position: absolute;
+						top:0;
+						left: 18px;
+						margin: 0;
+						padding:0;
+						border:0;
+						outline: 0;
+						@include appearance(none);
+						padding-left: 4px;
+						
+
+
+					}
+					
+					.go {
+						display: block;
+						@extend %header-button-style;
+						@include border-radius(20px);
+						padding: 8px 10px;
+						position: absolute;
+						right: -1px;
+						top:0;
+						height: 27px;
+						text-decoration: none;
+						color: #527988;
+						font-size: 12px;
+						font-family: Helvetica, Arial, sans-serif;
+						
+					}
+					
+
+					
+				}
+				
+
+				
+			}
+		}
+		
+
+	}
+
+
+}
+
+
+.top-nav {
+	background:#52c6ec;
+
+	ul {
+
+		float: right;
+	}
+
+	li {
+
+		display: block;
+		float: left;
+
+		a {
+
+			display: block;
+			text-transform: uppercase;
+			color: #fff;
+			text-decoration: none;
+			padding: 10px;
+			font-size: 12px;
+
+			&:hover {
+
+				background:#9cdbef;
+			}
+		}
+	}
+}
+
+.left-nav {
+	
+	
+	width: 156px;
+	position: absolute;
+	left: 0;
+	top:0;
+	padding-top: 26px;
+	border-right: 1px solid #e5e5e4;
+	padding-right: 10px;
+	background: #fff;
+	height: 100%;
+
+	&:before {
+
+		content: "";
+		position:absolute;
+		background:#fff;
+		height: 100%;
+		left:-2000px;
+		top:0;
+		width: 2000px;
+	}
+
+
+	
+	h2 {
+		
+		padding-left: 25px;
+		margin-bottom: 15px;
+		line-height: 20px;
+		font-size: 15px;
+	}
+			
+	> .streaming > ul,> .my-downloads > ul {
+	
+		margin-left: 25px;
+		
+		li {
+		
+			margin-bottom: 15px;
+			
+			a {
+				
+				text-decoration: none;
+				color: #9f9f9f;
+				font-size: 15px;
+				
+				
+			}
+		}
+	}
+
+	> .streaming > ul > li > ul > li > a,> .my-downloads > ul > li > ul > li > a {
+
+		color: #000;
+	}
+	
+
+
+	
+	.streaming {
+		
+		h2 {
+			
+			
+			position: relative;
+			
+			
+			&:before {
+				
+				content: "";
+				position: absolute;
+				left: 0;
+				top:3px;
+				background: url(../img/freegal_sprite.png) no-repeat 0 0;
+				width: 19px;
+				height: 13px;
+			}
+
+		}
+		
+		li {
+		
+			ul {
+				margin-left: 20px;
+				margin-top: 10px;
+				display: none;
+				
+				&.active {
+					
+					display: block;
+				}
+				
+				li {
+					
+					margin-bottom: 10px;
+				}
+				
+			}
+		}
+	}
+	
+	.my-downloads {
+		
+		h2 {
+			
+			position: relative;
+			&:before {
+				
+				position: absolute;
+				content: "";
+				left: 0;
+				top:0;
+				background: url(../img/freegal_sprite.png) no-repeat -70px 0;
+				width: 20px;
+				height: 17px;
+			}
+
+		}
+	}
+	
+	.announcements {
+		
+		h2 {
+			position: relative;
+
+			&:before {
+				
+				position: absolute;
+				content: "";
+				left: 0;
+				top:0;
+				background: url(../img/freegal_sprite.png) no-repeat -90px 0;
+				width: 14px;
+				height: 18px;
+			}			
+
+		}
+		
+		.announcement {
+			
+			background: #eeeeee;
+			font-size: 14px;
+			padding: 10px;
+			
+			p {
+				
+				padding-bottom: 10px;
+			}
+			.announcement_header {
+				
+				text-decoration: underline;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+
+.content {
+	padding-left:177px;
+	padding-top:20px;
+	
+	min-height:1300px;
+	
+	.breadcrumbs {
+
+		font-size: 12px;
+		color: rgba(0,0,0,.3);
+		margin-bottom: 18px;
+	}
+
+	> h3 {
+
+		font-size: 24px;
+		letter-spacing: 1px;
+		margin-bottom:20px;
+	}
+}
+
+
+.top-albums {
+
+	
+	@extend %homepage-header;
+
+	margin-top:20px;
+	.top-albums-carousel-container {
+		
+		position: relative;
+		margin-top: 20px;
+		
+		.left-scroll-button {
+			
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			left: 0;
+			top:0;
+			background: url(../img/freegal_sprite.png) -200px 0;
+			
+			&:hover {
+				background: url(../img/freegal_sprite.png) -230px 0;
+				
+			}
+			
+			&:active {
+				background: url(../img/freegal_sprite.png) -260px 0;
+				
+			}
+
+		}
+		
+		.right-scroll-button {
+			
+			width: 25px;
+			height: 162px;
+			position: absolute;
+			right: 0;
+			top:0;
+			
+			
+			background: url(../img/freegal_sprite.png) -300px 0;
+			
+			&:hover {
+				
+				background: url(../img/freegal_sprite.png) -330px 0;
+			}
+			
+			&:active {
+				
+				background: url(../img/freegal_sprite.png) -360px 0;
+			}
+		}
+		
+		.top-albums-carousel {
+			
+			margin-top: 10px;
+			margin-left: 28px;
+			margin-right: 28px;
+			height: 226px;
+			overflow:hidden;
+			position: relative;
+
+			
+			
+
+			
+			ul {
+				overflow-y: hidden;
+				height: 216px;
+				width: 4125px;
+				
+				li {
+					
+					float: left;
+					display: block;
+					margin-right: 3px;
+					margin-bottom: 10px;
+					width: 162px;
+					
+					.album-cover-container {
+						
+						width: 162px;
+						height: 162px;
+						
+						position: relative;
+						
+						@extend %toggleable;
+
+
+						.ranking {
+
+							position: absolute;
+							right: 6px;
+							top:6px;;
+							text-align: center;
+							width: 40px;
+							height: 20px;
+							@include opacity(.75);
+							color:#000;
+							font-size: 16px;
+							font-family: Helvetica, Arial, sans-serif;
+							font-weight: bold;
+							background:#fff;
+							font-style: italic;
+							line-height: 20px;
+						}
+
+						@extend %album-cover-menu-and-icons;
+
+
+						img {
+							
+							width: 162px;
+							height: 162px;
+							
+							
+						}
+					}
+				}
+			}
+			
+			
+				
+
+			
+		}
+		
+		
+	}
+
+	
+
+	
+	.album-info {
+		font-size: 13px;
+		
+		p {
+			
+			margin-top: 5px;
+			
+			&.title {
+				font-weight: bold;	
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				font-size: 13px;
+
+				a {
+
+					color:$blue-link;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
+			}
+			
+			&.artist {
+				
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				color:rgba(0,0,0,.5);
+				font-size: 12px;
+				
+
+				a {
+
+					color:rgba(0,0,0,.5);
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+
+					}
+				}						
+			}
+		}
+
+	}
+	
+
+}
+
+
+.top-songs {
+
+	
+	@extend %homepage-header;
+
+	
+	@extend %gray-container-style;
+
+	.top-songs-container {
+
+		margin-top: 20px;
+	}
+
+	.top-songs-filter-icon {
+
+		position: absolute;
+		left: 10px;
+		top:6px;
+		width: 21px;
+		height: 20px;
+		background:url(../img/freegal_sprite.png) -400px -55px;
+
+		&:hover {
+			background:url(../img/freegal_sprite.png) -421px -55px;
+
+		}
+
+		&:active {
+			background:url(../img/freegal_sprite.png) -442px -55px;
+
+		}
+	}
+
+
+	.header-container {
+
+		position: relative;
+		overflow: visible;
+		
+		div {
+
+			position: absolute;
+			font-weight:bold;
+			font-size: 12px;
+			top:12px;
+
+			
+		}
+
+
+		.top-songs-filter-menu {
+			
+			@extend %options-menu-style;
+			z-index: 1;
+			left:10px;
+			top:27px;
+			display: none;
+			a {
+
+				font-weight: normal;
+			}
+			&.active {
+
+				display: block;
+			}
+			
+		}
+
+		.artist-header {
+
+			
+			left:275px;
+			
+
+			
+		}
+
+
+
+		.album-header {
+
+			left:496px;
+			
+			
+		}
+
+		.song-header {
+
+			left:53px;
+			
+			
+		}
+
+		.time-header {
+
+			left:755px;
+			
+			
+		}		
+
+		.header-border {
+
+			width: 1px;
+			height: 35px;
+			background:#d2d2d2;
+			top:0;
+			position: absolute;
+
+			&.artist-border {
+
+				left:487px;
+
+			}
+
+			&.song-border {
+
+				left:260px;
+
+			}
+
+			&.album-border {
+
+				left:740px;
+
+			}
+
+
+		}
+
+		.multi-select-icon {
+
+			position: absolute;
+			right:8px;
+			top:9px;
+			width: 17px;
+			height: 17px;
+			background:url(../img/freegal_sprite.png) -10px -20px;
+			@include opacity(.5);
+
+			&.highlighted {
+				background:url(../img/freegal_sprite.png) -30px -20px;
+				@include opacity(1);
+				
+				&:hover {
+					background:url(../img/freegal_sprite.png) -50px -20px;
+
+				}
+
+				&:active {
+					background:url(../img/freegal_sprite.png) -70px -20px;
+
+				}
+
+			}
+
+
+		}
+
+		.options-menu {
+
+			
+			@extend %options-menu-style;
+			position: absolute;
+			z-index: 1;
+			right: 8px;
+			top:28px;
+			display: none;
+
+			&.active {
+
+				display: block;
+			}
+
+			.playlist-menu {
+
+				display: none;
+				height: 312px;
+				overflow-y: scroll;
+
+				&.active {
+
+					display: block;
+				}
+			}
+		}
+
+
+	}
+
+
+
+
+
+	.row {
+
+		position: relative;
+		height: 40px;
+		font-size: 12px;
+
+		font-family: Helvetica, Arial, sans-serif;
+		color:#707070;
+		overflow:visible;
+		border-left:1px solid #d0d0d0;
+		border-right:1px solid #d0d0d0;
+
+		a {
+
+			color:#707070;
+			text-decoration: none;
+
+			&:hover {
+
+				text-decoration: underline;
+			}
+		}
+
+
+		&:nth-child(even) {
+
+			background:#f4f4f4;
+		}
+		&:hover,&.highlighted {
+
+			background: #bbe4f1;
+
+			color:#000;
+
+			a {
+				color:#000;
+
+			}
+		}
+	}
+	
+	.play-btn {
+		position: absolute;
+		left:10px;
+		top:8px;
+		width: 24px;
+		height: 24px;
+		@include border-radius(20px);
+		border:1px solid #cacaca;
+		@include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
+
+		&:hover {
+
+			@include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
+		}
+
+		&:active {
+
+			@include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
+		}		
+
+		&:before {
+
+			content: "";
+			position: absolute;
+			left:9px;
+			top:7px;
+			width: 0;
+			height: 0;
+			border-left:6px solid #000;
+			border-top:4px solid transparent;
+			border-bottom:4px solid transparent;
+		}
+
+	}
+
+	.ranking {
+
+		position: absolute;
+		top:15px;
+		left: 51px;
+	}
+	.song-name {
+
+		position: absolute;
+		left: 74px;
+		top:15px;
+	}
+	.artist-name {
+
+		position: absolute;
+		left:274px;
+		top:15px;
+
+
+
+	}
+	.album-name {
+
+		position: absolute;
+		left:496px;
+		top:15px;
+	}
+
+	.time {
+
+		position: absolute;
+		left:756px;
+		top:15px;
+
+	}
+
+
+
+
+
+	.menu-btn {
+
+		position: absolute;
+		left: 792px;
+		top:11px;
+		width: 19px;
+		height: 19px;
+		border:1px solid #cacaca;
+		@include background-image(linear-gradient(#f9f9f9, #eaeaea));
+
+		&:before {
+
+			
+			content: "";
+			background:url(../img/freegal_sprite.png) 0 -20px;
+			position: absolute;
+			left:4px;
+			top:6px;
+			width: 10px;
+			height: 5px;
+
+		}
+
+
+
+
+
+		&:hover {
+
+			@include background-image(linear-gradient(#fff, #f6f6f6));
+		}
+
+		&:active {
+
+			@include background-image(linear-gradient(#eaeaea, #f3f3f3));
+		}
+	}
+
+	.row-checkbox {
+		-webkit-appearance: none;
+		margin: 0;
+		padding:0;
+		border:0;
+		position: absolute;
+		right: 13px;
+		top:17px;
+		width: 9px;
+		height: 9px;
+		outline:0;
+		background:url(../img/freegal_sprite.png) -90px -20px;
+		&:checked {
+
+			background:url(../img/freegal_sprite.png) -100px -20px;
+		}
+	}
+
+	.options-menu {
+
+		
+		@extend %options-menu-style;
+
+		position: absolute;
+		z-index: 1;
+		right: 33px;
+		top:31px;
+		display: none;
+
+		&.active {
+
+			display: block;
+		}
+
+		.playlist-menu {
+
+			display: none;
+			height: 312px;
+			overflow-y: scroll;
+
+			&.active {
+
+				display: block;
+			}
+		}
+	}
+
+
+
+
+
+	.pagination-container {
+
+		position: relative;
+
+		button {
+
+			position: absolute;
+			width: 18px;
+			height:18px;
+			top:8px;	
+			border:1px solid #d2d2d4;
+			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
+			font-weight: normal;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 11px;
+
+			&:hover {
+
+				@include background-image(linear-gradient(#fff,#f5f5f5));
+			}
+
+			&:active {
+
+				@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+			}
+			&.beginning {
+
+				right:221px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:6px;
+					top:5px;
+					border-left:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 7px;
+					top:5px;
+				}
+			}
+			&.prev {
+
+				right:195px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+
+			}
+			&.page-1 {
+
+				right:169px;
+			}
+			&.page-2 {
+
+				right:143px;
+			}
+			&.page-3 {
+
+				right:117px;
+			}
+
+			&.page-4 {
+
+				right:91px;
+			}
+
+			&.page-5 {
+
+				right: 65px;
+			}
+
+			&.next {
+
+				right:39px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+			&.last {
+
+				right: 13px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:10px;
+					top:5px;
+					border-right:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+		}
+	}	
+
+	
+
+	
+}
+
+
+
+
+
+
+.featured-artists {
+	margin-top:20px;
+	h2 {
+		
+		font-size: 24px;
+	}
+	
+	.featured-artists-grid {
+		
+		margin-top: 10px;
+
+
+	}
+	
+	.featured-grid-item {
+		
+		display: block;
+		float: left;
+		position: relative;
+		overflow: hidden;
+		margin-right: 3px;
+		margin-bottom: 3px;
+		@include box-shadow(0 0 4px rgba(0,0,0,.5));
+
+		&:nth-child(5n) {
+
+			margin-right: 0;
+		}
+		
+		img {
+			
+			width: 167px;
+			height: 167px;
+			
+
+
+		}
+		
+		.featured-grid-menu {
+			background: rgb(0,0,0);
+			background: rgba(0,0,0,.8);
+			
+			color: #fff;
+			position: absolute;
+			bottom:-53px;
+			
+			left: 0;
+			width: 100%;
+			height: 76px;
+
+			@include single-transition(bottom,500ms);
+			
+
+			&.active {
+				
+				bottom:0;
+				@include single-transition(bottom,500ms);
+			}
+			
+			.featured-artist-name {
+				
+				font-size: 14px;
+				font-weight: bold;
+				padding: 5px;
+				
+				
+				position: relative;
+				
+
+			}
+
+			.featured-album-name {
+
+				font-size: 12px;
+				font-style: italic;
+				position:relative;
+				padding-left:5px;
+				padding-right:5px;
+				padding-bottom:10px;
+				
+
+				&:before {
+					
+					content: "";
+					position: absolute;
+					width: 158px;
+					height: 3px;
+					left: 4px;
+					bottom:0;
+					background: url(../img/featured-menu-border-rpt.png) repeat;
+				}
+
+			}
+			
+			.featured-artist-ctas {
+				margin-top: 5px;
+				position: relative;
+				
+
+				button {
+					
+					background: #d3d1cf;
+					position: relative;
+					vertical-align: top;
+					
+					&:hover {
+						
+						@include background-image(linear-gradient(white, #f4f4f4));
+					}	
+					&:active {
+						
+						@include background-image(linear-gradient(#ccc, #f4f4f4));
+					}							
+					
+					&.stream-artist {
+						font-size: 11px;
+						font-weight: bold;
+						width:108px;
+						height: 20px;
+						margin-left: 4px;
+						font-family: Helvetica, Arial, sans-serif;
+						
+
+					}
+					
+
+				}
+
+				.more-by-artist {
+					width: 30px;
+					height: 20px;
+					margin-left: 20px;
+					display: block;
+					text-decoration: none;
+					text-indent: -9999px;
+					position: absolute;
+					right: 4px;
+					top: 0;
+					background: #d3d1cf;
+					&:before {
+						
+						background: url(../img/freegal_sprite.png) -180px -20px no-repeat;
+						content: "";
+						position: absolute;
+						left: 7px;
+						top:3px;
+						width: 16px;
+						height: 14px;
+					}
+					
+				}
+
+			}
+		}
+	}
+	
+
+}
+
+
+.genres-page {
+	position: relative;
+
+	> h3 {
+		font-size: 24px;
+		letter-spacing: 1px;
+		margin-bottom: 20px;
+	}
+
+	
+	
+	.genres-container { border: 1px solid #d3d3d3; }
+	
+	header {
+		height: 34px;
+		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
+		@include filter-gradient(#f9f9f9, #e9e9e9);
+		position:relative;
+		border-bottom:1px solid #d3d3d3;
+		color:#000;
+	}
+
+		 
+	.genres-header,.a-z-header,.artist-header {
+		
+		height:34px;
+		color: #000;
+		
+		
+		
+		font-size: 12px;
+		font-weight: bold;
+		padding-top:13px;
+		float: left;
+	}
+	 
+
+	.genres-header {
+
+	 	width:224px;
+	 	padding-left:24px;
+		border-right:1px solid #d3d3d3;
+	 	
+	}
+
+	 .a-z-header {
+
+	 	width: 85px;
+		border-right:1px solid #d3d3d3;
+	 	padding-left:29px;
+
+	}
+
+	.artist-header {
+
+	 	width: 536px;
+	 	padding-left:17px;
+	}
+
+	.genre-filter-container {
+
+		
+
+
+
+		div {
+
+			
+
+			li {
+				
+				
+
+				&:nth-child(odd) {
+
+					background:#f7f7f7;
+				}
+
+				&:nth-child(even) {
+
+					background:#f2f2f2;
+				}
+
+				&:hover {
+
+					background:#bde6f3;
+				}
+
+				a {
+
+					display: block;
+
+					font-size: 12px;
+					text-decoration: none;
+					color:#707070;
+					position:relative;
+
+					&.active {
+
+						font-weight: bold;
+						color: #000;
+						background:#bde6f3;
+
+						&:before {
+
+							background:url(../img/freegal_sprite.png) -100px -20px;
+							content: "";
+							position:absolute;
+							left:8px;
+							top:5px;
+							width: 9px;
+							height: 9px;
+						}
+					}
+
+					&:hover {
+
+						color:#000;
+					}
+
+
+				}
+			}
+		}
+	}
+
+	.genre-column {
+
+		float: left;
+		width: 224px;
+		height: 616px;
+		overflow-y: scroll;
+		border-right:1px solid #d3d3d3;
+
+
+		ul {
+
+			// @include transition();
+
+		}
+		li {
+
+
+			a {
+
+				padding:5px 5px 5px 24px;
+
+
+			}
+		}
+	}
+
+	.alpha-artist-list-column {
+
+		float: left;
+		height: 616px;
+		width: 85px;
+		border-right:1px solid #d3d3d3;
+		li {
+			
+			text-align:center;
+			a {
+				
+				padding:5px 5px 5px;
+
+			}
+
+		}
+	}
+
+	.artist-column {
+
+		float: left;
+		width: 536px;
+		height: 616px;
+		overflow-y: scroll;
+		ul {
+
+			@include transition();
+		}
+		li {
+			
+
+			a {
+				padding:5px 5px 5px 17px;
+
+			}
+
+		}
+	}
+
+
+	.genre-button-container {
+		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
+		@include filter-gradient(#f9f9f9, #e9e9e9);
+		height: 34px;
+		border-left:1px solid #d3d3d3;
+		border-right:1px solid #d3d3d3;
+		border-bottom:1px solid #d3d3d3;
+		position:relative;
+	}
+	.genre-scroll-up {
+
+		
+		width: 30px;
+		height: 20px;
+		position:absolute;
+		left:10px;
+		top:8px;
+		background: url(../img/freegal_sprite.png) -400px -115px;
+		&:hover {
+
+			background: url(../img/freegal_sprite.png) -435px -115px;
+		}
+		&:active {
+
+			background: url(../img/freegal_sprite.png) -470px -115px;
+		}
+	}
+
+	.genre-scroll-down {
+
+		
+		width: 30px;
+		height: 20px;
+		position:absolute;
+		left:50px;
+		top:8px;
+		background: url(../img/freegal_sprite.png) -400px -140px;
+		&:hover {
+
+			background: url(../img/freegal_sprite.png) -435px -140px;
+		}
+		&:active {
+
+			background: url(../img/freegal_sprite.png) -470px -140px;
+		}
+	}
+
+	.artist-scroll-up {
+
+		
+		width: 30px;
+		height: 20px;
+		position:absolute;
+		left:330px;
+		top:8px;
+
+		background: url(../img/freegal_sprite.png) -400px -115px;
+		&:hover {
+
+			background: url(../img/freegal_sprite.png) -435px -115px;
+		}
+		&:active {
+
+			background: url(../img/freegal_sprite.png) -470px -115px;
+		}
+	}
+
+	.artist-scroll-down {
+
+		
+		width: 30px;
+		height: 20px;
+		position:absolute;
+		left:370px;
+		top:8px;
+		background: url(../img/freegal_sprite.png) -400px -140px;
+		&:hover {
+
+			background: url(../img/freegal_sprite.png) -435px -140px;
+		}
+		&:active {
+
+			background: url(../img/freegal_sprite.png) -470px -140px;
+		}
+	}
+
+
+}
+
+
+
+.search-container {
+
+	@include border-radius(20px);
+	position:relative;
+	height: 32px;
+	border: 1px solid #c9c9c9;
+	background:#fff;
+	color: #000;
+	float: right;
+	&:after {
+
+		content: "";
+		position:absolute;
+		left: 20px;
+		top:11px;
+		background:url(../img/freegal_sprite.png) -110px -20px;
+		width: 12px;
+		height: 11px;
+	}
+	
+	#search-page-search-text {
+
+		
+		@extend %form-reset;
+		height: 30px;
+		margin-left: 50px;
+		width: 237px;
+		
+		font-weight: bold;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 14px;
+
+	}
+
+	#search-page-go {
+		
+		@extend %form-reset;
+		cursor:pointer;
+		height: 30px;
+		width: 55px;
+		color:#fff;
+		@include background-image(linear-gradient(#63c9eb, #58bee0));
+		@include border-radius(20px);
+		position:absolute;
+		right: -1px;
+		top:0;
+		// border-left:1px solid #c9c9c9;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 12px;
+
+		&:hover {
+			@include background-image(linear-gradient(#7ed6f4, #62c4e4));
+
+		}
+
+		&:active {
+			@include background-image(linear-gradient(#46b2d5, #62c4e4));
+
+		}
+	}
+
+
+
+
+}
+
+.search-results-heading {
+
+	font-size: 22px;
+	font-weight: bold;
+	font-family: Helvetica, Arial, sans-serif;
+	margin-top: 34px;
+}
+
+.search-results-text {
+
+	font-size:13px;
+	margin-top:12px;
+	span {
+
+		font-weight: bold;
+	}
+}
+
+.category-results {
+	margin-top: 40px;
+
+	header {
+
+		position: relative;
+		height: 25px;
+		
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+			margin-left: 36px;
+			position: relative;
+			padding-top:5px;
+
+			&.albums-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) 0 -70px;
+			}
+			&.artists-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -30px -70px;
+			}
+
+			&.composers-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -60px -70px;
+			}
+
+			&.videos-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -90px -70px;
+			}
+
+			&.genres-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -120px -70px;
+			}
+
+			&.songs-header:before {
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -150px -70px;
+
+			}
+
+		}
+
+
+	}
+	
+
+	@extend %search-results-list;
+
+	.songs-results-list {
+		margin-top: 20px;
+
+
+
+		
+		@extend %gray-container-style;
+
+
+	}
+
+
+
+	.header-container {
+
+		position: relative;
+		overflow: visible;
+		
+		div {
+
+			position: absolute;
+			font-weight:bold;
+			font-size: 12px;
+			top:13px;
+
+			
+		}
+
+		.artist-col {
+
+			
+			left:17px;
+			
+
+			
+		}
+
+		.composer-col {
+
+			
+			left: 245px;
+			
+			
+
+		}
+
+		.album-col {
+
+			left:445px;
+			
+			
+		}
+
+		.song-col {
+
+			left:645px;
+			
+			
+		}
+
+		.header-border {
+
+			width: 1px;
+			height: 35px;
+			background:#d2d2d2;
+			top:0;
+			position: absolute;
+
+			&.artist-border {
+
+				left:230px;
+
+			}
+
+			&.composer-border {
+
+				left:430px;
+
+			}
+
+			&.album-border {
+
+				left:630px;
+
+			}
+		}
+
+		.multi-select-icon {
+
+			position: absolute;
+			right:8px;
+			top:9px;
+			width: 17px;
+			height: 17px;
+			background:url(../img/freegal_sprite.png) -10px -20px;
+			@include opacity(.5);
+
+			&:hover {
+
+				@include opacity(1);
+			}
+
+			&.highlighted {
+				background:url(../img/freegal_sprite.png) -30px -20px;
+				@include opacity(1);
+				
+				&:hover {
+					background:url(../img/freegal_sprite.png) -50px -20px;
+
+
+				}
+
+				&:active {
+					background:url(../img/freegal_sprite.png) -70px -20px;
+
+				}
+
+			}
+
+
+		}
+
+		.options-menu {
+
+			
+			@extend %options-menu-style;
+			position: absolute;
+			z-index: 1;
+			right: 8px;
+			top:28px;
+			display: none;
+
+			&.active {
+
+				display: block;
+			}
+
+			.playlist-menu {
+
+				display: none;
+				height: 312px;
+				overflow-y: scroll;
+
+				&.active {
+
+					display: block;
+				}
+			}
+		}
+
+
+	}
+
+	.row {
+
+		position: relative;
+		height: 40px;
+		font-size: 12px;
+
+		font-family: Helvetica, Arial, sans-serif;
+		color:#707070;
+		overflow:visible;
+		border-left:1px solid #d0d0d0;
+		border-right:1px solid #d0d0d0;
+
+		a {
+
+			color:#707070;
+			text-decoration: none;
+
+			&:hover {
+
+				color:#000;
+				text-decoration: underline;
+			}
+		}
+
+
+		&:nth-child(even) {
+
+			background:#f4f4f4;
+		}
+		&:hover,&.highlighted {
+
+			background: #bbe4f1;
+
+			color:#000;
+
+			a {
+
+				color: #000;
+			}
+		}
+	}
+	.play-btn {
+		position: absolute;
+		left:9px;
+		top:8px;
+		width: 24px;
+		height: 24px;
+		@include border-radius(20px);
+		border:1px solid #cacaca;
+		@include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
+
+		&:hover {
+
+			@include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
+		}
+
+		&:active {
+
+			@include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
+		}		
+
+		&:before {
+
+			content: "";
+			position: absolute;
+			left:9px;
+			top:7px;
+			width: 0;
+			height: 0;
+			border-left:6px solid #000;
+			border-top:4px solid transparent;
+			border-bottom:4px solid transparent;
+		}
+
+	}
+
+	.artist-name {
+
+		position: absolute;
+		left:42px;
+		top:15px;
+
+
+
+	}
+
+	.composer-name {
+
+		position: absolute;
+		left:246px;
+		top:15px;
+
+	}
+
+	.album-name {
+
+		position: absolute;
+		left:446px;
+		top:15px;
+	}
+
+	.song-name {
+
+		position: absolute;
+		left: 646px;
+		top:15px;
+	}
+
+	.menu-btn {
+
+		position: absolute;
+		left: 795px;
+		top:11px;
+		width: 19px;
+		height: 19px;
+		border:1px solid #cacaca;
+		@include background-image(linear-gradient(#f9f9f9, #eaeaea));
+
+		&:before {
+
+			
+			content: "";
+			background:url(../img/freegal_sprite.png) 0 -20px;
+			position: absolute;
+			left:4px;
+			top:6px;
+			width: 10px;
+			height: 5px;
+
+		}
+
+
+
+
+
+		&:hover {
+
+			@include background-image(linear-gradient(#fff, #f6f6f6));
+		}
+
+		&:active {
+
+			@include background-image(linear-gradient(#eaeaea, #f3f3f3));
+		}
+	}
+
+	.row-checkbox {
+		-webkit-appearance: none;
+		margin: 0;
+		padding:0;
+		border:0;
+		position: absolute;
+		right: 13px;
+		top:17px;
+		width: 9px;
+		height: 9px;
+		outline:0;
+		background:url(../img/freegal_sprite.png) -90px -20px;
+		&:checked {
+
+			background:url(../img/freegal_sprite.png) -100px -20px;
+		}
+	}
+
+	.options-menu {
+
+		
+		@extend %options-menu-style;
+		position: absolute;
+		z-index: 1;
+		right: 33px;
+		top:31px;
+		display: none;
+
+		&.active {
+
+			display: block;
+		}
+
+		.playlist-menu {
+
+			display: none;
+			height: 312px;
+			overflow-y: scroll;
+
+			&.active {
+
+				display: block;
+			}
+		}
+	}
+
+	.pagination-container {
+
+		position: relative;
+
+		button {
+
+			position: absolute;
+			width: 18px;
+			height:18px;
+			top:8px;	
+			border:1px solid #d2d2d4;
+			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
+			font-weight: normal;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 11px;
+
+			&:hover {
+
+				@include background-image(linear-gradient(#fff,#f5f5f5));
+			}
+
+			&:active {
+
+				@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+			}
+			&.beginning {
+
+				right:221px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:6px;
+					top:5px;
+					border-left:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 7px;
+					top:5px;
+				}
+			}
+			&.prev {
+
+				right:195px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+
+			}
+			&.page-1 {
+
+				right:169px;
+			}
+			&.page-2 {
+
+				right:143px;
+			}
+			&.page-3 {
+
+				right:117px;
+			}
+
+			&.page-4 {
+
+				right:91px;
+			}
+
+			&.page-5 {
+
+				right: 65px;
+			}
+
+			&.next {
+
+				right:39px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+			&.last {
+
+				right: 13px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:10px;
+					top:5px;
+					border-right:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+		}
+	}
+
+}
+
+.search-results-albums-page {
+
+	position: relative;
+
+	
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+			margin-left: 36px;
+			position: relative;
+			padding-top:5px;
+
+			&.albums-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) 0 -70px;
+			}
+		}
+
+
+	}	
+
+	.album-detail-container {
+
+		position: relative;
+		margin-top: 25px;
+		width: 847px;
+		height: 180px;
+		.cover-image {
+
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 180px;
+			height: 180px;
+
+			img {
+
+				width: 180px;
+				height: 180px;
+			}
+
+		}
+
+		.album-info {
+
+			position: absolute;
+			left: 191px;
+			top: 0;
+			width: 656px;
+			height: 180px;
+			border: 1px solid #dcdcdc;
+			padding: 10px;
+			font-family: Helvetica, Arial, sans-serif;
+			strong {
+
+				font-weight: bold;
+			}
+
+			.album-title {
+
+				
+				font-size: 18px;
+				
+
+			}
+
+			.artist {
+				font-size: 14px;
+				margin-top: 2px;
+
+			}
+
+			.release-information {
+				margin-top: 44px;
+				margin-bottom: 8px;
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.genre {
+				margin-bottom: 8px;
+				font-size: 12px;
+
+
+
+			}
+
+			.label {
+				margin-bottom: 8px;
+				font-size: 12px;
+			}
+
+			.distributor {
+				
+				font-size: 12px;
+
+			}
+
+			.menu-btn {
+
+				position: absolute;
+				right: -1px;
+				top: -1px;
+				background: url(../img/freegal_sprite.png) -105px -40px;
+				width: 25px;
+				height: 25px;
+
+				&:hover {
+					background: url(../img/freegal_sprite.png) -130px -40px;
+
+				}
+				&:active {
+					background: url(../img/freegal_sprite.png) -155px -40px;
+
+				}
+			}
+
+			.stream-now-btn {
+				position: absolute;
+				right: 23px;
+				top: -1px;
+				font-size: 12px;
+				font-weight: bold;
+				width: 87px;
+				height: 25px;
+				border: 1px solid #ccc;
+				font-family: Helvetica, Arial, sans-serif;
+				@include background-image(linear-gradient(#fff,#eaeaea));
+
+				&:hover {
+					@include background-image(linear-gradient(#fff,#f5f5f5));
+
+				}
+
+				&:active {
+					@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+
+				}
+
+			}
+			.options-menu {
+				@extend %options-menu-style;
+
+
+			
+				position: absolute;
+				z-index: 1;
+				right: -1px;
+				top:26px;
+				display: none;
+
+				&.active {
+
+					display: block;
+				}
+
+
+
+		
+			}
+
+			.playlist-menu {
+
+				display: none;
+				height: 312px;
+				overflow-y: scroll;
+
+				&.active {
+
+					display: block;
+				}
+			}
+
+
+		}
+	}
+
+
+}
+
+.search-results-artists-page {
+	position: relative;
+
+	
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+			margin-left: 36px;
+			position: relative;
+			padding-top:5px;
+
+			&.artists-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -30px -70px;
+			}
+		}
+
+
+	}
+
+
+	@extend %search-results-list;
+
+
+}
+
+
+.search-results-composers-page {
+	position: relative;
+
+	
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+			margin-left: 36px;
+			position: relative;
+			padding-top:5px;
+
+			&.composers-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -60px -70px;
+			}
+		}
+
+
+	}
+
+
+
+	@extend %search-results-list;
+
+
+}
+
+
+.search-results-videos-page {
+	position: relative;
+
+	
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+			margin-left: 36px;
+			position: relative;
+			padding-top:5px;
+
+			&.videos-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -90px -70px;
+			}
+		}
+
+
+	}
+
+	.video-result-container {
+
+		position: relative;
+		margin-top: 25px;
+		width: 847px;
+		height: 180px;
+		.video-thumb {
+
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 276px;
+			height: 159px;
+
+			img {
+
+				width: 276px;
+				height: 159px;
+			}
+
+		}
+
+		.video-info {
+
+			position: absolute;
+			left: 286px;
+			top: 0;
+			width: 561px;
+			height: 159px;
+			border: 1px solid #dcdcdc;
+			padding: 6px;
+			font-family: Helvetica, Arial, sans-serif;
+			strong {
+
+				font-weight: bold;
+			}
+
+			.video-title {
+
+				
+				font-size: 18px;
+				
+
+			}
+
+			.artist {
+				font-size: 14px;
+				margin-top: 2px;
+
+			}
+
+			.release-information {
+				margin-top: 34px;
+				margin-bottom: 8px;
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.release-date {
+				margin-bottom: 8px;
+				font-size: 12px;
+
+
+
+			}
+
+			.release-duration {
+				margin-bottom: 8px;
+				font-size: 12px;
+			}
+
+			.video-size {
+				
+				font-size: 12px;
+
+			}
+
+			.wishlist-btn {
+				position: absolute;
+				right:-1px;
+				top:-1px;
+				width: 34px;
+				height: 25px;
+				background: url(../img/freegal_sprite.png) 0 -150px;
+
+				&:hover {
+					background: url(../img/freegal_sprite.png) -35px -150px;	
+				}
+
+				&:active {
+					background: url(../img/freegal_sprite.png) -70px -150px;	
+				}
+
+				&.added-to-wishlist {
+
+					background: url(../img/freegal_sprite.png) 0 -175px;
+
+					&:hover {
+						background: url(../img/freegal_sprite.png) -35px -175px;	
+					}
+
+					&:active {
+						background: url(../img/freegal_sprite.png) -70px -175px;	
+					}
+
+				}
+
+			}
+
+			.download-btn {
+
+				position: absolute;
+				right: 32px;
+				top: -1px;
+				width: 34px;
+				height: 25px;
+
+				background: url(../img/freegal_sprite.png) 0 -125px;
+
+				&:hover {
+					background: url(../img/freegal_sprite.png) -35px -125px;	
+				}
+
+				&:active {
+					background: url(../img/freegal_sprite.png) -70px -125px;	
+				}
+
+			}
+
+
+		}
+	}	
+
+
+
+
+
+}
+
+
+
+.search-results-genres-page {
+	position: relative;
+
+	
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+			margin-left: 36px;
+			position: relative;
+			padding-top:5px;
+
+			&.genres-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -120px -70px;
+			}
+		}
+
+
+	}
+
+
+
+	@extend %search-results-list;
+
+
+}
+
+.search-results-songs-page {
+	position: relative;
+
+
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+			margin-left: 36px;
+			position: relative;
+			padding-top:5px;
+
+			&.songs-header:before {
+
+				content: "";
+				left: -36px;
+				top:0;
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background:url(../img/freegal_sprite.png) -150px -70px;
+			}
+		}
+
+
+	}
+
+	@extend %gray-container-style;
+
+	.top-songs-container {
+
+		margin-top: 20px;
+	}
+
+	.top-songs-filter-icon {
+
+		position: absolute;
+		left: 10px;
+		top:8px;
+		width: 21px;
+		height: 20px;
+		background:url(../img/freegal_sprite.png) -400px -55px;
+
+		&:hover {
+			background:url(../img/freegal_sprite.png) -421px -55px;
+
+		}
+
+		&:active {
+			background:url(../img/freegal_sprite.png) -442px -55px;
+
+		}
+	}
+
+	.header-container {
+
+		position: relative;
+		overflow: visible;
+		margin-top: 20px;
+		
+		div {
+
+			position: absolute;
+			font-weight:bold;
+			font-size: 12px;
+			top:12px;
+
+			
+		}
+		
+
+		.top-songs-filter-menu {
+			
+			@extend %options-menu-style;
+			z-index: 1;
+			left:10px;
+			top:27px;
+			display: none;
+			a {
+
+				font-weight: normal;
+			}
+			&.active {
+
+				display: block;
+			}
+			
+		}
+
+		.artist-header {
+
+			
+			left:275px;
+			
+
+			
+		}
+
+
+
+		.album-header {
+
+			left:496px;
+			
+			
+		}
+
+		.song-header {
+
+			left:42px;
+			
+			
+		}
+
+		.time-header {
+
+			left:755px;
+			
+			
+		}		
+
+		.header-border {
+
+			width: 1px;
+			height: 35px;
+			background:#d2d2d2;
+			top:0;
+			position: absolute;
+
+			&.artist-border {
+
+				left:487px;
+
+			}
+
+			&.song-border {
+
+				left:260px;
+
+			}
+
+			&.album-border {
+
+				left:740px;
+
+			}
+
+
+		}
+
+		.multi-select-icon {
+
+			position: absolute;
+			right:8px;
+			top:9px;
+			width: 17px;
+			height: 17px;
+			background:url(../img/freegal_sprite.png) -10px -20px;
+			@include opacity(.5);
+
+			&.highlighted {
+				background:url(../img/freegal_sprite.png) -30px -20px;
+				@include opacity(1);
+				
+				&:hover {
+					background:url(../img/freegal_sprite.png) -50px -20px;
+
+				}
+
+				&:active {
+					background:url(../img/freegal_sprite.png) -70px -20px;
+
+				}
+
+			}
+
+
+		}
+
+		.options-menu {
+
+			
+			@extend %options-menu-style;
+			position: absolute;
+			z-index: 1;
+			right: 8px;
+			top:28px;
+			display: none;
+
+			&.active {
+
+				display: block;
+			}
+
+			.playlist-menu {
+
+				display: none;
+				height: 312px;
+				overflow-y: scroll;
+
+				&.active {
+
+					display: block;
+				}
+			}
+		}
+
+
+	}
+
+	.row {
+
+		position: relative;
+		height: 40px;
+		font-size: 12px;
+
+		font-family: Helvetica, Arial, sans-serif;
+		color:#707070;
+		overflow:visible;
+		border-left:1px solid #d0d0d0;
+		border-right:1px solid #d0d0d0;
+
+		a {
+
+			color:#707070;
+			text-decoration: none;
+
+			&:hover {
+
+				text-decoration: underline;
+			}
+		}
+
+
+		&:nth-child(even) {
+
+			background:#f4f4f4;
+		}
+		&:hover,&.highlighted {
+
+			background: #bbe4f1;
+
+			color:#000;
+
+			a {
+				color:#000;
+
+			}
+		}
+	}
+
+
+
+
+	.play-btn {
+		position: absolute;
+		left:9px;
+		top:8px;
+		width: 24px;
+		height: 24px;
+		@include border-radius(20px);
+		border:1px solid #cacaca;
+		@include background-image(radial-gradient(45px 45px, #f7f7f7 10px, #fafafa 30px));
+
+		&:hover {
+
+			@include background-image(radial-gradient(45px 45px, #fdfdfd 10px, #fff 30px));
+		}
+
+		&:active {
+
+			@include background-image(radial-gradient(45px 45px, #ececec 10px, #eaeaea 30px));
+		}		
+
+		&:before {
+
+			content: "";
+			position: absolute;
+			left:9px;
+			top:7px;
+			width: 0;
+			height: 0;
+			border-left:6px solid #000;
+			border-top:4px solid transparent;
+			border-bottom:4px solid transparent;
+		}
+
+	}
+
+	.artist-name {
+
+		position: absolute;
+		left:275px;
+		top:15px;
+
+
+
+	}
+
+
+	.album-name {
+
+		position: absolute;
+		left:496px;
+		top:15px;
+	}
+
+	.song-name {
+
+		position: absolute;
+		left: 41px;
+		top:15px;
+	}
+
+	.time {
+
+		position: absolute;
+		left: 756px;
+		top: 15px;
+	}
+
+	.menu-btn {
+
+		position: absolute;
+		left: 795px;
+		top:11px;
+		width: 19px;
+		height: 19px;
+		border:1px solid #cacaca;
+		@include background-image(linear-gradient(#f9f9f9, #eaeaea));
+
+		&:before {
+
+			
+			content: "";
+			background:url(../img/freegal_sprite.png) 0 -20px;
+			position: absolute;
+			left:4px;
+			top:6px;
+			width: 10px;
+			height: 5px;
+
+		}
+
+
+
+
+
+		&:hover {
+
+			@include background-image(linear-gradient(#fff, #f6f6f6));
+		}
+
+		&:active {
+
+			@include background-image(linear-gradient(#eaeaea, #f3f3f3));
+		}
+	}
+
+	.row-checkbox {
+		-webkit-appearance: none;
+		margin: 0;
+		padding:0;
+		border:0;
+		position: absolute;
+		right: 13px;
+		top:17px;
+		width: 9px;
+		height: 9px;
+		outline:0;
+		background:url(../img/freegal_sprite.png) -90px -20px;
+		&:checked {
+
+			background:url(../img/freegal_sprite.png) -100px -20px;
+		}
+	}
+
+	.options-menu {
+
+		
+		@extend %options-menu-style;
+		position: absolute;
+		z-index: 1;
+		right: 33px;
+		top:31px;
+		display: none;
+
+		&.active {
+
+			display: block;
+		}
+
+		.playlist-menu {
+
+			display: none;
+			height: 312px;
+			overflow-y: scroll;
+
+			&.active {
+
+				display: block;
+			}
+		}
+	}
+
+
+
+	.pagination-container {
+
+		position: relative;
+
+		button {
+
+			position: absolute;
+			width: 18px;
+			height:18px;
+			top:8px;	
+			border:1px solid #d2d2d4;
+			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
+			font-weight: normal;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 11px;
+
+			&:hover {
+
+				@include background-image(linear-gradient(#fff,#f5f5f5));
+			}
+
+			&:active {
+
+				@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+			}
+			&.beginning {
+
+				right:221px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:6px;
+					top:5px;
+					border-left:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 7px;
+					top:5px;
+				}
+			}
+			&.prev {
+
+				right:195px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+
+			}
+			&.page-1 {
+
+				right:169px;
+			}
+			&.page-2 {
+
+				right:143px;
+			}
+			&.page-3 {
+
+				right:117px;
+			}
+
+			&.page-4 {
+
+				right:91px;
+			}
+
+			&.page-5 {
+
+				right: 65px;
+			}
+
+			&.next {
+
+				right:39px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+			&.last {
+
+				right: 13px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:10px;
+					top:5px;
+					border-right:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+		}
+	}
+
+
+
+}
+
+
+
+.filter-container {
+	margin-top:20px;
+	button {
+
+		float: left;
+		border:1px solid #bbbbbb;
+		@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
+		font-size: 12px;
+		font-family: Helvetica, Arial, sans-serif;
+		font-weight: bold;
+		padding-left:10px;
+		padding-right:10px;
+		height: 32px;
+		margin-right: 12px;
+		display: block;
+
+		&.last {
+
+			margin-right: 0;
+		}
+		
+
+		&:hover {
+
+			@include background-image(linear-gradient(#ffffff, #f4f4f4));
+		}
+
+		&:active {
+
+			@include background-image(linear-gradient(#eaeaea, #f4f4f4));
+		}
+
+		&.active {
+
+			color: #fff;
+			
+			@include background-image(linear-gradient(#37a1c3, #4ebfe3 25%));
+			border:1px solid #008fbd;
+			
+			
+			@include single-text-shadow(0, 0, 10px, $color:#2096bc);
+			
+		}
+	}
+}
+
+.search-results-all-page {
+
+	position: relative;
+
+
+}
+.search-results-all-albums-carousel	{
+
+	position: relative;
+	height:222px;
+	margin-top:15px;
+	overflow:hidden;
+
+	> button {
+
+		position: absolute;
+		top:0;
+		height: 162px;
+		width: 25px;
+		&.sr-albums-prev {
+
+			left:0;
+			background:url(../img/freegal_sprite.png) -200px 0;
+
+			&:hover {
+				background:url(../img/freegal_sprite.png) -230px 0;
+
+			}
+
+			&:active {
+				background:url(../img/freegal_sprite.png) -260px 0;
+
+			}
+
+		}
+
+		&.sr-albums-next {
+
+			right:0;
+			background:url(../img/freegal_sprite.png) -300px 0;
+
+			&:hover {
+				background:url(../img/freegal_sprite.png) -330px 0;
+
+			}
+
+			&:active {
+				background:url(../img/freegal_sprite.png) -360px 0;
+
+			}
+
+		}
+
+	}
+
+	.search-results-albums {
+		overflow: hidden;
+		margin-left: 28px;
+		margin-right: 28px;
+
+		.album-cover-container {
+
+			position: relative;
+			width: 162px;
+			height: 162px;
+
+			@extend %toggleable;
+			@extend %album-cover-menu-and-icons;
+
+
+
+		}
+
+		.album-info {
+
+			margin-top: 5px;
+		}
+		ul {
+
+			width: 1650px;
+		}
+
+		li {
+
+			float: left;
+			margin-right: 3px;
+
+			img {
+
+				width: 162px;
+				height: 162px;
+				
+			}
+		}
+		p {
+
+			margin-bottom: 2px;
+		}
+		.title {
+
+			font-size: 13px;
+			font-weight: bold;
+			font-family: Helvetica, Arial, sans-serif;
+			color: #000;
+
+			a {
+
+				color:$blue-link;
+				text-decoration: none;
+
+				&:hover {
+
+					text-decoration: underline;
+				}
+			}
+		}
+
+		.artist {
+
+			font-size: 12px;
+			color:#7d7c7c;
+		}
+
+		.label {
+
+			font-size: 12px;
+			color:#7d7c7c;
+		}
+	}
+}
+
+@-moz-document url-prefix() {
+	
+	#country {
+		
+		padding-top: 9px;
+	}
+}
+
+.library-chooser-page {
+
+	position: relative;
+
+	
+
+
+
+	@include label(191px);
+
+	header {
+
+		@extend %gray-bar;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 36px;
+		text-align: center;
+		margin-top: 16px;
+
+	}
+
+	.location-form-container {
+		position: relative;
+		background: #fdfdfd;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		border-left: 1px solid #e0e0e0;
+		border-right: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+		@include border-radius(2px);
+
+		input,select {
+
+			@extend %form-reset;
+			display: block;
+			width: 465px;
+			height: 35px;
+			border:1px solid #b9bcbe;
+			@include border-radius(2px);
+			margin: 20px auto;
+			
+			@include box-shadow(0 0 0 4px #f2f5f7);
+			color:#aeaeae;
+			font-size: 12px;
+			font-family: Helvetica, Arial, sans-serif;
+			padding-left:10px;
+
+			&:focus {
+				border:1px solid #52c6ec;
+				@include box-shadow(0 0 0 4px #d9ebf2);
+			}
+			
+		}
+		
+		select {
+			@include appearance(none);
+			text-indent: .01px;
+			text-overflow: "";
+			color:#000;
+			@include background-image(linear-gradient(#f9f9f9, #e9e9e9));
+			position: relative;
+			
+			&:hover {
+
+				@include background-image(linear-gradient(#ffffff, #f4f4f4));
+			}
+			
+
+
+		}
+
+		input[type="submit"] {
+			cursor:pointer;
+			width: 178px;
+			height: 30px;
+			@include border-radius(20px);
+			@include background-image(linear-gradient(#e3f0f5, #d3e8f0));
+			border:1px solid #afd6e3;
+			@include box-shadow(0 0 0 4px #e8eef1);
+			color: #537987;
+
+			&:hover {
+				@include background-image(linear-gradient(#ecf5f8, #d4e8f0));
+
+			}
+
+			&:active {
+				@include background-image(linear-gradient(#daecf2, #d5e9f1));
+
+			}		
+
+		}
+
+		.select-wrapper {
+
+			width: 465px;
+			height: 35px;
+			position:relative;
+			margin: 0 auto;
+			cursor: pointer;
+
+			&:before {
+				position: absolute;
+				content: "";
+				right: 10px;
+				top: 17px;
+				width: 0;
+				height: 0;
+				border-top: 3px solid #000;
+				border-left: 3px solid transparent;
+				border-right: 3px solid transparent;
+				z-index: 1;
+			}
+
+
+
+		}
+
+
+
+
+
+
+	}
+
+	.library-chooser-container {
+		background: #fdfdfd;
+		padding-top: 20px;
+		padding-bottom: 60px;
+		border-left: 1px solid #e0e0e0;
+		border-right: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+		@include border-radius(2px);
+
+		ul {
+			
+			width:465px;
+			border:1px solid #b9bcbe;
+			@include border-radius(2px);
+			margin: 20px auto 0 auto;
+			@include box-shadow(0 0 0 4px #f2f5f7);
+
+			li {
+
+				a {
+
+					display: block;
+					font-size: 12px;	
+					padding:12px;
+					color: #010101;
+					text-decoration: none;
+				
+
+
+				}
+
+				&:nth-child(odd) a {
+
+					background:#f9f9f9;
+				}
+				&:nth-child(even) a {
+
+					background:#f4f4f4;
+				}
+
+				a:hover {
+
+
+
+					background:#bde6f3;
+					
+				}
+
+			}
+		}
+
+	}
+}
+
+.login-page {
+
+	position: relative;
+
+	
+	@include label(466px);
+
+	header {
+
+		@extend %gray-bar;
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 36px;
+		padding-left:10px;
+		margin-top: 16px;
+
+		&:nth-of-type(2) {
+
+			text-align: center;
+		}
+
+	}
+
+	.instructions-container {
+		background: #fdfdfd;
+		padding-bottom: 20px;
+		border-left: 1px solid #e0e0e0;
+		border-right: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+		ul { padding: 20px; }
+		li {
+
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 13px;
+			line-height: 24px;
+			color: #333333;
+			list-style: disc;
+			margin-left: 10px;
+			margin-bottom: 4px;
+		}
+
+		p {
+
+			padding-left: 20px;
+			padding-right: 20px;
+			font-size: 13px;
+			margin-bottom: 15px;
+			span {
+
+				font-weight: bold;
+			}
+		}
+	}
+
+	.login-error {
+
+		background: #eb212e;
+		@include border-radius(2px);
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 12px;
+		line-height: 28px;
+		height: 28px;
+		color: #fff;
+		margin-top: 10px;
+		padding-left: 55px;
+		position: relative;
+		display: block;
+
+		&:before {
+
+			content: "";
+			position: absolute;
+			left: 20px;
+			top: 4px;
+			background: url(../img/freegal_sprite.png) -165px -20px;
+			width: 14px;
+			height: 18px;
+		}
+
+		&.active {
+
+			display: block;
+		}
+
+	}
+
+	.login-form-container {
+		background: #fdfdfd;
+		padding-top: 20px;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		border-left: 1px solid #e0e0e0;
+		border-right: 1px solid #e0e0e0;
+		border-bottom: 1px solid #e0e0e0;
+		input {
+
+			@extend %form-reset;
+			display: block;
+			width: 465px;
+			height: 35px;
+			border:1px solid #b9bcbe;
+			@include border-radius(2px);
+			margin: 20px auto;
+			
+			@include box-shadow(0 0 0 4px #f2f5f7);
+			color:#aeaeae;
+			font-size: 12px;
+			font-family: Helvetica, Arial, sans-serif;
+			padding-left:10px;
+
+			&:focus {
+				border:1px solid #52c6ec;
+				@include box-shadow(0 0 0 4px #d9ebf2);
+			}
+			
+		}
+		
+
+
+		input[type="submit"] {
+			cursor:pointer;
+			width: 178px;
+			height: 30px;
+			@include border-radius(20px);
+			@include background-image(linear-gradient(#e3f0f5, #d3e8f0));
+			border:1px solid #afd6e3;
+			@include box-shadow(0 0 0 4px #e8eef1);
+			color: #537987;
+			padding-left:0;
+
+			&:hover {
+				@include background-image(linear-gradient(#ecf5f8, #d4e8f0));
+
+			}
+
+			&:active {
+				@include background-image(linear-gradient(#daecf2, #d5e9f1));
+
+			}		
+
+		}
+
+	}
+
+	.forgot-password {
+		position: relative;
+		text-align: center;
+		color: #cccccc;
+		font-size: 10px;
+
+		p {
+
+			position:relative;
+
+			&:before {
+				position: absolute;
+				content: "";
+				left:305px;
+				top:-2px;
+				background:url(../img/freegal_sprite.png) -150px -20px;
+				width: 9px;
+				height: 12px;
+
+			}
+
+
+		}
+		a {
+
+			text-decoration: none;
+			color:#66ccff;
+		}
+
+
+
+	}
+	
+}
+	
+footer {
+	
+	height: 98px;
+	background: url(../img/footer-bkg.gif) repeat;
+	color: #000;
+	font-size: 12px;
+	padding-bottom: 100px;
+	
+	.inner-wrapper {
+		
+		height: 98px;
+		position: relative;
+		width: 1215px;
+		margin: 0 auto;
+		
+		.legal {
+			position: absolute;
+			left: 75px;
+			top:25px;
+		}
+		
+		.footer-nav {
+		
+			position: absolute;
+			right: 0;
+			top:25px;
+			
+			li {
+				
+				display: block;
+				float: left;
+				
+				a {
+					
+					display: block;
+					padding-left: 6px;
+					padding-right: 6px;
+					color: #000;
+					text-decoration: none;
+					border-right: 1px solid #000;
+				}
+				
+				&:last-child a {
+					
+					border-right: 0;
+				}
+			}
+		}
+		
+		.languages {
+		
+			position: absolute;
+			right: 0;
+			top:60px;
+			
+			li {
+				
+				display: block;
+				float: left;
+				
+				a {
+					
+					display: block;
+					padding-left: 6px;
+					padding-right: 6px;
+					color: #000;
+					text-decoration: none;
+					
+				}
+				
+				&:nth-child(2) a,&:nth-child(3) a,&:nth-child(4) a {
+					
+					border-right: 1px solid #000;
+				}
+			}
+			
+			
+			
+		}
+	}
+}
+
+
+
+.fmp-container {
+	
+	position: fixed;
+	bottom:0;
+	width: 100%;
+	background: url(../img/player-bkg.jpg) repeat;
+	height: 100px;
+	text-align: center;	
+	z-index: 1;
+
+	
+}
+
+.filler { height: 100px; }
