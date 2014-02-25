@@ -23,6 +23,9 @@
 
                 $questiontitleText = $this->getTextEncode($question['Section']['title']);
                 $questionansText = $this->getTextEncode($question['Question']['answer']);
+                if(!$questionansText){
+                    $questionansText =$question['Question']['answer'];
+                }  
                 $questionquText = $this->getTextEncode($question['Question']['question']);
 
                 if ($Title != $question['Section']['title'])
