@@ -30,7 +30,19 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                 <div class="album-cover-container">
                                                         <?php echo $html->link($html->image($value['songAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false))     ?>                                                       
                                                         <div class="ranking"><?php echo $count; ?></div>
-                                                        <button class="play-btn-icon toggleable"></button>
+                                                        <?php
+                                                        if ($this->Session->read("patron"))
+                                                        {
+                                                            if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs']))
+                                                            { 
+                                                                $providerType = base64_encode($providerType);
+                                                                $artistText = base64_encode($artistText);                                                                
+                                                             ?>  
+                                                                <a onclick="javascript:loadNationalAlbumData('<?php echo $artistText; ?>',<?php echo $prodId; ?>,'<?php echo $providerType ?>');" href="javascript:void(0);" ><button class="play-btn-icon toggleable"></button></a>
+                                                       <?php }
+                                                         } else { ?>
+                                                               <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a> 
+                                                   <?php } ?>      
                                                         <button class="playlist-menu-icon toggleable"></button>
                                                         <button class="wishlist-icon toggleable"></button>
                                                         <ul>
