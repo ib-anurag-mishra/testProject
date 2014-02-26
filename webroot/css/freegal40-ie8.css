@@ -6,12 +6,8 @@
 
 
 .site-header .header-right-col .row-2 .master-search-container .select-arrow-fix,
+.site-header .header-right-col .row-2 .master-search-container .master-search-select,
 .site-header .header-right-col .row-2 .master-search-container .master-search-field-container .go {
-
-	height: 25px;
-}
-
-.site-header .header-right-col .row-2 .master-search-container .master-search-select {
 
 	height: 26px;
 }

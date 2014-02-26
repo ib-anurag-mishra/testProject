@@ -674,10 +674,10 @@ sub { top: 0.4em; }
 		
 		
 		width: 350px;
-		//height: 72px;
+		height: 72px;
 		position: absolute;
 		left: 0;
-		//top:20px;
+		top:20px;
 
 		
 
@@ -761,7 +761,7 @@ sub { top: 0.4em; }
 					background: url(../img/freegal_sprite.png) no-repeat -50px 0;
 					position: absolute;
 					left: 12px;
-					top:6px;
+					top:4px;
 					
 
 				}
@@ -770,7 +770,7 @@ sub { top: 0.4em; }
 					
 					position: absolute;
 					right: 0;
-					top:10px;
+					top:8px;
 				}
 				
 			}
@@ -802,7 +802,7 @@ sub { top: 0.4em; }
 				
 				height: 30px;
 				margin-left: 6px;
-				
+				margin-top: -1px;
 				width: 57px;
 
 				&.logged-in {
@@ -886,7 +886,7 @@ sub { top: 0.4em; }
 					
 					position: absolute;
 					left: 0;
-					top:35px;
+					top:30px;
 					z-index: 100;
 					@include border-radius(5px);
 					border: 1px solid #dedddd;
@@ -1074,7 +1074,7 @@ sub { top: 0.4em; }
 				
 				position: relative;
 				width: 306px;
-				height: 27px;
+				height: 28px;
 				@include background-image(linear-gradient(#eee, #fcfcfc 25%, #fafafa 90%));
 				
 
@@ -1082,7 +1082,7 @@ sub { top: 0.4em; }
 
 					display: inline-block;
 					width: 100px;
-					height: 27px;
+					height: 28px;
 					overflow: hidden;
 					border-right: 1px solid #b1d3e0;
 
@@ -1106,7 +1106,7 @@ sub { top: 0.4em; }
 					@include background-image(linear-gradient(#daecf2, #d3e8f0));
 					// width: 100px;
 					width: 120px;
-					height: 27px;
+					height: 28px;
 					border-right: 1px solid #b1d3e0;
 					@include appearance(none);
 					text-overflow: '';
@@ -1160,7 +1160,7 @@ sub { top: 0.4em; }
 					position: relative;
 					display: inline-block;
 					width: 201px;
-					height: 27px;
+					height: 28px;
 					vertical-align: top;
 					
 					
@@ -1172,7 +1172,7 @@ sub { top: 0.4em; }
 						width: 144px;
 						font-size: 12px;
 						background: none;
-						height: 27px;
+						height: 28px;
 						position: absolute;
 						top:0;
 						left: 18px;
@@ -1195,7 +1195,7 @@ sub { top: 0.4em; }
 						position: absolute;
 						right: -1px;
 						top:0;
-						height: 27px;
+						height: 28px;
 						text-decoration: none;
 						color: #527988;
 						font-size: 12px;
