@@ -35,10 +35,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                         {
                                                             if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs']))
                                                             { 
-                                                                $providerType = base64_encode($providerType);
-                                                                $artistText = base64_encode($artistText);                                                                
+                                                                $providerType = base64_encode($value['Song']['provider_type']);
+                                                                $artistText = base64_encode($value['Song']['ArtistText']);                                                                
                                                              ?>  
-                                                                <a onclick="javascript:loadNationalAlbumData('<?php echo $artistText; ?>',<?php echo $prodId; ?>,'<?php echo $providerType ?>');" href="javascript:void(0);" ><button class="play-btn-icon toggleable"></button></a>
+                                                                <a onclick="javascript:loadNationalAlbumData('<?php echo $artistText; ?>',<?php echo $value['Albums']['ProdID']; ?>,'<?php echo $providerType ?>');" href="javascript:void(0);" ><button class="play-btn-icon toggleable"></button></a>
                                                        <?php }
                                                          } else { ?>
                                                                <a class="top-100-download-now-button " href='/users/redirection_manager'> <?php __("Login"); ?></a> 
