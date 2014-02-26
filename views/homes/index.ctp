@@ -11,6 +11,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             </header> 
             <div class="top-albums-carousel-container"> 
                     <div class="top-albums-carousel">
+                          <ul class="clearfix">
                                 <?php 
                         
                                 $count = 1;
@@ -26,7 +27,6 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             
                             
                                 ?>
-                                    <ul class="clearfix">
                                             <li>
                                                     <div class="album-cover-container">
                                                             <?php echo $html->link($html->image($value['songAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false))     ?>                                                       
@@ -62,10 +62,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                             <p class="artist"><a href="#">Pitbull</a></p>
                                                     </div>
                                             </li>
-                                    </ul>
                                     <?php 
                                         $count++;
-                                    }                            
+                                    } 
                             } else {
 
                                    echo '<span style="font-size:14px;">Sorry,there are no downloads.<span>';
@@ -73,6 +72,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             }  
 
                             ?>
+                         </ul>                        
                     </div>
                     <button class="left-scroll-button"></button>
                     <button class="right-scroll-button"></button>
