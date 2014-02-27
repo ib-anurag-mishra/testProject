@@ -142,15 +142,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
                     </ul>
                     <ul class="playlist-menu">
-                        <li><a href="#">Playlist 1</a></li>
-                        <li><a href="#">Playlist 2</a></li>
-                        <li><a href="#">Playlist 3</a></li>
-                        <li><a href="#">Playlist 4</a></li>
-                        <li><a href="#">Playlist 5</a></li>
-                        <li><a href="#">Playlist 6</a></li>
-                        <li><a href="#">Playlist 7</a></li>
-                        <li><a href="#">Playlist 8</a></li>
-                        <li><a href="#">Playlist 9</a></li>                  
+                                    
                     </ul>
                 </section>
                 <?php
@@ -213,6 +205,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <?php
                         if ($this->Session->read("patron"))
                         {
+                             if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
+                                    {
                             ?>
                             <button class="menu-btn"></button>
                             <section class="options-menu">
@@ -233,6 +227,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             </section>
                             <input type="checkbox" class="row-checkbox">
                             <?php
+                                    }
                         }
                         ?>
                     </div>

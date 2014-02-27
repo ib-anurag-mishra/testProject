@@ -100,6 +100,14 @@ function renameQueue()
                         $(this).find('a').text( name );
                     }
                  });
+
+                 //updating the queuelist
+                 $(document).find('.playlist-options-new').find('.playlist-menu').find('li').each(function(){
+                    if( $(this).find('a').attr('id') === $('#rqPlid').val() )
+                    {
+                        $(this).find('a').text( name );
+                    }
+                 });
                 
                 document.getElementById('ajaxflashMessage44').innerHTML = '' ;
                 document.getElementById('ajaxflashMessage44').innerHTML = response ;
