@@ -165,18 +165,37 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <button class="play-btn"></button>
                         <div class="ranking"><?= $count ?></div>
                         <div class="song-name">
+                                    <a href="#">
+                                        <?php
+                                        if (strlen($nationalTopSong['Song']['SongTitle']) > 20)
+                                            echo substr($nationalTopSong['Song']['SongTitle'], 0, 20) . "...";
+                                        else
+                                            echo $nationalTopSong['Song']['SongTitle'];
+                                        ?>
+                                    </a>
+                                </div>
+                        <div class="artist-name">
                             <a href="#">
                                 <?php
-                                if (strlen( $nationalTopSong['Song']['SongTitle']) > 20)
-                                        echo substr( $nationalTopSong['Song']['SongTitle'], 0, 20) . "...";
-                                    else
-                                        echo  $nationalTopSong['Song']['SongTitle'];
-                             ?>
+                                        if (strlen($nationalTopSong['Song']['ArtistText']) > 25)
+                                            echo substr($nationalTopSong['Song']['ArtistText'], 0, 25) . "...";
+                                        else
+                                            echo $nationalTopSong['Song']['ArtistText'];
+                                        ?>
                             </a>
                         </div>
-                        <div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
-                        <div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
-                        <div class="time">3:23</div>
+                        <div class="album-name">
+                            <a href="#">
+                                 <?php
+                                        if (strlen($nationalTopSong['Song']['Title']) > 25)
+                                            echo substr($nationalTopSong['Song']['Title'], 0, 25) . "...";
+                                        else
+                                            echo $nationalTopSong['Song']['Title'];
+                                        ?>
+                            </a>
+                        </div>
+                        <div class="time"><?=$nationalTopSong['Song']['FullLength_Duration']?></div>
+                        
                         <button class="menu-btn"></button>
                         <section class="options-menu">
                             <ul>
