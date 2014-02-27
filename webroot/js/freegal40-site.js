@@ -534,7 +534,7 @@ $(document).ready(function(){
          var oldList = $(this).next('.options-menu').find('.playlist-menu');
         oldList.remove();
         
-        $(this).next('.wishlist-popover').append(queuelist);
+        $(this).next('.options-menu').append(queuelist);
         
         
         return false;
