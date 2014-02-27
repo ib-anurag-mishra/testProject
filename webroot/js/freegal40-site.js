@@ -448,11 +448,10 @@ $(document).ready(function(){
 //            <button class="page-3">3</button>
 //            <button class="page-4">4</button>
 //            <button class="page-5">5</button>
-            pagination_string =+ '<button class="next"></button><button class="last"></button>';
+            pagination_string += '<button class="next"></button><button class="last"></button>';
             
              $(document).find('.top-songs-container .pagination-container').append(pagination_string);
          }
         
-        alert(count);
     }
 });
