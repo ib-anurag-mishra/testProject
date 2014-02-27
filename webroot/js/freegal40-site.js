@@ -467,7 +467,7 @@ $(document).ready(function(){
     
       $(document).find('.top-songs-container .pagination-container').on('click', 'button', function() {
         var page_class = $(this).attr('class');
-        if (page_class.contains('page-'))
+        if (page_class.indexOf('page-'))
         {
             var to_show_page = page_class.replace('-', '');
             $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
