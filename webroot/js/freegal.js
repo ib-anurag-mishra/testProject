@@ -1746,6 +1746,14 @@ function addToAlbumTest(queueID, addTo)
     return false;
 }
 
+function addToPlaylistNew(queueID, addTo)
+{
+    var type = $(addTo).parent().parent().find('input[type="hidden"]').attr('value');
+    var ProdID = $(addTo).parent().parent().find('input[type="hidden"]').attr('id');
+    
+    
+    return false;
+}
 function addToQueueResponse(response, type)
 {
     if (response.length === 6) {

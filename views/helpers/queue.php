@@ -67,7 +67,6 @@ EOD;
             }           
         }
 
-
         $str = <<<EOD
                 
                     <ul class="playlist-menu">
@@ -77,7 +76,7 @@ EOD;
         {
             foreach ($queueList as $key => $value)
             {
-                $str.='<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('.$value['QueueList']['queue_id'].', this );"  id="'.$value['QueueList']['queue_id'].'">' . $value['QueueList']['queue_name'] . '</a></li>';
+                $str.='<li><a href="JavaScript:void(0);" onclick="JavaScript:addToPlaylistNew('.$value['QueueList']['queue_id'].', this );"  id="'.$value['QueueList']['queue_id'].'">' . $value['QueueList']['queue_name'] . '</a></li>';
             }
         }
 

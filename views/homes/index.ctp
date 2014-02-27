@@ -216,6 +216,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             ?>
                             <button class="menu-btn"></button>
                             <section class="options-menu">
+                                <input type="hidden" id="<?= $nationalTopSong["Song"]["ProdID"] ?>" value="song"/>
                                 <ul>
                                     <li><a href="#">Download</a></li>
                                     <li><a href="#">Add to Wishlist</a></li>
