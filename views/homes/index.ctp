@@ -154,46 +154,64 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
         <!-- showing the songs list -->
         <div class="rows-container">
-              <div class="row">
-                            <button class="play-btn"></button>
-                            <div class="ranking">1</div>
-                            <div class="song-name"><a href="#">Say Something</a></div>
-                            <div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
-                            <div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
-                            <div class="time">3:23</div>
-                            <button class="menu-btn"></button>
-                            <section class="options-menu">
-                                    <ul>
-                                            <li><a href="#">Download</a></li>
-                                            <li><a href="#">Add to Wishlist</a></li>
-                                            <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
-                                    </ul>
-                                    <ul class="playlist-menu">
-                                            <li><a href="#">Create New Playlist</a></li>
-                                            <li><a href="#">Playlist 1</a></li>
-                                            <li><a href="#">Playlist 2</a></li>
-                                            <li><a href="#">Playlist 3</a></li>
-                                            <li><a href="#">Playlist 4</a></li>
-                                            <li><a href="#">Playlist 5</a></li>
-                                            <li><a href="#">Playlist 6</a></li>
-                                            <li><a href="#">Playlist 7</a></li>
-                                            <li><a href="#">Playlist 8</a></li>
-                                            <li><a href="#">Playlist 9</a></li>
-                                            <li><a href="#">Playlist 10</a></li>
-                                            <li><a href="#">Playlist 11</a></li>
-                                            <li><a href="#">Playlist 12</a></li>
-                                            <li><a href="#">Playlist 13</a></li>
-                                            <li><a href="#">Playlist 14</a></li>
-                                            <li><a href="#">Playlist 15</a></li>
-                                            <li><a href="#">Playlist 16</a></li>
-                                            <li><a href="#">Playlist 17</a></li>
-                                            <li><a href="#">Playlist 18</a></li>
-                                            <li><a href="#">Playlist 19</a></li>
-                                            <li><a href="#">Playlist 20</a></li>
-                                    </ul>											
-                            </section>
-                            <input type="checkbox" class="row-checkbox">
+            <?php
+            if (!empty($nationalTopDownload))
+            {
+                foreach ($nationalTopDownload as $nationalTopSong)
+                {
+                    ?>
+                    <div class="row">
+                        <button class="play-btn"></button>
+                        <div class="ranking">1</div>
+                        <div class="song-name"><a href="#">Say Something</a></div>
+                        <div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
+                        <div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
+                        <div class="time">3:23</div>
+                        <button class="menu-btn"></button>
+                        <section class="options-menu">
+                            <ul>
+                                <li><a href="#">Download</a></li>
+                                <li><a href="#">Add to Wishlist</a></li>
+                                <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                            </ul>
+                            <ul class="playlist-menu">
+                                <li><a href="#">Create New Playlist</a></li>
+                                <li><a href="#">Playlist 1</a></li>
+                                <li><a href="#">Playlist 2</a></li>
+                                <li><a href="#">Playlist 3</a></li>
+                                <li><a href="#">Playlist 4</a></li>
+                                <li><a href="#">Playlist 5</a></li>
+                                <li><a href="#">Playlist 6</a></li>
+                                <li><a href="#">Playlist 7</a></li>
+                                <li><a href="#">Playlist 8</a></li>
+                                <li><a href="#">Playlist 9</a></li>
+                                <li><a href="#">Playlist 10</a></li>
+                                <li><a href="#">Playlist 11</a></li>
+                                <li><a href="#">Playlist 12</a></li>
+                                <li><a href="#">Playlist 13</a></li>
+                                <li><a href="#">Playlist 14</a></li>
+                                <li><a href="#">Playlist 15</a></li>
+                                <li><a href="#">Playlist 16</a></li>
+                                <li><a href="#">Playlist 17</a></li>
+                                <li><a href="#">Playlist 18</a></li>
+                                <li><a href="#">Playlist 19</a></li>
+                                <li><a href="#">Playlist 20</a></li>
+                            </ul>											
+                        </section>
+                        <input type="checkbox" class="row-checkbox">
                     </div>
+                    <?php
+                }
+            }
+            else
+            {
+                ?>
+                <div class="row">
+                    No Songs Found.
+                </div>
+                <?php
+            }
+            ?>
         </div>
 
 
@@ -213,11 +231,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
     
     
     
-   <?php
-//    echo '<pre>';
-//    print_r($nationalTopDownload);
-//    exit;
-   ?>
+ 
 </section>
 <!-- Top Singles code end here -->
 
