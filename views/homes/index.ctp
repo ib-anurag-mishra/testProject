@@ -35,6 +35,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         $artistText = base64_encode($value['Song']['ArtistText']);
                                         ?>  
                                         <a onclick="javascript:loadNationalAlbumData('<?php echo $artistText; ?>',<?php echo $value['Albums']['ProdID']; ?>, '<?php echo $providerType ?>');" href="javascript:void(0);" ><button class="play-btn-icon toggleable"></button></a>
+                                        <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
                                         <?php
                                     }
                                 }
