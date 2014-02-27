@@ -162,57 +162,71 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     $count++;
                     ?>
                     <div class="row">
-                        <button class="play-btn"></button>
+                        <?php
+                        if ($this->Session->read("patron"))
+                        {
+                            ?>
+                            <button class="play-btn"></button>
+                            <?php
+                        }
+                        ?>
                         <div class="ranking"><?= $count ?></div>
                         <div class="song-name">
-                                    <a href="#">
-                                        <?php
-                                        if (strlen($nationalTopSong['Song']['SongTitle']) > 30)
-                                            echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 30))) . "...";
-                                        else
-                                            echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['SongTitle']));
-                                        ?>
-                                    </a>
-                                </div>
+                            <a href="#">
+                                <?php
+                                if (strlen($nationalTopSong['Song']['SongTitle']) > 25)
+                                    echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 25))) . "...";
+                                else
+                                    echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['SongTitle']));
+                                ?>
+                            </a>
+                        </div>
                         <div class="artist-name">
                             <a href="#">
                                 <?php
-                                        if (strlen($nationalTopSong['Song']['ArtistText']) > 30)
-                                            echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['ArtistText'], 0, 30))) . "...";
-                                        else
-                                            echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['ArtistText']));
-                                        ?>
+                                if (strlen($nationalTopSong['Song']['ArtistText']) > 30)
+                                    echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['ArtistText'], 0, 30))) . "...";
+                                else
+                                    echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['ArtistText']));
+                                ?>
                             </a>
                         </div>
                         <div class="album-name">
                             <a href="#">
-                                 <?php
-                                        if (strlen($nationalTopSong['Song']['Title']) > 30)
-                                            echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['Title'], 0, 30))) . "...";
-                                        else
-                                            echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['Title']));
-                                        ?>
+                                <?php
+                                if (strlen($nationalTopSong['Song']['Title']) > 30)
+                                    echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['Title'], 0, 30))) . "...";
+                                else
+                                    echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['Title']));
+                                ?>
                             </a>
                         </div>
-                        <div class="time"><?=$nationalTopSong['Song']['FullLength_Duration']?></div>
-                        
-                        <button class="menu-btn"></button>
-                        <section class="options-menu">
-                            <ul>
-                                <li><a href="#">Download</a></li>
-                                <li><a href="#">Add to Wishlist</a></li>
-                                <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
-                            </ul>
-                            <ul class="playlist-menu">
-                                <li><a href="#">Create New Playlist</a></li>
-                                <li><a href="#">Playlist 1</a></li>
-                                <li><a href="#">Playlist 2</a></li>
-                                <li><a href="#">Playlist 3</a></li>
-                                <li><a href="#">Playlist 4</a></li>
-                                <li><a href="#">Playlist 5</a></li>                              
-                            </ul>											
-                        </section>
-                        <input type="checkbox" class="row-checkbox">
+                        <div class="time"><?= $nationalTopSong['Song']['FullLength_Duration'] ?></div>
+
+                        <?php
+                        if ($this->Session->read("patron"))
+                        {
+                            ?>
+                            <button class="menu-btn"></button>
+                            <section class="options-menu">
+                                <ul>
+                                    <li><a href="#">Download</a></li>
+                                    <li><a href="#">Add to Wishlist</a></li>
+                                    <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                </ul>
+                                <ul class="playlist-menu">
+                                    <li><a href="#">Create New Playlist</a></li>
+                                    <li><a href="#">Playlist 1</a></li>
+                                    <li><a href="#">Playlist 2</a></li>
+                                    <li><a href="#">Playlist 3</a></li>
+                                    <li><a href="#">Playlist 4</a></li>
+                                    <li><a href="#">Playlist 5</a></li>                              
+                                </ul>											
+                            </section>
+                            <input type="checkbox" class="row-checkbox">
+                            <?php
+                        }
+                        ?>
                     </div>
                     <?php
                     if ($count == 20)
