@@ -536,7 +536,7 @@ $(document).ready(function(){
             oldList.empty();
             
             var queuelist = $(document).find('.playlist-options-new').find('ul').html();
-             $(this).next('.options-menu').append(queuelist);
+             $(this).next('ul').append(queuelist);
         }
         else
         {    
