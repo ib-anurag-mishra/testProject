@@ -527,16 +527,22 @@ $(document).ready(function(){
     });
     
     
-    $(document).find('.top-songs .menu-btn , .playlist-menu-icon').on('click', function(e){
-         e.preventDefault();
-         var queuelist = $(document).find('.playlist-options-new').html();
-         
-         var oldList = $(this).next('.options-menu').find('.playlist-menu');
-        oldList.remove();
-        
-        $(this).next('.options-menu').append(queuelist);
-        
-        
+    $(document).find('.top-songs .menu-btn , .playlist-menu-icon').on('click', function(e) {
+        if ($(this).hasClass('playlist-menu-icon'))
+        {
+            
+        }
+        else
+        {
+            e.preventDefault();
+            var queuelist = $(document).find('.playlist-options-new').html();
+
+            var oldList = $(this).next('.options-menu').find('.playlist-menu');
+            oldList.remove();
+
+            $(this).next('.options-menu').append(queuelist);
+        }
+
         return false;
     });
 });
