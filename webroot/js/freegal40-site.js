@@ -514,7 +514,7 @@ $(document).ready(function(){
             else if (page_class === 'beginning')
             {
                 $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
-                to_show_page = 'page0';
+                to_show_page = 'page1';
                 $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
                 return false;
             }
