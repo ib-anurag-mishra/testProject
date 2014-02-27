@@ -527,7 +527,7 @@ $(document).ready(function(){
     });
     
     
-    $(document).find('.top-songs .menu-btn , .playlist-menu-icon').on('click', function(e) {
+    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e) {
         e.preventDefault();
         
         if ($(this).hasClass('playlist-menu-icon'))
