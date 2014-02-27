@@ -464,4 +464,8 @@ $(document).ready(function(){
          }
         
     }
+    
+      $(document).find('.top-songs-container .pagination-container').on('click' , 'button' , function(){
+          alert('paginate clicked');
+      });
 });
