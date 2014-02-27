@@ -1748,10 +1748,10 @@ function addToAlbumTest(queueID, addTo)
 
 function addToPlaylistNew(queueID, addTo)
 {
-    var type = $(addTo).parent().parent().find('input[type="hidden"]').attr('value');
-    var ProdID = $(addTo).parent().parent().find('input[type="hidden"]').attr('id');
+    var type = $(addTo).parent();
+    //var ProdID = $(addTo).parent().parent().find('input[type="hidden"]').attr('id');
     
-    
+    alert(type);
     return false;
 }
 function addToQueueResponse(response, type)
