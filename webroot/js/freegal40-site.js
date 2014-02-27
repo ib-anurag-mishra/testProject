@@ -533,7 +533,7 @@ $(document).ready(function(){
         if ($(this).hasClass('playlist-menu-icon'))
         {
              var oldList = $(this).next('ul');
-            oldList.remove();
+            oldList.empty();
         }
         else
         {    
