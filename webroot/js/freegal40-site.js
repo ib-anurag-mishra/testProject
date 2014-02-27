@@ -529,14 +529,18 @@ $(document).ready(function(){
     
     $(document).find('.top-songs .menu-btn , .playlist-menu-icon').on('click', function(e) {
         e.preventDefault();
-        var queuelist = $(document).find('.playlist-options-new').html();
+        
         if ($(this).hasClass('playlist-menu-icon'))
         {
              var oldList = $(this).next('ul');
             oldList.empty();
+            
+            var queuelist = $(document).find('.playlist-options-new').find('ul').html();
+             $(this).next('.options-menu').append(queuelist);
         }
         else
         {    
+            var queuelist = $(document).find('.playlist-options-new').html();
             var oldList = $(this).next('.options-menu').find('.playlist-menu');
             oldList.remove();
 
