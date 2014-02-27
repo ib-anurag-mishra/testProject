@@ -490,10 +490,16 @@ $(document).ready(function(){
                             }
                         });
                     }
-                  $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function(){
-                      if($(this).css('display') ==='block')
-                          alert($(this).attr('class'));
-                  });
+                    else if( page_class === 'last')
+                        {
+                             $(this).css('display', 'none');
+                             $(document).find('.top-songs-container .rows-container div[class*="page"]:last');
+                             return false;
+                        }
+//                  $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function(){
+//                      if($(this).css('display') ==='block')
+//                          alert($(this).attr('class'));
+//                  });
               }
           alert(page_class);
           return false ;
