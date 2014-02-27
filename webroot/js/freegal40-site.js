@@ -484,7 +484,7 @@ $(document).ready(function(){
                             if ($(this).css('display') === 'block')
                             {
                                 $(this).css('display', 'none');
-                                to_show_page = parseInt( $(this).attr('class').replace('page', '')) + 1;
+                                to_show_page = 'page'+ (parseInt( $(this).attr('class').replace('page', '')) + 1);
                                 $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
                                 return false;
                             }
