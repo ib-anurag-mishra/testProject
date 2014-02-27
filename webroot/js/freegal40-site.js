@@ -482,7 +482,7 @@ $(document).ready(function(){
                     if ($(this).css('display') === 'block')
                     {                                           
                         to_show_page = 'page' + (parseInt($(this).attr('class').replace('page', '')) + 1);
-                        if( (parseInt($(this).attr('class').replace('page', '')) + 1) < total_length)
+                        if( (parseInt($(this).attr('class').replace('page', '')) + 1) < total_length+1)
                             {
                                  $(this).css('display', 'none');    
                                  $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
