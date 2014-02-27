@@ -473,6 +473,7 @@ $(document).ready(function(){
                   $(document).find('.top-songs-container .rows-container').addClass('loading');
                                     
                   $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
+                  $(document).find('.top-songs-container .rows-container div.'+to_show_page ).css('display', 'block');
               }
               else
               {
