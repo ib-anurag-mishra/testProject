@@ -466,6 +466,16 @@ $(document).ready(function(){
     }
     
       $(document).find('.top-songs-container .pagination-container').on('click' , 'button' , function(){
-          alert('paginate clicked');
+          var page_class = $(this).attr('class');
+          if(page_class.contains('page-'))
+              {
+                  
+              }
+              else
+              {
+                  return false;
+              }
+          alert(page_class);
+          return false ;
       });
 });
