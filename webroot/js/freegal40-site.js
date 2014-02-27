@@ -431,7 +431,7 @@ $(document).ready(function(){
     //For Pagination of song grid
     $(document).find('.top-songs-container .rows-container .row')
     {
-        var count = $(document).find('.top-songs-container .rows-container .row >div').length;
+        var count = $(document).find('.top-songs-container .rows-container > div.row').length;
         alert(count);
     }
 });
