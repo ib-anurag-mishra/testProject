@@ -428,6 +428,10 @@ $(document).ready(function(){
 
 
 
-
-
+    //For Pagination of song grid
+    $(document).find('.top-songs-container .rows-container .row')
+    {
+        var count = $(document).find('.top-songs-container .rows-container .row >div').length;
+        alert(count);
+    }
 });

@@ -118,37 +118,33 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             <div class="album-header">Album</div>
             <div class="album-border header-border"></div>
             <div class="time-header">Time</div>
-            <button class="multi-select-icon"></button>
-            <section class="options-menu">
-                <ul>
-                    <li><a class="select-all" href="#">Select All</a></li>
-                    <li><a class="clear-all" href="#">Clear All</a></li>										
-                    <li><a href="#">Add to Wishlist</a></li>
-                    <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
-                </ul>
-                <ul class="playlist-menu">
-                    <li><a href="#">Playlist 1</a></li>
-                    <li><a href="#">Playlist 2</a></li>
-                    <li><a href="#">Playlist 3</a></li>
-                    <li><a href="#">Playlist 4</a></li>
-                    <li><a href="#">Playlist 5</a></li>
-                    <li><a href="#">Playlist 6</a></li>
-                    <li><a href="#">Playlist 7</a></li>
-                    <li><a href="#">Playlist 8</a></li>
-                    <li><a href="#">Playlist 9</a></li>
-                    <li><a href="#">Playlist 10</a></li>
-                    <li><a href="#">Playlist 11</a></li>
-                    <li><a href="#">Playlist 12</a></li>
-                    <li><a href="#">Playlist 13</a></li>
-                    <li><a href="#">Playlist 14</a></li>
-                    <li><a href="#">Playlist 15</a></li>
-                    <li><a href="#">Playlist 16</a></li>
-                    <li><a href="#">Playlist 17</a></li>
-                    <li><a href="#">Playlist 18</a></li>
-                    <li><a href="#">Playlist 19</a></li>
-                    <li><a href="#">Playlist 20</a></li>
-                </ul>
-            </section>
+            <?php
+            if ($this->Session->read("patron"))
+            {
+                ?>
+                <button class="multi-select-icon"></button>
+                <section class="options-menu">
+                    <ul>
+                        <li><a class="select-all" href="#">Select All</a></li>
+                        <li><a class="clear-all" href="#">Clear All</a></li>										
+                        <li><a href="#">Add to Wishlist</a></li>
+                        <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                    </ul>
+                    <ul class="playlist-menu">
+                        <li><a href="#">Playlist 1</a></li>
+                        <li><a href="#">Playlist 2</a></li>
+                        <li><a href="#">Playlist 3</a></li>
+                        <li><a href="#">Playlist 4</a></li>
+                        <li><a href="#">Playlist 5</a></li>
+                        <li><a href="#">Playlist 6</a></li>
+                        <li><a href="#">Playlist 7</a></li>
+                        <li><a href="#">Playlist 8</a></li>
+                        <li><a href="#">Playlist 9</a></li>                  
+                    </ul>
+                </section>
+                <?php
+            }
+            ?>
         </div>
 
         <!-- showing the songs list -->
@@ -228,9 +224,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         }
                         ?>
                     </div>
-                    <?php
-                    if ($count == 20)
-                        break;
+                    <?php                  
                 }
             }
             else
