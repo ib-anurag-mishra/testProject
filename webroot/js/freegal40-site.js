@@ -503,10 +503,13 @@ $(document).ready(function(){
             {
                 $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function() {
                     if ($(this).css('display') === 'block')
-                    {
-                        $(this).css('display', 'none');
+                    {                        
                         to_show_page = 'page' + (parseInt($(this).attr('class').replace('page', '')) - 1);
+                        if((parseInt($(this).attr('class').replace('page', '')) - 1) > 0)
+                            {
+                        $(this).css('display', 'none');
                         $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                            }
                         return false;
                     }
                 });
