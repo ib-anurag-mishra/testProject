@@ -493,7 +493,9 @@ $(document).ready(function(){
                     else if( page_class === 'last')
                         {               
                             $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
-                             $(document).find('.top-songs-container .rows-container div[class*="page"]:last');
+                            var last_class=$(document).find('.top-songs-container .rows-container div[class*="page"]').length;
+                            to_show_page = 'page'+ last_class;
+                             $(document).find('.top-songs-container .rows-container div.'+to_show_page ).css('display', 'block');
                              return false;
                         }
 //                  $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function(){
