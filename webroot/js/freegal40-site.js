@@ -478,6 +478,18 @@ $(document).ready(function(){
               else
               {
                   //if next , prev , first and Last
+                  if ( page_class === 'next')
+                    {
+                        $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function() {
+                            if ($(this).css('display') === 'block')
+                            {
+                                $(this).css('display', 'none');
+                                to_show_page = $(this).attr('class').replace('page', '') + 1;
+                                $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                                return false;
+                            }
+                        });
+                    }
                   $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function(){
                       if($(this).css('display') ==='block')
                           alert($(this).attr('class'));
