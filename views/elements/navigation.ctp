@@ -392,6 +392,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     print_r( $this->Queue->getUserQueuesList($this->Session->read('patron')) );
                 ?>
             </div>
+
+            <div class="playlist-options-new" style="display:none;">
+                <?php
+                    print_r( $this->Queue->getUserQueuesListNew($this->Session->read('patron')) );
+                ?>
+            </div>
     </div>
     <div class="wrapper">
 			<!-- site header -->

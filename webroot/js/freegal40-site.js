@@ -527,8 +527,9 @@ $(document).ready(function(){
     });
     
     
-    $(document).find('.top-songs .menu-btn').on('click', function(){
-        
-        alert('Menu button clicked');
+    $(document).find('.top-songs .menu-btn').on('click', function(e){
+         e.preventDefault();
+         var queuelist = $(document).find('.playlist-options-new').html();
+        alert(queuelist);
     });
 });

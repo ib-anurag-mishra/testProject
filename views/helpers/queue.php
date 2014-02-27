@@ -47,6 +47,43 @@ EOD;
         $str.= '</ul></div>';
         return $str;
     }
+    
+    
+     /**
+     * Function name : getUserQueuesList
+     * Description   : This function is used to get queues list for user
+     */
+    function getUserQueuesListNew($patron_id = null)
+    {
+        $queueList = array();
+        if (!empty($patron_id))
+        {
+            if (!$this->Session->check('queuelist'))
+            {
+                $queueInstance = ClassRegistry::init('QueueList');
+                $queueInstance->recursive = -1;
+                $queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id, 'status' => 1), 'fields' => array('QueueList.queue_id', 'QueueList.queue_name'), 'order' => 'QueueList.created DESC'));
+                
+            }           
+        }
+
+
+        $str = <<<EOD
+                
+                    <ul class="playlist-menu">
+                            <li><a href="javascript:void(0);" class="create-new-queue-btn">Create New Playlist</a></li>
+EOD;
+        if (!empty($queueList))
+        {
+            foreach ($queueList as $key => $value)
+            {
+                $str.='<li><a href="JavaScript:void(0);" onclick="JavaScript:addToAlbumTest('.$value['QueueList']['queue_id'].', this );"  id="'.$value['QueueList']['queue_id'].'">' . $value['QueueList']['queue_name'] . '</a></li>';
+            }
+        }
+
+        $str.= '</ul>';
+        return $str;
+    }
 
     /**
      * Function name : getQueuesList
