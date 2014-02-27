@@ -529,24 +529,24 @@ $(document).ready(function(){
     
     $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e) {
         e.preventDefault();
-        
+
         if ($(this).hasClass('playlist-menu-icon'))
         {
-             var oldList = $(this).next('ul');
+            var oldList = $(this).next('ul');
             oldList.empty();
-            
             var queuelist = $(document).find('.playlist-options-new').find('ul').html();
-             $(this).next('ul').append(queuelist);
+            $(this).next('ul').append(queuelist);
         }
         else
-        {    
+        {
             var queuelist = $(document).find('.playlist-options-new').html();
             var oldList = $(this).next('.options-menu').find('.playlist-menu');
             oldList.remove();
 
             $(this).next('.options-menu').append(queuelist);
         }
-
         return false;
     });
+    
+    
 });
