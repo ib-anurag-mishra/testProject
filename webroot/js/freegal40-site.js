@@ -469,7 +469,7 @@ $(document).ready(function(){
           var page_class = $(this).attr('class');
           if(page_class.contains('page-'))
               {
-                  var to_show_page = page_class.replace('-');
+                  var to_show_page = page_class.replace('-','');
                   $(document).find('.top-songs-container .rows-container').addClass('loading');
                                     
                   $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
