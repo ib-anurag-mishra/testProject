@@ -242,6 +242,7 @@
                     }
 
                     // Add the scripts
+/*
                     if ($scripts.length > 1) {
                         $scripts.each(function() {
                             var $script = $(this), scriptText = $script.text(), scriptNode = document.createElement('script');
@@ -254,8 +255,8 @@
                             scriptNode.appendChild(document.createTextNode(scriptText));
                             contentNode.appendChild(scriptNode);
                         });
-                    }
-
+                    } 
+*/
                     // Complete the change
                     if ($body.ScrollTo || false) {
                         $body.ScrollTo(scrollOptions);
