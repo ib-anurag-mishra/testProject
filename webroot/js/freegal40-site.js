@@ -525,4 +525,10 @@ $(document).ready(function(){
         }       
         return false;
     });
+    
+    
+    $(document).find('.top-songs .menu-btn').on('click', function(){
+        
+        alert('Menu button clicked');
+    });
 });
