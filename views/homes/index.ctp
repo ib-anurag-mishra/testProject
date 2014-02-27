@@ -44,7 +44,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 {
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']]);
+                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']],1);
                                         ?>  
                                         <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album"/>
                                         <button class="playlist-menu-icon toggleable"></button>
