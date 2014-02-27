@@ -469,15 +469,19 @@ $(document).ready(function(){
           var page_class = $(this).attr('class');
           if(page_class.contains('page-'))
               {
-                  var to_show_page = page_class.replace('-','');
-                  $(document).find('.top-songs-container .rows-container').addClass('loading');
+                  //page no is clicked
+                  var to_show_page = page_class.replace('-','');             
                                     
                   $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
                   $(document).find('.top-songs-container .rows-container div.'+to_show_page ).css('display', 'block');
               }
               else
               {
-                  return false;
+                  //if next , prev , first and Last
+                  $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function(){
+                      if($(this).css('display') ==='block')
+                          alert($(this).attr('class'));
+                  });
               }
           alert(page_class);
           return false ;
