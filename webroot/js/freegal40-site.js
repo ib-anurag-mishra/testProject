@@ -441,13 +441,10 @@ $(document).ready(function(){
          $(document).find('.top-songs-container .pagination-container')
          {
              var pagination_string = '<button class="beginning"></button><button class="prev"></button>';
-//             
-//             
-//            <button class="page-1">1</button>
-//            <button class="page-2">2</button>
-//            <button class="page-3">3</button>
-//            <button class="page-4">4</button>
-//            <button class="page-5">5</button>
+             for(var i=1 ; i <= num_cols; i++)
+                 {
+                     pagination_string += "<button class='page-"+i+"' >'"+i+"'</button>";
+                 }
             pagination_string += '<button class="next"></button><button class="last"></button>';
             
              $(document).find('.top-songs-container .pagination-container').append(pagination_string);
