@@ -128,9 +128,7 @@ class HomesController extends AppController
             }                       
         }
         else
-        {      
-            
-            
+        {   
             $nationalTopDownload = Cache::read("national" . $territory);
         }
         $this->set('nationalTopDownload', $nationalTopDownload);
