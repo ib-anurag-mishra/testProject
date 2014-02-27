@@ -440,7 +440,7 @@ $(document).ready(function(){
         for(var i=0; i<num_cols; i++)
             {
                 var listItems = $(document).find('.top-songs-container .rows-container > div.row').slice(0, 20);
-                var newList = $('<div/>').append(listItems);
+                var newList = $("<div class='page-"+i+1+"/>").append(listItems);
                container.append(newList);
             }
         
