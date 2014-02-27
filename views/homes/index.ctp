@@ -157,17 +157,15 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             <?php
             if (!empty($nationalTopDownload))
             {
+                $count = 0 ;
                 foreach ($nationalTopDownload as $nationalTopSong)
-                {
-                    echo '<pre>';
-                    print_r($nationalTopSong);
-                    die;
-                    
+                {   
+                    $count++;
                     ?>
                     <div class="row">
                         <button class="play-btn"></button>
-                        <div class="ranking">1</div>
-                        <div class="song-name"><a href="#">Say Something</a></div>
+                        <div class="ranking"><?=$count ?></div>
+                        <div class="song-name"><a href="#"><?= $nationalTopSong['Song']['SongTitle'] ?></a></div>
                         <div class="artist-name"><a href="#">A Great Big World &amp; Christina</a></div>
                         <div class="album-name"><a href="#">A Great Big World &amp; Christina</a></div>
                         <div class="time">3:23</div>
@@ -204,7 +202,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         </section>
                         <input type="checkbox" class="row-checkbox">
                     </div>
+                    
                     <?php
+                    if($count == 20)                        break;
                 }
             }
             else
