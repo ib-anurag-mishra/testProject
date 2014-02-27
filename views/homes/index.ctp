@@ -167,30 +167,30 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <div class="song-name">
                                     <a href="#">
                                         <?php
-                                        if (strlen($nationalTopSong['Song']['SongTitle']) > 20)
-                                            echo substr($nationalTopSong['Song']['SongTitle'], 0, 20) . "...";
+                                        if (strlen($nationalTopSong['Song']['SongTitle']) > 30)
+                                            echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 30))) . "...";
                                         else
-                                            echo $nationalTopSong['Song']['SongTitle'];
+                                            echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['SongTitle']));
                                         ?>
                                     </a>
                                 </div>
                         <div class="artist-name">
                             <a href="#">
                                 <?php
-                                        if (strlen($nationalTopSong['Song']['ArtistText']) > 25)
-                                            echo substr($nationalTopSong['Song']['ArtistText'], 0, 25) . "...";
+                                        if (strlen($nationalTopSong['Song']['ArtistText']) > 30)
+                                            echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['ArtistText'], 0, 30))) . "...";
                                         else
-                                            echo $nationalTopSong['Song']['ArtistText'];
+                                            echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['ArtistText']));
                                         ?>
                             </a>
                         </div>
                         <div class="album-name">
                             <a href="#">
                                  <?php
-                                        if (strlen($nationalTopSong['Song']['Title']) > 25)
-                                            echo substr($nationalTopSong['Song']['Title'], 0, 25) . "...";
+                                        if (strlen($nationalTopSong['Song']['Title']) > 30)
+                                            echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['Title'], 0, 30))) . "...";
                                         else
-                                            echo $nationalTopSong['Song']['Title'];
+                                            echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['Title']));
                                         ?>
                             </a>
                         </div>
@@ -209,27 +209,11 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 <li><a href="#">Playlist 2</a></li>
                                 <li><a href="#">Playlist 3</a></li>
                                 <li><a href="#">Playlist 4</a></li>
-                                <li><a href="#">Playlist 5</a></li>
-                                <li><a href="#">Playlist 6</a></li>
-                                <li><a href="#">Playlist 7</a></li>
-                                <li><a href="#">Playlist 8</a></li>
-                                <li><a href="#">Playlist 9</a></li>
-                                <li><a href="#">Playlist 10</a></li>
-                                <li><a href="#">Playlist 11</a></li>
-                                <li><a href="#">Playlist 12</a></li>
-                                <li><a href="#">Playlist 13</a></li>
-                                <li><a href="#">Playlist 14</a></li>
-                                <li><a href="#">Playlist 15</a></li>
-                                <li><a href="#">Playlist 16</a></li>
-                                <li><a href="#">Playlist 17</a></li>
-                                <li><a href="#">Playlist 18</a></li>
-                                <li><a href="#">Playlist 19</a></li>
-                                <li><a href="#">Playlist 20</a></li>
+                                <li><a href="#">Playlist 5</a></li>                              
                             </ul>											
                         </section>
                         <input type="checkbox" class="row-checkbox">
                     </div>
-
                     <?php
                     if ($count == 20)
                         break;
@@ -238,16 +222,14 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             else
             {
                 ?>
-                <div class="row">
-                    No Songs Found.
-                </div>
+                <div class="row"> No Songs Found. </div>
                 <?php
             }
             ?>
         </div>
 
 
-        <!-- pagiantion part of the grid -->
+        <!-- pagination part of the grid -->
         <div class="pagination-container">
             <button class="beginning"></button>
             <button class="prev"></button>
