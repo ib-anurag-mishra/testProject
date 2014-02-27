@@ -159,6 +159,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             {
                 foreach ($nationalTopDownload as $nationalTopSong)
                 {
+                    echo '<pre>';
+                    print_r($nationalTopSong);
+                    die;
+                    
                     ?>
                     <div class="row">
                         <button class="play-btn"></button>
