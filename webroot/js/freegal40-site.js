@@ -491,8 +491,8 @@ $(document).ready(function(){
                         });
                     }
                     else if( page_class === 'last')
-                        {
-                             $(this).css('display', 'none');
+                        {               
+                            $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
                              $(document).find('.top-songs-container .rows-container div[class*="page"]:last');
                              return false;
                         }
