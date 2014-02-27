@@ -465,37 +465,64 @@ $(document).ready(function(){
         
     }
     
-      $(document).find('.top-songs-container .pagination-container').on('click' , 'button' , function(){
-          var page_class = $(this).attr('class');
-          if(page_class.contains('page-'))
-              {
-                  //page no is clicked
-                  var to_show_page = page_class.replace('-','');             
-                                    
-                  $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
-                  $(document).find('.top-songs-container .rows-container div.'+to_show_page ).css('display', 'block');
-              }
-              else
-              {
-                  //if next , prev , first and Last
-                  if ( page_class === 'next')
-                    {
-                        $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function() {
-                            if ($(this).css('display') === 'block')
+      $(document).find('.top-songs-container .pagination-container').on('click', 'button', function() {
+        var page_class = $(this).attr('class');
+      
+        if (!page_class.indexOf('page-'))
+        {
+            var to_show_page = page_class.replace('-', '');
+            $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
+            $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+        }
+        else
+        {        
+            if (page_class === 'next')
+            {
+                var total_length = $(document).find('.top-songs-container .rows-container div[class*="page"]').length;
+                $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function() {
+                    if ($(this).css('display') === 'block')
+                    {                                           
+                        to_show_page = 'page' + (parseInt($(this).attr('class').replace('page', '')) + 1);
+                        if( (parseInt($(this).attr('class').replace('page', '')) + 1) < total_length+1)
                             {
-                                $(this).css('display', 'none');
-                                to_show_page = $(this).attr('class').replace('page', '') + 1;
-                                $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
-                                return false;
-                            }
-                        });
+                                 $(this).css('display', 'none');    
+                                 $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                            }                       
+                        return false;
                     }
-                  $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function(){
-                      if($(this).css('display') ==='block')
-                          alert($(this).attr('class'));
-                  });
-              }
-          alert(page_class);
-          return false ;
-      });
+                });
+            }
+            else if (page_class === 'last')
+            {
+                $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
+                var last_class = $(document).find('.top-songs-container .rows-container div[class*="page"]').length;
+                to_show_page = 'page' + last_class;
+                $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                return false;
+            }
+            else if (page_class === 'prev')
+            {
+                $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function() {
+                    if ($(this).css('display') === 'block')
+                    {                        
+                        to_show_page = 'page' + (parseInt($(this).attr('class').replace('page', '')) - 1);
+                        if((parseInt($(this).attr('class').replace('page', '')) - 1) > 0)
+                            {
+                        $(this).css('display', 'none');
+                        $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                            }
+                        return false;
+                    }
+                });
+            }
+            else if (page_class === 'beginning')
+            {
+                $(document).find('.top-songs-container .rows-container div[class*="page"]').css('display', 'none');
+                to_show_page = 'page1';
+                $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                return false;
+            }
+        }       
+        return false;
+    });
 });
