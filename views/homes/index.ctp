@@ -1554,10 +1554,5 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
     div[class*='page']   
     {
         display: none;
-    }
-    
-     div[class*='page'] .active
-    {
-        display: block
-    }
+    }  
 </style>

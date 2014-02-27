@@ -444,7 +444,7 @@ $(document).ready(function(){
                 newList.addClass('page'+(i+1));
                 if(i === 0 )
                     {
-                         newList.addClass(' active');
+                         newList.css('display', 'block');
                     }
                    
                container.append(newList);
