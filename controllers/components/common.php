@@ -1522,6 +1522,136 @@ STR;
         $this->log("cache written for featured artists for: $territory", "cache");
         return $featured;
     }
+    
+    
+    /*
+     * Function Name : getTopAlbums
+     * Function Description : This function is used to getTopAlbums.
+     */
+
+    function getTopAlbums($territory)
+    {
+        set_time_limit(0);
+        //$countryPrefix = $this->getCountryPrefix($territory);       
+       // $featured = array();       
+        
+        $ids = '';
+        $ids_provider_type = '';
+        $topAlbumInstance = ClassRegistry::init('TopAlbum');
+        $topAlbums = $topAlbumInstance->find('all', array(
+            'conditions' => array(
+                'TopAlbum.territory' => $territory,
+                'TopAlbum.language' => Configure::read('App.LANGUAGE')),
+            'recursive' => -1,
+            'order' => array(
+                'TopAlbum.id' => 'desc')
+                )
+        );
+        
+        foreach ($topAlbums as $k => $v)
+        {
+            if ($v['TopAlbum']['album'] != 0)
+            {
+                if (empty($ids))
+                {
+                    $ids .= $v['TopAlbum']['album'];
+                    $ids_provider_type .= "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
+                }
+                else
+                {
+                    $ids .= ',' . $v['TopAlbum']['album'];
+                    $ids_provider_type .= ',' . "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
+                }
+            }
+        }
+
+        if ((count($topAlbums) < 1) || ($topAlbums === false))
+        {
+            $this->log("top album data is not available for" . $territory, "cache");
+        }
+
+        if ($ids != '')
+        {
+            $albumInstance = ClassRegistry::init('Album');
+            $albumInstance->recursive = 2;
+            $topAlbumData = $albumInstance->find('all', array(
+                'joins' => array(
+                    array(
+                        'type' => 'INNER',
+                        'table' => 'top_albums',
+                        'alias' => 'ta',
+                        'conditions' => array('Album.ProdID = ta.album')
+                    )
+                ),
+                'conditions' => array(
+                    'and' => array(
+                        array(
+                            "(Album.ProdID, Album.provider_type) IN (" . rtrim($ids_provider_type, ",'") . ")"
+                        ),
+                    ), 
+                    "1 = 1 GROUP BY Album.ProdID"
+                ),
+                'fields' => array(
+                    'Album.ProdID',
+                    'Album.Title',
+                    'Album.ArtistText',
+                    'Album.AlbumTitle',
+                    'Album.Artist',
+                    'Album.ArtistURL',
+                    'Album.Label',
+                    'Album.Copyright',
+                    'Album.provider_type'
+                ),
+                'contain' => array(
+                    'Genre' => array(
+                        'fields' => array(
+                            'Genre.Genre'
+                        )
+                    ),
+                    'Files' => array(
+                        'fields' => array(
+                            'Files.CdnPath',
+                            'Files.SaveAsName',
+                            'Files.SourceURL'
+                        ),
+                    )
+                ),
+                'order' => 'ta.id DESC',
+                'limit' => 20
+                    )
+            );
+        }
+        else
+        {
+            $topAlbumData = array();
+        }
+
+        if (empty($topAlbumData))
+        {
+            Cache::write("topAlbums" . $territory, Cache::read("topAlbums" . $territory));
+        }
+        else
+        {
+            foreach ($topAlbumData as $k => $v)
+            {
+                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
+                $image = Configure::read('App.Music_Path') . $albumArtwork;
+                $featured[$k]['topAlbumImage'] = $image;
+                // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
+                //{
+                    $featured[$k]['albumSongs'] = $this->requestAction(
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),0,$territory))
+                    );
+               // }
+            }
+            Cache::delete("topAlbums" . $territory);
+            Cache::write("topAlbums" . $territory, $topAlbumData);
+        }
+        $this->log("cache written for Top Albums for $territory", 'debug');
+        $this->log("cache written for Top Albums for: $territory", "cache");
+        return $topAlbumData;
+    }    
+    
 
     /*
      * Function Name : getGenreData

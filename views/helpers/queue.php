@@ -230,6 +230,47 @@ EOD;
     }
     
     
+    
+    /* Function name : getTopAlbumStreamData
+     * Description   : This function is used to get data for play button 
+     */
+
+    function getTopAlbumStreamData($albumSongs)
+    {
+        if (!empty($albumSongs))
+        {
+            foreach ($albumSongs as $value)
+            {
+                if (!empty($value['streamUrl']) || !empty($value['Song']['SongTitle']))
+                {
+
+                    if ($value["Song"]["Advisory"] == 'T')
+                    {
+                        $value["Song"]["SongTitle"] = $value["Song"]["SongTitle"] . ' (Explicit)';
+                    }
+
+                    $playItem = array('playlistId' => 0, 'songId' => $value["Song"]["ProdID"], 'providerType' => $value["Song"]["provider_type"], 'label' => $value['Song']['SongTitle'], 'songTitle' => $value['Song']['SongTitle'], 'artistName' => $value['Song']['ArtistText'], 'songLength' => $value['totalseconds'], 'data' => $value['streamUrl']);
+                    $jsonPlayItem = json_encode($playItem);
+                    $jsonPlayItem = str_replace("\/", "/", $jsonPlayItem);
+                    $playListData[] = $jsonPlayItem;
+                }
+            }
+        }
+        if (!empty($playListData))
+        {
+            $playList = implode(',', $playListData);
+            if (!empty($playList))
+            {
+                $playList = base64_encode('[' . $playList . ']');
+            }
+        }
+        
+        $playList.= '{'.$playList.'}';
+        
+        return   $playList;
+    }    
+    
+    
     /* Function name : getAlbumStreamLabel
      * Description   : This function is used to get stream now mark up replacing play button 
      */

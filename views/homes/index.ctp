@@ -12,62 +12,74 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             <ul class="clearfix">
                 <?php
                 $count = 1;
-                if (is_array($nationalTopDownload) && count($nationalTopAlbumsDownload) > 0)
+                if (is_array($nationalTopAlbums) && count($nationalTopAlbums) > 0)
                 {
-                    foreach ($nationalTopAlbumsDownload as $key => $value)
+                    foreach ($nationalTopAlbums as $key => $value)
                     {
                         //hide song if library block the explicit content
-                        if (($this->Session->read('block') == 'yes') && ($value['Albums']['Advisory'] == 'T'))
+                        if (strlen($value['Album']['AlbumTitle']) > 22)
                         {
-                            continue;
+                            $title = substr($value['Album']['AlbumTitle'], 0, 22) . "..";
+                        }
+                        else
+                        {
+                            $title = $value['Album']['AlbumTitle'];
+                        }
+
+                        if (strlen($value['Album']['ArtistText']) > 22)
+                        {
+                            $ArtistText = substr($value['Album']['ArtistText'], 0, 22) . "..";
+                        }
+                        else
+                        {
+                            $ArtistText = $value['Album']['ArtistText'];
                         }
                         ?>
                         <li>
                             <div class="album-cover-container">
-                                <?php echo $html->link($html->image($value['songAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'], base64_encode($value['Song']['provider_type'])), array('class' => 'first', 'escape' => false)) ?>                                                       
+                                <?php echo $html->link($html->image($value['topAlbumImage']), array('controller' => 'artists', 'action' => 'view', base64_encode($value['Album']['ArtistText']), $value['Album']['ProdID'], base64_encode($value['Album']['provider_type'])), array('class' => 'first', 'escape' => false)) ?>                                                       
                                 <div class="ranking"><?php echo $count; ?></div>
                                 <?php
                                 if ($this->Session->read("patron"))
                                 {
-                                    if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs']))
+                                    if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
                                     {
-                                        $providerType = base64_encode($value['Song']['provider_type']);
-                                        $artistText = base64_encode($value['Song']['ArtistText']);
+                                        $albumSongs = $this->Queue->getTopAlbumStreamData($value['albumSongs'][$value['Album']['ProdID']]);
                                         ?>  
-                                        <a onclick="javascript:loadNationalAlbumData('<?php echo $artistText; ?>',<?php echo $value['Albums']['ProdID']; ?>, '<?php echo $providerType ?>');" href="javascript:void(0);" ><button class="play-btn-icon toggleable"></button></a>
-                                        <input type="hidden" id="<?= $value['Albums']['ProdID'] ?>" value="album"/>
+                                        <a onclick="javascript:loadAlbumSong('<?php echo $albumSongs; ?>')"  href="javascript:void(0);" ><button class="play-btn-icon toggleable"></button></a>
+                                        <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album"/>
+                                        <button class="playlist-menu-icon toggleable"></button>
+                                        <button class="wishlist-icon toggleable"></button> 
+                                        <ul>
+                                            <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+                                            <li><a href="#">David's Favorites</a></li>
+                                            <li><a href="#">Pop</a></li>
+                                            <li><a href="#">Day After Christmas</a></li>
+                                            <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
+                                            <li><a href="#">80's</a></li>
+                                            <li><a href="#">90's</a></li>
+                                            <li><a href="#">Country</a></li>
+                                            <li><a href="#">Rock</a></li>
+                                            <li><a href="#">Metal</a></li>
+                                            <li><a href="#">Breakup Songs</a></li>
+                                            <li><a href="#">New Years</a></li>
+                                            <li><a href="#">Christmas</a></li>
+                                            <li><a href="#">Summer</a></li>
+                                            <li><a href="#">Road Trip</a></li>
+                                            <li><a href="#">Christian</a></li>
+                                            <li><a href="#">Cleaning</a></li>
+                                            <li><a href="#">Workout</a></li>
+                                            <li><a href="#">Running</a></li>
+                                            <li><a href="#">Romantic</a></li>
+                                        </ul>                                        
                                         <?php
                                     }
                                 }
                                 ?>
-                                <button class="playlist-menu-icon toggleable"></button>
-                                <button class="wishlist-icon toggleable"></button>
-                                <ul>
-                                    <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                    <li><a href="#">David's Favorites</a></li>
-                                    <li><a href="#">Pop</a></li>
-                                    <li><a href="#">Day After Christmas</a></li>
-                                    <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                    <li><a href="#">80's</a></li>
-                                    <li><a href="#">90's</a></li>
-                                    <li><a href="#">Country</a></li>
-                                    <li><a href="#">Rock</a></li>
-                                    <li><a href="#">Metal</a></li>
-                                    <li><a href="#">Breakup Songs</a></li>
-                                    <li><a href="#">New Years</a></li>
-                                    <li><a href="#">Christmas</a></li>
-                                    <li><a href="#">Summer</a></li>
-                                    <li><a href="#">Road Trip</a></li>
-                                    <li><a href="#">Christian</a></li>
-                                    <li><a href="#">Cleaning</a></li>
-                                    <li><a href="#">Workout</a></li>
-                                    <li><a href="#">Running</a></li>
-                                    <li><a href="#">Romantic</a></li>
-                                </ul>
                             </div>
                             <div class="album-info">
-                                <p class="title"><a href="#">Planet Pit</a><span class="explicit"> (Explicit)</span></p>
-                                <p class="artist"><a href="#">Pitbull</a></p>
+                                <p class="title"><a title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Album']['ArtistText']); ?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a></p>
+                                <p class="artist"><a title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['ArtistText'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Album']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>"><?php echo $this->getTextEncode($ArtistText); ?></a></p>
                             </div>
                         </li>
                         <?php
