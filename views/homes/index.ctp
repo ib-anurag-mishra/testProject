@@ -239,7 +239,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
         <!-- pagination part of the grid -->
         <div class="pagination-container">
-            <button class="beginning"></button>
+<!--            <button class="beginning"></button>
             <button class="prev"></button>
             <button class="page-1">1</button>
             <button class="page-2">2</button>
@@ -247,7 +247,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             <button class="page-4">4</button>
             <button class="page-5">5</button>
             <button class="next"></button>
-            <button class="last"></button>
+            <button class="last"></button>-->
         </div>
     </div>
 

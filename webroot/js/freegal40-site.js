@@ -431,7 +431,28 @@ $(document).ready(function(){
     //For Pagination of song grid
     $(document).find('.top-songs-container .rows-container .row')
     {
-        var count = $(document).find('.top-songs-container .rows-container > div.row').length;
+        var 
+            count = $(document).find('.top-songs-container .rows-container > div.row').length,
+            num_cols = Math.floor(count / 20),
+            container = $(document).find('.top-songs-container .rows-container');
+        
+        
+        //adding the pagination 
+         $(document).find('.top-songs-container .pagination-container')
+         {
+             var pagination_string = '<button class="beginning"></button><button class="prev"></button>';
+//             
+//             
+//            <button class="page-1">1</button>
+//            <button class="page-2">2</button>
+//            <button class="page-3">3</button>
+//            <button class="page-4">4</button>
+//            <button class="page-5">5</button>
+            pagination_string =+ '<button class="next"></button><button class="last"></button>';
+            
+             $(document).find('.top-songs-container .pagination-container').append(pagination_string);
+         }
+        
         alert(count);
     }
 });
