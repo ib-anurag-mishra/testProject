@@ -441,6 +441,7 @@ $(document).ready(function(){
             {
                 var listItems = $(document).find('.top-songs-container .rows-container > div.row').slice(0, 20);
                 var newList = $("<div />").append(listItems);
+                newList.addClass('page'+i);
                container.append(newList);
             }
         
