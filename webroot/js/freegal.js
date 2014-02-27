@@ -1749,9 +1749,24 @@ function addToAlbumTest(queueID, addTo)
 function addToPlaylistNew(queueID, addTo)
 {
     var type = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('value');
-    //var ProdID = $(addTo).parent().parent().find('input[type="hidden"]').attr('id');
+    var ProdID = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('id');
     
-    alert(type);
+    $.ajax({
+        type: "post",
+        data: {'prodID': ProdID, 'type': type, 'QueueID': queueID},
+        url: webroot + 'queues/queueListAlbums',
+        success: function(response)
+        {
+            //alert(response);
+            addToQueueResponse(response, type);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log(
+                    "The following error occured: " +
+                    textStatus, errorThrown);
+        }
+    });
     return false;
 }
 function addToQueueResponse(response, type)
