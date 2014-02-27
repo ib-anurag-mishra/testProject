@@ -47,8 +47,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']],1);
                                         ?>  
                                         <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album"/>
-                                        <button class="playlist-menu-icon toggleable"></button>
-                                        <button class="wishlist-icon toggleable"></button> 
+                                        <button class="playlist-menu-icon toggleable"></button>                                        
                                         <ul>
                                             <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
                                             <li><a href="#">David's Favorites</a></li>
@@ -70,7 +69,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             <li><a href="#">Workout</a></li>
                                             <li><a href="#">Running</a></li>
                                             <li><a href="#">Romantic</a></li>
-                                        </ul>                                        
+                                        </ul>   
+                                        <button class="wishlist-icon toggleable"></button> 
                                         <?php
                                     }
                                 }
