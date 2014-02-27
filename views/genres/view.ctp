@@ -70,7 +70,7 @@
 </style>
 
 <script>
-    //load the artist list when  scroll reached at the end
+    
     $(document).ready(function() {
         var preValue = 1;
         var artistPage = 2;
