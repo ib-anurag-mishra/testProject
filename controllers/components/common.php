@@ -1636,10 +1636,10 @@ STR;
             {
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
-                $featured[$k]['topAlbumImage'] = $image;
+                $topAlbumData[$k]['topAlbumImage'] = $image;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
-                    $featured[$k]['albumSongs'] = $this->requestAction(
+                    $topAlbumData[$k]['albumSongs'] = $this->requestAction(
                             array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),0,$territory))
                     );
                // }
