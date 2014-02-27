@@ -436,6 +436,13 @@ $(document).ready(function(){
             num_cols = Math.floor(count / 20),
             container = $(document).find('.top-songs-container .rows-container');
         
+        //dividing the songs list in pagination
+        for(var i=0; i<num_cols; i++)
+            {
+                var listItems = $(document).find('.top-songs-container .rows-container > div.row').slice(0, 20);
+                var newList = $('<div/>').append(listItems);
+               container.append(newList);
+            }
         
         //adding the pagination 
          $(document).find('.top-songs-container .pagination-container')
@@ -443,7 +450,7 @@ $(document).ready(function(){
              var pagination_string = '<button class="beginning"></button><button class="prev"></button>';
              for(var i=1 ; i <= num_cols; i++)
                  {
-                     pagination_string += "<button class='page-"+i+"' >'"+i+"'</button>";
+                     pagination_string += "<button class='page-"+i+"' >"+i+"</button>";
                  }
             pagination_string += '<button class="next"></button><button class="last"></button>';
             
