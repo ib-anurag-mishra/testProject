@@ -3544,7 +3544,7 @@ typeof JSON!="object"&&(JSON={}),function(){"use strict";function f(e){return e<
                     $.getScript(webroot + 'js/freegal.js');
                     $.getScript(webroot + 'js/freegal40-site.js');
                     //$.getScript(webroot + 'js/audioPlayer.js');
-                    $.getScript(scriptPath + '/js/recent-downloads.js');
+                    $.getScript(webroot + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
                   
                     
