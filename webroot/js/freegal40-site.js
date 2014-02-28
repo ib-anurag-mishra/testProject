@@ -542,8 +542,8 @@ $(document).ready(function(){
         $(document).find('.top-songs-container .rows-container .row').each(function()
         {           
             if($(this).find('.row-checkbox').prop('checked'))
-                {
-                   selected_songs[$(this).find('.options-menu input[type="hidden"]').attr('id')] = $(this).find('.options-menu input[type="hidden"]').attr('data-provider');
+                {                   
+                   selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id')+'&'+$(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
                 }
         });
 
