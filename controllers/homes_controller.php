@@ -1,8 +1,8 @@
 <?php
 
 /* File Name: homes_controller.php
-   File Description: Displays the home page for each patron
-   Author: FreegalMusic
+  File Description: Displays the home page for each patron
+  Author: FreegalMusic
  * Modified: 21-06-2013
  */
 
@@ -12,7 +12,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'WishlistVideo', 'Song', 'Language', 'Session', 'Mvideo', 'Download', 'Videodownload', 'Queue');
     var $components = array('RequestHandler', 'ValidatePatron', 'Downloads', 'PasswordHelper', 'Email', 'SuggestionSong', 'Cookie', 'Session', 'Auth', 'Downloadsvideos', 'Common', 'Streaming');
-    var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload', 'Zipcode', 'StreamingHistory','MemDatas');
+    var $uses = array('Home', 'User', 'Featuredartist', 'Artist', 'Library', 'Download', 'Genre', 'Currentpatron', 'Page', 'Wishlist', 'WishlistVideo', 'Album', 'Song', 'Language', 'Searchrecord', 'LatestDownload', 'Siteconfig', 'Country', 'LatestVideodownload', 'News', 'Video', 'Videodownload', 'Zipcode', 'StreamingHistory', 'MemDatas');
 
     /*
       Function Name : beforeFilter
@@ -105,18 +105,21 @@ class HomesController extends AppController
         if (($national = Cache::read("national" . $territory)) === false)
         //if(1)
         {
-            if($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ')
+            if ($territory == 'US' || $territory == 'CA' || $territory == 'AU' || $territory == 'NZ')
             {
-                $cacheFlag = $this->MemDatas->find('count',array('conditions' => array('territory'=>$territory,'vari_info != '=>'')));
-                if($cacheFlag > 0){
-                    $memDatasArr = $this->MemDatas->find('first',array('conditions' => array('territory'=>$territory)));
+                $cacheFlag = $this->MemDatas->find('count', array('conditions' => array('territory' => $territory, 'vari_info != ' => '')));
+                if ($cacheFlag > 0)
+                {
+                    $memDatasArr = $this->MemDatas->find('first', array('conditions' => array('territory' => $territory)));
                     $unMemDatasArr = unserialize(base64_decode($memDatasArr['MemDatas']['vari_info']));
-                    Cache::write("national" . $territory,$unMemDatasArr);
+                    Cache::write("national" . $territory, $unMemDatasArr);
                     $nationalTopDownload = $unMemDatasArr;
-                }else{
+                }
+                else
+                {
                     $nationalTopDownload = $this->Common->getNationalTop100($territory);
                     $nationalTopDownloadSer = base64_encode(serialize($nationalTopDownload));
-                    $memQuery = "update mem_datas  set vari_info='".$nationalTopDownloadSer."'  where territory='".$territory."'";
+                    $memQuery = "update mem_datas  set vari_info='" . $nationalTopDownloadSer . "'  where territory='" . $territory . "'";
                     $this->MemDatas->setDataSource('master');
                     $this->MemDatas->query($memQuery);
                     $this->MemDatas->setDataSource('default');
@@ -125,10 +128,10 @@ class HomesController extends AppController
             else
             {
                 $nationalTopDownload = $this->Common->getNationalTop100($territory);
-            }                       
+            }
         }
         else
-        {   
+        {
             $nationalTopDownload = Cache::read("national" . $territory);
         }
         $this->set('nationalTopDownload', $nationalTopDownload);
@@ -172,33 +175,34 @@ class HomesController extends AppController
         {
             $this->Session->write('Config.language', 'en');
         }
-        
-        
-        $news_rs = array();    
+
+
+        $news_rs = array();
         //create the cache variable name
-        $newCacheVarName = "news".$this->Session->read('territory').$this->Session->read('Config.language');        
+        $newCacheVarName = "news" . $this->Session->read('territory') . $this->Session->read('Config.language');
         //first check lenguage and territory set or not        
-        if($this->Session->read('territory') && $this->Session->read('Config.language')){            
+        if ($this->Session->read('territory') && $this->Session->read('Config.language'))
+        {
             if (($newsInfo = Cache::read($newCacheVarName)) === false)
             {
                 //if cache not set then run the queries
-                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")),
-                'order' => 'News.created DESC',
-                'limit' => '10'
-                )); 
-                Cache::write($newCacheVarName,$news_rs);
+                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%" . $this->Session->read('territory') . "%")),
+                    'order' => 'News.created DESC',
+                    'limit' => '10'
+                ));
+                Cache::write($newCacheVarName, $news_rs);
             }
             else
-            {           
+            {
                 //get all the information from the cache for news
                 $news_rs = Cache::read($newCacheVarName);
-            }            
-        }  
-        
-        
+            }
+        }
+
+
         $this->set('news', $news_rs);
-        
-        
+
+
 
 
         /*
@@ -2534,7 +2538,7 @@ STR;
                 }
 
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-                            
+
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
@@ -2610,10 +2614,6 @@ STR;
         }
     }
 
-    
-    
-    
-    
     /*
       Function Name : addAlbumToWishlist
       Desc : To let the patron add Albums to wishlist
@@ -2628,9 +2628,9 @@ STR;
         $log_id = md5(time());
         $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
         $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
-                . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderType:" . $_REQUEST['providerType']. "  :artistText:" . $_REQUEST['artistText'];
+                . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderType:" . $_REQUEST['providerType'] . "  :artistText:" . $_REQUEST['artistText'];
 
-        if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['providerType'])&& isset($_REQUEST['artistText']))
+        if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['providerType']) && isset($_REQUEST['artistText']))
         {
             $libraryId = $this->Session->read('library');
             $patronId = $this->Session->read('patron');
@@ -2647,7 +2647,7 @@ STR;
                 }
 
                 $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
-                            
+
                 $insertArr = Array();
                 $insertArr['library_id'] = $libraryId;
                 $insertArr['patron_id'] = $patronId;
@@ -2721,8 +2721,8 @@ STR;
             echo 'error';
             exit;
         }
-    }    
-    
+    }
+
     /*
       Function Name : addToWishlistVideo
       Desc : To let the patron add video to wishlist
@@ -3359,7 +3359,7 @@ STR;
         }
     }
 
-     /*
+    /*
       Function Name : wishlistVideoDownload
       Desc : For downloading a song in wishlist page
      */
@@ -4579,8 +4579,7 @@ STR;
         $this->set('new_releases_albums', $new_releases_albums_rs);
         //print_r($new_releases_albums_rs);
     }
-    
-    
+
     /*
      * Function Name : wishlistDownloadHome
      * Desc : This function is responsible for download functionality for both songs and video  
@@ -4594,13 +4593,13 @@ STR;
      * 
      * @return string 
      */
+
     function wishlistDownloadHome()
     {
         // Configure::write('debug', 0);
-        
         //set the layout fales because this is ajax call
         $this->layout = false;
-        
+
         //get all required variables
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -4617,8 +4616,8 @@ STR;
 
         /*
          * Check if any of the required parameter is null or not set then log details and return and error message to client         *
-         */         
-         
+         */
+
         if (empty($prodId) || empty($CdnPath) || empty($SaveAsName) || empty($provider) || empty($libId) || empty($patId))
         {
             $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider
@@ -4701,7 +4700,7 @@ STR;
         {
             $user = $this->Session->read('patron');
         }
-        
+
         //if validation pass than
         if ($validationPassed == true)
         {
@@ -4815,8 +4814,8 @@ STR;
 
             $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-            
-            
+
+
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
             $siteConfigData = $this->Album->query($siteConfigSQL);
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
@@ -4833,9 +4832,9 @@ STR;
                 $procedure = 'sonyproc_ioda';
                 $sql = "CALL sonyproc_ioda('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Song']['ProductID'] . "', '" . $trackDetails['0']['Song']['ISRC'] . "', '" . addslashes($trackDetails['0']['Song']['Artist']) . "', '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
             }
-            
+
             $this->Library->setDataSource('master');
-            
+
             $this->Library->query($sql);
             $sql = "SELECT @ret";
             $data = $this->Library->query($sql);
@@ -4843,7 +4842,7 @@ STR;
             $this->LatestDownload->setDataSource('default');
             $log_data .= ":StoredProcedureParameters-LibID='" . $libId . "':StoredProcedureParameters-Patron='" . $patId . "':StoredProcedureParameters-ProdID='" . $prodId . "':StoredProcedureParameters-ProductID='" . $trackDetails['0']['Song']['ProductID'] . "':StoredProcedureParameters-ISRC='" . $trackDetails['0']['Song']['ISRC'] . "':StoredProcedureParameters-Artist='" . addslashes($trackDetails['0']['Song']['Artist']) . "':StoredProcedureParameters-SongTitle='" . addslashes($trackDetails['0']['Song']['SongTitle']) . "':StoredProcedureParameters-UserLoginType='" . $insertArr['user_login_type'] . "':StoredProcedureParameters-ProviderType='" . $insertArr['provider_type'] . "':StoredProcedureParameters-Email='" . $insertArr['email'] . "':StoredProcedureParameters-UserAgent='" . addslashes($insertArr['user_agent']) . "':StoredProcedureParameters-IP='" . $insertArr['ip'] . "':StoredProcedureParameters-CurWeekStartDate='" . Configure::read('App.curWeekStartDate') . "':StoredProcedureParameters-CurWeekEndDate='" . Configure::read('App.curWeekEndDate') . "':StoredProcedureParameters-Name='" . $procedure . "':StoredProcedureParameters-@ret='" . $return . "'";
             $log_data .= ":StoredProcedureParameters-HTTP_REFERER='" . $_SERVER['HTTP_REFERER'];
-            
+
             //check the new entry is available in the latest download table or not
             if (is_numeric($return))
             {
@@ -4868,13 +4867,13 @@ STR;
                 {
                     $log_data .= ":SelectLDFail";
                 }
-                
-                
+
+
                 $this->LatestDownload->setDataSource('default');
-            }     
-            
+            }
+
             $this->Library->setDataSource('default');
-            
+
             //if stored procedure run correctly and retrun numric value
             if (is_numeric($return))
             {
@@ -4892,7 +4891,7 @@ STR;
 //                $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=" . $libId;
 //                $this->Library->query($sql);
 //                $this->Library->setDataSource('default'); 
-                
+
                 if ($id > 0)
                 {
                     //delete from wishlist table
@@ -4907,40 +4906,40 @@ STR;
                 $downloadscount = $this->Download->find('count', array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
                 $downloadsUsed = ($videodownloadsUsed * 2) + $downloadscount;
                 $this->Session->write('downloadCount', $downloadsUsed);
-                
+
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
 
                 echo "suces|" . $downloadsUsed . "|" . $finalURL;
-                exit;             
-                
-            }else{
-                
+                exit;
+            }
+            else
+            {
+
                 //check if this songs is already downloaded
                 if ($return == 'incld')
                 {
-                    $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later.".$return;
+                    $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later." . $return;
                     $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                    $this->log($log_data, $log_name);                
+                    $this->log($log_data, $log_name);
                     echo "empty|You have already downloaded this song. Get it from your recent downloads.";
-                    exit;                 
-                    
+                    exit;
                 }
-                
-                
+
+
                 //if store procedure return something else                 
-                $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later.".$return;
+                $log_data .= PHP_EOL . "empty|Something went wrong during download.Please try again later." . $return;
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                $this->log($log_data, $log_name);                
-                
+                $this->log($log_data, $log_name);
+
                 echo "empty|Something went wrong during download.Please try again later.";
-                exit; 
-            }           
+                exit;
+            }
         }
         else
         {
             //if validation fail than
-            $log_data .= PHP_EOL . "invalid|" .$validationResult[1];
+            $log_data .= PHP_EOL . "invalid|" . $validationResult[1];
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------" . PHP_EOL;
             $this->log($log_data, $log_name);
 
@@ -4949,27 +4948,28 @@ STR;
         }
     }
 
-    
+    /**
+     * 
+     */
     function addToWishlistNewHome()
     {
         Configure::write('debug', 2);
         $this->layout = 'ajax';
 
-        //check if its called for adding Album  / Songs to Wishlist
-        $type = $_POST["type"];
-
-        if ($type == 'album')
+        //check if its called for adding Album  / Songs to Wishlist        
+        $type = $this->params["type"];
+        //Check is patron is logged in or not
+        if ($this->Session->read('library') && $this->Session->read('patron') && isset($prodID) && isset($provider))
         {
-            $prodID = $_POST["prodID"];
-            $provider = $_POST["provider_type"];
-            if ($provider != 'sony')
+            if ($type == 'album')
             {
-                $provider = 'ioda';
-            }
-            
-            //Check is patron is logged in or not
-            if ($this->Session->read('library') && $this->Session->read('patron') && isset($prodID) && isset($provider))
-            {
+                $prodID = $this->params["prodID"];
+                $provider = $this->params["provider_type"];
+                if ($provider != 'sony')
+                {
+                    $provider = 'ioda';
+                }
+
                 $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
                 $log_id = md5(time());
                 $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
@@ -4978,53 +4978,67 @@ STR;
 
                 $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
                 $log_data .= $this->addsToWishlist($albumSongs);
-                
+
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
+                 echo "success|Album is added succesfully to wishlist.";
+            }
+            elseif ($type == 'song')
+            {
+                $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
+                $log_id = md5(time());
+                $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+                $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron');
+
+                $selectedSongs = $this->params["songs"];
+                $songsArray = array();
+                foreach ($selectedSongs as $song)
+                {
+                    $songInfo = explode('&', $song);
+                    $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[1] ";
+
+                    $songDetails = $this->Song->getdownloaddata($songInfo[0], $songInfo[1]);
+                    array_push($songsArray, array_pop($songDetails));
+                }
+
+                $log_data .= $this->addsToWishlist($songsArray);
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
+                echo "success|".((count($selectedSongs) > 1) ? "songs" : "song") ."is added succesfully to wishlist.";
             }
         }
-        elseif ($type == 'song')
+        else
         {
-            $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
-            $log_id = md5(time());
-            $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
-            $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron');
-            
-            $selectedSongs = $_POST["songs"];
-            $songsArray = array();
-            foreach ($selectedSongs as $song)
-            {
-                $songInfo = explode('&', $song);
-                $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[1] ";
-                
-                $songDetails = $this->Song->getdownloaddata($songInfo[0], $songInfo[1] );
-                array_push($songsArray, array_pop($songDetails));
-            }
-            
-             $log_data .= $this->addsToWishlist($songsArray);
-                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                $this->log($log_data, $log_name);
-      
+            echo "error|You have been logged out.Please reload and login again.";
         }
        
-        echo $log_data;
         die;
     }
-    
+
+    /**
+     * This method is used for storing the songs into the 
+     * wishlist for Patron's 
+     * @param type $songsArray
+     * @return string
+     */
     function addsToWishlist($songsArray)
-    {
+    {       
         $log_data = "";
         //check if the album is already add  to wishlist
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
+        
         foreach ($songsArray as $song)
         {
-            $wishlistCount = $this->Wishlist->find('count', array('conditions' =>
+            $wishlistCount = $this->Wishlist->find(
+                    'count', array(
+                'conditions' =>
                 array(
                     'library_id' => $libraryId,
                     'patron_id' => $patronId,
                     'ProdID' => $song['Song']['ProdID']
-            )));
+                )
+            ));
             if (!$wishlistCount)
             {
                 $insertArr = Array();
