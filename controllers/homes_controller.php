@@ -4977,7 +4977,10 @@ STR;
             if ($this->Session->read('library') && $this->Session->read('patron') && isset($prodID) && isset($provider))
             {
                 $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
-                $this->addsToWishlist($albumSongs);
+                $log_data .= $this->addsToWishlist($albumSongs);
+                   $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                        $this->log($log_data, $log_name);
+                    
             }
         }
         elseif ($type == 'song')
@@ -4991,37 +4994,61 @@ STR;
         die;
     }
     
-    function addsToWishlist($songsArray )
+    function addsToWishlist($songsArray)
     {
+        $log_data = "";
         //check if the album is already add  to wishlist
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
         foreach ($songsArray as $song)
         {
             $wishlistCount = $this->Wishlist->find('count', array('conditions' =>
-                array('library_id' => $libraryId,
+                array(
+                    'library_id' => $libraryId,
                     'patron_id' => $patronId,
                     'ProdID' => $song['Song']['ProdID']
-                )));
+            )));
             if (!$wishlistCount)
             {
                 $insertArr = Array();
-                    $insertArr['library_id'] = $libraryId;
-                    $insertArr['patron_id'] = $patronId;
-                    $insertArr['ProdID'] = $song['Song']['ProdID'];
-                    $insertArr['artist'] = $song['Song']['Artist'];
-                    $insertArr['album'] = $song['Song']['Title'];
-                    $insertArr['track_title'] = $song['Song']['SongTitle'];
-                    $insertArr['ProductID'] = $song['Song']['ProductID'];
-                    $insertArr['provider_type'] = $song['Country']['provider_type'];
-                    $insertArr['ISRC'] = $song['Song']['ISRC'];
-                    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-                    $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+                $insertArr['library_id'] = $libraryId;
+                $insertArr['patron_id'] = $patronId;
+                $insertArr['ProdID'] = $song['Song']['ProdID'];
+                $insertArr['artist'] = $song['Song']['Artist'];
+                $insertArr['album'] = $song['Song']['Title'];
+                $insertArr['track_title'] = $song['Song']['SongTitle'];
+                $insertArr['ProductID'] = $song['Song']['ProductID'];
+                $insertArr['provider_type'] = $song['Country']['provider_type'];
+                $insertArr['ISRC'] = $song['Song']['ISRC'];
+                $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+                
+                 $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is added";
+                 
+//                $this->Wishlist->setDataSource('master');
+//                //insert into wishlist table
+//                $this->Wishlist->create();      //Prepare model to save record
+//                //check the inserting values
+//
+//                if ($this->Wishlist->save($insertArr))
+//                {
+//                    $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is added";
+//                    $this->Wishlist->setDataSource('default');
+//                    //add the wishlist songs in the session array
+//                    if ($this->Session->read('wishlistVariArray'))
+//                    {
+//                        $wishlistVariArray = $this->Session->read('wishlistVariArray');
+//                        $wishlistVariArray[] = $prodId;
+//                        $this->Session->write('wishlistVariArray', $wishlistVariArray);
+//                    }
+//                }
+//                else
+//                {
+//                    $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is not added";
+//                }
             }
-            
-            echo '<pre>';
-            print_r($insertArr);
         }
+        return $log_data;
     }
 
 }
