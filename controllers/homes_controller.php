@@ -4990,11 +4990,18 @@ STR;
             $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron');
             
             $selectedSongs = $_POST["songs"];
+            $songsArray = array();
             foreach ($selectedSongs as $song)
             {
                 $songInfo = explode('&', $song);
-                $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[0] ";
+                $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[1] ";
+                
+                $songDetails = $this->Song->getdownloaddata($songInfo[0], $songInfo[1] );
+                array_push($songsArray, $songDetails);
             }
+            
+            echo "<pre>";
+            print_r($songsArray);
         }
        
         echo $log_data;
