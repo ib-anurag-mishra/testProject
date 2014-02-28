@@ -128,6 +128,28 @@ $(document).ready(function() {
     });
     $('.genre-column,.alpha-artist-list-column,.artist-column').bindMouseWheel();
 
+    $(document).on('mouseenter', '.artist-column', function() {
+
+        $(this).bind('mousewheel', function(e) {
+
+            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+            //prevent page fom scrolling
+            return false;
+
+        });
+    });
+
+    $(document).on('mouseenter', '.genre-column', function() {
+
+        $(this).bind('mousewheel', function(e) {
+
+            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+            //prevent page fom scrolling
+            return false;
+
+        });
+    });        
+
 
 
     $('.genre-column a').on('click', function(e) {
