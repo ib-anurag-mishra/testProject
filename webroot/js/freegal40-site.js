@@ -553,7 +553,8 @@ $(document).ready(function(){
     $(document).find('.add-all-to-wishlist').on('click' ,  function(e)
 {
     e.preventDefault();
-    alert("Multi add to wishlist clicked");
+    var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+    alert(songs_count);
     return false ;
 });
 });
