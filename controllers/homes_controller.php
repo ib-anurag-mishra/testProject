@@ -4965,8 +4965,8 @@ STR;
 
         if ($type == 'album')
         {
-            $prodID = $this->params["prodID"];
-            $provider = $this->params["provider_type"];
+            $prodID = $this->params["form"]["prodID"];
+            $provider = $this->params["form"]["provider_type"];
             if ($provider != 'sony')
             {
                 $provider = 'ioda';

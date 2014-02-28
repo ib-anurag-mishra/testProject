@@ -549,7 +549,7 @@ $(document).ready(function(){
                 url: webroot + 'homes/addToWishlistNewHome',
                 success: function(response)
                 {
-                    addToQueueResponse(response, type);
+                    displayMessage(response);
                 },
                 error: function(jqXHR, textStatus, errorThrown) 
                 {
@@ -579,7 +579,7 @@ $(document).ready(function(){
                 url: webroot + 'homes/addToWishlistNewHome',
                 success: function(response)
                 {
-                    addToQueueResponse(response, type);
+                    displayMessage(response);
                 },
                 error: function(jqXHR, textStatus, errorThrown) 
                 {
@@ -595,3 +595,34 @@ $(document).ready(function(){
     });
 });
 
+function displayMessage(response)
+{
+    var responseArray = response.split('|');
+
+    if (responseArray[0] === 'error')
+    {
+        if (document.getElementById('flash-message'))
+        {
+            document.getElementById('flash-message').innerHTML = '';
+            document.getElementById("flash-message").setAttribute("class", "");
+        }
+
+        document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById("ajaxflashMessage44").style.background = "red";
+        document.getElementById('ajaxflashMessage44').innerHTML = responseArray[1];
+
+        return false;
+    }
+    else if (responseArray[0] === 'success')
+    {
+        if (document.getElementById('flash-message'))
+        {
+            document.getElementById('flash-message').innerHTML = '';
+            document.getElementById("flash-message").setAttribute("class", "");
+        }
+
+        document.getElementById("ajaxflashMessage44").style.display = "block";
+        document.getElementById('ajaxflashMessage44').innerHTML = responseArray[1];
+        return false;
+    }
+}
