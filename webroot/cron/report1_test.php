@@ -30,7 +30,7 @@ $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
 if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)){
     
     // Sets the name for the log file
-    $outputFile = "/reports_output_".date('Y_m_d_h_i_s').".txt";
+    $outputFile = "/reports_output_".date('Y_m_d_h_i_s')."_test.txt";
     
     // Loops through the unlimited and the ala carte libraries
     foreach($lib_types as $lib_type){
@@ -42,6 +42,11 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)){
         foreach($countrys as $country => $currency){
             
             // $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
+            $reports_dir = SONY_REPORTFILES;
+
+            if(!file_exists($reports_dir)){
+                mkdir($reports_dir);
+            }
 
             $logs_dir = IMPORTLOGS;
 
@@ -60,9 +65,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)){
                 $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
                 $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day"))." 00:00:00";
                 $condEndDate = date('Y-m-d', strtotime($currentDate." last sunday"))." 23:59:59";
-                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
+                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt";
 
-                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";
+                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt'";
                 $result3 = mysql_query($sql);
                 
                 if(!$result3){
@@ -225,7 +230,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)){
 
                 $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt";
 
-                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";;
+                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt'";;
                 $result3 = mysql_query($sql);
                 
                 if(!$result3){
