@@ -4949,27 +4949,31 @@ STR;
     }
 
     /**
+     * This method is called by Ajax call for storing the 
+     * National Top Albums and Song(s) to wishlist from Home page
      * 
+     * @return null
      */
     function addToWishlistNewHome()
     {
-        Configure::write('debug', 2);
         $this->layout = 'ajax';
 
-        //check if its called for adding Album  / Songs to Wishlist        
+        //check if its called for adding Album  / Song(s) to Wishlist        
         $type = $this->params["type"];
-        //Check is patron is logged in or not
-        if ($this->Session->read('library') && $this->Session->read('patron') && isset($prodID) && isset($provider))
-        {
-            if ($type == 'album')
-            {
-                $prodID = $this->params["prodID"];
-                $provider = $this->params["provider_type"];
-                if ($provider != 'sony')
-                {
-                    $provider = 'ioda';
-                }
 
+        //Check is patron is logged in or not
+
+        if ($type == 'album')
+        {
+            $prodID = $this->params["prodID"];
+            $provider = $this->params["provider_type"];
+            if ($provider != 'sony')
+            {
+                $provider = 'ioda';
+            }
+
+            if ($this->Session->read('library') && $this->Session->read('patron') && isset($prodID) && isset($provider))
+            {
                 $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
                 $log_id = md5(time());
                 $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
@@ -4981,9 +4985,16 @@ STR;
 
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
-                 echo "success|Album is added succesfully to wishlist.";
+                echo "success|Album is added succesfully to wishlist.";
             }
-            elseif ($type == 'song')
+            else
+            {
+                echo "error|You have been logged out.Please reload and login again..";
+            }
+        }
+        elseif ($type == 'song')
+        {
+            if ($this->Session->read('library') && $this->Session->read('patron'))
             {
                 $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
                 $log_id = md5(time());
@@ -5004,14 +5015,17 @@ STR;
                 $log_data .= $this->addsToWishlist($songsArray);
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
-                echo "success|".((count($selectedSongs) > 1) ? "songs" : "song") ."is added succesfully to wishlist.";
+                echo "success|" . ((count($selectedSongs) > 1) ? "songs" : "song") . "is added succesfully to wishlist.";
+            }
+            else
+            {
+                echo "error|You have been logged out.Please reload and login again..";
             }
         }
         else
         {
-            echo "error|You have been logged out.Please reload and login again.";
+            echo "error|Something went wrong.Please try again.";
         }
-       
         die;
     }
 
@@ -5022,12 +5036,12 @@ STR;
      * @return string
      */
     function addsToWishlist($songsArray)
-    {       
+    {
         $log_data = "";
         //check if the album is already add  to wishlist
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
-        
+
         foreach ($songsArray as $song)
         {
             $wishlistCount = $this->Wishlist->find(
@@ -5083,5 +5097,3 @@ STR;
     }
 
 }
-
-?>
