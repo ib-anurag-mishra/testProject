@@ -562,7 +562,7 @@ $(document).ready(function(){
         else if($(this).hasClass('add-to-wishlist'))
             {
                  var type = 'song';
-                 var song = $(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider');
+                 var song = $(this).parent().parent().find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider');
                  alert(song);
             }
         else
