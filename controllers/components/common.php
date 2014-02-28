@@ -2764,7 +2764,7 @@ STR;
      * @func getAlbumSongs
      * @desc This is used to get album songs
      */    
-    function getAlbumSongs($albumProdId,$providerType){
+    function getAlbumSongs($albumProdId,$provider){
         
         $songInstance = ClassRegistry::init('Song');
         $country = $this->Session->read('territory');
@@ -2823,7 +2823,7 @@ STR;
                 'conditions' =>
                 array('and' =>
                     array(
-                        array('Song.ReferenceID' => $album['Album']['ProdID']),
+                        array('Song.ReferenceID' => $albumProdId),
                         array('Song.provider_type = Country.provider_type'),
                         array("Song.Sample_FileID != ''"),
                         array("Song.FullLength_FIleID != ''"),

@@ -4962,7 +4962,11 @@ STR;
         {
             $prodID = $_POST["prodID"];
             $provider = $_POST["provider_type"];
-
+            if ($provider != 'sony')
+                    {
+                        $provider = 'ioda';
+                    }
+                    
             $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
             $log_id = md5(time());
             $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
@@ -4975,23 +4979,17 @@ STR;
                 $libraryId = $this->Session->read('library');
                 $patronId = $this->Session->read('patron');
                 //check if the album is already add  to wishlist
-                $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $prodID)));
-                if (!$wishlistCount)
-                {
-                    if ($provider != 'sony')
-                    {
-                        $provider = 'ioda';
-                    }
-
-                    $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
+                
+                 $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
                     echo '<pre>';
                     print_r($albumSongs);
                     die;
                     
                     
-                    
-                    
-                    
+                $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $prodID)));
+                if (!$wishlistCount)
+                {
+                  
                     $insertArr = Array();
                     $insertArr['library_id'] = $libraryId;
                     $insertArr['patron_id'] = $patronId;
