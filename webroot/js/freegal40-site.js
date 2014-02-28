@@ -543,7 +543,7 @@ $(document).ready(function(){
         {           
             if($(this).find('.row-checkbox').prop('checked'))
                 {
-                   selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id'));
+                   selected_songs[$(this).find('.options-menu input[type="hidden"]').attr('id')] = $(this).find('.options-menu input[type="hidden"]').attr('data-provider');
                 }
         });
 
