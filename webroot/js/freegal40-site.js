@@ -562,13 +562,31 @@ $(document).ready(function(){
         }
         else
         {
-            var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+            //var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+            var type = 'song';
             var selected_songs = [];
             $(document).find('.top-songs-container .rows-container .row').each(function()
             {
                 if ($(this).find('.row-checkbox').prop('checked'))
                 {
                     selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
+                }
+            });
+            
+             $.ajax({
+                type: "post",
+                data: {'songs': selected_songs , 'type' : type},
+                url: webroot + 'homes/addToWishlistNewHome',
+                success: function(response)
+                {
+                    addToQueueResponse(response, type);
+                },
+                error: function(jqXHR, textStatus, errorThrown) 
+                {
+                    // log the error to the console
+                    console.log(
+                            "The following error occured: " +
+                            textStatus, errorThrown);
                 }
             });
         }

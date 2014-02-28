@@ -4978,19 +4978,17 @@ STR;
             {
                 $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
                 $log_data .= $this->addsToWishlist($albumSongs);
-                   $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                        $this->log($log_data, $log_name);
-                    
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
             }
         }
         elseif ($type == 'song')
         {
-            $prodID = $_POST["prodID"];
-            $provider = $_POST["provider_type"];
+            $selectedSongs = $_POST["songs"];
 
-            echo "$prodID|$provider|$type";
+            echo "$selectedSongs";
         }
-        echo $log_data;
+       
         die;
     }
     
@@ -5022,8 +5020,7 @@ STR;
                 $insertArr['ISRC'] = $song['Song']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-                
-                 $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is added";
+ 
                  
 //                $this->Wishlist->setDataSource('master');
 //                //insert into wishlist table
@@ -5032,7 +5029,7 @@ STR;
 //
 //                if ($this->Wishlist->save($insertArr))
 //                {
-//                    $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is added";
+//                    $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is added.";
 //                    $this->Wishlist->setDataSource('default');
 //                    //add the wishlist songs in the session array
 //                    if ($this->Session->read('wishlistVariArray'))
@@ -5044,7 +5041,7 @@ STR;
 //                }
 //                else
 //                {
-//                    $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is not added";
+//                    $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is not added.";
 //                }
             }
         }
