@@ -263,14 +263,20 @@ EOD;
             <a onclick="javascript:loadAlbumSong('{$playList}');"  class="album-preview" href="javascript:void(0);" >Stream Now</a>
 EOD;
             return $str;
-        }else{
+        }else if($top == 1){
            
 $str = <<<EOD
             <a onclick="javascript:loadAlbumSong('{$playList}');"   href="javascript:void(0);" ><button class="play-btn-icon toggleable"></button></a>
 EOD;
             return $str;           
-       }
-
+       }else if($top == 2){
+       
+$str = <<<EOD
+            <a onclick="javascript:loadAlbumSong('{$playList}');"   href="javascript:void(0);" ><button class="stream-artist">Stream Album</button></a>
+EOD;
+            return $str;  
+            
+       }     
     }
     
     
