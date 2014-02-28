@@ -550,11 +550,19 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).find('.add-all-to-wishlist').on('click' ,  function(e)
-{
-    e.preventDefault();
-    var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
-    alert(songs_count);
-    return false ;
-});
+    $(document).find('.add-all-to-wishlist').on('click', function(e)
+    {
+        e.preventDefault();
+        var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+        $(document).find('.top-songs-container .rows-container .row').each(function()
+        {
+            if($(this).find('.row-checkbox').prop('checked'))
+                {
+                    alert($(this).find('.options-menu input[type="hidden"]').attr('id'));
+                }
+        });
+
+        alert(songs_count);
+        return false;
+    });
 });
