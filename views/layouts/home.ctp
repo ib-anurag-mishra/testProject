@@ -29,28 +29,30 @@
             ?>
         </title>
         
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
+<!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/modernizr.custom.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/lazyload.1.9.1.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.colorbox.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.cycle.all.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>-->
+        <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
         <?php
         if ($this->Session->read("patron"))
-        {?>
+        {
+            ?>
             <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/swfobject.js"></script>
-       <?php 
+            <?php
         }
         ?>        
-<!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
-<!--		<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>-->
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
-        <!--<script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
+
+<!--            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/site.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/freegal.js"></script>-->
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/recent-downloads.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/search-results.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip.2.1.1.min.js"></script>
+            <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>        
 
         <?php
         echo $this->Html->css(
@@ -63,12 +65,12 @@
                 )
         );
 
-
-
         echo $javascript->link(
-                array(                    
-                    'freegal','ajaxify-html5.js', 'site.js',
-                    //'freegal40-libraries',
+                array(   
+                    'freegal40-libraries',
+                     'freegal',
+                    //'ajaxify-html5.js', 
+                    'site.js',
                     //'html5shiv',
                     'freegal40-site'
                 )
