@@ -1,70 +1,300 @@
-<html>
-<head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>    
-<script type="text/javascript" src="jwplayer.js"></script>
-<script type="text/javascript">
-    
-    jwplayer.key="pTfXPXvxG6Y+nMaoNAYFJkTtB3C/SseoP6V8XA==";</script>
-	<script type="text/javascript">
-            $(document).ready(function(){
-                jwplayer("myElement").setup({
-                        playlist:[{file:"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/274/140/00/JustinTimberlake_Mirrors_G0100029371261_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130903140049&nva=20130903150049&token=5a1d5ecf030b2ad317168",
-		    title:"Get Lucky",
-		    description:"Daft Punk"}],
-                        height: 70,
-                        width: 960,
-                        primary: "flash",
-                        skin: "/img/player_skin/freegal-custom-skin.xml",
-                            listbar: {
-
-                                    position:"right",
-                                    size:150
-                            },
-                            repeat: true
-                    });
-                $('.play-queue-btn').click(function(){
-                    //player_Src = $('#player-data').text('id');
-                    //var tmp = '{file:"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902134949&nva=20130902144949&token=58b38195a4e5d6931c536", title:"Get Lucky man", description:"Daft Punk"}';
-                    loadVideo('rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902134949&nva=20130902144949&token=58b38195a4e5d6931c536', 'Get Lucky man', 'Daft Punk');
-                });
-                function loadVideo(myFile,songTitle,songDescription) { 
-                  jwplayer().load([{
-                    file: myFile,
-                    title: songTitle, 
-                    description:songDescription
-                  }]);
-                  //jwplayer("myElement").play();
-                };                
-                
-                function getPlayer(e){
-                    var tmp = 'file:"rtmpe://streaming.libraryideas.com/libraryideas/mp3:000/000/000/000/278/177/55/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3?nvb=20130902134949&nva=20130902144949&token=58b38195a4e5d6931c536", title:"Get Lucky man", description:"Daft Punk"';
-                    jwplayer("myElement").setup({
-                        playlist:['{'+tmp+'}'],
-                        height: 70,
-                        width: 960,
-                        primary: "flash",
-                        skin: "/img/player_skin/freegal-custom-skin.xml",
-                            listbar: {
-
-                                    position:"right",
-                                    size:150
-                            },
-                            repeat: true
-                    });                    
-                    jwplayer("myElement").load();
-                }                   
-
-            });
-        </script>    
-
-                    
-                      
-</head> 
-<body>
-                                            <div class="player">
-                                                    <div class="player-container">
-                                                            <div id="myElement">Loading the player...</div>
-                                                    </div>			
-                                            </div>   
-</body>
-</html>    
+<div class="featured-grid-item">
+            <a href="/artists/view/Q29oZWVkIGFuZCBDYW1icmlh/23907403/c29ueQ=="><img width="84" height="77" alt="Coheed and Cambria - Playlist: The Very Best Of Coheed and Cambria" src="http://music.libraryideas.com/000/000/000/000/239/074/03/00000000000023907403-250x250_72dpi_RGB_100Q.jpg?token=547a9fa651553f97f20cb
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Coheed and Cambria                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/Q29oZWVkIGFuZCBDYW1icmlh/23907403/c29ueQ==" data-hasqtip="3" oldtitle="Playlist: The Very Best Of Coheed and Cambria" title="">Playlist: The Very Bes..</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/Q29oZWVkIGFuZCBDYW1icmlh/Um9jaw==" class="more-by-artist" title="Coheed and Cambria">Coheed and Cambria</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/VGhlIEZyYXk=/28713225/c29ueQ=="><img width="84" height="77" alt="The Fray - Helios" src="http://music.libraryideas.com/000/000/000/000/287/132/25/00000000000028713225-250x250_72dpi_RGB_100Q.jpg?token=5a271c59fd59663679226
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    The Fray                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/VGhlIEZyYXk=/28713225/c29ueQ==" title="Helios">Helios</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/VGhlIEZyYXk=/UG9w" class="more-by-artist" title="The Fray">The Fray</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/WW91biBTdW4gTmFo/614427903020/aW9kYQ=="><img width="84" height="77" alt="Youn Sun Nah - Lento" src="http://music.libraryideas.com/theorchard/614/427/903/020/614427903020.jpg?token=52a3ba7da2c7e8d233ae2
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Youn Sun Nah                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/WW91biBTdW4gTmFo/614427903020/aW9kYQ==" title="Lento">Lento</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/WW91biBTdW4gTmFo/SmF6eg==" class="more-by-artist" title="Youn Sun Nah">Youn Sun Nah</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/QnJ1Y2UgU3ByaW5nc3RlZW4=/28696220/c29ueQ=="><img width="84" height="77" alt="Bruce Springsteen - High Hopes" src="http://music.libraryideas.com/000/000/000/000/286/962/20/00000000000028696220-250x250_72dpi_RGB_100Q.jpg?token=509a8bc7fbc3933a78485
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Bruce Springsteen                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/QnJ1Y2UgU3ByaW5nc3RlZW4=/28696220/c29ueQ==" title="High Hopes">High Hopes</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/QnJ1Y2UgU3ByaW5nc3RlZW4=/Um9jaw==" class="more-by-artist" title="Bruce Springsteen">Bruce Springsteen</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/TWlyYW5kYSBMYW1iZXJ0/28936104/c29ueQ=="><img width="84" height="77" alt="Miranda Lambert - Automatic" src="http://music.libraryideas.com/000/000/000/000/289/361/04/00000000000028936104-250x250_72dpi_RGB_100Q.jpg?token=57f7ad5a944cc1908568a
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Miranda Lambert                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/TWlyYW5kYSBMYW1iZXJ0/28936104/c29ueQ==" title="Automatic">Automatic</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/TWlyYW5kYSBMYW1iZXJ0/Q291bnRyeQ==" class="more-by-artist" title="Miranda Lambert">Miranda Lambert</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/QnJva2VuIEJlbGxz/28669578/c29ueQ=="><img width="84" height="77" alt="Broken Bells - After the Disco" src="http://music.libraryideas.com/000/000/000/000/286/695/78/00000000000028669578-250x250_72dpi_RGB_100Q.jpg?token=50671a9a2db5633448b3e
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Broken Bells                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/QnJva2VuIEJlbGxz/28669578/c29ueQ==" data-hasqtip="4" oldtitle="After the Disco" title="">After the Disco</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/QnJva2VuIEJlbGxz/QWx0ZXJuYXRpdmU=" class="more-by-artist" title="Broken Bells">Broken Bells</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/Q2FzdGluZyBDcm93bnM=/28719963/c29ueQ=="><img width="84" height="77" alt="Casting Crowns - Thrive" src="http://music.libraryideas.com/000/000/000/000/287/199/63/00000000000028719963-250x250_72dpi_RGB_100Q.jpg?token=54f8db0008bc2e1ef00dd
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Casting Crowns                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/Q2FzdGluZyBDcm93bnM=/28719963/c29ueQ==" title="Thrive">Thrive</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/Q2FzdGluZyBDcm93bnM=/R29zcGVsL0NocmlzdGlhbg==" class="more-by-artist" title="Casting Crowns">Casting Crowns</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/TGF0aWNlIENyYXdmb3Jk/28814612/c29ueQ=="><img width="84" height="77" alt="Latice Crawford - Latice Crawford" src="http://music.libraryideas.com/000/000/000/000/288/146/12/00000000000028814612-250x250_72dpi_RGB_100Q.jpg?token=5c7978baeded59c0ba8e2
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Latice Crawford                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/TGF0aWNlIENyYXdmb3Jk/28814612/c29ueQ==" title="Latice Crawford">Latice Crawford</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/TGF0aWNlIENyYXdmb3Jk/R29zcGVsL0NocmlzdGlhbg==" class="more-by-artist" title="Latice Crawford">Latice Crawford</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/RWx2aXMgUHJlc2xleQ==/2469182/c29ueQ=="><img width="84" height="77" alt="Elvis Presley - The 50 Greatest Hits" src="http://music.libraryideas.com/000/000/000/000/024/691/82/00000000000002469182-250x250_72dpi_RGB_100Q.jpg?token=556f174db5a9158209bb3
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Elvis Presley                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/RWx2aXMgUHJlc2xleQ==/2469182/c29ueQ==" title="The 50 Greatest Hits">The 50 Greatest Hits</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/RWx2aXMgUHJlc2xleQ==/UG9w" class="more-by-artist" title="Elvis Presley">Elvis Presley</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/TmV3IFBvbGl0aWNz/27677461/c29ueQ=="><img width="84" height="77" alt="New Politics - A Bad Girl In Harlem" src="http://music.libraryideas.com/000/000/000/000/276/774/61/00000000000027677461-250x250_72dpi_RGB_100Q.jpg?token=52b03f022eb98b274576d
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    New Politics                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/TmV3IFBvbGl0aWNz/27677461/c29ueQ==" title="A Bad Girl In Harlem">A Bad Girl In Harlem</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/TmV3IFBvbGl0aWNz/QWx0ZXJuYXRpdmU=" class="more-by-artist" title="New Politics">New Politics</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/S2VsbHkgQ2xhcmtzb24=/28379454/c29ueQ=="><img width="84" height="77" alt="Kelly Clarkson - Wrapped In Red" src="http://music.libraryideas.com/000/000/000/000/283/794/54/00000000000028379454-250x250_72dpi_RGB_100Q.jpg?token=5a2470a9817d682ec7d11
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Kelly Clarkson                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/S2VsbHkgQ2xhcmtzb24=/28379454/c29ueQ==" data-hasqtip="1" oldtitle="Wrapped In Red" title="">Wrapped In Red</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/S2VsbHkgQ2xhcmtzb24=/SG9saWRheQ==" class="more-by-artist" title="Kelly Clarkson">Kelly Clarkson</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/Sm9obiBMZWdlbmQ=/28278452/c29ueQ=="><img width="84" height="77" alt="John Legend - Love In The Future" src="http://music.libraryideas.com/000/000/000/000/282/784/52/00000000000028278452-250x250_72dpi_RGB_100Q.jpg?token=50e9df602d3a305874b5f
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    John Legend                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/Sm9obiBMZWdlbmQ=/28278452/c29ueQ==" title="Love In The Future">Love In The Future</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/Sm9obiBMZWdlbmQ=/UiZC" class="more-by-artist" title="John Legend">John Legend</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/S2lkeiBCb3AgS2lkcw==/28652802/c29ueQ=="><img width="84" height="77" alt="Kidz Bop Kids - Kidz Bop 25" src="http://music.libraryideas.com/000/000/000/000/286/528/02/00000000000028652802-250x250_72dpi_RGB_100Q.jpg?token=56f9ea0665a20a921fe37
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Kidz Bop Kids                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/S2lkeiBCb3AgS2lkcw==/28652802/c29ueQ==" title="Kidz Bop 25">Kidz Bop 25</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/S2lkeiBCb3AgS2lkcw==/Q2hpbGRyZW4ncw==" class="more-by-artist" title="Kidz Bop Kids">Kidz Bop Kids</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/SnVzdGluIFRpbWJlcmxha2U=/28496647/c29ueQ=="><img width="84" height="77" alt="Justin Timberlake - The 20/20 Experience - 2 of 2" src="http://music.libraryideas.com/000/000/000/000/284/966/47/00000000000028496647-250x250_72dpi_RGB_100Q.jpg?token=5ae5941c8dda27ed8cd53
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Justin Timberlake                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/SnVzdGluIFRpbWJlcmxha2U=/28496647/c29ueQ==" data-hasqtip="2" oldtitle="The 20/20 Experience - 2 of 2" title="">The 20/20 Experience -..</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/SnVzdGluIFRpbWJlcmxha2U=/UG9w" class="more-by-artist" title="Justin Timberlake">Justin Timberlake</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/VGhlIENpdmlsIFdhcnM=/28462870/c29ueQ=="><img width="84" height="77" alt="The Civil Wars - Bare Bones EP" src="http://music.libraryideas.com/000/000/000/000/284/628/70/00000000000028462870-250x250_72dpi_RGB_100Q.jpg?token=539693911b155386587c5
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    The Civil Wars                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/VGhlIENpdmlsIFdhcnM=/28462870/c29ueQ==" title="Bare Bones EP">Bare Bones EP</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/VGhlIENpdmlsIFdhcnM=/QWx0ZXJuYXRpdmU=" class="more-by-artist" title="The Civil Wars">The Civil Wars</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/TWF0dCBNYWhlcg==/27404219/c29ueQ=="><img width="84" height="77" alt="Matt Maher - All The People Said Amen" src="http://music.libraryideas.com/000/000/000/000/274/042/19/00000000000027404219-250x250_72dpi_RGB_100Q.jpg?token=5260163e20021686e1588
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Matt Maher                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/TWF0dCBNYWhlcg==/27404219/c29ueQ==" title="All The People Said Amen">All The People Said Am..</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/TWF0dCBNYWhlcg==/R29zcGVsL0NocmlzdGlhbg==" class="more-by-artist" title="Matt Maher">Matt Maher</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/VGFtYXIgQnJheHRvbg==/28321628/c29ueQ=="><img width="84" height="77" alt="Tamar Braxton - Love and War" src="http://music.libraryideas.com/000/000/000/000/283/216/28/00000000000028321628-250x250_72dpi_RGB_100Q.jpg?token=5af5e2fc86847efc660ed
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Tamar Braxton                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/VGFtYXIgQnJheHRvbg==/28321628/c29ueQ==" title="Love and War">Love and War</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/VGFtYXIgQnJheHRvbg==/UiZC" class="more-by-artist" title="Tamar Braxton">Tamar Braxton</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/U3RldmVuIEN1cnRpcyBDaGFwbWFu/28304090/c29ueQ=="><img width="84" height="77" alt="Steven Curtis Chapman - Love Take Me Over" src="http://music.libraryideas.com/000/000/000/000/283/040/90/00000000000028304090-250x250_72dpi_RGB_100Q.jpg?token=526be0256e4a3981ed326
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Steven Curtis Chapman                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/U3RldmVuIEN1cnRpcyBDaGFwbWFu/28304090/c29ueQ==" title="Love Take Me Over">Love Take Me Over</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/U3RldmVuIEN1cnRpcyBDaGFwbWFu/R29zcGVsL0NocmlzdGlhbg==" class="more-by-artist" title="Steven Curtis Chapman">Steven Curtis Chapman</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/UCFuaw==/26141786/c29ueQ=="><img width="84" height="77" alt="P!nk - The Truth About Love" src="http://music.libraryideas.com/000/000/000/000/261/417/86/00000000000026141786-250x250_72dpi_RGB_100Q.jpg?token=54043db1ae3812f029477
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    P!nk                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/UCFuaw==/26141786/c29ueQ==" title="The Truth About Love">The Truth About Love</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/UCFuaw==/UG9w" class="more-by-artist" title="P!nk">P!nk</a>
+                </div>
+            </div>
+        </div>
+                <div class="featured-grid-item">
+            <a href="/artists/view/Q2FsdmluIEhhcnJpcw==/26961155/c29ueQ=="><img width="84" height="77" alt="Calvin Harris - 18 Months" src="http://music.libraryideas.com/000/000/000/000/269/611/55/00000000000026961155-250x250_72dpi_RGB_100Q.jpg?token=5246bb9ed9c5226338115
+"></a>
+            <div class="featured-grid-menu">
+                <div class="featured-artist-name">
+                    Calvin Harris                </div>
+                <div class="featured-album-name">
+                    <a href="/artists/view/Q2FsdmluIEhhcnJpcw==/26961155/c29ueQ==" title="18 Months">18 Months</a>
+                </div>
+                <div class="featured-artist-ctas">
+                                                     
+                    <a href="/artists/album/Q2FsdmluIEhhcnJpcw==/RGFuY2U=" class="more-by-artist" title="Calvin Harris">Calvin Harris</a>
+                </div>
+            </div>
+        </div>

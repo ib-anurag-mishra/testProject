@@ -247,11 +247,61 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 </section>
 <!-- Top Singles code end here -->
 
+<script>
+    
+    $(document).ready(function() {
+       // var preValue = 1;
+       // var artistPage = 2;
+       // var selectedAlpha = '<? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?>';
 
+        $("#featured-artists-section").scroll(function() {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
-<section class="featured-artists">
+                $('#artist_loader').show();
+             //   var totalPages = <?= $totalPages ?>;
+              //  var data = "npage=" + artistPage;
+
+               // if ((preValue != artistPage) && (artistPage <= totalPages)) {
+
+                  //  if (artistPage <= totalPages) {
+
+               //         preValue = artistPage;
+                      //  var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/' + selectedAlpha;
+			var link = webroot + 'jwtest.html';
+
+                        jQuery.ajax({
+                            type: "post", // Request method: post, get
+                            url: link, // URL to request
+                            data: data, // post data
+                            success: function(newitems) {
+                                if (newitems) {
+                                    artistPage++;
+                                    $('#artist_loader').hide();
+                                    $('#featured-artists-grid-div').append(newitems);
+                                } else {
+                                    $('#artist_loader').hide();
+                                    return;
+                                }
+                            },
+                            async: true,
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                //alert('No artist list available');
+                            }
+                        });
+
+                 //   } else {
+                  //      $('#artist_loader').hide();
+                   // }
+               // }
+            }
+        });
+    });
+
+</script>
+
+<section class="featured-artists" id="featured-artists-section">
     <h2>Featured Artists &amp; Composers</h2>
-    <div class="featured-artists-grid clearfix">
+    <div class="featured-artists-grid clearfix" id="featured-artists-grid-div">
         <?php
         // $this->log("index.ctp featuredArtists start", "siteSpeed");  
         $count = 1; 
@@ -307,6 +357,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         $count++;
         } ?>
     </div>
+    <span id="artist_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
 </section>
 
 <style>
