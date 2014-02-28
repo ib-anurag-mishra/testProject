@@ -313,34 +313,21 @@ $(document).ready(function(){
     });
 
     var multipleRowsChecked = false;
-    $('.row-checkbox').on('click',function(){
-        
+    $('.row-checkbox').on('click',function(){        
         $(this).parent('.row').toggleClass('highlighted');
-
         var c = 0;
-
         $('.row-checkbox').each(function(){
-            
-
             if($(this).is(':checked')) {
-
-                c++;
-                
+                c++;                
             }
-
             if (c>=2) {
-
                 $('.multi-select-icon').addClass('highlighted');
-                multipleRowsChecked = true;
-                
+                multipleRowsChecked = true;                
             } else {
                 $('.multi-select-icon').removeClass('highlighted');
                 multipleRowsChecked = false;
             }
-
         });
-
-
     });
 
     $('.add-to-playlist').on('mouseenter',function(){
@@ -377,7 +364,6 @@ $(document).ready(function(){
         $('.row-checkbox').each(function(){
             $(this).prop('checked', true);
         });
-
     });
 
     $('.clear-all').on('click',function(e){
@@ -385,7 +371,6 @@ $(document).ready(function(){
         $('.row-checkbox').each(function(){
             $(this).prop('checked', false);
         });
-
     });
 
     $('.playlist-menu').bindMouseWheel();
