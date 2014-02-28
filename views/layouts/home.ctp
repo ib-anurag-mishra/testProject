@@ -38,6 +38,17 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>-->
         <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
         <?php
+        echo $javascript->link(
+                array(
+                    'freegal40-libraries',
+                    'freegal',
+                    //'ajaxify-html5.js', 
+                    'site.js',
+                    //'html5shiv',
+                    'freegal40-site'
+                )
+        );
+
         if ($this->Session->read("patron"))
         {
             ?>
@@ -64,18 +75,6 @@
                         
                 )
         );
-
-        echo $javascript->link(
-                array(   
-                    'freegal40-libraries',
-                     'freegal',
-                    //'ajaxify-html5.js', 
-                    'site.js',
-                    //'html5shiv',
-                    'freegal40-site'
-                )
-        );
-        
         ?>
         <!--[if IE 8]>
         <link href="/css/freegal40-ie8.css" rel="stylesheet" type="text/css" />
