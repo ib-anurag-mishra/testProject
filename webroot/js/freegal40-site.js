@@ -555,13 +555,14 @@ $(document).ready(function(){
         var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
         $(document).find('.top-songs-container .rows-container .row').each(function()
         {
+            var selected_songs = [];
             if($(this).find('.row-checkbox').prop('checked'))
                 {
-                    alert($(this).find('.options-menu input[type="hidden"]').attr('id'));
+                   selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id'));
                 }
         });
 
-        alert(songs_count);
+        alert(selected_songs);
         return false;
     });
 });
