@@ -70,9 +70,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             <li><a href="#">Running</a></li>
                                             <li><a href="#">Romantic</a></li>
                                         </ul>   
-                                        <button class="wishlist-icon toggleable"></button> 
                                         <?php
                                     }
+                                    echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
                                 }
                                 ?>
                             </div>

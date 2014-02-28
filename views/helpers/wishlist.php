@@ -62,6 +62,14 @@ class WishlistHelper extends AppHelper {
 
     }
     
+    function getAlbumWishListMarkup($albumId,$providerType,$artistText){
+        
+        $str = <<<EOD
+            <a onclick="javascript:addAlbumToWishlist($albumId,'$providerType','$artistText');"   href="javascript:void(0);" ><button class="wishlist-icon toggleable"></button></a>
+EOD;
+        return $str;     
+    }            
+    
     function getWishlistCount() {
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $this->Session->read('library');
