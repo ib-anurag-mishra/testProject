@@ -4997,7 +4997,7 @@ STR;
             }
         }
        
-        return $log_data;
+        echo $log_data;
         die;
     }
     
