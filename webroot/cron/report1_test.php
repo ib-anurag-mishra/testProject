@@ -14,6 +14,7 @@ ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 
 $countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
+//$countrys = array('CA' => 'CAD' , 'US' => 'USD');
 $lib_types = array('Unlimited' , 'ALC');
 
 $currentDate = '2013-08-01';
@@ -230,7 +231,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)){
 
                 $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt";
 
-                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt'";;
+                $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt'";
                 $result3 = mysql_query($sql);
                 
                 if(!$result3){
