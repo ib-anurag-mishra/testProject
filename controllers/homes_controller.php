@@ -4983,11 +4983,19 @@ STR;
                         $provider = 'ioda';
                     }
 
-                    $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
+                    $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
+                    echo '<pre>';
+                    print_r($albumSongs);
+                    die;
+                    
+                    
+                    
+                    
+                    
                     $insertArr = Array();
                     $insertArr['library_id'] = $libraryId;
                     $insertArr['patron_id'] = $patronId;
-                    $insertArr['ProdID'] = $prodId;
+                    $insertArr['ProdID'] = $prodID;
                     $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
                     $insertArr['album'] = $trackDetails['0']['Song']['Title'];
                     $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
