@@ -428,46 +428,47 @@ $(document).ready(function(){
 
 
 
-    //For Pagination of song grid
+
     $(document).find('.top-songs-container .rows-container .row')
     {
-        var 
-            count = $(document).find('.top-songs-container .rows-container > div.row').length,
-            num_cols = Math.floor(count / 20),
-            container = $(document).find('.top-songs-container .rows-container');
-        
+        var
+                count = $(document).find('.top-songs-container .rows-container > div.row').length,
+                num_cols = Math.floor(count / 20),
+                container = $(document).find('.top-songs-container .rows-container');
+
         //dividing the songs list in pagination
-        for(var i=0; i<num_cols; i++)
+        for (var i = 0; i < num_cols; i++)
+        {
+            var listItems = $(document).find('.top-songs-container .rows-container > div.row').slice(0, 20);
+            var newList = $("<div />").append(listItems);
+            newList.addClass('page' + (i + 1));
+            if (i === 0)
             {
-                var listItems = $(document).find('.top-songs-container .rows-container > div.row').slice(0, 20);
-                var newList = $("<div />").append(listItems);
-                newList.addClass('page'+(i+1));
-                if(i === 0 )
-                    {
-                         newList.css('display', 'block');
-                    }
-                   
-               container.append(newList);
+                newList.css('display', 'block');
             }
-        
+
+            container.append(newList);
+        }
+
         //adding the pagination 
-         $(document).find('.top-songs-container .pagination-container')
-         {
-             var pagination_string = '<button class="beginning"></button><button class="prev"></button>';
-             for(var i=1 ; i <= num_cols; i++)
-                 {
-                     pagination_string += "<button class='page-"+i+"' >"+i+"</button>";
-                 }
+        $(document).find('.top-songs-container .pagination-container')
+        {
+            var pagination_string = '<button class="beginning"></button><button class="prev"></button>';
+            for (var i = 1; i <= num_cols; i++)
+            {
+                pagination_string += "<button class='page-" + i + "' >" + i + "</button>";
+            }
             pagination_string += '<button class="next"></button><button class="last"></button>';
-            
-             $(document).find('.top-songs-container .pagination-container').append(pagination_string);
-         }
-        
+
+            $(document).find('.top-songs-container .pagination-container').append(pagination_string);
+        }
+
     }
-    
-      $(document).find('.top-songs-container .pagination-container').on('click', 'button', function() {
+
+    $(document).find('.top-songs-container .pagination-container').on('click', 'button', function() 
+    {
         var page_class = $(this).attr('class');
-      
+
         if (!page_class.indexOf('page-'))
         {
             var to_show_page = page_class.replace('-', '');
@@ -475,19 +476,19 @@ $(document).ready(function(){
             $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
         }
         else
-        {        
+        {
             if (page_class === 'next')
             {
                 var total_length = $(document).find('.top-songs-container .rows-container div[class*="page"]').length;
                 $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function() {
                     if ($(this).css('display') === 'block')
-                    {                                           
+                    {
                         to_show_page = 'page' + (parseInt($(this).attr('class').replace('page', '')) + 1);
-                        if( (parseInt($(this).attr('class').replace('page', '')) + 1) < total_length+1)
-                            {
-                                 $(this).css('display', 'none');    
-                                 $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
-                            }                       
+                        if ((parseInt($(this).attr('class').replace('page', '')) + 1) < total_length + 1)
+                        {
+                            $(this).css('display', 'none');
+                            $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                        }
                         return false;
                     }
                 });
@@ -504,13 +505,13 @@ $(document).ready(function(){
             {
                 $(document).find('.top-songs-container .rows-container div[class*="page"]').each(function() {
                     if ($(this).css('display') === 'block')
-                    {                        
+                    {
                         to_show_page = 'page' + (parseInt($(this).attr('class').replace('page', '')) - 1);
-                        if((parseInt($(this).attr('class').replace('page', '')) - 1) > 0)
-                            {
-                        $(this).css('display', 'none');
-                        $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
-                            }
+                        if ((parseInt($(this).attr('class').replace('page', '')) - 1) > 0)
+                        {
+                            $(this).css('display', 'none');
+                            $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
+                        }
                         return false;
                     }
                 });
@@ -522,12 +523,13 @@ $(document).ready(function(){
                 $(document).find('.top-songs-container .rows-container div.' + to_show_page).css('display', 'block');
                 return false;
             }
-        }       
+        }
         return false;
     });
-    
-    
-    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e) {
+
+
+    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e) 
+    {
         e.preventDefault();
 
         if ($(this).hasClass('playlist-menu-icon'))
@@ -547,6 +549,9 @@ $(document).ready(function(){
         }
         return false;
     });
-    
-    
+
+    $(document).on('click' , '.top-songs .header-container .options-menu .add-all-to-wishlist', function()
+{
+    alert("Multi add to wishlist clicked");
+});
 });
