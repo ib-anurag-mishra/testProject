@@ -2758,6 +2758,112 @@ STR;
 
         return $albumInstance->query($album_songs);
     }
+    
+    
+    /**
+     * @func getAlbumSongs
+     * @desc This is used to get album songs
+     */    
+    function getAlbumSongs($albumProdId,$providerType){
+        
+        $songInstance = ClassRegistry::init('Song');
+        $country = $this->Session->read('territory');
+        $countryPrefix = $this->getCountryPrefix($country);        
+        $albumSongs = array();
+        $libType = $this->Session->read('library_type');
+        $cond = "";
+        if ($this->Session->read('block') == 'yes')
+        {
+            $cond = array('Song.Advisory' => 'F');
+        }
+        else
+        {
+            $cond = "";
+        }        
+        if ($libType != 2)
+        {
+            $albumSongs = $songInstance->find('all', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Song.ReferenceID' => $albumProdId),
+                        array('Song.provider_type = Country.provider_type'),
+                        array('Country.DownloadStatus' => 1),
+                        array("Song.Sample_FileID != ''"),
+                        array("Song.FullLength_FIleID != ''"),
+                        array("Song.provider_type" => $provider),
+                        array('Country.Territory' => $country),
+                        $cond
+                    )
+                ),
+                'fields' => array(
+                        'Song.ProdID',
+			'Song.ProductID',
+			'Song.Title',
+			'Song.SongTitle',
+			'Song.Artist',
+			'Song.ISRC'                    
+                    
+                ),
+                'contain' => array(
+                    'Full_Files' => array(
+                        'fields' => array(
+                            'Full_Files.CdnPath',
+                            'Full_Files.SaveAsName'
+                        )
+                    ),
+                ),
+                'group' => 'Song.ProdID, Song.provider_type',
+                'order' => array('Song.sequence_number', 'Song.ProdID')
+            ));
+        }
+        else
+        {
+            $albumSongs = $songInstance->find('all', array(
+                'conditions' =>
+                array('and' =>
+                    array(
+                        array('Song.ReferenceID' => $album['Album']['ProdID']),
+                        array('Song.provider_type = Country.provider_type'),
+                        array("Song.Sample_FileID != ''"),
+                        array("Song.FullLength_FIleID != ''"),
+                        array("Song.provider_type" => $provider),
+                        array('Country.Territory' => $country),
+                        $cond
+                    ),
+                    'or' => array(array('and' => array(
+                                'Country.StreamingStatus' => 1,
+                                'Country.StreamingSalesDate <=' => date('Y-m-d')
+                            ))
+                        ,
+                        array('and' => array(
+                                'Country.DownloadStatus' => 1
+                            ))
+                    )
+                ),
+                'fields' => array(
+                        'Song.ProdID',
+			'Song.ProductID',
+			'Song.Title',
+			'Song.SongTitle',
+			'Song.Artist',
+			'Song.ISRC' 
+                ),
+                'contain' => array(
+                    'Full_Files' => array(
+                        'fields' => array(
+                            'Full_Files.CdnPath',
+                            'Full_Files.SaveAsName'
+                        )
+                    ),
+                ),
+                'group' => 'Song.ProdID, Song.provider_type',
+                'order' => array('Song.sequence_number', 'Song.ProdID')
+            ));
+        }
+        
+        return $albumSongs;
+    }
 
     /**
      * @func getSongsDetails
