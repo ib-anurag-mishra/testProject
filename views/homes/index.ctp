@@ -44,7 +44,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 {
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']],1);
+                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
                                         ?>  
                                         <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album"/>
                                         <button class="playlist-menu-icon toggleable"></button>                                        
@@ -72,9 +72,13 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         </ul>   
                                         <?php
                                     }
-                                    echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
+                                    //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
+                                    ?>
+                                    <button class="wishlist-icon toggleable"></button>
+                                    <?php
                                 }
                                 ?>
+
                             </div>
                             <div class="album-info">
                                 <p class="title"><a title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Album']['ArtistText']); ?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a></p>
@@ -82,7 +86,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             </div>
                         </li>
                         <?php
-                        if($count == 25){
+                        if ($count == 25)
+                        {
                             break;
                         }
                         $count++;
@@ -142,7 +147,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
                     </ul>
                     <ul class="playlist-menu">
-                                    
+
                     </ul>
                 </section>
                 <?php
@@ -205,33 +210,33 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <?php
                         if ($this->Session->read("patron"))
                         {
-                             if ($this->Session->read('library_type') == 2)
-                                    {
-                            ?>
-                            <button class="menu-btn"></button>
-                            <section class="options-menu">
-                                <input type="hidden" id="<?= $nationalTopSong["Song"]["ProdID"] ?>" value="song" data-provider="<?= $nationalTopSong["Song"]["provider_type"] ?>"/>
-                                <ul>
-                                    <li><a href="#">Download</a></li>
-                                    <li><a href="#">Add to Wishlist</a></li>
-                                    <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
-                                </ul>
-                                <ul class="playlist-menu">
-                                    <li><a href="#">Create New Playlist</a></li>
-                                    <li><a href="#">Playlist 1</a></li>
-                                    <li><a href="#">Playlist 2</a></li>
-                                    <li><a href="#">Playlist 3</a></li>
-                                    <li><a href="#">Playlist 4</a></li>
-                                    <li><a href="#">Playlist 5</a></li>                              
-                                </ul>											
-                            </section>
-                            <input type="checkbox" class="row-checkbox">
-                            <?php
-                                    }
+                            if ($this->Session->read('library_type') == 2)
+                            {
+                                ?>
+                                <button class="menu-btn"></button>
+                                <section class="options-menu">
+                                    <input type="hidden" id="<?= $nationalTopSong["Song"]["ProdID"] ?>" value="song" data-provider="<?= $nationalTopSong["Song"]["provider_type"] ?>"/>
+                                    <ul>
+                                        <li><a href="#">Download</a></li>
+                                        <li><a href="#">Add to Wishlist</a></li>
+                                        <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                    </ul>
+                                    <ul class="playlist-menu">
+                                        <li><a href="#">Create New Playlist</a></li>
+                                        <li><a href="#">Playlist 1</a></li>
+                                        <li><a href="#">Playlist 2</a></li>
+                                        <li><a href="#">Playlist 3</a></li>
+                                        <li><a href="#">Playlist 4</a></li>
+                                        <li><a href="#">Playlist 5</a></li>                              
+                                    </ul>											
+                                </section>
+                                <input type="checkbox" class="row-checkbox">
+                                <?php
+                            }
                         }
                         ?>
                     </div>
-                    <?php                  
+                    <?php
                 }
             }
             else
@@ -246,15 +251,15 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
         <!-- pagination part of the grid -->
         <div class="pagination-container">
-<!--            <button class="beginning"></button>
-            <button class="prev"></button>
-            <button class="page-1">1</button>
-            <button class="page-2">2</button>
-            <button class="page-3">3</button>
-            <button class="page-4">4</button>
-            <button class="page-5">5</button>
-            <button class="next"></button>
-            <button class="last"></button>-->
+            <!--            <button class="beginning"></button>
+                        <button class="prev"></button>
+                        <button class="page-1">1</button>
+                        <button class="page-2">2</button>
+                        <button class="page-3">3</button>
+                        <button class="page-4">4</button>
+                        <button class="page-5">5</button>
+                        <button class="next"></button>
+                        <button class="last"></button>-->
         </div>
     </div>
 
