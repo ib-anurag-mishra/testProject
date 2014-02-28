@@ -2797,19 +2797,24 @@ STR;
                     )
                 ),
                 'fields' => array(
-                        'Song.ProdID',
-			'Song.ProductID',
-			'Song.Title',
-			'Song.SongTitle',
-			'Song.Artist',
-			'Song.ISRC'                    
-                    
+                    'Song.ProdID',
+                    'Song.ProductID',
+                    'Song.Title',
+                    'Song.SongTitle',
+                    'Song.Artist',
+                    'Song.ISRC'
                 ),
                 'contain' => array(
                     'Full_Files' => array(
                         'fields' => array(
                             'Full_Files.CdnPath',
                             'Full_Files.SaveAsName'
+                        )
+                    ),
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.Territory',
+                            'Country.provider_type'
                         )
                     ),
                 ),
@@ -2854,6 +2859,12 @@ STR;
                         'fields' => array(
                             'Full_Files.CdnPath',
                             'Full_Files.SaveAsName'
+                        )
+                    ),
+                    'Country' => array(
+                        'fields' => array(
+                            'Country.Territory',
+                            'Country.provider_type'
                         )
                     ),
                 ),
