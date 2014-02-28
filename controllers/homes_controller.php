@@ -4990,7 +4990,7 @@ STR;
 
             echo "$prodID|$provider|$type";
         }
-
+        echo $log_data;
         die;
     }
     
