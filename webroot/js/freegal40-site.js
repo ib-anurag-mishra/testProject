@@ -535,19 +535,23 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).find('.add-all-to-wishlist').on('click', function(e)
+    $(document).find('.add-all-to-wishlist , .wishlist-icon').on('click', function(e)
     {        
+        if($(this).hasClass('wishlist-icon'))
+            {
+                alert('it has');
+            }
        // var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
-         var selected_songs = [];
-        $(document).find('.top-songs-container .rows-container .row').each(function()
-        {           
-            if($(this).find('.row-checkbox').prop('checked'))
-                {                   
-                   selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id')+'&'+$(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
-                }
-        });
+//         var selected_songs = [];
+//        $(document).find('.top-songs-container .rows-container .row').each(function()
+//        {           
+//            if($(this).find('.row-checkbox').prop('checked'))
+//                {                   
+//                   selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id')+'&'+$(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
+//                }
+//        });
 
-        alert(selected_songs);
+        //alert(selected_songs);
         return false;
     });
 });
