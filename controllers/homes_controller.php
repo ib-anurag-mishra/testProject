@@ -4985,8 +4985,8 @@ STR;
         elseif ($type == 'song')
         {
             $selectedSongs = $_POST["songs"];
-
-            echo "$selectedSongs";
+            echo "<pre>";
+            print_r($selectedSongs);
         }
        
         die;
