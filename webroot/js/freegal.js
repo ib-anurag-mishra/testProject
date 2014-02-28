@@ -724,6 +724,30 @@ function addToWishlist(prodId, providerType)
     });
     return false;
 }
+
+function addAlbumToWishlist(prodId, providerType, artistText)
+{
+
+    $.ajax({
+        type: "post",
+        data: {'prodID': prodId, 'type': providerType, 'artistText': artistText},
+        url: webroot + 'homes/addAlbumToWishlist',
+        success: function(response)
+        {
+            //alert(response);
+            addToQueueResponse(response, type);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // log the error to the console
+            console.log(
+                    "The following error occured: " +
+                    textStatus, errorThrown);
+        }
+    });
+    return false;
+}
+
+
 function addToWishlistVideo(prodId, providerType)
 {
     $('.beforeClick').hide();

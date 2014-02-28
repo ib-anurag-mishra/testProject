@@ -2610,6 +2610,119 @@ STR;
         }
     }
 
+    
+    
+    
+    
+    /*
+      Function Name : addAlbumToWishlist
+      Desc : To let the patron add Albums to wishlist
+     */
+
+    function addAlbumToWishlist()
+    {
+        //Configure::write('debug', 2);
+        //creates log for Add to wishlist method when it is called
+
+        $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
+        $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron')
+                . " ProdID:" . $_REQUEST['prodId'] . "  :ProviderType:" . $_REQUEST['providerType']. "  :artistText:" . $_REQUEST['artistText'];
+
+        if ($this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['prodId']) && isset($_REQUEST['providerType'])&& isset($_REQUEST['artistText']))
+        {
+            $libraryId = $this->Session->read('library');
+            $patronId = $this->Session->read('patron');
+
+            $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $_REQUEST['prodId'])));
+            if (!$wishlistCount)
+            {
+                //get song details
+                $prodId = $_REQUEST['prodId'];
+                $provider = $_REQUEST['provider'];
+                if ($provider != 'sony')
+                {
+                    $provider = 'ioda';
+                }
+
+                $trackDetails = $this->Song->getdownloaddata($prodId, $provider);
+                            
+                $insertArr = Array();
+                $insertArr['library_id'] = $libraryId;
+                $insertArr['patron_id'] = $patronId;
+                $insertArr['ProdID'] = $prodId;
+                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+                $insertArr['album'] = $trackDetails['0']['Song']['Title'];
+                $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
+                $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+                $insertArr['provider_type'] = $provider;
+                $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+                $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
+                $this->Wishlist->setDataSource('master');
+                //insert into wishlist table
+                $this->Wishlist->create();      //Prepare model to save record
+                //check the inserting values
+                $log_data .= "  :InsertArray Beofre Save:" . serialize($insertArr);
+                if ($this->Wishlist->save($insertArr))
+                {
+                    $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
+
+
+                    $this->Wishlist->setDataSource('default');
+
+                    //add the wishlist songs in the session array
+                    if ($this->Session->read('wishlistVariArray'))
+                    {
+                        $wishlistVariArray = $this->Session->read('wishlistVariArray');
+                        $wishlistVariArray[] = $prodId;
+                        $this->Session->write('wishlistVariArray', $wishlistVariArray);
+                    }
+
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+
+                    echo "Success";
+                    exit;
+                }
+                else
+                {
+                    $logs = $this->Wishlist->getDataSource()->getLog();
+                    $lastLog = end($logs['log']);
+                    $query = $lastLog['query'];
+                    $log_data .= "  :InsertArray During Save:" . serialize($insertArr) . "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
+
+                    $log_data .= "   Some values not found..";
+                    $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                    $this->log($log_data, $log_name);
+
+                    echo 'error';
+                    exit;
+                }
+            }
+            else
+            {
+                $log_data .= "   TracklistDetails:Track Details not found..";
+                $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+                $this->log($log_data, $log_name);
+
+                echo 'error1';
+                exit;
+            }
+        }
+        else
+        {
+            $log_data .= "   Some values not found..";
+            $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
+            $this->log($log_data, $log_name);
+
+            echo 'error';
+            exit;
+        }
+    }    
+    
     /*
       Function Name : addToWishlistVideo
       Desc : To let the patron add video to wishlist
