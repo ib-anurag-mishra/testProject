@@ -552,10 +552,10 @@ $(document).ready(function(){
 
     $(document).find('.add-all-to-wishlist').on('click', function(e)
     {        
-        var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+       // var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+         var selected_songs = [];
         $(document).find('.top-songs-container .rows-container .row').each(function()
-        {
-            var selected_songs = [];
+        {           
             if($(this).find('.row-checkbox').prop('checked'))
                 {
                    selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id'));
