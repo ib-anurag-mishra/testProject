@@ -42,15 +42,17 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 <?php
                                 if ($this->Session->read("patron"))
                                 {
+                                    ?>
+                                    <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album" data-provider="<?= $value["Album"]["provider_type"] ?>"/>
+                                    <?php
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
-                                        ?>  
-                                        <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album" data-provider="<?= $value["Album"]["provider_type"] ?>"/>
+                                        ?>                                          
                                         <button class="playlist-menu-icon toggleable"></button>                                        
                                         <ul>
                                             <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                         
+
                                         </ul>   
                                         <?php
                                     }

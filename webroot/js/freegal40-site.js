@@ -615,7 +615,6 @@ $(document).ready(function() {
         return false;
     });
     
-    
 });
 
 function displayMessage(response)

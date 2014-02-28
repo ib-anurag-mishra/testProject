@@ -410,10 +410,20 @@ class QueuesController extends AppController
             echo $this->addSongToPlaylist($prodID, $queueId, $type);
                     exit;
         }
+        else if($type == 'multi')
+        {
+            
+        }
         die;
     }
     
-    
+    /**
+     * 
+     * @param type $prodID
+     * @param type $queueId
+     * @param type $type
+     * @return type
+     */
     function addSongToPlaylist($prodID, $queueId, $type)
     {
         $songDetails = array_pop($this->Common->getSongsDetails($prodID));
