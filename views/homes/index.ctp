@@ -1,3 +1,22 @@
+<?php echo $this->Html->script('jquery-ias.min'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        jQuery.ias({
+            container : '.featured-artists-grid clearfix',
+            item: '.featured-scrollset',
+            pagination: '.autoscrollnav',
+            next: '.next-slides',
+            loader: '<img src="/img/ajax-loader-1.gif"/>',
+            loaderDelay : 1000,
+            history:false,
+            onPageChange: function(pageNum, pageUrl, scrollOffset) {
+
+            },
+            triggerPageThreshold: 1000,
+            trigger:''
+        });
+    });
+</script>
 <?php
 echo $session->flash();
 ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
@@ -42,17 +61,15 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 <?php
                                 if ($this->Session->read("patron"))
                                 {
-                                    ?>
-                                    <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album" data-provider="<?= $value["Album"]["provider_type"] ?>"/>
-                                    <?php
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
                                     {
                                         echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
-                                        ?>                                          
+                                        ?>  
+                                        <input type="hidden" id="<?= $value['Album']['ProdID'] ?>" value="album" data-provider="<?= $value["Album"]["provider_type"] ?>"/>
                                         <button class="playlist-menu-icon toggleable"></button>                                        
                                         <ul>
                                             <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-
+                                         
                                         </ul>   
                                         <?php
                                     }
@@ -128,7 +145,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <li><a class="select-all" href="#">Select All</a></li>
                         <li><a class="clear-all" href="#">Clear All</a></li>										
                         <li><a  class="add-all-to-wishlist"href="#">Add to Wishlist</a></li>
-                        <li><a class="add-all-to-playlist" href="#">Add to Playlist</a></li>
+                        <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
                     </ul>
                     <ul class="playlist-menu">
 
@@ -249,117 +266,75 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 </section>
 <!-- Top Singles code end here -->
 
-<script>
-    
-    $(document).ready(function() {
-       // var preValue = 1;
-       // var artistPage = 2;
-       // var selectedAlpha = '<? echo ($this->Session->read('selectedAlpha') != '') ? $this->Session->read('selectedAlpha') : 'All' ?>';
 
-        $("#featured-artists-section").scroll(function() {
-            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
 
-                $('#artist_loader').show();
-             //   var totalPages = <?= $totalPages ?>;
-              //  var data = "npage=" + artistPage;
-
-               // if ((preValue != artistPage) && (artistPage <= totalPages)) {
-
-                  //  if (artistPage <= totalPages) {
-
-               //         preValue = artistPage;
-                      //  var link = webroot + 'genres/ajax_view_pagination/page:' + artistPage + '/<?= base64_encode($genre); ?>' + '/' + selectedAlpha;
-			var link = webroot + 'jwtest.html';
-
-                        jQuery.ajax({
-                            type: "post", // Request method: post, get
-                            url: link, // URL to request
-                            data: data, // post data
-                            success: function(newitems) {
-                                if (newitems) {
-                                    artistPage++;
-                                    $('#artist_loader').hide();
-                                    $('#featured-artists-grid-div').append(newitems);
-                                } else {
-                                    $('#artist_loader').hide();
-                                    return;
-                                }
-                            },
-                            async: true,
-                            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                //alert('No artist list available');
-                            }
-                        });
-
-                 //   } else {
-                  //      $('#artist_loader').hide();
-                   // }
-               // }
-            }
-        });
-    });
-
-</script>
-
-<section class="featured-artists" id="featured-artists-section">
+<section class="featured-artists">
     <h2>Featured Artists &amp; Composers</h2>
-    <div class="featured-artists-grid clearfix" id="featured-artists-grid-div">
-        <?php
-        // $this->log("index.ctp featuredArtists start", "siteSpeed");  
-        $count = 1; 
-        foreach ($featuredArtists as $k => $v)
-        {
+    <div class="featured-artists-grid clearfix">
+        <div class="featured-scrollset">
+            <?php
+            // $this->log("index.ctp featuredArtists start", "siteSpeed");  
+            $count = 1;
+            $cnt = 0;
+            foreach ($featuredArtists as $k => $v)
+            {
+                if($cnt%5 == 0){
+                    echo "</div><div class='featured-scrollset'>";
+                }                
 
-            //$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
-            //$image =  Configure::read('App.Music_Path').$albumArtwork;
-            if (strlen($v['Album']['AlbumTitle']) > 22)
-            {
-                $title = substr($v['Album']['AlbumTitle'], 0, 22) . "..";
-            }
-            else
-            {
-                $title = $v['Album']['AlbumTitle'];
-            }
+                //$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+                //$image =  Configure::read('App.Music_Path').$albumArtwork;
+                if (strlen($v['Album']['AlbumTitle']) > 22)
+                {
+                    $title = substr($v['Album']['AlbumTitle'], 0, 22) . "..";
+                }
+                else
+                {
+                    $title = $v['Album']['AlbumTitle'];
+                }
 
-            if (strlen($v['Album']['ArtistText']) > 22)
-            {
-                $ArtistText = substr($v['Album']['ArtistText'], 0, 22) . "..";
-            }
-            else
-            {
-                $ArtistText = $v['Album']['ArtistText'];
-            }
-            ?>
-        <div class="featured-grid-item">
-            <a href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $html->image($v['featuredImage'], array("height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'])); ?></a>
-            <div class="featured-grid-menu">
-                <div class="featured-artist-name">
-                    <?php echo $this->getTextEncode($ArtistText); ?>
-                </div>
-                <div class="featured-album-name">
-                    <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a>
-                </div>
-                <div class="featured-artist-ctas">
-                                <?php if ($this->Session->read("patron"))
-                                      {
-                                            if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
-                                            {
-                                                echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']],2);
-                                            }
-                                      }      
-                                    ?>                     
-                    <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['ArtistText'])); ?>" class="more-by-artist" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($v['Album']['ArtistText'])); ?>/<?= base64_encode($v['Genre']['Genre']) ?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                if (strlen($v['Album']['ArtistText']) > 22)
+                {
+                    $ArtistText = substr($v['Album']['ArtistText'], 0, 22) . "..";
+                }
+                else
+                {
+                    $ArtistText = $v['Album']['ArtistText'];
+                }
+                ?>
+            <div class="featured-grid-item">
+                <a href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $html->image($v['featuredImage'], array("height" => "77", "width" => "84", "alt" => $ArtistText . ' - ' . $v['Album']['AlbumTitle'])); ?></a>
+                <div class="featured-grid-menu">
+                    <div class="featured-artist-name">
+                        <?php echo $this->getTextEncode($ArtistText); ?>
+                    </div>
+                    <div class="featured-album-name">
+                        <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a>
+                    </div>
+                    <div class="featured-artist-ctas">
+                                    <?php if ($this->Session->read("patron"))
+                                          {
+                                                if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
+                                                {
+                                                    echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']],2);
+                                                }
+                                          }      
+                                        ?>                     
+                        <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['ArtistText'])); ?>" class="more-by-artist" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($v['Album']['ArtistText'])); ?>/<?= base64_encode($v['Genre']['Genre']) ?>"><?php echo $this->getTextEncode($ArtistText); ?></a>
+                    </div>
                 </div>
             </div>
+            <?php 
+            $cnt;
+            $count++;
+            } ?>
         </div>
-        <?php 
-        if($count == 20){
-            break;
-        }
-        $count++;
-        } ?>
+        <?php if(count($featuredArtists) == 10){ ?>
+        <div class="autoscrollnav">
+              <a href="<?php echo $this->Html->Url(array('controller'=>'homes','action'=>'feature_ajaxlisting')); ?>" class="next-slides">2</a>
+       </div>
+        <?php } ?>        
     </div>
-    <span id="artist_loader" style="display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif"  style="padding-left:115px;padding-buttom:25px;border:0;" alt=""/></span>
 </section>
 
 <style>
