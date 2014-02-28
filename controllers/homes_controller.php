@@ -4960,6 +4960,9 @@ STR;
 
         //check if its called for adding Album  / Song(s) to Wishlist        
         $type = $this->params["type"];
+        echo "<pre>";
+        print_r($this->params);
+        die;
 
         //Check is patron is logged in or not
 
