@@ -539,7 +539,7 @@ $(document).ready(function(){
     {        
         if($(this).hasClass('wishlist-icon'))
             {
-                var ProdID = $(this).find('input[type="hidden"]').attr('id');
+                var ProdID = $(this).parent().find('input[type="hidden"]').attr('id');
                 alert(ProdID);
             }
        // var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
