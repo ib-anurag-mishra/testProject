@@ -228,7 +228,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)){
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";;
                 $result3 = mysql_query($sql);
                 
-                if(!$result3)
+                if(!$result3){
                     die(" Query failed: ". $sql. " Error: " .mysql_error());
                 }
 
@@ -246,7 +246,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)){
                 $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
                 
-                if(!$result)
+                if(!$result){
                     die("Query failed: ". $sql. " Error: " .mysql_error());
                 }
                 
