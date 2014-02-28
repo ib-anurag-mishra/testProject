@@ -550,8 +550,9 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on('click' , '.top-songs .header-container .options-menu .add-all-to-wishlist', function()
+    $(document).on('click' , '.add-all-to-wishlist', function(e)
 {
+    e.preventDefault();
     alert("Multi add to wishlist clicked");
 });
 });
