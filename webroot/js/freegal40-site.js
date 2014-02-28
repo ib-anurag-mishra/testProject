@@ -550,9 +550,10 @@ $(document).ready(function(){
         return false;
     });
 
-    $(document).on('click' , '.add-all-to-wishlist', function(e)
+    $(document).find('.add-all-to-wishlist').on('click' ,  function(e)
 {
     e.preventDefault();
     alert("Multi add to wishlist clicked");
+    return false ;
 });
 });
