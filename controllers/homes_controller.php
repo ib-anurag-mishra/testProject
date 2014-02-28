@@ -5015,7 +5015,7 @@ STR;
                 $log_data .= $this->addsToWishlist($songsArray);
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
-                echo "success|" . ((count($selectedSongs) > 1) ? "songs" : "song") . "is added succesfully to wishlist.";
+                echo "success|" . ((count($selectedSongs) > 1) ? "songs are " : "song is ") . " added succesfully to wishlist.";
             }
             else
             {

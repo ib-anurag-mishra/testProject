@@ -50,25 +50,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         <button class="playlist-menu-icon toggleable"></button>                                        
                                         <ul>
                                             <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                            <li><a href="#">David's Favorites</a></li>
-                                            <li><a href="#">Pop</a></li>
-                                            <li><a href="#">Day After Christmas</a></li>
-                                            <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                            <li><a href="#">80's</a></li>
-                                            <li><a href="#">90's</a></li>
-                                            <li><a href="#">Country</a></li>
-                                            <li><a href="#">Rock</a></li>
-                                            <li><a href="#">Metal</a></li>
-                                            <li><a href="#">Breakup Songs</a></li>
-                                            <li><a href="#">New Years</a></li>
-                                            <li><a href="#">Christmas</a></li>
-                                            <li><a href="#">Summer</a></li>
-                                            <li><a href="#">Road Trip</a></li>
-                                            <li><a href="#">Christian</a></li>
-                                            <li><a href="#">Cleaning</a></li>
-                                            <li><a href="#">Workout</a></li>
-                                            <li><a href="#">Running</a></li>
-                                            <li><a href="#">Romantic</a></li>
+                                         
                                         </ul>   
                                         <?php
                                     }
@@ -214,20 +196,16 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             {
                                 ?>
                                 <button class="menu-btn"></button>
+                                
                                 <section class="options-menu">
                                     <input type="hidden" id="<?= $nationalTopSong["Song"]["ProdID"] ?>" value="song" data-provider="<?= $nationalTopSong["Song"]["provider_type"] ?>"/>
                                     <ul>
                                         <li><a href="#">Download</a></li>
-                                        <li><a href="#">Add to Wishlist</a></li>
+                                        <li><a class="add-to-wishlist" href="#">Add to Wishlist</a></li>
                                         <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
                                     </ul>
                                     <ul class="playlist-menu">
-                                        <li><a href="#">Create New Playlist</a></li>
-                                        <li><a href="#">Playlist 1</a></li>
-                                        <li><a href="#">Playlist 2</a></li>
-                                        <li><a href="#">Playlist 3</a></li>
-                                        <li><a href="#">Playlist 4</a></li>
-                                        <li><a href="#">Playlist 5</a></li>                              
+                                        <li><a href="#">Create New Playlist</a></li>                                                                 
                                     </ul>											
                                 </section>
                                 <input type="checkbox" class="row-checkbox">
