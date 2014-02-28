@@ -4952,7 +4952,7 @@ STR;
     
     function addToWishlistNewHome()
     {
-        //Configure::write('debug', 2);
+        Configure::write('debug', 2);
         $this->layout = 'ajax';
 
         //check if its called for adding Album  / Songs to Wishlist
