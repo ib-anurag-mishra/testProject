@@ -4959,11 +4959,8 @@ STR;
         $this->layout = 'ajax';
 
         //check if its called for adding Album  / Song(s) to Wishlist        
-        $type = $this->params["type"];
-        echo "<pre>";
-        print_r($this->params);
-        die;
-
+        $type = $this->params["form"]["type"];
+       
         //Check is patron is logged in or not
 
         if ($type == 'album')
@@ -5004,7 +5001,7 @@ STR;
                 $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
                 $log_data .= "Library ID:" . $this->Session->read('library') . " :PatronID:" . $this->Session->read('patron');
 
-                $selectedSongs = $this->params["songs"];
+                $selectedSongs = $this->params["form"]["songs"];
                 $songsArray = array();
                 foreach ($selectedSongs as $song)
                 {
