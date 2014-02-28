@@ -406,42 +406,46 @@ class QueuesController extends AppController
             }
         }
         else if ($type == 'song')
-        {
-            $songDetails = array_pop($this->Common->getSongsDetails($prodID));
-
-           // print_r($songDetails);
-
-            if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) 
-                    && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
-            {
-                if ($this->Session->read('library_type') == 2 && $songDetails['Country']['StreamingSalesDate'] <= date('Y-m-d') && $songDetails['Country']['StreamingStatus'] == 1)
-                {
-                    $insertArr = Array();
-                    $insertArr['queue_id'] = $queueId;
-                    $insertArr['song_prodid'] = $songDetails['Song']['ProdID'];
-                    $insertArr['song_providertype'] = $songDetails['Song']['provider_type'];
-                    $insertArr['album_prodid'] = $songDetails['Albums']['ProdID'];
-                    $insertArr['album_providertype'] = $songDetails['Albums']['provider_type'];
-                    //insert into queuedetail table
-                    $this->QueueDetail->setDataSource('master');
-                    $this->QueueDetail->save($insertArr);
-                    $this->QueueDetail->setDataSource('default');
-                    echo "Success|$type";
+        {            
+            echo $this->addSongToPlaylist($prodID, $queueId, $type);
                     exit;
-                }
-                else    // Song is not allowed for streaming
-                {
-                    echo "invalid_for_stream|$type";
-                    exit;
-                }
-            }
-            else
-            {
-                echo "error|$type";
-                exit;
-            }
         }
         die;
+    }
+    
+    
+    function addSongToPlaylist($prodID, $queueId, $type)
+    {
+        $songDetails = array_pop($this->Common->getSongsDetails($prodID));
+
+        if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) 
+                && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
+        {
+            if ($this->Session->read('library_type') == 2 && $songDetails['Country']['StreamingSalesDate'] <= date('Y-m-d') && $songDetails['Country']['StreamingStatus'] == 1)
+            {
+                $insertArr = Array();
+                $insertArr['queue_id'] = $queueId;
+                $insertArr['song_prodid'] = $songDetails['Song']['ProdID'];
+                $insertArr['song_providertype'] = $songDetails['Song']['provider_type'];
+                $insertArr['album_prodid'] = $songDetails['Albums']['ProdID'];
+                $insertArr['album_providertype'] = $songDetails['Albums']['provider_type'];
+                
+                //insert into queuedetail table
+                $this->QueueDetail->setDataSource('master');
+                $this->QueueDetail->save($insertArr);
+                $this->QueueDetail->setDataSource('default');
+                return "Success|$type";
+            }
+            else   
+            {
+                 // Song is not allowed for streaming
+                return "invalid_for_stream|$type";
+            }
+        }
+        else
+        {
+            return "error|$type";
+        }
     }
     
     

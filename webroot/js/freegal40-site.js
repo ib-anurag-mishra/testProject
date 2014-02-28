@@ -583,8 +583,7 @@ $(document).ready(function() {
             });
         }
         else
-        {
-            //var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+        {           
             var type = 'song';
             var selected_songs = [];
             $(document).find('.top-songs-container .rows-container .row').each(function()
@@ -615,6 +614,8 @@ $(document).ready(function() {
 
         return false;
     });
+    
+    
 });
 
 function displayMessage(response)
