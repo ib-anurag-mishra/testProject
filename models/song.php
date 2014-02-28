@@ -187,29 +187,40 @@ class Song extends AppModel
    Function Name : allartistname
    Desc : This would returna the download data for the patron
   */
-  function getdownloaddata($id , $provider) {
-    $this->recursive = 2;
-    $this->Behaviors->attach('Containable');
-    $downloadData = $this->find('all', array(
-		'conditions'=>array('Song.ProdID' => $id , 'Song.provider_type' => $provider),
-		'fields' => array(
-			'Song.ProdID',
-			'Song.ProductID',
-			'Song.Title',
-			'Song.SongTitle',
-			'Song.Artist',
-			'Song.ISRC'
-		),
-		'contain' => array(										
-			'Full_Files' => array(
-				'fields' => array(
-					'Full_Files.CdnPath',
-					'Full_Files.SaveAsName'
-					),                             
-			)
-	)));
-    return $downloadData;
-  }
+ function getdownloaddata($id, $provider)
+    {
+        $this->recursive = 2;
+        $this->Behaviors->attach('Containable');
+        $downloadData = $this->find('all', array(
+            'conditions' => array(
+                'Song.ProdID' => $id,
+                'Song.provider_type' => $provider
+            ),
+            'fields' => array(
+                'Song.ProdID',
+                'Song.ProductID',
+                'Song.Title',
+                'Song.SongTitle',
+                'Song.Artist',
+                'Song.ISRC'
+            ),
+            'contain' => array(
+                'Full_Files' => array(
+                    'fields' => array(
+                        'Full_Files.CdnPath',
+                        'Full_Files.SaveAsName'
+                    )
+                ),
+                'Country' => array(
+                    'fields' => array(
+                        'Country.Territory',
+                        'Country.provider_type'
+                    )
+                ),
+            ),
+        ));
+        return $downloadData;
+    }
   
   /*
    Function Name : allartistname
