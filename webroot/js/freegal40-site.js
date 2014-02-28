@@ -551,8 +551,7 @@ $(document).ready(function(){
     });
 
     $(document).find('.add-all-to-wishlist').on('click', function(e)
-    {
-        e.preventDefault();
+    {        
         var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
         $(document).find('.top-songs-container .rows-container .row').each(function()
         {
