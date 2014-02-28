@@ -4963,10 +4963,10 @@ STR;
             $prodID = $_POST["prodID"];
             $provider = $_POST["provider_type"];
             if ($provider != 'sony')
-                    {
-                        $provider = 'ioda';
-                    }
-                    
+            {
+                $provider = 'ioda';
+            }
+
             $log_name = 'stored_procedure_web_album_wishlist_log_' . date('Y_m_d');
             $log_id = md5(time());
             $log_data = PHP_EOL . "----------Request (" . $log_id . ") Start----------------" . PHP_EOL;
@@ -4974,72 +4974,11 @@ STR;
                     . " ProdID:$prodID  :ProviderType:$provider ";
 
             //Check is patron is logged in or not
-            if ($this->Session->read('library') && $this->Session->read('patron') && isset($prodID) && isset($provider) )
+            if ($this->Session->read('library') && $this->Session->read('patron') && isset($prodID) && isset($provider))
             {
-                $libraryId = $this->Session->read('library');
-                $patronId = $this->Session->read('patron');
-                //check if the album is already add  to wishlist
-                
-                 $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
-                    echo '<pre>';
-                    print_r($albumSongs);
-                    die;
-                    
-                    
-                $wishlistCount = $this->Wishlist->find('count', array('conditions' => array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $prodID)));
-                if (!$wishlistCount)
-                {
-                  
-                    $insertArr = Array();
-                    $insertArr['library_id'] = $libraryId;
-                    $insertArr['patron_id'] = $patronId;
-                    $insertArr['ProdID'] = $prodID;
-                    $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-                    $insertArr['album'] = $trackDetails['0']['Song']['Title'];
-                    $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-                    $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-                    $insertArr['provider_type'] = $provider;
-                    $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-                    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-                    $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-
-                    $this->Wishlist->setDataSource('master');
-                    //insert into wishlist table
-                    $this->Wishlist->create();      //Prepare model to save record
-                    //check the inserting values
-                    $log_data .= "  :InsertArray Beofre Save:" . serialize($insertArr);
-                    if ($this->Wishlist->save($insertArr))
-                    {
-                        $log_data .= "  :TracklistDetails:" . serialize($trackDetails) . " :InsertArrayDetails:" . serialize($insertArr);
-                        $this->Wishlist->setDataSource('default');
-
-                        //add the wishlist songs in the session array
-                        if ($this->Session->read('wishlistVariArray'))
-                        {
-                            $wishlistVariArray = $this->Session->read('wishlistVariArray');
-                            $wishlistVariArray[] = $prodId;
-                            $this->Session->write('wishlistVariArray', $wishlistVariArray);
-                        }
-                         $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                        $this->log($log_data, $log_name);
-                        echo "Success";
-                     
-                    }
-                    else
-                    {
-                        $logs = $this->Wishlist->getDataSource()->getLog();
-                        $lastLog = end($logs['log']);
-                        $query = $lastLog['query'];
-                        $log_data .= "  :InsertArray During Save:" . serialize($insertArr) . "  :Mysql Error :" . mysql_error() . " Mysql query:" . $query;
-                        $log_data .= "   Some values not found..";
-                        $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
-                        $this->log($log_data, $log_name);
-
-                        echo 'error';
-                    
-                    }
-                }
-            }           
+                $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
+                $this->addsToWishlist($albumSongs);
+            }
         }
         elseif ($type == 'song')
         {
@@ -5050,6 +4989,39 @@ STR;
         }
 
         die;
+    }
+    
+    function addsToWishlist($songsArray )
+    {
+        //check if the album is already add  to wishlist
+        $libraryId = $this->Session->read('library');
+        $patronId = $this->Session->read('patron');
+        foreach ($songsArray as $song)
+        {
+            $wishlistCount = $this->Wishlist->find('count', array('conditions' =>
+                array('library_id' => $libraryId,
+                    'patron_id' => $patronId,
+                    'ProdID' => $song['Song']['ProdID']
+                )));
+            if (!$wishlistCount)
+            {
+                $insertArr = Array();
+                    $insertArr['library_id'] = $libraryId;
+                    $insertArr['patron_id'] = $patronId;
+                    $insertArr['ProdID'] = $song['Song']['ProdID'];
+                    $insertArr['artist'] = $song['Song']['Artist'];
+                    $insertArr['album'] = $song['Song']['Title'];
+                    $insertArr['track_title'] = $song['Song']['SongTitle'];
+                    $insertArr['ProductID'] = $song['Song']['ProductID'];
+                    $insertArr['provider_type'] = $song['Country']['provider_type'];
+                    $insertArr['ISRC'] = $song['Song']['ISRC'];
+                    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                    $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+            }
+            
+            echo '<pre>';
+            print_r($insertArr);
+        }
     }
 
 }
