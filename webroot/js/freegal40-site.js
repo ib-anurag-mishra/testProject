@@ -536,23 +536,44 @@ $(document).ready(function(){
     });
 
     $(document).find('.add-all-to-wishlist , .wishlist-icon').on('click', function(e)
-    {        
-        if($(this).hasClass('wishlist-icon'))
-            {
-                var ProdID = $(this).parent().find('input[type="hidden"]').attr('id');
-                alert(ProdID);
-            }
-       // var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
-//         var selected_songs = [];
-//        $(document).find('.top-songs-container .rows-container .row').each(function()
-//        {           
-//            if($(this).find('.row-checkbox').prop('checked'))
-//                {                   
-//                   selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id')+'&'+$(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
-//                }
-//        });
+    {
+        if ($(this).hasClass('wishlist-icon'))
+        {
+            var ProdID = $(this).parent().find('input[type="hidden"]').attr('id');
+            var Provider = $(this).parent().find('input[type="hidden"]').attr('data-provider');
+            var type = $(this).parent().find('input[type="hidden"]').attr('value');
 
-        //alert(selected_songs);
+            $.ajax({
+                type: "post",
+                data: {'prodID': ProdID, 'provider_type': Provider, 'type' : type},
+                url: webroot + 'homes/addToWishlistNewHome',
+                success: function(response)
+                {
+                    addToQueueResponse(response, type);
+                },
+                error: function(jqXHR, textStatus, errorThrown) 
+                {
+                    // log the error to the console
+                    console.log(
+                            "The following error occured: " +
+                            textStatus, errorThrown);
+                }
+            });
+        }
+        else
+        {
+            var songs_count = $(document).find('.top-songs-container .rows-container .row').length;
+            var selected_songs = [];
+            $(document).find('.top-songs-container .rows-container .row').each(function()
+            {
+                if ($(this).find('.row-checkbox').prop('checked'))
+                {
+                    selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
+                }
+            });
+        }
+
         return false;
     });
 });
+

@@ -4950,6 +4950,31 @@ STR;
     }
 
     
+    function addToWishlistNewHome()
+    {
+        //Configure::write('debug', 2);
+        $this->layout = 'ajax';
+
+        //check if its called for adding Album  / Songs to Wishlist
+        $type = $_POST["type"];
+
+        if ($type == 'album')
+        {
+            $prodID = $_POST["prodID"];
+            $provider = $_POST["provider_type"];
+
+            echo "$prodID|$provider|$type";
+        }
+        elseif ($type == 'song')
+        {
+            $prodID = $_POST["prodID"];
+            $provider = $_POST["provider_type"];
+
+            echo "$prodID|$provider|$type";
+        }
+
+        die;
+    }
 
 }
 
