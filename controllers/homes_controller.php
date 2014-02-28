@@ -4997,7 +4997,7 @@ STR;
                 $log_data .= " ProdID:$songInfo[0]  :ProviderType:$songInfo[1] ";
                 
                 $songDetails = $this->Song->getdownloaddata($songInfo[0], $songInfo[1] );
-                array_push($songsArray, $songDetails);
+                array_push($songsArray, array_pop($songDetails));
             }
             
             echo "<pre>";
