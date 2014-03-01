@@ -17,6 +17,17 @@
         });
     });
 </script>
+
+<style type="text/css">
+
+.top-albums, .top-songs {
+    display: none;
+    position: relative;
+}    
+    
+    
+</style>    
+
 <?php
 echo $session->flash();
 ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
