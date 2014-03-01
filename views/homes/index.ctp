@@ -1,7 +1,7 @@
 <?php echo $this->Html->script('jquery-ias.min'); ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        jQuery.ias({
+        /*jQuery.ias({
             container : '.featured-artists-grid',
             item: '.featured-scrollset',
             pagination: '.featured-artists-grid .autoscrollnav',
@@ -14,7 +14,15 @@
             },
             triggerPageThreshold: 1000,
             trigger:''
-        });
+        });*/
+var ias = jQuery.ias({
+  container:  '.featured-artists-grid',
+  item:       '.featured-scrollset',
+  pagination: '.featured-artists-grid .autoscrollnav',
+  next:       '.next-slides'
+}); 
+ias.extension(new IASTriggerExtension());
+        
     });
 </script>
 
