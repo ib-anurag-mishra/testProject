@@ -156,16 +156,14 @@ class HomesController extends AppController
         $ids_provider_type = '';
         //featured artist slideshow code start
         //if(1){
-        if (($artists = Cache::read("featured" . $country)) === false)
-        {
-            $featured = $this->Common->getFeaturedArtists($territory);
-        }
-        else
-        {
-            //fetched all the information from the cache
-            $featured = Cache::read("featured" . $country);
-        }
-        $this->set('featuredArtists', $featured);
+        
+        if(Cache::read("featured_artists_" . $territory.'_'.'1') === false){
+            $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
+            Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
+        }else{
+            $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.'1');
+        }        
+        $this->set('featuredArtists', $featuresArtists);
 
         /*
           Code OF NEWS Section --- START

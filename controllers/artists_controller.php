@@ -23,7 +23,7 @@ Class ArtistsController extends AppController
     function beforeFilter()
     {
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl');
+        $this->Auth->allowedActions = array('view', 'test', 'album', 'album_ajax', 'album_ajax_view', 'admin_getAlbums', 'admin_getAutoArtist', 'getAlbumSongs', 'getAlbumData','getNationalAlbumData','getSongStreamUrl','featuredAjaxListing');
 //		$libraryCheckArr = array("view");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //			$validPatron = $this->ValidatePatron->validatepatron();
@@ -795,7 +795,32 @@ Class ArtistsController extends AppController
         memcache_delete($memcache, Configure::read('App.memcache_key') . "_newartists");
         memcache_close($memcache);
     }
+    
+    
+    /**
+     * Function Name : featuredAjaxListing
+     * Desc          : This function is used to get featured artists which are called through ajax 
+     */
+    function featuredAjaxListing(){
+        if(!empty($this->params['pass'])){
+            $page = $this->params['pass'][0];
+            if(!empty($page)){
+                $territory = $this->Session->read('territory');
+                if(Cache::read("featured_artists_" . $territory.'_'.$page) === false){
+                    $featuresArtists = $this->Common->getFeaturedArtists($territory,$page);
+                    Cache::write("featured_artists_" . $territory.'_'.$page, $featuresArtists);
+                }else{
+                    $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.$page);
+                }
+                return $featuresArtists;
+            }else{
+                
+            }
+            
+        }
 
+    }
+    
     /*
       Function Name : view
       Desc : For artist view page

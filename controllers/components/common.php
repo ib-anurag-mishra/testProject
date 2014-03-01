@@ -1400,11 +1400,21 @@ STR;
      * Function Description : This function is used to getFeaturedArtists.
      */
 
-    function getFeaturedArtists($territory)
+    function getFeaturedArtists($territory,$page = 0, $limit = 20)
     {
         set_time_limit(0);
         //$countryPrefix = $this->getCountryPrefix($territory);       
        // $featured = array();       
+        
+        
+        if(isset($page)){
+            if($page <= 0)
+            {
+                $page = 1;
+            }
+            $offset = ($page - 1) * $limit;
+        }
+
         
         $ids = '';
         $ids_provider_type = '';
@@ -1415,7 +1425,8 @@ STR;
                 'Featuredartist.language' => Configure::read('App.LANGUAGE')),
             'recursive' => -1,
             'order' => array(
-                'Featuredartist.id' => 'desc')
+                'Featuredartist.id' => 'desc'),
+            'limit' => "$offset,$limit"
                 )
         );
         
@@ -1488,7 +1499,7 @@ STR;
                     )
                 ),
                 'order' => 'fa.id DESC',
-                'limit' => 20
+                'limit' => $limit
                     )
             );
         }
@@ -1499,7 +1510,7 @@ STR;
 
         if (empty($featured))
         {
-            Cache::write("featured" . $territory, Cache::read("featured" . $territory));
+            Cache::write("featured_artists_" . $territory.'_'.$page, Cache::read("featured_artists_" . $territory.'_'.$page));
         }
         else
         {
@@ -1515,8 +1526,8 @@ STR;
                     );
                // }
             }
-            Cache::delete("featured" . $territory);
-            Cache::write("featured" . $territory, $featured);
+            Cache::delete("featured_artists_" . $territory.'_'.$page);
+            Cache::write("featured_artists_" . $territory.'_'.$page, $featured);
         }
         $this->log("cache written for featured artists for $territory", 'debug');
         $this->log("cache written for featured artists for: $territory", "cache");
