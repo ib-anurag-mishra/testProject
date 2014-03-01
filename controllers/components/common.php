@@ -1507,13 +1507,7 @@ STR;
         {
             $featured = array();
         }
-
-        if (empty($featured))
-        {
-            Cache::write("featured_artists_" . $territory.'_'.$page, Cache::read("featured_artists_" . $territory.'_'.$page));
-        }
-        else
-        {
+        if(!empty($featured)){
             foreach ($featured as $k => $v)
             {
                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
@@ -1526,12 +1520,7 @@ STR;
                     );
                // }
             }
-            Cache::delete("featured_artists_" . $territory.'_'.$page);
-            Cache::write("featured_artists_" . $territory.'_'.$page, $featured);
         }
-        $this->log("cache written for featured artists for $territory", 'debug');
-        $this->log("cache written for featured artists for: $territory", "cache");
-        
         return array_pop($featured);
     }
     

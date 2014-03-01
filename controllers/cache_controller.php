@@ -106,10 +106,10 @@ class CacheController extends AppController {
             $this->Common->getUsTop10Videos($territory);
             $this->Common->getNewReleaseAlbums($territory);
             $this->Common->getNewReleaseVideos($territory);
-            $this->Common->getFeaturedArtists($territory);
             $this->Common->getDifferentGenreData($territory);            
             $this->Common->getDefaultQueues($territory);  
             //$this->getArtistText($territory);
+            $this->setFeaturedArtists($territory);
         }
        $this->Common->setLibraryTopTenCache();
        $this->Common->setVideoCacheVar();    
@@ -128,6 +128,39 @@ class CacheController extends AppController {
         $announcment_rs = $this->Album->query($announcment_query);
         Cache::write("announcementCache",$announcment_rs);
    
+    }
+    
+    /**
+     * Function Name : setFeaturedArtists
+     * Function Description : This function is used to set all featured artists in Cache.
+     * 
+     */
+    
+    function setFeaturedArtists($territory){
+        
+        $featuresArtists = $this->Common->getFeaturedArtists($territory,1);
+        if(!empty($featuresArtists)){
+            Cache::write("featured_artists_" . $territory.'_'.'1', $featuresArtists);
+            $this->log("cache written for featured artists for ".$territory.'_'.'1', 'debug');
+            $this->log("cache written for featured artists for: ".$territory.'_'.'1', "cache");        
+        }else{
+            $this->log("unable to write cache for featured artists for ".$territory.'_'.'1', 'debug');
+            $this->log("unable to write cache for featured artists for: ".$territory.'_'.'1', "cache");             
+        }
+        
+        $page = 2;
+        while($featuresArtists = $this->Common->getFeaturedArtists($territory,$page)){
+            if(!empty($featuresArtists)){
+                Cache::write("featured_artists_" . $territory.'_'.$page, $featuresArtists);
+                $this->log("cache written for featured artists for ".$territory.'_'.$page, 'debug');
+                $this->log("cache written for featured artists for: ".$territory.'_'.$page, "cache");        
+            }else{
+                $this->log("unable to write cache for featured artists for ".$territory.'_'.$page, 'debug');
+                $this->log("unable to write cache for featured artists for: ".$territory.'_'.$page, "cache");             
+            }                       
+            $page++;
+        }        
+        
     }
     
      /*
