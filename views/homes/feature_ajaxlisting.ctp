@@ -151,8 +151,8 @@
                 </div>
             </div>
                     </div>
-                <div class="autoscrollnav" style="display: none;">
-              <a class="next-slides" href="/homes/feature_ajaxlisting">2</a>
+        <div class="autoscrollnav">
+              <a href="<?php echo $this->Html->Url(array('controller'=>'homes','action'=>'feature_ajaxlisting')); ?>" class="next-slides">2</a>
        </div>
                 
     </div>
