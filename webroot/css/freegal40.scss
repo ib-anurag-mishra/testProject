@@ -1837,6 +1837,13 @@ sub { top: 0.4em; }
 			}
 		}
 
+                .preview{
+                    left: 11px;
+                    position: relative;
+                    top: 9px;
+                    width: 23px;
+                }
+
 
 		&:nth-child(even) {
 
