@@ -1618,7 +1618,7 @@ STR;
                     )
                 ),
                 'order' => 'ta.id DESC',
-                'limit' => 20
+                'limit' => 25
                     )
             );
         }
