@@ -23,7 +23,12 @@
 .top-albums, .top-songs {
     display: none;
     position: relative;
-}    
+}  
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav{
+    
+    display:none;
+}
     
     
 </style>    
