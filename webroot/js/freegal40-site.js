@@ -148,7 +148,7 @@ $(document).ready(function() {
             return false;
 
         });
-    });        
+    });
 
 
 
@@ -605,7 +605,7 @@ $(document).ready(function() {
             });
         }
         else
-        {           
+        {
             var type = 'song';
             var selected_songs = [];
             $(document).find('.top-songs-container .rows-container .row').each(function()
@@ -636,19 +636,23 @@ $(document).ready(function() {
 
         return false;
     });
-    
+
     $(window).scroll(function()
     {
         var path = window.location.pathname;
-        if( path === '/homes/index' || path === '/index' )
+        if (path === '/homes/index' || path === '/index')
         {
-            if($(window).scrollTop() + $(window).height() > $(document).height() - 300) 
+            if (!complete)
             {
-                getFeaturedArtist();
-             }
+                if ($(window).scrollTop() + $(window).height() > $(document).height() - 100)
+                {
+                    complete = true;
+                    getFeaturedArtist();
+                }
+            }
         }
     });
-    
+
 });
 
 function displayMessage(response)
@@ -685,29 +689,30 @@ function displayMessage(response)
 
 
 
-var page=2;
+var page = 2;
+var complete = false;
 function getFeaturedArtist()
 {
-    $(document).find('#artist_loader').css('display','block');
-    
+    $(document).find('#artist_loader').css('display', 'block');
+
     $.ajax({
-         type: "post",
-         data : {'page' : page },
+        type: "post",
+        data: {'page': page},
         url: webroot + 'artists/featuredAjaxListing',
-        success:function(response)
+        success: function(response)
         {
-          
             $(document).find("#featured-artists-grid-div").append(response);
-            
+
             page++;
-            $(document).find('#artist_loader').css('display','none');
+            complete = false;
+            $(document).find('#artist_loader').css('display', 'none');
         },
-                 error: function(jqXHR, textStatus, errorThrown)
-                {
-                    // log the error to the console
-                    console.log(
-                            "The following error occured: " +
-                            textStatus, errorThrown);
-                }
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+            // log the error to the console
+            console.log(
+                    "The following error occured: " +
+                    textStatus, errorThrown);
+        }
     });
 }
