@@ -813,7 +813,9 @@ Class ArtistsController extends AppController
                 if (Cache::read("featured_artists_" . $territory . '_' . $page) === false)
                 {
                     $featuresArtists = $this->Common->getFeaturedArtists($territory, $page);
-                    Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
+                    if(!empty($featuresArtists)){
+                        Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
+                    }
                 }
                 else
                 {
