@@ -56,7 +56,7 @@ class HomesController extends AppController
         }
         else                                          //  Before Login
         {
-            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms','feature_ajaxlisting');
+            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms');
         }
 
         $this->Cookie->name = 'baker_id';
@@ -244,13 +244,6 @@ class HomesController extends AppController
 
         //print_r( $this->element('sql_dump') );
         //print_r($this->Session->read('downloadVariArray'));
-    }
-    
-    
-    function feature_ajaxlisting(){
-        
-        $this->layout = 'ajax';
-        
     }
 
     //this is just for streaming component test
