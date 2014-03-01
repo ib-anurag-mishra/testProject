@@ -1531,7 +1531,8 @@ STR;
         }
         $this->log("cache written for featured artists for $territory", 'debug');
         $this->log("cache written for featured artists for: $territory", "cache");
-        return $featured;
+        
+        return array_pop($featured);
     }
     
     
