@@ -639,7 +639,11 @@ $(document).ready(function() {
     
     $(window).scroll(function()
     {
-        alert( window.location.pathname);
+        var path = window.location.pathname;
+        if( path === '/homes/index' || path === '/index' )
+        {
+            alert(path);
+        }
     });
     
 });
