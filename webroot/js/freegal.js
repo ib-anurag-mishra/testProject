@@ -2532,7 +2532,7 @@ function getFeaturedArtist()
         url: webroot + 'artists/featuredAjaxListing',
         success: function(response)
         {
-            $(document).find("#featured-artists-grid-div").html(response);
+            $(document).find("#featured-artists-grid-div").append(response);
             page++;
             complete = false;
 
@@ -2554,7 +2554,7 @@ function getFeaturedArtist()
     $(document).find('#artist_loader').css('display', 'none');
     $.getScript(webroot + 'js/freegal40-libraries.js');
     $.getScript(webroot + 'js/freegal40-site.js');
-    $(document).find("#featured-artists-grid-div").ajaxify();
+    $(document.body).ajaxify();
 }
 
 $(document).ready(function() {
