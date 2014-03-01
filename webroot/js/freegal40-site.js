@@ -642,7 +642,10 @@ $(document).ready(function() {
         var path = window.location.pathname;
         if( path === '/homes/index' || path === '/index' )
         {
-             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+            var st = $(window).scrollTop();
+             var wi =$(window).innerHeight();
+             var ih = $(window).scrollHeight;
+             if (st + wi >= ih ) {
                 alert(path);
              }
         }
