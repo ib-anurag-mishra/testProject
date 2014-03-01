@@ -642,7 +642,7 @@ $(document).ready(function() {
         var path = window.location.pathname;
         if( path === '/homes/index' || path === '/index' )
         {
-            if($(window).scrollTop() + $(window).height() > $(document).height() - 100) 
+            if($(window).scrollTop() + $(window).height() > $(document).height() - 300) 
             {
                 getFeaturedArtist();
              }
