@@ -637,13 +637,9 @@ $(document).ready(function() {
         return false;
     });
     
-    $(document).find('#featured-artists-section').bindMouseWheel();
-    $(document).find('#featured-artists-section').scroll( function()
+    $(window).scroll(function()
     {
-        if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) 
-        {
-            alert('scrolled');
-        }
+        alert('d');
     });
     
 });
