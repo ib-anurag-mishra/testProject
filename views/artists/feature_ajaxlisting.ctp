@@ -1,4 +1,4 @@
-<div class="featured-artists-grid">
+
         <?php    
         $count = 1;
         foreach ($featuredArtists as $k => $v)
@@ -62,4 +62,3 @@
             $count++;
         }
         ?>
-    </div>

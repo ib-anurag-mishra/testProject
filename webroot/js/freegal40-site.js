@@ -696,7 +696,8 @@ function getFeaturedArtist()
         url: webroot + 'artists/featuredAjaxListing',
         success:function(response)
         {
-            
+          
+            $(document).find("#featured-artists-grid-div").append(response);
             
             page++;
             $(document).find('#artist_loader').css('display','none');
