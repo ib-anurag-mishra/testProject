@@ -326,10 +326,13 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
             </div>
             <?php 
             $cnt++;
+            if($count == 10){
+                break;
+            }
             $count++;
             } ?>
         </div>
-        <?php if(count($featuredArtists) == 10){ ?>
+        <?php if(count($featuredArtists) >= 10){ ?>
         <div class="autoscrollnav">
               <a href="<?php echo $this->Html->Url(array('controller'=>'homes','action'=>'feature_ajaxlisting')); ?>" class="next-slides">2</a>
        </div>
