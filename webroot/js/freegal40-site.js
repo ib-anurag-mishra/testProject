@@ -637,6 +637,12 @@ $(document).ready(function() {
         return false;
     });
     
+    $(document).find('#featured-artists-grid-div').bindMouseWheel();
+    $(document).find('#featured-artists-grid-div').on('scroll', function()
+    {
+        
+    });
+    
 });
 
 function displayMessage(response)
