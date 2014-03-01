@@ -688,31 +688,3 @@ function displayMessage(response)
 }
 
 
-
-var page = 2;
-var complete = false;
-function getFeaturedArtist()
-{
-    $(document).find('#artist_loader').css('display', 'block');
-
-    $.ajax({
-        type: "post",
-        data: {'page': page},
-        url: webroot + 'artists/featuredAjaxListing',
-        success: function(response)
-        {
-            $(document).find("#featured-artists-grid-div").append(response);
-            page++;
-            complete = false;
-            $(document).find('#artist_loader').css('display', 'none');
-            $.getScript(webroot + 'js/freegal40-site.js');  
-        },
-        error: function(jqXHR, textStatus, errorThrown)
-        {
-            // log the error to the console
-            console.log(
-                    "The following error occured: " +
-                    textStatus, errorThrown);
-        }
-    });
-}
