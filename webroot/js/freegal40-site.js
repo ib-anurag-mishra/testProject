@@ -683,7 +683,30 @@ function displayMessage(response)
     }
 }
 
+
+
+var page=2;
 function getFeaturedArtist()
 {
     $(document).find('#artist_loader').css('display','block');
+    
+    $.ajax({
+         type: "post",
+         data : {'page' : page },
+        url: webroot + 'homes/addToWishlistNewHome',
+        success:function(response)
+        {
+            
+            
+            page++;
+            $(document).find('#artist_loader').css('display','none');
+        },
+                 error: function(jqXHR, textStatus, errorThrown)
+                {
+                    // log the error to the console
+                    console.log(
+                            "The following error occured: " +
+                            textStatus, errorThrown);
+                }
+    });
 }

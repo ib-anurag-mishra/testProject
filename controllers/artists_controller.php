@@ -801,24 +801,34 @@ Class ArtistsController extends AppController
      * Function Name : featuredAjaxListing
      * Desc          : This function is used to get featured artists which are called through ajax 
      */
-    function featuredAjaxListing(){
-        if(!empty($this->params['pass'])){
+    function featuredAjaxListing()
+    {
+        echo '<pre>';
+        print_r($this->params);
+        die;
+        if (!empty($this->params['pass']))
+        {
             $page = $this->params['pass'][0];
-            if(!empty($page)){
+            if (!empty($page))
+            {
                 $territory = $this->Session->read('territory');
-                if(Cache::read("featured_artists_" . $territory.'_'.$page) === false){
-                    $featuresArtists = $this->Common->getFeaturedArtists($territory,$page);
-                    Cache::write("featured_artists_" . $territory.'_'.$page, $featuresArtists);
-                }else{
-                    $featuresArtists = Cache::read("featured_artists_" . $territory.'_'.$page);
+                if (Cache::read("featured_artists_" . $territory . '_' . $page) === false)
+                {
+                    $featuresArtists = $this->Common->getFeaturedArtists($territory, $page);
+                    Cache::write("featured_artists_" . $territory . '_' . $page, $featuresArtists);
+                }
+                else
+                {
+                    $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
                 }
                 return $featuresArtists;
-            }else{
+            }
+            else
+            {
                 
             }
-            
         }
-
+        die;
     }
     
     /*
