@@ -281,7 +281,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
 <section class="featured-artists">
     <h2>Featured Artists &amp; Composers</h2>
-    <div class="featured-artists-grid clearfix">
+    <div class="featured-artists-grid">
         <div class="featured-scrollset">
             <?php
             // $this->log("index.ctp featuredArtists start", "siteSpeed");  
