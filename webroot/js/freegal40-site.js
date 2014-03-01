@@ -639,7 +639,7 @@ $(document).ready(function() {
     
     $(window).scroll(function()
     {
-        alert('d');
+        alert( window.location.pathname);
     });
     
 });
