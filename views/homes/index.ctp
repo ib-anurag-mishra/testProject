@@ -1,24 +1,22 @@
-<?php if ($this->Session->read("patron")){ ?>
-    <?php echo $this->Html->script('jquery-ias.min'); ?>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            jQuery.ias({
-                container : '.featured-artists-grid clearfix',
-                item: '.featured-scrollset',
-                pagination: '.autoscrollnav',
-                next: '.next-slides',
-                loader: '<img src="/img/ajax-loader-1.gif"/>',
-                loaderDelay : 1000,
-                history:false,
-                onPageChange: function(pageNum, pageUrl, scrollOffset) {
+<?php echo $this->Html->script('jquery-ias.min'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        jQuery.ias({
+            container : '.featured-artists-grid clearfix',
+            item: '.featured-scrollset',
+            pagination: '.autoscrollnav',
+            next: '.next-slides',
+            loader: '<img src="/img/ajax-loader-1.gif"/>',
+            loaderDelay : 1000,
+            history:false,
+            onPageChange: function(pageNum, pageUrl, scrollOffset) {
 
-                },
-                triggerPageThreshold: 1000,
-                trigger:''
-            });
+            },
+            triggerPageThreshold: 1000,
+            trigger:''
         });
-    </script>
-<?php } ?>
+    });
+</script>
 <?php
 echo $session->flash();
 ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
