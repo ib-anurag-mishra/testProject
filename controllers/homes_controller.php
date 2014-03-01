@@ -56,7 +56,7 @@ class HomesController extends AppController
         }
         else                                          //  Before Login
         {
-            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms','featured_ajaxlisting');
+            $this->Auth->allow('display', 'aboutus', 'index', 'us_top_10', 'chooser', 'forgot_password', 'new_releases', 'language', 'checkPatron', 'approvePatron', 'my_lib_top_10', 'checkStreamingComponent', 'terms','feature_ajaxlisting');
         }
 
         $this->Cookie->name = 'baker_id';
