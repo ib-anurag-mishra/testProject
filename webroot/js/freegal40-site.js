@@ -702,10 +702,10 @@ function getFeaturedArtist()
         success: function(response)
         {
             $(document).find("#featured-artists-grid-div").append(response);
-            $.getScript(webroot + 'js/freegal40-site.js');
             page++;
             complete = false;
             $(document).find('#artist_loader').css('display', 'none');
+            $.getScript(webroot + 'js/freegal40-site.js');  
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
