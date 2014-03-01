@@ -2541,7 +2541,7 @@ function getFeaturedArtist()
             $.getScript(webroot + 'js/freegal40-site.js');  
             
             
-            var count = $(document).find('.featured-artists-grid-div > div.featured-grid-item').length;
+            var count = $(document).find('#featured-artists-grid-div > div.featured-grid-item').length;
             if(count < (page-1)*20 )
                 {
                     results_completed = true ;
