@@ -637,8 +637,8 @@ $(document).ready(function() {
         return false;
     });
     
-    $(document).find('#featured-artists-grid-div').bindMouseWheel();
-    $(document).find('#featured-artists-grid-div').on('scroll', function()
+    $(document).find('#featured-artists-section').bindMouseWheel();
+    $(document).find('#featured-artists-section').scroll( function()
     {
         if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) 
         {
