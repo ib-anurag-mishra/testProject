@@ -247,7 +247,7 @@ class HomesController extends AppController
     }
     
     
-    function featured_ajaxlisting(){
+    function feature_ajaxlisting(){
         
         $this->layout = 'ajax';
         
