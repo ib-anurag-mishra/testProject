@@ -640,7 +640,10 @@ $(document).ready(function() {
     $(document).find('#featured-artists-grid-div').bindMouseWheel();
     $(document).find('#featured-artists-grid-div').on('scroll', function()
     {
-        
+        if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) 
+        {
+            alert('scrolled');
+        }
     });
     
 });
