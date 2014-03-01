@@ -642,9 +642,9 @@ $(document).ready(function() {
         var path = window.location.pathname;
         if( path === '/homes/index' || path === '/index' )
         {
-            if($(window).scrollTop() + $(window).height() === $(document).height()) 
+            if($(window).scrollTop() + $(window).height() > $(document).height() - 100) 
             {
-                alert(path);
+                getFeaturedArtist();
              }
         }
     });
@@ -681,4 +681,9 @@ function displayMessage(response)
         document.getElementById('ajaxflashMessage44').innerHTML = responseArray[1];
         return false;
     }
+}
+
+function getFeaturedArtist()
+{
+    $(document).find('#artist_loader').css('display','block');
 }
