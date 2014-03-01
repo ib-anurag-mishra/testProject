@@ -642,7 +642,9 @@ $(document).ready(function() {
         var path = window.location.pathname;
         if( path === '/homes/index' || path === '/index' )
         {
-            alert(path);
+             if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                alert(path);
+             }
         }
     });
     
