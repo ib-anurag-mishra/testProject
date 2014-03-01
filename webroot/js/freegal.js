@@ -2523,6 +2523,7 @@ function showHideGridCommingSoon(varType) {
 
 var page = 2;
 var complete = false;
+var results_completed = false;
 function getFeaturedArtist()
 {
     $(document).find('#artist_loader').css('display', 'block');
@@ -2538,6 +2539,13 @@ function getFeaturedArtist()
             complete = false;
             $(document).find('#artist_loader').css('display', 'none');
             $.getScript(webroot + 'js/freegal40-site.js');  
+            
+            
+            var count = $(document).find('.featured-artists-grid-div > div.featured-grid-item').lenght;
+            if(count < (page-1)*20 )
+                {
+                    results_completed = true ;
+                }
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
