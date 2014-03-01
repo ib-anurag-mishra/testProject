@@ -1521,7 +1521,7 @@ STR;
                // }
             }
         }
-        return array_pop($featured);
+        return $featured;
     }
     
     

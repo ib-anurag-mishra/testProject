@@ -819,9 +819,7 @@ Class ArtistsController extends AppController
                 }
                 else
                 {   
-                    
                     $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
-                    $featuresArtists = array_pop($featuresArtists);
                 }
                 
                 $this->set('featuredArtists', $featuresArtists);
