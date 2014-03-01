@@ -102,6 +102,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
         <!-- top header of the grid -->
         <div class="header-container">
+            <!--   commented to enable this afterwards
             <button class="top-songs-filter-icon"></button>
             <div class="top-songs-filter-menu">
                 <ul>
@@ -110,7 +111,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     <li><a href="#">Country</a></li>
                     <li><a href="#">Pop</a></li>
                 </ul>
-            </div>
+            </div> -->
             <div class="song-header">Song</div>
             <div class="song-border header-border"></div>
             <div class="artist-header">Artist</div>
