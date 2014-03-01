@@ -1,5 +1,5 @@
        <?php   
-    if(!empty(featuredArtists))
+    if(!empty($featuredArtists))
     {
   
         $count = 1;
