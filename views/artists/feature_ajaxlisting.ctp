@@ -1,5 +1,7 @@
-
-        <?php    
+       <?php   
+    if(!empty(featuredArtists))
+    {
+  
         $count = 1;
         foreach ($featuredArtists as $k => $v)
         {
@@ -61,4 +63,6 @@
             }
             $count++;
         }
-        ?>
+
+    }
+ ?>

@@ -803,7 +803,7 @@ Class ArtistsController extends AppController
      */
     function featuredAjaxListing()
     {
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         if (!empty($this->params['form']['page']))
         {
             $page = $this->params['form']['page'];
