@@ -2,9 +2,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         jQuery.ias({
-            container : '.featured-artists-grid clearfix',
+            container : '.featured-artists-grid',
             item: '.featured-scrollset',
-            pagination: '.autoscrollnav',
+            pagination: '.featured-artists-grid .autoscrollnav',
             next: '.next-slides',
             loader: '<img src="/img/ajax-loader-1.gif"/>',
             loaderDelay : 1000,
