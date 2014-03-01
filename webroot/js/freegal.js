@@ -2537,12 +2537,12 @@ function getFeaturedArtist()
             $(document).find("#featured-artists-grid-div").append(response);
             page++;
             complete = false;
-             
+
             var count = $(document).find('#featured-artists-grid-div > div.featured-grid-item').length;
-            if(count < (page-1)*20 )
-                {
-                    results_completed = true ;
-                }
+            if (count < (page - 1) * 20)
+            {
+                results_completed = true;
+            }
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -2552,10 +2552,11 @@ function getFeaturedArtist()
                     textStatus, errorThrown);
         }
     });
-    
-     $(document).find('#artist_loader').css('display', 'none');
-            $.getScript(webroot + 'js/freegal40-libraries.js');
-             $.getScript(webroot + 'js/freegal40-site.js');
+
+    $(document).find('#artist_loader').css('display', 'none');
+    $.getScript(webroot + 'js/freegal40-libraries.js');
+    $.getScript(webroot + 'js/freegal40-site.js');
+    $(document).find("#featured-artists-grid-div").ajaxify();
 }
 
 $(document).ready(function() {
