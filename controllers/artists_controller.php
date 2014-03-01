@@ -802,7 +802,8 @@ Class ArtistsController extends AppController
      * Desc          : This function is used to get featured artists which are called through ajax 
      */
     function featuredAjaxListing()
-    {        
+    {
+        Configure::write('debug', 2);
         if (!empty($this->params['form']['page']))
         {
             $page = $this->params['form']['page'];
@@ -818,9 +819,9 @@ Class ArtistsController extends AppController
                 {
                     $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
                 }
-                
-                $this->set('featuresArtists',$featuresArtists);
-                echo $this->render('feature_ajaxlisting');               
+
+                $this->set('featuredArtists', $featuresArtists);
+                echo $this->render('/artists/feature_ajaxlisting');
             }
             else
             {
