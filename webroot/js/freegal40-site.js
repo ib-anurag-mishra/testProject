@@ -693,7 +693,7 @@ function getFeaturedArtist()
     $.ajax({
          type: "post",
          data : {'page' : page },
-        url: webroot + 'homes/addToWishlistNewHome',
+        url: webroot + 'artists/featuredAjaxListing',
         success:function(response)
         {
             
