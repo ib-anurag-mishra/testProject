@@ -819,7 +819,11 @@ Class ArtistsController extends AppController
                 {
                     $featuresArtists = Cache::read("featured_artists_" . $territory . '_' . $page);
                 }
-
+                
+                echo "<pre>";
+                print_r($featuresArtists);
+                die;
+                
                 $this->set('featuredArtists', $featuresArtists);
                 echo $this->render('/artists/feature_ajaxlisting');
             }
