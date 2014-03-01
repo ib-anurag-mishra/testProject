@@ -2434,8 +2434,6 @@ function showAlbumDetails(albumDetailURL) {
         url: webroot + albumDetailURL, // URL to request
         data: data, // post data
         success: function(response) {
-
-
             $('#album_details_container').html(response);
             $('#album_details_container').ajaxify();
             $('a[title]').qtip({
@@ -2534,7 +2532,7 @@ function getFeaturedArtist()
         url: webroot + 'artists/featuredAjaxListing',
         success: function(response)
         {
-            $(document).find("#featured-artists-grid-div").append(response);
+            $(document).find("#featured-artists-grid-div").html(response);
             page++;
             complete = false;
 
