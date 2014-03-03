@@ -188,7 +188,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         </div>
                         <div class="artist-name">
                             <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText'])); ?>"
-                                href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>" >
+                                href="/artists/album/<?php echo base64_encode($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText'])); ?>" >
                                 <?php
                                 if (strlen($nationalTopSong['Song']['ArtistText']) > 30)
                                     echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['ArtistText'], 0, 30))) . "...";
@@ -260,7 +260,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                                              <input type="hidden" name="ProviderType" value="<?php echo $nationalTopSong["Song"]["provider_type"]; ?>" />
                                                              <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $nationalTopSong["Song"]["ProdID"]; ?>">
                                                                  <![if !IE]>
-                                                                 <a href='javascript:void(0);' class="add-to-wishlist no-ajaxy top-10-download-now-button" 
+                                                                 <a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" 
                                                                     title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" 
                                                                     onclick='return wishlistDownloadOthersHome("<?php echo $nationalTopSong["Song"]['ProdID']; ?>", "0", "<?php echo $nationalTopSong['Full_Files']['CdnPath']; ?>", "<?php echo $nationalTopSong['Full_Files']['SaveAsName']; ?>", "<?php echo $nationalTopSong["Song"]["provider_type"]; ?>");'>
                                                                      <?php __('Download Now'); ?></a>
