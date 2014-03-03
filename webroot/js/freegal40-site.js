@@ -642,16 +642,17 @@ $(document).ready(function() {
                      $('.beforeClick').show();
                     $('.afterClick').hide();
                     
-                    for(i=0; i < selected_songs.length; i++)
+                    for (i = 0; i < selected_songs.length; i++)
                     {
-                        var temp = selected_songs[i].split('|');
+                        var temp = selected_songs[i].split('&');
+
+                        if (languageSet === 'en') {
+                            document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                        } else {
+                            document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
+                        }
                         console.log(temp);
-                    }
-                    if (languageSet === 'en') {
-                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-                    } else {
-                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
-                    }
+                    }                  
                     
                     displayMessage(response);
                 },
