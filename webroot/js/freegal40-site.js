@@ -56,7 +56,15 @@ $(document).ready(function() {
 
 
     $('.playlist-menu-icon').on('click', function() {
-        $(this).siblings('ul').toggleClass('active');
+        if( $(this).siblings('ul').hasClass('active'))
+            {
+                 $(this).siblings('ul').removeClass('active');
+            }
+            else
+                {
+                    $(this).siblings('ul').addClass('active');
+                }
+        //$(this).siblings('ul').toggleClass('active');
         return false ;
     });
 
