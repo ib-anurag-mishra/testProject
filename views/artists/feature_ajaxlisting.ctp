@@ -5,7 +5,7 @@
         $count = 1;
         foreach ($featuredArtists as $k => $v)
         {
-            //$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+            //$albumArtwork = shell_exec(Configure::read('App.tokengen') . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
             //$image =  Configure::read('App.Music_Path').$albumArtwork;
             if (strlen($v['Album']['AlbumTitle']) > 22)
             {

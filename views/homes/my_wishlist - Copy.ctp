@@ -128,7 +128,7 @@
 					<?php										
 						$productInfo = $song->getDownloadData($wishlistResult['Wishlist']['ProdID'],$wishlistResult['Wishlist']['provider_type']);
 						if($libraryDownload == '1' && $patronDownload == '1'){
-							$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+							$songUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
 							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 					?>

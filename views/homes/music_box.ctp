@@ -38,7 +38,7 @@
 						)
 					);
 				}
-				$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
+				$songUrl = shell_exec(Configure::read('App.tokengen') . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
 				$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 				$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 				?>

@@ -204,7 +204,7 @@ $ieVersion =  ieversion();
                         <p>
                             <?php
                             $productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']);
-//                            $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+//                            $songUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
 //                            $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 //                            $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
                             ?>
@@ -302,7 +302,7 @@ $ieVersion =  ieversion();
                         <?php
                         
                             $productInfo = $mvideo->getDownloadData($videoDownloadResult['Videodownload']['ProdID'],$videoDownloadResult['Videodownload']['provider_type']);
-                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+                            $videoUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
                             $finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
                             $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>

@@ -260,7 +260,7 @@ $ieVersion = ieversion();
                                 $productInfo = $song->getDownloadData($wishlistResults[$i]['wishlists']['ProdID'], $wishlistResults[$i]['wishlists']['provider_type']);
                                 if ($libraryDownload == '1' && $patronDownload == '1')
                                 {
-//                                    $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                    $songUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
 //                                    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 //                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                     ?>
@@ -381,7 +381,7 @@ $ieVersion = ieversion();
                                 <p>
                                     <?php
                                     $productInfo = $mvideo->getDownloadData($wishlistResultsVideo['WishlistVideo']['ProdID'], $wishlistResultsVideo['WishlistVideo']['provider_type']);
-                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                    $videoUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                     $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
                                     $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                     ?>

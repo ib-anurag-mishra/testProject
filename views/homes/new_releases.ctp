@@ -41,7 +41,7 @@
                         continue;
                     }
 
-                    //$album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    //$album_img = shell_exec(Configure::read('App.tokengen') . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     //$album_img =  Configure::read('App.Music_Path').$album_img;                                            					
                     ?>					
                     <li>
@@ -139,7 +139,7 @@
 
 
         //if($count>10) break;  
-        $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+        $songs_img = shell_exec(Configure::read('App.tokengen') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
         $songs_img = Configure::read('App.Music_Path') . $songs_img;
         ?>
                                                         <li>
@@ -178,7 +178,7 @@
                 if ($libraryDownload == '1' && $patronDownload == '1')
                 {
                     $productInfo = $song->getDownloadData($value['Song']['ProdID'], $value['Song']['provider_type']);
-                    $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                    $songUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                     $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                     
@@ -344,9 +344,9 @@
                     continue;
                 }
 
-                // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                // $video_img = shell_exec(Configure::read('App.tokengen') . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                 //$video_img =  Configure::read('App.Music_Path').$video_img;
-                // $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                // $albumArtwork = shell_exec(Configure::read('App.tokengen') . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                 // $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                 ?>
                 <li>
@@ -373,7 +373,7 @@
                                 {
                                     $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value['Video']['provider_type'], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));
                                     $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-//                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                    $videoUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
 //                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 //                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                     if ($downloadsUsed > 0)

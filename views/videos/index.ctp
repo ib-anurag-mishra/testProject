@@ -47,7 +47,7 @@
                                         {
 
                                             //$productInfo = $mvideo->getDownloadData($featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-//                                            $videoUrl = shell_exec('perl files/tokengen ' . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['Video_file']['SaveAsName']);
+//                                            $videoUrl = shell_exec(Configure::read('App.tokengen') . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['Video_file']['SaveAsName']);
 //                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 //                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
 
@@ -214,7 +214,7 @@
                                             //$productInfo = $mvideo->getDownloadData($topDownload["Video"]["ProdID"],$topDownload["Video"]["provider_type"]);
 
 
-//                                            $videoUrl = shell_exec('perl files/tokengen ' . $topDownload["File"]['CdnPath'] . "/" . $topDownload['Video_file']['SaveAsName']);
+//                                            $videoUrl = shell_exec(Configure::read('App.tokengen') . $topDownload["File"]['CdnPath'] . "/" . $topDownload['Video_file']['SaveAsName']);
 //                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 //                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
 

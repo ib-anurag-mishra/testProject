@@ -298,7 +298,7 @@ class ServicesController extends AppController {
                         // echo $this->Album->lastQuery();
                         // print_r($albumData); die;
                         if(!empty($albumData)){
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+						$albumArtWork = Configure::read('App.Music_Path').shell_exec(Configure::read('App.tokengen') . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
                         } else {
                             $albumArtWork = null;
                         }
@@ -542,7 +542,7 @@ class ServicesController extends AppController {
 						)));
 						$reference = $v->ReferenceID;
                         if(!empty($albumData)){
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+						$albumArtWork = Configure::read('App.Music_Path').shell_exec(Configure::read('App.tokengen') . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
 					//	print_r($result);exit;
                         } else {
                             $albumArtWork = null;
@@ -718,7 +718,7 @@ class ServicesController extends AppController {
 						$reference = $v->ReferenceID;
                         
                         if(!empty($albumData)){
-						$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+						$albumArtWork = Configure::read('App.Music_Path').shell_exec(Configure::read('App.tokengen') . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
                         } else {
 					//	print_r($result);exit;
                             $albumArtWork = null;

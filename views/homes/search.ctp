@@ -121,7 +121,7 @@ if(isset($searchtype)){
 							echo '<font class="explicit"> (Explicit)</font>';
 						}
 						if($searchResult['Country']['SalesDate'] <= date('Y-m-d')) {
-							$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Sample_Files']['CdnPath']."/".$searchResult['Sample_Files']['SaveAsName']);
+							$songUrl = shell_exec(Configure::read('App.tokengen') . $searchResult['Sample_Files']['CdnPath']."/".$searchResult['Sample_Files']['SaveAsName']);
 							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$searchResult["Song"]["ProdID"].', "'.base64_encode($searchResult['Song']['provider_type']).'", "'.$this->webroot.'");'));

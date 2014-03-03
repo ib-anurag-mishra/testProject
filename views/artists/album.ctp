@@ -255,7 +255,7 @@
                                             if ($libraryDownload == '1' && $patronDownload == '1')
                                             {
                                                 $productInfo = $mvideo->getDownloadData($value["Video"]["ProdID"], $value["Video"]["provider_type"]);
-//                                            $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                            $videoUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
 //                                            $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 //                                            $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                                 $downloadsUsed = $this->Videodownload->getVideodownloadfind($value['Video']['ProdID'], $value["Video"]["provider_type"], $libId, $patId, Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'));

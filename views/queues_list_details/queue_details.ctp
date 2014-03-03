@@ -150,7 +150,7 @@
                                    
                                     if ($libraryDownload == '1' && $patronDownload == '1')
                                     {
-//                                        $songUrl = shell_exec('perl files/tokengen ' . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
+//                                        $songUrl = shell_exec(Configure::read('App.tokengen') . $value['SongFile']['SCdnPath'] . "/" . $value['SongFile']['SSaveAsName']);
 //                                        $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 //                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                         

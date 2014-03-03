@@ -287,7 +287,7 @@ STR;
 					$albumDetails = $album->getImage($palbum->ReferenceID);
 					$albumDetails = $album->getImage($palbum->ReferenceID);
 					if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
-						$albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+						$albumArtwork = shell_exec(Configure::read('App.tokengen') . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
 						$image = Configure::read('App.Music_Path').$albumArtwork;
 					} else {
 						$image = 'no-image.jpg';
@@ -742,7 +742,7 @@ STR;
 				foreach($albumData as $palbum){
 					$albumDetails = $album->getImage($palbum->ReferenceID);
 					if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
-						$albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+						$albumArtwork = shell_exec(Configure::read('App.tokengen') . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
 						$image = Configure::read('App.Music_Path').$albumArtwork;
 					} else {
 						$image = 'no-image.jpg';
@@ -1096,7 +1096,7 @@ STR;
               </span>
 							<?php
 							$sampleFile = $song->getSampleFile($psong->Sample_FileID);
-							$songUrl = shell_exec('perl files/tokengen ' . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
+							$songUrl = shell_exec(Configure::read('App.tokengen') . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
 							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$psong->ProdID.', "'.base64_encode($psong->provider_type).'", "'.$this->webroot.'");'));

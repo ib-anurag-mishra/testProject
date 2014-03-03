@@ -1401,7 +1401,7 @@ STR;
 
             $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
             $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-            $songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
+            $songUrl = shell_exec(Configure::read('App.tokengen') . $trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
             $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 
 
@@ -3631,7 +3631,7 @@ STR;
         $SaveAsName = $_REQUEST['SaveAsName'];
 
 
-        $videoUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        $videoUrl = shell_exec(Configure::read('App.tokengen') . $CdnPath . "/" . $SaveAsName);
         $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
         $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
         $finalURL = urlencode($finalVideoUrlArr[0]) . urlencode($finalVideoUrlArr[1]) . urlencode($finalVideoUrlArr[2]);
@@ -3907,7 +3907,7 @@ STR;
         $SaveAsName = $_REQUEST['SaveAsName'];
 
 
-        $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        $songUrl = shell_exec(Configure::read('App.tokengen') . $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
         $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);
@@ -4332,7 +4332,7 @@ STR;
                 )
         );
 
-        $songUrl = shell_exec('perl files/tokengen ' . $data['Sample_Files']['CdnPath'] . "/" . $data['Sample_Files']['SaveAsName']);
+        $songUrl = shell_exec(Configure::read('App.tokengen') . $data['Sample_Files']['CdnPath'] . "/" . $data['Sample_Files']['SaveAsName']);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         echo $finalSongUrl;
         exit;
@@ -4634,7 +4634,7 @@ STR;
          * for download and  insert record in download table
          */
 
-        $songUrl = shell_exec('perl files/tokengen ' . $CdnPath . "/" . $SaveAsName);
+        $songUrl = shell_exec(Configure::read('App.tokengen'). $CdnPath . "/" . $SaveAsName);
         $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
         $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
         $finalURL = urlencode($finalSongUrlArr[0]) . urlencode($finalSongUrlArr[1]) . urlencode($finalSongUrlArr[2]);

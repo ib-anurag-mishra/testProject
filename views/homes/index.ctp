@@ -228,7 +228,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
                                              if ($libraryDownload == '1' && $patronDownload == '1')
                                              {
-                                                 /* $songUrl = shell_exec('perl files/tokengen ' . $nationalTopSong['Full_Files']['CdnPath'] . "/" . $nationalTopSong['Full_Files']['SaveAsName']);
+                                                 /* $songUrl = shell_exec(Configure::read('App.tokengen') . $nationalTopSong['Full_Files']['CdnPath'] . "/" . $nationalTopSong['Full_Files']['SaveAsName']);
                                                    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
                                                    $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3)); */
 
@@ -374,7 +374,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         $count = 1;
         foreach ($featuredArtists as $k => $v)
         {
-            //$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+            //$albumArtwork = shell_exec(Configure::read('App.tokengen') . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
             //$image =  Configure::read('App.Music_Path').$albumArtwork;
             if (strlen($v['Album']['AlbumTitle']) > 22)
             {

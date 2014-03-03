@@ -1214,7 +1214,7 @@ function Get_Sales_date($sales_date_array, $country)
                                             $productInfo = $song->getDownloadData($psong->ProdID, $psong->provider_type);
                                             if ($libraryDownload == '1' && $patronDownload == '1')
                                             {
-//                                                $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                                $songUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
 //                                                $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
 //                                                $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3));
                                                 if ($psong->status != 'avail')
@@ -1413,7 +1413,7 @@ else
                                 if ($sales_date <= date('Y-m-d'))
                                 {
                                     $productInfo = $mvideo->getDownloadData($psong->ProdID, $psong->provider_type);
-//                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+//                                    $videoUrl = shell_exec(Configure::read('App.tokengen') . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
 //                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 //                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
                                     if ($libraryDownload == '1' && $patronDownload == '1')
