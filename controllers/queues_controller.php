@@ -412,6 +412,8 @@ class QueuesController extends AppController
         }
         else if($type == 'multi')
         {
+            echo '<pre>';
+            print_r($this->params);
             
         }
         die;

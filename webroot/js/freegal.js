@@ -1774,21 +1774,46 @@ function addToPlaylistNew(queueID, addTo)
 {
     if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
     {
-        alert('yes');
-    }
-    else
-    {
-        var type = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('value');
-        var ProdID = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('id');
-
-        $.ajax({
+        var type_of = 'multi';
+            var selected_songs = [];
+            $(document).find('.top-songs-container .rows-container .row').each(function()
+            {
+                if ($(this).find('.row-checkbox').prop('checked'))
+                {
+                    selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
+                }
+            });
+            
+              $.ajax({
             type: "post",
-            data: {'prodID': ProdID, 'type': type, 'QueueID': queueID},
+            data: {'prodID': 0, 'type': type_of, 'QueueID': queueID},
             url: webroot + 'queues/queueListAlbums',
             success: function(response)
             {
                 //alert(response);
-                addToQueueResponse(response, type);
+                addToQueueResponse(response, type_of);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                console.log(
+                        "The following error occured: " +
+                        textStatus, errorThrown);
+            }
+        });
+    }
+    else
+    {
+        var type_of = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('value');
+        var ProdID = $(addTo).parent().parent().parent().find('input[type="hidden"]').attr('id');
+
+        $.ajax({
+            type: "post",
+            data: {'prodID': ProdID, 'type': type_of, 'QueueID': queueID},
+            url: webroot + 'queues/queueListAlbums',
+            success: function(response)
+            {
+                //alert(response);
+                addToQueueResponse(response, type_of);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
