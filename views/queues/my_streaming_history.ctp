@@ -106,7 +106,7 @@ $ieVersion =  ieversion();
                        
                         if( $this->Session->read('library_type') == 2 && $streamingArr['Country']['StreamingSalesDate'] <= date('Y-m-d') && $streamingArr['Country']['StreamingStatus'] == 1){
                             
-                                $filePath = shell_exec('perl files/tokengen_streaming '. $streamingArr['Full_Files']['CdnPath']."/".$streamingArr['Full_Files']['SaveAsName']);
+                                $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $streamingArr['Full_Files']['CdnPath']."/".$streamingArr['Full_Files']['SaveAsName']);
 
                                 if(!empty($filePath))
                                 {

@@ -1249,7 +1249,7 @@ Class ArtistsController extends AppController
 
                     if ($this->Session->read('library_type') == 2)
                     {
-                        $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                        $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                         if (!empty($filePath))
                         {
                             $songPath = explode(':', $filePath);
@@ -1522,7 +1522,7 @@ Class ArtistsController extends AppController
                 //{
                 if (empty($ajax))
                 {
-                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
                     if (!empty($filePath))
                     {
                         $songPath = explode(':', $filePath);
@@ -1582,7 +1582,7 @@ Class ArtistsController extends AppController
             foreach ($albumSongs as $value)
             {
 
-                $filePath = shell_exec('perl files/tokengen_streaming ' . $value->CdnPath . "/" . $value->SaveAsName);
+                $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value->CdnPath . "/" . $value->SaveAsName);
                 if (!empty($filePath))
                 {
                     $songPath = explode(':', $filePath);
@@ -1704,7 +1704,7 @@ Class ArtistsController extends AppController
         if (!empty($cdnPath) && !empty($sourceUrl) && !empty($songLength))
         {
             $data = array();
-            $filePath = shell_exec('perl files/tokengen_streaming ' . $cdnPath . "/" . $sourceUrl);
+            $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $cdnPath . "/" . $sourceUrl);
             $songPath = explode(':', $filePath);
             $streamUrl = trim($songPath[1]);
             $songStreamUrl = $streamUrl;
