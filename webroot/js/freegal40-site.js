@@ -24,16 +24,12 @@ $(document).ready(function() {
 
     });
 
-    $('.my-account-menu').on('click', function() {
-
+    $(document).find('.my-account-menu').on('click', function() {
         $('.account-menu-dropdown').toggleClass('active');
-
     });
 
-    $('.my-account-menu').on('mouseleave', function(e) {
-
+     $(document).find('.my-account-menu').on('mouseleave', function(e) {
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
-
             $('.account-menu-dropdown').removeClass('active');
         }
     });
