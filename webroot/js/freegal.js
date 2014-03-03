@@ -2570,7 +2570,7 @@ function getFeaturedArtist()
     $(document).find('#artist_loader').css('display', 'none');
     $.getScript(webroot + 'js/freegal40-libraries.js');
     $.getScript(webroot + 'js/freegal40-site.js');
-    $(document.body).ajaxify();
+  
 }
 
 $(document).ready(function() {
