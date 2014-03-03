@@ -581,6 +581,9 @@ $(document).ready(function() {
         }
         else if ($(this).hasClass('add-to-wishlist'))
         {
+            $('.beforeClick').hide();
+            $('.afterClick').show();
+            
             var type = 'song';
             var selected_songs = [];
             var prod_id = $(this).parent().parent().parent().find('input[type="hidden"]').attr('id');
@@ -606,6 +609,9 @@ $(document).ready(function() {
         }
         else
         {
+            $('.beforeClick').hide();
+            $('.afterClick').show();
+    
             var type = 'song';
             var selected_songs = [];
             $(document).find('.top-songs-container .rows-container .row').each(function()

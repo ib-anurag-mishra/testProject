@@ -187,8 +187,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             </a>
                         </div>
                         <div class="artist-name">
-                            <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText'])); ?>"
-                                href="/artists/album/<?php echo base64_encode($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText'])); ?>" >
+                            <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['ArtistText'])); ?>"
+                                href="/artists/album/<?php echo base64_encode($this->getTextEncode($nationalTopSong['Song']['ArtistText'])); ?>" >
                                 <?php
                                 if (strlen($nationalTopSong['Song']['ArtistText']) > 30)
                                     echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['ArtistText'], 0, 30))) . "...";
@@ -310,7 +310,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                              <?php
                                          } ?>
                                     </li>
-                                    <li><a class="add-to-wishlist" href="#">Add to Wishlist</a></li>
+                                    <li>
+                                        <span class="beforeClick"> <a class="add-to-wishlist" href="#">Add to Wishlist</a> </span>
+                                        <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>'."Please Wait...".'</a></span>
+                                    </li>
                                     <?php } ?>
                                     <?php  if ($this->Session->read('library_type') == 2) { ?> 
                                             <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
