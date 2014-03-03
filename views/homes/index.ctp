@@ -316,7 +316,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                             
                                              if($wishlistInfo == 'Added To Wishlist') 
                                              {?>
-                                                 <a class="add-to-wishlist" href="#">Add to Wishlist</a>
+                                                 <a href="#">Added to Wishlist</a>
                                                  <?php
                                              }
                                              else
