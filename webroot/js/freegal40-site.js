@@ -13,6 +13,17 @@ $(document).ready(function() {
     });
     $('.playlist-menu').bindMouseWheel();
     $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
+    $(document).on('mouseenter', '.top-songs .options-menu .playlist-menu', function() {
+
+        $(this).bind('mousewheel', function(e) {
+
+            $(this).scrollTop($(this).scrollTop() - e.originalEvent.wheelDeltaY);
+            //prevent page fom scrolling
+            return false;
+
+        });
+    });
+
 
     $('.music-note-icon').on('mouseenter', function() {
 
