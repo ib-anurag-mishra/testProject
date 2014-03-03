@@ -1661,17 +1661,17 @@ STR;
         {
              foreach ($top_singles as $k => $v)
         {
-            if ($v['TopAlbum']['album'] != 0)
+            if ($v['TopSingle']['prod_id'] != 0)
             {
                 if (empty($ids))
                 {
-                    $ids .= $v['TopAlbum']['album'];
-                    $ids_provider_type .= "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
+                    $ids .= $v['TopSingle']['prod_id'];
+                    $ids_provider_type .= "(" . $v['TopSingle']['prod_id'] . ",'" . $v['TopSingle']['provider_type'] . "')";
                 }
                 else
                 {
-                    $ids .= ',' . $v['TopAlbum']['album'];
-                    $ids_provider_type .= ',' . "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
+                    $ids .= ',' . $v['TopSingle']['prod_id'];
+                    $ids_provider_type .= ',' . "(" . $v['TopSingle']['prod_id'] . ",'" . $v['TopSingle']['provider_type'] . "')";
                 }
             }
         }
