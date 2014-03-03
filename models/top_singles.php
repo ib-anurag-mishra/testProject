@@ -15,8 +15,8 @@ class TopSingles extends AppModel
     {
         return $this->find('all', array(
                     'conditions' => array(
-                        'TopAlbum.territory' => $territory,
-                        'TopAlbum.language' => Configure::read('App.LANGUAGE')),
+                        'territory' => $territory,
+                        'language' => Configure::read('App.LANGUAGE')),
                     'recursive' => -1,
                     'order' => array(
                         'id' => 'desc')

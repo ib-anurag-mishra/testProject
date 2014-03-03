@@ -140,7 +140,7 @@ class HomesController extends AppController
 
         // National Top 100 Albums singles        
         //if (($national = Cache::read("top_singles" . $territory)) === false)
-                if(1)
+        if(1)
         {
             $top_singles = $this->Common->getTopSingles($territory);
         }
