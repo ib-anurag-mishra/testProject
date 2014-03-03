@@ -12,6 +12,8 @@ $(document).ready(function() {
         });
     });
 
+    $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
+
     $('.music-note-icon').on('mouseenter', function() {
 
         $('.plays-tooltip').addClass('active');
