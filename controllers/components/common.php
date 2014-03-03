@@ -1743,6 +1743,10 @@ STR;
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
 
+            echo '<pre>';
+            print_r($topSingleData);
+            exit;
+            
             if (!empty($topSingleData))
             {
                 foreach ($topSingleData as $key => $value)
