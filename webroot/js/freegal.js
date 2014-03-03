@@ -1791,7 +1791,7 @@ function addToPlaylistNew(queueID, addTo)
             success: function(response)
             {
                 //alert(response);
-                addToQueueResponse(response, type_of);
+                addToQueueResponse(response, 'song ');
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 // log the error to the console
