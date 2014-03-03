@@ -4979,7 +4979,12 @@ STR;
                         . " ProdID:$prodID  :ProviderType:$provider ";
 
                 $albumSongs = $this->Common->getAlbumSongs($prodID, $provider);
-                $log_data .= $this->addsToWishlist($albumSongs);
+                if(!empty($albumSongs)){
+                    $log_data .= $this->addsToWishlist($albumSongs);
+                }else{
+                    echo "error|There are no songs found in this Album.";
+                    die;
+                }
 
                 $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
                 $this->log($log_data, $log_name);
