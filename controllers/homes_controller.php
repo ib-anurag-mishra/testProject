@@ -75,7 +75,7 @@ class HomesController extends AppController
     function index()
     {
 
-        Configure::write('debug', 3);
+        //Configure::write('debug', 3);
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443)
         {
