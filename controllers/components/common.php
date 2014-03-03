@@ -181,7 +181,7 @@ STR;
             {   
                 foreach ($data as $key => $value)
                 {
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
 
@@ -338,7 +338,7 @@ STR;
 
                 foreach ($data as $key => $value)
                 {
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                    // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
@@ -400,7 +400,7 @@ STR;
         {
             foreach ($featuredVideos as $key => $featureVideo)
             {
-                $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['File']['SourceURL']);
+                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $featureVideo['File']['CdnPath'] . "/" . $featureVideo['File']['SourceURL']);
                 // print_r($featureVideo); die;
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $featuredVideos[$key]['videoImage'] = $videoImage;
@@ -447,7 +447,7 @@ STR;
         {
             foreach ($topDownloads as $key => $topDownload)
             {
-                $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $topDownload['File']['CdnPath'] . "/" . $topDownload['File']['SourceURL']);
+                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $topDownload['File']['CdnPath'] . "/" . $topDownload['File']['SourceURL']);
                 // print_r($featureVideo);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $topDownloads[$key]['videoImage'] = $videoImage;
@@ -594,7 +594,7 @@ STR;
                 Cache::delete("nationalvideos" . $country);
                 foreach ($data as $key => $value)
                 {
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
@@ -674,7 +674,7 @@ STR;
         {
             foreach ($coming_soon_rs as $key => $value)
             {
-                $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $cs_img_url = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $cs_songImage = Configure::read('App.Music_Path') . $cs_img_url;
                 $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
             }
@@ -754,7 +754,7 @@ STR;
         {
             foreach ($coming_soon_rv as $key => $value)
             {
-                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $coming_soon_rv[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
@@ -888,7 +888,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $songs_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songs_img = Configure::read('App.Music_Path') . $songs_img;
                     $data[$key]['songs_img'] = $songs_img;
 
@@ -1035,7 +1035,7 @@ STR;
                 foreach ($data as $key => $value)
                 {
 
-                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['album_img'] = $album_img;
                     // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
@@ -1171,7 +1171,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
@@ -1286,7 +1286,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $album_img = Configure::read('App.Music_Path') . $album_img;
                     $data[$key]['albumImage'] = $album_img;
                     // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
@@ -1375,7 +1375,7 @@ STR;
             {
                 foreach ($data as $key => $value)
                 {
-                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                     $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }
@@ -1510,7 +1510,7 @@ STR;
         if(!empty($featured)){
             foreach ($featured as $k => $v)
             {
-                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
+                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
                 $featured[$k]['featuredImage'] = $image;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
@@ -1635,7 +1635,7 @@ STR;
         {
             foreach ($topAlbumData as $k => $v)
             {
-                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
+                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $v['Files']['CdnPath'] . "/" . $v['Files']['SourceURL']);
                 $image = Configure::read('App.Music_Path') . $albumArtwork;
                 $topAlbumData[$k]['topAlbumImage'] = $image;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
@@ -1979,7 +1979,7 @@ STR;
         {
             foreach ($topDownload as $key => $value)
             {
-                $songs_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $songs_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $songs_img = Configure::read('App.Music_Path') . $songs_img;
                 $topDownload[$key]['songs_img'] = $songs_img;
 
@@ -2178,7 +2178,7 @@ STR;
         {
             foreach ($topDownload as $key => $value)
             {
-                $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $album_img = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $album_img = Configure::read('App.Music_Path') . $album_img;
                 $topDownload[$key]['album_img'] = $album_img;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
@@ -2362,7 +2362,7 @@ STR;
         {
             foreach ($topDownload as $key => $value)
             {
-                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
@@ -2437,7 +2437,7 @@ STR;
         }
         else
         {
-            $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $EachVideosData[0]['File']['CdnPath'] . "/" . $EachVideosData[0]['File']['SourceURL']);
+            $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $EachVideosData[0]['File']['CdnPath'] . "/" . $EachVideosData[0]['File']['SourceURL']);
             $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path') . $videoArtwork;
         }
         if (count($EachVideosData) > 0)
@@ -2467,7 +2467,7 @@ STR;
             $MoreVideosData = $albumInstance->query($MoreVideosSql);
             foreach ($MoreVideosData as $key => $value)
             {
-                $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $MoreVideosData[$key]['videoImage'] = $videoImage;
             }
@@ -2492,7 +2492,7 @@ STR;
             $TopVideoGenreData = $albumInstance->query($TopVideoGenreSql);
             foreach ($TopVideoGenreData as $key => $value)
             {
-                $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                $videoArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                 $videoImage = Configure::read('App.Music_Path') . $videoArtwork;
                 $TopVideoGenreData[$key]['videoImage'] = $videoImage;
             }
@@ -2578,7 +2578,7 @@ STR;
             $artistVideoList = $videoInstance->query($sql_us_10_v);
             foreach ($artistVideoList as $key => $value)
             {
-                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
+                $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['Image_Files']['CdnPath'] . "/" . $value['Image_Files']['SourceURL']);
                 $videoAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                 $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
             }

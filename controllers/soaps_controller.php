@@ -599,7 +599,7 @@ class SoapsController extends AppController {
       if(!(empty($featured))) {     
         foreach($featured as $k => $v){
 
-          $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+          $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
           $image =  Configure::read('App.Music_Path').$albumArtwork;
           $featured[$k]['featuredImage'] = $image;
         }
@@ -5463,7 +5463,7 @@ STR;
         ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
         $sobj->VideoFullLength_Duration   = $this->getSongDurationTime($arrTemp[$cnt]['v']['FullLength_Duration']);          
         $sobj->VideoFullLength_FileURL = '';
-        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec('perl files/tokengen_artwork ' . $arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
+        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec(Configure::read('App.tokengen_artwork') . $arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
           
         if('T' == $arrTemp[$cnt]['v']['Advisory']) {
       
@@ -6556,7 +6556,7 @@ STR;
         $sobj->fileURL            = 'nostring';
         $sobj->FullLengthFileURL  = 'nostring';
       }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl files/tokengen_artwork ' . $val->ACdnPath."/".$val->ASourceURL);
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec(Configure::read('App.tokengen_artwork') . $val->ACdnPath."/".$val->ASourceURL);
         $vdata = $this->Files->find('first',
           array(
             'fields' => array(
