@@ -1700,8 +1700,7 @@ STR;
                         Song.Advisory,
                         Song.Sample_Duration,
                         Song.FullLength_Duration,
-                        Song.provider_type,
-                        Genre.Genre,
+                        Song.provider_type,                       
                         Country.Territory,
                         Country.SalesDate,
                         Country.StreamingSalesDate,
@@ -1723,9 +1722,7 @@ STR;
                                 LEFT JOIN
                         File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                                 LEFT JOIN
-                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                LEFT JOIN
-                        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
+                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)                             
                                 INNER JOIN
                         {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                                 LEFT JOIN
@@ -1735,15 +1732,16 @@ STR;
                                 INNER JOIN 
                         File ON (Albums.FileID = File.FileID) 
                 WHERE
-                        (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
+                        (Song.ProdID, Song.provider_type) IN ($ids_provider_type) 
                 GROUP BY Song.ProdID
                 ORDER BY FIELD(Song.ProdID,$ids) ASC
                 LIMIT 75 
 
 STR;
-            $topSingleData = $albumInstance->query($sql_top_singles);
+           // $topSingleData = $albumInstance->query($sql_top_singles);
 
             echo '<pre>';
+            echo "$topSingleData";
             print_r($topSingleData);
             exit;
             
