@@ -185,7 +185,7 @@ STR;
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
 
-//                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+//                    $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 //                    if (!empty($filePath))
 //                    {
 //                        $songPath = explode(':', $filePath);
@@ -892,7 +892,7 @@ STR;
                     $songs_img = Configure::read('App.Music_Path') . $songs_img;
                     $data[$key]['songs_img'] = $songs_img;
 
-                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    $filePath = shell_exec(Configure::read('App.tokengen_streaming'). $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
                     if (!empty($filePath))
                     {
@@ -1985,7 +1985,7 @@ STR;
 
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
-                    $filePath = shell_exec('perl files/tokengen_streaming ' . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
+                    $filePath = shell_exec(Configure::read('App.tokengen_streaming') . $value['Full_Files']['CdnPath'] . "/" . $value['Full_Files']['SaveAsName']);
 
                     if (!empty($filePath))
                     {
