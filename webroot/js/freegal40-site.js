@@ -650,9 +650,9 @@ $(document).ready(function() {
                             $(document).find('wishlist' + temp[0]).html('<a class="add-to-wishlist">Added to Wishlist</a>');
                             //document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
                         } else {
-                            document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
-                        }
-                        console.log(temp);
+                            $(document).find('wishlist' + temp[0]).html('<a class="add-to-wishlist">Added to Wishlist</a>');
+                            //document.getElementById('wishlist' + temp[0]).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
+                        }                        
                     }                  
                     
                     displayMessage(response);

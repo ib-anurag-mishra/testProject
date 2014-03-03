@@ -128,7 +128,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     <ul>
                         <li><a class="select-all" href="#">Select All</a></li>
                         <li><a class="clear-all" href="#">Clear All</a></li>										
-                        <li><a class="add-all-to-wishlist" href="#">Add to Wishlist</a></li>
+                        <li><a class="add-all-to-wishlist no-ajaxy" href="#">Add to Wishlist</a></li>
                         <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
                     </ul>
                     <ul class="playlist-menu">
