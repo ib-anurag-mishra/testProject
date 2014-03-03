@@ -1650,38 +1650,38 @@ STR;
     function getTopSingles($territory)
     {
         set_time_limit(0);
-        $countryPrefix = $this->getCountryPrefix($territory); 
-        
-         $ids = '';
+        $countryPrefix = $this->getCountryPrefix($territory);
+
+        $ids = '';
         $ids_provider_type = '';
         $top_singles_instance = ClassRegistry::init('TopSingles');
         $top_singles = $top_singles_instance->getAllTopSingles($territory);
-        
-        if(!empty($top_singles))
+
+        if (!empty($top_singles))
         {
-             foreach ($top_singles as $k => $v)
-        {
-            if ($v['TopSingles']['prod_id'] != 0)
+            foreach ($top_singles as $k => $v)
             {
-                if (empty($ids))
+                if ($v['TopSingles']['prod_id'] != 0)
                 {
-                    $ids .= $v['TopSingles']['prod_id'];
-                    $ids_provider_type .= "(" . $v['TopSingles']['prod_id'] . ",'" . $v['TopSingles']['provider_type'] . "')";
-                }
-                else
-                {
-                    $ids .= ',' . $v['TopSingles']['prod_id'];
-                    $ids_provider_type .= ',' . "(" . $v['TopSingles']['prod_ij'] . ",'" . $v['TopSingles']['provider_type'] . "')";
+                    if (empty($ids))
+                    {
+                        $ids .= $v['TopSingles']['prod_id'];
+                        $ids_provider_type .= "(" . $v['TopSingles']['prod_id'] . ",'" . $v['TopSingles']['provider_type'] . "')";
+                    }
+                    else
+                    {
+                        $ids .= ',' . $v['TopSingles']['prod_id'];
+                        $ids_provider_type .= ',' . "(" . $v['TopSingles']['prod_id'] . ",'" . $v['TopSingles']['provider_type'] . "')";
+                    }
                 }
             }
         }
-        }
         else
         {
-             $this->log("top album data is not available for" . $territory, "cache");
+            $this->log("top album data is not available for" . $territory, "cache");
         }
-        
-        
+
+
         if ($ids != '')
         {
             $albumInstance = ClassRegistry::init('Album');
@@ -1742,29 +1742,30 @@ STR;
 
 STR;
             $topSingleData = $albumInstance->query($sql_top_singles);
-            
+
             if (!empty($topSingleData))
-            {   
+            {
                 foreach ($topSingleData as $key => $value)
                 {
                     $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
                     $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
                     $data[$key]['songAlbumImage'] = $songAlbumImage;
                 }
-                Cache::delete("national" . $territory,"cache2");
-                Cache::write("national" . $territory, $data, "cache2");
+                Cache::delete("top_singles" . $territory, "cache");
+                Cache::write("top_singles" . $territory, $topSingleData, "cache");
                 $this->log("cache written for national top 100 songs for $territory", "cache");
             }
             else
             {
-                $data = Cache::read("national" . $territory, "cache2");
-                Cache::write("national" . $territory, Cache::read("national" . $territory, "cache2"), "cache2");
+                $data = Cache::read("top_singles" . $territory, "cache");
+                Cache::write("top_singles" . $territory, Cache::read("top_singles" . $territory, "cache"), "cache");
+
                 $this->log("Unable to update national 100 for " . $territory, "cache");
             }
-            
+
             $this->log("cache written for top 100 singles for $territory", 'debug');
-        return $data;
-    }
+            return $data;
+        }
     }
     
     
