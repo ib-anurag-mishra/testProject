@@ -2012,6 +2012,16 @@ sub { top: 0.4em; }
 			background:url(../img/freegal_sprite.png) -100px -20px;
 		}
 	}
+	
+	.sample-icon {
+
+		position: absolute;
+		right:13px;
+		top:17px;
+		width: 9px;
+		height: 9px;
+		background: url(../img/freegal_sprite.png) -115px -150px;
+	}
 
 	.options-menu {
 
