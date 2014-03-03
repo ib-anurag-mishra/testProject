@@ -139,9 +139,10 @@ class HomesController extends AppController
         $this->set('nationalTopDownload', $nationalTopDownload);
 
         // National Top 100 Albums singles        
-        if (($national = Cache::read("top_singles" . $territory)) === false)
+        //if (($national = Cache::read("top_singles" . $territory)) === false)
+                if(1)
         {
-            $top_singles = $this->Common->getTopAlbums($territory);
+            $top_singles = $this->Common->getTopSingles($territory);
         }
         else
         {
