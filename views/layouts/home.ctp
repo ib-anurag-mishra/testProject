@@ -29,7 +29,7 @@
             ?>
         </title>
         
-<!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/modernizr.custom.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/lazyload.1.9.1.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.colorbox.js"></script>
@@ -40,9 +40,9 @@
         <?php
         echo $javascript->link(
                 array(
-                    'freegal40-libraries',
+                    //'freegal40-libraries',
                     'freegal',
-                    //'ajaxify-html5.js', 
+                    'ajaxify-html5.js', 
                     'site.js',
                     //'html5shiv',
                     'freegal40-site'
