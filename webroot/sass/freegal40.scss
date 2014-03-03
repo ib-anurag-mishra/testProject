@@ -1336,14 +1336,11 @@ sub { top: 0.4em; }
 			ul {
 				margin-left: 20px;
 				margin-top: 10px;
-				// display: none;
-				max-height: 0;
-				overflow: hidden;
-				-webkit-transition: max-height 250ms;
+				display: none;
+
 				&.active {
-					max-height: 2000px;
-					-webkit-transition: max-height 250ms;
-					// display: block;
+
+					display: block;
 				}
 				
 				li {
