@@ -17,7 +17,7 @@ $countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' 
 //$countrys = array('CA' => 'CAD' , 'US' => 'USD');
 $lib_types = array('Unlimited' , 'ALC');
 
-$currentDate = '2013-09-01';
+$currentDate = '2013-10-01';
 // $currentDate = date( "Y-m-d", time());
 
 echo "\n----------- Start ".$currentDate." -----------";
