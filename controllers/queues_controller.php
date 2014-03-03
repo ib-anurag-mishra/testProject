@@ -350,8 +350,7 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-        //Configure::write('debug', 2);
-
+        Configure::write('debug', 2);
         
         $prodID = $this->params['form']['prodID'];  //$_POST["prodID"];
         $type = $this->params['form']['type'];      //$_POST["type"];
@@ -411,8 +410,7 @@ class QueuesController extends AppController
             echo $this->addSongToPlaylist($prodID, $queueId, $type);                    
         }
         else if($type == 'multi')
-        {
-            echo '<pre>';
+        {          
             if(is_array($prodID))
             {
                 foreach ($prodID as $song)
