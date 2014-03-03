@@ -34,8 +34,7 @@
                         <?php echo $this->getTextEncode($ArtistText); ?>
                     </div>
                     <div class="featured-album-name">
-                        <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['AlbumTitle'])); ?>" 
-                           href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>">
+                        <a href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>">
                                <?php echo $this->getTextEncode($title); ?>
                         </a>
                     </div>
@@ -49,7 +48,7 @@
                             }
                         }
                         ?>                     
-                        <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['ArtistText'])); ?>" class="more-by-artist" 
+                        <a class="more-by-artist" 
                            href="/artists/album/<?php echo str_replace('/', '@', base64_encode($v['Album']['ArtistText'])); ?>/<?= base64_encode($v['Genre']['Genre']) ?>">
                                <?php echo $this->getTextEncode($ArtistText); ?>
                         </a>
