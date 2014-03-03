@@ -25,7 +25,7 @@ $(document).ready(function() {
     });
 
     $('.my-account-menu').on('click', function() {
-        $('.account-menu-dropdown').toggleClass('active');
+        $('.account-menu-dropdown').addClass('active');
         return false;
     });
 
