@@ -25,6 +25,9 @@ $(document).ready(function() {
     });
 
 
+     
+
+
     $('.music-note-icon').on('mouseenter', function() {
 
         $('.plays-tooltip').addClass('active');

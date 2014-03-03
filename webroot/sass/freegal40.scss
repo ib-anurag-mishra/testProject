@@ -1336,11 +1336,14 @@ sub { top: 0.4em; }
 			ul {
 				margin-left: 20px;
 				margin-top: 10px;
-				display: none;
-				
+				// display: none;
+				max-height: 0;
+				overflow: hidden;
+				-webkit-transition: max-height 250ms;
 				&.active {
-					
-					display: block;
+					max-height: 2000px;
+					-webkit-transition: max-height 250ms;
+					// display: block;
 				}
 				
 				li {
@@ -1414,6 +1417,7 @@ sub { top: 0.4em; }
 	padding-top:20px;
 	
 	min-height:1300px;
+
 	
 	.breadcrumbs {
 
