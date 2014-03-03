@@ -55,7 +55,7 @@ $(document).ready(function() {
     });
 
 
-    $('.playlist-menu-icon').on('click', function() {
+    $(document).on('click', '.playlist-menu-icon', function() {
         if( $(this).siblings('ul').hasClass('active'))
             {
                  $(this).siblings('ul').removeClass('active');
