@@ -416,9 +416,7 @@ class QueuesController extends AppController
             foreach ($prodID as $song)
             {
                 $song_detail = explode('&', $song);
-                $message = $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);
-                echo "($song_detail[0], $queueId, $song_detail[1]) \n";
-                echo "$message \n";
+                $message = $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);          
             }
 
             echo $message;
@@ -438,7 +436,8 @@ class QueuesController extends AppController
         Configure::write('debug', 2);
         $songDetails = array_pop($this->Common->getSongsDetails($prodID));
 
-        if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
+        if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) && 
+                !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
         {
             if ($this->Session->read('library_type') == 2 && $songDetails['Country']['StreamingSalesDate'] <= date('Y-m-d') && $songDetails['Country']['StreamingStatus'] == 1)
             {
