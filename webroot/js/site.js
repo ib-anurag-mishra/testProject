@@ -1769,6 +1769,15 @@ $('document').ready(function()
         {
             createLinkThis = null;
         }
+        
+         if ($(this).parent().parent().parent().parent().hasClass('header-container'))
+                    {
+                       multi_create = true;
+                    }
+                    else
+                    {
+                       multi_create = false;
+                    }
     });
 
     $(document).on('click', '.close,.text-close', function(e) {

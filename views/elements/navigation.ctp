@@ -1,6 +1,7 @@
 <script type="text/javascript">
 
 var createLinkThis;
+var multi_create;
 
 /*
 $(document).ready(function() {
@@ -140,14 +141,9 @@ $(document).ready(function() {
                 if(response=='Insertion Allowed')
                 {                   
                     $(this).unbind('submit').submit();
-                     if ($(this).parent().parent().parent().parent().hasClass('header-container'))
-                    {
-                        addToPlaylistNew(album_data[1], this);
-                    }
-                    else
-                    {
+                    
                         createQueue();
-                    }
+                   
                 }
                 else
                 {
