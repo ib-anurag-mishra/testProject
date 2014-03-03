@@ -187,8 +187,15 @@ function createQueue(){
                  
                  if(createLinkThis !== null)
                  {
-                 //adding the current song / album to newly create playlist
-                 addToAlbumTest( album_data[1], this );
+                    if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
+                    {
+                        addToPlaylistNew(album_data[1], this);
+                    }
+                    else
+                    {
+                        //adding the current song / album to newly create playlist
+                        addToAlbumTest( album_data[1], this );
+                    }
                  }
                 else
                 {
