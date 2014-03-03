@@ -642,6 +642,11 @@ $(document).ready(function() {
                      $('.beforeClick').show();
                     $('.afterClick').hide();
                     
+                    for(i=0; i < selected_songs.length; i++)
+                    {
+                        var temp = selected_songs[i].split('|');
+                        console.log(temp);
+                    }
                     if (languageSet === 'en') {
                         document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
                     } else {

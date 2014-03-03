@@ -2569,7 +2569,9 @@ function getFeaturedArtist()
         }
     });
     
-    $.getScript(webroot + 'js/freegal40-site.js');  
+    $.getScript(webroot + 'js/freegal40-libraries.js');
+    $.getScript(webroot + 'js/freegal40-site.js');
+  
 }
 
 $(document).ready(function() {
