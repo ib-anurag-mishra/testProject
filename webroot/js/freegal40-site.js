@@ -55,16 +55,8 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('click', '.playlist-menu-icon', function() {
-        if( $(this).siblings('ul').hasClass('active'))
-            {
-                 $(this).siblings('ul').removeClass('active');
-            }
-            else
-                {
-                    $(this).siblings('ul').addClass('active');
-                }
-        //$(this).siblings('ul').toggleClass('active');
+    $('.playlist-menu-icon').on('click', function() {
+        $(this).siblings('ul').addclass('active');
         return false ;
     });
 
@@ -77,23 +69,17 @@ $(document).ready(function() {
     });
 
     $('.top-albums-carousel>ul>li').on('mouseleave', function() {
-
         $('.album-cover-container ul').removeClass('active');
     });
 
     $('.top-songs-filter-icon').on('mouseleave', function(e) {
-
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
-
             $('.top-songs-filter-menu').removeClass('active');
         }
-
     });
 
 
     var ulPosition;
-
-
     $('.left-scroll-button').on('click', function() {
         var currentScrollLeft = $('.top-albums-carousel').scrollLeft();
         currentScrollLeft = currentScrollLeft - 660;
