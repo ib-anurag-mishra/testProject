@@ -176,7 +176,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         ?> 
                         <div class="ranking"><?= $count ?></div>
                         <div class="song-name">
-                            <a href="#">
+                            <a 
+                                href="#">
                                 <?php
                                 if (strlen($nationalTopSong['Song']['SongTitle']) > 25)
                                     echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['SongTitle'], 0, 25))) . "...";
@@ -186,7 +187,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             </a>
                         </div>
                         <div class="artist-name">
-                            <a href="#">
+                            <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText'])); ?>"
+                                href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>" >
                                 <?php
                                 if (strlen($nationalTopSong['Song']['ArtistText']) > 30)
                                     echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['ArtistText'], 0, 30))) . "...";
