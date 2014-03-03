@@ -2289,6 +2289,10 @@ sub { top: 0.4em; }
 				padding-left:5px;
 				padding-right:5px;
 				padding-bottom:10px;
+				width: 160px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;				
 				
 
 				&:before {
