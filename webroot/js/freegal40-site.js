@@ -56,7 +56,7 @@ $(document).ready(function() {
 
 
     $('.playlist-menu-icon').on('click', function() {
-        $(this).siblings('ul').addclass('active');
+        $(this).siblings('ul').addClass('active');
     });
 
     $('.left-scroll-button,.wishlist-icon').on('mouseenter', function() {
