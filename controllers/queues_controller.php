@@ -352,9 +352,10 @@ class QueuesController extends AppController
         $this->layout = 'ajax';
         //Configure::write('debug', 2);
 
-        $prodID = $_POST["prodID"];
-        $type = $_POST["type"];
-        $queueId = $_POST['QueueID'];
+        
+        $prodID = $this->params['form']['prodID'];  //$_POST["prodID"];
+        $type = $this->params['form']['type'];      //$_POST["type"];
+        $queueId = $this->params['form']['QueueID'];   //$_POST['QueueID'];
 
         $patronID = $this->Session->read("patron");
 
@@ -413,7 +414,13 @@ class QueuesController extends AppController
         else if($type == 'multi')
         {
             echo '<pre>';
-            print_r($this->params);
+            if(is_array($prodID))
+            {
+                foreach ($prodID as $song)
+                {
+                    print_r($song);
+                }
+            }
             
         }
         die;

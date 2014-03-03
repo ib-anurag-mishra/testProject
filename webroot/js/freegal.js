@@ -1786,7 +1786,7 @@ function addToPlaylistNew(queueID, addTo)
             
               $.ajax({
             type: "post",
-            data: {'prodID': 0, 'type': type_of, 'QueueID': queueID},
+            data: {'prodID': selected_songs, 'type': type_of, 'QueueID': queueID},
             url: webroot + 'queues/queueListAlbums',
             success: function(response)
             {
