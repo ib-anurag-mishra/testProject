@@ -140,7 +140,14 @@ $(document).ready(function() {
                 if(response=='Insertion Allowed')
                 {                   
                     $(this).unbind('submit').submit();
-                    createQueue();
+                     if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
+                    {
+                        addToPlaylistNew(album_data[1], this);
+                    }
+                    else
+                    {
+                        createQueue();
+                    }
                 }
                 else
                 {
@@ -186,16 +193,9 @@ function createQueue(){
                  resetForms();
                  
                  if(createLinkThis !== null)
-                 {
-                    if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
-                    {
-                        addToPlaylistNew(album_data[1], this);
-                    }
-                    else
-                    {
+                 { 
                         //adding the current song / album to newly create playlist
-                        addToAlbumTest( album_data[1], this );
-                    }
+                        addToAlbumTest( album_data[1], this );                   
                  }
                 else
                 {
