@@ -1772,7 +1772,7 @@ function addToAlbumTest(queueID, addTo)
 
 function addToPlaylistNew(queueID, addTo)
 {
-    if ($(addTo).parent().parent().parent().parent().hasClass())
+    if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
     {
         alert('yes');
     }
