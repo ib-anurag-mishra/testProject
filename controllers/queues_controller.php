@@ -418,6 +418,8 @@ class QueuesController extends AppController
                 {
                    $song_detail = explode('&', $song);
                    $message = $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);
+                   echo "($song_detail[0], $queueId, $song_detail[1]) \n";
+                   echo "$message \n"
                 }
             }
             echo $message;

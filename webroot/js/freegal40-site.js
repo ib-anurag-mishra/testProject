@@ -705,7 +705,7 @@ function multiSongCreateNewPlaylist(queueID)
             url: webroot + 'queues/queueListAlbums',
             success: function(response)
             {
-                addToQueueResponse(response, 'song ');
+                addToQueueResponse(response, 'songs ');
             },
             error: function(jqXHR, textStatus, errorThrown) {              
                 console.log(
