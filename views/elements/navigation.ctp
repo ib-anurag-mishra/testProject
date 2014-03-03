@@ -140,7 +140,7 @@ $(document).ready(function() {
                 if(response=='Insertion Allowed')
                 {                   
                     $(this).unbind('submit').submit();
-                     if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
+                     if ($(this).parent().parent().parent().parent().hasClass('header-container'))
                     {
                         addToPlaylistNew(album_data[1], this);
                     }
