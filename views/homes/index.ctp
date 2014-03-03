@@ -311,8 +311,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                          } ?>
                                     </li>
                                     <li>
-                                        <span class="beforeClick"> <a class="add-to-wishlist" href="#">Add to Wishlist</a> </span>
-                                        <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>'."Please Wait...".'</a></span>
+                                        <span class="beforeClick" id="wishlist<?=$nationalTopSong['Song']['ProdID']?>" > <a class="add-to-wishlist" href="#">Add to Wishlist</a> </span>
+                                        <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a></span>
                                     </li>
                                     <?php } ?>
                                     <?php  if ($this->Session->read('library_type') == 2) { ?> 
