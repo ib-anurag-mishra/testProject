@@ -407,12 +407,12 @@ $(document).ready(function() {
 
     });
 
-    $(document).on('mouseenter'.'.featured-grid-item',function(){
+    $(document).on('mouseenter','.featured-grid-item',function(){
 
         $(this).find('.featured-grid-menu').addClass('active');
     });
 
-    $(document).on('mouseleave'.'.featured-grid-item',function(){
+    $(document).on('mouseleave','.featured-grid-item',function(){
 
         $(this).find('.featured-grid-menu').removeClass('active');
     });     
