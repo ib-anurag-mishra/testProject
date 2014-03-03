@@ -65,8 +65,8 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
 
                             </div>
                             <div class="album-info">
-                                <p class="title"><a title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['AlbumTitle'])); ?>" href="/artists/view/<?= base64_encode($value['Album']['ArtistText']); ?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a></p>
-                                <p class="artist"><a title="<?php echo $this->getValidText($this->getTextEncode($value['Album']['ArtistText'])); ?>" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Album']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>"><?php echo $this->getTextEncode($ArtistText); ?></a></p>
+                                <p class="title"><a  href="/artists/view/<?= base64_encode($value['Album']['ArtistText']); ?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']); ?>"><?php echo $this->getTextEncode($title); ?></a></p>
+                                <p class="artist"><a  href="/artists/album/<?php echo str_replace('/', '@', base64_encode($value['Album']['ArtistText'])); ?>/<?= base64_encode($value['Genre']['Genre']) ?>"><?php echo $this->getTextEncode($ArtistText); ?></a></p>
                             </div>
                         </li>
                         <?php
@@ -187,8 +187,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             </a>
                         </div>
                         <div class="artist-name">
-                            <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopSong['Song']['ArtistText'])); ?>"
-                               href="/artists/album/<?php echo base64_encode($this->getTextEncode($nationalTopSong['Song']['ArtistText'])); ?>" >
+                            <a href="/artists/album/<?php echo base64_encode($this->getTextEncode($nationalTopSong['Song']['ArtistText'])); ?>" >
                                    <?php
                                    if (strlen($nationalTopSong['Song']['ArtistText']) > 30)
                                        echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['ArtistText'], 0, 30))) . "...";
@@ -198,8 +197,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             </a>
                         </div>
                         <div class="album-name">
-                            <a title="<?php echo $this->getValidText($this->getTextEncode($nationalTopSong['Album']['AlbumTitle'])); ?>" 
-                               href="/artists/view/<?= base64_encode($nationalTopSong['Song']['ArtistText']); ?>/<?= $nationalTopSong['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopSong['Song']['provider_type']); ?>">
+                            <a href="/artists/view/<?= base64_encode($nationalTopSong['Song']['ArtistText']); ?>/<?= $nationalTopSong['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopSong['Song']['provider_type']); ?>">
                                    <?php
                                    if (strlen($nationalTopSong['Song']['Title']) > 30)
                                        echo $this->getValidText($this->getTextEncode(substr($nationalTopSong['Song']['Title'], 0, 30))) . "...";
@@ -411,8 +409,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         <?php echo $this->getTextEncode($ArtistText); ?>
                     </div>
                     <div class="featured-album-name">
-                        <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['AlbumTitle'])); ?>" 
-                           href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>">
+                        <a href="/artists/view/<?= base64_encode($v['Album']['ArtistText']); ?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']); ?>">
                                <?php echo $this->getTextEncode($title); ?>
                         </a>
                     </div>
@@ -426,8 +423,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             }
                         }
                         ?>                     
-                        <a title="<?php echo $this->getValidText($this->getTextEncode($v['Album']['ArtistText'])); ?>" class="more-by-artist" 
-                           href="/artists/album/<?php echo str_replace('/', '@', base64_encode($v['Album']['ArtistText'])); ?>/<?= base64_encode($v['Genre']['Genre']) ?>">
+                        <a class="more-by-artist" href="/artists/album/<?php echo str_replace('/', '@', base64_encode($v['Album']['ArtistText'])); ?>/<?= base64_encode($v['Genre']['Genre']) ?>">
                                <?php echo $this->getTextEncode($ArtistText); ?>
                         </a>
                     </div>
