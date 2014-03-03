@@ -72,26 +72,16 @@ Class CommonComponent extends Object
             $maintainLatestDownload = $this->Session->read('maintainLatestDownload');
             if ($maintainLatestDownload)
             {
-
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `latest_downloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '" . $country . "' 
-              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
-            }
-            else
-            {
-                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `downloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '" . $country . "' 
-              AND `Download`.`created` BETWEEN '" . Configure::read('App.lastWeekStartDate') . "' AND '" . Configure::read('App.lastWeekEndDate') . "' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
+$natTopDownloaded = $topAlbumInstance->find('all', array(
+            'conditions' => array(
+                'TopAlbum.territory' => $territory,
+                'TopAlbum.language' => Configure::read('App.LANGUAGE')),
+            'recursive' => -1,
+            'order' => array(
+                'TopAlbum.id' => 'desc')
+                )
+        );
+               
             }
             $ids = '';
             $ids_provider_type = '';
@@ -1653,7 +1643,131 @@ STR;
         return $topAlbumData;
     }    
     
+    /*
+     * Function Name : getTopSingles
+     * Function Description : This function is used to Top 100 singles songs.
+     */
+    function getTopSingles($territory)
+    {
+        set_time_limit(0);
+        $countryPrefix = $this->getCountryPrefix($territory); 
+        
+         $ids = '';
+        $ids_provider_type = '';
+        $top_singles_instance = ClassRegistry::init('TopSingles');
+        $top_singles = $top_singles_instance->getAllTopSingles($territory);
+        
+        if(!empty($top_singles))
+        {
+             foreach ($top_singles as $k => $v)
+        {
+            if ($v['TopAlbum']['album'] != 0)
+            {
+                if (empty($ids))
+                {
+                    $ids .= $v['TopAlbum']['album'];
+                    $ids_provider_type .= "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
+                }
+                else
+                {
+                    $ids .= ',' . $v['TopAlbum']['album'];
+                    $ids_provider_type .= ',' . "(" . $v['TopAlbum']['album'] . ",'" . $v['TopAlbum']['provider_type'] . "')";
+                }
+            }
+        }
+        }
+        else
+        {
+             $this->log("top album data is not available for" . $territory, "cache");
+        }
+        
+        
+        if ($ids != '')
+        {
+            $albumInstance = ClassRegistry::init('Album');
+            $albumInstance->recursive = 2;
+            $topSingleData = array();
 
+            $sql_top_singles = <<<STR
+                SELECT 
+                        Song.ProdID,
+                        Song.ReferenceID,
+                        Song.Title,
+                        Song.ArtistText,
+                        Song.DownloadStatus,
+                        Song.SongTitle,
+                        Song.Artist,
+                        Song.Advisory,
+                        Song.Sample_Duration,
+                        Song.FullLength_Duration,
+                        Song.provider_type,
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Country.StreamingSalesDate,
+                        Country.StreamingStatus,
+                        Country.DownloadStatus,
+                        Sample_Files.CdnPath,
+                        Sample_Files.SaveAsName,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        File.CdnPath,
+                        File.SourceURL,
+                        File.SaveAsName,
+                        Sample_Files.FileID,
+                        PRODUCT.pid,
+                        Albums.ProdID,
+                        Albums.provider_type
+                FROM
+                        Songs AS Song
+                                LEFT JOIN
+                        File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                LEFT JOIN
+                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                LEFT JOIN
+                        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
+                                INNER JOIN
+                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND Country.DownloadStatus = '1' AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+                                LEFT JOIN
+                        PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
+                                INNER JOIN 
+                        Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                INNER JOIN 
+                        File ON (Albums.FileID = File.FileID) 
+                WHERE
+                        (Song.ProdID, Song.provider_type) IN ($ids_provider_type) AND 1 = 1
+                GROUP BY Song.ProdID
+                ORDER BY FIELD(Song.ProdID,$ids) ASC
+                LIMIT 75 
+
+STR;
+            $topSingleData = $albumInstance->query($sql_top_singles);
+            
+            if (!empty($topSingleData))
+            {   
+                foreach ($topSingleData as $key => $value)
+                {
+                    $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $value['File']['CdnPath'] . "/" . $value['File']['SourceURL']);
+                    $songAlbumImage = Configure::read('App.Music_Path') . $albumArtwork;
+                    $data[$key]['songAlbumImage'] = $songAlbumImage;
+                }
+                Cache::delete("national" . $territory,"cache2");
+                Cache::write("national" . $territory, $data, "cache2");
+                $this->log("cache written for national top 100 songs for $territory", "cache");
+            }
+            else
+            {
+                $data = Cache::read("national" . $territory, "cache2");
+                Cache::write("national" . $territory, Cache::read("national" . $territory, "cache2"), "cache2");
+                $this->log("Unable to update national 100 for " . $territory, "cache");
+            }
+            
+            $this->log("cache written for top 100 singles for $territory", 'debug');
+        return $data;
+    }
+    }
+    
+    
     /*
      * Function Name : getGenreData
      * Function Description : This function is used to getGenreData.
