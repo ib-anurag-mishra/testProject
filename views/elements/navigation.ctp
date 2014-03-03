@@ -548,7 +548,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                              <?php } ?>    
                                                 <div class="my-account-menu-container<?php echo $class ?>">
                                                      <?php if($this->Session->read("patron")){  ?>
-                                                        <button class="my-account-menu">My Account</button>
+                                                        <button class="my-account-menu no-ajaxy">My Account</button>
 
                                                         <ul class="account-menu-dropdown">
                                                                 <?php 
