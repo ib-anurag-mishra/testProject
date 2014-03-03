@@ -75,7 +75,7 @@ class HomesController extends AppController
     function index()
     {
 
-        //Configure::write('debug', 3);
+        Configure::write('debug', 3);
         //check the server port and redirect to index page
         if ($_SERVER['SERVER_PORT'] == 443)
         {
@@ -134,17 +134,31 @@ class HomesController extends AppController
         {
             $nationalTopDownload = Cache::read("national" . $territory);
         }
+        
+        
         $this->set('nationalTopDownload', $nationalTopDownload);
 
+        // National Top 100 Albums singles        
+        if (($national = Cache::read("top_singles" . $territory)) === false)
+        {
+            $top_singles = $this->Common->getTopAlbums($territory);
+        }
+        else
+        {
+            $top_singles = Cache::read("top_singles" . $territory);
+        }
+         $this->set('top_singles', $top_singles);
+        echo "<pre>";
+        print_r($top_singles);
+        exit;
+        
         // National Top 100 Albums slider        
         if (($national = Cache::read("topAlbums" . $territory)) === false)
         {
-
             $TopAlbums = $this->Common->getTopAlbums($territory);
         }
         else
         {
-
             $TopAlbums = Cache::read("topAlbums" . $territory);
         }
         $this->set('nationalTopAlbums', $TopAlbums);
