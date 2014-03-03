@@ -3547,7 +3547,10 @@ typeof JSON!="object"&&(JSON={}),function(){"use strict";function f(e){return e<
                     $.getScript(scriptPath + '/js/recent-downloads.js');
                     //$.getScript(webroot + 'js/search-results.js');
                   
-                    
+                     page = 2;
+                     complete = false;
+                     results_completed = false;
+                     
                     $('.loader').fadeOut(50);
                     $('#content').find('.loader').remove();
                 },
