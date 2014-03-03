@@ -1681,9 +1681,7 @@ STR;
             $this->log("top album data is not available for" . $territory, "cache");
         }
 
-        echo '<pre>';
-        echo "$ids :   $ids_provider_type ";
-        exit;
+     
         if ($ids != '')
         {
             $albumInstance = ClassRegistry::init('Album');

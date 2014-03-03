@@ -143,10 +143,10 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         <!-- showing the songs list -->
         <div class="rows-container">
             <?php
-            if (!empty($nationalTopDownload))
+            if (!empty($top_singles))
             {
                 $count = 0;
-                foreach ($nationalTopDownload as $nationalTopSong)
+                foreach ($top_singles as $nationalTopSong)
                 {
                     $count++;
                     ?>
