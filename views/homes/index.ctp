@@ -143,6 +143,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         <!-- showing the songs list -->
         <div class="rows-container">
             <?php
+                        echo '<pre>';
+                        print_r($top_singles);
+                        die;
             if (!empty($top_singles))
             {
                 $count = 0;
