@@ -26,6 +26,7 @@ $(document).ready(function() {
 
     $('.my-account-menu').on('click', function() {
         $('.account-menu-dropdown').toggleClass('active');
+        return false;
     });
 
      $('.my-account-menu').on('mouseleave', function(e) {
@@ -56,6 +57,7 @@ $(document).ready(function() {
 
     $('.playlist-menu-icon').on('click', function() {
         $(this).siblings('ul').toggleClass('active');
+        return false ;
     });
 
     $('.left-scroll-button,.wishlist-icon').on('mouseenter', function() {
@@ -85,36 +87,18 @@ $(document).ready(function() {
 
 
     $('.left-scroll-button').on('click', function() {
-
-
-
         var currentScrollLeft = $('.top-albums-carousel').scrollLeft();
-
         currentScrollLeft = currentScrollLeft - 660;
-
-
         $('.top-albums-carousel').animate({scrollLeft: currentScrollLeft});
-
+          return false;
     });
 
 
     $('.right-scroll-button').on('click', function() {
-
-
-
-
         var currentScrollLeft = $('.top-albums-carousel').scrollLeft();
-
         currentScrollLeft = currentScrollLeft + 660;
-
-
         $('.top-albums-carousel').animate({scrollLeft: currentScrollLeft});
-
-
-
-
-
-
+          return false;
     });
 
     $('.account-menu-dropdown').on('mouseleave', function() {
@@ -180,7 +164,7 @@ $(document).ready(function() {
         $('.genre-column').animate({
             scrollTop: genreScrollAmount
         });
-
+          return false;
     });
 
     $(document).on('click', '.genre-scroll-down', function() {
