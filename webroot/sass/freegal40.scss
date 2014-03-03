@@ -1895,6 +1895,26 @@ sub { top: 0.4em; }
 			border-bottom:4px solid transparent;
 		}
 
+		&.preview {
+
+			background: url(../img/freegal_sprite.png) -115px -125px;
+
+			&:hover {
+
+				background: url(../img/freegal_sprite.png) -140px -125px;
+			}
+
+			&:active {
+				background: url(../img/freegal_sprite.png) -165px -125px;
+
+			}
+
+			&:before {
+
+				display: none;
+			}
+		}
+
 	}
 
 	.ranking {
