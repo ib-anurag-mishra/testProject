@@ -2268,13 +2268,14 @@ sub { top: 0.4em; }
 					bottom:0;
 					background: url(../img/featured-menu-border-rpt.png) repeat;
 				}
+
+                a {
+                    color:#ffffff;
+                }				
                                 
-                                a:hover{
-                                    color:#ffffff !important;
-                                }
-                                a{
-                                    color:#ffffff !important;
-                                }
+
+
+
 
 			}
 			
