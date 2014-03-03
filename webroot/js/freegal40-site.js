@@ -11,7 +11,7 @@ $(document).ready(function() {
 
         });
     });
-
+    $('.playlist-menu').bindMouseWheel();
     $('.top-songs .options-menu .playlist-menu').bindMouseWheel();
 
     $('.music-note-icon').on('mouseenter', function() {
@@ -372,7 +372,7 @@ $(document).ready(function() {
         });
     });
 
-    $('.playlist-menu').bindMouseWheel();
+    
 
     $('.menu-btn').on('click', function() {
 
