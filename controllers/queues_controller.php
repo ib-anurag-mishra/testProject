@@ -408,8 +408,7 @@ class QueuesController extends AppController
         }
         else if ($type == 'song')
         {            
-            echo $this->addSongToPlaylist($prodID, $queueId, $type);
-                    exit;
+            echo $this->addSongToPlaylist($prodID, $queueId, $type);                    
         }
         else if($type == 'multi')
         {
@@ -418,7 +417,8 @@ class QueuesController extends AppController
             {
                 foreach ($prodID as $song)
                 {
-                    print_r($song);
+                   $song_detail = explode('&', $song);
+                   $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);
                 }
             }
             
