@@ -687,4 +687,30 @@ function displayMessage(response)
     }
 }
 
+function multiSongCreateNewPlaylist(queueID)
+{
+    var type_of = 'multi';
+        var selected_songs = [];
+        $(document).find('.top-songs-container .rows-container .row').each(function()
+        {
+            if ($(this).find('.row-checkbox').prop('checked'))
+            {
+                selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
+            }
+        });
 
+        $.ajax({
+            type: "post",
+            data: {'prodID': selected_songs, 'type': type_of, 'QueueID': queueID},
+            url: webroot + 'queues/queueListAlbums',
+            success: function(response)
+            {
+                addToQueueResponse(response, 'song ');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {              
+                console.log(
+                        "The following error occured: " +
+                        textStatus, errorThrown);
+            }
+        });
+}

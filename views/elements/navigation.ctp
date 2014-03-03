@@ -140,10 +140,8 @@ $(document).ready(function() {
                
                 if(response=='Insertion Allowed')
                 {                   
-                    $(this).unbind('submit').submit();
-                    
-                        createQueue();
-                   
+                    $(this).unbind('submit').submit();                   
+                    createQueue();                              
                 }
                 else
                 {
@@ -190,8 +188,16 @@ function createQueue(){
                  
                  if(createLinkThis !== null)
                  { 
-                        //adding the current song / album to newly create playlist
-                        addToAlbumTest( album_data[1], this );                   
+                    //adding the current song / album to newly create playlist
+                    if( multi_create )
+                    {
+                         multiSongCreateNewPlaylist(album_data[1]);
+                    }
+                    else
+                    {
+                        addToAlbumTest( album_data[1], this ); 
+                     }    
+                                          
                  }
                 else
                 {

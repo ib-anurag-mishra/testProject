@@ -1744,32 +1744,7 @@ function addToAlbumTest(queueID, addTo)
 {
     if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
     {
-        var type_of = 'multi';
-        var selected_songs = [];
-        $(document).find('.top-songs-container .rows-container .row').each(function()
-        {
-            if ($(this).find('.row-checkbox').prop('checked'))
-            {
-                selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
-            }
-        });
-
-        $.ajax({
-            type: "post",
-            data: {'prodID': selected_songs, 'type': type_of, 'QueueID': queueID},
-            url: webroot + 'queues/queueListAlbums',
-            success: function(response)
-            {
-                //alert(response);
-                addToQueueResponse(response, 'song ');
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // log the error to the console
-                console.log(
-                        "The following error occured: " +
-                        textStatus, errorThrown);
-            }
-        });
+        multiSongCreateNewPlaylist(queueID);
     }
     else
     {
