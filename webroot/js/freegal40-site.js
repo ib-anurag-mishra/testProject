@@ -568,15 +568,7 @@ $(document).ready(function() {
                 url: webroot + 'homes/addToWishlistNewHome',
                 success: function(response)
                 {
-                    $('.beforeClick').show();
-                    $('.afterClick').hide();
-                    
-                    if (languageSet === 'en') {
-                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-                    } else {
-                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
-                    }
-                    
+                   
                     
                     displayMessage(response);
                 },
@@ -606,6 +598,15 @@ $(document).ready(function() {
                 url: webroot + 'homes/addToWishlistNewHome',
                 success: function(response)
                 {
+                     $('.beforeClick').show();
+                    $('.afterClick').hide();
+                    
+                    if (languageSet === 'en') {
+                        document.getElementById('wishlist' + prod_id).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                    } else {
+                        document.getElementById('wishlist' + prod_id).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
+                    }
+                    
                     displayMessage(response);
                 },
                 error: function(jqXHR, textStatus, errorThrown)
@@ -638,6 +639,15 @@ $(document).ready(function() {
                 url: webroot + 'homes/addToWishlistNewHome',
                 success: function(response)
                 {
+                     $('.beforeClick').show();
+                    $('.afterClick').hide();
+                    
+                    if (languageSet === 'en') {
+                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+                    } else {
+                        document.getElementById('wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
+                    }
+                    
                     displayMessage(response);
                 },
                 error: function(jqXHR, textStatus, errorThrown)
