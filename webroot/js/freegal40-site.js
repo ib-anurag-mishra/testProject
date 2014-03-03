@@ -24,11 +24,11 @@ $(document).ready(function() {
 
     });
 
-    $(document).find('.my-account-menu').on('click', function() {
+    $('.my-account-menu').on('click', function() {
         $('.account-menu-dropdown').toggleClass('active');
     });
 
-     $(document).find('.my-account-menu').on('mouseleave', function(e) {
+     $('.my-account-menu').on('mouseleave', function(e) {
         if (e.offsetX < 0 || e.offsetX > $(this).width() || e.offsetY < 0) {
             $('.account-menu-dropdown').removeClass('active');
         }
@@ -55,7 +55,6 @@ $(document).ready(function() {
 
 
     $('.playlist-menu-icon').on('click', function() {
-
         $(this).siblings('ul').toggleClass('active');
     });
 
@@ -430,7 +429,7 @@ $(document).ready(function() {
 
 
 
-    $(document).find('.top-songs-container .rows-container .row')
+    $('.top-songs-container .rows-container .row')
     {
         var
                 count = $(document).find('.top-songs-container .rows-container > div.row').length,
@@ -528,7 +527,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e)
+    $('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e)
     {
         e.preventDefault();
 
@@ -550,7 +549,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist').on('click', function(e)
+    $('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist').on('click', function(e)
     {
         if ($(this).hasClass('wishlist-icon'))
         {
