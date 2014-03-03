@@ -411,7 +411,7 @@ $(document).ready(function() {
 
 
 
-    $('.top-songs-container .rows-container .row')
+    $(document).find('.top-songs-container .rows-container .row')
     {
         var
                 count = $(document).find('.top-songs-container .rows-container > div.row').length,
@@ -509,7 +509,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e)
+    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e)
     {
         e.preventDefault();
 
@@ -531,7 +531,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist').on('click', function(e)
+    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist').on('click', function(e)
     {
         if ($(this).hasClass('wishlist-icon'))
         {
