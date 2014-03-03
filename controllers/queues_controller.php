@@ -411,15 +411,16 @@ class QueuesController extends AppController
         }
         else if($type == 'multi')
         {          
+            $message ='';
             if(is_array($prodID))
             {
                 foreach ($prodID as $song)
                 {
                    $song_detail = explode('&', $song);
-                   $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);
+                   $message = $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);
                 }
             }
-            
+            echo $message;
         }
         die;
     }
