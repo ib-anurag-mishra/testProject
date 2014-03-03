@@ -666,7 +666,8 @@ $(document).ready(function() {
     $(window).scroll(function()
     {
         var path = window.location.pathname;
-        if (path === '/homes/index' || path === '/index' || path === '/homes/index/')
+        if (path === '/homes/index' || path === '/index' || 
+                path === '/homes/index/' || path === '/index/')
         {
             if (!complete && !results_completed)
             {
