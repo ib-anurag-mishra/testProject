@@ -335,7 +335,7 @@ $ieVersion = ieversion();
                             <div class="date"><?php echo date("Y-m-d", strtotime($wishlistResultsVideo['WishlistVideo']['created'])); ?></div>
                             <div class="small-album-container">
                                 <?php
-                                $videoImage = shell_exec('perl files/tokengen_artwork ' . $wishlistResultsVideo['File']['CdnPath'] . "/" . $wishlistResultsVideo['File']['SourceURL']);
+                                $videoImage = shell_exec(Configure::read('App.tokengen_artwork') . $wishlistResultsVideo['File']['CdnPath'] . "/" . $wishlistResultsVideo['File']['SourceURL']);
                                 $videoImageUrl = Configure::read('App.Music_Path') . $videoImage;
                                 ?>
                                 <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />

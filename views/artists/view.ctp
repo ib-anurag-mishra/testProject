@@ -49,7 +49,7 @@
                 ?>
                 <section class="album-detail">
                     <div class="album-cover-image">
-                        <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
+                        <?php $albumArtwork = shell_exec(Configure::read('App.tokengen_artwork') . $album['Files']['CdnPath'] . "/" . $album['Files']['SourceURL']); ?>
                         <img src="<?php echo Configure::read('App.Music_Path') . $albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
                         <?php
                         if ($this->Session->read('library_type') == 2 && !empty($album['albumSongs'][$album['Album']['ProdID']]) && $this->Session->read("patron"))
