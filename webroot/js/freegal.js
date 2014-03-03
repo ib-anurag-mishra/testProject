@@ -1020,7 +1020,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
         type: "post", // Request method: post, get
         url: webroot + "homes/wishlistVideoDownloadToken", // URL to request
         data: data, // post data
-        async:false,
+        async: false,
         success: function(response) {
             var msg = response.substring(0, 5);
             if (msg === 'error')
@@ -1063,7 +1063,7 @@ function wishlistVideoDownloadIEToken(prodId, id, provider, CdnPath, SaveAsName)
 
 
 
-function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
+function historyDownload(id, libID, patronID, CdnPath, SaveAsName)
 {
     $('.beforeClick').hide();
     $('.afterClick').show();
@@ -1084,8 +1084,8 @@ function historyDownload(id, libID, patronID , CdnPath, SaveAsName)
             else if (msg === 'suces')
             {
                 var count = response.substring(0, 1);
-                 var downloadUsedArr = response.split('|');
-                 
+                var downloadUsedArr = response.split('|');
+
                 if (count === 2) {
                     if (languageSet === 'en') {
                         document.getElementById('download_song_' + id).innerHTML = 'Limit Met';
@@ -1742,31 +1742,63 @@ function videoDownloadAll(prodId)
 
 function addToAlbumTest(queueID, addTo)
 {
-    var type = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
-    var ProdID = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
-
-    if ((typeof type === 'undefined') && (typeof ProdID === 'undefined'))
+    if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
     {
-        type = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
-        ProdID = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
-    }
-
-    $.ajax({
-        type: "post",
-        data: {'prodID': ProdID, 'type': type, 'QueueID': queueID},
-        url: webroot + 'queues/queueListAlbums',
-        success: function(response)
+        var type_of = 'multi';
+        var selected_songs = [];
+        $(document).find('.top-songs-container .rows-container .row').each(function()
         {
-            //alert(response);
-            addToQueueResponse(response, type);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // log the error to the console
-            console.log(
-                    "The following error occured: " +
-                    textStatus, errorThrown);
+            if ($(this).find('.row-checkbox').prop('checked'))
+            {
+                selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
+            }
+        });
+
+        $.ajax({
+            type: "post",
+            data: {'prodID': selected_songs, 'type': type_of, 'QueueID': queueID},
+            url: webroot + 'queues/queueListAlbums',
+            success: function(response)
+            {
+                //alert(response);
+                addToQueueResponse(response, 'song ');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                console.log(
+                        "The following error occured: " +
+                        textStatus, errorThrown);
+            }
+        });
+    }
+    else
+    {
+        var type = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
+        var ProdID = $(addTo).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
+
+        if ((typeof type === 'undefined') && (typeof ProdID === 'undefined'))
+        {
+            type = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
+            ProdID = $(createLinkThis).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
         }
-    });
+
+        $.ajax({
+            type: "post",
+            data: {'prodID': ProdID, 'type': type, 'QueueID': queueID},
+            url: webroot + 'queues/queueListAlbums',
+            success: function(response)
+            {
+                //alert(response);
+                addToQueueResponse(response, type);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // log the error to the console
+                console.log(
+                        "The following error occured: " +
+                        textStatus, errorThrown);
+            }
+        });
+    }
     return false;
 }
 
@@ -1775,16 +1807,16 @@ function addToPlaylistNew(queueID, addTo)
     if ($(addTo).parent().parent().parent().parent().hasClass('header-container'))
     {
         var type_of = 'multi';
-            var selected_songs = [];
-            $(document).find('.top-songs-container .rows-container .row').each(function()
+        var selected_songs = [];
+        $(document).find('.top-songs-container .rows-container .row').each(function()
+        {
+            if ($(this).find('.row-checkbox').prop('checked'))
             {
-                if ($(this).find('.row-checkbox').prop('checked'))
-                {
-                    selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
-                }
-            });
-            
-              $.ajax({
+                selected_songs.push($(this).find('.options-menu input[type="hidden"]').attr('id') + '&' + $(this).find('.options-menu input[type="hidden"]').attr('data-provider'));
+            }
+        });
+
+        $.ajax({
             type: "post",
             data: {'prodID': selected_songs, 'type': type_of, 'QueueID': queueID},
             url: webroot + 'queues/queueListAlbums',
@@ -2226,15 +2258,15 @@ function loadSong(songFile, songTitle, artistName, songLength, prodId, providerT
 }
 
 
-function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLength, prodId, providerType, playlistId) {
+function loadNationalTopSong(cdnPath, sourceUrl, songTitle, artistName, songLength, prodId, providerType, playlistId) {
     playlistId = (playlistId === undefined) ? 0 : playlistId;
     cdnPath = base64_decode(cdnPath);
     sourceUrl = base64_decode(sourceUrl);
     songLength = base64_decode(songLength);
     songTitle = base64_decode(songTitle);
     artistName = base64_decode(artistName);
-    
-    var data = "cdnPath=" + cdnPath+"&sourceUrl="+sourceUrl+"&songLength="+songLength+"&songTitle="+songTitle+"&artistName="+artistName+"&providerType="+providerType+"&playlistId="+playlistId+"&prodId="+prodId;
+
+    var data = "cdnPath=" + cdnPath + "&sourceUrl=" + sourceUrl + "&songLength=" + songLength + "&songTitle=" + songTitle + "&artistName=" + artistName + "&providerType=" + providerType + "&playlistId=" + playlistId + "&prodId=" + prodId;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getSongStreamUrl", // URL to request
@@ -2255,8 +2287,8 @@ function loadNationalTopSong(cdnPath,sourceUrl, songTitle, artistName, songLengt
             console.log('Ajax call to get album songs has been failed');
         }
     });
-    return false;    
-    
+    return false;
+
 }
 
 function loadAlbumSong(albumSongs) {
@@ -2268,23 +2300,23 @@ function loadAlbumSong(albumSongs) {
 }
 
 
-function loadAlbumData(albumtData){
-    
+function loadAlbumData(albumtData) {
+
     //albumtData = JSON.parse(albumtData);
     var data = "albumtData=" + albumtData;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getAlbumData", // URL to request
         data: data, // post data
-        dataType: "json", 
+        dataType: "json",
         success: function(response) {
-            if(response.success){
+            if (response.success) {
                 playlist = base64_decode(response.success);
                 playlist = JSON.parse(playlist);
                 if (playlist.length) {
                     pushSongs(playlist);
                 }
-            }else if(response.error){
+            } else if (response.error) {
                 console.log(response.error);
             }
         },
@@ -2293,15 +2325,15 @@ function loadAlbumData(albumtData){
         }
     });
     return false;
-    
-    
+
+
 }
 
-function loadNationalAlbumData(artistText,prodId,providerType) {
+function loadNationalAlbumData(artistText, prodId, providerType) {
 
     artistText = base64_decode(artistText);
     providerType = base64_decode(providerType);
-    var data = "artistText=" + artistText+"&prodId="+prodId+"&providerType="+providerType;
+    var data = "artistText=" + artistText + "&prodId=" + prodId + "&providerType=" + providerType;
     jQuery.ajax({
         type: "post", // Request method: post, get
         url: webroot + "artists/getNationalAlbumData", // URL to request
@@ -2387,10 +2419,10 @@ function base64_decode(data) {
 
 //load the artist list via ajax    
 function load_artist(link, id_serial, genre_name) {
-    if(id_serial){
-    var genreid = "#genre_list_item_"+id_serial;
-    $('.genre-column a').removeClass('active');
-    $(genreid).addClass('active');
+    if (id_serial) {
+        var genreid = "#genre_list_item_" + id_serial;
+        $('.genre-column a').removeClass('active');
+        $(genreid).addClass('active');
     }
     $('.album-list-span').html('');
     $('#album_details_container').html('');
@@ -2696,7 +2728,7 @@ $(document).ready(function() {
 
     $('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click', function(e) {
         e.preventDefault();
-        
+
         if ($(this).hasClass('active')) {
 
             if ($(this).hasClass('toggled')) {
