@@ -5075,12 +5075,11 @@ STR;
                 $this->Wishlist->setDataSource('master');
                 //insert into wishlist table
                 $this->Wishlist->create();      //Prepare model to save record
-                //check the inserting values
-
+                
                 if ($this->Wishlist->save($insertArr))
                 {
                     $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is added.";
-                    $this->Wishlist->setDataSource('default');
+                   
                     //add the wishlist songs in the session array
                     if ($this->Session->read('wishlistVariArray'))
                     {
@@ -5093,6 +5092,8 @@ STR;
                 {
                     $log_data .= ' library_id:' . $libraryId . '  patron_id:' . $patronId . '  ProdID:' . $song['Song']['ProdID'] . " is not added.";
                 }
+                
+                 $this->Wishlist->setDataSource('default');
             }
         }
 

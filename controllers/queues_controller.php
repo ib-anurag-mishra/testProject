@@ -350,7 +350,7 @@ class QueuesController extends AppController
     function queueListAlbums()
     {
         $this->layout = 'ajax';
-        Configure::write('debug', 2);
+        //Configure::write('debug', 2);
         
         $prodID = $this->params['form']['prodID'];  //$_POST["prodID"];
         $type = $this->params['form']['type'];      //$_POST["type"];
@@ -409,19 +409,18 @@ class QueuesController extends AppController
         {            
             echo $this->addSongToPlaylist($prodID, $queueId, $type);                    
         }
-        else if($type == 'multi')
-        {          
-            $message ='';
-            if(is_array($prodID))
+        else if ($type == 'multi')
+        {
+            $message = '';
+
+            foreach ($prodID as $song)
             {
-                foreach ($prodID as $song)
-                {
-                   $song_detail = explode('&', $song);
-                   $message = $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);
-                   echo "($song_detail[0], $queueId, $song_detail[1]) \n";
-                   echo "$message \n";
-                }
+                $song_detail = explode('&', $song);
+                $message = $this->addSongToPlaylist($song_detail[0], $queueId, $song_detail[1]);
+                echo "($song_detail[0], $queueId, $song_detail[1]) \n";
+                echo "$message \n";
             }
+
             echo $message;
         }
         die;
@@ -436,10 +435,10 @@ class QueuesController extends AppController
      */
     function addSongToPlaylist($prodID, $queueId, $type)
     {
+        Configure::write('debug', 2);
         $songDetails = array_pop($this->Common->getSongsDetails($prodID));
 
-        if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) 
-                && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
+        if ($this->Session->read('library') && $this->Session->read('patron') && !empty($prodID) && !empty($songDetails['Song']['provider_type']) && !empty($songDetails['Albums']['ProdID']) && !empty($songDetails['Albums']['provider_type']) && !empty($queueId))
         {
             if ($this->Session->read('library_type') == 2 && $songDetails['Country']['StreamingSalesDate'] <= date('Y-m-d') && $songDetails['Country']['StreamingStatus'] == 1)
             {
@@ -449,16 +448,17 @@ class QueuesController extends AppController
                 $insertArr['song_providertype'] = $songDetails['Song']['provider_type'];
                 $insertArr['album_prodid'] = $songDetails['Albums']['ProdID'];
                 $insertArr['album_providertype'] = $songDetails['Albums']['provider_type'];
-                
+
                 //insert into queuedetail table
                 $this->QueueDetail->setDataSource('master');
+                $this->QueueDetail->create();      //Prepare model to save record
                 $this->QueueDetail->save($insertArr);
                 $this->QueueDetail->setDataSource('default');
                 return "Success|$type";
             }
-            else   
+            else
             {
-                 // Song is not allowed for streaming
+                // Song is not allowed for streaming
                 return "invalid_for_stream|$type";
             }
         }

@@ -225,7 +225,7 @@ function createQueue(){
                  $(updated_queue_list).insertAfter( $(document).find('.playlist-options-new').find('.playlist-menu').find('li:eq(0)') );
 
                 //History.pushState(null, title, url);
-                event.preventDefault();
+                return false;
             },
             error: function(jqXHR, textStatus, errorThrown){
                 // log the error to the console
