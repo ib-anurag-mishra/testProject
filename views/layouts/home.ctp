@@ -64,7 +64,9 @@
         ?>
         
       <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/audioPlayer.js"></script>      
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>    
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/qtip_add.js"></script>
+        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-scrollto.js"></script>
+          
         
         <?php
         if ($this->Session->read("patron"))
