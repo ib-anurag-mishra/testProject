@@ -23,7 +23,7 @@
 						</div>
 
 						<header>
-							<h3 class="composers-header">Composers</h3>
+							<h3 class="composers-header">More Composers Like Shakira</h3>
 							
 						</header>
 						<div class="search-results-list">

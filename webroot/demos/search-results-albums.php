@@ -32,11 +32,8 @@
 							</div>
 							<div class="album-info">
 								<div class="album-title"><strong>Oral Fixation Vol. 2</strong></div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="genre"><strong>Genre:</strong> Pop</div>
-								<div class="label"><strong>Label:</strong> Epic</div>
-								<div class="distributor">(P) 2005 Sony Music Entertainment (Holland) B.V.</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -76,11 +73,8 @@
 							</div>
 							<div class="album-info">
 								<div class="album-title"><strong>Donde Estan Los Ladrones</strong></div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="genre"><strong>Genre:</strong> Latin</div>
-								<div class="label"><strong>Label:</strong> Epic</div>
-								<div class="distributor">(P) 1998 Sony Music Entertainment (Holland) B.V.</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="genre">Genre: Latin</div>
 								<button class="stream-now-btn">Stream Now</button>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -120,11 +114,8 @@
 							</div>
 							<div class="album-info">
 								<div class="album-title"><strong>Shakira MTV Unplugged</strong></div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="genre"><strong>Genre:</strong> Pop</div>
-								<div class="label"><strong>Label:</strong> Epic</div>
-								<div class="distributor">(P) 2000 Sony Music Entertainment (Holland) B.V.</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -164,11 +155,8 @@
 							</div>
 							<div class="album-info">
 								<div class="album-title"><strong>La Tortura (Artista Invitado Alejandro Sanz</strong></div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="genre"><strong>Genre:</strong> Pop</div>
-								<div class="label"><strong>Label:</strong> Epic</div>
-								<div class="distributor">(P) 2005 Sony Music Entertainment (Holland) B.V.</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -208,11 +196,8 @@
 							</div>
 							<div class="album-info">
 								<div class="album-title"><strong>GRW Recordings Presents Freestyle Frenzy Vol. 1 (D...</strong></div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="genre"><strong>Genre:</strong> Pop</div>
-								<div class="label"><strong>Label:</strong> Epic</div>
-								<div class="distributor">(P) 2005 Sony Music Entertainment (Holland) B.V.</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
 								<button class="menu-btn"></button>
 								<section class="options-menu">

@@ -23,7 +23,7 @@
 						</div>
 
 						<header>
-							<h3 class="genres-header">Genres</h3>
+							<h3 class="genres-header">More Genres Like Shakira</h3>
 							
 						</header>
 						<div class="search-results-list">

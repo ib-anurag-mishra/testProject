@@ -32,11 +32,9 @@
 							</div>
 							<div class="video-info">
 								<div class="video-title">Whenever, Wherever</div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="release-date"><strong>Date:</strong> Aug 01, 2004</div>
-								<div class="release-duration"><strong>Duration:</strong> 03 min 16 sec</div>
-								<div class="video-size"><strong>Size:</strong> 67.2 MB</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="release-date">Released on Aug 01, 2004</div>
+								<div class="video-size">Size: 67.2 MB</div>
 								<button class="wishlist-btn"></button>
 								<button class="download-btn"></button>
 							</div>
@@ -47,12 +45,10 @@
 							</div>
 							<div class="video-info">
 								<div class="video-title">Whenever, Wherever</div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="release-date"><strong>Date:</strong> Aug 01, 2004</div>
-								<div class="release-duration"><strong>Duration:</strong> 03 min 16 sec</div>
-								<div class="video-size"><strong>Size:</strong> 67.2 MB</div>
-								<button class="wishlist-btn added-to-wishlist"></button>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="release-date">Released on Aug 01, 2004</div>
+								<div class="video-size">Size: 67.2 MB</div>
+								<button class="wishlist-btn"></button>
 								<button class="download-btn"></button>
 							</div>
 						</div>
@@ -62,11 +58,9 @@
 							</div>
 							<div class="video-info">
 								<div class="video-title">Whenever, Wherever</div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="release-date"><strong>Date:</strong> Aug 01, 2004</div>
-								<div class="release-duration"><strong>Duration:</strong> 03 min 16 sec</div>
-								<div class="video-size"><strong>Size:</strong> 67.2 MB</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="release-date">Released on Aug 01, 2004</div>
+								<div class="video-size">Size: 67.2 MB</div>
 								<button class="wishlist-btn"></button>
 								<button class="download-btn"></button>
 							</div>
@@ -77,11 +71,9 @@
 							</div>
 							<div class="video-info">
 								<div class="video-title">Whenever, Wherever</div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="release-date"><strong>Date:</strong> Aug 01, 2004</div>
-								<div class="release-duration"><strong>Duration:</strong> 03 min 16 sec</div>
-								<div class="video-size"><strong>Size:</strong> 67.2 MB</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="release-date">Released on Aug 01, 2004</div>
+								<div class="video-size">Size: 67.2 MB</div>
 								<button class="wishlist-btn"></button>
 								<button class="download-btn"></button>
 							</div>
@@ -92,11 +84,9 @@
 							</div>
 							<div class="video-info">
 								<div class="video-title">Whenever, Wherever</div>
-								<div class="artist">Shakira</div>
-								<div class="release-information">Release Information</div>
-								<div class="release-date"><strong>Date:</strong> Aug 01, 2004</div>
-								<div class="release-duration"><strong>Duration:</strong> 03 min 16 sec</div>
-								<div class="video-size"><strong>Size:</strong> 67.2 MB</div>
+								<div class="artist">by <a href="#">Shakira</a></div>
+								<div class="release-date">Released on Aug 01, 2004</div>
+								<div class="video-size">Size: 67.2 MB</div>
 								<button class="wishlist-btn"></button>
 								<button class="download-btn"></button>
 							</div>
