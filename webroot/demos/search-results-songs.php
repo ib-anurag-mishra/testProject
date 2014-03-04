@@ -81,7 +81,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Cold</div>
+								<div class="song-name"><a href="#">Cold</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -121,7 +121,7 @@
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">So Far Away</div>
+								<div class="song-name"><a href="#">So Far Away</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -161,7 +161,7 @@
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">If I Could Fly</div>
+								<div class="song-name"><a href="#">If I Could Fly</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -200,7 +200,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Soldiers</div>
+								<div class="song-name"><a href="#">Soldiers</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -239,7 +239,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Soldiers</div>
+								<div class="song-name"><a href="#">Soldiers</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -278,7 +278,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Cold</div>
+								<div class="song-name"><a href="#">Cold</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -317,7 +317,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">So Far Away</div>
+								<div class="song-name"><a href="#">So Far Away</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -356,7 +356,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">If I Could Fly</div>
+								<div class="song-name"><a href="#">If I Could Fly</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<input type="checkbox" class="row-checkbox">
@@ -395,7 +395,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Soldiers</div>
+								<div class="song-name"><a href="#">Soldiers</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -434,7 +434,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Soldiers</div>
+								<div class="song-name"><a href="#">Soldiers</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -473,7 +473,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Cold</div>
+								<div class="song-name"><a href="#">Cold</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -512,7 +512,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">So Far Away</div>
+								<div class="song-name"><a href="#">So Far Away</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -551,7 +551,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">If I Could Fly</div>
+								<div class="song-name"><a href="#">If I Could Fly</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -590,7 +590,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Soldiers</div>
+								<div class="song-name"><a href="#">Soldiers</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
@@ -629,7 +629,7 @@
 								<button class="play-btn"></button>
 								<div class="artist-name"><a href="#">Shakira</a></div>
 								<div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-								<div class="song-name">Soldiers</div>
+								<div class="song-name"><a href="#">Soldiers</a></div>
 								<div class="time">3:23</div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">

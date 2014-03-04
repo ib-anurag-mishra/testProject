@@ -432,7 +432,7 @@ button::-moz-focus-inner {
 	.search-results-list {
 
 		position: relative;
-		margin-top: 30px;
+		margin-top: 25px;
 		font-size: 12px;
 		font-family: Helvetica,Arial,sans-serif;
 
@@ -2752,7 +2752,7 @@ sub { top: 0.4em; }
 }
 
 .category-results {
-	margin-top: 40px;
+	margin-top: 25px;
 
 	header {
 
@@ -3337,20 +3337,35 @@ sub { top: 0.4em; }
 			.album-title {
 
 				
-				font-size: 18px;
+				font-size: 16px;
+
+				a {
+
+					color: #000;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
 				
 
 			}
 
 			.artist {
-				font-size: 14px;
+				font-size: 13px;
 				margin-top: 4px;
 
 				a {
 
 					color:#008fbd;
 					text-decoration: none;
-					font-weight: bold;
+					
+					&:hover {
+
+						text-decoration: underline;
+					}
 				}
 
 			}
@@ -3587,8 +3602,9 @@ sub { top: 0.4em; }
 			width: 620px;
 			height: 108px;
 			border: 1px solid #dcdcdc;
-			padding: 6px;
+			padding: 10px;
 			font-family: Helvetica, Arial, sans-serif;
+			background: #fff;
 			strong {
 
 				font-weight: bold;
@@ -3597,7 +3613,20 @@ sub { top: 0.4em; }
 			.video-title {
 
 				
-				font-size: 18px;
+				font-size: 16px;
+				font-weight: bold;
+
+				a {
+
+					color: #000;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+
+				}
 				
 
 			}
@@ -3610,7 +3639,11 @@ sub { top: 0.4em; }
 
 					color:#008fbd;
 					text-decoration: none;
-					font-weight: bold;
+					
+					&:hover {
+
+						text-decoration: underline;
+					}
 				}
 			}
 

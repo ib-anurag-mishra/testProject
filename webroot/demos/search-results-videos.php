@@ -28,10 +28,10 @@
 						</header>
 						<div class="video-result-container">
 							<div class="video-thumb">
-								<img src="images/video-results-shakira.jpg" />
+								<a href="#"><img src="images/video-results-shakira.jpg" /></a>
 							</div>
 							<div class="video-info">
-								<div class="video-title">Whenever, Wherever</div>
+								<div class="video-title"><a href="#">Whenever, Wherever</a></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="release-date">Released on Aug 01, 2004</div>
 								<div class="video-size">Size: 67.2 MB</div>
@@ -41,10 +41,10 @@
 						</div>
 						<div class="video-result-container">
 							<div class="video-thumb">
-								<img src="images/video-results-shakira2.jpg" />
+								<a href="#"><img src="images/video-results-shakira2.jpg" /></a>
 							</div>
 							<div class="video-info">
-								<div class="video-title">Whenever, Wherever</div>
+								<div class="video-title"><a href="#">Whenever, Wherever</a></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="release-date">Released on Aug 01, 2004</div>
 								<div class="video-size">Size: 67.2 MB</div>
@@ -54,10 +54,10 @@
 						</div>
 						<div class="video-result-container">
 							<div class="video-thumb">
-								<img src="images/video-results-shakira3.jpg" />
+								<a href="#"><img src="images/video-results-shakira3.jpg" /></a>
 							</div>
 							<div class="video-info">
-								<div class="video-title">Whenever, Wherever</div>
+								<div class="video-title"><a href="#">Whenever, Wherever</a></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="release-date">Released on Aug 01, 2004</div>
 								<div class="video-size">Size: 67.2 MB</div>
@@ -67,10 +67,10 @@
 						</div>
 						<div class="video-result-container">
 							<div class="video-thumb">
-								<img src="images/video-results-shakira4.jpg" />
+								<a href="#"><img src="images/video-results-shakira4.jpg" /></a>
 							</div>
 							<div class="video-info">
-								<div class="video-title">Whenever, Wherever</div>
+								<div class="video-title"><a href="#">Whenever, Wherever</a></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="release-date">Released on Aug 01, 2004</div>
 								<div class="video-size">Size: 67.2 MB</div>
@@ -80,10 +80,10 @@
 						</div>
 						<div class="video-result-container">
 							<div class="video-thumb">
-								<img src="images/video-results-shakira5.jpg" />
+								<a href="#"><img src="images/video-results-shakira5.jpg" /></a>
 							</div>
 							<div class="video-info">
-								<div class="video-title">Whenever, Wherever</div>
+								<div class="video-title"><a href="#">Whenever, Wherever</a></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="release-date">Released on Aug 01, 2004</div>
 								<div class="video-size">Size: 67.2 MB</div>

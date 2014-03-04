@@ -28,10 +28,10 @@
 						</header>
 						<div class="album-detail-container">
 							<div class="cover-image">
-								<img src="images/album-results-shakira.jpg" />
+								<a href="#"><img src="images/album-results-shakira.jpg" /></a>
 							</div>
 							<div class="album-info">
-								<div class="album-title"><strong>Oral Fixation Vol. 2</strong></div>
+								<div class="album-title"><strong><a href="#">Oral Fixation Vol. 2</a></strong></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
@@ -69,10 +69,10 @@
 						</div>
 						<div class="album-detail-container">
 							<div class="cover-image">
-								<img src="images/album-results-shakira2.jpg" />
+								<a href="#"><img src="images/album-results-shakira2.jpg" /></a>
 							</div>
 							<div class="album-info">
-								<div class="album-title"><strong>Donde Estan Los Ladrones</strong></div>
+								<div class="album-title"><strong><a href="#">Donde Estan Los Ladrones</a></strong></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="genre">Genre: Latin</div>
 								<button class="stream-now-btn">Stream Now</button>
@@ -110,10 +110,10 @@
 						</div>
 						<div class="album-detail-container">
 							<div class="cover-image">
-								<img src="images/album-results-shakira3.jpg" />
+								<a href="#"><img src="images/album-results-shakira3.jpg" /></a>
 							</div>
 							<div class="album-info">
-								<div class="album-title"><strong>Shakira MTV Unplugged</strong></div>
+								<div class="album-title"><strong><a href="#">Shakira MTV Unplugged</a></strong></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
@@ -151,10 +151,10 @@
 						</div>
 						<div class="album-detail-container">
 							<div class="cover-image">
-								<img src="images/album-results-shakira4.jpg" />
+								<a href="#"><img src="images/album-results-shakira4.jpg" /></a>
 							</div>
 							<div class="album-info">
-								<div class="album-title"><strong>La Tortura (Artista Invitado Alejandro Sanz</strong></div>
+								<div class="album-title"><strong><a href="#">La Tortura (Artista Invitado Alejandro Sanz</a></strong></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
@@ -192,10 +192,10 @@
 						</div>
 						<div class="album-detail-container">
 							<div class="cover-image">
-								<img src="images/album-results-shakira5.jpg" />
+								<a href="#"><img src="images/album-results-shakira5.jpg" /></a>
 							</div>
 							<div class="album-info">
-								<div class="album-title"><strong>GRW Recordings Presents Freestyle Frenzy Vol. 1 (D...</strong></div>
+								<div class="album-title"><strong><a href="#">GRW Recordings Presents Freestyle Frenzy Vol. 1 (D...</a></strong></div>
 								<div class="artist">by <a href="#">Shakira</a></div>
 								<div class="genre">Genre: Pop</div>
 								<button class="stream-now-btn">Stream Now</button>
