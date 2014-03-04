@@ -338,7 +338,9 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                             <?php if ($this->Session->read('library_type') == 2) { ?>
                                 <input type="checkbox" class="row-checkbox">
                             <?php
-                            }
+                            }else{ ?>
+                                <div class=“sample-icon”></div>
+                        <?php } 
                         }
                         ?>
                     </div>

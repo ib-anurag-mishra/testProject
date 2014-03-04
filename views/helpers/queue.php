@@ -220,7 +220,7 @@ EOD;
         $sourceUrl = base64_encode($sourceUrl);
         $songLength = base64_encode($songLength);
         $str = <<<EOD
-       <a onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType');"  href="javascript:void(0);" ><button class="play-btn"></button></a>        
+       <button class="play-btn" onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType');"></button>        
 EOD;
         return $str;
     }    
