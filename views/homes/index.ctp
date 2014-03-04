@@ -327,7 +327,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                         ?>
                                     </li>
                                     <?php } ?>
-                                    <?php  if ($this->Session->read('library_type') == 2) { ?> 
+                                    <?php  if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?> 
                                             <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
                                     </ul>
                                     <ul class="playlist-menu">
