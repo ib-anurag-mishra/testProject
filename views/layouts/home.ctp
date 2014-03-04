@@ -36,7 +36,6 @@
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.cycle.all.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.autocomplete.js"></script>
         <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery.history.js"></script>
-        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/jquery-scrollto.js"></script>
         
         <!--        <script type="text/javascript" src="<?php echo Configure::read('App.Script') ?>/js/ajaxify-html5.js"></script>-->
         <?php
@@ -47,7 +46,8 @@
                     'ajaxify-html5.js', 
                     'site.js',
                     //'html5shiv',
-                    'freegal40-site'
+                    'freegal40-site',
+                    'jquery-scrollto'
                 )
         );
 
