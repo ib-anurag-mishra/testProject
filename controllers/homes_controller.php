@@ -140,16 +140,16 @@ class HomesController extends AppController
         
         //TODO :  Top singles
         // National Top 100 Albums singles        
-        if (($national = Cache::read("top_singles" . $territory)) === false)       
-       //         if(1)
-        {
-            $top_singles = $this->Common->getTopSingles($territory);
-        }
-        else
-        {
-            $top_singles = Cache::read("top_singles" . $territory);
-        }
-         $this->set('top_singles', $top_singles);
+//        if (($national = Cache::read("top_singles" . $territory)) === false)       
+//       //         if(1)
+//        {
+//            $top_singles = $this->Common->getTopSingles($territory);
+//        }
+//        else
+//        {
+//            $top_singles = Cache::read("top_singles" . $territory);
+//        }
+         $this->set('top_singles', $nationalTopDownload);
       
         
         // National Top 100 Albums slider        
