@@ -335,7 +335,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     </ul>
                                     <?php } ?>    
                             </section>
-                            <?php if ($this->Session->read('library_type') == 2) { ?>
+                            <?php if ($this->Session->read('library_type') == 2 && $nationalTopSong['Country']['StreamingSalesDate'] <= date('Y-m-d') && $nationalTopSong['Country']['StreamingStatus'] == 1) { ?>
                                 <input type="checkbox" class="row-checkbox">
                             <?php
                             }else{ ?>
