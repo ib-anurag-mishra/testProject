@@ -1861,6 +1861,15 @@ sub { top: 0.4em; }
 
 			}
 		}
+
+		.preview {
+
+			position: absolute;
+			left: 10px;
+			top: 8px;
+			width: 24px;
+			height: 24px;
+		}
 	}
 	
 	.play-btn {
