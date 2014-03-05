@@ -209,7 +209,21 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         ?>
                         
                         <?= $count ?></div>
-                        <div class="song-name">
+                        <?php
+                            if ($this->Session->read("patron")) {
+
+                        ?>
+                                <div class="song-name logged-in">
+                        <?php
+                            } else {
+                        ?>
+                                <div class="song-name">
+                        <?php                
+
+                            }
+                        ?>
+
+                        
                             <a 
                                 href="#">
                                 <?php
