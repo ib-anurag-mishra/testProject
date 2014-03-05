@@ -231,15 +231,7 @@ function Get_Sales_date($sales_date_array, $country)
                 <a href="#">Videos</a>
                 <a href="#">Genres</a>
                 <a class="last">Songs</a>
-                <!--            
-                <button class="active">All Music</button>
-                <button>Albums</button>
-                <button>Artists</button>
-                <button>Composers</button>
-                <button>Videos</button>
-                <button>Genres</button>
-                <button class="last">Songs</button>
-            -->
+
                 <div class="search-container">
                         <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage();
                                 return false;">
