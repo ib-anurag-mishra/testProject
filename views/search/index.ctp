@@ -224,13 +224,13 @@ function Get_Sales_date($sales_date_array, $country)
         <div class="search-results-text"><span><?php count($albumData); ?></span> Albums, <span><?php count($artists); ?></span> Artists, <span><?php count($composers); ?></span> Composers, <span><?php count($videos); ?></span> Videos, <span><?php count($genres); ?></span> Genres, <span><?php count($songs); ?></span> Songs</div>
         <div class="refine-text">Not what you're looking for? Refine your search below.</div>
         <div class="filter-container clearfix">
-                <a class="active">All Music</a>
-                <a href="#">Albums</a>
-                <a href="#">Artists</a>
-                <a href="#">Composers</a>
-                <a href="#">Videos</a>
-                <a href="#">Genres</a>
-                <a class="last">Songs</a>
+                <a class="active" href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=all">All Music</a>
+                <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=album">Albums</a>
+                <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=artist">Artists</a>
+                <a href="/search/index?q=<?php echo $keyword; ?>&type=composer">Composers</a>
+                <a href="/search/index?q=<?php echo $keyword; ?>&type=genre">Genres</a>
+                <a href="/search/index?q=<?php echo $keyword; ?>&type=video">Videos</a>
+                <a class="last" href="/search/index?q=<?php echo $keyword; ?>&type=song">Songs</a>                
 
                 <div class="search-container">
                         <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage();
@@ -420,15 +420,67 @@ function Get_Sales_date($sales_date_array, $country)
         <section class="category-results album-results">
                 <header>
                         <h3 class="albums-header">Albums</h3>
-                        <a class="see-more"></a>
+                        <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=album"></a>
                 </header>
                 <div class="search-results-all-albums-carousel">
+                    <?php if(!empty($albumData)){ ?>
                         <div class="search-results-albums">
                                 <ul class="clearfix">
+                                    <?php 
+                                        foreach($albumData as $palbum) {  
+                                            $i = 0;
+                                        ?>
                                         <li>
+                                            <?php
+                                            $albumDetails = $album->getImage($palbum->ReferenceID);
+                                            //print_r($albumDetails); die;
+                                            if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL']))
+                                            {
+                                                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
+                                                $image = Configure::read('App.Music_Path') . $albumArtwork;
+                                            }
+                                            else
+                                            {
+                                                $image = 'no-image.jpg';
+                                            }
+                                            if ($page->isImage($image))
+                                            {
+                                                //Image is a correct one
+                                            }
+                                            else
+                                            {
+                                                //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                            }
+                                            $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
+                                            $title = urlencode($palbum->Title);
+                                            $album_genre = str_replace('"', '', $palbum->Genre);
+                                            $tilte = urlencode($palbum->Title);
+                                            $album_label = $palbum->Label;
+                                            $linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
+                                            $linkProviderType = base64_encode($palbum->provider_type);
+                                            $ReferenceId = $palbum->ReferenceID;
+                                            if ($palbum->AAdvisory == 'T')
+                                            {
+                                                $explicit = '<font class="explicit"> (Explicit)</font><br />';
+                                            }
+                                            else
+                                            {
+                                                $explicit = '';
+                                            }
+                                            if (!empty($album_label))
+                                            {
+                                                $album_label_str = "Label: " . truncate_text($album_label, 32, $this);
+                                            }
+                                            else
+                                            {
+                                                $album_label_str = "";
+                                            }
+                                            ?>                                            
                                                 <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
+                                                        <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
+                                                           title="<?php echo $this->getTextEncode($palbum->Title); ?>">
+                                                            <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
+                                                        </a>                                                        <button class="play-btn-icon toggleable"></button>
                                                         <button class="playlist-menu-icon toggleable"></button>
                                                         <button class="wishlist-icon toggleable"></button>
                                                         <ul>
@@ -456,367 +508,99 @@ function Get_Sales_date($sales_date_array, $country)
 
                                                 </div>
                                                 <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
+                                                        <p class="title">
+                                                            <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>">
+                                                                <?php echo $album_title; ?>
+                                                            </a>
+                                                        </p>
+                                                        <p class="artist">Genre:<span><a href="javascript:void(0)"><?php echo $album_genre; ?></a></span></p>
+                                                        <p class="label"><?php echo $album_label_str; ?></p>
                                                 </div>
                                         </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira2.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira3.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira4.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira2.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira3.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira4.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
-                                        <li>
-                                                <div class="album-cover-container">
-                                                        <a href="#"><img src="images/album-result-shakira2.jpg" /></a>
-                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
-                                                </div>
-                                                <div class="album-info">
-                                                        <p class="title"><a href="#">Oral Fixation Vol. 2</a></p>
-                                                        <p class="artist">Genre: Pop</p>
-                                                        <p class="label">Label: Epic</p>
-                                                </div>
-                                        </li>
+                                        <?php 
+                                            $i++;
+                                        } ?>
                                 </ul>
                         </div>
                         <button class="sr-albums-prev"></button>
                         <button class="sr-albums-next"></button>
-
+                     <?php } else { ?>
+                                <div style="color:red; padding:50px; ">
+                                    <span>No Albums Found</span>
+                                </div>                        
+                     <?php } ?>   
                 </div>
         </section>
         <section class="category-results artist-results">
                 <header>
                         <h3 class="artists-header">Artists</h3>
-                        <a class="see-more"></a>
+                        <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=artist"></a>
                 </header>
                 <div class="search-results-list">
-                        <ul>
-                                <li><a href="#">Shakira <span>(180)</span></a></li>
-                                <li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
-                                <li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
-                                <li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
-                                <li><a href="#">House of Shakira<span>(12)</span></a></li>
-                        </ul>
+                        <?php
+                        if (!empty($artists))
+                        { ?>
+                            <ul>
+                        <?php foreach ($artists as $artist)
+                            {
+                                $tilte = urlencode($artist->ArtistText);
+                                $artist_name_text = truncate_text($this->getTextEncode($artist->ArtistText), 30, $this);
+                                $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))), array('title' => $this->getTextEncode($artist->ArtistText)));
+                                if (!empty($artist_name_text))
+                                {
+                                    ?>
+                                    <li><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></li>
+                                    <?php
+                                }
+                            } ?>
+                            </ul>         
+                    <?php }else
+                        {
+                            ?>
+                            <div style='color:red'><?php __("No Artists Found"); ?></div>
+                        <?php } ?>                    
                 </div>
         </section>
         <section class="category-results composers-results">
                 <header>
                         <h3 class="composers-header">Composers</h3>
-                        <a class="see-more"></a>
+                        <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=composer"></a>
                 </header>
                 <div class="search-results-list">
-                        <ul>
-                                <li><a href="#">Shakira <span>(3)</span></a></li>
-                                <li><a href="#">Shakira Mebarak<span>(5)</span></a></li>
-                                <li><a href="#">Meberak Ripoli Shakira<span>(2)</span></a></li>
-                                <li><a href="#">Graham Edwards<span>(1)</span></a></li>
-                                <li><a href="#">Lester Mendez<span>(1)</span></a></li>
-                        </ul>
+                    
+                        <?php
+                        if (!empty($composers))
+                        { ?>
+                            <ul>
+                          <?php  foreach ($composers as $composer)
+                            {
+                                $tilte = urlencode($composer->Composer);
+                                $composer_name = truncate_text($this->getTextEncode($composer->Composer), 30, $this);
+                                if (!empty($composer_name))
+                                {
+                                    ?>
+                                    <li>
+                                        <a href="/search/index?q=<?php echo $tilte; ?>&type=composer" title="<?php echo $this->getTextEncode($composer->Composer) ?>"><?php echo str_replace('"', '', $this->getTextEncode($composer_name)); ?></a><span>(<?php echo $composer->numFound; ?>)</span>
+                                    </li>
+                                    <?php
+                                }
+                            } ?>
+                            <ul>
+                        <?php }
+                        else
+                        {
+                            ?>
+                            <div style='color:red'><?php __("No Composers Found"); ?></div>  
+                        <?php 
+                        
+                        } 
+                        ?>                    
                 </div>
         </section>
         <section class="category-results videos-results">
                 <header>
                         <h3 class="videos-header">Videos</h3>
-                        <a class="see-more"></a>
+                        <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=video"></a>
                 </header>
                 <div class="search-results-list">
                         <ul>
@@ -826,21 +610,60 @@ function Get_Sales_date($sales_date_array, $country)
                                 <li><a href="#">No (featuring Gustavo Cerati)</a></li>
                                 <li><a href="#">Don't Bother</a></li>
                         </ul>
+                        <?php
+                        if (!empty($videos))
+                        { ?>
+                              <ul>   
+                        <?php foreach ($videos as $video)
+                            {
+                                $tilte = urlencode($video->VideoTitle);
+                                $video_name_text = truncate_text($this->getTextEncode($video->VideoTitle), 30, $this);
+                                $name = $this->getTextEncode($video->VideoTitle);
+                                // $count = $video->numFound;
+                                ?>
+                                <li><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></li>
+                                <?php
+                            } ?>
+                              </ul>   
+                      <?php  }
+                        else
+                        {
+                            ?>
+                            <div style='color:red'><?php __("No Videos Found"); ?></div>     
+                        <?php } ?>                    
                 </div>
         </section>
         <section class="category-results genres-results">
                 <header>
                         <h3 class="genres-header">Genres</h3>
-                        <a class="see-more"></a>
+                        <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=genre"></a>
                 </header>
                 <div class="search-results-list">
-                        <ul>
-                                <li><a href="#">Freestyle <span>(8)</span></a></li>
-                                <li><a href="#">Rock <span>(14)</span></a></li>
-                                <li><a href="#">Latin <span>(85)</span></a></li>
-                                <li><a href="#">Latin Music <span>(125)</span></a></li>
-                                <li><a href="#">Children's <span>(55)</span></a></li>
-                        </ul>
+                        <?php
+                        if (!empty($genres))
+                        { ?>
+                            <ul>
+                        <?php    foreach ($genres as $genre)
+                            {
+                                $genre_name = str_replace('"', '', $genre->Genre);
+                                $tilte = urlencode($genre_name);
+                                $genre_name_text = truncate_text($this->getTextEncode($genre_name), 30, $this);
+                                $name = $genre->Genre;
+                                $count = $genre->numFound;
+                                if (!empty($genre_name_text))
+                                {
+                                    ?>
+                                    <li><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $genre_name_text; ?><span>(<?php echo $count; ?>)</span></a></li>
+                                    <?php
+                                }
+                            }  ?>
+                            </ul>
+                        <?php }
+                        else
+                        {
+                            ?>
+                            <div style='color:red'><?php __("No Genres Found"); ?></div>  
+                        <?php } ?>                    
                 </div>
         </section>
         <section class="category-results songs-results">
