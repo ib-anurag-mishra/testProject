@@ -221,7 +221,7 @@ function clearNowstreamingSession(){
 
     })
     .fail(function(){
-        alert('An Ajax error has occurred. Please reload page.');
+        alert('An error has occurred. Please reload the page.');
     });                                
 
 }
