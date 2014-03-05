@@ -255,7 +255,52 @@ function Get_Sales_date($sales_date_array, $country)
                             $search_category = 'search-results-albums-page';
                             break;
                         case 'genre':
-                            $search_category = 'search-results-genres-page';
+                             
+			     ?>
+                            <header>
+			       <h3 class="genres-header">More Genres Like <span><?php echo $keyword; ?></span></h3>
+			    </header>
+			    <div class="search-results-list">
+                             <?php
+                              if (!empty($genres))
+                              {
+                             ?>
+			     <ul>
+				<?php
+                                  $i = 0;
+                                    foreach ($genres as $genre)
+                                    {
+                                      $genre_name = str_replace('"', '', $genre->Genre);
+                                      $genre_name_text = truncate_text($genre_name, 30, $this);
+                                      $tilte = urlencode($genre->Genre);
+                                      $name = $genre->Genre;
+                                      $count = $genre->numFound;
+                                  ?>
+                                  <li><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $this->getTextEncode($genre_name); ?>"><?php echo $this->getTextEncode($genre_name_text); ?> (<?php echo $count; ?>)</a></li>
+                                     <?php
+                                     $i++;
+                                                
+                                    }
+				   ?>
+			           </ul>
+
+ 				   <?php
+                                      $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                                        $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString);
+                                }
+                                else
+                                {
+                                 ?>
+                                  <div style="color:red; padding:50px; ">
+                                     <span>No Genres Found</span>
+                                   </div>
+                                 <?php
+                                  }
+                                 ?>
+
+				</div>
+
+                                <?php
                             break;
                         case 'label':
                             $search_category = 'Label';
