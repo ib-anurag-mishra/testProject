@@ -266,9 +266,13 @@ function Get_Sales_date($sales_date_array, $country)
                           
 				?>
                             	<header>
-				<h3 class="artists-header">More Artists Like Shakira</h3>
+				<h3 class="artists-header">More Artists Like <span><?php echo $keyword; ?></span></h3>
 				</header>
 				<div class="search-results-list">
+                                <?php
+                                    if (!empty($artists))
+                                    {
+                                        ?>
 				  <ul>
 								
 				<?php
@@ -286,6 +290,21 @@ function Get_Sales_date($sales_date_array, $country)
 				     }
 				   ?>
 			           </ul>
+
+ 				   <?php
+                                        $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                                        $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString);
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <div style="color:red">
+                                            <span>No Artists Found</span>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+
 				</div>
 
                                 <?php
