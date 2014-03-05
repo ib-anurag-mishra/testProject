@@ -264,7 +264,7 @@ function Get_Sales_date($sales_date_array, $country)
                             break;
                         case 'artist':
                           
-
+				?>
                             	<header>
 							<h3 class="artists-header">More Artists Like Shakira</h3>
 							
@@ -294,7 +294,7 @@ function Get_Sales_date($sales_date_array, $country)
 							</ul>
 						</div>
 
-
+                                <?php
 
                             break;
                         case 'composer':
