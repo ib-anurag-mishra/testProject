@@ -224,6 +224,14 @@ function Get_Sales_date($sales_date_array, $country)
         <div class="search-results-text"><span><?php count($albumData); ?></span> Albums, <span><?php count($artists); ?></span> Artists, <span><?php count($composers); ?></span> Composers, <span><?php count($videos); ?></span> Videos, <span><?php count($genres); ?></span> Genres, <span><?php count($songs); ?></span> Songs</div>
         <div class="refine-text">Not what you're looking for? Refine your search below.</div>
         <div class="filter-container clearfix">
+                <a class="active">All Music</a>
+                <a href="#">Albums</a>
+                <a href="#">Artists</a>
+                <a href="#">Composers</a>
+                <a href="#">Videos</a>
+                <a href="#">Genres</a>
+                <a class="last">Songs</a>
+                <!--            
                 <button class="active">All Music</button>
                 <button>Albums</button>
                 <button>Artists</button>
@@ -231,6 +239,7 @@ function Get_Sales_date($sales_date_array, $country)
                 <button>Videos</button>
                 <button>Genres</button>
                 <button class="last">Songs</button>
+            -->
                 <div class="search-container">
                         <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage();
                                 return false;">
