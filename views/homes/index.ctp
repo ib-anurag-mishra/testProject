@@ -112,7 +112,21 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     <li><a href="#">Pop</a></li>
                 </ul>
             </div> -->
-            <div class="song-header">Song</div>
+            <?php
+                if ($this->Session->read("patron")) {
+            ?>
+                    <div class="song-header logged-in">Song</div>
+                    
+            <?php
+
+                } else {
+            ?>
+                    <div class="song-header">Song</div>
+            <?php
+
+                }
+            ?>
+            
             <div class="song-border header-border"></div>
             <div class="artist-header">Artist</div>
             <div class="artist-border header-border"></div>
