@@ -193,8 +193,22 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 echo $html->image('sample-stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));                                
                             }
                         }
-                        ?> 
-                        <div class="ranking"><?= $count ?></div>
+                        ?>
+                        <?php
+                            if ($this->Session->read("patron")) {
+
+                        ?>
+                                <div class="ranking logged-in">
+                        <?php
+                            } else {
+                        ?>
+                                <div class="ranking">
+                        <?php                
+
+                            }
+                        ?>
+                        
+                        <?= $count ?></div>
                         <div class="song-name">
                             <a 
                                 href="#">
