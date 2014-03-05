@@ -266,33 +266,27 @@ function Get_Sales_date($sales_date_array, $country)
                           
 				?>
                             	<header>
-							<h3 class="artists-header">More Artists Like Shakira</h3>
-							
-						</header>
-						<div class="search-results-list">
-							<ul>
-								<li><a href="#">Shakira<span>(180)</span></a></li>
-								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
-								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
-								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
-								<li><a href="#">House of Shakira<span>(12)</span></a></li>
-								<li><a href="#">Shakira<span>(180)</span></a></li>
-								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
-								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
-								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
-								<li><a href="#">House of Shakira<span>(12)</span></a></li>
-								<li><a href="#">Shakira<span>(180)</span></a></li>
-								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
-								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
-								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
-								<li><a href="#">House of Shakira<span>(12)</span></a></li>
-								<li><a href="#">Shakira<span>(180)</span></a></li>
-								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
-								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
-								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
-								<li><a href="#">House of Shakira<span>(12)</span></a></li>
-							</ul>
-						</div>
+				<h3 class="artists-header">More Artists Like Shakira</h3>
+				</header>
+				<div class="search-results-list">
+				  <ul>
+								
+				<?php
+                                   $i = 0;
+                                   foreach ($artists as $artist){
+                                  	 $artist_name = str_replace('"', '', $artist->ArttistText);
+                                   	 $artist_name_text = truncate_text($artist_name, 30, $this);
+                                         $tilte = urlencode($artist->ArtistText);
+                                         $count = $artist->numFound;
+                                         $link = $html->link(str_replace('"', '', truncate_text($artist->ArtistText, 30, $this)) . " (" . $count . ")", array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($artist->ArtistText))), array('title' => str_replace('"', '', $artist->ArtistText)));
+                                  ?>
+					<li><?php echo $link; ?></li>
+				  <?php
+                                     $i++;
+				     }
+				   ?>
+			           </ul>
+				</div>
 
                                 <?php
 
