@@ -112,7 +112,21 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                     <li><a href="#">Pop</a></li>
                 </ul>
             </div> -->
-            <div class="song-header">Song</div>
+            <?php
+                if ($this->Session->read("patron")) {
+            ?>
+                    <div class="song-header logged-in">Song</div>
+                    
+            <?php
+
+                } else {
+            ?>
+                    <div class="song-header">Song</div>
+            <?php
+
+                }
+            ?>
+            
             <div class="song-border header-border"></div>
             <div class="artist-header">Artist</div>
             <div class="artist-border header-border"></div>
@@ -179,9 +193,37 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                 echo $html->image('sample-stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));                                
                             }
                         }
-                        ?> 
-                        <div class="ranking"><?= $count ?></div>
-                        <div class="song-name">
+                        ?>
+                        <?php
+                            if ($this->Session->read("patron")) {
+
+                        ?>
+                                <div class="ranking logged-in">
+                        <?php
+                            } else {
+                        ?>
+                                <div class="ranking">
+                        <?php                
+
+                            }
+                        ?>
+                        
+                        <?= $count ?></div>
+                        <?php
+                            if ($this->Session->read("patron")) {
+
+                        ?>
+                                <div class="song-name logged-in">
+                        <?php
+                            } else {
+                        ?>
+                                <div class="song-name">
+                        <?php                
+
+                            }
+                        ?>
+
+                        
                             <a 
                                 href="#">
                                 <?php
