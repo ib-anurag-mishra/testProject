@@ -298,7 +298,7 @@ function Get_Sales_date($sales_date_array, $country)
                                     else
                                     {
                                         ?>
-                                        <div style="color:red">
+                                        <div style="color:red; padding:50px; ">
                                             <span>No Artists Found</span>
                                         </div>
                                         <?php
@@ -310,8 +310,55 @@ function Get_Sales_date($sales_date_array, $country)
                                 <?php
 
                             break;
-                        case 'composer':
-                            $search_category = 'search-results-composers-page';
+                        case 'composer': 
+			
+			    ?>
+                            	<header>
+				<h3 class="composers-header">More Composers Like <span><?php echo $keyword; ?></span></h3>
+				</header>
+				<div class="search-results-list">
+                                <?php
+                                    if (!empty($composers))
+                                    {
+                                        ?>
+				  <ul>
+								
+				<?php
+                                  $i = 0;
+                                  foreach ($composers as $composer)
+                                  {
+                                     $composer_name = str_replace('"', '', $composer->Composer);
+                                     $composer_name = truncate_text($composer_name, 30, $this);
+                                     $tilte = urlencode($composer->Composer);
+                                     $name = $composer->Composer;
+                                     $count = $composer->numFound;
+                                     $name = $this->getTextEncode($name);
+                                   ?>
+                                    <li><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></li>
+                                    <?php
+                                               
+                                     $i++;
+				   }
+				   ?>
+			           </ul>
+
+ 				   <?php
+                                      $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                                        $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString);
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <div style="color:red; padding:50px; ">
+                                            <span>No Composers Found</span>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+
+				</div>
+
+                                <?php
                             break;
                         case 'all':
                             $search_category = 'search-results-all-page';
