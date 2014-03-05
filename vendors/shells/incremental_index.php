@@ -12,7 +12,7 @@ class IncrementalIndexShell extends Shell {
     
     var $statusQuery = "command=status";
     
-    function main(){
+    function main() {
         
         $httpSocket = new HttpSocket();
         
@@ -20,9 +20,26 @@ class IncrementalIndexShell extends Shell {
         
         echo $response;
         
-        // $response = $httpSocket->get($this->videosIndexUrl,$this->query);
+        $response = $httpSocket->get($this->songsIndexUrl,$this->statusQuery);
+        
+        echo $response;
+        
+        $status = $this->parseStatusResponse($response);
+        
+        $response = $httpSocket->get($this->videosIndexUrl,$this->query);
+        
+        echo $response;
+        
+        $response = $httpSocket->get($this->videosIndexUrl,$this->statusQuery);
+        
+        echo $response;
+        
+        $status = $this->parseStatusResponse($response);
     }
     
-    
-
+    function parseStatusResponse($response) {
+        $xmlArray = simplexml_load_string($response);
+        
+        print_r($xmlArray); die;
+    }
 }
