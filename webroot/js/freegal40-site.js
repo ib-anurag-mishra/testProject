@@ -435,19 +435,19 @@ $(document).ready(function() {
 
 
 
-
+    var paginationcount = 10;
 
     $(document).find('.top-songs-container .rows-container .row')
     {
         var
                 count = $(document).find('.top-songs-container .rows-container > div.row').length,
-                num_cols = Math.floor(count / 20),
+                num_cols = Math.floor(count / paginationcount),
                 container = $(document).find('.top-songs-container .rows-container');
 
         //dividing the songs list in pagination
         for (var i = 0; i < num_cols; i++)
         {
-            var listItems = $(document).find('.top-songs-container .rows-container > div.row').slice(0, 20);
+            var listItems = $(document).find('.top-songs-container .rows-container > div.row').slice(0, paginationcount);
             var newList = $("<div />").append(listItems);
             newList.addClass('page' + (i + 1));
             if (i === 0)
