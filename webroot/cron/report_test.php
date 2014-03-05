@@ -21,7 +21,7 @@ $interval = DateInterval::createFromDateString('1 day');
 $period = new DatePeriod($begin, $interval, $end);
 foreach ($period as $dt)
 {
-    echo $currentDate = $dt->format("Y-m-d");
+    $currentDate = $dt->format("Y-m-d");
     echo "\n";
     //$currentDate = '2014-02-01';
     //$currentDate = date( "Y-m-d", time());
@@ -68,7 +68,7 @@ foreach ($period as $dt)
                     $showEndDate = date('Ymd', strtotime($currentDate . " last sunday"));
                     $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day")) . " 00:00:00";
                     $condEndDate = date('Y-m-d', strtotime($currentDate . " last sunday")) . " 23:59:59";
-                    echo $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt'";
+                    $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt'";
                     $result3 = mysql_query($sql);
                     if ($result3)
                     {
@@ -92,7 +92,7 @@ foreach ($period as $dt)
                     $row2['ReportCount'] = 0;
                     $report_name = $reports_dir . "/PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . ".txt";
                     $all_Ids = '';
-                    echo $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '" . $lib_type_int . "' AND ( (clp.library_contract_start_date <= '" . $condStartDate . "' AND clp.library_contract_end_date >= '" . $condEndDate . "')  OR (clp.library_contract_start_date <= '" . $condStartDate . "' AND clp.library_contract_end_date BETWEEN '" . $condStartDate . "' AND '" . $condEndDate . "') OR (clp.library_contract_start_date BETWEEN '" . $condStartDate . "' AND '" . $condEndDate . "' AND clp.library_contract_end_date >= '" . $condEndDate . "') OR (clp.library_contract_start_date >= '" . $condStartDate . "' AND clp.library_contract_end_date <= '" . $condEndDate . "') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                    $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '" . $lib_type_int . "' AND ( (clp.library_contract_start_date <= '" . $condStartDate . "' AND clp.library_contract_end_date >= '" . $condEndDate . "')  OR (clp.library_contract_start_date <= '" . $condStartDate . "' AND clp.library_contract_end_date BETWEEN '" . $condStartDate . "' AND '" . $condEndDate . "') OR (clp.library_contract_start_date BETWEEN '" . $condStartDate . "' AND '" . $condEndDate . "' AND clp.library_contract_end_date >= '" . $condEndDate . "') OR (clp.library_contract_start_date >= '" . $condStartDate . "' AND clp.library_contract_end_date <= '" . $condEndDate . "') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                     $result = mysql_query($sql);
                     if ($result)
                     {
@@ -133,7 +133,7 @@ foreach ($period as $dt)
                                     $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM $fetchRecordsFromTable as downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID AND Songs.provider_type=downloads.provider_type LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID AND Albums.provider_type=Songs.provider_type WHERE downloads.provider_type='sony' and downloads.created between '" . $row['library_contract_start_date'] . " 00:00:00' and '" . $row['library_contract_end_date'] . " 23:59:59' and library_id = " . $library_id . " group by downloads.id";
                                 }
                             }
-                            echo $query;
+                           
                             $dataresult = mysql_query($query);
                             if ($dataresult)
                             {
@@ -248,7 +248,7 @@ foreach ($period as $dt)
                         fwrite($file, $trailer);
                         fclose($file);
 
-                        echo $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt','PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
+                        $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt','PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
 
                         $result6 = mysql_query($sql);
 
@@ -266,7 +266,7 @@ foreach ($period as $dt)
                         if (sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . ".txt", $logFileWrite, "weekly"))
                         {
                             // FOR SENDING REPORT TO SONY SERVER USING FTP
-                            echo $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
+                            $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
                             $result7 = mysql_query($sql);
 
                             if ($result7)
@@ -294,7 +294,7 @@ foreach ($period as $dt)
 
                     $report_name = $reports_dir . "/PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt";
 
-                    echo $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt'";
+                    $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt'";
                  
                     $result3 = mysql_query($sql);
 
@@ -364,7 +364,6 @@ foreach ($period as $dt)
                                     $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM $fetchRecordsFromTable as downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID WHERE downloads.provider_type='sony' and downloads.created between '" . $row['library_contract_start_date'] . " 00:00:00' and '" . $row['library_contract_end_date'] . " 23:59:59' and library_id = " . $library_id . " group by downloads.id";
                                 }
                             }
-                            echo $query;
                             $dataresult = mysql_query($query);
 
                             if ($dataresult)
@@ -483,7 +482,7 @@ foreach ($period as $dt)
                         fwrite($file, $trailer);
                         fclose($file);
 
-                        echo $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
+                        $sql = "INSERT INTO sony_reports(report_name,new_report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $country . ".txt','PM43_M_" . $showStartDate . "_" . $showEndDate . "_" . $lib_type . "_" . $count . "_" . $country . ".txt', '" . addslashes(SONY_REPORTFILES) . "', now(), now())";
                         $result6 = mysql_query($sql);
 
                         if ($result6)
@@ -501,7 +500,7 @@ foreach ($period as $dt)
                         {
                             // FOR SENDING REPORT TO SONY SERVER USING FTP
                             // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
-                            echo $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
+                            $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = " . mysql_insert_id();
                             $result7 = mysql_query($sql);
 
                             if ($result7)
