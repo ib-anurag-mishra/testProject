@@ -248,7 +248,7 @@ function Get_Sales_date($sales_date_array, $country)
                     switch ($type)
                     {
                         case 'song':
-                            $search_category = 'search-results-songs-page';
+                           $search_category = 'search-results-songs-page';
                             break;
                         case 'album':
                             $search_category = 'search-results-albums-page';
@@ -263,7 +263,39 @@ function Get_Sales_date($sales_date_array, $country)
                             $search_category = 'search-results-videos-page';
                             break;
                         case 'artist':
-                            $search_category = 'search-results-artists-page';
+                          
+
+                            	<header>
+							<h3 class="artists-header">More Artists Like Shakira</h3>
+							
+						</header>
+						<div class="search-results-list">
+							<ul>
+								<li><a href="#">Shakira<span>(180)</span></a></li>
+								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
+								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
+								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
+								<li><a href="#">House of Shakira<span>(12)</span></a></li>
+								<li><a href="#">Shakira<span>(180)</span></a></li>
+								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
+								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
+								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
+								<li><a href="#">House of Shakira<span>(12)</span></a></li>
+								<li><a href="#">Shakira<span>(180)</span></a></li>
+								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
+								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
+								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
+								<li><a href="#">House of Shakira<span>(12)</span></a></li>
+								<li><a href="#">Shakira<span>(180)</span></a></li>
+								<li><a href="#">Shakira Ramirez<span>(1)</span></a></li>
+								<li><a href="#">Beyonce &amp; Shakira<span>(5)</span></a></li>
+								<li><a href="#">Shakira's Karaoke Band<span>(1)</span></a></li>
+								<li><a href="#">House of Shakira<span>(12)</span></a></li>
+							</ul>
+						</div>
+
+
+
                             break;
                         case 'composer':
                             $search_category = 'search-results-composers-page';
