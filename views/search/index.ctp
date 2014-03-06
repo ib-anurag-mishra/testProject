@@ -133,7 +133,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             if ($currentPage != $totalPages)
             {
                 $pagination_str .= $html->link('<button class="next"></button>', '/search/index/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
-		 $pagination_str .= $html->link('<button class="last"></button>', '/search/index/' . $totalPages . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
+		 $pagination_str .= $html->link('<button class="last"></button>', '/search/index/' . $totalPages . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
             }
             else
             {
@@ -146,7 +146,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             if ($facetPage != $totalPages)
             {
                 $pagination_str .= $html->link('<button class="next"></button>', '/search/index/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString, array('escape' => FALSE));
-	 	 $pagination_str .= $html->link('<button class="last"></button>', '/search/index/' . $totalPages . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
+	 	 $pagination_str .= $html->link('<button class="last"></button>', '/search/index/' . $totalPages . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
             }
             else
             {
