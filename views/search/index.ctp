@@ -9,6 +9,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
 {
 
     $pagination_change = 3;
+    $diffnum = ($currentpage> $pagination_change): $currentpage - $pagination_change : 0; 
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
@@ -85,12 +86,12 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             {
                 if ($currentPage == $pageCount)
                 {
-                    $classnum = ($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount;
+                    $classnum = $pageCount - $diffnum;
                     $pagination_str .= '<button class="page-'.$classnum.'">'.$pageCount.'</button>';
                 }
                 else
                 { 
-       		    $classnum = ($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount;
+       		    $classnum = $pageCount - $diffnum;
                     $pagination_str .= $html->link('<button class="page-'.$classnum.'">'.$pageCount.'</button>', '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
                 }
             }
@@ -98,12 +99,12 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             {
                 if ($facetPage == $pageCount)
                 {
-		    $classnum = ($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount;
+		    $classnum = $pageCount - $diffnum;
                     $pagination_str .= '<button class="page-'.$classnum.'">'.$pageCount.'</button>';
                 }
                 else
                 {
-		    $classnum = ($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount;
+		    $classnum = $pageCount - $diffnum;
                     $pagination_str .= $html->link('<button class="page-'.$classnum.'">'.$pageCount.'</button>', '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
                 }
             }
