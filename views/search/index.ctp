@@ -8,11 +8,19 @@
 function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null)
 {
 
-    $pagination_diff = 3;
+    $pagination_diff = $pageLimitToShow -2;
+    $pagination_add = $pageLimitToShow-$totalPages;
     if($currentPage > $pagination_diff)
    	$diffnum = $currentPage- $pagination_diff;
     else
-   	$diffnum = 0;
+        $diffnum = 0;
+    
+    if($totalPages < $pageLimitToShow){
+        $diffnum = -($pagination_add);
+        $prevstyle = "style='right:".(195-$diffnum*26)."px;'"; 
+     }
+    else
+       $prevstyle = "";
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
@@ -22,22 +30,22 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
         {
             if (1 != $currentPage)
             {
-                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE) );
+                $pagination_str .= $html->link('<button class="prev" '.$prevstyle.'></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE) );
             }
             else
             {
-                $pagination_str .= '<button class="prev"></button>';
+                $pagination_str .= '<button class="prev" '.$prevstyle.'></button>';
             }
         }
         else if ($type == 'block')
         {
             if (1 != $facetPage)
             {
-                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString , array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="prev" '.$prevstyle.'></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString , array('escape' => FALSE));
             }
             else
             {
-                $pagination_str .= '<button class="prev"></button>';
+                $pagination_str .= '<button class="prev" '.$prevstyle.'></button>';
             }
         }
 
