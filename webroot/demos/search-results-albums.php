@@ -9,13 +9,13 @@
 						<div class="search-results-text"><span>4</span> Albums, <span>5</span> Artists, <span>5</span> Composers, <span>5</span> Videos, <span>5</span> Genres, <span>681</span> Songs</div>
 						<div class="refine-text">Not what you're looking for? Refine your search below.</div>
 						<div class="filter-container clearfix">
-							<button>All Music</button>
-							<button class="active">Albums</button>
-							<button>Artists</button>
-							<button>Composers</button>
-							<button>Videos</button>
-							<button>Genres</button>
-							<button class="last">Songs</button>
+							<a href="#">All Music</a>
+							<a href="#" class="active">Albums</a>
+							<a href="#">Artists</a>
+							<a href="#">Composers</a>
+							<a href="#">Videos</a>
+							<a href="#">Genres</a>
+							<a class="last">Songs</a>
 							<div class="search-container">
 								<input type="text" id="search-page-search-text">
 								<input type="submit" id="search-page-go" value="Go">
@@ -230,6 +230,17 @@
 									</ul>
 								</section> 
 							</div>
+						</div>
+						<div class="search-results-pagination-container">
+							<button class="beginning"></button>
+							<button class="prev"></button>
+							<button class="page-1">1</button>
+							<button class="page-2">2</button>
+							<button class="page-3">3</button>
+							<button class="page-4">4</button>
+							<button class="page-5">5</button>
+							<button class="next"></button>
+							<button class="last"></button>								
 						</div>
 						
 					</section>
