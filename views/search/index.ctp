@@ -338,7 +338,7 @@ function Get_Sales_date($sales_date_array, $country)
                     {
                         case 'song':
                           
-
+     ?>
 		<header>
 			<h3 class="songs-header">Songs</h3>
 		</header>
@@ -997,7 +997,7 @@ function Get_Sales_date($sales_date_array, $country)
 	<button class="next"></button>
 	<button class="last"></button>								
 </div>
-
+ <?php
                             break;
                         case 'album':
                             $search_category = 'search-results-albums-page';
