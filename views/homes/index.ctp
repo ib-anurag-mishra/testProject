@@ -47,7 +47,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                                     <?php
                                     if ($this->Session->read('library_type') == 2 && !empty($value['albumSongs'][$value['Album']['ProdID']]))
                                     {
-                                        echo $this->Queue->getAlbumStreamNowLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
+                                        echo $this->Queue->getAlbumStreamLabel($value['albumSongs'][$value['Album']['ProdID']], 1);
                                         ?>                                          
                                         <button class="playlist-menu-icon toggleable"></button>                                        
                                         <ul>
@@ -461,7 +461,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
                         {
                             if ($this->Session->read('library_type') == 2 && !empty($v['albumSongs'][$v['Album']['ProdID']]))
                             {
-                                echo $this->Queue->getAlbumStreamLabel($v['albumSongs'][$v['Album']['ProdID']], 1);
+                                echo $this->Queue->getAlbumStreamNowLabel($v['albumSongs'][$v['Album']['ProdID']], 2);
                             }
                         }
                         ?>                     
