@@ -1234,7 +1234,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                             <?php
                                                             if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
                                                             {
-                                                                echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
+                                                                echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
                                                                 ?>                                          
                                                                 <button class="playlist-menu-icon toggleable"></button>                                        
                                                                 <ul>
