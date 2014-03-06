@@ -4979,6 +4979,16 @@ STR;
         {
             $prodID = $this->params["form"]["prodID"];
             $provider = $this->params["form"]["provider_type"];
+            
+            if(empty($prodID) && empty($provider)){
+                $selectedSongs = $this->params["form"]["songs"];
+                foreach ($selectedSongs as $song)
+                {
+                    $songInfo = explode('&', $song);
+                    $prodID = $songInfo[0];
+                    $provider = $songInfo[1]; 
+                }   
+            }
             if ($provider != 'sony')
             {
                 $provider = 'ioda';
