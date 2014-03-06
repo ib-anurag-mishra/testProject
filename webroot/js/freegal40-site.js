@@ -589,10 +589,14 @@ $(document).ready(function() {
             $('.beforeClick').hide();
             $('.afterClick').show();
             
-            var type = 'song';
+            
             var selected_songs = [];
             var prod_id = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
             var provider = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('data-provider');
+            var type = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
+            if(!type){
+                var type = 'song';
+            }
             var song = prod_id + '&' + provider;
             selected_songs.push(song);
             $.ajax({
