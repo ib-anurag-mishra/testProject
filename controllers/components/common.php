@@ -1631,7 +1631,7 @@ STR;
                 // if ($this->Session->read('library_type') == 2) commented this as it is not displaying stream now button
                 //{
                     $topAlbumData[$k]['albumSongs'] = $this->requestAction(
-                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),0,$territory))
+                            array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'], base64_encode($v['Album']['provider_type']),1,$territory))
                     );
                // }
             }

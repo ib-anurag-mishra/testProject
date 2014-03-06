@@ -776,7 +776,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                         <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
                                                            title="<?php echo $this->getTextEncode($palbum->Title); ?>">
                                                             <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
-                                                        </a>                                                        <button class="play-btn-icon toggleable"></button>
+                                                        </a> 
                                                         <?php
                                                         if ($this->Session->read("patron"))
                                                         {
@@ -785,7 +785,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                             <?php
                                                             if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
                                                             {
-                                                                echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
+                                                                echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
                                                                 ?>                                          
                                                                 <button class="playlist-menu-icon toggleable"></button>                                        
                                                                 <ul>
