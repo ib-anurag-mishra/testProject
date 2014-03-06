@@ -340,7 +340,14 @@ EOD;
 EOD;
             return $str;            
             
-        }
+        }else if($flag == 2){
+       
+$str = <<<EOD
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Album</button>
+EOD;
+            return $str;  
+            
+       }
     }  
     
     /* Function name : getNationalAlbumStreamLabel
