@@ -542,9 +542,126 @@ function Get_Sales_date($sales_date_array, $country)
 </div>
  <?php
                             break;
-                        case 'album':
-                            $search_category = 'search-results-albums-page';
-                            break;
+                        case 'album': 
+                            ?>
+                                <header>
+                                        <h3 class="albums-header"><?php echo $keyword; ?></h3>
+
+                                </header>
+                                <?php
+                                if (!empty($albumData))
+                                {
+                                    $i = 0;
+                                    foreach ($albumData as $palbum)
+                                    {
+                                        $albumDetails = $album->getImage($palbum->ReferenceID);
+
+                                        //$albumDetails = $album->getImage($palbum->ReferenceID);
+
+                                        if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL']))
+                                        {
+                                            $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
+                                            $image = Configure::read('App.Music_Path') . $albumArtwork;
+                                        }
+                                        else
+                                        {
+                                            $image = 'no-image.jpg';
+                                        }
+                                        if ($page->isImage($image))
+                                        {
+                                            //Image is a correct one
+                                        }
+                                        else
+                                        {
+
+                                            //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                        }
+                                        $album_title = truncate_text($this->getTextEncode($palbum->Title), 24, $this, false);
+                                        $album_genre = str_replace('"', '', $palbum->Genre);
+                                        $album_label = $palbum->Label;
+                                        $tilte = urlencode($palbum->Title);
+                                        $linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
+                                        $linkProviderType = base64_encode($palbum->provider_type);
+                                        if (!empty($album_label))
+                                        {
+                                            $album_label_str = "Label: " . truncate_text($this->getTextEncode($album_label), 32, $this);
+                                        }
+                                        else
+                                        {
+                                            $album_label_str = "";
+                                        }
+                                        $ReferenceId = $palbum->ReferenceID;
+                                        if ($palbum->AAdvisory == 'T')
+                                        {
+                                            $explicit = '<font class="explicit"> (Explicit)</font><br />';
+                                        }
+                                        else
+                                        {
+                                            $explicit = '';
+                                        }
+                                    ?>         
+                                        <div class="album-detail-container">
+                                                <div class="cover-image">
+                                                    <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" 
+                                                       title="<?php echo $this->getTextEncode($palbum->Title); ?>">
+                                                        <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
+                                                    </a>
+                                                </div>
+                                                <div class="album-info">
+                                                        <div class="album-title"><strong><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>" ><?php echo $album_title; ?> <?php echo $explicit; ?></a></strong></div>
+                                                        <div class="artist">by 
+                                                            <a class="more-by-artist" 
+                                                               href="/artists/album/<?php echo str_replace('/', '@', base64_encode($palbum->ArtistText)); ?>/<?= base64_encode($album_genre) ?>">
+                                                                   <?php echo $this->getTextEncode($palbum->ArtistText); ?>
+                                                            </a>                                                        
+                                                        
+                                                        </div>
+                                                        <div class="genre">Genre: <a href="javascript:void(0)"><?php echo $album_genre; ?></a></div>
+                                                        <button class="stream-now-btn">Stream Now</button>
+                                                        <button class="menu-btn"></button>
+                                                        <section class="options-menu">
+                                                                <ul>
+                                                                        <li><a href="#">Add to Wishlist</a></li>
+                                                                        <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                                                </ul>
+                                                                <ul class="playlist-menu">
+                                                                        <li><a href="#">Create New Playlist</a></li>
+                                                                        <li><a href="#">Playlist 1</a></li>
+                                                                        <li><a href="#">Playlist 2</a></li>
+                                                                        <li><a href="#">Playlist 3</a></li>
+                                                                        <li><a href="#">Playlist 4</a></li>
+                                                                        <li><a href="#">Playlist 5</a></li>
+                                                                        <li><a href="#">Playlist 6</a></li>
+                                                                        <li><a href="#">Playlist 7</a></li>
+                                                                        <li><a href="#">Playlist 8</a></li>
+                                                                        <li><a href="#">Playlist 9</a></li>
+                                                                        <li><a href="#">Playlist 10</a></li>
+                                                                        <li><a href="#">Playlist 11</a></li>
+                                                                        <li><a href="#">Playlist 12</a></li>
+                                                                        <li><a href="#">Playlist 13</a></li>
+                                                                        <li><a href="#">Playlist 14</a></li>
+                                                                        <li><a href="#">Playlist 15</a></li>
+                                                                        <li><a href="#">Playlist 16</a></li>
+                                                                        <li><a href="#">Playlist 17</a></li>
+                                                                        <li><a href="#">Playlist 18</a></li>
+                                                                        <li><a href="#">Playlist 19</a></li>
+                                                                        <li><a href="#">Playlist 20</a></li>
+                                                                </ul>
+                                                        </section> 
+                                                </div>
+                                            </div>
+                                    <?php 
+                                      $i++; 
+                                     } ?>           
+                            <?php } else { ?>
+                                        <div class="album-detail-container">
+                                          <div style="color:red; padding:50px; ">
+                                              <span>No Albums Found</span>
+                                          </div> 
+                                        </div>    
+                              <?php } ?>
+                       <?php     break;
+
                         case 'genre':
                              
 			     ?>
