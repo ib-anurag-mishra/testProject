@@ -627,37 +627,46 @@ function Get_Sales_date($sales_date_array, $country)
                                                         
                                                         </div>
                                                         <div class="genre">Genre: <a href="javascript:void(0)"><?php echo $album_genre; ?></a></div>
-                                                        <button class="stream-now-btn">Stream Now</button>
-                                                        <button class="menu-btn"></button>
-                                                        <section class="options-menu">
-                                                                <ul>
-                                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                                        <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
-                                                                </ul>
-                                                                <ul class="playlist-menu">
-                                                                        <li><a href="#">Create New Playlist</a></li>
-                                                                        <li><a href="#">Playlist 1</a></li>
-                                                                        <li><a href="#">Playlist 2</a></li>
-                                                                        <li><a href="#">Playlist 3</a></li>
-                                                                        <li><a href="#">Playlist 4</a></li>
-                                                                        <li><a href="#">Playlist 5</a></li>
-                                                                        <li><a href="#">Playlist 6</a></li>
-                                                                        <li><a href="#">Playlist 7</a></li>
-                                                                        <li><a href="#">Playlist 8</a></li>
-                                                                        <li><a href="#">Playlist 9</a></li>
-                                                                        <li><a href="#">Playlist 10</a></li>
-                                                                        <li><a href="#">Playlist 11</a></li>
-                                                                        <li><a href="#">Playlist 12</a></li>
-                                                                        <li><a href="#">Playlist 13</a></li>
-                                                                        <li><a href="#">Playlist 14</a></li>
-                                                                        <li><a href="#">Playlist 15</a></li>
-                                                                        <li><a href="#">Playlist 16</a></li>
-                                                                        <li><a href="#">Playlist 17</a></li>
-                                                                        <li><a href="#">Playlist 18</a></li>
-                                                                        <li><a href="#">Playlist 19</a></li>
-                                                                        <li><a href="#">Playlist 20</a></li>
-                                                                </ul>
-                                                        </section> 
+                                                            <?php
+                                                            if ($this->Session->read("patron"))
+                                                            {
+                                                                if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
+                                                                {                                                          
+                                                                    //echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]);
+                                                                    echo $this->Queue->getAlbumStreamLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID],3); 
+                                                                } ?>
+                                                                <button class="menu-btn"></button>
+                                                                <section class="options-menu">
+                                                                    <input type="hidden" id="<?= $ReferenceId ?>" value="album" data-provider="<?= $palbum->provider_type ?>"/>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <?php
+                                                                                $wishlistInfo = $wishlist->getWishlistData($nationalTopSong['Song']['ProdID']);
+
+                                                                                 if($wishlistInfo == 'Added To Wishlist') 
+                                                                                 {?>
+                                                                                     <a href="#">Added to Wishlist</a>
+                                                                                     <?php
+                                                                                 }
+                                                                                 else
+                                                                                 {
+                                                                            ?>
+                                                                            <span class="beforeClick" id="wishlist<?=$palbum->ReferenceID?>" > <a class="add-to-wishlist" href="#">Add to Wishlist</a> </span>
+                                                                            <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a></span>
+                                                                            <?php
+                                                                                 }
+                                                                            ?>
+                                                                        </li>
+                                                                        <?php  if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) { ?> 
+                                                                                <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                                                        </ul>
+                                                                        <ul class="playlist-menu">
+                                                                            <li><a href="#">Create New Playlist</a></li>                                                                 
+                                                                        </ul>
+                                                                        <?php } ?>    
+                                                                </section>
+                                                            <?php  
+                                                            } ?>                                                        
                                                 </div>
                                             </div>
                                     <?php 
@@ -671,7 +680,6 @@ function Get_Sales_date($sales_date_array, $country)
                                         </div>    
                               <?php } ?>
                        <?php     break;
-
                         case 'genre':
                              
 			     ?>
