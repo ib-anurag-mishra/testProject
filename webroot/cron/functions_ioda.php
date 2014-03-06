@@ -15,16 +15,16 @@ Description : Function for sending report through FTP for US Libraies
 function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
 {
 
-	if(!($con = ftp_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
+	if(!($con = ssh2_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection with The Orchard using ftp. \n";
+		echo "Not Able to Establish Connection with The Orchard using sftp. \n";
 		return false;
 	}
 	else
 	{
-		if(!ftp_login($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
+		if(!ssh2_auth_password($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
 		{
-			echo "fail: unable to authenticate with The Orchard using ftp.\n";
+			echo "fail: unable to authenticate with The Orchard using sftp.\n";
 			return false;
 		}
 		else
