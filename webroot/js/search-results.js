@@ -89,9 +89,9 @@ $menuChildren.addClass(activeClass);
                     }
 
                     // Complete the change
-                    if ($body.ScrollTo || false) {
-                        $body.ScrollTo(scrollOptions);
-                    } /* http://balupton.com/projects/jquery-scrollto */
+//                    if ($body.ScrollTo || false) {
+//                        $body.ScrollTo(scrollOptions);
+//                    } /* http://balupton.com/projects/jquery-scrollto */
 
                     //$body.removeClass('loader');
                     $.getScript(webroot + 'css/styles.css');
