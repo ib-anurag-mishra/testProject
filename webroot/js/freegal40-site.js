@@ -535,7 +535,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon').on('click', function(e)
+    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon , .album-info .menu-btn').on('click', function(e)
     {
         e.preventDefault();
 
@@ -557,7 +557,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist').on('click', function(e)
+    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist').on('click', function(e)
     {
         if ($(this).hasClass('wishlist-icon'))
         {
@@ -589,10 +589,14 @@ $(document).ready(function() {
             $('.beforeClick').hide();
             $('.afterClick').show();
             
-            var type = 'song';
+            
             var selected_songs = [];
             var prod_id = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('id');
             var provider = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('data-provider');
+            var type = $(this).parent().parent().parent().parent().find('input[type="hidden"]').attr('value');
+            if(!type){
+                var type = 'song';
+            }
             var song = prod_id + '&' + provider;
             selected_songs.push(song);
             $.ajax({
