@@ -345,9 +345,17 @@ EOD;
 $str = <<<EOD
             <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-artist">Stream Album</button>
 EOD;
-            return $str;  
+            return $str;
+            
+       }else if($flag == 3){
+       
+$str = <<<EOD
+            <button onclick="javascript:loadAlbumData('$albumSongs');" class="stream-now-btn">Stream Now</button>
+EOD;
+            return $str;
             
        }
+     
     }  
     
     /* Function name : getNationalAlbumStreamLabel
