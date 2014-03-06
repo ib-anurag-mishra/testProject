@@ -446,13 +446,13 @@ function Get_Sales_date($sales_date_array, $country)
                                         {
                                             $song_title = $psong->SongTitle;
                                         }
-                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("' . $psong->streamUrl . '", "' . base64_encode($song_title) . '","' . base64_encode($psong->ArtistText) . '",' . $psong->totalseconds . ',"' . $psong->ProdID . '","' . $psong->provider_type . '");'));
+                                        echo $html->image('', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("' . $psong->streamUrl . '", "' . base64_encode($song_title) . '","' . base64_encode($psong->ArtistText) . '",' . $psong->totalseconds . ',"' . $psong->ProdID . '","' . $psong->provider_type . '");'));
                                     }
                                     else
                                     {
-                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $psong->ProdID . ', "' . base64_encode($psong->provider_type) . '", "' . $this->webroot . '");'));
+                                        echo $html->image('', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $psong->ProdID . ', "' . base64_encode($psong->provider_type) . '", "' . $this->webroot . '");'));
                                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
-                                        echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
+                                        echo $html->image('img/stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                                     }
                                 }
 
@@ -463,15 +463,15 @@ function Get_Sales_date($sales_date_array, $country)
                                 }
                                 else
                                 {
-                                    $style = 'style="left:10px"';
-                                    $styleSong = "style='left:570px'";
+                                   // $style = 'style="left:10px"';
+                                   // $styleSong = "style='left:570px'";
                                 }
                                 ?>
 
 							<!--	<button class="play-btn"></button> -->
-								<div class="artist artist-name" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></div>
+								<div class="artist artist-name"><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></div>
 								<div class="album album-name"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
-								 <div class="song song-name" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
+								 <div class="song song-name" sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
                                     <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
                                     <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
                                         <?php
