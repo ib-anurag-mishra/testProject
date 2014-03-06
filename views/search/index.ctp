@@ -813,9 +813,13 @@ function Get_Sales_date($sales_date_array, $country)
                         <button class="sr-albums-prev"></button>
                         <button class="sr-albums-next"></button>
                      <?php } else { ?>
-                                <div style="color:red; padding:50px; ">
-                                    <span>No Albums Found</span>
-                                </div>                        
+                                <ul>
+                                    <li>    
+                                        <div style="color:red;">
+                                            <span>No Albums Found</span>
+                                        </div>
+                                    </li>
+                                </ul>
                      <?php } ?>   
                 </div>
         </section>
@@ -845,7 +849,13 @@ function Get_Sales_date($sales_date_array, $country)
                     <?php }else
                         {
                             ?>
-                            <div style='color:red'><?php __("No Artists Found"); ?></div>
+                                <ul>
+                                    <li>    
+                                        <div style="color:red;">
+                                            <span>No Artists Found</span>
+                                        </div>
+                                    </li>
+                                </ul>
                         <?php } ?>                    
                 </div>
         </section>
@@ -878,7 +888,13 @@ function Get_Sales_date($sales_date_array, $country)
                         else
                         {
                             ?>
-                            <div style='color:red'><?php __("No Composers Found"); ?></div>  
+                                <ul>
+                                    <li>    
+                                        <div style="color:red;">
+                                            <span>No Composers Found</span>
+                                        </div>
+                                    </li>
+                                </ul> 
                         <?php 
                         
                         } 
@@ -891,13 +907,6 @@ function Get_Sales_date($sales_date_array, $country)
                         <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=video"></a>
                 </header>
                 <div class="search-results-list">
-                        <ul>
-                                <li><a href="#">Whenever, Wherever</a></li>
-                                <li><a href="#">Poem To A Horse</a></li>
-                                <li><a href="#">La Tortura</a></li>
-                                <li><a href="#">No (featuring Gustavo Cerati)</a></li>
-                                <li><a href="#">Don't Bother</a></li>
-                        </ul>
                         <?php
                         if (!empty($videos))
                         { ?>
@@ -917,7 +926,13 @@ function Get_Sales_date($sales_date_array, $country)
                         else
                         {
                             ?>
-                            <div style='color:red'><?php __("No Videos Found"); ?></div>     
+                                <ul>
+                                    <li>    
+                                        <div style="color:red;">
+                                            <span>No Videos Found</span>
+                                        </div>
+                                    </li>
+                                </ul>    
                         <?php } ?>                    
                 </div>
         </section>
@@ -950,7 +965,13 @@ function Get_Sales_date($sales_date_array, $country)
                         else
                         {
                             ?>
-                            <div style='color:red'><?php __("No Genres Found"); ?></div>  
+                                <ul>
+                                    <li>    
+                                        <div style="color:red;">
+                                            <span>No Genres Found</span>
+                                        </div>
+                                    </li>
+                                </ul> 
                         <?php } ?>                    
                 </div>
         </section>
