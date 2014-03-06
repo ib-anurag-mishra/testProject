@@ -4981,6 +4981,7 @@ STR;
             $provider = $this->params["form"]["provider_type"];
             
             if(empty($prodID) && empty($provider)){
+                $selectedSongs = $this->params["form"]["songs"];
                 foreach ($selectedSongs as $song)
                 {
                     $songInfo = explode('&', $song);
