@@ -16,22 +16,22 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
         {
             if (1 != $currentPage)
             {
-                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
+                $pagination_str .= $html->link('<button class=&quot;prev&quot;></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
             }
             else
             {
-                $pagination_str .= '<button class="prev"></button>';
+                $pagination_str .= '<button class=&quot;prev&quot;></button>';
             }
         }
         else if ($type == 'block')
         {
             if (1 != $facetPage)
             {
-                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
+                $pagination_str .= $html->link('<button class=&quot;prev&quot;></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
             }
             else
             {
-                $pagination_str .= '<button class="prev"></button>';
+                $pagination_str .= '<button class=&quot;prev></button>';
             }
         }
 
