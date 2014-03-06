@@ -547,7 +547,7 @@ function Get_Sales_date($sales_date_array, $country)
                         case 'album': 
                             ?>
                                 <header>
-                                        <h3 class="albums-header"><?php echo $keyword; ?></h3>
+                                        <h3 class="albums-header">Albums</h3>
 
                                 </header>
                                 <?php
