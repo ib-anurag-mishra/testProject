@@ -289,7 +289,7 @@ class SearchController extends AppController
             {
 
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
-                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
+                $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 15);
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 $queryArr = null;
                 $albumData = array();
