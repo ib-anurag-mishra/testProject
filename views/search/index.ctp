@@ -823,7 +823,7 @@ function Get_Sales_date($sales_date_array, $country)
                      <?php } else { ?>
                                 <ul>
                                     <li>    
-                                        <div style="color:red; padding:50px; ">
+                                        <div style="color:red;">
                                             <span>No Albums Found</span>
                                         </div>
                                     </li>
@@ -859,7 +859,7 @@ function Get_Sales_date($sales_date_array, $country)
                             ?>
                                 <ul>
                                     <li>    
-                                        <div style="color:red; padding:50px; ">
+                                        <div style="color:red;">
                                             <span>No Artists Found</span>
                                         </div>
                                     </li>
@@ -898,7 +898,7 @@ function Get_Sales_date($sales_date_array, $country)
                             ?>
                                 <ul>
                                     <li>    
-                                        <div style="color:red; padding:50px; ">
+                                        <div style="color:red;">
                                             <span>No Composers Found</span>
                                         </div>
                                     </li>
@@ -936,7 +936,7 @@ function Get_Sales_date($sales_date_array, $country)
                             ?>
                                 <ul>
                                     <li>    
-                                        <div style="color:red; padding:50px; ">
+                                        <div style="color:red;">
                                             <span>No Videos Found</span>
                                         </div>
                                     </li>
@@ -975,7 +975,7 @@ function Get_Sales_date($sales_date_array, $country)
                             ?>
                                 <ul>
                                     <li>    
-                                        <div style="color:red; padding:50px; ">
+                                        <div style="color:red;">
                                             <span>No Genres Found</span>
                                         </div>
                                     </li>
