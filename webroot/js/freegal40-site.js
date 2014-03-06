@@ -557,7 +557,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist').on('click', function(e)
+    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist').on('click', function(e)
     {
         if ($(this).hasClass('wishlist-icon'))
         {
