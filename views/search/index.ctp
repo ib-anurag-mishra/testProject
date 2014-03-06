@@ -218,16 +218,107 @@ function Get_Sales_date($sales_date_array, $country)
 <section class="<?php echo $search_category; ?>">
         <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
         <div class="search-results-heading">Results for your search <?php echo $keyword; ?></div>
-        <div class="search-results-text"><span><?php count($albumData); ?></span> Albums, <span><?php count($artists); ?></span> Artists, <span><?php count($composers); ?></span> Composers, <span><?php count($videos); ?></span> Videos, <span><?php count($genres); ?></span> Genres, <span><?php count($songs); ?></span> Songs</div>
+        <div class="search-results-text"><span><?php (empty($albumData)) ? '0' : count($albumData) ?></span> Albums,<span><?php (empty($artists)) ? '0' : count($artists) ?></span> Artists, <span><?php (empty($composers)) ? '0' : count($composers) ?></span> Composers, <span><?php (empty($videos)) ? '0' : count($videos) ?></span> Videos, <span><?php (empty($genres)) ? '0' : count($genres) ?></span> Genres, <span><?php (empty($songs)) ? '0' : count($songs) ?></span> Songs</div>
         <div class="refine-text">Not what you're looking for? Refine your search below.</div>
         <div class="filter-container clearfix">
-                <a class="active" href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=all">All Music</a>
-                <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=album">Albums</a>
-                <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=artist">Artists</a>
-                <a href="/search/index?q=<?php echo $keyword; ?>&type=composer">Composers</a>
-                <a href="/search/index?q=<?php echo $keyword; ?>&type=genre">Genres</a>
-                <a href="/search/index?q=<?php echo $keyword; ?>&type=video">Videos</a>
-                <a class="last" href="/search/index?q=<?php echo $keyword; ?>&type=song">Songs</a>                
+                <?php
+                if ($type != 'all')
+                {
+                    ?>
+                    <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=all">All Music</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <a	href="javascript:void(0)" class="active">All Music</a>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($type != 'album')
+                {
+                    ?>
+                    <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=album">Albums</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <a href="javascript:void(0)" class="active">Albums</a>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($type != 'artist')
+                {
+                    ?>
+                    <a href="/search/index?q=<?php echo htmlspecialchars($keyword); ?>&type=artist">Artists</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <a href="javascript:void(0)" class="active">Artists</a>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($type != 'composer')
+                {
+                    ?>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=composer">Composers</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <a href="javascript:void(0)" class="active">Composers</a>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($type != 'genre')
+                {
+                    ?>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=genre">Genres</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <a href="javascript:void(0)" class="active">Genres</a>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($type != 'video')
+                {
+                    ?>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=video">Videos</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <a href="javascript:void(0)" class="active">Videos</a>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($type != 'song')
+                {
+                    ?>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=song">Songs</a>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <a href="javascript:void(0)" class="active">Songs</a>
+                    <?php
+                }
+                ?>                
 
                 <div class="search-container">
                         <form method="get" id="searchQueryForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="ajaxSearchPage();
