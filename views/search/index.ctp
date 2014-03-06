@@ -9,7 +9,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
 {
 
     $pagination_diff = 3;
-    if($currentPage > $pagination_change)
+    if($currentPage > $pagination_diff)
    	$diffnum = $currentPage- $pagination_diff;
     else
    	$diffnum = 0;
