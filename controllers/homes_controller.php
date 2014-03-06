@@ -4983,8 +4983,8 @@ STR;
             if(empty($prodID) && empty($provider)){
                 foreach ($selectedSongs as $song)
                 {
+                    $songInfo = explode('&', $song);
                     $prodID = $songInfo[0];
-                    
                     $provider = $songInfo[1]; 
                 }   
             }
