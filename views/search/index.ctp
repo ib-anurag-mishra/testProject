@@ -899,13 +899,6 @@ function Get_Sales_date($sales_date_array, $country)
                         <a class="see-more" href="/search/index?q=<?php echo $keyword; ?>&type=video"></a>
                 </header>
                 <div class="search-results-list">
-                        <ul>
-                                <li><a href="#">Whenever, Wherever</a></li>
-                                <li><a href="#">Poem To A Horse</a></li>
-                                <li><a href="#">La Tortura</a></li>
-                                <li><a href="#">No (featuring Gustavo Cerati)</a></li>
-                                <li><a href="#">Don't Bother</a></li>
-                        </ul>
                         <?php
                         if (!empty($videos))
                         { ?>
