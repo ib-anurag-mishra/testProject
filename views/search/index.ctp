@@ -723,8 +723,9 @@ function Get_Sales_date($sales_date_array, $country)
                         <div class="search-results-albums">
                                 <ul class="clearfix">
                                     <?php 
+                                        $i = 0;
                                         foreach($albumData as $palbum) {  
-                                            $i = 0;
+                                            
                                         ?>
                                         <li>
                                             <?php
