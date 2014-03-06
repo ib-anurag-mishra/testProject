@@ -883,7 +883,7 @@ function Get_Sales_date($sales_date_array, $country)
                                     <?php
                                 }
                             } ?>
-                            <ul>
+                            </ul>
                         <?php }
                         else
                         {
