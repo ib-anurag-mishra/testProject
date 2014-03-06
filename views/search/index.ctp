@@ -7,6 +7,8 @@
 
 function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null)
 {
+
+    $pagination_change = $pageLimitToShow-2;
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
@@ -83,22 +85,22 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             {
                 if ($currentPage == $pageCount)
                 {
-                    $pagination_str .= '<button class="page-'.$pageCount.'">'.$pageCount.'</button>';
+                    $pagination_str .= '<button class="page-'.($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount.'">'.$pageCount.'</button>';
                 }
                 else
                 {
-                    $pagination_str .= $html->link('<button class="page-'.$pageCount.'">'.$pageCount.'</button>', '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
+                    $pagination_str .= $html->link('<button class="page-'.($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount.'">'.$pageCount.'</button>', '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
                 }
             }
             else if ($type == 'block')
             {
                 if ($facetPage == $pageCount)
                 {
-                    $pagination_str .= '<button class="page-'.$pageCount.'">'.$pageCount.'</button>';
+                    $pagination_str .= '<button class="page-'.($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount.'">'.$pageCount.'</button>';
                 }
                 else
                 {
-                    $pagination_str .= $html->link('<button class="page-'.$pageCount.'">'.$pageCount.'</button>', '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
+                    $pagination_str .= $html->link('<button class="page-'.($pagecount>$pagination_change)? $pageCount-$pagination_change : $pageCount.'">'.$pageCount.'</button>', '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
                 }
             }
             $pagination_str .= " ";
