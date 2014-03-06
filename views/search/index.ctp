@@ -199,9 +199,6 @@ function Get_Sales_date($sales_date_array, $country)
         case 'genre':
             $search_category = 'search-results-genres-page';
             break;
-        case 'label':
-            $search_category = 'Label';
-            break;
         case 'video':
             $search_category = 'search-results-videos-page';
             break;
@@ -301,9 +298,6 @@ function Get_Sales_date($sales_date_array, $country)
 				</div>
 
                                 <?php
-                            break;
-                        case 'label':
-                            $search_category = 'Label';
                             break;
                         case 'video':
                             $search_category = 'search-results-videos-page';
