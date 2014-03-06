@@ -83,7 +83,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             {
                 if ($currentPage == $pageCount)
                 {
-                    $pagination_str .= $pageCount;
+                    $pagination_str .= '<button class="page-'.$pageCount.'">'.$pageCount.'</button>';
                 }
                 else
                 {
