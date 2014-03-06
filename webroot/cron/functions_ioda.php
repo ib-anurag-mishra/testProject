@@ -17,14 +17,14 @@ function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
 
 	if(!($con = ftp_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection\n";
+		echo "Not Able to Establish Connection with The Orchard using ftp. \n";
 		return false;
 	}
 	else
 	{
 		if(!ftp_login($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
 		{
-			echo "fail: unable to authenticate\n";
+			echo "fail: unable to authenticate with The Orchard using ftp.\n";
 			return false;
 		}
 		else
@@ -104,14 +104,14 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 {
 	if(!($con = ssh2_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection\n";
+		echo "Not Able to Establish Connection with The Orchard FTP\n";
 		return false;
 	}
 	else
 	{
 		if(!ssh2_auth_password($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
 		{
-			echo "fail: unable to authenticate\n";
+			echo "fail: unable to authenticate with The Orchard FTP\n";
 			return false;
 		}
 		else
@@ -218,13 +218,13 @@ function sendFile($src,$dst)
         
 	if(!($con = ssh2_connect($SFTP_HOST,$SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection\n";
+		echo "Not Able to Establish Connection with CDN.\n";
 	}
 	else
 	{
 		if(!ssh2_auth_password($con,$SFTP_USER,$SFTP_PASS))
 		{
-			echo "fail: unable to authenticate\n";
+			echo "fail: unable to authenticate with CDN.\n";
 		}
 		else
 		{
@@ -234,7 +234,7 @@ function sendFile($src,$dst)
 			}
 			else
 			{
-				//echo "FILE Sucessfully sent\n";
+				echo "FILE Sucessfully sent to CDN\n";
 			}
 
 		}
