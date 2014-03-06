@@ -536,7 +536,7 @@ function Get_Sales_date($sales_date_array, $country)
                 ?>
                 <?php
                 $keyword = $keyword . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
-                echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 7, $keyword);
+                echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 5, $keyword);
          ?>
 								
 </div>
