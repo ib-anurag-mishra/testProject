@@ -8,8 +8,11 @@
 function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null)
 {
 
-    $pagination_change = 3;
-    $diffnum = ($currentpage> $pagination_change): $currentpage - $pagination_change : 0; 
+    $pagination_diff = 3;
+    if($currentPage > $pagination_change)
+   	$diffnum = $currentPage- $pagination_diff;
+    else
+   	$diffnum = 0;
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
