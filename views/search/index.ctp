@@ -566,30 +566,29 @@ function Get_Sales_date($sales_date_array, $country)
                                                            title="<?php echo $this->getTextEncode($palbum->Title); ?>">
                                                             <img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" />
                                                         </a>                                                        <button class="play-btn-icon toggleable"></button>
-                                                        <button class="playlist-menu-icon toggleable"></button>
-                                                        <button class="wishlist-icon toggleable"></button>
-                                                        <ul>
-                                                                <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
-                                                                <li><a href="#">David's Favorites</a></li>
-                                                                <li><a href="#">Pop</a></li>
-                                                                <li><a href="#">Day After Christmas</a></li>
-                                                                <li><a href="#">A really, really, long playlist name that is going to be long enough for two lines.</a></li>
-                                                                <li><a href="#">80's</a></li>
-                                                                <li><a href="#">90's</a></li>
-                                                                <li><a href="#">Country</a></li>
-                                                                <li><a href="#">Rock</a></li>
-                                                                <li><a href="#">Metal</a></li>
-                                                                <li><a href="#">Breakup Songs</a></li>
-                                                                <li><a href="#">New Years</a></li>
-                                                                <li><a href="#">Christmas</a></li>
-                                                                <li><a href="#">Summer</a></li>
-                                                                <li><a href="#">Road Trip</a></li>
-                                                                <li><a href="#">Christian</a></li>
-                                                                <li><a href="#">Cleaning</a></li>
-                                                                <li><a href="#">Workout</a></li>
-                                                                <li><a href="#">Running</a></li>
-                                                                <li><a href="#">Romantic</a></li>
-                                                        </ul> 
+                                                        <?php
+                                                        if ($this->Session->read("patron"))
+                                                        {
+                                                            ?>
+                                                            <input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>"/>
+                                                            <?php
+                                                            if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID]))
+                                                            {
+                                                                echo $this->Queue->getAlbumStreamNowLabel($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID], 1);
+                                                                ?>                                          
+                                                                <button class="playlist-menu-icon toggleable"></button>                                        
+                                                                <ul>
+                                                                    <li><a href="#" class="create-new-playlist">Create New Playlist ...</a></li>
+
+                                                                </ul>   
+                                                                <?php
+                                                            }
+                                                            //echo $this->Wishlist->getAlbumWishListMarkup($value['Album']['ProdID'],base64_encode($value['Album']['provider_type']),base64_encode($value['Album']['ArtistText']));
+                                                            ?>
+                                                            <button class="wishlist-icon toggleable"></button>
+                                                            <?php
+                                                        }
+                                                        ?>
 
                                                 </div>
                                                 <div class="album-info">
