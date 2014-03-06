@@ -16,22 +16,22 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
         {
             if (1 != $currentPage)
             {
-                $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
+                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString);
             }
             else
             {
-                $pagination_str .= "&lt&ltprevious";
+                $pagination_str .= '<button class="prev"></button>';
             }
         }
         else if ($type == 'block')
         {
             if (1 != $facetPage)
             {
-                $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
+                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString);
             }
             else
             {
-                $pagination_str .= "&lt&ltprevious";
+                $pagination_str .= '<button class="prev"></button>';
             }
         }
 
@@ -87,18 +87,18 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
                 }
                 else
                 {
-                    $pagination_str .= $html->link($pageCount, '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString);
+                    $pagination_str .= $html->link('<button class="page-'.$pageCount.'">'.$pageCount.'</button>', '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString);
                 }
             }
             else if ($type == 'block')
             {
                 if ($facetPage == $pageCount)
                 {
-                    $pagination_str .= $pageCount;
+                    $pagination_str .= '<button class="page-'.$pageCount.'">'.$pageCount.'</button>';
                 }
                 else
                 {
-                    $pagination_str .= $html->link($pageCount, '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString);
+                    $pagination_str .= $html->link('<button class="page-'.$pageCount.'">'.$pageCount.'</button>', '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString);
                 }
             }
             $pagination_str .= " ";
@@ -109,22 +109,22 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
         {
             if ($currentPage != $totalPages)
             {
-                $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString);
+                $pagination_str .= $html->link('<button class="next"></button>', '/search/index/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString);
             }
             else
             {
-                $pagination_str .= "next&gt&gt";
+                $pagination_str .= '<button class="next"></button>';
             }
         }
         else if ($type == 'block')
         {
             if ($facetPage != $totalPages)
             {
-                $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString);
+                $pagination_str .= $html->link('<button class="next"></button>', '/search/index/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString);
             }
             else
             {
-                $pagination_str .= "next&gt&gt";
+                $pagination_str .= '<button class="next"></button>';
             }
         }
     }
@@ -538,15 +538,7 @@ function Get_Sales_date($sales_date_array, $country)
                 $keyword = $keyword . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
                 echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 7, $keyword);
          ?>
-	<button class="beginning"></button>
-	<button class="prev"></button>
-	<button class="page-1">1</button>
-	<button class="page-2">2</button>
-	<button class="page-3">3</button>
-	<button class="page-4">4</button>
-	<button class="page-5">5</button>
-	<button class="next"></button>
-	<button class="last"></button>								
+								
 </div>
  <?php
                             break;
