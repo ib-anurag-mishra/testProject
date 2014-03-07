@@ -24,8 +24,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             else
             {
 		$pagination_str .= '<button class=
-"beginning" style="cursor:none;" ></button>';
-                $pagination_str .= '<button class="prev" style="cursor:none;" ></button>';
+"beginning" style="cursor:text;" ></button>';
+                $pagination_str .= '<button class="prev" style="cursor:text;" ></button>';
             }
         }
         else if ($type == 'block')
@@ -37,8 +37,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             }
             else
             {
-		$pagination_str .= '<button class="beginning" style="cursor:none;"></button>';
-                $pagination_str .= '<button class="prev" style="cursor:none;" ></button>';
+		$pagination_str .= '<button class="beginning" style="cursor:text;"></button>';
+                $pagination_str .= '<button class="prev" style="cursor:text;" ></button>';
             }
         }
 
@@ -91,7 +91,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
                 if ($currentPage == $pageCount)
                 {
                    
-                    $pagination_str .= '<button class="page-'.$classCounter.'" style="cursor:none;" >'.$pageCount.'</button>';
+                    $pagination_str .= '<button class="page-'.$classCounter.'" style="cursor:text;" >'.$pageCount.'</button>';
                 }
                 else
                 { 
@@ -104,7 +104,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
                 if ($facetPage == $pageCount)
                 {
 		   
-                    $pagination_str .= '<button class="page-'.$classCounter.'" style="cursor:none;" >'.$pageCount.'</button>';
+                    $pagination_str .= '<button class="page-'.$classCounter.'" style="cursor:text;" >'.$pageCount.'</button>';
                 }
                 else
                 {
@@ -126,8 +126,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             }
             else
             {
-                $pagination_str .= '<button class="next" style="cursor:none;"></button>';
- 		$pagination_str .= '<button class="last" style="cursor:none;"></button>';   
+                $pagination_str .= '<button class="next" style="cursor:text;"></button>';
+ 		$pagination_str .= '<button class="last" style="cursor:text;"></button>';   
             }
         }
         else if ($type == 'block')
@@ -139,8 +139,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             }
             else
             {
-                $pagination_str .= '<button class="next" style="cursor:none;"></button>';
-		$pagination_str .= '<button class="last" style="cursor:none;"></button>';   
+                $pagination_str .= '<button class="next" style="cursor:text;"></button>';
+		$pagination_str .= '<button class="last" style="cursor:text;"></button>';   
             }
         }
     }
