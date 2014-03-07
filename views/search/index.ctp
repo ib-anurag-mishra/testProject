@@ -774,11 +774,12 @@ function Get_Sales_date($sales_date_array, $country)
                                                    </div>
                                                    <div class="video-info">
                                                         <div class="video-title"><a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $psong->VideoTitle; ?></a></div>
-                                                        <div class="artist">by <a href="#"><?php echo $psong->ProdID; ?></a></div>
-                                                         <a  href="/artists/album/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?= base64_encode($psong->Genre) ?>">
-                                                                <?php echo $this->getTextEncode($psong->ArtistText); ?>
-                                                         </a>
-                                                        <div class="release-date">Released on Aug 01, 2004</div>
+                                                        <div class="artist">
+                                                            by
+                                                            <a  href="/artists/album/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?= base64_encode($psong->Genre) ?>">
+                                                               <?php echo $this->getTextEncode($psong->ArtistText); ?>
+                                                            </a>
+                                                        </div>    
                                                         <div class="release-date">
                                                             Released on
                                                             <?php
