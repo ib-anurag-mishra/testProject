@@ -518,7 +518,7 @@ function Get_Sales_date($sales_date_array, $country)
                                         </span>
                                 </div>
 								
-								<div class="time">3:23</div>
+								<div class="time"><?php echo ltrim($psong->FullLength_Duration,"0"); ?></div>
 								<button class="menu-btn"></button>
 								<section class="options-menu">
 									<ul>
