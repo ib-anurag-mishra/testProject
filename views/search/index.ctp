@@ -1321,8 +1321,8 @@ break;
                                 }
                                 else
                                 {
-                                    $style = 'style="left:10px"';
-                                    $styleSong = "style='left:570px'";
+                                    $style = 'style="left:18px"';
+                                   // $styleSong = "style='left:570px'";
                                 }
                                 ?>
                                   <!--      <button class="play-btn"></button> -->
