@@ -770,7 +770,9 @@ function addToWishlistVideo(prodId, providerType,type)
             var msg = response.substring(0, 5);
             if (msg === 'error')
             {
-                document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
+				document.getElementById("ajaxflashMessage44").style.display = "block";
+				document.getElementById("ajaxflashMessage44").style.background = "red";                
+				document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more videos to your wishlist.';
                 //alert("You can not add more songs to your wishlist.");
                 location.reload();
                 return false;
@@ -778,6 +780,8 @@ function addToWishlistVideo(prodId, providerType,type)
             else if (msg === 'error1')
             {
                 if(type == 1){
+					document.getElementById("ajaxflashMessage44").style.display = "block";
+					document.getElementById("ajaxflashMessage44").style.background = "red";						
                     document.getElementById('ajaxflashMessage44').innerHTML = 'You have Already Added  Video to your wishlist.';
                     return false;
                 }
@@ -800,6 +804,7 @@ function addToWishlistVideo(prodId, providerType,type)
                 if (languageSet === 'en')
                 {
                     if(type == 1){
+						document.getElementById("ajaxflashMessage44").style.display = "block";
                         document.getElementById('ajaxflashMessage44').innerHTML = 'Video has been successfully added to your wishlist.';
                         return false;
                     }                    
@@ -809,6 +814,7 @@ function addToWishlistVideo(prodId, providerType,type)
                 else
                 {
                     if(type == 1){
+						document.getElementById("ajaxflashMessage44").style.display = "block";
                         document.getElementById('ajaxflashMessage44').innerHTML = 'Añadido a su Lista Deseos';
                         return false;
                     }                    
@@ -820,6 +826,7 @@ function addToWishlistVideo(prodId, providerType,type)
             }
             else
             {
+				document.getElementById("ajaxflashMessage44").style.display = "block";
                 document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
                 //alert("You have been logged out from the system. Please login again.");
                 location.reload();
@@ -1485,8 +1492,10 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
                 if(type == 1){
                     document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 if (languageSet === 'en') {
+					document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById('ajaxflashMessage44').innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
                 } else {
+					document.getElementById("ajaxflashMessage44").style.display = "block";
                     document.getElementById('ajaxflashMessage44').innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
                 }
                 location.href = unescape(downloadUsedArr[2]);
