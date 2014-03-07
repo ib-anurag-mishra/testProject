@@ -10,11 +10,17 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
 
     $pagination_diff = $pageLimitToShow -2;
     $pagination_add = $pageLimitToShow-$totalPages;
-    if($currentPage > $pagination_diff)
-   	$diffnum = $currentPage- $pagination_diff;
+    if($currentPage > $pagination_diff){
+        if($currentPage > $totalPages-2){
+         $diffnum = $totalPages- $pageLimitToShow;
+                //break;
+         }
+        else
+        $diffnum = $currentPage- $pagination_diff;
+    }
     else
         $diffnum = 0;
-    
+
     if($totalPages < $pageLimitToShow){
         $diffnum = -($pagination_add);
         $prevstyle = "style='right:".(195-$diffnum*26)."px;'";
@@ -22,6 +28,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
      }
     else
        $prevstyle = "";
+
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
