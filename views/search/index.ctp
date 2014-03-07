@@ -6,13 +6,10 @@
  */
 
 function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null)
-{
-   
-    
+{ 
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
-
         $part = floor($pageLimitToShow / 2);
         if ($type == 'listing')
         {
@@ -530,7 +527,7 @@ function Get_Sales_date($sales_date_array, $country)
 										<li><a href="#">Playlist 18</a></li>
 										<li><a href="#">Playlist 19</a></li>
 										<li><a href="#">Playlist 20</a></li>
-							</ul>											
+							      </ul>											
 								</section>
 								<input type="checkbox" class="row-checkbox">
 							</div>
@@ -1220,13 +1217,13 @@ break;
                 </header>
                 <div class="songs-results-list">
                         <div class="header-container">
-                                <div class="artist-col">Artist</div>
+                                <div class="artist-col"><a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=artist&sortOrder=" . (($sort == 'artist') ? $reverseSortOrder : 'asc'); ?>"><span class="artist">Artist</span></a></div>
                                 <div class="artist-border header-border"></div>
-                                <div class="composer-col">Composer</div>
+                                <div class="composer-col"> <a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=composer&sortOrder=" . (($sort == 'composer') ? $reverseSortOrder : 'asc'); ?>"><span class="composer">Composer</span></a></div>
                                 <div class="composer-border header-border"></div>
-                                <div class="album-col">Album</div>
+                                <div class="album-col"><a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=album&sortOrder=" . (($sort == 'album') ? $reverseSortOrder : 'asc'); ?>"><span class="album">Album</span></a></div>
                                 <div class="album-border header-border"></div>
-                                <div class="song-col">Song</div>
+                                <div class="song-col"><a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=song&sortOrder=" . (($sort == 'song') ? $reverseSortOrder : 'asc'); ?>"><span class="song">Song</span></a></div>
                                 <button class="multi-select-icon"></button>
                                 <section class="options-menu">
                                         <ul>
@@ -1261,12 +1258,88 @@ break;
                                 </section>
                         </div>
                         <div class="rows-container">
+						<?php 
+                    		if (!empty($songs)){
+                        	$i = 1;
+                        	$country = $this->Session->read('territory');
+                        	foreach ($songs as $psong){
+								$downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus, $psong->TerritorySalesDate, $this->Session->read('territory'));
+                           		$StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus, $psong->TerritoryStreamingSalesDate, $this->Session->read('territory'));
+
+                            //if song not allowed for streaming and not allowed for download then this song must not be display
+                            if ($downloadFlag === 0 && $StreamFlag === 0)
+                            {
+                                continue;
+                            }
+                            ?>
                                 <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Crossfade</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Cold</div>
+<?php
+                                if ($this->Session->read('library_type') == 2)
+                                {
+                                    $filePath = shell_exec('perl files/tokengen_streaming ' . $psong->CdnPathFullStream . "/" . $psong->SaveAsNameFullStream);
+                                  
+
+                                    if (!empty($filePath))
+                                    {
+                                        $songPath = explode(':', $filePath);
+                                        $streamUrl = trim($songPath[1]);
+                                        $psong->streamUrl = $streamUrl;
+                                        $psong->totalseconds = $this->Queue->getSeconds($psong->FullLength_Duration);
+                                    }
+                                }
+                                ?>
+
+
+                                <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                    if ($this->Session->read('library_type') == 2 && ($StreamFlag === 1))
+                                    {
+                                        if ('T' == $psong->Advisory)
+                                        {
+                                            $song_title = $psong->SongTitle . '(Explicit)';
+                                        }
+                                        else
+                                        {
+                                            $song_title = $psong->SongTitle;
+                                        }
+                                        echo $html->image('', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'loadSong("' . $psong->streamUrl . '", "' . base64_encode($song_title) . '","' . base64_encode($psong->ArtistText) . '",' . $psong->totalseconds . ',"' . $psong->ProdID . '","' . $psong->provider_type . '");'));
+                                    }
+                                    else
+                                    {
+                                        echo $html->image('', array("class" => "preview play-btn", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $psong->ProdID . ', "' . base64_encode($psong->provider_type) . '", "' . $this->webroot . '");'));
+                                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
+                                        echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
+                                    }
+                                }
+
+                                if ($this->Session->read("patron"))
+                                {
+                                    $style = '';
+                                    $styleSong = '';
+                                }
+                                else
+                                {
+                                    $style = 'style="left:10px"';
+                                    $styleSong = "style='left:570px'";
+                                }
+                                ?>
+                                  <!--      <button class="play-btn"></button> -->
+                                        <div class="artist artist-name" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></div>
+										 <div class="composer composer-name"><a style="text-decoration:none;" title='<?php echo str_replace('"', '', $this->getTextEncode($psong->Composer)); ?>'><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
+                                          <div class="album album-name"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
+                                          <div class="song song-name" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
+                                    <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
+                                    <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
+                                        <?php
+                                        if ($psong->Advisory == 'T')
+                                        {
+                                            echo '<font class="explicit"> (Explicit)</font>';
+                                        }
+                                        //
+                                        ?>
+                                        	</span>
+                                		</div>
                                         <button class="menu-btn"></button>
                                         <section class="options-menu">
                                                 <ul>
@@ -1300,564 +1373,25 @@ break;
                                         </section>
                                         <input type="checkbox" class="row-checkbox">
                                 </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Crossfade</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">So Far Away</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Is There Love In Space</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">If I Could Fly</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">True Love Never Dies</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Soldiers</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Yellow &amp; Green</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Soldiers</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Crossfade</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Cold</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Crossfade</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">So Far Away</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Is There Love In Space</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">If I Could Fly</div>
-                                        <button class="menu-btn"></button>
-                                        <input type="checkbox" class="row-checkbox">
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">True Love Never Dies</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Soldiers</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Yellow &amp; Green</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Soldiers</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>	
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Crossfade</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Cold</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Crossfade</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">So Far Away</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Is There Love In Space</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">If I Could Fly</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">True Love Never Dies</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Soldiers</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>
-                                <div class="row">
-                                        <button class="play-btn"></button>
-                                        <div class="artist-name"><a href="#">Shakira</a></div>
-                                        <div class="composer-name"><a href="#">Yellow &amp; Green</a></div>
-                                        <div class="album-name"><a href="#">Oral Fixation Vol. 2</a></div>
-                                        <div class="song-name">Soldiers</div>
-                                        <button class="menu-btn"></button>
-                                        <section class="options-menu">
-                                                <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
-                                        </section>
-                                        <input type="checkbox" class="row-checkbox">
-                                </div>	
+
+   								<?php
+                                   $i++;
+                        			}
+                    	     	}
+                   	 			?>	
 
                         </div>
                         <div class="pagination-container">
-                                <button class="beginning"></button>
-                                <button class="prev"></button>
-                                <button class="page-1">1</button>
-                                <button class="page-2">2</button>
-                                <button class="page-3">3</button>
-                                <button class="page-4">4</button>
-                                <button class="page-5">5</button>
-                                <button class="next"></button>
-                                <button class="last"></button>
+                           <?php
+                				if (isset($type)) {
+                    				$keyword = "?q=" . $keyword . "&type=" . $type;
+                				}
+                		   ?>
+                			<?php
+                				$keyword = $keyword . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                				echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 5, $keyword);
+         					?>
+						</div>
                         </div>
                 </div>
         </section>
