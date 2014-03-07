@@ -104,14 +104,14 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 {
 	if(!($con = ssh2_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
 	{
-		echo "Not Able to Establish Connection with The Orchard FTP\n";
+		echo "Not Able to Establish Connection with The Orchard SFTP\n";
 		return false;
 	}
 	else
 	{
 		if(!ssh2_auth_password($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
 		{
-			echo "fail: unable to authenticate with The Orchard FTP\n";
+			echo "fail: unable to authenticate with The Orchard SFTP\n";
 			return false;
 		}
 		else
@@ -124,7 +124,7 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 
 			if(!ssh2_scp_send($con, $src, REPORTS_SFTP_PATH."uploads/".$dst, 0644)){
 				echo "error sending $src report to ".REPORTS_SFTP_PATH."uploads/$dst report to IODA server\n";
-				fwrite($logFileWrite, "error sending " . $typeRepport . " report to IODA server\n");
+				fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n");
 				return false;
 			}
 			else
