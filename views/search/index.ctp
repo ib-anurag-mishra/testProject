@@ -906,12 +906,10 @@ break;
                                      $name = $composer->Composer;
                                      $count = $composer->numFound;
                                      $name = $this->getTextEncode($name);
-                                     echo $this->getTextEncode($composer_name);
-                                     /*
                                    ?>
                                     <li><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></li>
                                     <?php
-                                     $i++;*/
+                                     $i++;
 				   }
 				   ?>
 			           </ul>
