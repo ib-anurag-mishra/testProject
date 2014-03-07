@@ -51,12 +51,6 @@ $(document).ready(function() {
         }
     });
 
-    $('.top-single-container ul').bindMouseWheel();
-    $('.top-single-container ul').on('mouseleave', function() {
-        $(this).removeClass('active');
-
-    });    
-
     $('.album-cover-container ul').bindMouseWheel();
     $('.album-cover-container ul').on('mouseleave', function() {
         $(this).removeClass('active');
@@ -102,21 +96,17 @@ $(document).ready(function() {
 
     var ulPosition;
     $('.left-scroll-button').on('click', function() {
-
-
-        var currentScrollLeft = $(this).siblings('.carousel').scrollLeft();
+        var currentScrollLeft = $('.top-albums-carousel').scrollLeft();
         currentScrollLeft = currentScrollLeft - 660;
-        $(this).siblings('.carousel').animate({scrollLeft: currentScrollLeft});        
+        $('.top-albums-carousel').animate({scrollLeft: currentScrollLeft});
 
     });
 
 
     $('.right-scroll-button').on('click', function() {
-
-
-        var currentScrollLeft = $(this).siblings('.carousel').scrollLeft();
+        var currentScrollLeft = $('.top-albums-carousel').scrollLeft();
         currentScrollLeft = currentScrollLeft + 660;
-        $(this).siblings('.carousel').animate({scrollLeft: currentScrollLeft});
+        $('.top-albums-carousel').animate({scrollLeft: currentScrollLeft});
 
 
 
