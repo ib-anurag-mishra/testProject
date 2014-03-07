@@ -696,7 +696,7 @@ function Get_Sales_date($sales_date_array, $country)
                                     <?php 
                                       $i++; 
                                      } ?> 
-
+<section style="position: relative; width: 866px; right: 21px;" class="search-results-songs-page"> 
 <div class="pagination-container">
         <?php
                 $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
@@ -705,7 +705,7 @@ function Get_Sales_date($sales_date_array, $country)
          ?>
 								
 </div>
-
+</section>
 
 
           
