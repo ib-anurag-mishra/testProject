@@ -748,10 +748,16 @@ function addAlbumToWishlist(prodId, providerType, artistText)
 }
 
 
-function addToWishlistVideo(prodId, providerType)
+function addToWishlistVideo(prodId, providerType,type)
 {
-    $('.beforeClick').hide();
-    $('.afterClick').show();
+    
+    
+    if(type == 1){
+        
+    }else{
+        $('.beforeClick').hide();
+        $('.afterClick').show();
+    }
     //document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 
     var data = "prodId=" + prodId + "&provider=" + providerType;
@@ -771,6 +777,10 @@ function addToWishlistVideo(prodId, providerType)
             }
             else if (msg === 'error1')
             {
+                if(type == 1){
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
+                    return false;
+                }
                 document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Already Added</a>';
                 return false;
             }
@@ -779,17 +789,30 @@ function addToWishlistVideo(prodId, providerType)
             var msg = response.substring(0, 7);
             if (msg === 'Success')
             {
-                $('.beforeClick').show();
-                $('.afterClick').hide();
+                if(type == 1){
+
+                }else{                
+                    $('.beforeClick').show();
+                    $('.afterClick').hide();
+                }
 
                 // alert(languageSet);
                 if (languageSet === 'en')
                 {
+                    if(type == 1){
+                        document.getElementById('ajaxflashMessage44').innerHTML = 'Video has been successfully added to your wishlist.';
+                        return false;
+                    }                    
                     document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
                     return false;
                 }
                 else
                 {
+                    if(type == 1){
+                        document.getElementById('ajaxflashMessage44').innerHTML = 'Añadido a su Lista Deseos';
+                        return false;
+                    }                    
+                    
                     document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
                     return false;
                 }
