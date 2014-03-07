@@ -730,7 +730,7 @@ function multiSongCreateNewPlaylist(queueID)
 {
     var type_of = 'multi';
         var selected_songs = [];
-        $(document).find('.top-songs-container .rows-container .row').each(function()
+        $(document).find('.top-songs-container .rows-container .row , .songs .rows-container .row').each(function()
         {
             if ($(this).find('.row-checkbox').prop('checked'))
             {
