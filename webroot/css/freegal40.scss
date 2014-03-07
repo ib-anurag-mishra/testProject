@@ -4295,6 +4295,7 @@ sub { top: 0.4em; }
 		&:hover {
 
 			@include background-image(linear-gradient(#ffffff, #f4f4f4));
+			text-decoration: none;
 		}
 
 		&:active {
