@@ -703,7 +703,25 @@ function Get_Sales_date($sales_date_array, $country)
                                           </div> 
                                         </div>    
                               <?php } ?>
-                       <?php     break;
+                            
+
+</div>
+
+<div class="pagination-container">
+        <?php
+                if (isset($type))
+                {
+                    $keyword = "?q=" . $keyword . "&type=" . $type;
+                }
+                ?>
+                <?php
+                $keyword = $keyword . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 5, $keyword);
+         ?>
+								
+</div>
+<?php
+break;
                         case 'genre':
                              
 			     ?>
