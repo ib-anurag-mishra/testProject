@@ -1449,13 +1449,16 @@ function wishlistVideoDownloadOthers(prodId, id, downloadUrl1, downloadUrl2, dow
     return false;
 }
 
-function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provider)
+function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provider,type)
 {
-    $('.beforeClick').hide();
-    $('.afterClick').show();
-    document.getElementById('vdownloading_' + prodId).style.display = 'block';
-    document.getElementById('download_video_' + prodId).style.display = 'none';
-    document.getElementById('vdownload_loader_' + prodId).style.display = 'block';
+    
+    if(type == 1){
+        $('.beforeClick').hide();
+        $('.afterClick').show();
+        document.getElementById('vdownloading_' + prodId).style.display = 'block';
+        document.getElementById('download_video_' + prodId).style.display = 'none';
+        document.getElementById('vdownload_loader_' + prodId).style.display = 'block';
+    }
 //    var finalURL = downloadUrl1;
 //    finalURL += downloadUrl2;
 //    finalURL += downloadUrl3;
@@ -1477,18 +1480,30 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
             else if (msg === 'suces')
             {
                 var downloadUsedArr = response.split('|');
-                document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                if(type == 1){
+                    document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
                 if (languageSet === 'en') {
-                    document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                    document.getElementById('ajaxflashMessage44').innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
                 } else {
-                    document.getElementById('download_video_' + prodId).innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
+                    document.getElementById('ajaxflashMessage44').innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
                 }
-                document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
-                document.getElementById('vdownloading_' + prodId).style.display = 'none';
-                document.getElementById('download_video_' + prodId).style.display = 'block';
                 location.href = unescape(downloadUsedArr[2]);
-                $('.afterClick').hide();
-                $('.beforeClick').show();
+                }else{
+                    
+                    document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
+                    if (languageSet === 'en') {
+                        document.getElementById('download_video_' + prodId).innerHTML = '<a title="You have already downloaded this Video. Get it from your recent downloads" href="/homes/my_history"><label class="top-10-download-now-button">Downloaded</label></a>';
+                    } else {
+                        document.getElementById('download_video_' + prodId).innerHTML = '<a href="/homes/my_history"><label class="top-10-download-now-button">bajaedas</label></a>';
+                    }
+                    document.getElementById('vdownload_loader_' + prodId).style.display = 'none';
+                    document.getElementById('vdownloading_' + prodId).style.display = 'none';
+                    document.getElementById('download_video_' + prodId).style.display = 'block';
+                    location.href = unescape(downloadUsedArr[2]);
+                    $('.afterClick').hide();
+                    $('.beforeClick').show();                    
+                    
+                }
             }
             else
             {
