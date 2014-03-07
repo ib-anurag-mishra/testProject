@@ -489,9 +489,13 @@ function Get_Sales_date($sales_date_array, $country)
                                                         <div class="time">
 													 <?php
 														
-															
-														  	//echo $psong->FullLength_Duration;
-													
+															$timeDur = explode(':',$psong->FullLength_Duration);
+															if($timeDur[0] != "0"){														  	
+																echo ltrim($psong->FullLength_Duration,"0");
+															}
+															else{
+																echo $psong->FullLength_Duration;
+															}													
 														?>
 													
 														</div>
