@@ -493,11 +493,8 @@ function Get_Sales_date($sales_date_array, $country)
 															echo ltrim($psong->FullLength_Duration,"0");
 														}
 														else {
-															if($timeDuration[0] == "00"){
-																echo "0".ltrim($psong->FullLength_Duration,"0");
-															}
-															else
-																echo $psong->FullLength_Duration;
+															
+														  	echo $psong->FullLength_Duration;
 														} 
 														?>
 													
