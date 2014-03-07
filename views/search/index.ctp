@@ -490,8 +490,8 @@ function Get_Sales_date($sales_date_array, $country)
 													 <?php
 														
 															
-														  	echo $psong->FullLength_Duration;
-														} 
+														  	//echo $psong->FullLength_Duration;
+													
 														?>
 													
 														</div>
