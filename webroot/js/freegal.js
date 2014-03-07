@@ -778,7 +778,7 @@ function addToWishlistVideo(prodId, providerType,type)
             else if (msg === 'error1')
             {
                 if(type == 1){
-                    document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'You have Already Added  Video to your wishlist.';
                     return false;
                 }
                 document.getElementById('video_wishlist' + prodId).innerHTML = '<a class="add-to-wishlist">Already Added</a>';
@@ -1453,12 +1453,14 @@ function wishlistVideoDownloadOthersToken(prodId, id, CdnPath, SaveAsName, provi
 {
     
     if(type == 1){
+    
+	}else{
         $('.beforeClick').hide();
         $('.afterClick').show();
         document.getElementById('vdownloading_' + prodId).style.display = 'block';
         document.getElementById('download_video_' + prodId).style.display = 'none';
-        document.getElementById('vdownload_loader_' + prodId).style.display = 'block';
-    }
+        document.getElementById('vdownload_loader_' + prodId).style.display = 'block';	
+	}
 //    var finalURL = downloadUrl1;
 //    finalURL += downloadUrl2;
 //    finalURL += downloadUrl3;
