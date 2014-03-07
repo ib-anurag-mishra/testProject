@@ -3636,14 +3636,14 @@ sub { top: 0.4em; }
 				top:-1px;
 				width: 34px;
 				height: 25px;
-				background: url(../img/freegal_sprite.png) 0 -225px;
+				background: url(../img/freegal_sprite.png) -230px -200px;
 
 				&:hover {
-					background: url(../img/freegal_sprite.png) -35px -225px;	
+					background: url(../img/freegal_sprite.png) -265px -200px;	
 				}
 
 				&:active {
-					background: url(../img/freegal_sprite.png) -70px -170px;	
+					background: url(../img/freegal_sprite.png) -300px -200px;	
 				}
 
 
