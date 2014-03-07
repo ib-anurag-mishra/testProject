@@ -394,7 +394,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                         ?>
 						</div>
 
-                                    <div class="rows-container">
+                                    <div class="rows-container songs">
                                      <?php 
                                             if (!empty($songs))
                                             {
