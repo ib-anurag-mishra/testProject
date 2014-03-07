@@ -695,7 +695,20 @@ function Get_Sales_date($sales_date_array, $country)
                                             </div>
                                     <?php 
                                       $i++; 
-                                     } ?>           
+                                     } ?> 
+
+<div class="pagination-container">
+        <?php
+                $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
+                                        $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString);
+                echo $pagination_str;
+         ?>
+								
+</div>
+
+
+
+          
                             <?php } else { ?>
                                         <div class="album-detail-container">
                                           <div style="color:red; padding:50px; ">
@@ -707,19 +720,7 @@ function Get_Sales_date($sales_date_array, $country)
 
 </div>
 
-<div class="pagination-container">
-        <?php
-                if (isset($type))
-                {
-                    $keyword = "?q=" . $keyword . "&type=" . $type;
-                }
-                ?>
-                <?php
-                $keyword = $keyword . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
-                echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 5, $keyword);
-         ?>
-								
-</div>
+
 <?php
 break;
                         case 'genre':
