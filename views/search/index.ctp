@@ -8,27 +8,7 @@
 function createPagination($html, $currentPage, $facetPage, $type = 'listing', $totalPages, $pageLimitToShow, $queryString = null)
 {
    
-    $pagination_diff = $pageLimitToShow -2;
-    $pagination_add = $pageLimitToShow-$totalPages;
-    if($currentPage > $pagination_diff){
-        if($currentPage > $totalPages-2){
-         $diffnum = $totalPages- $pageLimitToShow;
-                //break;
-         }
-        else
-        $diffnum = $currentPage- $pagination_diff;
-    }
-    else
-        $diffnum = 0;
-
-    if($totalPages < $pageLimitToShow){
-        $diffnum = -($pagination_add);
-        $prevstyle = "style='right:".(195-$diffnum*26)."px;'";
-	$beginstyle = "style='right:".(221-$diffnum*26)."px;'";  
-     }
-    else
-       $prevstyle = "";
-
+    
     $queryString = html_entity_decode($queryString);
     if ($totalPages > 1)
     {
@@ -38,26 +18,27 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
         {
             if (1 != $currentPage)
             {   
-		$pagination_str .= $html->link('<button class="beginning" '.$beginstyle.'></button>', "/search/index/" .$queryString, array('escape' => FALSE) );
-                $pagination_str .= $html->link('<button class="prev" '.$prevstyle.'></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE) );
+		$pagination_str .= $html->link('<button class="beginning" ></button>', "/search/index/" .$queryString, array('escape' => FALSE) );
+                $pagination_str .= $html->link('<button class="prev" ></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE) );
             }
             else
             {
-		$pagination_str .= '<button class="beginning" '.$beginstyle.'></button>';
-                $pagination_str .= '<button class="prev" '.$prevstyle.'></button>';
+		$pagination_str .= '<button class=
+"beginning" style="cursor:none;" ></button>';
+                $pagination_str .= '<button class="prev" style="cursor:none;" ></button>';
             }
         }
         else if ($type == 'block')
         {
             if (1 != $facetPage)
             {
-		$pagination_str .= $html->link('<button class="beginning" '.$beginstyle.'></button>', "/search/index/" .$queryString, array('escape' => FALSE) );
-                $pagination_str .= $html->link('<button class="prev" '.$prevstyle.'></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString , array('escape' => FALSE));
+		$pagination_str .= $html->link('<button class="beginning"></button>', "/search/index/" .$queryString, array('escape' => FALSE) );
+                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString , array('escape' => FALSE));
             }
             else
             {
-		$pagination_str .= '<button class="beginning" '.$beginstyle.'></button>';
-                $pagination_str .= '<button class="prev" '.$prevstyle.'></button>';
+		$pagination_str .= '<button class="beginning" style="cursor:none;"></button>';
+                $pagination_str .= '<button class="prev" style="cursor:none;" ></button>';
             }
         }
 
@@ -109,12 +90,12 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             {
                 if ($currentPage == $pageCount)
                 {
-                    $classnum = $pageCount - $diffnum;
-                    $pagination_str .= '<button class="page-'.$classCounter.'">'.$pageCount.'</button>';
+                   
+                    $pagination_str .= '<button class="page-'.$classCounter.'" style="cursor:none;" >'.$pageCount.'</button>';
                 }
                 else
                 { 
-       		    $classnum = $pageCount - $diffnum;
+       		    
                     $pagination_str .= $html->link('<button class="page-'.$classCounter.'">'.$pageCount.'</button>', '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
                 }
             }
@@ -122,12 +103,12 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             {
                 if ($facetPage == $pageCount)
                 {
-		    $classnum = $pageCount - $diffnum;
-                    $pagination_str .= '<button class="page-'.$classCounter.'">'.$pageCount.'</button>';
+		   
+                    $pagination_str .= '<button class="page-'.$classCounter.'" style="cursor:none;" >'.$pageCount.'</button>';
                 }
                 else
                 {
-		    $classnum = $pageCount - $diffnum;
+		   
                     $pagination_str .= $html->link('<button class="page-'.$classCounter.'">'.$pageCount.'</button>', '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
                 }
             }
@@ -145,8 +126,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             }
             else
             {
-                $pagination_str .= '<button class="next"></button>';
- 		$pagination_str .= '<button class="last"></button>';   
+                $pagination_str .= '<button class="next" style="cursor:none;"></button>';
+ 		$pagination_str .= '<button class="last" style="cursor:none;"></button>';   
             }
         }
         else if ($type == 'block')
@@ -158,8 +139,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             }
             else
             {
-                $pagination_str .= '<button class="next"></button>';
-		$pagination_str .= '<button class="last"></button>';   
+                $pagination_str .= '<button class="next" style="cursor:none;"></button>';
+		$pagination_str .= '<button class="last" style="cursor:none;"></button>';   
             }
         }
     }
