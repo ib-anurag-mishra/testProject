@@ -793,36 +793,34 @@ function Get_Sales_date($sales_date_array, $country)
                                                         { ?>
                                                             
                                                             <button class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $song->provider_type; ?>",1);'></button>
-                                                     <?php  $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
-                                                            if ($sales_date <= date('Y-m-d'))
-                                                            {
-                                                                $productInfo = $mvideo->getDownloadData($psong->ProdID, $psong->provider_type);
-                            //                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
-                            //                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
-                            //                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-                                                                if ($libraryDownload == '1' && $patronDownload == '1')
-                                                                {
-                                                                    if ($psong->status != 'avail')
-                                                                    {
-                                                                        ?>
-                                                                        <p>
-                                                                        <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
-                                                                            <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
-                                                                            <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
-                                                                            <button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'></button>                                                                        
-                                                                        </form>
-                                                                        </p>
-                                                                        <?php
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __("Downloaded"); ?></a><?php
-                                                                    }
-                                                                }
-                                                            }
-                                                        } ?>                                                        
-                                                        
-                                                        <button class="download-btn"></button>
+                                                            <?php  $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
+                                                                   if ($sales_date <= date('Y-m-d'))
+                                                                   {
+                                                                       $productInfo = $mvideo->getDownloadData($psong->ProdID, $psong->provider_type);
+                                   //                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
+                                   //                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
+                                   //                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
+                                                                       if ($libraryDownload == '1' && $patronDownload == '1')
+                                                                       {
+                                                                           if ($psong->status != 'avail')
+                                                                           {
+                                                                               ?>
+                                                                               <p>
+                                                                               <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
+                                                                                   <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
+                                                                                   <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
+                                                                                   <button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'></button>                                                                        
+                                                                               </form>
+                                                                               </p>
+                                                                               <?php
+                                                                           }
+                                                                           else
+                                                                           {
+                                                                               ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __("Downloaded"); ?></a><?php
+                                                                           }
+                                                                       }
+                                                                   }
+                                                          } ?>                                                        
                                                    </div>
                                            </div> 
                                  <?php }
