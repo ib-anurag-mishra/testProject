@@ -167,13 +167,15 @@ function write_file($content, $file_name, $folder)
         fclose($fh);
 
         //FOR SENDING REPORT TO IODA SERVER USING SFTP
-        //if(sendReportFilesftp($folder.$file_name, $file_name, $logFileWrite, "monthly")) {
-        //echo "Report $file_name sent";
-        //FOR SENDING REPORT TO IODA SERVER USING FTP
-        if (sendReportFileftp($folder . $file_name, $file_name, $logFileWrite, "monthly"))
+        if (sendReportFilesftp($folder . $file_name, $file_name, $logFileWrite, "monthly"))
         {
             echo "Report $file_name sent";
         }
+        //FOR SENDING REPORT TO IODA SERVER USING FTP
+//        if (sendReportFileftp($folder . $file_name, $file_name, $logFileWrite, "monthly"))
+//        {
+//            echo "Report $file_name sent";
+//        }
     }
 }
 
