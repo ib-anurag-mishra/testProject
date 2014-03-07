@@ -121,20 +121,60 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 //			{
 //				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH."uploads/");
 //			}
+                    
+                        // Create SFTP session
+                        $sftp = ssh2_sftp($con);
+                        $sftpStream = fopen('ssh2.sftp://' . $sftp . '/'.$dst, 'w');
 
-			if(!ssh2_scp_send($con, $src, "/".$dst, 0644)){
-				echo "error sending $src report to /$dst report to IODA server\n";
-				fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n");
-				return false;
-			}
-			else
-			{
-				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
-				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
-                                sendFile($src, $dst);
-				sendReportEmail($typeReport, $dst);
-				return true;
-			}
+                        try
+                        {
+                            if (!$sftpStream)
+                            {
+                                throw new Exception("Could not open remote file: $dst");
+                            }
+
+                            $data_to_send = file_get_contents($src);
+                            if ($data_to_send === false)
+                            {
+                                throw new Exception("Could not open local file: $src.");
+                            }
+
+                            if (fwrite($sftpStream, $data_to_send) === false)
+                            {
+                                throw new Exception("Could not send data from file: $src.");
+                            }
+
+                            fclose($sftpStream);
+
+                            echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+                            fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+                            sendFile($src, $dst);
+                            sendReportEmail($typeReport, $dst);
+                            return true;
+                        }
+                        catch (Exception $e)
+                        {
+                            echo "error sending $src report to /$dst report to IODA server\n";
+                            fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n");                          
+                            echo 'Exception: ' . $e->getMessage();
+                            fclose($sftpStream);
+                            return false;
+                        }
+
+
+//			if(!ssh2_scp_send($con, $src, "/".$dst, 0644)){
+//				echo "error sending $src report to /$dst report to IODA server\n";
+//				fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n");
+//				return false;
+//			}
+//			else
+//			{
+//				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+//				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+//                                sendFile($src, $dst);
+//				sendReportEmail($typeReport, $dst);
+//				return true;
+//			}
 		}
 	}
 }
