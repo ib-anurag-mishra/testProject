@@ -811,7 +811,7 @@ break;
                                                         if ($this->Session->read("patron"))
                                                         { ?>
                                                             
-                                                            <button class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $song->provider_type; ?>",1);'></button>
+                                                            <button class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>",1);'></button>
                                                             <?php  $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
                                                                    if ($sales_date <= date('Y-m-d'))
                                                                    {
@@ -828,7 +828,7 @@ break;
                                                                                <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
                                                                                    <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                                                    <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
-                                                                                   <button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'></button>                                                                        
+                                                                                   <button class="download-btn" onclick='return wishlistVideoDownloadOthersToken("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>",1);'></button>                                                                        
                                                                                </form>
                                                                                </p>
                                                                                <?php
