@@ -352,7 +352,8 @@ function Get_Sales_date($sales_date_array, $country)
                          case 'song':
                         $reverseSortOrder = (($sortOrder == 'asc') ? 'desc' : 'asc');
      ?>
-		<header>
+	    <div class="songs">	
+                <header>
 			<h3 class="songs-header">Songs</h3>
 		</header>
 
@@ -394,7 +395,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                         ?>
 						</div>
 
-                                    <div class="rows-container songs">
+                                    <div class="rows-container">
                                      <?php 
                                             if (!empty($songs))
                                             {
@@ -639,6 +640,7 @@ function Get_Sales_date($sales_date_array, $country)
                                              ?>
 
                                     </div>
+                       </div>             
  <?php
                             break;
                         case 'album': 
