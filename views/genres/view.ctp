@@ -150,7 +150,7 @@ $genre_text_conversion = array(
 //$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
 $genre_crumb_name = $genre;
 
-$html->addCrumb(__('Genres', true), '/genres/view/');
+$html->addCrumb(__('All Genre', true), '/genres/view/');
 $html->addCrumb($this->getTextEncode($genre_crumb_name), '/genres/view/' . base64_encode($genre_crumb_name));
 $totalRows = count($genresAll);
 ?>
