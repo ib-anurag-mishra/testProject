@@ -745,9 +745,27 @@ function Get_Sales_date($sales_date_array, $country)
 
                                 <?php
                             break;
-                        case 'video':
-                            $search_category = 'search-results-videos-page';
-                            break;
+                        case 'video': 
+                            
+                            ?>
+                                <header>
+                                        <h3 class="videos-header">Videos</h3>
+
+                                </header>
+                                <div class="video-result-container">
+                                        <div class="video-thumb">
+                                                <a href="#"><img src="images/video-results-shakira.jpg"></a>
+                                        </div>
+                                        <div class="video-info">
+                                                <div class="video-title"><a href="#">Whenever, Wherever</a></div>
+                                                <div class="artist">by <a href="#">Shakira</a></div>
+                                                <div class="release-date">Released on Aug 01, 2004</div>
+                                                <div class="video-size">Size: 67.2 MB</div>
+                                                <button class="wishlist-btn"></button>
+                                                <button class="download-btn"></button>
+                                        </div>
+                                </div>        
+                     <?php      break;
                         case 'artist':
                           
 				?>
