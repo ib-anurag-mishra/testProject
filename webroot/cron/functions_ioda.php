@@ -116,14 +116,14 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 		}
 		else
 		{
-			$sftp = ssh2_sftp($con);
-			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH."uploads/"))
-			{
-				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH."uploads/");
-			}
+//			$sftp = ssh2_sftp($con);
+//			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH."uploads/"))
+//			{
+//				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH."uploads/");
+//			}
 
-			if(!ssh2_scp_send($con, $src, REPORTS_SFTP_PATH."uploads/".$dst, 0644)){
-				echo "error sending $src report to ".REPORTS_SFTP_PATH."uploads/$dst report to IODA server\n";
+			if(!ssh2_scp_send($con, $src, $dst, 0644)){
+				echo "error sending $src report to $dst report to IODA server\n";
 				fwrite($logFileWrite, "error sending " . $typeReport . " report to IODA server\n");
 				return false;
 			}
