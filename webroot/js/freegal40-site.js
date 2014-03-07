@@ -535,7 +535,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon , .album-info .menu-btn').on('click', function(e)
+    $(document).find('.top-songs .menu-btn , .playlist-menu-icon , .top-songs .multi-select-icon , .album-info .menu-btn , .songs .menu-btn ,  .songs .multi-select-icon').on('click', function(e)
     {
         e.preventDefault();
 
@@ -557,7 +557,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist').on('click', function(e)
+    $(document).find('.add-all-to-wishlist , .wishlist-icon, .top-songs .add-to-wishlist, .album-info .add-to-wishlist , .songs .add-to-wishlist').on('click', function(e)
     {
         if ($(this).hasClass('wishlist-icon'))
         {
