@@ -8,7 +8,7 @@ ini_set("session.cookie_lifetime", "0"); // 0 means "until the browser is closed
         <h2>Top Albums</h2>
     </header> 
     <div class="top-albums-carousel-container"> 
-        <div class="top-albums-carousel">
+        <div class="top-albums-carousel carousel">
             <ul class="clearfix">
                 <?php
                 $count = 1;
