@@ -759,22 +759,51 @@ function Get_Sales_date($sales_date_array, $country)
                                         <h3 class="videos-header">Videos</h3>
 
                                 </header>
-                                <div class="video-result-container">
-                                        <div class="video-thumb">
-                                                <a href="#"><img src="images/video-results-shakira.jpg"></a>
-                                        </div>
-                                        <div class="video-info">
-                                                <div class="video-title"><a href="#">Whenever, Wherever</a></div>
-                                                <div class="artist">by <a href="#">Shakira</a></div>
-                                                <div class="release-date">Released on Aug 01, 2004</div>
-                                                <div class="video-size">Size: 67.2 MB</div>
-                                                <button class="wishlist-btn"></button>
-                                                <button class="download-btn"></button>
-                                        </div>
-                                </div>        
+                                <?php
+                                 if(!empty($songs)){    
+                                       $b = 1;
+                                       foreach ($songs as $psong)
+                                       {
+                                           ?>
+                                           <div class="video-result-container">
+                                                   <div class="video-thumb">
+                                                        <?php     
+                                                        $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
+                                                        $VideoImage = Configure::read('App.Music_Path') . $videoArtwork;   ?>
+                                                        <a href="/videos/details/<?php echo $psong->ProdID; ?>"><img src="<?php echo $VideoImage; ?>"></a>
+                                                   </div>
+                                                   <div class="video-info">
+                                                        <div class="video-title"><a href="/videos/details/<?php echo $psong->ProdID; ?>"><?php echo $psong->VideoTitle; ?></a></div>
+                                                        <div class="artist">by <a href="#"><?php echo $psong->ProdID; ?></a></div>
+                                                         <a  href="/artists/album/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?= base64_encode($psong->Genre) ?>">
+                                                                <?php echo $this->getTextEncode($psong->ArtistText); ?>
+                                                         </a>
+                                                        <div class="release-date">Released on Aug 01, 2004</div>
+                                                        <div class="release-date">
+                                                            Released on
+                                                            <?php
+                                                                $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
+                                                                echo date("M d, Y", strtotime($sales_date)); 
+                                                             ?>
+                                                        </div>
+                                                        <div class="video-size">Size: 67.2 MB</div>
+                                                        <button class="wishlist-btn"></button>
+                                                        <button class="download-btn"></button>
+                                                   </div>
+                                           </div> 
+                                 <?php }
+                                   }else{ ?>
+
+                                       <div style="color:red; padding:50px; ">
+                                           <span>No Videos Found</span>
+                                       </div>
+
+                            <?php  } 
+
+                                 ?>
                      <?php      break;
-                        case 'artist':
-                          
+                     
+                     case 'artist':
 				?>
                             	<header>
 				<h3 class="artists-header">More Artists Like <span><?php echo $keyword; ?></span></h3>
