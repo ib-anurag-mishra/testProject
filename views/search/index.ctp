@@ -486,7 +486,22 @@ function Get_Sales_date($sales_date_array, $country)
                                                                 ?>
                                                             </a>   
                                                         </div>
-                                                        <div class="time"><?php echo ltrim($psong->FullLength_Duration,"0"); ?></div>
+                                                        <div class="time">
+													 <?php
+														$timeDuration = explode(':',$psong->FullLength_Duration);				
+														if ($timeDuration[0] != "0" || $timeDuration != "00") {
+															echo ltrim($psong->FullLength_Duration,"0");
+														}
+														else {
+															if($timeDuration[0] == "00"){
+																echo "0".ltrim($psong->FullLength_Duration,"0");
+															}
+															else
+																echo $psong->FullLength_Duration;
+														} 
+														?>
+													
+														</div>
                                                 <?php
                                                 if ($this->Session->read("patron"))
                                                 {
