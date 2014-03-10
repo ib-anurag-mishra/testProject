@@ -1321,10 +1321,10 @@ break;
                                     <button class="multi-select-icon"></button>
                                     <section class="options-menu">
                                         <ul>
-                                            <li><a class="select-all" href="#">Select All</a></li>
-                                            <li><a class="clear-all" href="#">Clear All</a></li>										
-                                            <li><a class="add-all-to-wishlist" href="#">Add to Wishlist</a></li>
-                                            <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                            <li><a class="select-all no-ajaxy" href="#">Select All</a></li>
+                                            <li><a class="clear-all no-ajaxy" href="#">Clear All</a></li>										
+                                            <li><a class="add-all-to-wishlist no-ajaxy" href="#">Add to Wishlist</a></li>
+                                            <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
                                         </ul>
                                         <ul class="playlist-menu">
 
@@ -1509,7 +1509,7 @@ break;
                                                                      else
                                                                      {
                                                                 ?>
-                                                                <span class="beforeClick" id="wishlist<?=$psong->ProdID?>" > <a class="add-to-wishlist" href="#">Add to Wishlist</a> </span>
+                                                                <span class="beforeClick" id="wishlist<?=$psong->ProdID?>" > <a class="add-to-wishlist no-ajaxy" href="#">Add to Wishlist</a> </span>
                                                                 <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a></span>
                                                                 <?php
                                                                      }
@@ -1517,10 +1517,10 @@ break;
                                                             </li>
                                                             <?php } ?>
                                                             <?php  if ($this->Session->read('library_type') == 2 && ($StreamFlag === 1)) { ?> 
-                                                                    <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                                                    <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
                                                             </ul>
                                                             <ul class="playlist-menu">
-                                                                <li><a href="#">Create New Playlist</a></li>                                                                 
+                                                                <li><a href="#" class="no-ajaxy">Create New Playlist</a></li>                                                                 
                                                             </ul>
                                                             <?php } ?> 											
                                         </section>
