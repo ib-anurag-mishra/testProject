@@ -307,7 +307,9 @@ if ($type != 'genre') {
                                     <li><a class="select-all no-ajaxy" href="#">Select All</a></li>
                                     <li><a class="clear-all no-ajaxy" href="#">Clear All</a></li>										
                                     <li><a class="add-all-to-wishlist no-ajaxy" href="#">Add to Wishlist</a></li>
-                                    <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+                                    <?php if ($this->Session->read('library_type') == 2) { ?> 
+                                        <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+                                    <?php } ?>
                                 </ul>
                                 <ul class="playlist-menu">
 
@@ -1165,7 +1167,9 @@ if ($type != 'genre') {
                             <li><a class="select-all no-ajaxy" href="#">Select All</a></li>
                             <li><a class="clear-all no-ajaxy" href="#">Clear All</a></li>										
                             <li><a class="add-all-to-wishlist no-ajaxy" href="#">Add to Wishlist</a></li>
-                            <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+                            <?php if ($this->Session->read('library_type') == 2) { ?> 
+                                <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
+                            <?php } ?>
                         </ul>
                         <ul class="playlist-menu">
 
