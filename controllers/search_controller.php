@@ -247,7 +247,7 @@ class SearchController extends AppController
 
                     case 'genre':
                         $limit = 30;
-			$totalGenres = 30;
+			
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
                         $genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
                         //print_r($genres); die;
@@ -263,7 +263,7 @@ class SearchController extends AppController
 
                     case 'artist':
                         $limit = 18;
-			$totalArtists = 18;
+			
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
                         $artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
                         $this->set('artists', $artists);
@@ -271,7 +271,7 @@ class SearchController extends AppController
 
                     case 'composer':
                         $limit = 18;
-			$totalComposers = 18;
+			
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
                         $composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
                         $this->set('composers', $composers);
@@ -316,15 +316,15 @@ class SearchController extends AppController
 
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
-                $totalArtists = 18;
+                
                 //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
                 //echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
-		$totalGenres = 30;
+		
                 //echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
                 //echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
-		$totalComposers = 18;
+		
                 //echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
                 // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
                 //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
@@ -350,9 +350,10 @@ class SearchController extends AppController
             $this->set('currentPage', $page);
             $this->set('facetPage', $facetPage);
 	    $this->set('totalAlbums',$totalAlbums);
-   	    $this->set('totalArtists',$totalArtists);
-	    $this->set('totalComposers',$totalComposers);
-	    $this->set('totalGenres',$totalGenres);
+   	    $this->set('totalArtists',18);
+	    $this->set('totalComposers',18);
+	    $this->set('totalGenres',30);
+	    $this->set('totalSongs', $totalPages*10);
         }
         $this->set('keyword', htmlspecialchars($queryVar));
         //echo "<br>search end- ".date("Y-m-d H:i:s");
