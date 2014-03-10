@@ -4351,7 +4351,7 @@ sub { top: 0.4em; }
 		
 
 		&:hover {
-
+			
 			@include background-image(linear-gradient(#ffffff, #f4f4f4));
 			text-decoration: none;
 		}
@@ -4364,7 +4364,7 @@ sub { top: 0.4em; }
 		&.active {
 
 			color: #fff;
-			
+			background: #37a1c3;
 			@include background-image(linear-gradient(#37a1c3, #4ebfe3 25%));
 			border:1px solid #008fbd;
 			
