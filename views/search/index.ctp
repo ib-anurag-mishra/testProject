@@ -743,14 +743,14 @@ function Get_Sales_date($sales_date_array, $country)
                                                                                  else
                                                                                  {
                                                                             ?>
-                                                                            <span class="beforeClick" id="wishlist<?=$palbum->ReferenceID?>" > <a class="add-to-wishlist" href="#">Add to Wishlist</a> </span>
+                                                                            <span class="beforeClick" id="wishlist<?=$palbum->ReferenceID?>" > <a class="add-to-wishlist no-ajaxy" href="#">Add to Wishlist</a> </span>
                                                                             <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a></span>
                                                                             <?php
                                                                                  }
                                                                             ?>
                                                                         </li>
                                                                         <?php  if ($this->Session->read('library_type') == 2 && !empty($arr_albumStream[$i]['albumSongs'][$palbum->ReferenceID])) { ?> 
-                                                                                <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                                                                <li><a class="add-to-playlist no-ajaxy" href="#">Add to Playlist</a></li>
                                                                         </ul>
                                                                         <ul class="playlist-menu">
                                                                             <li><a href="#">Create New Playlist</a></li>                                                                 
