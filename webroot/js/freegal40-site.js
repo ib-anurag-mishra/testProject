@@ -642,7 +642,7 @@ $(document).ready(function() {
     
             var type = 'song';
             var selected_songs = [];
-            $(document).find('.top-songs-container .rows-container .row , .songs .rows-container .row , . songs-results-list .rows-container .row').each(function()
+            $(document).find('.top-songs-container .rows-container .row , .songs .rows-container .row , .songs-results-list .rows-container .row').each(function()
             {
                 if ($(this).find('.row-checkbox').prop('checked'))
                 {
