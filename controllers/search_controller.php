@@ -157,8 +157,7 @@ class SearchController extends AppController
             //echo "<br>Search for Songs Started at ".date("Y-m-d H:i:s");
             $songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
             //echo "<br>Search for Songs Ended at ".date("Y-m-d H:i:s");
-            $total = $this->Solr->getFacetSearchTotal($queryVar, 'song');
-	    print_r($total);exit;
+
             $total = $this->Solr->total;
             $totalPages = ceil($total / $limit);
 
@@ -213,8 +212,7 @@ class SearchController extends AppController
             }
             /* echo "Microtime : ".microtime();
               echo "Time : ".date('h:m:s'); */
-	    $totalSongs = $totalPages*$limit;
-	    $this->set('totalSongs', $totalSongs);
+
             $this->set('songs', $songs);
             // print_r($songs);
             // Added code for all functionality
@@ -289,7 +287,7 @@ class SearchController extends AppController
             }
             else
             {
- 	        $totalalbums = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 15);
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
@@ -314,20 +312,16 @@ class SearchController extends AppController
 
                 //echo "<br>Group Search for Artists Started at ".date("Y-m-d H:i:s");
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
-		$totalArtists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5000);
                 //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
                 //echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
-     	        $totalGenres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5000);
                 //echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
                 //echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
-                $totalComposers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5000);
                 //echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
                 // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
                 //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
                 $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
-		$totalVideos = $this->Solr->groupSearch($queryVar, 'video', 1, 5000);
                 //echo "<br>Group Search for Video ended at ".date("Y-m-d H:i:s");
                 // print_r($videos); die;
                 $this->set('albums', $albums);
@@ -340,11 +334,6 @@ class SearchController extends AppController
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
                 $this->set('videos', $videos);
-                $this->set('totalAlbums'$totalalbums);
-		$this->set('totalArtists'$totalArtists);
-		$this->set('totalGenres'$totalGenres);
-		$this->set('totalComposers'$totalComposers);
-		$this->set('totalVideos'$totalVideos);
             }
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
