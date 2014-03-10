@@ -225,7 +225,7 @@ class SearchController extends AppController
                 {
                     case 'album':
                         $limit = 12;
-                        $totalAlbums = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        //$totalAlbums = $this->Solr->getFacetSearchTotal($queryVar, 'album');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
 
@@ -293,7 +293,7 @@ class SearchController extends AppController
 
                 //echo "<br>Group Search for Albums Started at ".date("Y-m-d H:i:s");
                 $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 15);
-		$totalAlbums = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+		//$totalAlbums = $this->Solr->getFacetSearchTotal($queryVar, 'album');
                 //echo "<br>Group Search for Albums Ended at ".date("Y-m-d H:i:s");
                 $queryArr = null;
                 $albumData = array();
@@ -349,11 +349,11 @@ class SearchController extends AppController
             $this->set('totalPages', $totalPages);
             $this->set('currentPage', $page);
             $this->set('facetPage', $facetPage);
-	    $this->set('totalAlbums',$totalAlbums);
-   	    $this->set('totalArtists',18);
-	    $this->set('totalComposers',18);
-	    $this->set('totalGenres',30);
-	    $this->set('totalSongs', $totalPages*10);
+	  //  $this->set('totalAlbums',$totalAlbums);
+   	  //  $this->set('totalArtists',18);
+	  //  $this->set('totalComposers',18);
+	 //   $this->set('totalGenres',30);
+	 //   $this->set('totalSongs', $totalPages*10);
         }
         $this->set('keyword', htmlspecialchars($queryVar));
         //echo "<br>search end- ".date("Y-m-d H:i:s");
