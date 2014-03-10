@@ -2519,6 +2519,7 @@ sub { top: 0.4em; }
 		height: 30px;
 		width: 55px;
 		color:#fff;
+		background: #63c9eb;
 		@include background-image(linear-gradient(#63c9eb, #58bee0));
 		@include border-radius(20px);
 		position:absolute;
@@ -2529,11 +2530,13 @@ sub { top: 0.4em; }
 		font-size: 12px;
 
 		&:hover {
+			background: #7ed6f4;
 			@include background-image(linear-gradient(#7ed6f4, #62c4e4));
 
 		}
 
 		&:active {
+			background: #46b2d5;
 			@include background-image(linear-gradient(#46b2d5, #62c4e4));
 
 		}
