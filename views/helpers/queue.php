@@ -223,6 +223,22 @@ EOD;
        <button class="play-btn" onclick="loadNationalTopSong('$cdnPath','$sourceUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType');"></button>        
 EOD;
         return $str;
+    } 
+    
+
+    /* Function name : getsearchSongsStreamNowLabel
+     * Description   : This function is used to get stream now mark up replacing play button 
+     */
+
+    function getsearchSongsStreamNowLabel($streamUrl, $songTitle, $artistText, $songLength, $songProdId, $providerType)
+    {
+
+        $songTitle = base64_encode($songTitle);
+        $artistText = base64_encode($artistText);
+        $str = <<<EOD
+       <button class="play-btn" onclick="loadSong('$streamUrl','$songTitle','$artistText','$songLength',$songProdId,'$providerType');"></button>        
+EOD;
+        return $str;
     }    
 
     /* Function name : getAlbumStreamNowLabel
