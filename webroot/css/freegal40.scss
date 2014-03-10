@@ -3683,6 +3683,19 @@ sub { top: 0.4em; }
 
 				}
 
+				&.video-downloaded {
+					background: url(../img/freegal_sprite.png) -115px -225px;
+
+					&:hover {
+						background: url(../img/freegal_sprite.png) -150px -225px;	
+					}
+
+					&:active {
+						background: url(../img/freegal_sprite.png) -185px -225px;	
+					}
+
+				}
+
 			}
 
 
