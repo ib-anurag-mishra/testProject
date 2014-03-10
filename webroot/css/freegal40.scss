@@ -3992,7 +3992,25 @@ sub { top: 0.4em; }
 	}
 
 
+	.preview {
+		position: absolute;
+		left: 9px;
+		top: 8px;
+		width: 24px;
+		height: 24px;
+		
+	}
 
+
+	.sample-icon {
+
+		position: absolute;
+		right:13px;
+		top:17px;
+		width: 9px;
+		height: 9px;
+		background: url(../img/freegal_sprite.png) -115px -150px;
+	}	
 
 	.play-btn {
 		position: absolute;

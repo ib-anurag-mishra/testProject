@@ -769,7 +769,7 @@ if ($type != 'genre') {
                                             </p>
                                                 <?php
                                             } else {
-                                                ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-btn"></button></a>
+                                                ?><a href='/homes/my_history' title='<?php __("You have already downloaded this video. Get it from your recent downloads"); ?>'><button class="download-btn video-downloaded"></button></a>
                                             <?php
                                             }
                                         }else{ ?>
