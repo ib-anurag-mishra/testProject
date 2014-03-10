@@ -320,9 +320,11 @@ class SearchController extends AppController
                 //echo "<br>Group Search for Artists Ended at ".date("Y-m-d H:i:s");
                 //echo "<br>Group Search for Genres Started at ".date("Y-m-d H:i:s");
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
+		$totalGenres = 30;
                 //echo "<br>Group Search for Genres Ended at ".date("Y-m-d H:i:s");;
                 //echo "<br>Group Search for Composers Started at ".date("Y-m-d H:i:s");
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
+		$totalComposers = 18;
                 //echo "<br>Group Search for Composers Ended at ".date("Y-m-d H:i:s");
                 // $labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
                 //echo "<br>Group Search for Video Started at ".date("Y-m-d H:i:s");
