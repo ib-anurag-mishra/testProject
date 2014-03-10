@@ -1314,69 +1314,56 @@ break;
                                 <div class="album-col"><a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=album&sortOrder=" . (($sort == 'album') ? $reverseSortOrder : 'asc'); ?>"><span class="album">Album</span></a></div>
                                 <div class="album-border header-border"></div>
                                 <div class="song-col"><a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=song&sortOrder=" . (($sort == 'song') ? $reverseSortOrder : 'asc'); ?>"><span class="song">Song</span></a></div>
-                                <button class="multi-select-icon"></button>
-                                <section class="options-menu">
+                                <?php
+                                if ($this->Session->read("patron"))
+                                {
+                                    ?>
+                                    <button class="multi-select-icon"></button>
+                                    <section class="options-menu">
                                         <ul>
-                                                <li><a href="#" class="select-all">Select All</a></li>
-                                                <li><a href="#" class="clear-all">Clear All</a></li>
-                                                <li><a href="#">Add to Wishlist</a></li>
-                                                <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
+                                            <li><a class="select-all" href="#">Select All</a></li>
+                                            <li><a class="clear-all" href="#">Clear All</a></li>										
+                                            <li><a class="add-all-to-wishlist" href="#">Add to Wishlist</a></li>
+                                            <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
                                         </ul>
                                         <ul class="playlist-menu">
 
-                                                <li><a href="#">Playlist 1</a></li>
-                                                <li><a href="#">Playlist 2</a></li>
-                                                <li><a href="#">Playlist 3</a></li>
-                                                <li><a href="#">Playlist 4</a></li>
-                                                <li><a href="#">Playlist 5</a></li>
-                                                <li><a href="#">Playlist 6</a></li>
-                                                <li><a href="#">Playlist 7</a></li>
-                                                <li><a href="#">Playlist 8</a></li>
-                                                <li><a href="#">Playlist 9</a></li>
-                                                <li><a href="#">Playlist 10</a></li>
-                                                <li><a href="#">Playlist 11</a></li>
-                                                <li><a href="#">Playlist 12</a></li>
-                                                <li><a href="#">Playlist 13</a></li>
-                                                <li><a href="#">Playlist 14</a></li>
-                                                <li><a href="#">Playlist 15</a></li>
-                                                <li><a href="#">Playlist 16</a></li>
-                                                <li><a href="#">Playlist 17</a></li>
-                                                <li><a href="#">Playlist 18</a></li>
-                                                <li><a href="#">Playlist 19</a></li>
-                                                <li><a href="#">Playlist 20</a></li>
                                         </ul>
-                                </section>
+                                    </section>
+                                    <?php
+                                }
+                                ?>
                         </div>
                         <div class="rows-container">
-						<?php 
-                    		if (!empty($songs)){
-                        	$i = 1;
-                        	$country = $this->Session->read('territory');
-                        	foreach ($songs as $psong){
-								$downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus, $psong->TerritorySalesDate, $this->Session->read('territory'));
-                           		$StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus, $psong->TerritoryStreamingSalesDate, $this->Session->read('territory'));
+                                <?php 
+                                    if (!empty($songs)){
+                                    $i = 1;
+                                    $country = $this->Session->read('territory');
+                                    foreach ($songs as $psong){
+                                        $downloadFlag = $this->Search->checkDownloadForSearch($psong->TerritoryDownloadStatus, $psong->TerritorySalesDate, $this->Session->read('territory'));
+                                        $StreamFlag = $this->Search->checkStreamingForSearch($psong->TerritoryStreamingStatus, $psong->TerritoryStreamingSalesDate, $this->Session->read('territory'));
 
-                            //if song not allowed for streaming and not allowed for download then this song must not be display
-                            if ($downloadFlag === 0 && $StreamFlag === 0)
-                            {
-                                continue;
-                            }
-                            ?>
+                                        //if song not allowed for streaming and not allowed for download then this song must not be display
+                                        if ($downloadFlag === 0 && $StreamFlag === 0)
+                                        {
+                                            continue;
+                                        }
+                                ?>
                                 <div class="row">
-<?php
-                                if ($this->Session->read('library_type') == 2)
-                                {
-                                    $filePath = shell_exec('perl files/tokengen_streaming ' . $psong->CdnPathFullStream . "/" . $psong->SaveAsNameFullStream);
-                                  
-
-                                    if (!empty($filePath))
+                                <?php
+                                    if ($this->Session->read('library_type') == 2)
                                     {
-                                        $songPath = explode(':', $filePath);
-                                        $streamUrl = trim($songPath[1]);
-                                        $psong->streamUrl = $streamUrl;
-                                        $psong->totalseconds = $this->Queue->getSeconds($psong->FullLength_Duration);
+                                        $filePath = shell_exec('perl files/tokengen_streaming ' . $psong->CdnPathFullStream . "/" . $psong->SaveAsNameFullStream);
+
+
+                                        if (!empty($filePath))
+                                        {
+                                            $songPath = explode(':', $filePath);
+                                            $streamUrl = trim($songPath[1]);
+                                            $psong->streamUrl = $streamUrl;
+                                            $psong->totalseconds = $this->Queue->getSeconds($psong->FullLength_Duration);
+                                        }
                                     }
-                                }
                                 ?>
 
 
@@ -1415,10 +1402,10 @@ break;
                                 }
                                 ?>
                                   <!--      <button class="play-btn"></button> -->
-                                        <div class="artist artist-name" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></div>
-										 <div class="composer composer-name"><a style="text-decoration:none;" title='<?php echo str_replace('"', '', $this->getTextEncode($psong->Composer)); ?>'><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
-                                          <div class="album album-name"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
-                                          <div class="song song-name" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
+                                <div class="artist artist-name" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText))), array('title' => $this->getTextEncode($psong->ArtistText))); ?></div>
+                                <div class="composer composer-name"><a style="text-decoration:none;" title='<?php echo str_replace('"', '', $this->getTextEncode($psong->Composer)); ?>'><?php echo truncate_text(str_replace('"', '', $this->getTextEncode($psong->Composer)), 25, $this); ?></a></div>
+                                <div class="album album-name"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
+                                <div class="song song-name" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
                                     <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
                                     <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
                                         <?php
@@ -1428,47 +1415,131 @@ break;
                                         }
                                         //
                                         ?>
-                                        	</span>
-                                		</div>
+                                    </a> 
+                               </div>
+                                    <?php
+                                    if ($this->Session->read("patron"))
+                                    {
+                                      ?>                                
                                         <button class="menu-btn"></button>
                                         <section class="options-menu">
+                                            <input type="hidden" id="<?= $psong->ProdID ?>" value="song" data-provider="<?= $psong->provider_type ?>"/>
                                                 <ul>
-                                                        <li><a href="#">Download</a></li>
-                                                        <li><a href="#">Add to Wishlist</a></li>
-                                                        <li><a href="#" class="add-to-playlist">Add to Playlist</a></li>
-                                                </ul>
-                                                <ul class="playlist-menu">
-                                                        <li><a href="#">Create New Playlist</a></li>
-                                                        <li><a href="#">Playlist 1</a></li>
-                                                        <li><a href="#">Playlist 2</a></li>
-                                                        <li><a href="#">Playlist 3</a></li>
-                                                        <li><a href="#">Playlist 4</a></li>
-                                                        <li><a href="#">Playlist 5</a></li>
-                                                        <li><a href="#">Playlist 6</a></li>
-                                                        <li><a href="#">Playlist 7</a></li>
-                                                        <li><a href="#">Playlist 8</a></li>
-                                                        <li><a href="#">Playlist 9</a></li>
-                                                        <li><a href="#">Playlist 10</a></li>
-                                                        <li><a href="#">Playlist 11</a></li>
-                                                        <li><a href="#">Playlist 12</a></li>
-                                                        <li><a href="#">Playlist 13</a></li>
-                                                        <li><a href="#">Playlist 14</a></li>
-                                                        <li><a href="#">Playlist 15</a></li>
-                                                        <li><a href="#">Playlist 16</a></li>
-                                                        <li><a href="#">Playlist 17</a></li>
-                                                        <li><a href="#">Playlist 18</a></li>
-                                                        <li><a href="#">Playlist 19</a></li>
-                                                        <li><a href="#">Playlist 20</a></li>
-                                                </ul>											
+                                                    <li>
+                                                        <?php if ($this->Session->read('patron'))
+                                                             {
+                                                                 if ($downloadFlag === 1)
+                                                                 {
+                                                                     $productInfo = $song->getDownloadData($psong->ProdID, $psong->provider_type);
+
+                                                                     if ($libraryDownload == '1' && $patronDownload == '1')
+                                                                     {
+                                                                         /* $songUrl = shell_exec(Configure::read('App.tokengen') . $nationalTopSong['Full_Files']['CdnPath'] . "/" . $nationalTopSong['Full_Files']['SaveAsName']);
+                                                                           $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+                                                                           $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl) / 3)); */
+                                                                         if ($psong->status != 'avail')
+                                                                         {
+                                                                             ?>
+                                                                             <span class="top-100-download-now-button">
+                                                                                 <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload" class="suggest_text1">
+                                                                                     <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
+                                                                                     <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
+                                                                                     <span class="beforeClick" style="cursor:pointer;" id="wishlist_song_<?php echo $psong->ProdID; ?>">
+                                                                                         <![if !IE]>
+                                                                                         <a href='javascript:void(0);' class="no-ajaxy top-10-download-now-button" 
+                                                                                            title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" 
+                                                                                            onclick='return wishlistDownloadOthersHome("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'>
+                                                                                             <?php __('Download Now'); ?></a>
+                                                                                         <![endif]>
+                                                                                         <!--[if IE]>
+                                                                                                <a id="song_download_<?php echo $psong->ProdID; ?>" 
+                                                                                                     class="no-ajaxy top-10-download-now-button" 
+                                                                                                     title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." 
+                                                                                                     onclick='wishlistDownloadIEHome("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' 
+                                                                                                     href="javascript:void(0);"><?php __('Download Now'); ?></a>
+                                                                                         <![endif]-->
+                                                                                     </span>
+                                                                                     <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait.."); ?>
+                                                                                             <span id="wishlist_loader_<?php echo $psong->ProdID; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif'); ?></span> </a> </span>
+                                                                                 </form>
+                                                                             </span>
+                                                                             <?php
+                                                                         }
+                                                                         else
+                                                                         {
+                                                                             ?>
+                                                                             <a class="top-100-download-now-button" href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __('Downloaded'); ?></a>
+                                                                             <?php
+                                                                         }
+                                                                     }
+                                                                     else
+                                                                     {
+                                                                         ?>
+                                                                         <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met"); ?></a> 
+
+                                                                         <?php
+                                                                     }
+                                                                 }
+                                                                 else
+                                                                 {
+                                                                     ?>
+                                                                     <a class="top-100-download-now-button" href="javascript:void(0);">
+                                                                         <span title='<?php __("Coming Soon"); ?> ( <?php
+                                                                         $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
+                                                                         if (isset($sales_date))
+                                                                         {
+                                                                             echo date("F d Y", strtotime($sales_date));
+                                                                         }
+                                                                         ?> )'>
+                                                                                   <?php __("Coming Soon"); ?>
+                                                                         </span>
+                                                                     </a>
+                                                                     <?php
+                                                                 } ?>
+                                                            </li>                                                        
+                                                            <li>
+                                                                <?php
+                                                                    $wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
+
+                                                                     if($wishlistInfo == 'Added To Wishlist') 
+                                                                     {?>
+                                                                         <a href="#">Added to Wishlist</a>
+                                                                         <?php
+                                                                     }
+                                                                     else
+                                                                     {
+                                                                ?>
+                                                                <span class="beforeClick" id="wishlist<?=$psong->ProdID?>" > <a class="add-to-wishlist" href="#">Add to Wishlist</a> </span>
+                                                                <span class="afterClick" style="display:none;"><a class="add-to-wishlist" href="JavaScript:void(0);">Please Wait...</a></span>
+                                                                <?php
+                                                                     }
+                                                                ?>
+                                                            </li>
+                                                            <?php } ?>
+                                                            <?php  if ($this->Session->read('library_type') == 2 && ($StreamFlag === 1)) { ?> 
+                                                                    <li><a class="add-to-playlist" href="#">Add to Playlist</a></li>
+                                                            </ul>
+                                                            <ul class="playlist-menu">
+                                                                <li><a href="#">Create New Playlist</a></li>                                                                 
+                                                            </ul>
+                                                            <?php } ?> 											
                                         </section>
-                                        <input type="checkbox" class="row-checkbox">
+                                        <?php if ($this->Session->read('library_type') == 2 && ($StreamFlag === 1)) { ?>
+                                                 <input type="checkbox" class="row-checkbox">
+                                             <?php
+                                             }else{ ?>
+                                                 <div class="sample-icon"></div>
+                                         <?php } 
+                                         }
+                                         ?>
                                 </div>
 
-   								<?php
-                                   $i++;
-                        			}
+                                <?php
+                                        $i++;
+                                    }
                     	     	}
-                   	 			?>	
+                                
+                                ?>	
 
                         </div>
                         <div class="pagination-container">
