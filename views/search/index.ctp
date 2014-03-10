@@ -358,6 +358,7 @@ function Get_Sales_date($sales_date_array, $country)
 		</header>
 
                                                    <div class="header-container">
+                                                       <!-- Disabled this feature to deploy it in next phase
 							<button class="top-songs-filter-icon"></button>
 							<div class="top-songs-filter-menu">
 								<ul>
@@ -366,7 +367,7 @@ function Get_Sales_date($sales_date_array, $country)
 									<li><a href="#">Country</a></li>
 									<li><a href="#">Pop</a></li>
 								</ul>
-							</div>
+							</div> -->
 							<div class="song-header"><a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=song&sortOrder=" . (($sort == 'song') ? $reverseSortOrder : 'asc'); ?>"><span class="song">Song</span></a></div>
 							<div class="song-border header-border"></div>
 							<div class="artist-header"> <a href="<?php echo "/search/index/" . $currentPage . "/" . $facetPage . "/?q=" . $keyword . "&type=" . $type . "&sort=artist&sortOrder=" . (($sort == 'artist') ? $reverseSortOrder : 'asc'); ?>"><span class="artist">Artist</span></a></div>
