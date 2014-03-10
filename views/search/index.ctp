@@ -176,7 +176,7 @@ switch ($type) {
 <section class="<?php echo $search_category; ?>">
     <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
     <div class="search-results-heading">Results for your search <?php echo $keyword; ?></div>
-    <div class="search-results-text"><span><?php echo ((empty($albumData)) ? '0' : $totalAlbums) ?></span> Albums,<span><?php echo ((empty($artists)) ? '0' : count($artists)) ?></span> Artists, <span><?php echo ((empty($composers)) ? '0' : count($composers)) ?></span> Composers, <span><?php echo ((empty($videos)) ? '0' : count($videos)) ?></span> Videos, <span><?php echo ((empty($genres)) ? '0' : count($genres)) ?></span> Genres, <span><?php echo ((empty($songs)) ? '0' : count($songs)) ?></span> Songs</div>
+    <div class="search-results-text"><span><?php echo ((empty($albumData)) ? '0' : $totalAlbums) ?></span> Albums,<span><?php echo ((empty($artists)) ? '0' : $totalArtists) ?></span> Artists, <span><?php echo ((empty($composers)) ? '0' : $totalComposers) ?></span> Composers, <span><?php echo ((empty($videos)) ? '0' : count($videos)) ?></span> Videos, <span><?php echo ((empty($genres)) ? '0' : $totalGenres) ?></span> Genres, <span><?php echo ((empty($songs)) ? '0' : count($songs)) ?></span> Songs</div>
     <div class="refine-text">Not what you're looking for? Refine your search below.</div>
     <div class="filter-container clearfix">
 <?php
