@@ -335,7 +335,7 @@ class SearchController extends AppController
                 $this->set('composers', $composers);
                 //$this->set('labels', $labels);
                 $this->set('videos', $videos);
-		$this->set('totalAlbums',$totalAlbums);
+		
             }
             $this->set('libraryDownload', $libraryDownload);
             $this->set('patronDownload', $patronDownload);
@@ -343,6 +343,7 @@ class SearchController extends AppController
             $this->set('totalPages', $totalPages);
             $this->set('currentPage', $page);
             $this->set('facetPage', $facetPage);
+	    $this->set('totalAlbums',$totalAlbums);
         }
         $this->set('keyword', htmlspecialchars($queryVar));
         //echo "<br>search end- ".date("Y-m-d H:i:s");
