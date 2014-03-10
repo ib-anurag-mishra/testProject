@@ -750,13 +750,13 @@ if ($type != 'genre') {
                                 <button class="wishlist-btn" onclick='Javascript: addToWishlistVideo("<?php echo $psong->ProdID; ?>", "<?php echo $psong->provider_type; ?>", 1);'></button>
                                             <?php
                                             $sales_date = Get_Sales_date($psong->TerritorySalesDate, $this->Session->read('territory'));
-                                            if ($sales_date <= date('Y-m-d')) {
+                                      if ($sales_date <= date('Y-m-d')) {
                                                 $productInfo = $mvideo->getDownloadData($psong->ProdID, $psong->provider_type);
                                                 //                                    $videoUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath'] . "/" . $productInfo[0]['Full_Files']['SaveAsName']);
                                                 //                                    $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
                                                 //                                    $finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl) / 3));
-                                                if ($libraryDownload == '1' && $patronDownload == '1') {
-                                                    if ($psong->status != 'avail') {
+                                        if ($libraryDownload == '1' && $patronDownload == '1') {
+                                            if ($psong->status != 'avail') {
                                                         ?>
                                             <p>
                                             <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
@@ -767,9 +767,12 @@ if ($type != 'genre') {
                                             </p>
                                                 <?php
                                             } else {
-                                                ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __("Downloaded"); ?></a><?php
+                                                ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><button class="download-btn"></button></a>
+                                            <?php
                                             }
-                                        }
+                                        }else{ ?>
+                                                <button class="download-btn download-limit-met"></button> 
+                                   <?php }
                                     }
                                 }
                                 ?>                                                        
