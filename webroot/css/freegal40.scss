@@ -3992,7 +3992,14 @@ sub { top: 0.4em; }
 	}
 
 
-
+	.preview {
+		position: absolute;
+		left: 9px;
+		top: 8px;
+		width: 24px;
+		height: 24px;
+		
+	}
 
 	.play-btn {
 		position: absolute;
