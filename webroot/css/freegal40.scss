@@ -2497,20 +2497,20 @@ sub { top: 0.4em; }
 
 	}
 
-        #query{
+    #query {
 		@extend %form-reset;
 		height: 30px;
 		margin-left: 50px;
-		width: 237px;
+		width: 234px;
 		border: 0 none;
-                outline: 0 none;
-                padding: 0;
+        outline: 0 none;
+        padding: 0;
 		font-weight: bold;
 		font-family: Helvetica, Arial, sans-serif;
 		font-size: 14px;
 		@include border-radius(20px);
 
-        }
+    }
 
 	#search-page-go {
 		
