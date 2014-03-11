@@ -1882,6 +1882,17 @@ function callSearchAjax() {
     });
 }
 
+$(document).ready(function(){
+    
+    $('#headerSearchSubmit').on('click', function() {
+        ajaxSearch();
+        return false;
+    });
+    
+    
+    
+});
+
 function resetNavigation() {
 
     var sidebar_anchor = $('.sidebar-anchor');
@@ -1949,7 +1960,7 @@ function ajaxSearch() {
             $(document).find('.content').ajaxify().css('opacity', 100).show();
             $('div.ac_results').hide();
             $('#search-text').val('');
-            callSearchAjax();
+            //callSearchAjax();
         },
         error: function(response) {
            
