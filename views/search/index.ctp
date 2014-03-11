@@ -141,7 +141,7 @@ function Get_Sales_date($sales_date_array, $country) {
     return $Sales_date;
 }
 ?>
-<div class="search-page">
+<section class="search-page">
     <div class="breadcrumbs">
     <?php
     $html->addCrumb(__('Search Results', true), '/search/index');
@@ -1373,4 +1373,4 @@ function Get_Sales_date($sales_date_array, $country) {
         </section>
                     <?php } ?>
     </section>                                    
-</div>
+</section>
