@@ -1878,6 +1878,7 @@ function callSearchAjax() {
     $("#headerSearchSubmit").click(function(event) {
         console.log('called ajaxsearch');
         ajaxSearch();
+        return false;
     });
 }
 
@@ -1936,8 +1937,8 @@ function ajaxSearch() {
             $(document).find('.content').find('section').remove();
             $(document).find('.content').append(response);            
 
-            $.getScript(webroot + 'css/styles.css');
-            $.getScript(webroot + 'css/freegal_styles.css');
+            //$.getScript(webroot + 'css/styles.css');
+            //$.getScript(webroot + 'css/freegal_styles.css');
 
             //$.getScript(webroot + 'js/site.js');
             //$.getScript(webroot + 'js/freegal.js');
@@ -1948,7 +1949,7 @@ function ajaxSearch() {
             $(document).find('.content').ajaxify().css('opacity', 100).show();
             $('div.ac_results').hide();
             $('#search-text').val('');
-            //callSearchAjax(); commented to test for unnecessary load of css
+            callSearchAjax();
         },
         error: function(response) {
            
@@ -2289,7 +2290,7 @@ $('document').ready(function() {
          }*/
     });
 
-    callSearchAjax();
+    //callSearchAjax();
     callMyAccountAjax();
     callNotificationAjax();
 
