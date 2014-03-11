@@ -1889,7 +1889,15 @@ $(document).ready(function(){
         return false;
     });
     
-    
+    $('#btnMyAccount').on('click', function() {
+        ajaxMyAccount();
+        return false;
+    });
+
+    $('#btnNotification').on('click', function() {
+        ajaxNotification();
+        return false;
+    });
     
 });
 
@@ -1923,7 +1931,6 @@ function resetNavigation() {
 }
 
 function ajaxSearch() {
-    console.log('inside ajaxsearch');
     resetNavigation();
 
     var loading_div = "<div class='loader'>";
@@ -1977,7 +1984,7 @@ function callMyAccountAjax() {
 }
 
 function ajaxMyAccount() {
-    console.log('inside ajaxMyaccount');
+    //console.log('inside ajaxMyaccount');
 //       $('#btnMyAccount').click(function(){
     var UFirstName = '';
     var ULastName = '';
@@ -2103,7 +2110,7 @@ function ajaxMyAccount() {
             $('.loader').fadeOut(500);
 
             $('.content').remove('.loader');
-            callMyAccountAjax();
+            //callMyAccountAjax();
         },
         failure: function() {
             alert('Problem fetching data');
@@ -2123,7 +2130,7 @@ function callNotificationAjax() {
 
 // code to ajaxify Notification form end
 function ajaxNotification() {
-    console.log('inside ajaxnotification');
+    //console.log('inside ajaxnotification');
 //       $('#btnMyAccount').click(function(){
     var USendNewsLetterCheck = '';
     var UNewsletterEmail = '';
@@ -2242,7 +2249,7 @@ function ajaxNotification() {
             $('.loader').fadeOut(500);
 
             $('.content').remove('.loader');
-            callNotificationAjax();
+            //callNotificationAjax();
         },
         failure: function() {
             alert('Problem fetching data');
@@ -2302,7 +2309,7 @@ $('document').ready(function() {
     });
 
     //callSearchAjax();
-    callMyAccountAjax();
-    callNotificationAjax();
+    //callMyAccountAjax();
+    //callNotificationAjax();
 
 });
