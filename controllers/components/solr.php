@@ -198,8 +198,9 @@ class SolrComponent extends Object {
                     else
                     {
                         $response = self::$solr2->search($query . $provider_query, 0, 1, $additionalParams);
+			$num_found = $response->response->numFound;
                     }
-                  //  $num_found = $response->response->numFound;
+                    
                     
                     if (0 == $num_found)
                     {
