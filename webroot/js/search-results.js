@@ -97,8 +97,8 @@ $menuChildren.addClass(activeClass);
                     $.getScript(webroot + 'css/styles.css');
                     $.getScript(webroot + 'css/freegal_styles.css');
                     
-                    $.getScript(webroot + 'js/freegal.js');
-                    $.getScript(webroot + 'js/site.js');
+                    //$.getScript(webroot + 'js/freegal.js');
+                    //$.getScript(webroot + 'js/site.js');
                     
                     $.getScript(webroot + 'js/audioPlayer.js');
                     $.getScript(webroot + 'js/recent-downloads.js');

@@ -1911,7 +1911,7 @@ function resetNavigation() {
 }
 
 function ajaxSearch() {
-
+    console.log('inside ajaxsearch');
     resetNavigation();
 
     var loading_div = "<div class='loader'>";
@@ -1939,8 +1939,8 @@ function ajaxSearch() {
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
 
-            $.getScript(webroot + 'js/site.js');
-            $.getScript(webroot + 'js/freegal.js');
+            //$.getScript(webroot + 'js/site.js');
+            //$.getScript(webroot + 'js/freegal.js');
 
             $('.loader').fadeOut(500);
             $('.content').remove('.loader');
@@ -1965,6 +1965,7 @@ function callMyAccountAjax() {
 }
 
 function ajaxMyAccount() {
+    console.log('inside ajaxMyaccount');
 //       $('#btnMyAccount').click(function(){
     var UFirstName = '';
     var ULastName = '';
@@ -2079,8 +2080,8 @@ function ajaxMyAccount() {
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
 
-            $.getScript(webroot + 'js/freegal.js');
-            $.getScript(webroot + 'js/site.js');
+            //$.getScript(webroot + 'js/freegal.js');
+            //$.getScript(webroot + 'js/site.js');
 
             $.getScript(webroot + 'js/audioPlayer.js');
             $.getScript(webroot + 'js/recent-downloads.js');
@@ -2110,6 +2111,7 @@ function callNotificationAjax() {
 
 // code to ajaxify Notification form end
 function ajaxNotification() {
+    console.log('inside ajaxnotification');
 //       $('#btnMyAccount').click(function(){
     var USendNewsLetterCheck = '';
     var UNewsletterEmail = '';
@@ -2217,8 +2219,8 @@ function ajaxNotification() {
             $.getScript(webroot + 'css/styles.css');
             $.getScript(webroot + 'css/freegal_styles.css');
 
-            $.getScript(webroot + 'js/freegal.js');
-            $.getScript(webroot + 'js/site.js');
+            //$.getScript(webroot + 'js/freegal.js');
+            //$.getScript(webroot + 'js/site.js');
 
             $.getScript(webroot + 'js/audioPlayer.js');
             $.getScript(webroot + 'js/recent-downloads.js');
