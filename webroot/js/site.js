@@ -1948,7 +1948,7 @@ function ajaxSearch() {
             $(document).find('.content').ajaxify().css('opacity', 100).show();
             $('div.ac_results').hide();
             $('#search-text').val('');
-            callSearchAjax();
+            //callSearchAjax(); commented to test for unnecessary load of css
         },
         error: function(response) {
            
