@@ -557,7 +557,7 @@ function Get_Sales_date($sales_date_array, $country)
                                                 $name = $composer->Composer;
                                                 $count = $composer->numFound;
                                                 $name = $this->getTextEncode($name);
-                                                if (!empty($composer_name)) {
+                                                if ( "" !=  $this->getTextEncode($composer_name) ) {
                                                 ?>
                                                 	<div class="row"><a href="<?php echo "/search/index?q=$tilte&type=composer"; ?>" title="<?php echo $this->getTextEncode($composer_name); ?>"><?php echo $this->getTextEncode($composer_name); ?> (<?php echo $count; ?>)</a></div>
                                                 <?php
