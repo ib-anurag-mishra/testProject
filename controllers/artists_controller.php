@@ -2636,9 +2636,10 @@ Class ArtistsController extends AppController
     function composer($composer_text){
         
         $this->layout = 'home';
-        if(isset($this->params['pass'][0])){
+        $composer_text = $this->params['pass'][0];    
+        if(isset($composer_text)){
             $totalFacetCount = $this->Solr->getFacetSearchTotal($composer_text, 'album');
-            $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
+            $albums = $this->Solr->groupSearch($composer_text, 'album', $facetPage, $limit);
             $arr_albumStream = array();
             foreach ($albums as $objKey => $objAlbum)
             {
