@@ -13,7 +13,7 @@ Class ArtistsController extends AppController
     var $uses = array('Featuredartist', 'Artist', 'Newartist', 'Files', 'Album', 'Song', 'Download', 'Video', 'Territory');
     var $layout = 'admin';
     var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language', 'Album', 'Song', 'Mvideo', 'Videodownload', 'Queue', 'Paginator', 'WishlistVideo');
-    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common');
+    var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'CdnUpload', 'Streaming', 'Common','Solr');
 
     /*
       Function Name : beforeFilter
@@ -2633,10 +2633,22 @@ Class ArtistsController extends AppController
      * 
      */
     
-    function composer(){
+    function composer($composer_text){
         
         $this->layout = 'home';
-        
+        if(isset($this->params['pass'][0])){
+            $totalFacetCount = $this->Solr->getFacetSearchTotal($composer_text, 'album');
+            $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
+            $arr_albumStream = array();
+            foreach ($albums as $objKey => $objAlbum)
+            {
+                $arr_albumStream[$objKey]['albumSongs'] = $this->requestAction(
+                        array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
+                );
+            }
+            $this->set('albumData', $albums);
+            $this->set('arr_albumStream', $arr_albumStream); 
+        }
     }
 
 }
