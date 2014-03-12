@@ -4976,3 +4976,372 @@ footer {
 }
 
 .filler { height: 100px; }
+
+.composer-albums{
+
+	position: relative;
+
+	
+
+	
+
+	header {
+
+		position: relative;
+		height: 25px;
+		margin-top: 20px;
+		h3 {
+			font-weight: normal;
+			font-size: 16px;
+			font-family: Helvetica,Arial,sans-serif;
+
+			position: relative;
+			padding-top:5px;
+
+
+		}
+
+
+	}	
+
+	.album-detail-container {
+
+		position: relative;
+		
+		margin-left: 25px;
+		width: 822px;
+		height: 108px;
+
+		margin-top: 25px;
+
+		.cover-image {
+
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 108px;
+			height: 108px;
+
+			img {
+
+				width: 108px;
+				height: 108px;
+			}
+
+		}
+
+		.album-info {
+
+			position: absolute;
+			left: 120px;
+			top: 0;
+			width: 700px;
+			height: 108px;
+			border: 1px solid #dcdcdc;
+			padding: 10px;
+			font-family: Helvetica, Arial, sans-serif;
+			background: #f9f9f9;
+			strong {
+
+				font-weight: bold;
+			}
+
+			.album-title {
+
+				
+				font-size: 16px;
+
+				a {
+
+					color: #000;
+					text-decoration: none;
+
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
+				
+
+			}
+
+			.artist {
+				font-size: 13px;
+				margin-top: 4px;
+
+				a {
+
+					color:#008fbd;
+					text-decoration: none;
+					
+					&:hover {
+
+						text-decoration: underline;
+					}
+				}
+
+			}
+
+			.release-information {
+				margin-top: 44px;
+				margin-bottom: 8px;
+				font-size: 12px;
+				font-weight: bold;
+			}
+
+			.genre {
+				margin-bottom: 8px;
+				margin-top: 4px;
+				font-size: 12px;
+
+
+
+			}
+
+			.label {
+				margin-bottom: 8px;
+				font-size: 12px;
+			}
+
+			.distributor {
+				
+				font-size: 12px;
+
+			}
+
+			.menu-btn {
+
+				position: absolute;
+				right: -1px;
+				top: -1px;
+				background: url(../img/freegal_sprite.png) -115px -170px;
+				width: 34px;
+				height: 25px;
+				
+				&:hover {
+					background: url(../img/freegal_sprite.png) -150px -170px;
+
+				}
+				&:active {
+					background: url(../img/freegal_sprite.png) -185px -170px;
+
+				}
+			}
+
+			.stream-now-btn {
+				position: absolute;
+				right: 32px;
+				top: -1px;
+				font-size: 12px;
+				font-weight: bold;
+				width: 87px;
+				height: 25px;
+				border: 1px solid #ccc;
+				font-family: Helvetica, Arial, sans-serif;
+				@include background-image(linear-gradient(#fff,#eaeaea));
+				@include box-shadow(inset 1px 1px 0 1px #fff);
+
+				&:hover {
+					@include background-image(linear-gradient(#fff,#f5f5f5));
+
+				}
+
+				&:active {
+					@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+
+				}
+
+			}
+			.options-menu {
+				@extend %options-menu-style;
+
+
+			
+				position: absolute;
+				z-index: 1;
+				right: -1px;
+				top:26px;
+				display: none;
+
+				&.active {
+
+					display: block;
+				}
+
+
+
+		
+			}
+
+			.playlist-menu {
+
+				display: none;
+				height: 312px;
+				overflow-y: scroll;
+
+				&.active {
+
+					display: block;
+				}
+			}
+
+
+		}
+	}
+
+
+
+	.search-results-pagination-container {
+
+		position: relative;
+
+		button {
+
+			position: absolute;
+			width: 18px;
+			height:18px;
+			top:8px;	
+			border:1px solid #d2d2d4;
+			@include background-image(linear-gradient(#f9f9f9,#eaeaea));
+			font-weight: normal;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 11px;
+
+			&:hover {
+
+				@include background-image(linear-gradient(#fff,#f5f5f5));
+			}
+
+			&:active {
+
+				@include background-image(linear-gradient(#eaeaea,#f4f4f4));
+			}
+			&.beginning {
+
+				right:221px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:6px;
+					top:5px;
+					border-left:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 7px;
+					top:5px;
+				}
+			}
+			&.prev {
+
+				right:195px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-right:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+
+			}
+			&.page-1 {
+
+				right:169px;
+			}
+			&.page-2 {
+
+				right:143px;
+			}
+			&.page-3 {
+
+				right:117px;
+			}
+
+			&.page-4 {
+
+				right:91px;
+			}
+
+			&.page-5 {
+
+				right: 65px;
+			}
+
+			&.next {
+
+				right:39px;
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+			&.last {
+
+				right: 13px;
+
+				&:before {
+
+					content: "";
+					position: absolute;
+					left:10px;
+					top:5px;
+					border-right:1px solid #000;
+					width: 0;
+					height:6px;
+				}
+
+				&:after {
+
+					content: "";
+					position: absolute;
+					width: 0;
+					height: 0;
+					border-left:4px solid #000;
+					border-top:3px solid transparent;
+					border-bottom:3px solid transparent;
+					left: 6px;
+					top:5px;
+				}
+			}
+
+		}
+	}		
+
+
+}
+
+.composer-page{ 
+
+    .faq-link {
+        float: right;
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+}
