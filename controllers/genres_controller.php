@@ -804,8 +804,8 @@ Class GenresController extends AppController
         }
 
         $id = str_replace('@', '/', $id);
-        $this->set('artisttext', base64_decode($id));
-        $this->set('artisttitle', base64_decode($id));
+        $this->set('genretext', base64_decode($id));
+        $this->set('gneretitle', base64_decode($id));
         $this->set('genre', base64_decode($album));
 
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -906,7 +906,7 @@ Class GenresController extends AppController
             $this->Album->recursive = 2;
             
             $albumData = $this->paginate('Album');
-
+           print_r($albumData);exit;
             if ($libType == 2)
             {
                 foreach ($albumData as $key => $value)
@@ -940,7 +940,7 @@ Class GenresController extends AppController
                 if (!empty($decodedId))
                 {
                     $artistVideoList = $this->Common->getAllVideoByArtist($country, $decodedId);
-                    Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
+                  //  Cache::write("videolist_" . $country . "_" . $decodedId, $artistVideoList);
                 }
             }
             else
