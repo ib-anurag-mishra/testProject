@@ -606,7 +606,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null)
+    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null , $check)
     {
     
         set_time_limit(0);
@@ -677,7 +677,11 @@ class SolrComponent extends Object {
                     $field = 'Genre';
                     break;
                 case 'album':
-                    $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                    if(!empty($check)){
+                        $queryFields = "CComposer^10000";
+                    }else{
+                        $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                    }
                     $query = $searchkeyword;
                     $field = 'rpjoin';
                     break;

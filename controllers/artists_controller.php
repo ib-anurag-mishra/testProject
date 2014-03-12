@@ -2638,8 +2638,9 @@ Class ArtistsController extends AppController
         $this->layout = 'home';
         $composer_text = base64_decode($this->params['pass'][0]);    
         if(isset($composer_text)){
-            $totalFacetCount = $this->Solr->getFacetSearchTotal($composer_text, 'album');
-            $albums = $this->Solr->groupSearch($composer_text, 'album', $facetPage, $limit);
+            //$totalFacetCount = $this->Solr->getFacetSearchTotal($composer_text, 'album');
+            $limit = 12;
+            $albums = $this->Solr->groupSearch($composer_text, 'album', $facetPage, $limit, 0, null, 1);
             $arr_albumStream = array();
             foreach ($albums as $objKey => $objAlbum)
             {
