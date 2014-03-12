@@ -2636,6 +2636,7 @@ Class ArtistsController extends AppController
     function composer($composer_text){
         
         $this->layout = 'home';
+        $this->params['pass'][0] = 'Miley Cyrus';
         $composer_text = $this->params['pass'][0];    
         if(isset($composer_text)){
             $totalFacetCount = $this->Solr->getFacetSearchTotal($composer_text, 'album');
