@@ -678,7 +678,7 @@ class SolrComponent extends Object {
                     break;
                 case 'album':
                     if(!empty($check)){
-                        $queryFields = "CComposer^10000";
+                        $queryFields = "CComposer^10000 CTitle^100 CGenre^60 CSongTitle^20 CArtistText";
                     }else{
                         $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
                     }
