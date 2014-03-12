@@ -2648,7 +2648,8 @@ Class ArtistsController extends AppController
                 );
             }
             $this->set('albumData', $albums);
-            $this->set('arr_albumStream', $arr_albumStream); 
+            $this->set('arr_albumStream', $arr_albumStream);
+            $this->set('composertext', $composer_text);
         }
     }
 

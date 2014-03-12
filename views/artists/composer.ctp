@@ -21,13 +21,13 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
             echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
             echo " > ";
             echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
-            if(!empty($artisttext)){
+            if(!empty($composertext)){
                 echo " > ";
-                if (strlen($artisttext) >= 30)
+                if (strlen($composertext) >= 30)
                 {
-                    $artisttext = substr($artisttext, 0, 30) . '...';
+                    $composertext = substr($composertext, 0, 30) . '...';
                 }
-                echo $this->getTextEncode($artisttext);
+                echo $this->getTextEncode($composertext);
             }
         ?>
     </div>
@@ -84,13 +84,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                             </div>
                             <div class="album-info">
                                 <div class="album-title"><strong><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $this->getTextEncode($palbum->Title); ?>" ><?php echo $album_title; ?> <?php echo $explicit; ?></a></strong></div>
-                                <div class="artist">by 
-                                    <a class="more-by-artist" 
-                                       href="/artists/album/<?php echo str_replace('/', '@', base64_encode($palbum->ArtistText)); ?>/<?= base64_encode($album_genre) ?>">
-                                                <?php echo $this->getTextEncode($palbum->ArtistText); ?>
-                                    </a>                                                        
-
-                                </div>
                                 <div class="genre">Genre: <a href="javascript:void(0)"><?php echo $album_genre; ?></a></div>
                                                 <?php
                                                 if ($this->Session->read("patron")) {
