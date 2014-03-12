@@ -1,5 +1,4 @@
 <?php 
-
 function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) {
 
     if (strlen($text) > $char_count) {
@@ -14,9 +13,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
 
     return $obj->getTextEncode($modified_text);
 }
-
-
-
 ?>
 
 <section class="composer-page">
@@ -35,7 +31,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
             }
         ?>
     </div>
-    <br class="clr">
+    <br class="clr" />
     <header class="clearfix">
         <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
     </header> 
@@ -139,15 +135,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                 $i++;
                             }
                             ?> 
-                    <!-- <section style="position: relative; width: 866px; right: 21px;" class="search-results-songs-page"> 
-                        <div class="pagination-container">
-                    <?php
-                    $searchString = "?q=" . urlencode($keyword) . "&type=" . $type . "&sort=" . $sort . "&sortOrder=" . $sortOrder;
-                    $pagination_str = createPagination($html, $currentPage, $facetPage, 'block', $totalFacetPages, 5, $searchString);
-                    echo $pagination_str;
-                    ?>
-                        </div>
-                    </section>  -->    
                 <?php } else { ?>
                     <div class="album-detail-container">
                         <div style="color:red; padding:50px; ">
