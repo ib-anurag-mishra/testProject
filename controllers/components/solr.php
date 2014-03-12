@@ -606,7 +606,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null , $check)
+    function groupSearch($keyword, $type='song', $page=1, $limit = 5, $mobileExplicitStatus = 0, $country = null , $check = 0)
     {
     
         set_time_limit(0);
