@@ -5347,6 +5347,7 @@ footer {
 }
 
 .album-container {
+        @extend %toggleable;
 	.wishlist-icon {
 
 		position: absolute;
@@ -5368,24 +5369,4 @@ footer {
 
 
 	}
-
-%toggleable {
-	.toggleable {
-
-		display: block;
-		@include opacity(0);
-
-		&.active {
-			
-			display: block;
-			@include opacity(.5);
-		}
-
-		&:hover {
-
-			@include opacity(1);
-		}	
-	}
-
-}
 }

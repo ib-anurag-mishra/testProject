@@ -64,13 +64,13 @@ $(document).ready(function() {
     });
 
 
-    $('.album-cover-container').on('mouseenter', function() {
+    $('.album-cover-container , .album-container').on('mouseenter', function() {
 
         $(this).find('.toggleable').addClass('active');
 
     });
 
-    $('.album-cover-container').on('mouseleave', function() {
+    $('.album-cover-container , .album-container').on('mouseleave', function() {
 
         $(this).find('.toggleable').removeClass('active');
 
