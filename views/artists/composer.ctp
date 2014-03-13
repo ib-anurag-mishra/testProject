@@ -91,6 +91,12 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                     </div>
                                     <?php
                                 }
+                                if($this->Session->read("patron")){ ?>
+                                     <input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>"/>   
+                                     <button class="wishlist-icon toggleable"></button>
+                           <?php }
+                                
+                                
                                 ?>
                             </div>
                             <div class="album-title">
