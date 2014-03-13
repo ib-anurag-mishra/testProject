@@ -52,7 +52,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
             <div class="album-scrollable horiz-scroll">
                 <ul style="width:4500px">
                     <?php
-                    $i = 0;
                     foreach ($albumData as $palbum) {
                         $albumDetails = $album->getImage($palbum->ReferenceID);
 
@@ -139,8 +138,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                             </div>
                         </li>
                         <?php
-                         $i++;   
-                        
                        }
                     ?>
                 </ul>
@@ -150,7 +147,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
     }
     else
     {
-        echo '<span> Sorry,there are no details available for this Artist.</span>';
+        echo '<span> Sorry,there are no details available for this Composer.</span>';
     }
     ?>
     <br class="clr">
