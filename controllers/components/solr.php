@@ -161,8 +161,8 @@ class SolrComponent extends Object {
                             $queryFields = "CArtistText^100 CTitle^80 CSongTitle^60 CGenre^20 CComposer";
                             break;
 			case 'genreAlbum':
-                    	    $query = $searchkeyword;
-                            $queryFields = "CGenre^60";
+                            $query = $searchkeyword;
+                            $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer"; // CArtistText^80
                             break;
                         default:
                             $query = $searchkeyword;
@@ -555,8 +555,9 @@ class SolrComponent extends Object {
                     $field = 'Composer';
                     break;
 		case 'genreAlbum':
-		    $query = '(CGenre:(' . $searchkeyword . '))';
+		    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') CComposer:(' . $searchkeyword . '))';
                     $field = 'Title';
+                    break;
                 default:
                     $query = '(CSongTitle:(' . $searchkeyword . '))';
                     $field = 'SongTitle';
@@ -712,7 +713,7 @@ class SolrComponent extends Object {
                         $field = 'Composer';
                         break;
 		    case 'genreAlbum':
-			$queryFields = "CGenre^100";
+			$queryFields = "CGenre^60";
                     	$query = $searchkeyword;
                     	$field = 'rpjoin';
                     default:
@@ -874,9 +875,10 @@ class SolrComponent extends Object {
                         $field = 'Composer';
                         break;
 		    case 'genreAlbum':
-			$queryFields = "CGenre^100";
-                    	$query = $searchkeyword;
-                    	$field = 'rpjoin';
+			$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+                        $query = $searchkeyword;
+                        $field = 'rpjoin';
+                        break;
                     default:
                         $query = $searchkeyword;
                         $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
