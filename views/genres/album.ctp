@@ -188,28 +188,14 @@ function Get_Sales_date($sales_date_array, $country) {
     }
     ?>     
     <section class="<?php echo $search_category; ?>">
-      <!--  <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
-	<div class="search-results-heading">Results for your search <?php echo $keyword; ?></div> -->
-
-<header class="clearfix">
-        <?php
-        if (isset($keyword))
-        {
-            ?>
-            <h2><?php echo $this->getTextEncode($keyword); ?></h2>
-            <?php
-        }
-        ?>        
-        <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
-    </header>
-<header>
-                       <!-- <h3 class="albums-header">Albums</h3>
-
-                    </header> -->
+        <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
+	<div class="search-results-heading"><?php echo $keyword; ?></div> 
+	<header>
+                <h3 class="albums-header">Albums</h3>
+        </header> 
                 <?php
-                if (!empty($albumData)) {?>
-		 <h3>Albums</h3>
-                   <?php $i = 0;
+                if (!empty($albumData)) {
+		    $i = 0;
                     foreach ($albumData as $palbum) {
                         $albumDetails = $album->getImage($palbum->ReferenceID);
 
