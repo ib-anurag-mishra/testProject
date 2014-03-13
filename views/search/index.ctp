@@ -1197,7 +1197,7 @@ function Get_Sales_date($sales_date_array, $country)
                                 <div class="album"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>" title="<?php echo $this->getTextEncode($psong->Title); ?> "><?php echo str_replace('"', '', truncate_text($this->getTextEncode($psong->Title), 25, $this)); ?></a></div>
                                 <div class="song" <?php echo $styleSong; ?>  sdtyped="<?php echo $downloadFlag . '-' . $StreamFlag . '-' . $this->Session->read('territory'); ?>">
                                     <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                    <a style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
+                                    <span style="text-decoration:none;" title="<?php echo str_replace('"', '', $this->getTextEncode($showSongTitle)); ?>"><?php echo truncate_text($this->getTextEncode($psong->SongTitle), 21, $this); ?>
                                         <?php
                                         if ($psong->Advisory == 'T')
                                         {
@@ -1226,14 +1226,14 @@ function Get_Sales_date($sales_date_array, $country)
                                                     <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload">
                                                         <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
-                                                        <div class="beforeClick" id="wishlist_song_<?php echo $psong->ProdID; ?>">
+                                                        <span class="beforeClick" id="wishlist_song_<?php echo $psong->ProdID; ?>">
                                                             <![if !IE]>
                                                             <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not."); ?>" onclick='return wishlistDownloadOthersHome("<?php echo $psong->ProdID; ?>", "0", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>", "<?php echo $psong->provider_type; ?>");'><?php __('Download'); ?></a>
                                                             <![endif]>
                                                             <!--[if IE]>
                                                                    <a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='wishlistDownloadIEHome("<?php echo $psong->ProdID; ?>", "0" , "<?php echo $psong->provider_type; ?>", "<?php echo $productInfo[0]['Full_Files']['CdnPath']; ?>", "<?php echo $productInfo[0]['Full_Files']['SaveAsName']; ?>");' href="javascript:void(0);"><?php __('Download'); ?></a>
                                                             <![endif]-->
-                                                        </div>
+                                                        </span>
                                                         <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
                                                         <span id="wishlist_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                                                     </form>
