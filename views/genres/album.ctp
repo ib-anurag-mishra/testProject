@@ -148,7 +148,7 @@ function Get_Sales_date($sales_date_array, $country) {
         <?php
             echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
             echo " > ";
-            echo "<a href = '../search/index?q=".$keyword."&type=genre' >Search Results</a>";
+            echo "<a href = '/../search/index?q=".$keyword."&type=genre' >Search Results</a>";
             if(!empty($keyword)){
                 echo " > ";
                 if (strlen($keyword) >= 30)
