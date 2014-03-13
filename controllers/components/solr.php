@@ -717,6 +717,7 @@ class SolrComponent extends Object {
 			$queryFields = "CGenre^60";
                     	$query = $searchkeyword;
                     	$field = 'rpjoin';
+			break;
                     default:
                         $query = $searchkeyword;
                         $queryFields = "CSongTitle^100 CTitle^80 CArtistText^60 CComposer^20 CGenre";
