@@ -557,7 +557,7 @@ class SolrComponent extends Object {
                     break;
 		case 'genreAlbum':
 		    $query = '(CGenre:(' . $searchkeyword . '))';
-                    $field = 'Genre';
+                    $field = 'Title';
                     break;
                 default:
                     $query = '(CSongTitle:(' . $searchkeyword . '))';
