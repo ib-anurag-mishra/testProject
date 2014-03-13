@@ -4699,8 +4699,8 @@ footer .inner-wrapper .languages li:nth-child(2) a, footer .inner-wrapper .langu
 /* line 5350, freegal40.scss */
 .album-container .wishlist-icon {
   position: absolute;
-  right: 31px;
-  top: -1px;
+  right: 122px;
+  top: 132px;
   width: 34px;
   height: 25px;
   background: url(../img/freegal_sprite.png) 0 -225px;
@@ -4712,4 +4712,21 @@ footer .inner-wrapper .languages li:nth-child(2) a, footer .inner-wrapper .langu
 /* line 5364, freegal40.scss */
 .album-container .wishlist-icon:active {
   background: url(../img/freegal_sprite.png) -70px -225px;
+}
+/* line 5373, freegal40.scss */
+.album-container .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable, .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-container .album-cover-container .toggleable, .album-container .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable, .search-results-all-albums-carousel .search-results-albums .album-container .album-cover-container .toggleable {
+  display: block;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+}
+/* line 5378, freegal40.scss */
+.album-container .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable.active, .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-container .album-cover-container .toggleable.active, .album-container .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable.active, .search-results-all-albums-carousel .search-results-albums .album-container .album-cover-container .toggleable.active {
+  display: block;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  opacity: 0.5;
+}
+/* line 5384, freegal40.scss */
+.album-container .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-cover-container .toggleable:hover, .top-albums .top-albums-carousel-container .top-albums-carousel ul li .album-container .album-cover-container .toggleable:hover, .album-container .search-results-all-albums-carousel .search-results-albums .album-cover-container .toggleable:hover, .search-results-all-albums-carousel .search-results-albums .album-container .album-cover-container .toggleable:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
 }

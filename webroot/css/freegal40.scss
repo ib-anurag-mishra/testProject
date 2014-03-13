@@ -5350,8 +5350,8 @@ footer {
 	.wishlist-icon {
 
 		position: absolute;
-		right: 31px;
-		top: -1px;
+		right: 122px;
+		top: 132px;
 		width: 34px;
 		height: 25px;
 		background: url(../img/freegal_sprite.png) 0 -225px;
@@ -5368,4 +5368,24 @@ footer {
 
 
 	}
+
+%toggleable {
+	.toggleable {
+
+		display: block;
+		@include opacity(0);
+
+		&.active {
+			
+			display: block;
+			@include opacity(.5);
+		}
+
+		&:hover {
+
+			@include opacity(1);
+		}	
+	}
+
+}
 }
