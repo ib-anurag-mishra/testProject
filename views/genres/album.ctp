@@ -5,8 +5,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
         $part = floor($pageLimitToShow / 2);
         if ($type == 'listing') {
             if (1 != $currentPage) {
-                $pagination_str .= $html->link('<button class="beginning" ></button>', "/search/index/" . $queryString, array('escape' => FALSE));
-                $pagination_str .= $html->link('<button class="prev" ></button>', "/search/index/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="beginning" ></button>', "/genres/album/" . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="prev" ></button>', "/genres/album/" . ($currentPage - 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
             } else {
                 $pagination_str .= '<button class=
 "beginning" style="cursor:text;" ></button>';
@@ -14,8 +14,8 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
             }
         } else if ($type == 'block') {
             if (1 != $facetPage) {
-                $pagination_str .= $html->link('<button class="beginning"></button>', "/search/index/" . $queryString, array('escape' => FALSE));
-                $pagination_str .= $html->link('<button class="prev"></button>', "/search/index/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="beginning"></button>', "/genres/album/" . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="prev"></button>', "/genres/album/" . $currentPage . '/' . ($facetPage - 1) . '/' . $queryString, array('escape' => FALSE));
             } else {
                 $pagination_str .= '<button class="beginning" style="cursor:text;"></button>';
                 $pagination_str .= '<button class="prev" style="cursor:text;" ></button>';
@@ -59,7 +59,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
     color: #FFFFFF;" >' . $pageCount . '</button>';
                 } else {
 
-                    $pagination_str .= $html->link('<button class="page-' . $classCounter . '">' . $pageCount . '</button>', '/search/index/' . ($pageCount) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
+                    $pagination_str .= $html->link('<button class="page-' . $classCounter . '">' . $pageCount . '</button>', '/genres/album/' . ($pageCount) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
                 }
             } else if ($type == 'block') {
                 if ($facetPage == $pageCount) {
@@ -68,7 +68,7 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
     color: #FFFFFF;" >' . $pageCount . '</button>';
                 } else {
 
-                    $pagination_str .= $html->link('<button class="page-' . $classCounter . '">' . $pageCount . '</button>', '/search/index/' . $currentPage . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
+                    $pagination_str .= $html->link('<button class="page-' . $classCounter . '">' . $pageCount . '</button>', '/genres/album/' . $currentPage . '/' . $pageCount . '/' . $queryString, array('escape' => FALSE));
                 }
             }
             $pagination_str .= " ";
@@ -78,16 +78,16 @@ function createPagination($html, $currentPage, $facetPage, $type = 'listing', $t
 
         if ($type == 'listing') {
             if ($currentPage != $totalPages) {
-                $pagination_str .= $html->link('<button class="next"></button>', '/search/index/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
-                $pagination_str .= $html->link('<button class="last"></button>', '/search/index/' . $totalPages . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="next"></button>', '/genres/album/' . ($currentPage + 1) . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="last"></button>', '/genres/album/' . $totalPages . '/' . $facetPage . '/' . $queryString, array('escape' => FALSE));
             } else {
                 $pagination_str .= '<button class="next" style="cursor:text;"></button>';
                 $pagination_str .= '<button class="last" style="cursor:text;"></button>';
             }
         } else if ($type == 'block') {
             if ($facetPage != $totalPages) {
-                $pagination_str .= $html->link('<button class="next"></button>', '/search/index/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString, array('escape' => FALSE));
-                $pagination_str .= $html->link('<button class="last"></button>', '/search/index/' . $currentPage . '/' . $totalPages . '/' . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="next"></button>', '/genres/album/' . $currentPage . '/' . ($facetPage + 1) . '/' . $queryString, array('escape' => FALSE));
+                $pagination_str .= $html->link('<button class="last"></button>', '/genres/album/' . $currentPage . '/' . $totalPages . '/' . $queryString, array('escape' => FALSE));
             } else {
                 $pagination_str .= '<button class="next" style="cursor:text;"></button>';
                 $pagination_str .= '<button class="last" style="cursor:text;"></button>';
