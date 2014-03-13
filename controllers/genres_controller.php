@@ -819,7 +819,7 @@ Class GenresController extends AppController
         if (isset($_GET['type']))
         {
             $type = $_GET['type'];
-            $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer' || $_GET['type'] == 'video') ? $_GET['type'] : 'all');
+            $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer' || $_GET['type'] == 'video' || $_GET['type'] == 'genreAlbum' ) ? $_GET['type'] : 'all');
         }
         else
         {
@@ -853,6 +853,9 @@ Class GenresController extends AppController
                     break;
                 case 'composer':
                     $sortVar = 'Composer';
+                    break;
+				case 'genreAlbum':
+                    $sortVar = 'Title';
                     break;
                 default:
                     $sortVar = 'ArtistText';
@@ -988,7 +991,7 @@ Class GenresController extends AppController
                         $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
 			//$totalAlbums = $totalFacetCount;
                         // echo "Group Search for Albums Started at ".time();
-                        $albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
+                        $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
 
                         // echo "Group Search for Albums Ended at ".time();
 
