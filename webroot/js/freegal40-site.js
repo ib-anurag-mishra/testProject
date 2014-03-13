@@ -67,13 +67,14 @@ $(document).ready(function() {
     $('.album-cover-container , .album-container').on('mouseenter', function() {
 
         $(this).find('.toggleable').addClass('active');
+        $(this).find('.toggeable').addClass('active');
 
     });
 
     $('.album-cover-container , .album-container').on('mouseleave', function() {
 
         $(this).find('.toggleable').removeClass('active');
-
+        $(this).find('.toggeable').removeClass('active');
     });
 
 
