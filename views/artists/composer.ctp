@@ -69,17 +69,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                         $tilte = urlencode($palbum->Title);
                         $linkArtistText = str_replace('/', '@', base64_encode($palbum->ArtistText));
                         $linkProviderType = base64_encode($palbum->provider_type);
-                        if (!empty($album_label)) {
-                            $album_label_str = "Label: " . truncate_text($this->getTextEncode($album_label), 32, $this);
-                        } else {
-                            $album_label_str = "";
-                        }
                         $ReferenceId = $palbum->ReferenceID;
-                        if ($palbum->AAdvisory == 'T') {
-                            $explicit = '<font class="explicit"> (Explicit)</font><br />';
-                        } else {
-                            $explicit = '';
-                        }
                         ?>
                         <li>
                             <div class="album-container">
@@ -95,7 +85,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                     ?>
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                     <div class="wishlist-popover">
-                                        <input type="hidden" id="<?= $album['Album']['ProdID'] ?>" value="album"/>                                       
+                                        <input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album"/>                                       
                                         <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>                                       
                                     </div>
                                     <?php
@@ -130,10 +120,10 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                             </div>
                             <div class="label">
                                 <?php
-                                if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown')
+                                /*if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown')
                                 {
                                     echo $this->getTextEncode($album['Album']['Copyright']);
-                                }
+                                } */
                                 ?>
                             </div>
                         </li>
