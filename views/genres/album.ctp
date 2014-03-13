@@ -137,12 +137,29 @@ function Get_Sales_date($sales_date_array, $country) {
 ?>
 
 <section class="search-page">
-    <div class="breadcrumbs">
+   <!-- <div class="breadcrumbs">
     <?php
     $html->addCrumb(__('Search Results', true), '/search/index');
     echo $html->getCrumbs(' > ', __('Home', true), '/homes');
     ?>
+    </div> -->
+
+ <div class="breadcrumbs">
+        <?php
+            echo $html->link('Home', array('controller' => 'homes', 'action' => 'index'));
+            echo " > ";
+            echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
+            if(!empty($keyword)){
+                echo " > ";
+                if (strlen($keyword) >= 30)
+                {
+                    $composertext = substr($keyword, 0, 30) . '...';
+                }
+                echo $this->getTextEncode($keyword);
+            }
+        ?>
     </div>
+
     <?php
     switch ($type) {
         case 'song':
@@ -171,17 +188,28 @@ function Get_Sales_date($sales_date_array, $country) {
     }
     ?>     
     <section class="<?php echo $search_category; ?>">
-        <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
-	<div class="search-results-heading">Results for your search <?php echo $keyword; ?></div>
+      <!--  <div class="faq-link">Need Help? Visit our <a href="/questions">FAQ Section.</a></div>
+	<div class="search-results-heading">Results for your search <?php echo $keyword; ?></div> -->
 
-
+<header class="clearfix">
+        <?php
+        if (isset($keyword))
+        {
+            ?>
+            <h2><?php echo $this->getTextEncode($keyword); ?></h2>
+            <?php
+        }
+        ?>        
+        <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
+    </header>
 <header>
-                        <h3 class="albums-header">Albums</h3>
+                       <!-- <h3 class="albums-header">Albums</h3>
 
-                    </header>
+                    </header> -->
                 <?php
-                if (!empty($albumData)) {
-                    $i = 0;
+                if (!empty($albumData)) {?>
+		 <h3>Albums</h3>
+                   <?php $i = 0;
                     foreach ($albumData as $palbum) {
                         $albumDetails = $album->getImage($palbum->ReferenceID);
 
