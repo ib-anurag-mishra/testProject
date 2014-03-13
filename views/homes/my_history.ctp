@@ -166,7 +166,7 @@ $ieVersion =  ieversion();
 					<!-- <a class="add-to-wishlist-button" href="#"></a> -->
 					<div class="album-title"><a title="<?php echo $this->getTextEncode($downloadResult['Song']['Title']); ?>" href="/artists/view/<?=base64_encode($downloadResult['Song']['ArtistText']);?>/<?= $downloadResult['Song']['ReferenceID']; ?>/<?= base64_encode($downloadResult['Song']['provider_type']);?>">
                                              <?php 
-						if (strlen($downloadResult['Song']['Title']) >= 19) {
+						if (strlen($downloadResult['Song']['Title']) >= 50) {
 							echo '<a title="'.htmlentities($downloadResult['Song']['Title']).'">' .substr($downloadResult['Song']['Title'], 0, 19) . '...</a>';
 						} else {
 							echo $downloadResult['Song']['Title']; 
