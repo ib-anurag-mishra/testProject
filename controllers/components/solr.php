@@ -1040,6 +1040,11 @@ class SolrComponent extends Object {
                         $queryFields = "CComposer";
                         $field = 'Composer';
                         break;
+		    case 'genreAlbum':
+		    	$query = $searchkeyword;
+                        $queryFields = "CTitle";
+                        $field = 'Title';
+                        break;
                     default:
                         $query = $searchkeyword;
                         $queryFields = "CSongTitle";

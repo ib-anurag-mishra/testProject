@@ -830,7 +830,7 @@ Class GenresController extends AppController
         if (isset($_GET['sort']))
         {
             $sort = $_GET['sort'];
-            $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer') ? $sort : 'artist');
+            $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer' || $sort == 'genreAlbum') ? $sort : 'artist');
             switch ($sort)
             {
                 case 'song':
@@ -1043,7 +1043,7 @@ Class GenresController extends AppController
 	
 					case 'genreAlbum':
                         $limit = 12;
-                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+                        $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genreAlbum');
                         // echo "Group Search for Albums Started at ".time();
                         $albums = $this->Solr->groupSearch($queryVar, 'genreAlbum', $facetPage, $limit);
                         // echo "Group Search for Albums Ended at ".time();
