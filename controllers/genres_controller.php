@@ -11,9 +11,9 @@ ini_set('memory_limit', '2048M');
 Class GenresController extends AppController
 {
 
-    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download');
+    var $uses = array('Category', 'Files', 'Album', 'Song', 'Download','Searchrecord','LatestVideodownload','LatestDownload');
     var $components = array('Session', 'Auth', 'Acl', 'RequestHandler', 'Downloads', 'ValidatePatron', 'Common', 'Streaming','Solr');
-    var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue');
+    var $helpers = array('Cache', 'Library', 'Page', 'Wishlist', 'Language', 'Queue','Session');
 
     /*
       Function Name : beforeFilter
@@ -756,6 +756,27 @@ Class GenresController extends AppController
         }
         $this->set('selectedGenres', $selArray);
         $this->layout = 'admin';
+    }
+
+
+    function searchrecords($type, $search_text)
+    {
+        $search_text = strtolower(trim($search_text));
+        $search_text = preg_replace('/\s\s+/', ' ', $search_text);
+        $insertArr['search_text'] = $search_text;
+        $insertArr['type'] = $type;
+        $genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
+        if (count($genre_id_count_array) > 0)
+        {
+            $insertArr['count'] = $genre_id_count_array[0]['Searchrecord']['count'] + 1;
+            $insertArr['id'] = $genre_id_count_array[0]['Searchrecord']['id'];
+        }
+        else
+        {
+            $insertArr['count'] = 1;
+        }
+
+        return $insertArr;
     }
 
 	/*
