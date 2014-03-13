@@ -86,13 +86,12 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                                     ?>
                                     <a class="add-to-playlist-button no-ajaxy" href="javascript:void(0)" ></a>
                                     <div class="wishlist-popover">
-                                        <input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album"/>                                       
+                                        <input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>"/> 
                                         <a class="add-to-playlist" href="javascript:void(0)">Add To Playlist</a>                                       
                                     </div>
                                     <?php
                                 }
                                 if($this->Session->read("patron")){ ?>
-                                     <input type="hidden" id="<?= $palbum->ReferenceID ?>" value="album" data-provider="<?= $palbum->provider_type ?>"/>   
                                      <button class="wishlist-icon toggleable"></button>
                            <?php }
                                 
