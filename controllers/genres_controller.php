@@ -1000,7 +1000,7 @@ Class GenresController extends AppController
                                     array('controller' => 'artists', 'action' => 'getAlbumSongs'), array('pass' => array(base64_encode($objAlbum->ArtistText), $objAlbum->ReferenceID, base64_encode($objAlbum->provider_type), 1))
                             );
                         }
-                          echo "<pre>"; print_r($albums); exit;
+                          //echo "<pre>"; print_r($albums);
                         $this->set('albumData', $albums);
                         $this->set('arr_albumStream', $arr_albumStream);
 
