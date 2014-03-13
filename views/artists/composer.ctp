@@ -206,9 +206,15 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                     ?>
                 </ul>
             </div>
-            <?php
+            <?php 
                 $pagination_str = createPagination($html,$facetPage,$totalFacetPages, 5, urlencode($composertext)); 
-            ?>
+                if(!empty($pagination_str)){ ?>    
+                    <div  class="paging">
+                    <?php
+                       echo $pagination_str;   
+                    ?>
+                    </div>
+                <?php } ?>
         </div>
         <?php
     }
