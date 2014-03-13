@@ -145,14 +145,6 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                     ?>
                 </ul>
             </div>
-
-            <div class="paging">    
-                <?php
-                echo $paginator->prev('<< ' . __('Previous ', true), null, null, array('class' => 'disabled'));
-                echo $paginator->numbers(array('separator' => ' '));
-                echo $paginator->next(__(' Next >>', true), null, null, array('class' => 'disabled'));
-                ?>
-            </div>
         </div>
         <?php
     }
