@@ -162,7 +162,7 @@ class SolrComponent extends Object {
                             break;
 			case 'genreAlbum':
                             $query = $searchkeyword;
-                            $queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer"; // CArtistText^80
+                            $queryFields = "CGenre^60"; // CArtistText^80
                             break;
                         default:
                             $query = $searchkeyword;
@@ -556,8 +556,8 @@ class SolrComponent extends Object {
                     $field = 'Composer';
                     break;
 		case 'genreAlbum':
-		    $query = '(CTitle:('.$searchkeyword.') OR CArtistText:('.$searchkeyword.') CComposer:(' . $searchkeyword . '))';
-                    $field = 'Title';
+		    $query = '(CGenre:(' . $searchkeyword . '))';
+                    $field = 'Genre';
                     break;
                 default:
                     $query = '(CSongTitle:(' . $searchkeyword . '))';
@@ -877,7 +877,7 @@ class SolrComponent extends Object {
                         $field = 'Composer';
                         break;
 		    case 'genreAlbum':
-			$queryFields = "CArtistText^10000 CTitle^100 CGenre^60 CSongTitle^20 CComposer";
+			$queryFields = "CGenre^60";
                         $query = $searchkeyword;
                         $field = 'rpjoin';
                         break;
@@ -1046,8 +1046,8 @@ class SolrComponent extends Object {
                         break;
 		    case 'genreAlbum':
 		    	$query = $searchkeyword;
-                        $queryFields = "CTitle";
-                        $field = 'Title';
+                        $queryFields = "CGenre";
+                        $field = 'Genre';
                         break;
                     default:
                         $query = $searchkeyword;
