@@ -9,7 +9,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
         $part = floor($pageLimitToShow / 2);
         if (1 != $facetPage)
         {
-            $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . ($facetPage - 1) . '/' . $queryString);
+            $pagination_str .= $html->link('<<' . __('previous', true), "/artists/composer/" . ($facetPage - 1) . '/' . $queryString);
         }
         else
         {
@@ -45,7 +45,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
             }
             else
             {
-                $pagination_str .= $html->link($pageCount, '/search/index/' . $pageCount . '/' . $queryString);
+                $pagination_str .= $html->link($pageCount, '/artists/composer/' . $pageCount . '/' . $queryString);
             }
             $pagination_str .= " ";
         }
@@ -53,7 +53,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
 
         if ($facetPage != $totalPages)
         {
-            $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . ($facetPage + 1) . '/' . $queryString);
+            $pagination_str .= $html->link(__('next', true) . '>>', '/artists/composer/' . ($facetPage + 1) . '/' . $queryString);
         }
         else
         {
