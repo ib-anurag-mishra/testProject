@@ -9,7 +9,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
         $part = floor($pageLimitToShow / 2);
         if (1 != $facetPage)
         {
-            $pagination_str .= $html->link('<<' . __('previous', true), "/search/index/" . ($facetPage - 1) . '/' . $queryString);
+            $pagination_str .= $html->link('<<' . __('previous', true), "/artists/composer/" . $queryString.'/' . ($facetPage - 1));
         }
         else
         {
@@ -45,7 +45,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
             }
             else
             {
-                $pagination_str .= $html->link($pageCount, '/search/index/' . $pageCount . '/' . $queryString);
+                $pagination_str .= $html->link($pageCount, '/artists/composer/' . $queryString.'/' .$pageCount);
             }
             $pagination_str .= " ";
         }
@@ -53,7 +53,7 @@ function createPagination($html,$facetPage,$totalPages,$pageLimitToShow, $queryS
 
         if ($facetPage != $totalPages)
         {
-            $pagination_str .= $html->link(__('next', true) . '>>', '/search/index/' . ($facetPage + 1) . '/' . $queryString);
+            $pagination_str .= $html->link(__('next', true) . '>>', '/artists/composer/' . $queryString.'/' .($facetPage + 1));
         }
         else
         {
@@ -207,7 +207,7 @@ function truncate_text($text, $char_count, $obj = null, $truncateByWord = true) 
                 </ul>
             </div>
             <?php 
-                $pagination_str = createPagination($html,$facetPage,$totalFacetPages, 5, urlencode($composertext)); 
+                $pagination_str = createPagination($html,$facetPage,$totalFacetPages, 5, base64_encode($composertext)); 
                 if(!empty($pagination_str)){ ?>    
                     <div  class="paging">
                     <?php
